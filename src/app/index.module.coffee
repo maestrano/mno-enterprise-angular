@@ -1,1 +1,10 @@
-angular.module 'mnoEnterpriseAngular', ['ngAnimate', 'ngMessages', 'ngAria', 'restangular', 'ui.router', 'ui.bootstrap', 'toastr']
+angular.module 'mnoEnterpriseAngular', [
+  'ngAnimate',
+  'ngAria',
+  'ngCookies',
+  'ngMessages',
+  'ui.router',
+  'ui.bootstrap',
+  'toastr',
+  'restangular'
+]

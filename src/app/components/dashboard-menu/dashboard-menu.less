@@ -1,0 +1,297 @@
+dashboard-menu {
+  /*-----------------------------------------------------------------------*/
+  /*                         Mobile menu                                   */
+  /*-----------------------------------------------------------------------*/
+  .navbar {
+    &.navbar-inverse {
+      font-weight:300;
+      letter-spacing:1px;
+
+      ul.nav.navbar-nav {
+        padding:0px;
+        text-transform:uppercase;
+        a {
+          font-size:@normal;
+          text-align:center;
+          background-color:#111c21;
+          border-bottom: solid 1px @bg-inverse-color;
+          padding:22px 0px;
+        }
+
+        ul.dropdown-menu {
+          padding:0px;
+          a {
+            background-color:@bg-inverse-color;
+            border-bottom: solid 1px #111c21;
+            padding:13px 0px;
+          }
+        }
+      }
+    }
+
+    .navbar-nav {
+      &.navbar-right:last-child {
+        margin-right:10px;
+      }
+
+      li.active {
+        .navbar-arrow {
+          position:absolute;
+          margin-top:60px;
+          width: 0;
+          height: 0;
+          border-left: 27px solid transparent;
+          border-right: 27px solid transparent;
+          margin-left:50%-27px;
+          border-bottom: 20px solid @elem-cozy-color;
+        }
+      }
+    }
+
+    &.navbar-inverse {
+      font-weight:300;
+      letter-spacing:1px;
+
+      ul.nav.navbar-nav {
+        text-transform:uppercase;
+        a {
+          font-size:@normal;
+        }
+      }
+
+      ul.nav.navbar-nav.navbar-right {
+        button {
+          margin-top: ((@navbar-height - @line-height-computed) / 2) - 18;
+        }
+
+        a {
+          text-transform:none;
+        }
+      }
+    }
+  }
+
+  /*-----------------------------------------------------------------------*/
+  /*                         Dashboard Left Navbar                         */
+  /*-----------------------------------------------------------------------*/
+  .menu {
+
+    a:hover { text-decoration: none; }
+
+    // Dashboard Button > Active State
+    .dashboard-button.active, .dashboard-button.active:hover {
+      color: @dashboard-side-menu-link-active-color;
+      background-color: @dashboard-side-menu-link-active-bg-color;
+    }
+
+    // Dashboard Button Content > Active State
+    .dashboard-button.active .content, .dashboard-button.active:hover .content {
+      color: @dashboard-side-menu-link-active-color;
+      background-color: @dashboard-side-menu-link-active-bg-color;
+    }
+
+    // Dashboard Button Content > Normal State
+    .dashboard-button,
+    .dashboard-button .content {
+      color: @dashboard-side-menu-link-color;
+      background-color: @dashboard-side-menu-link-bg-color;
+    }
+
+    // Dashboard Button Content > Normal State Hover
+    .dashboard-button:hover, .dashboard-button:hover .content {
+      color: @dashboard-side-menu-link-hover-color;
+      background-color: @dashboard-side-menu-link-hover-bg-color;
+    }
+
+    // Vertical menu
+    &.vertical {
+      z-index:100;
+      position:fixed;
+      left:0px;
+      top:0px;
+      padding: @dashboard-side-menu-padding;
+      width:80px;
+      min-height:100%;
+      height:99%;
+
+      // Dashboard Button > Normal State
+      .dashboard-button {
+        border-radius: 5px;
+        width: 51px;
+        height: 51px;
+        padding-top: 7px;
+        padding-left: 9px;
+      }
+
+      &:hover .dashboard-button {
+        width: 250px;
+      }
+
+      // Dashboard Button Content > Normal State
+      .dashboard-button .content {
+        display: none;
+      }
+
+      &:hover .dashboard-button .content {
+        display: block;
+        white-space: nowrap;
+        position: absolute;
+        margin: 8px 0px 0px 55px;
+        font-size: 15px;
+      }
+
+      // Side menu brand logo
+      .brand-logo {
+        height: 90px;
+        background-repeat: no-repeat;
+        background-image: url(@dashboard-side-menu-brand-logo-img);
+        background-size: 100%;
+        @dashboard-side-menu-brand-logo();
+      }
+      .brand-logo.expanded {
+        @dashboard-side-menu-brand-logo-expanded();
+      }
+    }
+
+    background-color: @dashboard-side-menu-bg-color;
+
+    hr {
+      border-top: 2px dashed darken(@dashboard-side-menu-bg-color, 5%);
+      margin-right: 11px;
+    }
+
+    // Icon configuration for each dashboard button
+    .dashboard-button i.dhb-icon-dashboard {
+      @dashboard-side-menu-btn-dashboard();
+    };
+    .dashboard-button:hover i.dhb-icon-dashboard,
+    .dashboard-button.active i.dhb-icon-dashboard {
+      @dashboard-side-menu-btn-dashboard-active();
+    };
+
+    .dashboard-button i.dhb-icon-impac {
+      @dashboard-side-menu-btn-impac();
+    };
+    .dashboard-button.active i.dhb-icon-impac,
+    .dashboard-button:hover i.dhb-icon-impac {
+      @dashboard-side-menu-btn-impac-active();
+    };
+
+    .dashboard-button i.dhb-icon-account {
+      @dashboard-side-menu-btn-account();
+    };
+    .dashboard-button:hover i.dhb-icon-account,
+    .dashboard-button.active i.dhb-icon-account {
+      @dashboard-side-menu-btn-account-active();
+    };
+
+    .dashboard-button i.dhb-icon-company {
+      @dashboard-side-menu-btn-company();
+    };
+    .dashboard-button:hover i.dhb-icon-company,
+    .dashboard-button.active i.dhb-icon-company {
+      @dashboard-side-menu-btn-company-active();
+    };
+
+    .dashboard-button i.dhb-icon-marketplace {
+      @dashboard-side-menu-btn-marketplace();
+    };
+    .dashboard-button:hover i.dhb-icon-marketplace,
+    .dashboard-button.active i.dhb-icon-marketplace {
+      @dashboard-side-menu-btn-marketplace-active();
+    };
+
+    .dashboard-button i.dhb-icon-logout {
+      @dashboard-side-menu-btn-logout();
+    };
+    .dashboard-button:hover i.dhb-icon-logout,
+    .dashboard-button.active i.dhb-icon-logout {
+      @dashboard-side-menu-btn-logout-active();
+    };
+  }
+
+  .company-select-box {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background-color: @dashboard-cpy-select-bg-color;
+    color: @dashboard-cpy-select-header-text-color;
+    font-size: @dashboard-cpy-select-header-text-size;
+    padding: @dashboard-cpy-select-padding;
+    .border-bottom-radius(@dashboard-cpy-select-border-radius);
+    z-index: 10;
+
+    // Change company button
+    .btn.switch-company {
+      color: @dashboard-cpy-select-header-text-color;
+      background-color: @dashboard-cpy-select-switch-btn-bg-color;
+      margin-left: 15px;
+    }
+    .btn.switch-company i {
+      @dashboard-cpy-select-switch-btn-icon();
+    }
+    .btn.switch-company i.active {
+      @dashboard-cpy-select-switch-btn-icon-active();
+    }
+
+    // Section always visible
+    .box-header {
+      text-align: right;
+    }
+
+    // Section visible when change company is clicked
+    .box-content {
+      margin-top: 10px;
+      border-top: solid 1px @dashboard-cpy-select-link-color;
+      .border-bottom-radius(5px);
+    }
+    .box-content ul {
+      list-style: none;
+      padding-top: 15px;
+      max-height: 400px;
+      min-width: 250px;
+      overflow-y: auto;
+    }
+    .box-content ul li a {
+      color: @dashboard-cpy-select-link-color;
+      line-height: 25px;
+      display: block;
+      padding-left: 5px;
+
+      &:hover {
+        text-decoration: none;
+        color: @dashboard-cpy-select-link-hover-color;
+        background-color: @dashboard-cpy-select-link-hover-bg-color;
+      }
+    }
+
+    // Circle next to company name
+    // Indicate which company is currently viewed on dashboard
+    .box-content ul li a i.fa {
+      width: 13px;
+      margin-right: 6px;
+      text-align: center;
+      color: @dashboard-cpy-select-link-color;
+    }
+
+    // Create new company
+    .box-content .create-new, .box-content .admin-link {
+      text-align: center;
+    }
+    .box-content .create-new a {
+      color: @dashboard-cpy-select-link-create-color;
+    }
+
+    // Admin platform link
+    .box-content .admin-link {
+      margin-top: 3px;
+
+      a {
+        color: @dashboard-cpy-select-link-admin-color;
+      }
+    }
+
+    // Play well with menu at the top in responsive mode
+    @media (max-width: @screen-sm-min) { top: 40px; }
+  }
+}
