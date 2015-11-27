@@ -3,9 +3,20 @@ angular.module 'mnoEnterpriseAngular'
     'ngInject'
     $stateProvider
       .state 'home',
-        url: '/'
-        templateUrl: 'app/main/main.html'
-        controller: 'MainController'
-        controllerAs: 'main'
+        abstract: true
+        templateUrl: 'app/views/layout.html'
+        controller: 'LayoutController'
+      .state 'home.app-list',
+        url: '/apps'
+        templateUrl: 'app/views/dashboard-apps-list/dashboard-apps-list.html'
+        controller: 'DashboardAppsListCtrl'
+      .state 'home.impac',
+        url: '/impac'
+        templateUrl: 'app/views/impac/impac.html'
+        controller: 'ImpacController'
+      .state 'home.account',
+        url: '/account'
+        templateUrl: 'app/views/account/account.html'
+        controller: 'DashboardAccountCtrl'
 
-    $urlRouterProvider.otherwise '/'
+    $urlRouterProvider.otherwise '/apps'

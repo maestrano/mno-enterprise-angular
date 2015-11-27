@@ -1,0 +1,25 @@
+<div class="modal-header">
+  <button type="button" class="close" aria-label="Close" ng-click="modalOptions.close()"><span aria-hidden="true">&times;</span></button>
+  <h4 class="modal-title">Confirm app deletion</h4>
+</div>
+<div class="modal-body">
+  <div class="alert alert-error" ng-show="modal.errors">
+    <button class="close" ng-click="modal.errors=''">×</button>
+    <ul>
+      <li ng-repeat="error in modal.errors">{{error}}</li>
+    </ul>
+  </div>
+  <p class="text-center"><small>In order to delete your app, please enter the following statement in the box below.</small></p>
+  <p class="text-error text-center">{{modal.sentence}}</p>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <input type="text" ng-model="sentenceCheck" class='form-control text-center' required>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-default" ng-click="modal.cancel()">Cancel</button>
+  <button type="button" class="btn btn-danger" ng-disabled="modal.sentence != sentenceCheck" ng-click="modal.deleteApp()">
+    <span ng-show="modal.loading"><i class="fa fa-spinner fa-spin"></i>&nbsp;</span>Delete {{modal.app.name}}
+  </button>
+</div>

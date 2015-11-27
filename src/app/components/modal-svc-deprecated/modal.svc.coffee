@@ -1,5 +1,7 @@
 angular.module 'mnoEnterpriseAngular'
-  .factory('ModalSvc', ($modal) ->
+  .factory('ModalSvc', ($log, $modal) ->
+
+    $log.warn('ModalSvc is deprecated. Please use MnoConfirm instead, or directly $uibModal.')
 
     # --------------------------------------------------------------------
     # The goal of this service is to create a generic modal creator

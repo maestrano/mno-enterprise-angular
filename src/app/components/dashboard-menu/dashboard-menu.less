@@ -7,6 +7,20 @@ dashboard-menu {
       font-weight:300;
       letter-spacing:1px;
 
+      .navbar-toggle {
+        background-color: #fff;
+        .icon-bar {
+          background-color: #333;
+        }
+
+        &:hover, &:focus {
+          background-color: #333;
+          .icon-bar {
+            background-color: #fff;
+          }
+        }
+      }
+
       ul.nav.navbar-nav {
         padding:0px;
         text-transform:uppercase;
@@ -46,11 +60,6 @@ dashboard-menu {
           border-bottom: 20px solid @elem-cozy-color;
         }
       }
-    }
-
-    &.navbar-inverse {
-      font-weight:300;
-      letter-spacing:1px;
 
       ul.nav.navbar-nav {
         text-transform:uppercase;

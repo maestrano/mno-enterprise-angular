@@ -84,13 +84,6 @@
 @dashboard-side-menu-btn-logout:                { .icon-fa(lock); @_default_style(); margin-left: 6px; };
 @dashboard-side-menu-btn-logout-active:         { .icon-fa(lock); @_default_style_active(); margin-left: 6px; };
 
-// TODO: Remove?
-.icon-fa(@icon) {
-  .fa;
-  @fa-icon-variable: "fa-var-@{icon}";
-  &:before { content: @@fa-icon-variable; }
-};
-
 // Company select box (top right)
 //--------------------------------------
 @dashboard-cpy-select-bg-color:                 @bg-inverse-intense-color;
@@ -164,6 +157,7 @@
 // Dashboard
 //--------------------------------------
 @impac-dashboard-padding-top:                   33px;
+@impac-dashboard-margin-left:                   0px;
 
 // Title
 @impac-dashboard-title-label-color:             @text-strong-color;

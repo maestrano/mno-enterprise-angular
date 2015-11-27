@@ -6,5 +6,6 @@ angular.module 'mnoEnterpriseAngular', [
   'ui.router',
   'ui.bootstrap',
   'toastr',
-  'restangular'
+  'restangular',
+  'maestrano.impac'
 ]

@@ -1,0 +1,20 @@
+.font(@size,@weight,@color) {
+  font-weight:@weight;
+  font-size:@size;
+  color:@color;
+}
+
+.icon-fa(@icon) {
+  .fa;
+  @fa-icon-variable: "fa-var-@{icon}";
+  &:before { content: @@fa-icon-variable; }
+}
+
+.size(@width; @height) {
+  width: @width;
+  height: @height;
+}
+
+.square(@size) {
+  .size(@size; @size);
+}

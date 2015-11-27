@@ -2,7 +2,7 @@
 #============================================
 #
 #============================================
-DashboardMenuCtrl = ($scope, $location, $stateParams, $window, $cookies, $sce,
+DashboardMenuCtrl = ($scope, $location, $stateParams, $window, $cookies, $sce, $uibModal,
   CurrentUserSvc, DashboardAppsDocument, DhbOrganizationSvc, MarketplaceSvc, DhbTeamSvc, MsgBus, ModalSvc) ->
 
     # Open the maestrano star menu
@@ -140,14 +140,14 @@ angular.module 'mnoEnterpriseAngular'
       templateUrl: 'app/components/dashboard-menu/dashboard-menu.html',
 
       # We need to manually close the collapse menu as we actually stay on the same page
-      link: (scope, element, attrs) ->
-        element.find(".menu").on("mouseenter", ->
+      link: (scope, elem, attrs) ->
+        elem.find(".menu").on("mouseenter", ->
           angular.element(this).stop()
           angular.element(this).find(".brand-logo").addClass('expanded')
           angular.element(this).find(".dashboard-button").find(".content").css("display", "block")
           angular.element(this).animate({width:275}, 150)
         )
-        element.find(".menu").on("mouseleave", ->
+        elem.find(".menu").on("mouseleave", ->
           angular.element(this).stop()
           angular.element(this).find(".brand-logo").removeClass('expanded')
           angular.element(this).find(".dashboard-button").find(".content").css("display", "none")

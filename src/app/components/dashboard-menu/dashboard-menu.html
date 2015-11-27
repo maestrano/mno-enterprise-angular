@@ -16,13 +16,13 @@
     </button>
     <a class="navbar-brand" href="#">Dashboard</a>
   </div>
-  <div class="collapse navbar-collapse" collapse="navCollapsed">
+  <div class="collapse navbar-collapse" uib-collapse="navCollapsed">
     <ul class="nav navbar-nav">
       <!-- ------------------------- -->
       <!-- My account section        -->
       <!-- ------------------------- -->
       <li ng-show="!selectBoxisEmpty()">
-        <a href="#/">My dashboard</a>
+        <a href="#/apps">My dashboard</a>
       </li>
       <li ng-show="!selectBoxisEmpty() && isAnalyticsTabShown()">
         <a href="#/impac">Impac!</a>
@@ -61,7 +61,7 @@
       </a>
     </div>
 
-    <div class="box-content scrollbar-hidden" collapse="selectBox.isClosed">
+    <div class="box-content scrollbar-hidden" uib-collapse="selectBox.isClosed">
       <ul class="list-unstyled">
         <li ng-repeat="organization in selectBox.organizationList()" >
           <a href="" ng-click="selectBox.changeTo(organization)" ng-bind-html="selectBox.organizationLabel(organization)"></a>

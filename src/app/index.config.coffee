@@ -23,22 +23,3 @@ angular.module 'mnoEnterpriseAngular'
 
     return $httpProvider
   )
-
-  .config(($sceDelegateProvider) ->
-    'ngInject'
-
-    # Configure SCE to authorize the Maestrano domains
-    #$sceProvider.enabled(false);
-    $sceDelegateProvider.resourceUrlWhitelist([
-        # Allow same origin resource loads.
-        'self'
-        # Allow UAT asset server
-        #'https://assets-apse1-uat-maestrano.s3.amazonaws.com/assets/**',
-        # Allow UAT Cloudfront distribution
-        #'https://dbu1g4tv4k5kk.cloudfront.net/web/mno/assets/**',
-        # Allow PROD asset server
-        #'https://assets-apse1-prd-maestrano.s3.amazonaws.com/assets/**',
-        # Allow PROD Cloudfront distribution
-        #'https://cdn.maestrano.com/web/mno/assets/**'
-    ])
-  )
