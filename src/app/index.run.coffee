@@ -1,11 +1,18 @@
 angular.module 'mnoEnterpriseAngular'
-  .run ($log) ->
+  .run(($log) ->
     'ngInject'
     $log.debug 'runBlock end'
-
-  .run (ImpacLinking, ImpacConfigSvc) ->
+  )
+  .run((MnoeCurrentUser) ->
+    'ngInject'
+    MnoeCurrentUser.get()
+  )
+  .run((ImpacLinking, ImpacConfigSvc) ->
+    'ngInject'
     data =
       user: ImpacConfigSvc.getUserData
       organizations: ImpacConfigSvc.getOrganizations
 
     ImpacLinking.linkData(data)
+  )
+

@@ -1,7 +1,3 @@
-<!---------------------------->
-<!--    Advertisement moda  -->
-<!---------------------------->
-<div mno-message-modal></div>
 
 <!---------------------------->
 <!--    Responsive Navbar   -->
@@ -21,7 +17,7 @@
       <!-- ------------------------- -->
       <!-- My account section        -->
       <!-- ------------------------- -->
-      <li ng-show="!selectBoxisEmpty()">
+      <li>
         <a href="#/apps">My dashboard</a>
       </li>
       <li ng-show="!selectBoxisEmpty() && isAnalyticsTabShown()">
@@ -30,10 +26,10 @@
       <li>
         <a href="#/account">My account</a>
       </li>
-      <li ng-show="!selectBoxisEmpty()">
+      <li>
         <a href="#/company">My company</a>
       </li>
-      <li ng-show="!selectBoxisEmpty()">
+      <li>
         <a href="#/marketplace">Marketplace</a>
       </li>
       <li>
@@ -43,101 +39,44 @@
   </div>
 </nav>
 
-<!-- Push content below the navbar + select box -->
-<div class="spacer2 visible-xs-block"></div>
-
-<!-------------------------->
-<!--    Select Box        -->
-<!-------------------------->
-<div class="company-select-box">
-  <div class="wrapper">
-
-    <div class="box-header">
-      <span class="title">{{ selectBox.userLabel }}</span>
-      -
-      <span class="title">{{ selectBox.organization.name }}</span>
-      <a type="button" class="btn switch-company" ng-click="selectBox.toggle()">
-        <i ng-class="!selectBox.isClosed && 'active'"></i>
-      </a>
-    </div>
-
-    <div class="box-content scrollbar-hidden" uib-collapse="selectBox.isClosed">
-      <ul class="list-unstyled">
-        <li ng-repeat="organization in selectBox.organizationList()" >
-          <a href="" ng-click="selectBox.changeTo(organization)" ng-bind-html="selectBox.organizationLabel(organization)"></a>
-        </li>
-      </ul>
-      <div class="create-new">
-        <a href="" ng-click="selectBox.createNewOrga()"><small>New Company</small></a>
-      </div>
-      <div class="admin-link" ng-if="selectBox.user.admin_role">
-        <a href="/admin/"><small>Access Admin Panel</small></a>
-      </div>
-    </div>
-
-  </div>
-</div>
-
 <!-------------------------->
 <!--    Side Navbar       -->
 <!-------------------------->
-<div class="col-xs-1 hidden-xs scrollbar-hidden">
+<nav class="col-xs-1 hidden-xs scrollbar-hidden">
   <div class="menu vertical expanded">
     <!--Home page link-->
     <a href="/">
       <div class='brand-logo'></div>
     </a>
-    <!-------------------------->
-    <!--   User section     -->
-    <!-------------------------->
-    <div  ng-show="!selectBoxisEmpty()">
-      <a href="#/">
-        <div class="dashboard-button" ng-class="isButtonActive('/') && 'active'">
-          <div class='content'>Dashboard</div>
-          <i class="dhb-icon-dashboard"></i>
-        </div>
-      </a>
-      <br>
-    </div>
-    <div  ng-show="!selectBoxisEmpty()">
-      <a href="#/impac">
-        <div class="dashboard-button" ng-class="isButtonActive('/impac') && 'active'">
-          <div class='content'>Impac!</div>
-          <i class="dhb-icon-impac"></i>
-        </div>
-      </a>
-      <br>
-    </div>
-    <a href="#/account">
-      <div ng-class="isButtonActive('/account') && 'active'" class="dashboard-button">
-        <div class='content'>My Account</div>
-        <i class="dhb-icon-account"></i>
-      </div>
+
+    <a ui-sref="home.app-list" class="dashboard-button" ui-sref-active="active">
+      <div class='content'>Dashboard</div>
+      <i class="dhb-icon-dashboard"></i>
     </a>
-    <br>
-    <div  ng-show="!selectBoxisEmpty()">
-      <a href="#/company">
-        <div ng-class="isButtonActive('/company') && 'active'" class="dashboard-button">
-          <div class='content'>Company</div>
-          <i class="dhb-icon-company"></i>
-        </div>
-      </a>
-      <br>
-    </div>
-    <div  ng-show="!selectBoxisEmpty()">
-      <a href="#/marketplace">
-        <div ng-class="isButtonActive('/marketplace') && 'active'" class="dashboard-button">
-          <div class='content'>Marketplace</div>
-          <i class="dhb-icon-marketplace"></i>
-        </div>
-      </a>
-      <br>
-    </div>
-    <a href="/mnoe/auth/users/sign_out" data-method='delete'>
-      <div class="dashboard-button">
-        <div class='content'>Logout</div>
-        <i class="dhb-icon-logout"></i>
-      </div>
+
+    <a ui-sref="home.impac" class="dashboard-button top-buffer-1" ui-sref-active="active">
+      <div class='content'>Impac!</div>
+      <i class="dhb-icon-impac"></i>
+    </a>
+
+    <a ui-sref="home.account" class="dashboard-button top-buffer-1" ui-sref-active="active">
+      <div class='content'>My Account</div>
+      <i class="dhb-icon-account"></i>
+    </a>
+
+    <a ui-sref="home.company" class="dashboard-button top-buffer-1" ui-sref-active="active">
+      <div class='content'>Company</div>
+      <i class="dhb-icon-company"></i>
+    </a>
+
+    <a ui-sref="home.marketplace" class="dashboard-button top-buffer-1" ui-sref-active="active">
+      <div class='content'>Marketplace</div>
+      <i class="dhb-icon-marketplace"></i>
+    </a>
+
+    <a href="/mnoe/auth/users/sign_out" data-method='delete' class="dashboard-button top-buffer-1">
+      <div class='content'>Logout</div>
+      <i class="dhb-icon-logout"></i>
     </a>
   </div>
-</div>
+</nav>

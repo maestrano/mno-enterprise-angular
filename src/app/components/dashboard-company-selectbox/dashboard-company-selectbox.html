@@ -1,0 +1,32 @@
+
+<!-------------------------->
+<!--    Select Box        -->
+<!-------------------------->
+<div class="company-select-box">
+  <div class="wrapper">
+
+    <div class="box-header">
+      <span class="title">{{ selectBox.userLabel }}</span>
+      -
+      <span class="title">{{ selectBox.organization.name }}</span>
+      <a type="button" class="btn switch-company" ng-click="selectBox.toggle()">
+        <i ng-class="!selectBox.isClosed && 'active'"></i>
+      </a>
+    </div>
+
+    <div class="box-content scrollbar-hidden" uib-collapse="selectBox.isClosed">
+      <ul class="list-unstyled">
+        <li ng-repeat="organization in selectBox.organizationList()" >
+          <a href="" ng-click="selectBox.changeTo(organization)" ng-bind-html="selectBox.organizationLabel(organization)"></a>
+        </li>
+      </ul>
+      <div class="create-new">
+        <a href="" ng-click="selectBox.createNewOrga()"><small>New Company</small></a>
+      </div>
+      <div class="admin-link" ng-if="selectBox.user.admin_role">
+        <a href="/admin/"><small>Access Admin Panel</small></a>
+      </div>
+    </div>
+
+  </div>
+</div>

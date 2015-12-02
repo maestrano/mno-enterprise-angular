@@ -18,5 +18,13 @@ angular.module 'mnoEnterpriseAngular'
         url: '/account'
         templateUrl: 'app/views/account/account.html'
         controller: 'DashboardAccountCtrl'
+      .state 'home.company',
+        url: '/company'
+        templateUrl: 'app/views/company/company.html'
+        controller: 'DashboardCompanyCtrl'
+      .state 'home.marketplace',
+        url: '/marketplace'
+        templateUrl: 'app/views/marketplace/marketplace.html'
+        controller: 'DashboardMarketplaceCtrl'
 
     $urlRouterProvider.otherwise '/apps'
