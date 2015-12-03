@@ -7,5 +7,7 @@ angular.module 'mnoEnterpriseAngular', [
   'ui.bootstrap',
   'toastr',
   'restangular',
+  'platanus.inflector',
+
   'maestrano.impac'
 ]

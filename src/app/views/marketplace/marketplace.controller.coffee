@@ -1,34 +1,41 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('DashboardMarketplaceCtrl', ($scope, MarketplaceSvc) ->
+  .controller('DashboardMarketplaceCtrl', (MnoeMarketplace) ->
+    'ngInject'
+
+    vm = this
 
     #====================================
-    # Pre-Initialization
+    # Initialization
     #====================================
-    $scope.isLoading = true
-    $scope.selectedCategory = ''
-    $scope.searchTerm = ''
-    $scope.appFilter = ''
+    vm.isLoading = true
+    vm.selectedCategory = ''
+    vm.searchTerm = ''
 
     #====================================
     # Scope Management
     #====================================
-    $scope.initialize = (marketplace)->
-      $scope.categories = marketplace.categories
-      $scope.apps = marketplace.apps
-      $scope.isLoading = false
-
-    $scope.linkFor = (app) ->
+    vm.linkFor = (app) ->
       "#/marketplace/#{app.id}"
 
-    $scope.appsFilter = (app) ->
-      if ($scope.searchTerm? && $scope.searchTerm.length > 0) || !$scope.selectedCategory
+    vm.appsFilter = (app) ->
+      if (vm.searchTerm? && vm.searchTerm.length > 0) || !vm.selectedCategory
         return true
       else
-        return _.contains(app.categories,$scope.selectedCategory)
+        return _.contains(app.categories, vm.selectedCategory)
 
     #====================================
-    # Post-Initialization
+    # Calls
     #====================================
-    MarketplaceSvc.load().then (marketplace)->
-      $scope.initialize(marketplace)
+    MnoeMarketplace.getApps().then(
+      (response) ->
+        # Remove restangular decoration
+        response = response.plain()
+
+        vm.categories = response.categories
+        vm.apps = response.apps
+
+        vm.isLoading = false
+    )
+
+    return
 )

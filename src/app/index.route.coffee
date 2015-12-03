@@ -6,6 +6,7 @@ angular.module 'mnoEnterpriseAngular'
         abstract: true
         templateUrl: 'app/views/layout.html'
         controller: 'LayoutController'
+        controllerAs: 'layout'
       .state 'home.app-list',
         url: '/apps'
         templateUrl: 'app/views/dashboard-apps-list/dashboard-apps-list.html'
@@ -26,5 +27,6 @@ angular.module 'mnoEnterpriseAngular'
         url: '/marketplace'
         templateUrl: 'app/views/marketplace/marketplace.html'
         controller: 'DashboardMarketplaceCtrl'
+        controllerAs: 'vm'
 
     $urlRouterProvider.otherwise '/apps'
