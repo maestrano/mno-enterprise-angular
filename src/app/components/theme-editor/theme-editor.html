@@ -1,0 +1,13 @@
+<div class="container">
+  <form ng-submit="editor.update()">
+    <div class="row">
+      <div class="form-group col-md-6" ng-repeat="(color, value) in theme">
+        <label>{{color}} - {{labels[color]}}</label>
+        <input type="color" class="form-control" ng-model="theme[color]">
+      </div>
+    </div>
+    <div class="row">
+      <button type="submit" class="btn btn-default">Submit</button>
+    </div>
+  </form>
+</div>
