@@ -3,12 +3,6 @@ angular.module 'mnoEnterpriseAngular'
     'ngInject'
     $log.debug 'runBlock end'
   )
-  .run((MnoeCurrentUser) ->
-    'ngInject'
-
-    # Run the init calls
-    MnoeCurrentUser.get()
-  )
   .run((ImpacLinking, ImpacConfigSvc) ->
     'ngInject'
 
