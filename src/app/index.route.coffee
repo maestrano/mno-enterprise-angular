@@ -28,5 +28,11 @@ angular.module 'mnoEnterpriseAngular'
         templateUrl: 'app/views/marketplace/marketplace.html'
         controller: 'DashboardMarketplaceCtrl'
         controllerAs: 'vm'
+      .state 'home.marketplace.app',
+        url: '^/marketplace/:appId'
+        views: '@home':
+          templateUrl: 'app/views/marketplace/marketplace-app.html'
+          controller: 'DashboardMarketplaceAppCtrl'
+          controllerAs: 'vm'
 
     $urlRouterProvider.otherwise '/apps'

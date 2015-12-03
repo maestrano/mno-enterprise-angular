@@ -23,3 +23,14 @@ angular.module 'mnoEnterpriseAngular'
 
     return $httpProvider
   )
+
+  .config(($sceDelegateProvider) ->
+    'ngInject'
+
+    # Configure SCE to authorize the Maestrano domains
+    # (see: https://docs.angularjs.org/api/ng/provider/$sceDelegateProvider)
+    $sceDelegateProvider.resourceUrlWhitelist([
+        # Allow same origin resource loads.
+        'self'
+    ])
+  )

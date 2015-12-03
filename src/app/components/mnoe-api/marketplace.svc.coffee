@@ -14,11 +14,14 @@ angular.module 'mnoEnterpriseAngular'
     _self = @
 
     # Using this syntax will not trigger the data extraction in MnoeApiSvc
-    # as the /marketplace payload isn't encapsulated in "{ marketpalce: categories {}, apps {...} }"
+    # as the /marketplace payload isn't encapsulated in "{ marketpalce: categories {...}, apps {...} }"
     marketplaceApi = MnoeApiSvc.oneUrl('/marketplace')
 
+    marketplacePromise = null
+
     @getApps = () ->
-      marketplaceApi.get()
+      return marketplacePromise if marketplacePromise?
+      marketplacePromise = marketplaceApi.get()
 
     @getApp = (id) ->
       marketplaceApi.one(id).get().then(
