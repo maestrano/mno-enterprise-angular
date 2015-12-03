@@ -5,10 +5,13 @@ angular.module 'mnoEnterpriseAngular'
   )
   .run((MnoeCurrentUser) ->
     'ngInject'
+
+    # Run the init calls
     MnoeCurrentUser.get()
   )
   .run((ImpacLinking, ImpacConfigSvc) ->
     'ngInject'
+
     data =
       user: ImpacConfigSvc.getUserData
       organizations: ImpacConfigSvc.getOrganizations

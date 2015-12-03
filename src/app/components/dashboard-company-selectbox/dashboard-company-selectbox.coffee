@@ -124,8 +124,10 @@ DashboardCompanySelectboxCtrl = ($scope, $location, $stateParams, $cookies, $sce
         selectBox.changeTo(data)
     })
 
-    CurrentUserSvc.loadDocument().then (data) ->
-      selectBox.initialize(CurrentUserSvc.document.current_user)
+    MnoeCurrentUser.get().then(
+      (response) ->
+        selectBox.initialize(response)
+    )
 
 
 angular.module 'mnoEnterpriseAngular'

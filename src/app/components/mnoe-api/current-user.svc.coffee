@@ -16,16 +16,17 @@ angular.module 'mnoEnterpriseAngular'
   .service 'MnoeCurrentUser', (MnoeApiSvc) ->
     _self = @
 
-    @user = null
+    # Store the current_user promise
+    # Only one call will be executed even if there is multiple callers at the same time
+    @userPromise = null
+
+    # Store the selected organization
+    @selectedOrganization = null
 
     # Get the current user
-    # Should be called while initialising the app
     @get = ->
-      MnoeApiSvc.one('current_user').get().then(
-        (response) ->
-          _self.user = response
-          response
-      )
+      return _self.userPromise if _self.userPromise?
+      _self.userPromise = MnoeApiSvc.one('current_user').get()
 
     # TODO: update current @user
     # _self.user.put()
