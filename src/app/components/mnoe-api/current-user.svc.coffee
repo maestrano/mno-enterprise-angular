@@ -18,18 +18,18 @@ angular.module 'mnoEnterpriseAngular'
 
     # Store the current_user promise
     # Only one call will be executed even if there is multiple callers at the same time
-    @userPromise = null
+    userPromise = null
 
     # Store the selected organization
     @selectedOrganization = null
 
     # Get the current user
     @get = ->
-      return _self.userPromise if _self.userPromise?
-      _self.userPromise = MnoeApiSvc.one('current_user').get()
+      return userPromise if userPromise?
+      userPromise = MnoeApiSvc.one('current_user').get()
 
     # TODO: update current @user
-    # _self.user.put()
+    # _self.get().put()
     @update = (data) ->
       currentUserApi.doPUT({user: data}, 'update')
 
