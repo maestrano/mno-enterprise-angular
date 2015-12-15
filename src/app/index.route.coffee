@@ -23,6 +23,7 @@ angular.module 'mnoEnterpriseAngular'
         url: '/company'
         templateUrl: 'app/views/company/company.html'
         controller: 'DashboardCompanyCtrl'
+        controllerAs: 'vm'
       .state 'home.marketplace',
         url: '/marketplace'
         templateUrl: 'app/views/marketplace/marketplace.html'

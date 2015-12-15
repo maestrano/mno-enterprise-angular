@@ -1,9 +1,9 @@
 <div id="account">
   <h2 class="section-title">My Account</h2>
 
-  <div accordion class="accordion">
-    <div accordion-group is-open="isPersoInfoOpen">
-      <div accordion-heading>
+  <div uib-accordion class="accordion">
+    <div uib-accordion-group is-open="isPersoInfoOpen">
+      <div uib-accordion-heading>
         Personal Information  <span class="caret pull-right" ng-class="{'caret-down': !isPersoInfoOpen, 'caret-up': isPersoInfoOpen}"></span>
       </div>
 
@@ -57,8 +57,8 @@
     <!--
       Change Password Section
       -->
-    <div accordion-group is-open="isChangePasswordOpen">
-      <div accordion-heading>
+    <div uib-accordion-group is-open="isChangePasswordOpen">
+      <div uib-accordion-heading>
           Change password <span class="caret pull-right" ng-class="{'caret-down': !isChangePasswordOpen, 'caret-up': isChangePasswordOpen}"></span>
       </div>
       <div class="alert alert-error" ng-show="errors.changePassword">
@@ -99,7 +99,7 @@
       Account Deletion Section
       -->
     <!-- <div accordion-group is-open="isAccountDeletionOpen">
-      <div accordion-heading>
+      <div uib-accordion-heading>
           Account deletion <span class="caret pull-right" ng-class="{'caret-down': !isAccountDeletionOpen, 'caret-up': isAccountDeletionOpen}"></span>
       </div>
       <div class='align-center'>

@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .service 'MnoConfirm', ($modal) ->
+  .service 'MnoConfirm', ($uibModal) ->
     _self = this
 
     modalOptions =
