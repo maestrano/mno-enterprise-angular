@@ -10,6 +10,7 @@
       <div  ng-hide="editor.busy">
         <button ng-click="editor.reset()" class="btn btn-default">Reset</button>
         <button type="submit" ng-click="editor.update()" class="btn btn-primary">Preview</button>
+        <button ng-click="editor.save()" class="btn btn-danger">Save</button>
         <button ng-click="editor.export()" class="btn btn-danger">Export</button>
       </div>
       <div ng-show="editor.busy"><i class="fa fa-spinner fa-spin fa-2x"></i></div>
