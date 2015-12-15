@@ -21,6 +21,11 @@ themeEditorCtrl = ($scope, $log) ->
     '@elem-cozy-color':                "#977bf0"
   }
 
+  # Length of longest key (for padding purpose)
+  key_length = _.max(_.keys(default_theme), (k) -> k.length).length + 2
+
+  $scope.theme = theme = angular.copy(default_theme)
+
   $scope.labels = {
     # Main colors
     '@bg-main-color':          "Dashboard background color"
@@ -41,9 +46,40 @@ themeEditorCtrl = ($scope, $log) ->
   }
 
   editor.update = () ->
-    less.modifyVars(
-      theme
+    editor.busy = true
+    # Timeout to not refresh ui before freezing it with the less compilation
+    $timeout(
+      -> less.modifyVars(theme).then(-> editor.busy = false)
+    , 100)
+
+  editor.reset = () ->
+    editor.busy = true
+    $scope.theme = theme = angular.copy(default_theme)
+    editor.update()
+
+  editor.export = () ->
+    # Update  the Text Area
+    output = ""
+    _.forEach(theme, (value, key) ->
+      variable = "#{key}: "
+      output += _.padRight(variable, key_length) + value + ';\r\n'
     )
+    editor.output  = output
+
+    # Create and download the less file
+    anchor = angular.element('<a/>')
+    anchor.css({display: 'none'}) # Make sure it's not visible
+    angular.element(document.body).append(anchor) # Attach to document
+
+    anchor.attr({
+      href: 'data:attachment/csv;charset=utf-8,' + encodeURI(output),
+      target: '_blank',
+      download: 'theme.less'
+    })[0].click()
+
+    anchor.remove() # Clean it up afterwards
+
+    return true
 
 angular.module 'mnoEnterpriseAngular'
   .directive('themeEditor', ->

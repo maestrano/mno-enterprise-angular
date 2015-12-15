@@ -1,13 +1,22 @@
-<div class="container">
-  <form ng-submit="editor.update()">
+<div class="container top-buffer-1">
+  <form>
     <div class="row">
       <div class="form-group col-md-6" ng-repeat="(color, value) in theme">
         <label>{{color}} - {{labels[color]}}</label>
         <input type="color" class="form-control" ng-model="theme[color]">
       </div>
     </div>
-    <div class="row">
-      <button type="submit" class="btn btn-default">Submit</button>
+    <div class="row text-center">
+      <div  ng-hide="editor.busy">
+        <button ng-click="editor.reset()" class="btn btn-default">Reset</button>
+        <button type="submit" ng-click="editor.update()" class="btn btn-primary">Preview</button>
+        <button ng-click="editor.export()" class="btn btn-danger">Export</button>
+      </div>
+      <div ng-show="editor.busy"><i class="fa fa-spinner fa-spin fa-2x"></i></div>
     </div>
+    <div class="row top-buffer-1">
+      <textarea class="form-control" ng-model="editor.output" rows="15" style="font-family: monospace"></textarea>
+    </div>
+    <div class="top-buffer-1"></div>
   </form>
 </div>
