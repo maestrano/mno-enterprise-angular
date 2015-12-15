@@ -21,14 +21,15 @@ angular.module 'mnoEnterpriseAngular'
     userPromise = null
 
     # Save the current user in variable to be able to reference it directly
-    @current = null
+    @user = {}
 
     # Get the current user
     @get = ->
       return userPromise if userPromise?
       userPromise = MnoeApiSvc.one('current_user').get().then(
         (response) ->
-          _self.current = response
+          angular.copy(response, _self.user)
+          response
       )
 
     # TODO: update current @user

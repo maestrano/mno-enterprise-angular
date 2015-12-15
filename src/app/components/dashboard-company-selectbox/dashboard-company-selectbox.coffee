@@ -9,10 +9,9 @@ DashboardCompanySelectboxCtrl = ($scope, $location, $stateParams, $cookies, $sce
     # Select Box
     #====================================
     $scope.selectBox = selectBox = {
-      form: {}
       isClosed: true
       isShown: false
-      user = MnoeCurrentUser.user
+      user: MnoeCurrentUser.user
     }
 
     selectBox.changeTo = (organization) ->
@@ -20,14 +19,14 @@ DashboardCompanySelectboxCtrl = ($scope, $location, $stateParams, $cookies, $sce
       MnoeOrganizations.get(organization.id)
       selectBox.close()
 
+    selectBox.getOrganization = () ->
+      _.find(MnoeCurrentUser.user.organizations, { id: MnoeOrganizations.selectedId })
+
     selectBox.toggle = ->
       selectBox.isClosed = !selectBox.isClosed
 
     selectBox.close = ->
       selectBox.isClosed = true
-
-    selectBox.organizationList = ->
-      return _.sortBy(selectBox.organizations, (o) -> o.name)
 
     selectBox.isCurrentOrganization = (organization) ->
       (organization.id == MnoeOrganizations.selectedId)

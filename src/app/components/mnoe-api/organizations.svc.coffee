@@ -19,10 +19,10 @@ angular.module 'mnoEnterpriseAngular'
       organizationsApi.all('in_arrears').getList()
 
     @get = (id) ->
+      _self.selectedId = id
       MnoeApiSvc.one('organizations', id).get().then(
         (response) ->
           _self.selected = response
-          _self.selectedId = response.id
           $cookies.put('dhb_ref_id', response.id)
           $log.debug('selected organization', response)
           response
@@ -44,7 +44,7 @@ angular.module 'mnoEnterpriseAngular'
       if dhbRefId
         _self.selectedId = parseInt(dhbRefId)
         $log.debug "MnoeOrganizations.onAppInit: dhbRefId", _self.selectedId
-        _self.get(organization.id)
+        _self.get(_self.selectedId)
 
       # Attempt to load last organization from cookie
       else if (val = $cookies.get('dhb_ref_id'))

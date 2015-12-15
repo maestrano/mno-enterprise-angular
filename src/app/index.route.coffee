@@ -4,11 +4,12 @@ angular.module 'mnoEnterpriseAngular'
     $stateProvider
       .state 'home',
         abstract: true
+        url: '?dhbRefId'
         templateUrl: 'app/views/layout.html'
         controller: 'LayoutController'
         controllerAs: 'layout'
       .state 'home.apps',
-        url: '/apps?dhbRefId'
+        url: '/apps'
         templateUrl: 'app/views/apps/dashboard-apps-list.html'
         controller: 'DashboardAppsListCtrl'
       .state 'home.impac',

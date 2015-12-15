@@ -8,7 +8,7 @@
     <div class="box-header">
       <span class="title">{{ selectBox.user.name }} {{ selectBox.user.surname }}</span>
       -
-      <span class="title">{{ selectBox.organization.name }}</span>
+      <span class="title">{{ selectBox.getOrganization().name }}</span>
       <a type="button" class="btn switch-company" ng-click="selectBox.toggle()">
         <i ng-class="!selectBox.isClosed && 'active'"></i>
       </a>
