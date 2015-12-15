@@ -1,6 +1,6 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('DashboardAppsListCtrl',
-    ($scope, $interval, $q, $uibModal, MnoConfirm, DashboardAppsDocument, DashboardAppInstance, AppsListHelper, DhbOrganizationSvc, MsgBus) ->
+    ($scope, $interval, $q, $stateParams, $uibModal, MnoConfirm, MnoeOrganizations, DashboardAppsDocument, DashboardAppInstance, AppsListHelper, DhbOrganizationSvc, MsgBus) ->
       $scope.blink = { value: 'neutral' }
 
       #====================================
@@ -109,7 +109,6 @@ angular.module 'mnoEnterpriseAngular'
             app: ->
               app
         )
-
 
       #====================================
       # Post-Initialization

@@ -9,7 +9,7 @@ describe('Service: MnoeOrganizations', ->
     MnoeOrganizations = _MnoeOrganizations_
     $httpBackend = _$httpBackend_
 
-    # Backend interceptors
+    # @list backend interceptor
     $httpBackend.when('GET', '/mnoe/jpi/v1/organizations').respond(200,
       {
         "organizations": [
@@ -18,7 +18,7 @@ describe('Service: MnoeOrganizations', ->
         ]
       })
 
-    # Backend interceptors
+    # @inArrears backend interceptor
     $httpBackend.when('GET', '/mnoe/jpi/v1/organizations/in_arrears').respond(200,
       {
         "organization": [
@@ -26,13 +26,21 @@ describe('Service: MnoeOrganizations', ->
         ]
       })
 
-    # Backend interceptors
+    # @get backend interceptor
     $httpBackend.when('GET', '/mnoe/jpi/v1/organizations/9').respond(200,
       {
         "organization": [
           { "id": 9, "uid": "usr-fbbw", "name": "Marvel" }
         ]
       })
+
+    # # @update backend interceptor
+    # $httpBackend.when('PUT', '/mnoe/jpi/v1/organizations/9').respond(200,
+    #   {
+    #     "organization": [
+    #       { "id": 9, "uid": "usr-fbbw", "name": "Marvel" }
+    #     ]
+    #   })
   ))
 
   afterEach( ->
@@ -63,4 +71,17 @@ describe('Service: MnoeOrganizations', ->
       $httpBackend.flush()
     )
   )
+
+  # describe('@update', ->
+  #   it('PUTs /mnoe/jpi/v1/organizations/9', ->
+  #     $httpBackend.expectPUT('/mnoe/jpi/v1/organizations/9')
+  #
+  #     org = "organization": [
+  #       { "id": 9, "uid": "usr-fbbw", "name": "Marvel" }
+  #     ]
+  #
+  #     MnoeOrganizations.update(org)
+  #     $httpBackend.flush()
+  #   )
+  # )
 )

@@ -6,7 +6,7 @@
   <div class="wrapper">
 
     <div class="box-header">
-      <span class="title">{{ selectBox.userLabel }}</span>
+      <span class="title">{{ selectBox.user.name }} {{ selectBox.user.surname }}</span>
       -
       <span class="title">{{ selectBox.organization.name }}</span>
       <a type="button" class="btn switch-company" ng-click="selectBox.toggle()">
@@ -16,8 +16,10 @@
 
     <div class="box-content scrollbar-hidden" uib-collapse="selectBox.isClosed">
       <ul class="list-unstyled">
-        <li ng-repeat="organization in selectBox.organizationList()" >
-          <a href="" ng-click="selectBox.changeTo(organization)" ng-bind-html="selectBox.organizationLabel(organization)"></a>
+        <li ng-repeat="organization in selectBox.user.organizations | orderBy:'name'" >
+          <a href="" ng-click="selectBox.changeTo(organization)">
+            <i class="fa" ng-class="selectBox.isCurrentOrganization(organization) ? 'fa-dot-circle-o' : 'fa-circle-o'"></i> {{organization.name}}
+          </a>
         </li>
       </ul>
       <div class="create-new">

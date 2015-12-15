@@ -1,17 +1,15 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller 'LayoutController', ($timeout, toastr, MnoeCurrentUser) ->
+  .controller 'LayoutController', (MnoeCurrentUser, MnoeOrganizations) ->
     'ngInject'
 
     layout = this
 
-    MnoeCurrentUser.get().then(
-      (response) ->
-        layout.currentUser = response
-    )
+    console.log "in LayoutController"
 
     MnoeCurrentUser.get().then(
       (response) ->
-        layout.currentUser2 = response
+        # Load the current organization if defined (url param, cookie or first)
+        MnoeOrganizations.onAppInit(response)
     )
 
     return

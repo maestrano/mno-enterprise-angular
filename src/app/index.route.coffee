@@ -3,13 +3,12 @@ angular.module 'mnoEnterpriseAngular'
     'ngInject'
     $stateProvider
       .state 'home',
-        abstract: true
         templateUrl: 'app/views/layout.html'
         controller: 'LayoutController'
         controllerAs: 'layout'
-      .state 'home.app-list',
-        url: '/apps'
-        templateUrl: 'app/views/dashboard-apps-list/dashboard-apps-list.html'
+      .state 'home.apps',
+        url: '/apps?dhbRefId'
+        templateUrl: 'app/views/apps/dashboard-apps-list.html'
         controller: 'DashboardAppsListCtrl'
       .state 'home.impac',
         url: '/impac'
