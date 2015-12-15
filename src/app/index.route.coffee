@@ -3,6 +3,7 @@ angular.module 'mnoEnterpriseAngular'
     'ngInject'
     $stateProvider
       .state 'home',
+        abstract: true
         templateUrl: 'app/views/layout.html'
         controller: 'LayoutController'
         controllerAs: 'layout'

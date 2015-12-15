@@ -12,8 +12,6 @@ DashboardCompanySelectboxCtrl = ($scope, $location, $stateParams, $cookies, $sce
       form: {}
       isClosed: true
       isShown: false
-      user: undefined
-      organizations: []
       user = MnoeCurrentUser.user
     }
 
