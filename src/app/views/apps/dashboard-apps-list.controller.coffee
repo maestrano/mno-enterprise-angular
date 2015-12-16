@@ -110,28 +110,14 @@ angular.module 'mnoEnterpriseAngular'
       #====================================
       # Post-Initialization
       #====================================
-      # MnoeOrganizations.getCurrentId().then(
-      #   (response) ->
-      #     MnoeOrganizations.appInstances().then(
-      #       (response) ->
-      #         console.log 'MnoeOrganizations.appInstances()', response
-      #     )
-      # )
-
-      MnoeOrganizations.getCurrentId().then(
-        (response) ->
-          console.log "in DashboardAppsListCtrl getCurrentId", response
-
+      $scope.$watch MnoeOrganizations.getSelectedId, (val) ->
+        if val?
+          $scope.apps.isLoading = true
           MnoeOrganizations.getAppInstances().then(
             (response) ->
               console.log "in DashboardAppsListCtrl getAppInstances", response
               $scope.apps.isLoading = false
               $scope.apps.appInstances = response
           )
-      )
 
-      # $scope.$watch DashboardAppsDocument.getId, (val) ->
-      #   if val?
-      #     DashboardAppsDocument.load(val).then () ->
-      #       init()
   )

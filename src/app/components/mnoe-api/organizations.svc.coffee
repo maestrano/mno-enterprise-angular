@@ -9,6 +9,9 @@ angular.module 'mnoEnterpriseAngular'
     # Mostly used to refresh the UI befor the selected entity is requested
     @selectedId = null
 
+    @getSelectedId = ->
+      _self.selectedId
+
     # Store the selected entity
     @selected = null
 
