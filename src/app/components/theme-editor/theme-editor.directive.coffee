@@ -1,34 +1,7 @@
-angular.module 'mnoEnterpriseAngular'
-  .service 'themeEditorSvc', ($log, $http) ->
-    _self = @
-
-    @saveTheme = (theme) ->
-      # Define a boundary, I stole this from IE but you can use any string AFAIK
-      boundary = "---------------------------7da24f2e50046"
-      body = '--' + boundary + '\r\n'
-      # Parameter name is "file" and local filename is "temp.txt"
-      body += 'Content-Disposition: form-data; name="file";' + 'filename="temp.txt"\r\n'
-      # Add the file's mime-type
-      body += 'Content-type: plain/text\r\n\r\n'
-      # Add your data
-      body +=  '/****** Live Theme ****/' + '\r\n'
-      body += theme + '\r\n'
-      body += '--'+ boundary + '--'
-
-      uploadUrl = '/mnoe_theme_previewer'
-
-      $http.post(uploadUrl, body, {
-        transformRequest: angular.identity,
-        headers: {'Content-Type': "multipart/form-data; boundary="+boundary}
-      })
-      .success(-> $log.debug('success'))
-      .error(-> $log.debug('error'))
-
-    return @
-
-themeEditorCtrl = ($scope, $log, $timeout, themeEditorSvc) ->
-  $scope.editor = editor = {busy: false, output: ''}
-
+ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
+  #============================================
+  # Theme Config
+  #============================================
   default_theme = {
     # Main colors
     '@bg-main-color':        "#aeb5bf"
@@ -48,9 +21,6 @@ themeEditorCtrl = ($scope, $log, $timeout, themeEditorSvc) ->
     '@elem-positive-flash-color':      "#47ff00"
     '@elem-cozy-color':                "#977bf0"
   }
-
-  # Length of longest key (for padding purpose)
-  key_length = _.max(_.keys(default_theme), (k) -> k.length).length + 2
 
   $scope.theme = theme = angular.copy(default_theme)
 
@@ -73,6 +43,14 @@ themeEditorCtrl = ($scope, $log, $timeout, themeEditorSvc) ->
     '@elem-cozy-color':                "used for regular design element - fits well with both main and inverse backgrounds"
   }
 
+  # Length of longest key (for padding purpose)
+  key_length = _.max(_.keys(default_theme), (k) -> k.length).length + 2
+
+  #============================================
+  # View methods
+  #============================================
+  $scope.editor = editor = {busy: false, output: ''}
+
   editor.update = () ->
     editor.busy = true
     # Timeout to not refresh ui before freezing it with the less compilation
@@ -87,18 +65,18 @@ themeEditorCtrl = ($scope, $log, $timeout, themeEditorSvc) ->
 
   editor.save = () ->
     # Gruik Gruik! Let's get the compiled css and save it to disk :D
-    style = document.getElementById('less:styles-app').innerHTML
-    themeEditorSvc.saveTheme(style)
+    # style = document.getElementById('less:styles-app').innerHTML
 
+    style = themeToLess()
+    editor.busy = true
+    themeEditorSvc.saveTheme(style).then(
+      -> toastr.info('Theme saved')
+      -> toastr.error('Error while saving theme')
+    ).finally(-> editor.busy = false)
 
   editor.export = () ->
     # Update  the Text Area
-    output = ""
-    _.forEach(theme, (value, key) ->
-      variable = "#{key}: "
-      output += _.padRight(variable, key_length) + value + ';\r\n'
-    )
-    editor.output  = output
+    editor.output = output = themeToLess()
 
     # Create and download the less file
     anchor = angular.element('<a/>')
@@ -115,11 +93,23 @@ themeEditorCtrl = ($scope, $log, $timeout, themeEditorSvc) ->
 
     return true
 
+  #============================================
+  # Private method
+  #============================================
+  # Convert the theme JS object to a less String
+  themeToLess = ->
+    output = ""
+    _.forEach(theme, (value, key) ->
+      variable = "#{key}: "
+      output += _.padRight(variable, key_length) + value + ';\r\n'
+    )
+    return output
+
 angular.module 'mnoEnterpriseAngular'
   .directive('themeEditor', ->
     return {
       restrict: 'EA'
-      controller: themeEditorCtrl
+      controller: ThemeEditorCtrl
       templateUrl: 'app/components/theme-editor/theme-editor.html',
     }
   )
