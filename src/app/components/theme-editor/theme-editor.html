@@ -1,11 +1,27 @@
 <div class="container top-buffer-1">
   <form>
-    <div class="row">
-      <div class="form-group col-md-6" ng-repeat="(color, value) in theme">
-        <label>{{color}} - {{labels[color]}}</label>
-        <input type="color" class="form-control" ng-model="theme[color]">
-      </div>
-    </div>
+    <uib-tabset>
+      <uib-tab heading="Theme">
+        <div class="row top-buffer-1">
+          <div class="form-group col-md-6" ng-repeat="(color, value) in theme">
+            <label>{{color}} - {{labels[color]}}</label>
+            <input type="color" class="form-control" ng-model="theme[color]">
+          </div>
+        </div>
+      </uib-tab>
+      <uib-tab heading="Advanced">
+        <div class="panel panel-default top-buffer-1" ng-repeat="(section, vars) in variables">
+          <div class="panel-heading">{{section}}</div>
+          <div class="panel-body">
+            <div class="form-group col-md-6" ng-repeat="(var, value) in vars">
+              <label>{{var}}</label>
+              <input type="text" class="form-control" ng-model="variables[section][var]">
+            </div>
+          </div>
+        </div>
+      </uib-tab>
+      <uib-tab heading="Logo"></uib-tab>
+    </uib-tabset>
     <div class="row text-center">
       <div  ng-hide="editor.busy">
         <button ng-click="editor.reset()" class="btn btn-default">Reset</button>

@@ -11,7 +11,6 @@ angular.module 'mnoEnterpriseAngular'
     # Add the file's mime-type
     body += 'Content-type: plain/text\r\n\r\n'
     # Add your data
-    body +=  '/****** Live Theme ****/' + '\r\n'
     body += theme + '\r\n'
     body += '--'+ boundary + '--'
 

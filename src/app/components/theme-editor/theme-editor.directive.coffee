@@ -46,6 +46,30 @@ ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
   # Length of longest key (for padding purpose)
   key_length = _.max(_.keys(default_theme), (k) -> k.length).length + 2
 
+
+  default_variables = {
+    'Login Box': {
+      '@login-box-bg-color':                 '@bg-inverse-color'
+      '@login-box-padding':                  '20px'
+      '@login-box-brand-logo':               '{ min-height: 61px; max-width: 160px; max-height: 130px; margin: 17px auto 5px auto; }'
+      '@login-box-btn-login':                '{ width: 100%; }'
+    },
+    'Dashboard Side Menu': {
+      '@dashboard-side-menu-padding': '30px 0px 0px 14px'
+      '@dashboard-side-menu-bg-color': '@bg-inverse-color'
+      '@dashboard-side-menu-brand-logo': '{ background-size: 204px; width: 51px; margin-left: 5px; }'
+      '@dashboard-side-menu-brand-logo-expanded': '{ width: 201px; background-size: 100%; }'
+
+      '@dashboard-side-menu-link-color':               '@text-inverse-color'
+      '@dashboard-side-menu-link-bg-color':            '@dashboard-side-menu-bg-color'
+      '@dashboard-side-menu-link-hover-color':         '@dashboard-side-menu-bg-color'
+      '@dashboard-side-menu-link-hover-bg-color':      'lighten(@bg-main-color,15%)'
+      '@dashboard-side-menu-link-active-color':        '@dashboard-side-menu-bg-color'
+      '@dashboard-side-menu-link-active-bg-color':     '@bg-main-color'
+    }
+  }
+  $scope.variables = variables = angular.copy(default_variables)
+
   #============================================
   # View methods
   #============================================
@@ -53,14 +77,18 @@ ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
 
   editor.update = () ->
     editor.busy = true
+
+    vars = mergeLessVars()
+
     # Timeout to not refresh ui before freezing it with the less compilation
     $timeout(
-      -> less.modifyVars(theme).then(-> editor.busy = false)
+      -> less.modifyVars(vars).then(-> editor.busy = false)
     , 100)
 
   editor.reset = () ->
     editor.busy = true
     $scope.theme = theme = angular.copy(default_theme)
+    $scope.variables = variables = angular.copy(default_variables)
     editor.update()
 
   editor.save = () ->
@@ -98,12 +126,29 @@ ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
   #============================================
   # Convert the theme JS object to a less String
   themeToLess = ->
-    output = ""
+    output = "/****** Live Theme ****/\r\n/* Theme */ \r\n"
     _.forEach(theme, (value, key) ->
       variable = "#{key}: "
       output += _.padRight(variable, key_length) + value + ';\r\n'
     )
+
+    output += "\r\n/* Variables */ \r\n"
+    _.forEach(variables, (vars, section) ->
+      _.forEach(vars, (value, key) ->
+        output += "#{key}: " + value + ';\r\n'
+      )
+    )
+
     return output
+
+  # Build a JS object than can be passed to lessjs
+  mergeLessVars = ->
+    lessVars = angular.extend({}, theme)
+    _.forEach(variables, (vars, key) ->
+      angular.extend(lessVars, vars)
+    )
+    return lessVars
+
 
 angular.module 'mnoEnterpriseAngular'
   .directive('themeEditor', ->
