@@ -121,6 +121,12 @@ ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
 
     return true
 
+  editor.updateLogo = () ->
+    logo = angular.element($('#theme-main-logo'))[0].files[0]
+    themeEditorSvc.saveLogo(logo).then(->
+      toastr.info('Logo updated, please refresh the page')
+    )
+
   #============================================
   # Private method
   #============================================

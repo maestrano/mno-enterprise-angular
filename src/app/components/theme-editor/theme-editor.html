@@ -20,7 +20,13 @@
           </div>
         </div>
       </uib-tab>
-      <uib-tab heading="Logo"></uib-tab>
+      <uib-tab heading="Logo">
+        <div class='form-group top-buffer-1'>
+          <label>New Logo</label>
+          <input type="file" id="theme-main-logo"/>
+        </div>
+        <button class='btn btn-warning' ng-click="editor.updateLogo()">Update Logo</button>
+      </uib-tab>
     </uib-tabset>
     <div class="row text-center">
       <div  ng-hide="editor.busy">
