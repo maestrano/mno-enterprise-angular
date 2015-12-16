@@ -23,13 +23,4 @@ angular.module 'mnoEnterpriseAngular'
       return marketplacePromise if marketplacePromise?
       marketplacePromise = marketplaceApi.get()
 
-    @getApp = (id) ->
-      marketplaceApi.one(id).get().then(
-        (response) ->
-          $log.debug(data)
-          # TODO
-          response
-      )
-
     return @
-
