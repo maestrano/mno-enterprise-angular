@@ -28,6 +28,10 @@ angular.module 'mnoEnterpriseAngular'
       return userPromise if userPromise?
       userPromise = MnoeApiSvc.one('current_user').get().then(
         (response) ->
+          # if there is no organization, then by default we show the account tab
+          if response.organizations.length == 0
+            $state.go('home.account')
+
           angular.copy(response, _self.user)
           response
       )

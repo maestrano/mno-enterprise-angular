@@ -1,19 +1,17 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('DashboardAppsListCtrl',
-    ($scope, $interval, $q, $stateParams, $uibModal, MnoConfirm, MnoeOrganizations, DashboardAppsDocument, DashboardAppInstance, AppsListHelper, DhbOrganizationSvc, MsgBus) ->
+    ($scope, $interval, $q, $stateParams, $uibModal, MnoConfirm, MnoeOrganizations, DashboardAppsDocument, DashboardAppInstance, AppsListHelper, DhbOrganizationSvc) ->
       $scope.blink = { value: 'neutral' }
 
       #====================================
       # Pre-Initialization
       #====================================
       $scope.loading = true
-      $scope.starWizardModal = { value:false }
-      MsgBus.publish('starWizardModal', $scope.starWizardModal)
-
-      $scope.openStarWizard = ->
-        $scope.starWizardModal.value = true
-
       $scope.originalApps = []
+
+      $scope.apps = {}
+      $scope.apps.appInstances = null
+      $scope.apps.isLoading = true
 
       #====================================
       # Scope Management
@@ -26,7 +24,6 @@ angular.module 'mnoEnterpriseAngular'
         can = DhbOrganizationSvc.can
         angular.copy(DashboardAppsDocument.data,$scope.originalApps)
         $scope.loading = false
-
 
         # ----------------------------------------------------------
         # Permissions helper
@@ -113,8 +110,28 @@ angular.module 'mnoEnterpriseAngular'
       #====================================
       # Post-Initialization
       #====================================
-      $scope.$watch DashboardAppsDocument.getId, (val) ->
-        if val?
-          DashboardAppsDocument.load(val).then () ->
-            init()
+      # MnoeOrganizations.getCurrentId().then(
+      #   (response) ->
+      #     MnoeOrganizations.appInstances().then(
+      #       (response) ->
+      #         console.log 'MnoeOrganizations.appInstances()', response
+      #     )
+      # )
+
+      MnoeOrganizations.getCurrentId().then(
+        (response) ->
+          console.log "in DashboardAppsListCtrl getCurrentId", response
+
+          MnoeOrganizations.getAppInstances().then(
+            (response) ->
+              console.log "in DashboardAppsListCtrl getAppInstances", response
+              $scope.apps.isLoading = false
+              $scope.apps.appInstances = response
+          )
+      )
+
+      # $scope.$watch DashboardAppsDocument.getId, (val) ->
+      #   if val?
+      #     DashboardAppsDocument.load(val).then () ->
+      #       init()
   )

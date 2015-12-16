@@ -1,12 +1,19 @@
 # Service for managing the users.
 angular.module 'mnoEnterpriseAngular'
-  .service 'MnoeOrganizations', ($state, $cookies, $log, MnoeApiSvc, MnoeCurrentUser) ->
+  .service 'MnoeOrganizations', ($state, $cookies, $log, $q, MnoeApiSvc, MnoeCurrentUser) ->
     _self = @
 
     organizationsApi = MnoeApiSvc.all('organizations')
 
-    @selected = null
+    # Store the selected entity id
+    # Mostly used to refresh the UI befor the selected entity is requested
     @selectedId = null
+
+    # Store the selected entity
+    @selected = null
+
+    # Store selected organization app instances
+    @appInstances = []
 
     @list = () ->
       organizationsApi.getList().then(
@@ -15,17 +22,42 @@ angular.module 'mnoEnterpriseAngular'
           response
       )
 
-    @inArrears = () ->
-      organizationsApi.all('in_arrears').getList()
-
     @get = (id) ->
       _self.selectedId = id
-      MnoeApiSvc.one('organizations', id).get().then(
+
+      # Get the selected organization
+      organizationPromise = MnoeApiSvc.one('organizations', id).get().then(
         (response) ->
+          # Save the organization
           _self.selected = response
           $cookies.put('dhb_ref_id', response.id)
           $log.debug('selected organization', response)
           response
+      )
+
+      # # Get organization app instances
+      # appInstancesPromise = _self.getAppInstances().then(
+      #   (response) ->
+      #     $log.debug('app_instances', response)
+      #     # Append the response array in service array
+      #
+      # )
+      return
+
+    @getAppInstances = () ->
+      # Empty app instances service array
+      _self.appInstances.length = 0
+
+      # Workaround as the API is not standard (return a hash map not an array)
+      # (Prefix operation by '/' to avoid data extraction)
+      # TODO: Standard API
+      MnoeApiSvc.one('organizations', _self.selectedId).one('/app_instances').get().then(
+        (response) ->
+          # Transform hash map to array
+          response = _.values(response.app_instances)
+          #Append response array to service array
+          Array.prototype.push.apply(_self.appInstances, response)
+          return _self.appInstances
       )
 
     @create = (organization) ->
@@ -35,28 +67,36 @@ angular.module 'mnoEnterpriseAngular'
       organization.put()
 
     # Load the current organization if defined (url, cookie or first)
-    @onAppInit = (user, dhbRefId = null) ->
-      # if there is no organization, then by default we show the account tab
-      if user.organizations.length == 0
-        $state.go('home.account')
+    @getCurrentId = (user = null, dhbRefId = null) ->
+      deferred = $q.defer()
+
+      $log.debug "in MnoeOrganizations.getCurrentId"
+
+      # Return the already selected id
+      if _self.selectedId
+        $log.debug "MnoeOrganizations.getCurrentId: selectedId", _self.selectedId
+        deferred.resolve(_self.selectedId)
 
       # Attempt to load organization from param
-      if dhbRefId
-        _self.selectedId = parseInt(dhbRefId)
-        $log.debug "MnoeOrganizations.onAppInit: dhbRefId", _self.selectedId
-        _self.get(_self.selectedId)
+      else if dhbRefId
+        _self.get(dhbRefId)
+        $log.debug "MnoeOrganizations.getCurrentId: dhbRefId", _self.selectedId
+        deferred.resolve(dhbRefId)
 
       # Attempt to load last organization from cookie
       else if (val = $cookies.get('dhb_ref_id'))
-        _self.selectedId = parseInt(val)
-        $log.debug "MnoeOrganizations.onAppInit: cookie", _self.selectedId
-        _self.get(_self.selectedId)
+        _self.get(val)
+        $log.debug "MnoeOrganizations.getCurrentId: cookie", _self.selectedId
+        deferred.resolve(val)
 
-      # Load first organization one otherwise
+      # Load first organization from user
       else
+        # If the app is initializing, return the correct organization id
         organization = user.organizations[0]
-        _self.selectedId = organization.id
-        $log.debug "MnoeOrganizations.onAppInit: first", _self.selectedId
         _self.get(organization.id)
+        $log.debug "MnoeOrganizations.getCurrentId: first", _self.selectedId
+        deferred.resolve(organization.id)
+
+      return deferred.promise
 
     return @
