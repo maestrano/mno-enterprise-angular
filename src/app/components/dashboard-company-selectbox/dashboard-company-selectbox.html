@@ -8,7 +8,7 @@
     <div class="box-header">
       <span class="title">{{ selectBox.user.name }} {{ selectBox.user.surname }}</span>
       -
-      <span class="title">{{ selectBox.getOrganization().name }}</span>
+      <span class="title">{{ selectBox.organization.name }}</span>
       <a type="button" class="btn switch-company" ng-click="selectBox.toggle()">
         <i ng-class="!selectBox.isClosed && 'active'"></i>
       </a>
@@ -18,7 +18,7 @@
       <ul class="list-unstyled">
         <li ng-repeat="organization in selectBox.user.organizations | orderBy:'name'" >
           <a href="" ng-click="selectBox.changeTo(organization)">
-            <i class="fa" ng-class="selectBox.isCurrentOrganization(organization) ? 'fa-dot-circle-o' : 'fa-circle-o'"></i> {{organization.name}}
+            <i class="fa" ng-class="organization === selectBox.organization ? 'fa-dot-circle-o' : 'fa-circle-o'"></i> {{organization.name}}
           </a>
         </li>
       </ul>
