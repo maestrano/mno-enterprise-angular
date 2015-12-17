@@ -12,7 +12,7 @@
     <div class="row">
       <div class="marketplace-nav">
         <div class="col-sm-4">
-          <select class="form-control" ng-model="selectedCategory" ng-options="c for c in vm.categories" ng-change="vm.searchTerm = ''">
+          <select class="form-control" ng-model="vm.selectedCategory" ng-options="c for c in vm.categories" ng-change="vm.searchTerm = ''">
             <option value=''>All</option>
           </select>
         </div>
@@ -27,7 +27,7 @@
       <div class="marketplace-list">
 
         <!-- App Cards-->
-        <div class="col-sm-6 col-md-4" ng-repeat="app in vm.apps | filter:appsFilter | filter:searchTerm">
+        <div class="col-sm-6 col-md-4" ng-repeat="app in vm.apps | filter:vm.appsFilter | filter:vm.searchTerm">
 
           <a class="marketplace-app-card" ui-sref="home.marketplace.app({appId: app.id})">
             <div class="media">
