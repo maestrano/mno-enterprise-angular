@@ -34,17 +34,9 @@ angular.module 'mnoEnterpriseAngular'
           # Save the organization
           _self.selected = response
           $cookies.put('dhb_ref_id', response.id)
-          $log.debug('selected organization', response)
           response
       )
 
-      # # Get organization app instances
-      # appInstancesPromise = _self.getAppInstances().then(
-      #   (response) ->
-      #     $log.debug('app_instances', response)
-      #     # Append the response array in service array
-      #
-      # )
       return
 
     @getAppInstances = () ->
@@ -72,8 +64,6 @@ angular.module 'mnoEnterpriseAngular'
     # Load the current organization if defined (url, cookie or first)
     @getCurrentId = (user = null, dhbRefId = null) ->
       deferred = $q.defer()
-
-      $log.debug "in MnoeOrganizations.getCurrentId"
 
       # Return the already selected id
       if _self.selectedId

@@ -2,7 +2,7 @@
 #============================================
 #
 #============================================
-DashboardCompanySelectboxCtrl = ($scope, $location, $stateParams, $cookies, $sce, $uibModal, $log, MnoeCurrentUser, MnoeOrganizations, ModalSvc) ->
+DashboardCompanySelectboxCtrl = ($scope, $location, $stateParams, $cookies, $sce, $uibModal, MnoeCurrentUser, MnoeOrganizations, ModalSvc) ->
 
   #====================================
   # Select Box
@@ -15,11 +15,11 @@ DashboardCompanySelectboxCtrl = ($scope, $location, $stateParams, $cookies, $sce
   }
 
   selectBox.changeTo = (organization) ->
-    selectBox.organization = organization
+    #selectBox.organization = organization
     MnoeOrganizations.get(organization.id)
     selectBox.close()
 
-  selectBox.getOrganizationName = ->
+  selectBox.selectOrganization = ->
     selectBox.organization = _.find(MnoeCurrentUser.user.organizations, { id: parseInt(MnoeOrganizations.selectedId) })
 
   selectBox.toggle = ->
@@ -45,7 +45,7 @@ DashboardCompanySelectboxCtrl = ($scope, $location, $stateParams, $cookies, $sce
   #====================================
   $scope.$watch MnoeOrganizations.getSelectedId, (val) ->
     if val?
-      selectBox.getOrganizationName()
+      selectBox.selectOrganization()
 
 angular.module 'mnoEnterpriseAngular'
   .directive('dashboardCompanySelectbox', ->
