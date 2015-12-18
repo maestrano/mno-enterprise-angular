@@ -1,16 +1,14 @@
 <div id="dashboard-apps-list">
   <h2 class="section-title">
-    Dashboard {{isLoading}}
+    Dashboard
   </h2>
 
-
-
   <!-- Loader -->
-  <mno-loader ng-show="apps.isLoading"></mno-loader>
+  <mno-loader ng-show="isLoading"></mno-loader>
 
-  <div ng-show="!apps.isLoading">
+  <div ng-show="!isLoading">
     <div class='row'>
-      <div ng-repeat="app in apps.appInstances" class='col-md-3'>
+      <div ng-repeat="app in apps" class='col-md-3'>
         <div class='app-dashboard'>
 
           <!-- Backface -->

@@ -15,9 +15,6 @@ angular.module 'mnoEnterpriseAngular'
     # Store the selected entity
     @selected = null
 
-    # Store selected organization app instances
-    @appInstances = []
-
     @list = () ->
       organizationsApi.getList().then(
         (response) ->
@@ -29,31 +26,16 @@ angular.module 'mnoEnterpriseAngular'
       _self.selectedId = id
 
       # Get the selected organization
-      organizationPromise = MnoeApiSvc.one('organizations', id).get().then(
+      organizationPromise = MnoeApiSvc.one('/organizations', id).get().then(
         (response) ->
           # Save the organization
-          _self.selected = response
+          _self.selected = response.plain()
           $cookies.put('dhb_ref_id', response.id)
           response
       )
 
-      return
-
-    @getAppInstances = () ->
-      # Empty app instances service array
-      _self.appInstances.length = 0
-
-      # Workaround as the API is not standard (return a hash map not an array)
-      # (Prefix operation by '/' to avoid data extraction)
-      # TODO: Standard API
-      MnoeApiSvc.one('organizations', _self.selectedId).one('/app_instances').get().then(
-        (response) ->
-          # Transform hash map to array
-          response = _.values(response.app_instances)
-          #Append response array to service array
-          Array.prototype.push.apply(_self.appInstances, response)
-          return _self.appInstances
-      )
+    @reload = ->
+      _self.get(_self.selectedId)
 
     @create = (organization) ->
       organizationsApi.post(organization)
@@ -91,5 +73,67 @@ angular.module 'mnoEnterpriseAngular'
         deferred.resolve(organization.id)
 
       return deferred.promise
+
+    #======================================
+    # User Role
+    #======================================
+    @role = {}
+
+    _self.role.isSuperAdmin = ->
+      _self.selected? && _self.selected.current_user.role == 'Super Admin'
+
+    _self.role.isAdmin = ->
+      _self.selected? && _self.selected.current_user.role == 'Admin'
+
+    _self.role.isPowerUser = ->
+      _self.selected? && _self.selected.current_user.role == 'Power User'
+
+    _self.role.isMember = ->
+      _self.selected? && _self.selected.current_user.role == 'Member'
+
+    _self.role.atLeastMember = ->
+      true
+
+    _self.role.atLeastPowerUser = ->
+      _self.role.isPowerUser() || _self.role.isAdmin() || _self.role.isSuperAdmin()
+
+    _self.role.atLeastAdmin = ->
+      _self.role.isAdmin() || _self.role.isSuperAdmin()
+
+    _self.role.atLeastSuperAdmin = ->
+      _self.role.isSuperAdmin()
+
+    #======================================
+    # Access Management
+    #======================================
+    @can = {}
+
+    _self.can.read = {
+      appInstance: (obj = null) -> _self.role.atLeastMember()
+      billing: (obj = null) -> _self.role.atLeastSuperAdmin()
+      member: (obj = null) -> _self.role.atLeastMember()
+      organizationSettings: (obj = null) -> _self.role.atLeastSuperAdmin()
+    }
+
+    _self.can.create = {
+      appInstance: (obj = null) -> _self.role.atLeastAdmin()
+      billing: (obj = null) -> _self.role.atLeastSuperAdmin()
+      member: (obj = null) -> _self.role.atLeastAdmin() && (obj == null || obj.role != 'Super Admin' || _self.role.isSuperAdmin())
+      organizationSettings: (obj = null) -> _self.role.atLeastSuperAdmin()
+    }
+
+    _self.can.update = {
+      appInstance: (obj = null) -> _self.can.create.appInstance(obj) # call similar permission
+      billing: (obj = null) -> _self.can.create.billing(obj) # call similar permission
+      member: (obj = null) -> _self.can.create.member(obj) # call similar permission
+      organizationSettings: (obj = null) -> _self.can.create.organizationSettings(obj) # call similar permission
+    }
+
+    _self.can.destroy = {
+      appInstance: (obj = null) -> _self.can.create.appInstance(obj) # call similar permission
+      billing: (obj = null) -> _self.can.create.billing(obj) # call similar permission
+      member: (obj = null) -> _self.can.create.member(obj) # call similar permission
+      organizationSettings: (obj = null) -> _self.can.create.organizationSettings(obj) # call similar permission
+    }
 
     return @

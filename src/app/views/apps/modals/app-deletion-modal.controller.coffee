@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('AppDeletionModalCtrl', ($scope, $uibModalInstance, DashboardAppInstance, DashboardAppsDocument, Utilities, app) ->
+  .controller('AppDeletionModalCtrl', ($scope, $uibModalInstance, MnoeAppInstances, Utilities, app) ->
 
     $scope.modal =
       app: app
@@ -8,9 +8,9 @@ angular.module 'mnoEnterpriseAngular'
 
       deleteApp: ->
         $scope.modal.loading = true
-        DashboardAppInstance.terminate($scope.appId).then(
+        MnoeAppInstances.terminate($scope.modal.app.id).then(
           (success) ->
-            DashboardAppsDocument.reload()
+            MnoeAppInstances.getAppInstances()
             $scope.modal.loading = false
             $scope.modal.errors = null
             $uibModalInstance.close()
