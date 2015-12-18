@@ -5,10 +5,6 @@
 # => GET /mnoe/jpi/v1/marketplace
 # Return the list off apps and categories
 #   {categories: [], apps: []}
-
-# .getApp(1)
-# => GET /mnoe/jpi/v1/marketplace/1
-# Return an app
 angular.module 'mnoEnterpriseAngular'
   .service 'MnoeMarketplace', ($log, MnoeApiSvc) ->
     _self = @

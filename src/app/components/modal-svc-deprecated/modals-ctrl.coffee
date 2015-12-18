@@ -9,54 +9,25 @@ angular.module 'mnoEnterpriseAngular'
   # NewOrgModalCtrl
   #============================================
   .controller('NewOrgModalCtrl',
-    ($scope, $modalInstance, Utilities, DhbOrganizationSvc, $modalInstanceCB) ->
+    ($scope, $modalInstance, Utilities, MnoeOrganizations, $modalInstanceCB) ->
 
-      $scope.modal = { model:{} }
+      $scope.modal = { model: {} }
 
       $scope.modal.close = ->
         $modalInstance.close()
 
       $scope.modal.proceed =  ->
-        self = $scope
-        modal = self.modal
-        modal.isLoading = true
-        data = { organization: modal.model }
-        DhbOrganizationSvc.organization.create(data).then(
-          (success) ->
-            modal.errors = ''
-            modal.close()
+        $scope.modal.isLoading = true
+        data = { organization: $scope.modal.model }
+        MnoeOrganizations.create(data).then(
+          (response) ->
+            $scope.modal.errors = ''
+            $scope.modal.close()
             # Callback method
-            if $modalInstanceCB then $modalInstanceCB(success.data.organization)
+            if $modalInstanceCB then $modalInstanceCB(response.organization)
           (errors) ->
-            modal.errors = Utilities.processRailsError(errors)
+            $scope.modal.errors = Utilities.processRailsError(errors)
         ).finally(->
-          modal.isLoading = false
-        )
-  )
-
-  #============================================
-  # NewOrgResellerReqModalCtrl
-  #============================================
-  .controller('NewOrgResellerReqModalCtrl',
-    ($scope, $modalInstance, Utilities, DhbOrganizationSvc, $modalInstanceCB) ->
-
-      $scope.modal = { model:{} }
-
-      $scope.modal.close = ->
-        $modalInstance.close()
-
-      $scope.modal.proceed =  ->
-        self = $scope
-        modal = self.modal
-        modal.isLoading = true
-        data = { organization: modal.model, reseller_req: true }
-        DhbOrganizationSvc.organization.create(data).then(
-          (success) ->
-            modal.errors = ''
-            modal.close()
-          (errors) ->
-            modal.errors = Utilities.processRailsError(errors)
-        ).finally(->
-          modal.isLoading = false
+          $scope.modal.isLoading = false
         )
   )

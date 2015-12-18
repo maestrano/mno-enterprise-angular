@@ -53,13 +53,8 @@ angular.module 'mnoEnterpriseAngular'
       return new Modal(opts)
 
     service.newOrgModal = (opts = {}) ->
-      opts.templateUrl = 'app/components/mnoe-modals/new-org-modal/new-organization.html'
+      opts.templateUrl = 'app/components/modal-svc-deprecated/new-org-modal/new-organization.html'
       opts.controller = 'NewOrgModalCtrl'
-      return new Modal(opts)
-
-    service.newOrgResellerReqModal = (opts = {}) ->
-      opts.templateUrl = 'app/components/mnoe-modals/new-org-reseller-req/new-organization-reseller-req.html'
-      opts.controller = 'NewOrgResellerReqModalCtrl'
       return new Modal(opts)
 
     return service

@@ -38,7 +38,13 @@ angular.module 'mnoEnterpriseAngular'
       _self.get(_self.selectedId)
 
     @create = (organization) ->
-      organizationsApi.post(organization)
+      MnoeApiSvc.all('/organizations').post(organization).then(
+        (response) ->
+          _self.selected = response.plain()
+          MnoeCurrentUser.user.organizations.push(_self.selected.organization)
+          _self.selectedId = _self.selected.organization.id
+          response
+      )
 
     @update = (organization) ->
       organization.put()
