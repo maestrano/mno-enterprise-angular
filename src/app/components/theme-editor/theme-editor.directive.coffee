@@ -155,6 +155,27 @@ ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
     )
     return lessVars
 
+  # Load custom theme
+  loadCustomTheme = ->
+    themeEditorSvc.getTheme().then(
+      (data) ->
+        _.forEach(theme, (value, key) ->
+          if data[key]
+            theme[key] = data[key]
+        )
+
+        _.forEach(variables, (vars, section) ->
+          _.forEach(vars, (value, key) ->
+            if data[key]
+              variables[section][key] = data[key]
+          )
+        )
+      (error) ->
+        $log.info('No custom theme found')
+    )
+
+  # Init
+  loadCustomTheme()
 
 angular.module 'mnoEnterpriseAngular'
   .directive('themeEditor', ->

@@ -33,4 +33,23 @@ angular.module 'mnoEnterpriseAngular'
 
     $http.put(uploadUrl, data, opts)
 
+  @getTheme = ->
+    $log.debug('Loading custom theme')
+    $http.get('/styles/theme.less').then((response) ->
+      data  = response.data
+      return getLessVars(data)
+    )
+
+  getLessVars = (lessStr)->
+    lines = lessStr.split('\n')
+    lessVars = {}
+    for line in lines
+      if line.indexOf('@') is 0
+        i = line.indexOf(':')
+        keyVar = line.slice(0,i)
+        value = line.trim().slice(i+1, -1).trim()
+        lessVars[keyVar] = value
+
+    return lessVars
+
   return @
