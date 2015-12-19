@@ -36,13 +36,15 @@ angular.module 'mnoEnterpriseAngular'
           response
       )
 
-    # TODO: update current @user
-    # _self.get().put()
+    # Update the current user infos
     @update = (data) ->
-      currentUserApi.doPUT({user: data}, 'update')
+      _self.user.put().then(
+        (response) ->
+          angular.copy(response, _self.user)
+      )
 
-    # TODO: update current @user
+    # Update user password
     @updatePassword = (passwordData) ->
-      currentUserApi.doPUT({user: passwordData}, 'update_password')
+      MnoeApiSvc.all('/current_user').doPUT({user: passwordData}, 'update_password')
 
     return @

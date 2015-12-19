@@ -1,6 +1,6 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('DashboardAccountCtrl',
-    ($scope, CurrentUserSvc, DashboardUser, Miscellaneous, Utilities) ->
+    ($scope, $log, toastr, MnoeCurrentUser, MnoErrorsHandler, CurrentUserSvc, DashboardUser, Miscellaneous, Utilities) ->
       CurrentUserSvc.loadDocument()
       CurrentUserSvc.then ->
 
@@ -11,7 +11,7 @@ angular.module 'mnoEnterpriseAngular'
 
         # User model init
         $scope.isPersoInfoOpen = true
-        userDocument = CurrentUserSvc.document.current_user
+        userDocument = MnoeCurrentUser.user
         $scope.user = { model: {}, password: {}, loading:false }
 
         setUserModel = (model) ->
@@ -68,33 +68,33 @@ angular.module 'mnoEnterpriseAngular'
         # Password update
         # ----------------------------------------------------
         $scope.isChangePasswordOpen = false
+
         $scope.user.cancelPassword = ->
-          $scope.user.password = { currentPassword:null, confirmPassword:null, newPassword:null }
-
-        $scope.user.updatePasswordEnabled = ->
-          $scope.user.password.currentPassword &&
-          $scope.user.password.confirmPassword &&
-          $scope.user.password.newPassword &&
-          $scope.user.password.confirmPassword == $scope.user.password.newPassword
-
+          $scope.user.password = {}
 
         $scope.user.cancelPasswordEnabled = ->
-          $scope.user.password.currentPassword ||
-          $scope.user.password.confirmPassword ||
-          $scope.user.password.newPassword
+          $scope.user.password.current_password ||
+          $scope.user.password.password ||
+          $scope.user.password.password_confirmation
 
-        $scope.user.updatePassword = ->
+        $scope.user.updatePassword = (form) ->
           $scope.user.loading = true
-          CurrentUserSvc.updatePassword($scope.user.password.newPassword,$scope.user.password.confirmPassword,$scope.user.password.currentPassword).then(
-            (success) ->
-              $scope.user.loading = false
-              $scope.success.changePassword = "Saved!"
-              $scope.errors = null
+
+          # Reset last error
+          MnoErrorsHandler.resetErrors(form)
+
+          # Update the user password
+          MnoeCurrentUser.updatePassword($scope.user.password).then(
+            ->
+              # Success message
+              toastr.success('Your password has been changed!')
+              # Clear local data
               $scope.user.cancelPassword()
-            ,(error) ->
-              $scope.user.loading = false
-              $scope.errors.changePassword = Utilities.processRailsError(error)
-          )
+            (error) ->
+              toastr.error('An error occured, your password has not been changed.')
+              $log.error('Error while updating user: ', error)
+              MnoErrorsHandler.processServerError(error, form)
+          ).finally( -> $scope.user.loading = false )
 
         # ----------------------------------------------------
         # Account Deletion
