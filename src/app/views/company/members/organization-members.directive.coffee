@@ -2,7 +2,7 @@
 #============================================
 #
 #============================================
-DashboardOrganizationMembersCtrl = ($scope, $window, $modal, $q, DhbOrganizationSvc, DhbTeamSvc, Utilities) ->
+DashboardOrganizationMembersCtrl = ($scope, $window, $modal, $q, MnoeOrganizations, DhbOrganizationSvc, DhbTeamSvc, Utilities) ->
   #====================================
   # Pre-Initialization
   #====================================
@@ -29,13 +29,13 @@ DashboardOrganizationMembersCtrl = ($scope, $window, $modal, $q, DhbOrganization
     $scope.inviteModal.open()
 
   $scope.isInviteShown = ->
-    DhbOrganizationSvc.can.create.member()
+    MnoeOrganizations.can.create.member()
 
   $scope.isEditShown = (member) ->
-    DhbOrganizationSvc.can.update.member(member)
+    MnoeOrganizations.can.update.member(member)
 
   $scope.isRemoveShown = (member) ->
-    DhbOrganizationSvc.can.destroy.member(member)
+    MnoeOrganizations.can.destroy.member(member)
 
   $scope.memberRoleLabel = (member) ->
     if member.entity == 'User'
@@ -165,7 +165,7 @@ DashboardOrganizationMembersCtrl = ($scope, $window, $modal, $q, DhbOrganization
     defaultRole: 'Member'
     roles: ->
       list = ['Member','Power User','Admin']
-      list.push('Super Admin') if DhbOrganizationSvc.user.isSuperAdmin()
+      list.push('Super Admin') if MnoeOrganizations.role.isSuperAdmin()
       return list
     teams: ->
       $scope.teams

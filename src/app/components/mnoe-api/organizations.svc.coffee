@@ -15,6 +15,9 @@ angular.module 'mnoEnterpriseAngular'
     # Store the selected entity
     @selected = null
 
+    @getSelected = ->
+      _self.selected
+
     @list = () ->
       organizationsApi.getList().then(
         (response) ->

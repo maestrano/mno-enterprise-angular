@@ -1,18 +1,8 @@
-DashboardOrganizationBillingCtrl = ($scope, $window, DhbOrganizationSvc, Utilities, Miscellaneous) ->
-  #====================================
-  # Pre-Initialization
-  #====================================
-  $scope.isLoading = true
-  $scope.billing = {}
+DashboardOrganizationBillingCtrl = ($scope, $window, MnoeOrganizations, Utilities, Miscellaneous) ->
 
   #====================================
   # Scope Management
   #====================================
-  # Initialize the data used by the directive
-  $scope.initialize = (billing) ->
-    angular.copy(billing,$scope.billing)
-    $scope.isLoading = false
-
   $scope.isCreditShown = () ->
     b = $scope.billing
     b &&
@@ -22,11 +12,10 @@ DashboardOrganizationBillingCtrl = ($scope, $window, DhbOrganizationSvc, Utiliti
   #====================================
   # Post-Initialization
   #====================================
-  $scope.$watch DhbOrganizationSvc.getId, (val) ->
+  $scope.$watch MnoeOrganizations.getSelected, (val) ->
     $scope.isLoading = true
     if val?
-      DhbOrganizationSvc.load().then (organization)->
-        $scope.initialize(organization.billing)
+      $scope.billing = MnoeOrganizations.selected.billing
 
 
 angular.module 'mnoEnterpriseAngular'

@@ -1,5 +1,5 @@
 
-DashboardOrganizationSettingsCtrl = ($scope, $window, DhbOrganizationSvc, Utilities) ->
+DashboardOrganizationSettingsCtrl = ($scope, $window, MnoeOrganizations, DhbOrganizationSvc, Utilities) ->
   #====================================
   # Pre-Initialization
   #====================================
@@ -66,11 +66,10 @@ DashboardOrganizationSettingsCtrl = ($scope, $window, DhbOrganizationSvc, Utilit
   #====================================
   # Post-Initialization
   #====================================
-  $scope.$watch DhbOrganizationSvc.getId, (val) ->
+  $scope.$watch MnoeOrganizations.getSelected, (val) ->
     $scope.isLoading = true
     if val?
-      DhbOrganizationSvc.load().then (organization)->
-        $scope.initialize(organization.organization)
+      $scope.initialize(MnoeOrganizations.selected.organization)
 
 
 angular.module 'mnoEnterpriseAngular'

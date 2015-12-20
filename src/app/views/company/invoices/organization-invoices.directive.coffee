@@ -1,5 +1,5 @@
 
-DashboardOrganizationInvoicesCtrl = ($scope, $window, DhbOrganizationSvc, Utilities, Miscellaneous) ->
+DashboardOrganizationInvoicesCtrl = ($scope, $window, MnoeOrganizations, Utilities, Miscellaneous) ->
   #====================================
   # Pre-Initialization
   #====================================
@@ -7,21 +7,11 @@ DashboardOrganizationInvoicesCtrl = ($scope, $window, DhbOrganizationSvc, Utilit
   $scope.invoices = []
 
   #====================================
-  # Scope Management
-  #====================================
-  # Initialize the data used by the directive
-  $scope.initialize = (invoices) ->
-    angular.copy(invoices,$scope.invoices)
-    $scope.isLoading = false
-
-  #====================================
   # Post-Initialization
   #====================================
-  $scope.$watch DhbOrganizationSvc.getId, (val) ->
-    $scope.isLoading = true
+  $scope.$watch MnoeOrganizations.getSelected, (val) ->
     if val?
-      DhbOrganizationSvc.load().then (organization)->
-        $scope.initialize(organization.invoices)
+      $scope.invoices = MnoeOrganizations.selected.invoices
 
 
 angular.module 'mnoEnterpriseAngular'

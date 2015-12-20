@@ -1,6 +1,6 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('DashboardCompanyCtrl',
-    ($scope, DhbOrganizationSvc) ->
+    ($scope, MnoeOrganizations, DhbOrganizationSvc) ->
       vm = @
 
       #====================================
@@ -26,22 +26,21 @@ angular.module 'mnoEnterpriseAngular'
 
       vm.isTabSetShown = ->
         !vm.isLoading && (
-          DhbOrganizationSvc.user.isSuperAdmin() || DhbOrganizationSvc.user.isAdmin())
+          MnoeOrganizations.role.isSuperAdmin() || MnoeOrganizations.role.isAdmin())
 
       vm.isBillingShown = ->
-        DhbOrganizationSvc.user.isSuperAdmin()
+        MnoeOrganizations.role.isSuperAdmin()
 
       vm.isSettingsShown = ->
-        DhbOrganizationSvc.user.isSuperAdmin()
+        MnoeOrganizations.role.isSuperAdmin()
 
       #====================================
       # Post-Initialization
       #====================================
-      $scope.$watch DhbOrganizationSvc.getId, (val) ->
+      $scope.$watch MnoeOrganizations.getSelected, (val) ->
         vm.isLoading = true
         if val?
-          DhbOrganizationSvc.load().then (organization)->
-            vm.initialize()
+          vm.initialize()
 
       return
   )
