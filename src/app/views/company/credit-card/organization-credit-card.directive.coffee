@@ -1,5 +1,5 @@
 
-DashboardOrganizationCreditCardCtrl = ($scope, $window, DhbOrganizationSvc, Miscellaneous, Utilities) ->
+DashboardOrganizationCreditCardCtrl = ($scope, $window, MnoeOrganizations, Miscellaneous, Utilities) ->
   #====================================
   # Pre-Initialization
   #====================================
@@ -19,34 +19,34 @@ DashboardOrganizationCreditCardCtrl = ($scope, $window, DhbOrganizationSvc, Misc
   #====================================
   # Initialize the data used by the directive
   $scope.initialize = (creditCard) ->
-    angular.copy(creditCard,$scope.model)
-    angular.copy(creditCard,$scope.origModel)
+    angular.copy(creditCard, $scope.model)
+    angular.copy(creditCard, $scope.origModel)
     $scope.isLoading = false
 
   # Save the current state of the credit card
   $scope.save = ->
     $scope.isLoading = true
-    DhbOrganizationSvc.billing.update($scope.model).then(
-      (creditCard) ->
+    MnoeOrganizations.updateCreditCard($scope.model).then(
+      (response) ->
         $scope.errors = ''
-        angular.copy(creditCard,$scope.model)
-        angular.copy(creditCard,$scope.origModel)
+        angular.copy(response.credit_card, $scope.model)
+        angular.copy(response.credit_card, $scope.origModel)
         if $scope.callback
           $scope.callback()
-      , (errors) ->
+      (errors) ->
         $scope.errors = Utilities.processRailsError(errors)
     ).finally(-> $scope.isLoading = false)
 
   # Cancel the temporary changes made by the
   # user
   $scope.cancel = ->
-    angular.copy($scope.origModel,$scope.model)
+    angular.copy($scope.origModel, $scope.model)
     $scope.errors = ''
 
   # Check if the user has started editing the
   # CreditCard
   $scope.isChanged = ->
-    !angular.equals($scope.model,$scope.origModel)
+    !angular.equals($scope.model, $scope.origModel)
 
   # Check whether we should display the cancel
   # button or not
@@ -115,11 +115,9 @@ DashboardOrganizationCreditCardCtrl = ($scope, $window, DhbOrganizationSvc, Misc
   #====================================
   # Post-Initialization
   #====================================
-  $scope.$watch DhbOrganizationSvc.getId, (val) ->
-    $scope.isLoading = true
+  $scope.$watch MnoeOrganizations.getSelected, (val) ->
     if val?
-      DhbOrganizationSvc.load().then (organization)->
-        $scope.initialize(organization.credit_card)
+      $scope.initialize(MnoeOrganizations.selected.credit_card)
 
 
 angular.module 'mnoEnterpriseAngular'

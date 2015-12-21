@@ -52,6 +52,16 @@ angular.module 'mnoEnterpriseAngular'
     @update = (organization) ->
       organization.put()
 
+    # Update the credit card
+    @updateCreditCard = (creditCard) ->
+      MnoeApiSvc.one('organizations', _self.selectedId).doPUT({"credit_card": creditCard}, '/update_billing').then(
+        (response) ->
+          # Return an unrestangularized object
+          # as the API doesn't return a standardized object
+          # TODO: Change API
+          response.plain()
+      )
+
     # Load the current organization if defined (url, cookie or first)
     @getCurrentId = (user = null, dhbRefId = null) ->
       deferred = $q.defer()
