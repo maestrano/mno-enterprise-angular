@@ -13,7 +13,6 @@ DashboardOrganizationBillingCtrl = ($scope, $window, MnoeOrganizations, Utilitie
   # Post-Initialization
   #====================================
   $scope.$watch MnoeOrganizations.getSelected, (val) ->
-    $scope.isLoading = true
     if val?
       $scope.billing = MnoeOrganizations.selected.billing
 

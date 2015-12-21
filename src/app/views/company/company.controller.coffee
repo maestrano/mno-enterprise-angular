@@ -1,6 +1,6 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('DashboardCompanyCtrl',
-    ($scope, MnoeOrganizations, DhbOrganizationSvc) ->
+    ($scope, MnoeOrganizations) ->
       vm = @
 
       #====================================
