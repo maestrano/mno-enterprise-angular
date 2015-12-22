@@ -21,6 +21,9 @@ angular.module 'mnoEnterpriseAngular'
           return _self.appInstances
       )
 
+    @update = (appInstance) ->
+      MnoeApiSvc.one('/app_instances', appInstance.id).patch({name: appInstance.name})
+
     @terminate = (id) ->
       MnoeApiSvc.one('app_instances', id).remove()
 
