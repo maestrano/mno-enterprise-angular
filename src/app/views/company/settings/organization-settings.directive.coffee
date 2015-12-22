@@ -66,11 +66,11 @@ DashboardOrganizationSettingsCtrl = ($scope, $window, MnoeOrganizations, DhbOrga
   #====================================
   # Post-Initialization
   #====================================
-  $scope.$watch MnoeOrganizations.getSelected, (val) ->
+  $scope.$watch(MnoeOrganizations.getSelected, (newValue) ->
     $scope.isLoading = true
-    if val?
+    if newValue?
       $scope.initialize(MnoeOrganizations.selected.organization)
-
+  )
 
 angular.module 'mnoEnterpriseAngular'
   .directive('dashboardOrganizationSettings', ->

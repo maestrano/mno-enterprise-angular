@@ -2,11 +2,10 @@
 #============================================
 #
 #============================================
-DashboardOrganizationMembersCtrl = ($scope, $window, $modal, $q, MnoeOrganizations, DhbOrganizationSvc, DhbTeamSvc, Utilities) ->
+DashboardOrganizationMembersCtrl = ($scope, $modal, MnoeOrganizations, MnoeTeams, DhbOrganizationSvc, Utilities) ->
   #====================================
   # Pre-Initialization
   #====================================
-  $scope.isLoading = true
   $scope.members = []
   $scope.teams = []
 
@@ -15,9 +14,8 @@ DashboardOrganizationMembersCtrl = ($scope, $window, $modal, $q, MnoeOrganizatio
   #====================================
   # Initialize the data used by the directive
   $scope.initialize = (members, teams = nil) ->
-    angular.copy(members,$scope.members)
-    angular.copy(teams,$scope.teams) if teams
-    $scope.isLoading = false
+    angular.copy(members, $scope.members)
+    angular.copy(teams, $scope.teams) if teams
 
   $scope.editMember = (member) ->
     $scope.editionModal.open(member)
@@ -146,7 +144,7 @@ DashboardOrganizationMembersCtrl = ($scope, $window, $modal, $q, MnoeOrganizatio
         self.errors = ''
         angular.copy(members,$scope.members)
         self.close()
-      , (errors) ->
+      (errors) ->
         self.errors = Utilities.processRailsError(errors)
     ).finally(-> self.isLoading = false)
 
@@ -246,7 +244,7 @@ DashboardOrganizationMembersCtrl = ($scope, $window, $modal, $q, MnoeOrganizatio
         self.errors = ''
         angular.copy(members,$scope.members)
         self.close()
-      , (errors) ->
+      (errors) ->
         self.errors = Utilities.processRailsError(errors)
     ).finally(-> self.isLoading = false)
 
@@ -254,14 +252,14 @@ DashboardOrganizationMembersCtrl = ($scope, $window, $modal, $q, MnoeOrganizatio
   #====================================
   # Post-Initialization
   #====================================
-  refresh = ->
-    $q.all([DhbOrganizationSvc.load(),DhbTeamSvc.load()]).then (values)->
-      $scope.initialize(values[0].organization.members,values[1])
-
-  contextObj = ->
-    { orgId: DhbOrganizationSvc.getId(), teams: DhbTeamSvc.data }
-
-  $scope.$watch contextObj, refresh, true
+  $scope.$watch(MnoeOrganizations.getSelected, (newValue) ->
+    if newValue?
+      # Get the new teams for this organization
+      MnoeTeams.getTeams().then(
+        (response) ->
+          $scope.initialize(MnoeOrganizations.selected.organization.members, MnoeTeams.teams)
+      )
+  )
 
 
 angular.module 'mnoEnterpriseAngular'
