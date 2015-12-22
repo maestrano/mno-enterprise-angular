@@ -1,5 +1,5 @@
 
-DashboardOrganizationTeamsCtrl = ($scope, $window, $modal, $q, DhbOrganizationSvc, DhbTeamSvc, DashboardAppsDocument, Utilities) ->
+DashboardOrganizationTeamsCtrl = ($scope, $window, $modal, $q, MnoeOrganizations, MnoeTeams, MnoeAppInstances, DhbOrganizationSvc, DhbTeamSvc, DashboardAppsDocument, Utilities) ->
   #====================================
   # Pre-Initialization
   #====================================
@@ -12,11 +12,11 @@ DashboardOrganizationTeamsCtrl = ($scope, $window, $modal, $q, DhbOrganizationSv
   # Scope Management
   #====================================
   # Initialize the data used by the directive
-  $scope.initialize = (teams,appInstances) ->
-    angular.copy(teams,$scope.teams)
-    angular.copy(teams,$scope.originalTeams)
+  $scope.initialize = (teams, appInstances) ->
+    angular.copy(teams, $scope.teams)
+    angular.copy(teams, $scope.originalTeams)
     realAppInstances = _.filter(appInstances, (i) -> i.status != 'terminated')
-    angular.copy(realAppInstances,$scope.appInstances)
+    angular.copy(realAppInstances, $scope.appInstances)
     $scope.isLoading = false
 
   $scope.isTeamEmpty = (team) ->
@@ -242,11 +242,15 @@ DashboardOrganizationTeamsCtrl = ($scope, $window, $modal, $q, DhbOrganizationSv
   #====================================
   # Post-Initialization
   #====================================
-
   # Watch organization id and reload on change
-  $scope.$watch DhbOrganizationSvc.getId, (orgId) ->
-    $q.all([DhbTeamSvc.load(),DashboardAppsDocument.load()]).then (values)->
-      $scope.initialize(DhbTeamSvc.data,_.values(DashboardAppsDocument.data))
+  $scope.$watch(MnoeOrganizations.getSelected, (newValue) ->
+    if newValue?
+      # Get the new teams for this organization
+      $q.all([MnoeTeams.getTeams(), MnoeAppInstances.getAppInstances()]).then(
+        (responses) ->
+          $scope.initialize(responses[0], responses[1])
+      )
+  )
 
 
 angular.module 'mnoEnterpriseAngular'

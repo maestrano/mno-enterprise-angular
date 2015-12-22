@@ -12,4 +12,8 @@ angular.module 'mnoEnterpriseAngular'
 
     ImpacLinking.linkData(data)
   )
+  .run((editableOptions) ->
+    'ngInject'
 
+    editableOptions.theme = 'bs3'
+  )

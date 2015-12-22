@@ -8,6 +8,7 @@ angular.module 'mnoEnterpriseAngular', [
   'toastr',
   'restangular',
   'platanus.inflector',
+  'xeditable',
 
   'maestrano.impac'
 ]

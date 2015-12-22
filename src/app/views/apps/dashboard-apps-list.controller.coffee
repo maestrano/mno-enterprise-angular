@@ -57,10 +57,10 @@ angular.module 'mnoEnterpriseAngular'
         if app.name.length == 0
           app.name = origApp.name
         else
-          DashboardAppInstance.updateName(app.id,app.name).then(
-            (->)
+          MnoeAppInstances.update(app).then(
+            ->
               origApp.name = app.name
-            , ->
+            ->
               app.name = origApp.name
           )
 
