@@ -1,0 +1,82 @@
+
+<!---------------------------->
+<!--    Responsive Navbar   -->
+<!---------------------------->
+<nav class="navbar navbar-fixed-top navbar-inverse visible-xs" role="navigation">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#">Dashboard</a>
+  </div>
+  <div class="collapse navbar-collapse" uib-collapse="navCollapsed">
+    <ul class="nav navbar-nav">
+      <!-- ------------------------- -->
+      <!-- My account section        -->
+      <!-- ------------------------- -->
+      <li>
+        <a href="#/apps">My dashboard</a>
+      </li>
+      <li>
+        <a href="#/impac">Impac!</a>
+      </li>
+      <li>
+        <a href="#/account">My account</a>
+      </li>
+      <li>
+        <a href="#/company">My company</a>
+      </li>
+      <li>
+        <a href="#/marketplace">Marketplace</a>
+      </li>
+      <li>
+        <a href="/mnoe/auth/users/sign_out" data-method='delete'>Sign Out</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-------------------------->
+<!--    Side Navbar       -->
+<!-------------------------->
+<nav class="col-xs-1 hidden-xs scrollbar-hidden">
+  <div class="menu vertical expanded">
+    <!--Home page link-->
+    <a href="/">
+      <div class='brand-logo'></div>
+    </a>
+
+    <a ui-sref="home.apps" class="dashboard-button" ui-sref-active="active">
+      <div class='content'>Dashboard</div>
+      <i class="dhb-icon-dashboard"></i>
+    </a>
+
+    <a ui-sref="home.impac" class="dashboard-button top-buffer-1" ui-sref-active="active">
+      <div class='content'>Impac!</div>
+      <i class="dhb-icon-impac"></i>
+    </a>
+
+    <a ui-sref="home.account" class="dashboard-button top-buffer-1" ui-sref-active="active">
+      <div class='content'>My Account</div>
+      <i class="dhb-icon-account"></i>
+    </a>
+
+    <a ui-sref="home.company" class="dashboard-button top-buffer-1" ui-sref-active="active">
+      <div class='content'>Company</div>
+      <i class="dhb-icon-company"></i>
+    </a>
+
+    <a ui-sref="home.marketplace" class="dashboard-button top-buffer-1" ui-sref-active="active">
+      <div class='content'>Marketplace</div>
+      <i class="dhb-icon-marketplace"></i>
+    </a>
+
+    <a href="/mnoe/auth/users/sign_out" data-method='delete' class="dashboard-button top-buffer-1">
+      <div class='content'>Logout</div>
+      <i class="dhb-icon-logout"></i>
+    </a>
+  </div>
+</nav>

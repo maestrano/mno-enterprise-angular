@@ -1,0 +1,72 @@
+.dashboard-marketplace {
+
+  .marketplace-nav input, select {
+    color: @dashboard-marketplace-search-text-color;
+    border: solid 1px @dashboard-marketplace-search-border-color;
+    background: transparent;
+    box-shadow: none;
+    height: 35px;
+
+    // Placeholder
+    .placeholder(@dashboard-marketplace-search-text-color);
+  }
+
+  // Fix Windows (Chrome/FF/IE) bug on dropdown options colors
+  // when parent "select" color is set to white
+  .marketplace-nav select option {
+    color: black;
+  }
+
+  //-------------------------------
+  // Marketplace list
+  //-------------------------------
+  .marketplace-list {
+    margin-top: 20px;
+  }
+
+  //-------------------------------
+  // App Card
+  //-------------------------------
+  .marketplace-app-card {
+    background-color: @dashboard-marketplace-tile-bg-color;
+    color: rgb(51, 51, 51);
+    cursor: pointer;
+    @dashboard-marketplace-app-card();
+
+    &:hover {
+      text-decoration: none;
+      background-color: @dashboard-marketplace-tile-hover-bg-color;
+    }
+  }
+
+  // Application logo
+  .marketplace-app-card img.media-object {
+    max-width: 100px;
+    border: solid 1px @dashboard-marketplace-tile-img-border-color;
+    border-radius: 5px;
+  }
+  .marketplace-app-card:hover img.media-object {
+    border: solid 1px darken(@dashboard-marketplace-tile-hover-img-border-color,5%);
+  }
+
+  // Application Description
+  .marketplace-app-card .media-body {
+    padding-right: 10px;
+    color: @dashboard-marketplace-tile-text-color;
+  }
+  .marketplace-app-card:hover .media-body {
+    color: @dashboard-marketplace-tile-hover-text-color;
+  }
+
+  // App tile arrow right
+  .marketplace-app-card .arrow {
+    position: absolute;
+    right: 20px;
+    top: 50px;
+    color: @dashboard-marketplace-tile-hover-arrow-color;
+    visibility: hidden;
+  }
+  .marketplace-app-card:hover .arrow {
+    visibility: visible;
+  }
+}

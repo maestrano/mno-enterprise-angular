@@ -1,0 +1,67 @@
+//-----------------------------------------
+// Responsive tables (using TWB grid)
+// see templates/dashboard/organization/invoices.html
+// for an example
+//-----------------------------------------
+.table-cell .th-row,
+.table-cell .td-row {
+  margin-top: @table-cell-row-spacing;
+  margin-bottom: @table-cell-row-spacing;
+  margin-left: 0px;
+  margin-right: 0px;
+  padding-top: @table-cell-row-padding;
+  padding-bottom: @table-cell-row-padding;
+}
+
+.table-cell .th-row {
+  color: @table-cell-header-text-color;
+  background-color: @table-cell-header-bg-color;
+  font-size: @table-cell-header-text-size;
+  line-height: (@table-cell-header-text-size + @table-cell-row-padding)*2;
+  @table-cell-header-additional-rule();
+}
+
+.table-cell .td-row {
+  font-size: @table-cell-row-text-size;
+  line-height: (@table-cell-row-text-size + @table-cell-row-padding)*2;
+}
+
+.table-cell .td-row:nth-child(odd) {
+  background-color: @table-cell-row-odd-bg-color;
+}
+
+.table-cell .td-row:nth-child(even) {
+  background-color: @table-cell-row-even-bg-color;
+}
+
+.table-cell .td-row .cell > .cell-label {
+  font-weight: bold;
+}
+
+.table-cell .td-row .cell > a > i {
+  font-size: 20px;
+}
+@media (max-width: @screen-sm) {
+  .table-cell .td-row .cell > a { padding-left: 0px; }
+}
+
+// Inverse Style
+.table-cell.inverse .th-row {
+  background-color: @bg-inverse-intense-color;
+  color: white;
+}
+
+.table-cell.inverse .td-row:nth-child(odd) {
+  background-color: lighten(@bg-inverse-color,3%);
+}
+
+.table-cell.inverse .td-row:nth-child(even) {
+  background-color: lighten(@bg-inverse-color,5%);
+}
+
+// Table style in a well
+.well .table-cell .th-row,
+.well .table-cell .td-row {
+  margin-left: -15px;
+  margin-right: -15px;
+}
