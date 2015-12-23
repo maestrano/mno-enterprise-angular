@@ -24,9 +24,6 @@ angular.module 'mnoEnterpriseAngular'
       $scope.helper.displayCogwheel = ->
         MnoeOrganizations.can.update.appInstance()
 
-      $scope.helper.canRestartApp = ->
-        MnoeOrganizations.can.update.appInstance()
-
       $scope.helper.canRenameApp = ->
         MnoeOrganizations.can.update.appInstance()
 
@@ -38,19 +35,6 @@ angular.module 'mnoEnterpriseAngular'
 
       $scope.helper.displayBootstrapWizard = ->
         MnoeOrganizations.can.update.appInstance()
-
-      # ----------------------------------------------------------
-      # Restart app
-      # ----------------------------------------------------------
-      $scope.restartApp = { loading: false }
-      $scope.restartApp.perform = (id) ->
-        $scope.restartApp.loading = true
-        DashboardAppInstance.restart(id).then(
-          (success) ->
-            $scope.restartApp.loading = false
-          (error) ->
-            $scope.restartApp.loading = false
-        )
 
       $scope.updateAppName = (app) ->
         origApp = $scope.originalApps["app_instance_#{app.id}"]
