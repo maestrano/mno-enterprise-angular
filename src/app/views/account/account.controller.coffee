@@ -33,7 +33,7 @@ angular.module 'mnoEnterpriseAngular'
                 You will need to click on the link enclosed in this email in order to validate this new address."""
 
             displayEmail = vm.user.model.email
-            setUserModel(userResp)
+            vm.user.model = _.clone(userResp)
 
             # Email not changed in backend until confirmation
             # Keep changed email on frontend side to avoid user confusion

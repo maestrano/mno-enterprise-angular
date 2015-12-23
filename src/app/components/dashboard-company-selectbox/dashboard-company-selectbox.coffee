@@ -3,6 +3,7 @@
 #
 #============================================
 DashboardCompanySelectboxCtrl = ($scope, $location, $stateParams, $cookies, $sce, $uibModal, MnoeCurrentUser, MnoeOrganizations, ModalSvc) ->
+  'ngInject'
 
   #====================================
   # Select Box

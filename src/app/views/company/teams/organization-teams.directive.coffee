@@ -1,5 +1,7 @@
 
-DashboardOrganizationTeamsCtrl = ($scope, $window, $modal, $q, MnoeOrganizations, MnoeTeams, MnoeAppInstances, DhbOrganizationSvc, DhbTeamSvc, DashboardAppsDocument, Utilities) ->
+DashboardOrganizationTeamsCtrl = ($scope, $window, $modal, $q, MnoeOrganizations, MnoeTeams, MnoeAppInstances, DhbOrganizationSvc, DhbTeamSvc, Utilities) ->
+  'ngInject'
+
   #====================================
   # Pre-Initialization
   #====================================

@@ -3,6 +3,8 @@
 #
 #============================================
 DashboardOrganizationMembersCtrl = ($scope, $modal, $sce, MnoeOrganizations, MnoeTeams, DhbOrganizationSvc, Utilities) ->
+  'ngInject'
+  
   #====================================
   # Pre-Initialization
   #====================================

@@ -1,26 +1,24 @@
 angular.module 'mnoEnterpriseAngular'
-  .service('ImpacConfigSvc' , ($log, $q, CurrentUserSvc, DhbOrganizationSvc) ->
+  .service('ImpacConfigSvc' , ($log, $q, MnoeCurrentUser, MnoeOrganizations) ->
 
     @getUserData = ->
       deferred = $q.defer()
-      id = CurrentUserSvc.getUserData()
-      if id
-        deferred.resolve(id)
-      else
-        $log.error(err = {msg: "Unable to retrieve user data"})
-        deferred.reject(err)
+
+      MnoeCurrentUser.get().then(
+        (response) ->
+          deferred.resolve(response)
+      )
 
       return deferred.promise
 
     @getOrganizations = ->
       deferred = $q.defer()
 
-      DhbOrganizationSvc.load().then (success) ->
-        currentOrgId = DhbOrganizationSvc.getId()
-
-        CurrentUserSvc.getOrganizations().then (orgs) ->
-          userOrgs = orgs
-          currentOrgId ||= orgs[0].id if orgs.length > 0
+      MnoeCurrentUser.get().then(
+        (response) ->
+          currentOrgId = MnoeOrganizations.selectedId
+          userOrgs = response.organizations
+          currentOrgId ||= userOrgs[0].id if userOrgs.length > 0
 
           if userOrgs && currentOrgId
             deferred.resolve({organizations: userOrgs, currentOrgId: currentOrgId})
@@ -28,7 +26,8 @@ angular.module 'mnoEnterpriseAngular'
             $log.error(err = {msg: "Unable to retrieve user organizations"})
             deferred.reject(err)
 
-      return deferred.promise
+          return deferred.promise
+      )
 
     return @
   )

@@ -33,7 +33,7 @@ angular.module 'mnoEnterpriseAngular'
         (response) ->
           # Save the organization
           _self.selected = response.plain()
-          $cookies.put('dhb_ref_id', response.id)
+          $cookies.put('dhb_ref_id', _self.selectedId)
           response
       )
 

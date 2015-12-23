@@ -1,5 +1,7 @@
 
 DashboardOrganizationCreditCardCtrl = ($scope, $window, MnoeOrganizations, Miscellaneous, Utilities) ->
+  'ngInject'
+  
   #====================================
   # Pre-Initialization
   #====================================
