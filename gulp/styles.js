@@ -18,9 +18,9 @@ gulp.task('styles-concat', function() {
   .pipe($.concat('app.less'))
   .pipe(wiredep(_.extend({}, conf.wiredep)))
   .pipe(gulp.dest(path.join(conf.paths.dist, '/styles/')))
-})
+});
 
-gulp.task('styles', function () {
+gulp.task('styles', ['styles-concat'], function () {
   var lessOptions = {
     options: [
       'bower_components',
