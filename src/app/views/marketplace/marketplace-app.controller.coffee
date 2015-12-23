@@ -3,7 +3,7 @@
 #============================================
 angular.module 'mnoEnterpriseAngular'
   .controller('DashboardMarketplaceAppCtrl',
-    ($stateParams, $sce, MnoeMarketplace, DhbOrganizationSvc) ->
+    ($stateParams, $sce, MnoeMarketplace, MnoeOrganizations) ->
 
       vm = this
 
@@ -26,7 +26,7 @@ angular.module 'mnoEnterpriseAngular'
         testimonial.text? && testimonial.text.length > 0
 
       vm.provisionLink = () ->
-        "/mnoe/provision/new?apps[]=#{vm.app.nid}&organization_id=#{DhbOrganizationSvc.getId()}"
+        "/mnoe/provision/new?apps[]=#{vm.app.nid}&organization_id=#{MnoeOrganizations.selectedId}"
 
       #====================================
       # Cart Management
