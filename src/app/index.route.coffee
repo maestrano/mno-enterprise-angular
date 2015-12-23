@@ -1,7 +1,7 @@
 angular.module 'mnoEnterpriseAngular'
   .config ($stateProvider, $urlRouterProvider) ->
     'ngInject'
-    
+
     $stateProvider
       .state 'home',
         abstract: true
@@ -38,5 +38,14 @@ angular.module 'mnoEnterpriseAngular'
           templateUrl: 'app/views/marketplace/marketplace-app.html'
           controller: 'DashboardMarketplaceAppCtrl'
           controllerAs: 'vm'
+      .state 'logout',
+        url: '/logout'
+        controller: ($window, $http) ->
+          'ngInject'
+
+          # Logout and redirect the user
+          $http.delete('/mnoe/auth/users/sign_out').then( ->
+            $window.location.href = '/'
+          )
 
     $urlRouterProvider.otherwise '/apps'
