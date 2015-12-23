@@ -1,0 +1,45 @@
+<div class="container top-buffer-1">
+  <form>
+    <uib-tabset>
+      <uib-tab heading="Theme">
+        <div class="row top-buffer-1">
+          <div class="form-group col-md-6" ng-repeat="(color, value) in theme">
+            <label>{{color}} - {{labels[color]}}</label>
+            <input type="color" class="form-control" ng-model="theme[color]">
+          </div>
+        </div>
+      </uib-tab>
+      <uib-tab heading="Advanced">
+        <div class="panel panel-default top-buffer-1" ng-repeat="(section, vars) in variables">
+          <div class="panel-heading">{{section}}</div>
+          <div class="panel-body">
+            <div class="form-group col-md-6" ng-repeat="(var, value) in vars">
+              <label>{{var}}</label>
+              <input type="text" class="form-control" ng-model="variables[section][var]">
+            </div>
+          </div>
+        </div>
+      </uib-tab>
+      <uib-tab heading="Logo">
+        <div class='form-group top-buffer-1'>
+          <label>New Logo</label>
+          <input type="file" id="theme-main-logo"/>
+        </div>
+        <button class='btn btn-warning' ng-click="editor.updateLogo()">Update Logo</button>
+      </uib-tab>
+    </uib-tabset>
+    <div class="row text-center">
+      <div  ng-hide="editor.busy">
+        <button ng-click="editor.reset()" class="btn btn-default">Reset</button>
+        <button type="submit" ng-click="editor.update()" class="btn btn-primary">Preview</button>
+        <button ng-click="editor.export()" class="btn btn-danger">Export</button>
+        <button ng-click="editor.save()" class="btn btn-danger">Save</button>
+      </div>
+      <div ng-show="editor.busy"><i class="fa fa-spinner fa-spin fa-2x"></i></div>
+    </div>
+    <div class="row top-buffer-1">
+      <textarea class="form-control" ng-model="editor.output" rows="15" style="font-family: monospace" readonly></textarea>
+    </div>
+    <div class="top-buffer-1"></div>
+  </form>
+</div>
