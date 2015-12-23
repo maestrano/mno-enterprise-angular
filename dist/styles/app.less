@@ -1,0 +1,1918 @@
+/**
+ *  Do not remove the comments below. It's the markers used by wiredep to inject
+ *  less dependencies when defined in the bower.json of your dependencies
+ */
+// bower:less
+@import "../../bower_components/bootstrap/less/bootstrap.less";
+@import "../../bower_components/font-awesome/less/font-awesome.less";
+@import "../../bower_components/impac-angular/src/impac-angular.less";
+// endbower
+
+/**
+ *  If you want to override some bootstrap variables, you have to change values here.
+ *  The list of variables are listed here bower_components/bootstrap/less/variables.less
+ */
+@icon-font-path: '../../bower_components/bootstrap/fonts/';
+@fa-font-path: '../../bower_components/font-awesome/fonts';
+
+html, body {
+  height: 100%;
+}
+
+.browsehappy {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+  text-align: center;
+
+  a {
+    text-decoration: underline;
+  }
+}
+
+.myspace {
+  background-color: @dashboard-bg-color;
+  min-height:100%;
+}
+
+// Spacers
+@top-buffer-height: @grid-gutter-width/2;
+.top-buffer-1 { margin-top: @top-buffer-height; }
+.top-buffer-2 { margin-top: 2*@top-buffer-height; }
+.top-buffer-3 { margin-top: 3*@top-buffer-height; }
+.top-buffer-4 { margin-top: 4*@top-buffer-height; }
+.top-buffer-5 { margin-top: 5*@top-buffer-height; }
+.top-buffer-6 { margin-top: 6*@top-buffer-height; }
+.top-buffer-7 { margin-top: 7*@top-buffer-height; }
+.top-buffer-8 { margin-top: 8*@top-buffer-height; }
+.top-buffer-9 { margin-top: 9*@top-buffer-height; }
+.top-buffer-10 { margin-top: 10*@top-buffer-height; }
+
+/**
+ *  Do not remove the comments below. It's the markers used by gulp-inject to inject
+ *  all your less files automatically
+ */
+// injector
+// endinjector
+
+.font(@size,@weight,@color) {
+  font-weight:@weight;
+  font-size:@size;
+  color:@color;
+}
+
+.icon-fa(@icon) {
+  .fa;
+  @fa-icon-variable: "fa-var-@{icon}";
+  &:before { content: @@fa-icon-variable; }
+}
+
+.size(@width; @height) {
+  width: @width;
+  height: @height;
+}
+
+.square(@size) {
+  .size(@size; @size);
+}
+
+.rgba(@color, @alpha) {
+  background-color: rgba(red(@color), green(@color), blue(@color), @alpha);
+}
+
+/*-----------------------------------------------------------------------*/
+/*                       General Theme Colors                            */
+/*-----------------------------------------------------------------------*/
+
+// Main colors
+//-------------------------------------------------------------
+// Dashboard background color
+@bg-main-color:                  #aeb5bf;
+
+// Elements placed on top of bg-main-color
+@decorator-main-color:           #758192;
+
+// Elements placed on top of bg-main-color (secondary)
+@decorator-alt-color:            #977bf0;
+
+// Used for text used in the context of bg-main-color
+@text-strong-color:              #17262d;
+
+// Inverse colors
+//-------------------------------------------------------------
+// Background color used for dashboard side menu. top banners, inverse modals
+@bg-inverse-color:               #ffffff;
+
+// Background color for elements displayed on top of inverse elements
+@bg-on-bg-inverse-color:         #cacfd6;
+
+// Background color used for elements on top of bg-inverse-color
+@bg-inverse-intense-color:       #17262d;
+
+// Design elements (lines, borders) on top of bg-inverse-color
+@decorator-inverse-color:        #977bf0;
+
+// Text used on top of bg-inverse-color such as inverse modals
+@text-inverse-color:             #17262d;
+
+// Color used in small/isolated elements
+//-------------------------------------------------------------
+// used to reflect a positive action or point (e.g: tick icon)
+@elem-positive-color:            #d1e55c;
+
+// stronger version of elem-positive-color (barely used)
+@elem-positive-flash-color:      #47ff00;
+
+// used for regular design element - fits well with both main and inverse backgrounds
+@elem-cozy-color:                #977bf0;
+
+// Use this file to override Twitter Bootstrap variables or define own variables.
+/*-----------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------*/
+/*                       Design variables                                */
+/*-----------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------*/
+
+/*-----------------------------------------------------------------------*/
+/*                          Fonts & Text                                 */
+/*-----------------------------------------------------------------------*/
+@font-family-sans-serif:             Arial, "Helvetica Neue", Helvetica, sans-serif;
+@font-family-base:                   @font-family-sans-serif;
+@small:                              11px;
+@normal:                             13px;
+
+/*-----------------------------------------------------------------------*/
+/*                        Public Page Header                             */
+/*-----------------------------------------------------------------------*/
+// Simple top header with brand logo - can be enabled/disabled via styleguide configuration
+@public-page-header-bg-color:        @bg-inverse-color;
+@public-page-header-padding:         10px;
+
+@public-page-header-logo-img:        "mno_enterprise/main-logo.png";
+@public-page-header-logo:            { min-height: 61px; max-width: 160px; max-height: 130px; margin: 17px auto 5px auto; };
+
+/*-----------------------------------------------------------------------*/
+/*                              Login Page                               */
+/*-----------------------------------------------------------------------*/
+@login-bg-color:                     @bg-main-color;
+@login-box-grid-position:            { margin-top: 80px; .make-sm-column(4); .make-sm-column-offset(4); };
+
+@login-box-title-color:              @decorator-main-color;
+@login-box-title:                    { text-transform: uppercase; };
+@login-box-title-display-box-arrow:  false;
+
+@login-box-bg-color:                  @bg-inverse-color;
+@login-box-padding:                   20px;
+@login-box-brand-logo-img:            "mno_enterprise/main-logo.png";
+@login-box-brand-logo:                { min-height: 61px; max-width: 160px; max-height: 130px; margin: 17px auto 5px auto; };
+@login-box-btn-login:                 { width: 100%; };
+
+/*-----------------------------------------------------------------------*/
+/*                           Dashboard Layout                            */
+/*-----------------------------------------------------------------------*/
+@dashboard-bg-color:                            @bg-main-color;
+
+@dashboard-section-title-color:                 @text-strong-color;
+@dashboard-section-title-alignment:             center;
+@dashboard-section-title-display-subline:       false;
+
+// Side navbar menu
+//--------------------------------------
+@dashboard-side-menu-padding:                   30px 0px 0px 14px;
+@dashboard-side-menu-bg-color:                  @bg-inverse-color;
+@dashboard-side-menu-horizontal:                { min-width:550px; };
+
+@dashboard-side-menu-brand-logo-img:            "../assets/images/main-logo.png";
+@dashboard-side-menu-brand-logo:                { background-size: 204px; width: 51px; margin-left: 5px; };
+@dashboard-side-menu-brand-logo-expanded:       { width: 201px; background-size: 100%; };
+
+@dashboard-side-menu-link-color:                @text-inverse-color;
+@dashboard-side-menu-link-bg-color:             @dashboard-side-menu-bg-color;
+
+@dashboard-side-menu-link-hover-color:          @dashboard-side-menu-bg-color;
+@dashboard-side-menu-link-hover-bg-color:       lighten(@bg-main-color,15%);
+
+@dashboard-side-menu-link-active-color:         @dashboard-side-menu-bg-color;
+@dashboard-side-menu-link-active-bg-color:      @bg-main-color;
+
+@_default_style:                                { .fa-2x; margin-top: 6px; margin-left: 2px; color: @dashboard-side-menu-link-color; };
+@_default_style_active:                         { @_default_style(); color: @dashboard-side-menu-link-active-color; };
+@dashboard-side-menu-btn-dashboard:             { .icon-fa(th); @_default_style(); };
+@dashboard-side-menu-btn-dashboard-active:      { .icon-fa(th); @_default_style_active(); };
+@dashboard-side-menu-btn-impac:                 { .icon-fa(pie-chart); @_default_style(); };
+@dashboard-side-menu-btn-impac-active:          { .icon-fa(pie-chart); @_default_style_active(); };
+@dashboard-side-menu-btn-account:               { .icon-fa(user); @_default_style(); margin-left: 5px; };
+@dashboard-side-menu-btn-account-active:        { .icon-fa(user); @_default_style_active(); margin-left: 5px; };
+@dashboard-side-menu-btn-company:               { .icon-fa(briefcase); @_default_style(); };
+@dashboard-side-menu-btn-company-active:        { .icon-fa(briefcase); @_default_style_active(); };
+@dashboard-side-menu-btn-marketplace:           { .icon-fa(plus-square-o); @_default_style(); margin-left: 5px; };
+@dashboard-side-menu-btn-marketplace-active:    { .icon-fa(plus-square-o); @_default_style_active(); margin-left: 5px; };
+@dashboard-side-menu-btn-logout:                { .icon-fa(lock); @_default_style(); margin-left: 6px; };
+@dashboard-side-menu-btn-logout-active:         { .icon-fa(lock); @_default_style_active(); margin-left: 6px; };
+
+// Company select box (top right)
+//--------------------------------------
+@dashboard-cpy-select-bg-color:                 @bg-inverse-intense-color;
+@dashboard-cpy-select-border-radius:            0px;
+@dashboard-cpy-select-padding:                  15px 25px;
+
+@dashboard-cpy-select-header-text-color:        @bg-inverse-color;
+@dashboard-cpy-select-header-text-size:         13px;
+
+@dashboard-cpy-select-link-color:               @dashboard-cpy-select-header-text-color;
+
+@dashboard-cpy-select-link-hover-color:         @dashboard-cpy-select-link-color;
+@dashboard-cpy-select-link-hover-bg-color:      lighten(@dashboard-cpy-select-bg-color,10%);
+
+@dashboard-cpy-select-link-create-color:        @decorator-alt-color;
+@dashboard-cpy-select-link-admin-color:         @elem-positive-color;
+
+@dashboard-cpy-select-switch-btn-color:         @dashboard-cpy-select-header-text-color;
+@dashboard-cpy-select-switch-btn-bg-color:      @dashboard-cpy-select-bg-color;
+@dashboard-cpy-select-switch-btn-icon:          { .icon-fa(caret-down); }; //pass a ruleset
+@dashboard-cpy-select-switch-btn-icon-active:   { .icon-fa(caret-up); }; //pass a ruleset
+
+/*-----------------------------------------------------------------------*/
+/*                        Dashboard > Apps Section                       */
+/*-----------------------------------------------------------------------*/
+@dashboard-apps-tile-bg-color:                  @bg-inverse-color;
+@dashboard-apps-tile-text-color:                @text-inverse-color;
+
+@dashboard-apps-tile-logo-border-size:          0px;
+@dashboard-apps-tile-logo-border-color:         @decorator-main-color;
+
+@dashboard-apps-tile-settings-color:            @dashboard-apps-tile-text-color;
+@dashboard-apps-tile-settings-bg-color:         @dashboard-apps-tile-bg-color;
+
+@dashboard-apps-tile-settings-hover-color:      @dashboard-apps-tile-bg-color;
+@dashboard-apps-tile-settings-hover-bg-color:   @dashboard-apps-tile-text-color;
+
+@dashboard-apps-tile-add-color:                 @dashboard-apps-tile-text-color;
+@dashboard-apps-tile-add-bg-color:              @dashboard-apps-tile-text-color;
+
+/*-----------------------------------------------------------------------*/
+/*                      Dashboard > Company Section                      */
+/*-----------------------------------------------------------------------*/
+// Tab Heading
+//--------------------------------------
+@dashboard-cpy-tabs-bg-color:                    @decorator-main-color;
+@dashboard-cpy-tabs-text-color:                  @text-inverse-color;
+@dashboard-cpy-tabs-border-radius:               2px;
+
+@dashboard-cpy-tabs-subline-size:                0px;
+@dashboard-cpy-tabs-subline-color:               transparent;
+
+@dashboard-cpy-tabs-active-text-color:           @decorator-alt-color;
+@dashboard-cpy-tabs-active-bg-color:             @bg-inverse-color;
+
+@dashboard-cpy-tabs-hover-text-color:            @bg-inverse-color;
+@dashboard-cpy-tabs-hover-bg-color:              @decorator-alt-color;
+
+// Tab Content
+//--------------------------------------
+@dashboard-cpy-tabcontent-bg-color:              @dashboard-cpy-tabs-bg-color;
+
+// Teams section
+//--------------------------------------
+@dashboard-cpy-teams-matrix-bg-color:            @bg-inverse-color;
+@dashboard-cpy-teams-matrix-border-color:        lighten(@bg-main-color,30%);
+
+/*-----------------------------------------------------------------------*/
+/*                              IMPAC                                    */
+/*-----------------------------------------------------------------------*/
+// Dashboard
+//--------------------------------------
+@impac-dashboard-padding-top:                   33px;
+@impac-dashboard-margin-left:                   0px;
+
+// Title
+@impac-dashboard-title-label-color:             @text-strong-color;
+@impac-dashboard-title-color:                   @elem-cozy-color;
+@impac-dashboard-source-color:                  @impac-dashboard-title-label-color;
+@impac-dashboard-buttons-border-radius:         4px;
+
+// Widgets container
+@impac-placeholder-border:                      2px dashed @bg-inverse-color;
+@impac-padding-between-widgets:                 12px;
+@impac-minimum-widget-size:                     258px;
+
+// Widgets
+//--------------------------------------
+// Global
+@impac-widget-background-color:                 @bg-inverse-color;
+@impac-widget-text-color:                       @text-inverse-color;
+@impac-widget-text-color-light:                 lighten(@impac-widget-text-color,70%);
+@impac-widget-borders-color:                    lighten(@impac-widget-text-color-light,10%);
+@impac-widget-link-color:                       @decorator-inverse-color;
+
+// Title
+@impac-widget-title-text-color:                 darken(@impac-widget-text-color,5%);
+@impac-widget-title-bg:                         @impac-widget-background-color;
+@impac-widget-title-border:                     solid 1px @impac-widget-borders-color;
+@impac-widget-title-text-transform:             uppercase;
+@impac-widget-title-text-size:                  12px;
+@impac-widget-title-border-radius:              5px 5px 0px 0px;
+
+// Content
+@impac-widget-content-border-radius:            0px 0px 5px 5px;
+@impac-widget-lines-container-max-height: 			210px;
+
+// Hist Mode Choser
+@impac-widget-hist-text-transform:              uppercase;
+@impac-widget-hist-text-size:                   12px;
+@impac-widget-hist-text-color:                  @impac-widget-text-color-light;
+
+// Price
+@impac-widget-price-color:                      @impac-widget-text-color;
+@impac-widget-price-positive-color:             @elem-positive-color;
+@impac-widget-price-negative-color:             @elem-cozy-color;
+@impac-widget-currency-color:                   @impac-widget-text-color-light;
+@impac-widget-legend-color:                     lighten(@impac-widget-text-color,30%);
+
+// Edit settings
+@impac-widget-sub-bg-color:                     darken(@impac-widget-background-color,10%);
+@impac-widget-sub-bg-color-light:               lighten(@impac-widget-sub-bg-color,5%);
+
+// Invoices list
+@impac-widget-line-hover-bg:                    lighten(@bg-inverse-color,10%);
+@impac-widget-line-hover-text:                  @text-inverse-color;
+
+// Accounts Comparison
+@impac-big-widget-size:                         581px;
+@impac-big-widget-bottom-padding:               30px;
+@impac-widget-accounts-comparison-lines-container-max-height: 250px;
+
+/*-----------------------------------------------------------------------*/
+/*                 Mno Enterprise > Marketplace Section                  */
+/*-----------------------------------------------------------------------*/
+@dashboard-marketplace-search-text-color:             @bg-inverse-color;
+@dashboard-marketplace-search-border-color:           @bg-inverse-intense-color;
+
+@dashboard-marketplace-tile-bg-color:                 @bg-inverse-color;
+@dashboard-marketplace-tile-text-color:               @text-strong-color;
+@dashboard-marketplace-tile-img-border-color:         @dashboard-marketplace-tile-bg-color;
+
+@dashboard-marketplace-tile-hover-bg-color:           @decorator-main-color;
+@dashboard-marketplace-tile-hover-text-color:         @dashboard-marketplace-tile-text-color;
+@dashboard-marketplace-tile-hover-img-border-color:   darken(@decorator-main-color,10%);
+@dashboard-marketplace-tile-hover-arrow-color:        @text-strong-color;
+
+@dashboard-marketplace-show-header-text-color:        @bg-inverse-color;
+
+@dashboard-marketplace-app-card:                      { display: block; padding: 10px; height: 120px; margin-bottom: 10px; font-weight: 300; };
+
+/*-----------------------------------------------------------------------*/
+/*                     Responsive Table (cell table)                     */
+/*-----------------------------------------------------------------------*/
+@table-cell-row-spacing:               10px;
+@table-cell-row-padding:               3px;
+
+@table-cell-header-text-size:          12px;
+@table-cell-header-text-color:         @bg-inverse-color;
+@table-cell-header-bg-color:           @bg-main-color;
+@table-cell-header-additional-rule:    { text-transform: uppercase; };
+
+@table-cell-row-text-size:             13px;
+@table-cell-row-odd-bg-color:          fade(@bg-main-color,30%);
+@table-cell-row-even-bg-color:         fade(@bg-main-color,10%);
+
+
+/*-----------------------------------------------------------------------*/
+/*                       Twitter Bootstrap colors                        */
+/*-----------------------------------------------------------------------*/
+@brand-success:                  @elem-positive-color;
+@brand-warning:                  @decorator-alt-color;
+@brand-info:                     @text-inverse-color;
+@brand-danger:                   @text-inverse-color;
+@brand-primary:                  @text-inverse-color;
+
+/*-----------------------------------------------------------------------*/
+/*                          Navbar Customization                         */
+/*-----------------------------------------------------------------------*/
+@navbar-inverse-bg:              @bg-inverse-color;
+@navbar-height:                  40px;
+@navbar-inverse-link-color:      @decorator-inverse-color;
+@navbar-border-radius:           0px;
+@navbar-inverse-border:          @bg-inverse-color;
+@navbar-desktop-height:          120px;
+@navbar-inverse-link-active-bg:  @navbar-inverse-bg;
+
+/*-----------------------------------------------------------------------*/
+/*                          Form Customization                           */
+/*-----------------------------------------------------------------------*/
+@input-bg: @bg-on-bg-inverse-color;
+@input-color: @text-inverse-color;
+@input-color-placeholder: @input-color;
+
+@input-label-color: @text-inverse-color;
+
+/*-----------------------------------------------------------------------*/
+/*                         Buttons Customization                         */
+/*-----------------------------------------------------------------------*/
+
+// General
+@btn-font-weight:                500;
+
+// Warning
+@btn-warning-color:              #fff;
+
+// Success
+@btn-success-color:              #fff;
+
+/*-----------------------------------------------------------------------*/
+/*                            Footer                                     */
+/*-----------------------------------------------------------------------*/
+
+@footer-bg:                      @bg-main-color;
+
+#dashboard {
+  @media (max-width: @screen-xs-max) {
+    padding-top: 40px;
+  }
+}
+
+dashboard-company-selectbox {
+  /*-----------------------------------------------------------------------*/
+  /*                       Company Select Box                              */
+  /*-----------------------------------------------------------------------*/
+  .company-select-box {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background-color: @dashboard-cpy-select-bg-color;
+    color: @dashboard-cpy-select-header-text-color;
+    font-size: @dashboard-cpy-select-header-text-size;
+    padding: @dashboard-cpy-select-padding;
+    .border-bottom-radius(@dashboard-cpy-select-border-radius);
+    z-index: 10;
+
+    // Change company button
+    .btn.switch-company {
+      color: @dashboard-cpy-select-header-text-color;
+      background-color: @dashboard-cpy-select-switch-btn-bg-color;
+      margin-left: 15px;
+    }
+    .btn.switch-company i {
+      @dashboard-cpy-select-switch-btn-icon();
+    }
+    .btn.switch-company i.active {
+      @dashboard-cpy-select-switch-btn-icon-active();
+    }
+
+    // Section always visible
+    .box-header {
+      text-align: right;
+    }
+
+    // Section visible when change company is clicked
+    .box-content {
+      margin-top: 10px;
+      border-top: solid 1px @dashboard-cpy-select-link-color;
+      .border-bottom-radius(5px);
+    }
+    .box-content ul {
+      list-style: none;
+      padding-top: 15px;
+      max-height: 400px;
+      min-width: 250px;
+      overflow-y: auto;
+    }
+    .box-content ul li a {
+      color: @dashboard-cpy-select-link-color;
+      line-height: 25px;
+      display: block;
+      padding-left: 5px;
+
+      &:hover {
+        text-decoration: none;
+        color: @dashboard-cpy-select-link-hover-color;
+        background-color: @dashboard-cpy-select-link-hover-bg-color;
+      }
+    }
+
+    // Circle next to company name
+    // Indicate which company is currently viewed on dashboard
+    .box-content ul li a i.fa {
+      width: 13px;
+      margin-right: 6px;
+      text-align: center;
+      color: @dashboard-cpy-select-link-color;
+    }
+
+    // Create new company
+    .box-content .create-new, .box-content .admin-link {
+      text-align: center;
+    }
+    .box-content .create-new a {
+      color: @dashboard-cpy-select-link-create-color;
+    }
+
+    // Admin platform link
+    .box-content .admin-link {
+      margin-top: 3px;
+
+      a {
+        color: @dashboard-cpy-select-link-admin-color;
+      }
+    }
+
+    // Play well with menu at the top in responsive mode
+    @media (max-width: @screen-sm-min) { top: 40px; }
+  }
+}
+
+dashboard-menu {
+  /*-----------------------------------------------------------------------*/
+  /*                         Mobile menu                                   */
+  /*-----------------------------------------------------------------------*/
+  .navbar {
+    &.navbar-inverse {
+      font-weight:300;
+      letter-spacing:1px;
+
+      .navbar-toggle {
+        background-color: #fff;
+        .icon-bar {
+          background-color: #333;
+        }
+
+        &:hover, &:focus {
+          background-color: #333;
+          .icon-bar {
+            background-color: #fff;
+          }
+        }
+      }
+
+      ul.nav.navbar-nav {
+        padding:0px;
+        text-transform:uppercase;
+        a {
+          font-size:@normal;
+          text-align:center;
+          background-color:#111c21;
+          border-bottom: solid 1px @bg-inverse-color;
+          padding:22px 0px;
+        }
+
+        ul.dropdown-menu {
+          padding:0px;
+          a {
+            background-color:@bg-inverse-color;
+            border-bottom: solid 1px #111c21;
+            padding:13px 0px;
+          }
+        }
+      }
+    }
+
+    .navbar-nav {
+      &.navbar-right:last-child {
+        margin-right:10px;
+      }
+
+      li.active {
+        .navbar-arrow {
+          position:absolute;
+          margin-top:60px;
+          width: 0;
+          height: 0;
+          border-left: 27px solid transparent;
+          border-right: 27px solid transparent;
+          margin-left:50%-27px;
+          border-bottom: 20px solid @elem-cozy-color;
+        }
+      }
+
+      ul.nav.navbar-nav {
+        text-transform:uppercase;
+        a {
+          font-size:@normal;
+        }
+      }
+
+      ul.nav.navbar-nav.navbar-right {
+        button {
+          margin-top: ((@navbar-height - @line-height-computed) / 2) - 18;
+        }
+
+        a {
+          text-transform:none;
+        }
+      }
+    }
+  }
+
+  /*-----------------------------------------------------------------------*/
+  /*                         Dashboard Left Navbar                         */
+  /*-----------------------------------------------------------------------*/
+  .menu {
+
+    a:hover { text-decoration: none; }
+
+    // Dashboard Button > Active State
+    .dashboard-button.active, .dashboard-button.active:hover {
+      color: @dashboard-side-menu-link-active-color;
+      background-color: @dashboard-side-menu-link-active-bg-color;
+    }
+
+    // Dashboard Button Content > Active State
+    .dashboard-button.active .content, .dashboard-button.active:hover .content {
+      color: @dashboard-side-menu-link-active-color;
+      background-color: @dashboard-side-menu-link-active-bg-color;
+    }
+
+    // Dashboard Button Content > Normal State
+    .dashboard-button,
+    .dashboard-button .content {
+      color: @dashboard-side-menu-link-color;
+      background-color: @dashboard-side-menu-link-bg-color;
+    }
+
+    // Dashboard Button Content > Normal State Hover
+    .dashboard-button:hover, .dashboard-button:hover .content {
+      color: @dashboard-side-menu-link-hover-color;
+      background-color: @dashboard-side-menu-link-hover-bg-color;
+    }
+
+    // Vertical menu
+    &.vertical {
+      z-index:100;
+      position:fixed;
+      left:0px;
+      top:0px;
+      padding: @dashboard-side-menu-padding;
+      width:80px;
+      min-height:100%;
+      height:99%;
+
+      // Dashboard Button > Normal State
+      .dashboard-button {
+        display: block;
+        border-radius: 5px;
+        width: 51px;
+        height: 51px;
+        padding-top: 7px;
+        padding-left: 9px;
+      }
+
+      &:hover .dashboard-button {
+        width: 250px;
+      }
+
+      // Dashboard Button Content > Normal State
+      .dashboard-button .content {
+        display: none;
+      }
+
+      &:hover .dashboard-button .content {
+        display: block;
+        white-space: nowrap;
+        position: absolute;
+        margin: 8px 0px 0px 55px;
+        font-size: 15px;
+      }
+
+      // Side menu brand logo
+      .brand-logo {
+        height: 90px;
+        background-repeat: no-repeat;
+        background-image: url(@dashboard-side-menu-brand-logo-img);
+        background-size: 100%;
+        @dashboard-side-menu-brand-logo();
+      }
+      .brand-logo.expanded {
+        @dashboard-side-menu-brand-logo-expanded();
+      }
+    }
+
+    background-color: @dashboard-side-menu-bg-color;
+
+    hr {
+      border-top: 2px dashed darken(@dashboard-side-menu-bg-color, 5%);
+      margin-right: 11px;
+    }
+
+    // Icon configuration for each dashboard button
+    .dashboard-button i.dhb-icon-dashboard {
+      @dashboard-side-menu-btn-dashboard();
+    }
+    .dashboard-button:hover i.dhb-icon-dashboard,
+    .dashboard-button.active i.dhb-icon-dashboard {
+      @dashboard-side-menu-btn-dashboard-active();
+    }
+
+    .dashboard-button i.dhb-icon-impac {
+      @dashboard-side-menu-btn-impac();
+    }
+    .dashboard-button.active i.dhb-icon-impac,
+    .dashboard-button:hover i.dhb-icon-impac {
+      @dashboard-side-menu-btn-impac-active();
+    }
+
+    .dashboard-button i.dhb-icon-account {
+      @dashboard-side-menu-btn-account();
+    }
+    .dashboard-button:hover i.dhb-icon-account,
+    .dashboard-button.active i.dhb-icon-account {
+      @dashboard-side-menu-btn-account-active();
+    }
+
+    .dashboard-button i.dhb-icon-company {
+      @dashboard-side-menu-btn-company();
+    }
+    .dashboard-button:hover i.dhb-icon-company,
+    .dashboard-button.active i.dhb-icon-company {
+      @dashboard-side-menu-btn-company-active();
+    }
+
+    .dashboard-button i.dhb-icon-marketplace {
+      @dashboard-side-menu-btn-marketplace();
+    }
+    .dashboard-button:hover i.dhb-icon-marketplace,
+    .dashboard-button.active i.dhb-icon-marketplace {
+      @dashboard-side-menu-btn-marketplace-active();
+    }
+
+    .dashboard-button i.dhb-icon-logout {
+      @dashboard-side-menu-btn-logout();
+    }
+    .dashboard-button:hover i.dhb-icon-logout,
+    .dashboard-button.active i.dhb-icon-logout {
+      @dashboard-side-menu-btn-logout-active();
+    }
+  }
+}
+
+mno-inline-message {
+  .mno-inline-checked {
+    color: @brand-success;
+  }
+
+  .mno-inline-unchecked {
+    color: @brand-warning;
+  }
+}
+
+mno-loader {
+  display: block;
+
+  .loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+mno-password {
+  display: block;
+}
+
+// Base style
+.accordion {
+  .panel-group > .panel {
+    margin: 25px 0px;
+  }
+
+  .panel-group > .panel,
+  .panel-group > .panel > .panel-heading {
+    background-color: white;
+    border: none;
+    box-shadow: none;
+  }
+
+  .panel-group .panel .panel-body {
+    p {
+      font-weight: 300;
+    }
+
+    ul > li {
+      font-weight: 300;
+    }
+  }
+
+  .panel-group .panel .panel-heading {
+    padding: 0px;
+    background-color: white;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+
+    .panel-title > div,
+    .panel-title > a {
+      font-size: 90%;
+      display: block;
+      padding-left: 10px;
+      line-height: 54px;
+      height: 54px;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
+    .panel-title i,
+    .panel-title .caret-up,
+    .panel-title .caret-down {
+      margin-left: 10px;
+    }
+
+    .panel-title a.btn.pull-right {
+      margin-top: 10px;
+      margin-right: 10px;
+    }
+
+    .panel-title span.pull-right {
+      margin-right: 10px;
+    }
+
+    .panel-title span.caret.pull-right {
+      margin-top: 26px;
+    }
+  }
+}
+
+
+// Accordion Black background style
+.accordion.inverse {
+
+  .panel-group > .panel,
+  .panel-group > .panel > .panel-heading {
+    background-color: @bg-inverse-color;
+    border: none;
+    box-shadow: none;
+  }
+
+  .panel-group > .panel > .panel-heading > .panel-title .text-muted {
+    color: @text-inverse-color;
+    font-weight: 700;
+  }
+
+  .panel-group > .panel > .panel-collapse > .panel-body {
+    border-top: solid 1px black;
+  }
+
+  .panel-group > .panel > .panel-heading > .panel-title > .caret-up,
+  .panel-group > .panel > .panel-heading > .panel-title > .caret-down {
+    color: @text-inverse-color;
+  }
+}
+
+// Accordion Compact style
+.accordion.accordion-compact {
+  margin-top: 40px;
+
+  .panel-group .panel .panel-heading .panel-title > a {
+    line-height: 35px;
+    height: 35px;
+  }
+
+  .panel-group .panel .panel-heading .panel-title span.caret.pull-right {
+    margin-top: 17px;
+  }
+
+  .panel-group .panel {
+    margin: 11px 0px;
+  }
+}
+
+
+.btn-fluid-wrapper .btn {
+  width: 100%;
+}
+
+.btn {
+  &.float-right {
+    float:right;
+  }
+  &.btn-promo {
+    font-size:18px;
+    padding-left:30px;
+    padding-right:30px;
+  }
+
+  .subtitle {
+    font-size:@small;
+    font-weight:300;
+    width:100%;
+    display:block;
+    text-align:center;
+  }
+
+  &.arrow,
+  &.arrow-right {
+    background-image: image-url('icons/icon-arrow-right.png');
+    background-repeat: no-repeat;
+    background-position: 96% 50%;
+  }
+
+  &.arrow-left {
+    background-image: image-url('icons/icon-arrow-left.png');
+    background-repeat: no-repeat;
+    background-position: 4% 50%;
+  }
+
+  &.btn-dark {
+    .font(16px, 300, @bg-main-color);
+    background-color: @bg-inverse-color;
+
+    &:hover {
+      color: @elem-cozy-color;
+    }
+  }
+
+  &.btn-shaded {
+    background-color: @bg-inverse-color;
+    border: solid 1px @bg-inverse-intense-color;
+    color: @text-inverse-color;
+    font-weight: 400;
+
+    &:hover {
+      color: lighten(@text-inverse-color,5%);
+      background-color: lighten(@bg-inverse-color,5%);
+    }
+  }
+
+  &.btn-grey {
+    background-color: @bg-main-color;
+    border: solid 1px @bg-main-color;
+    color: lighten(@bg-inverse-color,5%);
+    font-weight: 400;
+
+    &:hover {
+      color: @bg-inverse-color;
+      background-color: darken(@bg-main-color,5%);
+    }
+
+    &.btn-grey-bordered {
+      border: solid 1px darken(@bg-main-color,5%);
+    }
+  }
+
+  &.btn-whited {
+    background-color: lighten(#ccc,15%);
+    border: solid 1px #ccc;
+    color: #ccc;
+    font-weight: 400;
+
+    &:hover {
+      color: darken(#ccc,20%);
+      background-color: #ccc;
+    }
+  }
+}
+
+input.fluroblue[type=radio] {
+  width   : 18px;
+  margin  : 0;
+  padding : 0;
+  opacity : 0;
+}
+
+input.fluroblue[type=radio] + label{
+  display      : inline-block;
+  margin-left  : -12px;
+  padding-left : 25px;
+  background   : image-url('icons/radio-fluroblue.png') no-repeat 0 -18px;
+  line-height  : 18px;
+}
+
+input.fluroblue[type=radio]:checked + label{
+  background-position : 0 1px;
+}
+
+form label {
+  color: @input-label-color;
+}
+
+.input-group-addon.select select {
+  background-color: @input-bg;
+}
+
+
+select {
+    text-indent: 1px;
+    text-overflow: '';
+}
+
+// Remove dropdown arrow (Chrome, Firefox and IE)
+select.unstyled {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+//----------------------------------------
+// Styling for phone: select + input
+//----------------------------------------
+form .phone {
+  select.form-control {
+    width:30%;
+  }
+
+  input.form-control[type='text'] {
+    margin-left:23%;
+    margin-top:-34px;
+    width:77%;
+  }
+}
+
+form .select.fa {
+  margin: -28px 7% 0px 0px;
+  float: right;
+}
+
+//----------------------------------------
+// Styling for password checker
+//----------------------------------------
+form li.checked {
+  color: lighten(@decorator-inverse-color,30%);
+}
+
+form li.unchecked {
+  color: lighten(@text-strong-color,70%);
+}
+
+//----------------------------------------
+// Style for forms on inverse backgrounds
+//----------------------------------------
+form.inverse {
+  select {
+    background-color: @bg-inverse-color;
+    .font(16px, 300, @decorator-inverse-color);
+    border:solid 1px #111c21;
+
+    border-radius: 5px;
+    height:44px;
+    -webkit-appearance: none;
+    padding-left:15px;
+    width:100%;
+
+    // Placeholder
+    .placeholder(@decorator-inverse-color);
+  }
+
+  .select.fa {
+    .font(16px,300,@decorator-inverse-color);
+    margin: -28px 7% 0px 0px;
+    float: right;
+  }
+
+  .form-control {
+    // Placeholder
+    .placeholder(@decorator-inverse-color);
+  }
+}
+
+//------------------------------------
+// Dark forms styles
+//------------------------------------
+
+form.dark {
+  input[type='text'], input[type='email'], textarea {
+    border-radius: 5px;
+    .font(16px, 300, @bg-main-color);
+    background-color: @bg-inverse-color;
+    border: solid 1px @bg-inverse-color;
+    line-height: 25px;
+    margin-bottom: 0px;
+    width: 100%;
+    min-height: 42px;
+    padding: 5px 5px 5px 15px;
+  }
+
+  *::-webkit-input-placeholder {
+      color: @bg-main-color;
+  }
+  *:-moz-placeholder {
+      /* FF 4-18 */
+      color: @bg-main-color;
+  }
+  *::-moz-placeholder {
+      /* FF 19+ */
+      color: @bg-main-color;
+  }
+  *:-ms-input-placeholder {
+      /* IE 10+ */
+      color: @bg-main-color;
+  }
+
+  label {
+    color: @bg-main-color;
+  }
+}
+
+.dark {
+  .bootstrap-select {
+    select {
+      .font(16px, 300, @bg-main-color);
+      background-color: @bg-inverse-color;
+    }
+
+    .dropdown-toggle {
+      height: 42px;
+    }
+
+    .dropdown-menu {
+      .font(16px, 300, @bg-main-color);
+      background-color: @bg-inverse-color;
+    }
+    .dropdown-menu > li > a {
+      .font(16px, 300, @bg-main-color);
+    }
+
+    .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+      .font(16px, 300, @decorator-inverse-color);
+      background-color: @bg-inverse-color;
+    }
+  }
+}
+
+// Put a dropdown inside an input-group-addon
+.input-group-addon.select {
+  padding:0px;
+  border-radius: 6px 0px 0px 6px;
+  background-color: @input-bg;
+
+  select {
+    height:100%;
+    border:0px;
+  }
+}
+
+//------------------------------------
+// Invalid inputs (AngularJS)
+//------------------------------------
+input.ng-dirty.ng-invalid {
+  border-color: @brand-danger;
+}
+
+//-----------------------------------------
+// Responsive tables (using TWB grid)
+// see templates/dashboard/organization/invoices.html
+// for an example
+//-----------------------------------------
+.table-cell .th-row,
+.table-cell .td-row {
+  margin-top: @table-cell-row-spacing;
+  margin-bottom: @table-cell-row-spacing;
+  margin-left: 0px;
+  margin-right: 0px;
+  padding-top: @table-cell-row-padding;
+  padding-bottom: @table-cell-row-padding;
+}
+
+.table-cell .th-row {
+  color: @table-cell-header-text-color;
+  background-color: @table-cell-header-bg-color;
+  font-size: @table-cell-header-text-size;
+  line-height: (@table-cell-header-text-size + @table-cell-row-padding)*2;
+  @table-cell-header-additional-rule();
+}
+
+.table-cell .td-row {
+  font-size: @table-cell-row-text-size;
+  line-height: (@table-cell-row-text-size + @table-cell-row-padding)*2;
+}
+
+.table-cell .td-row:nth-child(odd) {
+  background-color: @table-cell-row-odd-bg-color;
+}
+
+.table-cell .td-row:nth-child(even) {
+  background-color: @table-cell-row-even-bg-color;
+}
+
+.table-cell .td-row .cell > .cell-label {
+  font-weight: bold;
+}
+
+.table-cell .td-row .cell > a > i {
+  font-size: 20px;
+}
+@media (max-width: @screen-sm) {
+  .table-cell .td-row .cell > a { padding-left: 0px; }
+}
+
+// Inverse Style
+.table-cell.inverse .th-row {
+  background-color: @bg-inverse-intense-color;
+  color: white;
+}
+
+.table-cell.inverse .td-row:nth-child(odd) {
+  background-color: lighten(@bg-inverse-color,3%);
+}
+
+.table-cell.inverse .td-row:nth-child(even) {
+  background-color: lighten(@bg-inverse-color,5%);
+}
+
+// Table style in a well
+.well .table-cell .th-row,
+.well .table-cell .td-row {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+.testimonial {
+  font-size: 25px;
+  font-weight:300;
+  color:@bg-inverse-color;
+  padding:20px;
+  min-height: 115px;
+
+  &.promo-dark {
+    color:white;
+    border-radius: 10px;
+    .rgba(@bg-inverse-color, 0.7);
+  }
+
+  .author {
+    font-style:italic;
+    font-size:16px;
+  }
+
+  .body {
+    background-color:@bg-main-color;
+    border-radius: 5px;
+    padding:20px;
+    color: @text-strong-color;
+    font-weight:300;
+    font-size:16px;
+    font-style:italic;
+
+    .arrow {
+      .rotate(45deg);
+      width: 0;
+      height: 0;
+      border-top: 18px solid transparent;
+      border-bottom: 18px solid transparent;
+      border-right:18px solid @decorator-main-color;
+      position:absolute;
+      right:48px;
+      margin-top:8px;
+    }
+  }
+
+  .from {
+    margin:7px 0px 0px 30px;
+
+    .name {
+      display:inline;
+      font-size:14px;
+      font-weight:700;
+      color:@text-inverse-color;
+    }
+
+    .company {
+      display:inline;
+      font-size:14px;
+      font-weight:300;
+      color:@decorator-inverse-color;
+    }
+
+    .avatar {
+      img {
+        float:right;
+        margin:33px 9px 0px 0px;
+      }
+    }
+  }
+}
+
+.ribbon-testimonial {
+
+  .body {
+    background-color:@bg-main-color;
+    border-radius: 5px;
+    padding:20px;
+    color:@text-strong-color;
+    font-weight:300;
+    font-size:16px;
+    font-style:italic;
+
+    .arrow {
+      .rotate(45deg);
+      width: 0;
+      height: 0;
+      border-top: 18px solid transparent;
+      border-bottom: 18px solid transparent;
+      border-right:18px solid @decorator-main-color;
+      position:absolute;
+      right:28px;
+      margin-top:8px;
+    }
+  }
+
+  .from {
+    margin:7px 0px 0px 30px;
+    .name {
+      display:inline;
+      font-size:14px;
+      font-weight:700;
+      color: @text-inverse-color;
+    }
+
+    .company {
+      display:inline;
+      font-size:14px;
+      font-weight:300;
+      color: @decorator-inverse-color;
+    }
+
+  }
+}
+
+.ribbon-testimonial.ribbon-white {
+  .body {
+    background-color: white;
+  }
+
+  .arrow {
+    border-right:18px solid #ccc;
+  }
+}
+
+
+.text-bg-inverse {
+  color: @bg-inverse-color;
+}
+
+#account {
+  .row:not(:first-child) {
+    margin-top: 15px;
+  }
+}
+
+#dashboard-apps-list {
+  .app-dashboard {
+    min-height: 280px;
+    max-width: 225px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 5px;
+    background-color: @dashboard-apps-tile-bg-color;
+    text-align: center;
+    padding: 30px 0px;
+    padding-bottom: 0px;
+    margin-top: 15px;
+
+    .btn-change-plan {
+      margin-top:50px;
+    }
+
+    .title {
+      .font(14px,normal,@dashboard-apps-tile-text-color);
+      margin-top:10px;
+      margin-bottom:10px;
+    }
+
+    .app-line {
+      .font(12px,normal,@text-inverse-color);
+    }
+
+    img.app-logo {
+      border-radius: 5px;
+      .square(85px);
+      border: solid @dashboard-apps-tile-logo-border-size @dashboard-apps-tile-logo-border-color;
+    }
+
+    .connector-logo {
+      margin-top: 3px;
+      margin-bottom: 3px;
+      cursor: pointer;
+    }
+
+    .office365-connector-logo {
+      height: 32px;
+      padding: 2px;
+    }
+
+    .tutorial {
+      display:block;
+      margin-top: 7px;
+    }
+
+    // App Tile Settings (top right)
+    a.options {
+      line-height: 19px;
+      .square(20px);
+      border-radius: 20px;
+      color: @dashboard-apps-tile-settings-color;
+      background-color: @dashboard-apps-tile-settings-bg-color;
+      float:right;
+      margin: -25px 5px 0px 0px;
+    }
+
+    a.options:hover {
+      color: @dashboard-apps-tile-settings-hover-color;
+      background-color: @dashboard-apps-tile-settings-hover-bg-color;
+    }
+    a.options i {
+      margin-top: 3px;
+    }
+
+    .app-custom-info {
+      position: relative;
+      top: -10px;
+      z-index: 999;
+    }
+
+    // Add application tile (tile with + button)
+    &.add-app {
+      padding:15px 0px;
+      font-size:140px;
+      color: @dashboard-apps-tile-add-color;
+      background-color: @dashboard-apps-tile-add-bg-color;
+    }
+
+    &.add-app a {
+      color: @dashboard-bg-color;
+
+      &:hover {
+        color: @brand-warning;
+      }
+    }
+  }
+}
+
+.dashboard-organization {
+
+  //-----------------------------------
+  // Tabs Styling
+  //-----------------------------------
+  ul.nav.nav-tabs {
+    border-bottom: none;
+  }
+
+  // Tab Header Wrapper Styling
+  ul.nav.nav-tabs > li {
+    margin-right: 5px;
+    padding-bottom: 5px;
+    background-color: transparent;
+    border-bottom: solid 5px transparent;
+    padding: 0px;
+    cursor: pointer;
+  }
+  ul.nav.nav-tabs > li.active when (@dashboard-cpy-tabs-subline-size > 0) {
+    border-bottom: solid 4px @dashboard-cpy-tabs-active-bg-color;
+  }
+
+  // Tab Header Styling
+  ul.nav.nav-tabs > li > a {
+    padding: 20px 40px;
+    border: none;
+    color: @dashboard-cpy-tabs-text-color;
+    background-color: @dashboard-cpy-tabs-bg-color;
+    .border-top-radius(@dashboard-cpy-tabs-border-radius);
+    .border-bottom-radius(@dashboard-cpy-tabs-border-radius);
+
+
+  }
+  ul.nav.nav-tabs > li > a:hover {
+    background-color: @dashboard-cpy-tabs-hover-bg-color;
+    color: @dashboard-cpy-tabs-hover-text-color;
+  }
+  ul.nav.nav-tabs > li.active > a,
+  ul.nav.nav-tabs > li.active > a:hover,
+  ul.nav.nav-tabs > li.active > a:focus {
+    padding-bottom: 20px;
+    background-color: @dashboard-cpy-tabs-active-bg-color;
+    color: @dashboard-cpy-tabs-active-text-color;
+
+    & when (@dashboard-cpy-tabs-subline-size = 0) {
+      .border-bottom-radius(@dashboard-cpy-tabs-border-radius);
+    }
+  }
+
+  // Tab Content Styling
+  .tab-content {
+    border-top: solid @dashboard-cpy-tabs-subline-size @dashboard-cpy-tabs-subline-color;
+    padding-top: 20px;
+  }
+
+  .tab-content .tab-pane {
+    background-color: transparent;
+  }
+
+  @media(max-width: 720px) {
+    ul.nav.nav-tabs > li {
+      width:100%;
+
+      &.active {
+        border-bottom: solid 5px transparent;
+        a {
+          background-color: @dashboard-cpy-tabs-active-bg-color;
+          color: white;
+        }
+      }
+    }
+  }
+
+  //-----------------------------------
+  // Well Styling
+  //-----------------------------------
+  .well {
+    border: none;
+    background-color: @dashboard-cpy-tabcontent-bg-color;
+  }
+
+  //-----------------------------------
+  // Accordion Styling
+  //-----------------------------------
+  .panel-group .panel {
+    background-color: @dashboard-cpy-tabcontent-bg-color;
+    box-shadow: none;
+    border: none;
+    margin: 0px 0px 25px 0px;
+  }
+
+  .panel-group .panel .panel-heading {
+    background-color: @dashboard-cpy-tabcontent-bg-color;
+    border: none;
+  }
+
+  .panel-group .panel-collapse > .panel-body {
+    background-color: @dashboard-cpy-tabcontent-bg-color;
+    border: none;
+  }
+
+  //-----------------------------------
+  // CC Form
+  //-----------------------------------
+  .cc-header small img {
+    max-height: 30px;
+  }
+
+  .cc-header-eft {
+    font-size: 13px;
+    line-height: 29px;
+    color: #777777;
+    float: right;
+  }
+}
+
+//-----------------------------------
+// User Edition Modal
+//-----------------------------------
+.modal.member-edit .role-management {
+  text-align: center;
+}
+
+.modal.member-edit .role-management .fa {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.modal.member-edit .role-management p {
+  font-weight: 300;
+}
+
+//-----------------------------------
+// Team Member Add Modal
+//-----------------------------------
+.team-member-add-modal table {
+  margin: auto;
+  font-weight: 300;
+}
+.team-member-add-modal table td {
+  border: none;
+  padding: 8px;
+}
+
+.team-member-add-modal table tr td:first-child {
+  text-align: right;
+}
+
+.team-member-add-modal table tr td:last-child {
+  text-align: left;
+}
+
+//-------------------------------
+// Show View
+//-------------------------------
+.dashboard-marketplace-app {
+
+  //-------------------------------
+  // Header
+  //-------------------------------
+  .show-header .media-object {
+    max-width: 80px;
+    border-radius: 5px;
+    border: solid 1px darken(@bg-main-color, 5%);
+  }
+
+  .show-header .media-body h2 {
+    line-height: 80px;
+    color: @dashboard-marketplace-show-header-text-color;
+  }
+
+  //-------------------------------
+  // Content - General
+  //-------------------------------
+  .show-content .well {
+    background-color: white;
+    border: none;
+    border-radius: 2px;
+  }
+
+  //-------------------------------
+  // Content - Carousel
+  //-------------------------------
+  .show-content .carousel img {
+    max-height: 300px;
+    margin: auto;
+  }
+
+  .show-content .carousel .carousel-inner {
+    text-align: center;
+  }
+
+  .show-content .carousel .carousel-control {
+    background: transparent;
+    cursor: pointer;
+    max-height: 300px;
+  }
+
+  .show-content .carousel .carousel-indicators {
+    visibility: hidden;
+  }
+
+  .show-content .carousel .carousel-control .glyphicon-chevron-left, .carousel-control .icon-prev {
+    margin-left: 0px;
+  }
+
+  //-------------------------------
+  // Content
+  // Height of columns in desktop
+  //-------------------------------
+  @media (min-width: @screen-md-min) {
+    .show-content .carousel { height: 340px; }
+    .show-content .well-details { height: 340px; }
+  }
+
+  //-------------------------------
+  // Content - Features
+  //-------------------------------
+  .show-content ul.app-features {
+    list-style: none;
+    padding-left: 0px;
+    text-align: left;
+    margin-top: 20px;
+  }
+
+  .show-content ul.app-features li {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  .show-content ul.app-features li > img {
+    margin-right: 5px;
+  }
+
+  //-------------------------------
+  // Content - Benefits
+  //-------------------------------
+  .show-content ul.key-benefits {
+    list-style: none;
+    padding-left: 0px;
+    text-align: left;
+    margin-top: 20px;
+  }
+
+  .show-content ul.key-benefits > li {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  .show-content ul.key-benefits > li > .fa.fa-check {
+    color: @elem-positive-color;
+    margin-right: 5px;
+  }
+
+  //-------------------------------
+  // Content - Testimonials
+  //-------------------------------
+  .show-content .ribbon-testimonial .body {
+    color: @dashboard-marketplace-tile-text-color;
+  }
+
+  .show-content .ribbon-testimonial .from .name {
+    color: @bg-inverse-color;
+  }
+}
+
+.dashboard-marketplace {
+
+  .marketplace-nav input, select {
+    color: @dashboard-marketplace-search-text-color;
+    border: solid 1px @dashboard-marketplace-search-border-color;
+    background: transparent;
+    box-shadow: none;
+    height: 35px;
+
+    // Placeholder
+    .placeholder(@dashboard-marketplace-search-text-color);
+  }
+
+  // Fix Windows (Chrome/FF/IE) bug on dropdown options colors
+  // when parent "select" color is set to white
+  .marketplace-nav select option {
+    color: black;
+  }
+
+  //-------------------------------
+  // Marketplace list
+  //-------------------------------
+  .marketplace-list {
+    margin-top: 20px;
+  }
+
+  //-------------------------------
+  // App Card
+  //-------------------------------
+  .marketplace-app-card {
+    background-color: @dashboard-marketplace-tile-bg-color;
+    color: rgb(51, 51, 51);
+    cursor: pointer;
+    @dashboard-marketplace-app-card();
+
+    &:hover {
+      text-decoration: none;
+      background-color: @dashboard-marketplace-tile-hover-bg-color;
+    }
+  }
+
+  // Application logo
+  .marketplace-app-card img.media-object {
+    max-width: 100px;
+    border: solid 1px @dashboard-marketplace-tile-img-border-color;
+    border-radius: 5px;
+  }
+  .marketplace-app-card:hover img.media-object {
+    border: solid 1px darken(@dashboard-marketplace-tile-hover-img-border-color,5%);
+  }
+
+  // Application Description
+  .marketplace-app-card .media-body {
+    padding-right: 10px;
+    color: @dashboard-marketplace-tile-text-color;
+  }
+  .marketplace-app-card:hover .media-body {
+    color: @dashboard-marketplace-tile-hover-text-color;
+  }
+
+  // App tile arrow right
+  .marketplace-app-card .arrow {
+    position: absolute;
+    right: 20px;
+    top: 50px;
+    color: @dashboard-marketplace-tile-hover-arrow-color;
+    visibility: hidden;
+  }
+  .marketplace-app-card:hover .arrow {
+    visibility: visible;
+  }
+}
+
+.dashboard-teams {
+
+  //-----------------------------------
+  // Teams: Permission Matrix
+  //-----------------------------------
+  .permission-matrix-wrapper {
+    padding: 10px 30px 10px 10px;
+    border: solid 1px darken(@dashboard-cpy-teams-matrix-border-color,5%);
+    background-color: @dashboard-cpy-teams-matrix-bg-color;
+    border-radius: 10px;
+
+    .editable-instructions {
+      display: inline;
+
+      .editable.editable-click,
+      a.editable.editable-click {
+        color: @decorator-alt-color;
+        border: none;
+
+        &:hover {
+          color: @decorator-alt-color;
+          border-bottom: dashed 1px fadeout(@decorator-alt-color,60%);
+        }
+      }
+    }
+  }
+
+  .permission-matrix-wrapper .table-left {
+    border-right: solid 1px darken(@bg-main-color,5%);
+  }
+
+  .permission-matrix-wrapper .table-right {
+    padding-right: 10px;
+    max-width: 100%;
+    overflow-x: auto;
+
+  }
+  table.permission-matrix.resellers-permissions {
+    thead > tr th {
+      height: 28px;
+    }
+  }
+
+  table.permission-matrix {
+      width: 100%;
+
+      thead > tr > th:first-child,
+      tbody > tr > td:first-child {
+        width: 20%;
+      }
+
+      tr > th.td-first {
+        text-align: left;
+        padding-left: 10px;
+      }
+
+      tr td.td-first {
+        text-align: left;
+        padding-left: 10px;
+        line-height: 52px;
+      }
+
+      thead > tr {
+        th {
+          text-align: center;
+          border-bottom: solid 2px darken(@dashboard-cpy-teams-matrix-border-color,5%);
+          padding-bottom: 10px;
+          vertical-align: bottom;
+          height: 95px;
+        }
+
+        th img {
+          height: 40px;
+          width: 40px;
+          margin: 10px auto;
+        }
+      }
+
+      tbody > tr {
+        td {
+          height: 60px;
+          padding: 0px;
+          text-align: center;
+          border-bottom: solid 1px darken(@dashboard-cpy-teams-matrix-border-color,5%);
+        }
+
+        &.btn-group-row > td {
+          border: none;
+          vertical-align: bottom;
+        }
+
+        td.team-name .team-remove {
+          margin-left: 5px;
+          visibility: hidden;
+        }
+
+        td.team-name:hover .team-remove {
+          visibility: visible;
+        }
+
+      }
+
+
+  }
+
+  .permission-matrix-wrapper .table-right thead > tr > th,
+  .permission-matrix-wrapper .table-right tbody > tr > td {
+    width: 100px;
+  }
+
+  .permission-matrix-wrapper .table-right thead > tr > th:last-child,
+  .permission-matrix-wrapper .table-right tbody > tr > td:last-child {
+    width: 0px;
+  }
+
+  .permission-matrix-wrapper .table-right thead > tr > th > .th-content {
+    width: 100px;
+    margin: auto;
+    cursor: default;
+  }
+
+  .permission-matrix-wrapper .table-right tbody > tr.btn-group-row > td {
+    height: 37px;
+  }
+
+  .permission-matrix-wrapper.resellers-permissions .table-right tbody > tr.btn-group-row > td {
+    height: 28px;
+  }
+
+  .permission-matrix-wrapper .table-right thead > tr > th {
+    font-size: 11px;
+    font-weight: 400;
+  }
+}
