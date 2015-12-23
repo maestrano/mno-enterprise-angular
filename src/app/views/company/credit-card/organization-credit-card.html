@@ -21,7 +21,6 @@
         <select class="form-control" ng-model="model.title" ng-options="label for label in config.validTitles" required>
           <option value='' disabled selected style='display:none;'>-- SELECT --</option>
         </select>
-        <div class="select fa fa-caret-down"></div>
       </div>
     </div>
 
@@ -56,7 +55,6 @@
         <select class="form-control" ng-model="model.country" ng-options="country.val as country.label for country in config.validCountries" required>
           <option value='' disabled selected style='display:none;'>-- SELECT --</option>
         </select>
-        <div class="select fa fa-caret-down"></div>
       </div>
     </div>
 
@@ -66,14 +64,12 @@
         <select class="form-control" ng-model="model.month" ng-options="label for label in config.validMonths" required>
           <option value='' disabled selected style='display:none;'>-- MONTH --</option>
         </select>
-        <div class="select fa fa-caret-down"></div>
       </div>
 
       <div class="col-sm-3">
         <select class="form-control" ng-model="model.year" ng-options="label for label in config.validYears" required>
           <option value='' disabled selected style='display:none;'>-- YEAR --</option>
         </select>
-        <div class="select fa fa-caret-down"></div>
       </div>
     </div>
 
@@ -115,7 +111,6 @@
         <select class="form-control" ng-model="model.billing_country" ng-options="country.val as country.label for country in config.validCountries" required>
           <option value='' disabled selected style='display:none;'>-- SELECT --</option>
         </select>
-        <div class="select fa fa-caret-down"></div>
       </div>
     </div>
 
@@ -138,18 +133,15 @@
 <!--
   Action buttons
 -->
-<div class="row text-right" ng-show="isLoading">
-  <img ng-src="{{assetPath['mno_enterprise/loader-32x32-bg-inverse.gif']}}" alt="Loading"/>
-</div>
-<div class="row text-right" ng-show="!isLoading">
+<div class="row text-right">
   <div class="col-md-4 col-md-offset-8">
-    <button ng-click="cancel()" class="btn btn-shaded btn-lg" ng-show="isCancelShown()">
+    <button ng-click="cancel()" class="btn btn-shaded" ng-show="isCancelShown() && !isLoading">
       Cancel
     </button>
 
-    <button ng-click="save()" href="" class="btn btn-info btn-lg" ng-disabled="!isSaveEnabled()">
-      <i class="fa fa-shield"></i>
-      &nbsp;
+    <button ng-click="save()" href="" class="btn btn-info" ng-disabled="!isSaveEnabled() || isLoading">
+      <span ng-show="isLoading"><i class="fa fa-spinner fa-pulse fa-fw"></i></span>
+      <span ng-show="!isLoading"><i class="fa fa-shield"></i></span>
       Save
     </button>
   </div>

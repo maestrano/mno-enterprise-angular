@@ -59,7 +59,7 @@ angular.module 'mnoEnterpriseAngular'
 
               userOld = _.clone($scope.user.model)
               $scope.user.loading = false
-            ,(error) ->
+            (error) ->
               $scope.user.loading = false
               $scope.errors.user = Utilities.processRailsError(error)
           )

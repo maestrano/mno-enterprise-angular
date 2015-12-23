@@ -2,7 +2,7 @@
 #============================================
 #
 #============================================
-DashboardOrganizationMembersCtrl = ($scope, $modal, MnoeOrganizations, MnoeTeams, DhbOrganizationSvc, Utilities) ->
+DashboardOrganizationMembersCtrl = ($scope, $modal, $sce, MnoeOrganizations, MnoeTeams, DhbOrganizationSvc, Utilities) ->
   #====================================
   # Pre-Initialization
   #====================================
@@ -67,9 +67,9 @@ DashboardOrganizationMembersCtrl = ($scope, $modal, MnoeOrganizations, MnoeTeams
   editionModal.title = ->
     m = editionModal.member
     if m.entity == 'User'
-      return "Edit Member: #{m.name} #{m.surname}"
+      return $sce.trustAsHtml("Edit Member: #{m.name} #{m.surname}")
     else
-      return "Edit Member: #{m.email}"
+      return $sce.trustAsHtml("Edit Member: #{m.email}")
 
   editionModal.close = ->
     self = editionModal
@@ -131,9 +131,9 @@ DashboardOrganizationMembersCtrl = ($scope, $modal, MnoeOrganizations, MnoeTeams
   deletionModal.confirmationText = ->
     m = deletionModal.member
     if m.entity == 'User' && m.name?
-      return "Do you really want to remove <strong>#{m.name} #{m.surname}</strong> from your company?"
+      return $sce.trustAsHtml("Do you really want to remove <strong>#{m.name} #{m.surname}</strong> from your company?")
     else
-      return "Do you really want to remove <strong>#{m.email}</strong> from your company?"
+      return $sce.trustAsHtml("Do you really want to remove <strong>#{m.email}</strong> from your company?")
 
   deletionModal.remove = ->
     self = deletionModal
@@ -190,9 +190,9 @@ DashboardOrganizationMembersCtrl = ($scope, $modal, MnoeOrganizations, MnoeTeams
   inviteModal.title = ->
     self = inviteModal
     if self.step == 'enterEmails'
-      "Enter email addresses"
+      return $sce.trustAsHtml("Enter email addresses")
     else
-      "Select role for each new member"
+      return $sce.trustAsHtml("Select role for each new member")
 
   inviteModal.labelForAction = ->
     if inviteModal.step == 'enterEmails'
