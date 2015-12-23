@@ -16,7 +16,8 @@ gulp.task('partials', function () {
     .pipe($.minifyHtml({
       empty: true,
       spare: true,
-      quotes: true
+      quotes: true,
+      loose: true
     }))
     .pipe($.angularTemplatecache('templateCacheHtml.js', {
       module: 'mnoEnterpriseAngular',
