@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .factory( 'AppsListHelper', ($window, MsgBus) ->
+  .factory( 'AppsListHelper', ($window) ->
 
     service = {}
 
@@ -289,8 +289,7 @@ angular.module 'mnoEnterpriseAngular'
         instance.stack == 'connector' && instance.appNid == 'office-365' && (moment(instance.createdAt) > moment().subtract({weeks:2}))
 
       isNewOfficeApp: (instance) ->
-        newApp = (MsgBus.subscribe('params'))().new_app
-        instance.stack == 'connector' && instance.appNid == 'office-365' && newApp && (moment(instance.createdAt) > moment().subtract({minutes:5}))
+        instance.stack == 'connector' && instance.appNid == 'office-365' && (moment(instance.createdAt) > moment().subtract({minutes:5}))
 
       microsoftTrialUrl: (instance) ->
         return instance.microsoftTrialUrl

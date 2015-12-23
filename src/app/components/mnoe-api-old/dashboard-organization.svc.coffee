@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .factory('DhbOrganizationSvc', ($http, $window, CurrentUserSvc) ->
+  .factory('DhbOrganizationSvc', ($http, $window) ->
     # Configuration
     service = {}
     service.routes = {
@@ -117,8 +117,6 @@ angular.module 'mnoEnterpriseAngular'
       self = service
       data = opts
       q = $http.post(self.routes.createPath(),data)
-      q.then (success) ->
-        CurrentUserSvc.addOrg(success.data.organization)
       return q
 
 
@@ -246,74 +244,6 @@ angular.module 'mnoEnterpriseAngular'
         self.data.organization.bootstrap_tasks[name] = true
 
       return q
-
-    #======================================
-    # User Role
-    #======================================
-    service.user = {}
-
-    service.user.isSuperAdmin = ->
-      service.data.current_user? && service.data.current_user.role == 'Super Admin'
-
-    service.user.isAdmin = ->
-      service.data.current_user? && service.data.current_user.role == 'Admin'
-
-    service.user.isPowerUser = ->
-      service.data.current_user? && service.data.current_user.role == 'Power User'
-
-    service.user.isMember = ->
-      service.data.current_user? && service.data.current_user.role == 'Member'
-
-    service.user.atLeastMember = ->
-      true
-
-    service.user.atLeastPowerUser = ->
-      u = service.user
-      u.isPowerUser() || u.isAdmin() || u.isSuperAdmin()
-
-    service.user.atLeastAdmin = ->
-      u = service.user
-      u.isAdmin() || u.isSuperAdmin()
-
-    service.user.atLeastSuperAdmin = ->
-      service.user.isSuperAdmin()
-
-    #======================================
-    # Access Management
-    #======================================
-    service.can = {}
-    service.can.read = {}
-    service.can.create = {}
-    service.can.update = {}
-    service.can.destroy = {}
-
-    service.can.read = {
-      appInstance: (obj = null) -> service.user.atLeastMember()
-      billing: (obj = null) -> service.user.atLeastSuperAdmin()
-      member: (obj = null) -> service.user.atLeastMember()
-      organizationSettings: (obj = null) -> service.user.atLeastSuperAdmin()
-    }
-
-    service.can.create = {
-      appInstance: (obj = null) -> service.user.atLeastAdmin()
-      billing: (obj = null) -> service.user.atLeastSuperAdmin()
-      member: (obj = null) -> service.user.atLeastAdmin() && (obj == null || obj.role != 'Super Admin' || service.user.isSuperAdmin())
-      organizationSettings: (obj = null) -> service.user.atLeastSuperAdmin()
-    }
-
-    service.can.update = {
-      appInstance: (obj = null) -> service.can.create.appInstance(obj) # call similar permission
-      billing: (obj = null) -> service.can.create.billing(obj) # call similar permission
-      member: (obj = null) -> service.can.create.member(obj) # call similar permission
-      organizationSettings: (obj = null) -> service.can.create.organizationSettings(obj) # call similar permission
-    }
-
-    service.can.destroy = {
-      appInstance: (obj = null) -> service.can.create.appInstance(obj) # call similar permission
-      billing: (obj = null) -> service.can.create.billing(obj) # call similar permission
-      member: (obj = null) -> service.can.create.member(obj) # call similar permission
-      organizationSettings: (obj = null) -> service.can.create.organizationSettings(obj) # call similar permission
-    }
 
     return service
   )
