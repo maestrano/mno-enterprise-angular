@@ -1,5 +1,6 @@
 DashboardOrganizationBillingCtrl = ($scope, $window, MnoeOrganizations, Utilities, Miscellaneous) ->
-
+  'ngInject'
+  
   #====================================
   # Scope Management
   #====================================

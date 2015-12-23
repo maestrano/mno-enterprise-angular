@@ -1,6 +1,7 @@
 angular.module 'mnoEnterpriseAngular'
   .config ($stateProvider, $urlRouterProvider) ->
     'ngInject'
+    
     $stateProvider
       .state 'home',
         abstract: true

@@ -1,5 +1,7 @@
 
 DashboardOrganizationSettingsCtrl = ($scope, $window, MnoeOrganizations, DhbOrganizationSvc, Utilities) ->
+  'ngInject'
+  
   #====================================
   # Pre-Initialization
   #====================================
