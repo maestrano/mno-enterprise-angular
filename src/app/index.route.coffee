@@ -20,6 +20,7 @@ angular.module 'mnoEnterpriseAngular'
         url: '/account'
         templateUrl: 'app/views/account/account.html'
         controller: 'DashboardAccountCtrl'
+        controllerAs: 'vm'
       .state 'home.company',
         url: '/company'
         templateUrl: 'app/views/company/company.html'

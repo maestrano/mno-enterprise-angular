@@ -28,6 +28,8 @@ angular.module 'mnoEnterpriseAngular'
       return userPromise if userPromise?
       userPromise = MnoeApiSvc.one('current_user').get().then(
         (response) ->
+          response = response.plain()
+
           # if there is no organization, then by default we show the account tab
           if response.organizations.length == 0
             $state.go('home.account')
@@ -37,10 +39,12 @@ angular.module 'mnoEnterpriseAngular'
       )
 
     # Update the current user infos
-    @update = (data) ->
-      _self.user.put().then(
+    @update = (user) ->
+      MnoeApiSvc.all('current_user').doPUT({user: user}).then(
         (response) ->
+          console.log response
           angular.copy(response, _self.user)
+          response
       )
 
     # Update user password
