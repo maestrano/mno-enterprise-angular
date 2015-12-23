@@ -1,7 +1,13 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller 'ImpacController', ($scope, $log) ->
+  .controller 'ImpacController', ($scope, $log, MnoeOrganizations, ImpacDashboardsSvc) ->
     'ngInject'
 
-    $log.debug('in ImpacController')
+    #====================================
+    # Post-Initialization
+    #====================================
+    $scope.$watch MnoeOrganizations.getSelectedId, (val) ->
+      if val?
+        # Reload the dashboard
+        ImpacDashboardsSvc.load(true)
 
     return
