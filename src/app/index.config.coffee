@@ -24,6 +24,18 @@ angular.module 'mnoEnterpriseAngular'
     return $httpProvider
   )
 
+  .config ($httpProvider) ->
+    $httpProvider.interceptors.push ($q, $window) ->
+      {
+        responseError: (rejection) ->
+          if rejection.status == 401
+            # Redirect to login page
+            console.log "User is not connected!"
+            $window.location.href = '/'
+
+          $q.reject rejection
+      }
+
   .config(($sceDelegateProvider) ->
     'ngInject'
 
