@@ -13,7 +13,7 @@
 # => PUT /mnoe/jpi/v1/current_user/update_password
 
 angular.module 'mnoEnterpriseAngular'
-  .service 'MnoeCurrentUser', (MnoeApiSvc) ->
+  .service 'MnoeCurrentUser', (MnoeApiSvc, $window) ->
     _self = @
 
     # Store the current_user promise
@@ -29,6 +29,9 @@ angular.module 'mnoEnterpriseAngular'
       userPromise = MnoeApiSvc.one('current_user').get().then(
         (response) ->
           response = response.plain()
+
+          if !response.logged_in
+            $window.location.href = '/'
 
           # if there is no organization, then by default we show the account tab
           if response.organizations.length == 0

@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller 'LayoutController', ($stateParams, $window, $location, MnoeCurrentUser, MnoeOrganizations, MnoeMarketplace) ->
+  .controller 'LayoutController', ($stateParams, $location, MnoeCurrentUser, MnoeOrganizations, MnoeMarketplace) ->
     'ngInject'
 
     layout = this
@@ -7,9 +7,6 @@ angular.module 'mnoEnterpriseAngular'
     # App initialization
     MnoeCurrentUser.get().then(
       (response) ->
-        if !response.logged_in
-          $window.location.href = '/'
-
         # Load the current organization if defined (url param, cookie or first)
         MnoeOrganizations.getCurrentId(response, $stateParams.dhbRefId).then(
           () ->

@@ -10,8 +10,6 @@
           You do not have any teams! Teams are a great way of controlling who has access to applications within your company.
         </p>
 
-        <div class="spacer1"></div>
-
         <button type="button" class="btn btn-lg btn-grey btn-grey-bordered" ng-click="matrix.addTeam()">
           <i class="fa fa-plus" style="margin-bottom:-2px;"></i>
           &nbsp;
@@ -20,7 +18,6 @@
       </div>
     </div>
   </div>
-
 
   <!-- Regular view -->
   <div ng-show="!isLoading && hasTeams()">
@@ -75,7 +72,6 @@
                     <span editable-text="team.name" onaftersave="matrix.updateTeamName(team)" buttons="no">{{ team.name }}</span>
                   </div>
 
-
                   <span class="team-remove">
                       <button class="btn btn-grey" ng-click="matrix.removeTeam(team)">
                         <i class="fa fa-remove hidden-xs"></i>
@@ -86,7 +82,6 @@
                 <td>
                   <input type="checkbox" ng-checked="matrix.hasAccess(team,'all')" ng-click="matrix.toggleAccess(team,'all')">
                 </td>
-
               </tr>
 
               <tr class="btn-group-row" ng-show="matrix.isChanged()">
@@ -100,15 +95,12 @@
                 </td>
               </tr>
             </tbody>
-
           </table>
         </div>
-
 
         <!-- Matrix: right part (detailed permissions) -->
         <div class="col-xs-8 table-right">
           <div class="text-center" ng-show="!hasApps()">
-            <div class="spacer2"></div>
             <p>It looks like you do not have any application at the moment.</p>
             <a type="button" class="btn btn-lg btn-grey btn-grey-bordered" href="#/marketplace">
               <i class="fa fa-plus" style="margin-bottom:-2px;"></i>
@@ -143,14 +135,11 @@
                 <td></td>
               </tr>
             </tbody>
-
             <!-- End: Permissions matrix -->
           </table>
         </div>
-
         <!-- End: row -->
       </div>
-
       <div class="clearfix"></div>
       <!-- End: permission matrix wrapper -->
     </div>
@@ -159,7 +148,6 @@
     <!--     List of Teams (accordion)    -->
     <!-------------------------------------->
     <div dashboard-organization-team-list></div>
-
     <!-- End: regular view -->
   </div>
 
