@@ -56,6 +56,49 @@ html, body {
 // injector
 // endinjector
 
+
+.flip {
+  perspective: 800;
+  width: 400px;
+  height: 200px;
+  position: relative;
+  margin: 50px auto;
+}
+.flip .card.flipped {
+  transform: rotatex(-180deg);
+}
+.flip .card {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: 0.5s;
+}
+.flip .card .face {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  -webkit-backface-visibility: hidden ;
+  z-index: 2;
+    font-family: Georgia;
+    font-size: 3em;
+    text-align: center;
+    line-height: 200px;
+}
+.flip .card .front {
+  position: absolute;
+  z-index: 1;
+    background: black;
+    color: white;
+    cursor: pointer;
+}
+.flip .card .back {
+  -webkit-transform: rotatex(-180deg);
+    background: blue;
+    background: white;
+    color: black;
+    cursor: pointer;
+}
+
 .font(@size,@weight,@color) {
   font-weight:@weight;
   font-size:@size;
@@ -556,6 +599,10 @@ dashboard-menu {
           background-color:#111c21;
           border-bottom: solid 1px @bg-inverse-color;
           padding:22px 0px;
+
+          &.active {
+            color: @dashboard-side-menu-link-active-color;
+          }
         }
 
         ul.dropdown-menu {
