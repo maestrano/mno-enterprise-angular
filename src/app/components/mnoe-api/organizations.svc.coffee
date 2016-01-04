@@ -70,24 +70,22 @@ angular.module 'mnoEnterpriseAngular'
 
     # Load the current organization if defined (url, cookie or first)
     @getCurrentId = (user = null, dhbRefId = null) ->
-      deferred = $q.defer()
-
       # Return the already selected id
       if _self.selectedId
         $log.debug "MnoeOrganizations.getCurrentId: selectedId", _self.selectedId
-        deferred.resolve(_self.selectedId)
+        return _self.selectedId
 
       # Attempt to load organization from param
       else if dhbRefId
         _self.get(dhbRefId)
         $log.debug "MnoeOrganizations.getCurrentId: dhbRefId", _self.selectedId
-        deferred.resolve(dhbRefId)
+        return dhbRefId
 
       # Attempt to load last organization from cookie
       else if (val = $cookies.get('dhb_ref_id'))
         _self.get(val)
         $log.debug "MnoeOrganizations.getCurrentId: cookie", _self.selectedId
-        deferred.resolve(val)
+        return val
 
       # Load first organization from user
       else
@@ -95,9 +93,7 @@ angular.module 'mnoEnterpriseAngular'
         organization = user.organizations[0]
         _self.get(organization.id)
         $log.debug "MnoeOrganizations.getCurrentId: first", _self.selectedId
-        deferred.resolve(organization.id)
-
-      return deferred.promise
+        return organization.id
 
     #======================================
     # User Role
