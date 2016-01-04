@@ -49,8 +49,14 @@ angular.module 'mnoEnterpriseAngular'
           response
       )
 
+    # TODO: Standardize API tobe able to use Restangular default behaviour (_self.selected.put())
     @update = (organization) ->
-      organization.put()
+      payload = { organization: organization }
+      MnoeApiSvc.one('/organizations', _self.selectedId).customPUT(payload).then(
+        (response) ->
+          _self.selected = response.plain()
+          response
+      )
 
     # Update the credit card
     @updateCreditCard = (creditCard) ->
