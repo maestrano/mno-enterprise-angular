@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "dependencies": {},
   "scripts": {
-    "test": "gulp test"
+    "postinstall": "bower install --quiet --config.interactive=false",
+    "test": "gulp test",
+    "gulp": "gulp"
   },
   "devDependencies": {
     "browser-sync": "~2.9.11",
