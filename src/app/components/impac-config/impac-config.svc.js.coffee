@@ -2,14 +2,7 @@ angular.module 'mnoEnterpriseAngular'
   .service('ImpacConfigSvc' , ($log, $q, MnoeCurrentUser, MnoeOrganizations) ->
 
     @getUserData = ->
-      deferred = $q.defer()
-
-      MnoeCurrentUser.get().then(
-        (response) ->
-          deferred.resolve(response)
-      )
-
-      return deferred.promise
+      MnoeCurrentUser.get()
 
     @getOrganizations = ->
       deferred = $q.defer()
