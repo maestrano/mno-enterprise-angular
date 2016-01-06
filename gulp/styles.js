@@ -20,7 +20,7 @@ var _ = require('lodash');
 //   .pipe(gulp.dest(path.join(conf.paths.dist, '/styles/')))
 // });
 
-gulp.task('styles', ['styles-concat'], function () {
+gulp.task('styles', function () {
   var lessOptions = {
     options: [
       'bower_components',
