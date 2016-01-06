@@ -11,14 +11,14 @@ var $ = require('gulp-load-plugins')();
 var wiredep = require('wiredep').stream;
 var _ = require('lodash');
 
-gulp.task('styles-concat', function() {
-  return gulp.src([
-    path.join(conf.paths.src, '/app/**/*.less')
-  ])
-  .pipe($.concat('app.less'))
-  .pipe(wiredep(_.extend({}, conf.wiredep)))
-  .pipe(gulp.dest(path.join(conf.paths.dist, '/styles/')))
-});
+// gulp.task('styles-concat', function() {
+//   return gulp.src([
+//     path.join(conf.paths.src, '/app/**/*.less')
+//   ])
+//   .pipe($.concat('app.less'))
+//   .pipe(wiredep(_.extend({}, conf.wiredep)))
+//   .pipe(gulp.dest(path.join(conf.paths.dist, '/styles/')))
+// });
 
 gulp.task('styles', ['styles-concat'], function () {
   var lessOptions = {
