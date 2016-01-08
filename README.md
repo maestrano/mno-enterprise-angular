@@ -17,3 +17,27 @@
 * `gulp test:auto` to launch your unit tests with Karma in watch mode
 * `gulp protractor` to launch your e2e tests with Protractor
 * `gulp protractor:dist` to launch your e2e tests with Protractor on the dist files
+
+## How to build this frontend on a Mno-Enterprise app
+
+In the enterprise app directory:
+
+* run `gulp clone-frontend;gulp run-npm-install`
+
+This command will clone the frontend repository in the `.tmp-frontend` directory
+and download its npm and bower dependencies.
+You can change the **mno-enterprise-angular** frontend repository address and branch
+by updating `git_frontend_repo` and `git_frontend_branch` variables in gulpfile.js
+
+* run `gulp copy-custom-files`
+
+Your custom files in the `frontend` directory will be duplicated in `.tmp-frontend` directory.
+Your custom files must respect the `mno-enterprise-angular/src` code organization.
+
+(eg. if the file `frontend/src/app/stylesheets/theme.less` is present in the host project, it will replace the one in `.tmp-frontend/src/app/stylesheets/theme.less`)
+
+* run `gulp run-frontend-build;gulp copy-dist-files`
+
+The **mno-enterprise-angular** project will be built with your custom files and duplicated in the `public` folder.
+
+Repeat step 2 & 3, anytime you need to copy your custom files and recompile your frontend project.
