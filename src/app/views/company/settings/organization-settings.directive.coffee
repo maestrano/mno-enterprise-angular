@@ -1,7 +1,7 @@
 
-DashboardOrganizationSettingsCtrl = ($scope, $window, MnoeOrganizations, DhbOrganizationSvc, Utilities) ->
+DashboardOrganizationSettingsCtrl = ($scope, $window, MnoeOrganizations, Utilities) ->
   'ngInject'
-  
+
   #====================================
   # Pre-Initialization
   #====================================
@@ -15,14 +15,14 @@ DashboardOrganizationSettingsCtrl = ($scope, $window, MnoeOrganizations, DhbOrga
   #====================================
   # Initialize the data used by the directive
   $scope.initialize = (organization) ->
-    angular.copy(organization,$scope.model)
-    angular.copy(organization,$scope.origModel)
+    angular.copy(organization, $scope.model)
+    angular.copy(organization, $scope.origModel)
     $scope.isLoading = false
 
   # Save the current state of the credit card
   $scope.save = ->
     $scope.isLoading = true
-    DhbOrganizationSvc.organization.update($scope.model).then(
+    MnoeOrganizations.update($scope.model).then(
       (organization) ->
         $scope.errors = ''
         angular.copy(organization, $scope.model)

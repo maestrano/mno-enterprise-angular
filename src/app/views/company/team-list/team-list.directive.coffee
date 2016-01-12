@@ -1,9 +1,9 @@
 #============================================
 #
 #============================================
-DashboardOrganizationTeamListCtrl = ($scope, $window, $modal, $q, MnoeOrganizations, MnoeTeams, MnoeAppInstances, DhbOrganizationSvc, DhbTeamSvc, Utilities) ->
+DashboardOrganizationTeamListCtrl = ($scope, $window, $modal, $q, MnoeCurrentUser, MnoeOrganizations, MnoeTeams, MnoeAppInstances, Utilities) ->
   'ngInject'
-  
+
   #====================================
   # Pre-Initialization
   #====================================
@@ -23,7 +23,7 @@ DashboardOrganizationTeamListCtrl = ($scope, $window, $modal, $q, MnoeOrganizati
       realTeams = teams
     else
       _.each teams, (t) ->
-        realTeams.push(t) if $scope.teamHasUser(t, DhbOrganizationSvc.data.current_user)
+        realTeams.push(t) if $scope.teamHasUser(t, MnoeCurrentUser.user)
 
     angular.copy(realTeams, $scope.teams)
     $scope.isLoading = false
@@ -47,7 +47,7 @@ DashboardOrganizationTeamListCtrl = ($scope, $window, $modal, $q, MnoeOrganizati
   memberAddModal.config = {
     instance: {
       backdrop: 'static'
-      templateUrl: 'mno_enterprise/dashboard/teams/member-add-modal.html'
+      templateUrl: 'app/views/company/team-list/modals/member-add-modal.html'
       size: 'lg'
       windowClass: 'inverse team-member-add-modal'
       scope: $scope
@@ -69,7 +69,7 @@ DashboardOrganizationTeamListCtrl = ($scope, $window, $modal, $q, MnoeOrganizati
   memberAddModal.getAvailableUsers = (team) ->
     self = memberAddModal
     list = []
-    _.each DhbOrganizationSvc.data.organization.members, (m) ->
+    _.each MnoeOrganizations.selected.organization.members, (m) ->
       unless _.find(team.users,(u)-> u.id == m.id)?
         list.push(m) if m.entity == 'User'
     return list
@@ -102,7 +102,7 @@ DashboardOrganizationTeamListCtrl = ($scope, $window, $modal, $q, MnoeOrganizati
   memberAddModal.proceed = ->
     self = memberAddModal
     self.isLoading = true
-    DhbTeamSvc.members.add(self.team.id, self.users).then(
+    MnoeTeams.addUsers(self.team.id, self.users).then(
       (users) ->
         self.errors = ''
         angular.copy(users,self.team.users)
@@ -118,7 +118,7 @@ DashboardOrganizationTeamListCtrl = ($scope, $window, $modal, $q, MnoeOrganizati
   memberRemovalModal.config = {
     instance: {
       backdrop: 'static'
-      templateUrl: 'mno_enterprise/dashboard/teams/member-removal-modal.html'
+      templateUrl: 'app/views/company/team-list/modals/member-removal-modal.html'
       size: 'lg'
       windowClass: 'inverse team-member-removal-modal'
       scope: $scope
@@ -139,7 +139,7 @@ DashboardOrganizationTeamListCtrl = ($scope, $window, $modal, $q, MnoeOrganizati
   memberRemovalModal.proceed = ->
     self = memberRemovalModal
     self.isLoading = true
-    DhbTeamSvc.members.remove(self.team.id, [self.user]).then(
+    MnoeTeams.removeUser(self.team.id, self.user).then(
       (users) ->
         self.errors = ''
         angular.copy(users, self.team.users)

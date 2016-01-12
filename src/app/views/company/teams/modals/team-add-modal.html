@@ -1,0 +1,36 @@
+<div class="modal-header">
+  <div class="close" type="button" ng-click="addTeamModal.close()" >×</div>
+  <h3>Create New Team</h3>
+</div>
+
+<div class="modal-body">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="alert alert-error" ng-show="addTeamModal.errors">
+        <button class="close" ng-click="addTeamModal.errors=''">×</button>
+        <ul>
+          <li ng-repeat="error in addTeamModal.errors">{{error}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3 text-center">
+      <p>Enter a name for your new team</p>
+      <div class="spacer1"></div>
+      <input type="text" class="form-control" ng-model="addTeamModal.model.name" required/>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <div class="row">
+    <div class="col-sm-12">
+      <button class="btn btn-default" ng-click="addTeamModal.close()" ng-show="!addTeamModal.isLoading">Cancel</button>
+      <button class="btn btn-info" ng-click="addTeamModal.proceed()" ng-disabled="addTeamModal.isProceedDisabled() || addTeamModal.isLoading">
+        <span ng-show="addTeamModal.isLoading"><i class="fa fa-spinner fa-pulse fa-fw"></i></span> Create
+      </button>
+    </div>
+  </div>
+</div>

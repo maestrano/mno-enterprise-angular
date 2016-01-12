@@ -1,19 +1,22 @@
 angular.module 'mnoEnterpriseAngular'
-  .run(($log) ->
-    'ngInject'
-    $log.debug 'runBlock end'
-  )
+  # Impac configuration
   .run((ImpacLinking, ImpacConfigSvc) ->
-    'ngInject'
-
     data =
       user: ImpacConfigSvc.getUserData
       organizations: ImpacConfigSvc.getOrganizations
 
     ImpacLinking.linkData(data)
   )
-  .run((editableOptions) ->
-    'ngInject'
 
+  # xeditable-anugular configuration
+  .run((editableOptions) ->
+    # bootstrap3 theme. Can be also 'bs2', 'default'
     editableOptions.theme = 'bs3'
+  )
+
+  # Force the page to scroll to top when a view change
+  .run(($rootScope) ->
+    $rootScope.$on('$viewContentLoaded', ->
+      window.scrollTo(0, 0)
+    )
   )

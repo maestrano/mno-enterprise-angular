@@ -6,14 +6,13 @@ angular.module 'mnoEnterpriseAngular'
     @appInstances = []
 
     @getAppInstances = ->
-      # Empty app instances service array
-      _self.appInstances.length = 0
-
       # Workaround as the API is not standard (return a hash map not an array)
       # (Prefix operation by '/' to avoid data extraction)
       # TODO: Standard API
       MnoeApiSvc.one('organizations', MnoeOrganizations.selectedId).one('/app_instances').get().then(
         (response) ->
+          # Empty app instances service array
+          _self.appInstances.length = 0
           # Transform hash map to array
           response = _.values(response.app_instances)
           #Append response array to service array

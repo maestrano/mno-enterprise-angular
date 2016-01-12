@@ -2,23 +2,15 @@ angular.module 'mnoEnterpriseAngular'
   .service('ImpacConfigSvc' , ($log, $q, MnoeCurrentUser, MnoeOrganizations) ->
 
     @getUserData = ->
-      deferred = $q.defer()
-
-      MnoeCurrentUser.get().then(
-        (response) ->
-          deferred.resolve(response)
-      )
-
-      return deferred.promise
+      MnoeCurrentUser.get()
 
     @getOrganizations = ->
       deferred = $q.defer()
 
       MnoeCurrentUser.get().then(
         (response) ->
-          currentOrgId = MnoeOrganizations.selectedId
+          currentOrgId = parseInt(MnoeOrganizations.selectedId)
           userOrgs = response.organizations
-          currentOrgId ||= userOrgs[0].id if userOrgs.length > 0
 
           if userOrgs && currentOrgId
             deferred.resolve({organizations: userOrgs, currentOrgId: currentOrgId})

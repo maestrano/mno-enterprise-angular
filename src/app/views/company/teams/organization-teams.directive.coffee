@@ -1,5 +1,6 @@
 
-DashboardOrganizationTeamsCtrl = ($scope, $window, $modal, $q, MnoeOrganizations, MnoeTeams, MnoeAppInstances, DhbOrganizationSvc, DhbTeamSvc, Utilities) ->
+# TODO: Remove DhbTeamSvc
+DashboardOrganizationTeamsCtrl = ($scope, $window, $modal, $q, MnoeOrganizations, MnoeTeams, MnoeAppInstances, DhbTeamSvc, Utilities) ->
   'ngInject'
 
   #====================================
@@ -150,7 +151,7 @@ DashboardOrganizationTeamsCtrl = ($scope, $window, $modal, $q, MnoeOrganizations
   addTeamModal.config = {
     instance: {
       backdrop: 'static'
-      templateUrl: 'mno_enterprise/dashboard/teams/team-add-modal.html'
+      templateUrl: 'app/views/company/teams/modals/team-add-modal.html'
       size: 'lg'
       windowClass: 'inverse team-add-modal'
       scope: $scope
@@ -180,12 +181,12 @@ DashboardOrganizationTeamsCtrl = ($scope, $window, $modal, $q, MnoeOrganizations
   addTeamModal.proceed = ->
     self = addTeamModal
     self.isLoading = true
-    DhbTeamSvc.team.create(self.model).then(
+    MnoeTeams.addTeam(self.model).then(
       (team) ->
         self.errors = ''
         self.addToScope(team)
         self.close()
-      , (errors) ->
+      (errors) ->
         self.errors = Utilities.processRailsError(errors)
     ).finally(-> self.isLoading = false)
 
@@ -200,7 +201,7 @@ DashboardOrganizationTeamsCtrl = ($scope, $window, $modal, $q, MnoeOrganizations
   teamDeletionModal.config = {
     instance: {
       backdrop: 'static'
-      templateUrl: 'mno_enterprise/dashboard/teams/team-delete-modal.html'
+      templateUrl: 'app/views/company/teams/modals/team-delete-modal.html'
       size: 'lg'
       windowClass: 'inverse team-delete-modal'
       scope: $scope
@@ -221,15 +222,14 @@ DashboardOrganizationTeamsCtrl = ($scope, $window, $modal, $q, MnoeOrganizations
   teamDeletionModal.proceed = ->
     self = teamDeletionModal
     self.isLoading = true
-    DhbTeamSvc.team.destroy(self.team.id).then(
+    MnoeTeams.deleteTeam(self.team.id).then(
       (data) ->
         self.errors = ''
         self.removeFromScope(self.team)
         self.close()
-      , (errors) ->
+      (errors) ->
         self.errors = Utilities.processRailsError(errors)
     ).finally(-> self.isLoading = false)
-
 
   teamDeletionModal.removeFromScope = (team) ->
     team = _.find($scope.teams, (t) -> t.id == team.id)

@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .config ($stateProvider, $urlRouterProvider) ->
+  .config ($stateProvider, $urlRouterProvider, URI) ->
     'ngInject'
 
     $stateProvider
@@ -44,8 +44,8 @@ angular.module 'mnoEnterpriseAngular'
           'ngInject'
 
           # Logout and redirect the user
-          $http.delete('/mnoe/auth/users/sign_out').then( ->
-            $window.location.href = '/'
+          $http.delete(URI.logout).then( ->
+            $window.location.href = URI.login
           )
 
     $urlRouterProvider.otherwise '/apps'
