@@ -22,6 +22,9 @@
 
 In the enterprise app directory:
 
+Install dependencies
+* run `npm install gulp gulp-util gulp-load-plugins del gulp-git`
+
 * run `gulp clone-frontend;gulp run-npm-install`
 
 This command will clone the frontend repository in the `.tmp-frontend` directory
