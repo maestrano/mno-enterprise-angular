@@ -14,6 +14,9 @@ var _ = require('lodash');
 // Concatenate all LESS files in one
 gulp.task('less-concat', function() {
   return gulp.src([
+    path.join(conf.paths.src, '/app/stylesheets/theme.less'),
+    path.join(conf.paths.src, '/app/stylesheets/variables.less'),
+    path.join(conf.paths.src, '/app/stylesheets/live-previewer.less'),
     path.join(conf.paths.src, '/app/**/*.less')
   ])
   .pipe($.concat('app.less'))
