@@ -1,4 +1,6 @@
 ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
+  'ngInject'
+
   #============================================
   # Theme Config
   #============================================

@@ -11,14 +11,15 @@ var $ = require('gulp-load-plugins')();
 var wiredep = require('wiredep').stream;
 var _ = require('lodash');
 
-// gulp.task('styles-concat', function() {
-//   return gulp.src([
-//     path.join(conf.paths.src, '/app/**/*.less')
-//   ])
-//   .pipe($.concat('app.less'))
-//   .pipe(wiredep(_.extend({}, conf.wiredep)))
-//   .pipe(gulp.dest(path.join(conf.paths.dist, '/styles/')))
-// });
+// Concatenate all LESS files in one
+gulp.task('less-concat', function() {
+  return gulp.src([
+    path.join(conf.paths.src, '/app/**/*.less')
+  ])
+  .pipe($.concat('app.less'))
+  .pipe(wiredep(_.extend({}, conf.wiredep)))
+  .pipe(gulp.dest(path.join(conf.paths.dist, '/styles/')))
+});
 
 gulp.task('styles', function () {
   var lessOptions = {
@@ -30,7 +31,9 @@ gulp.task('styles', function () {
 
   var injectFiles = gulp.src([
     path.join(conf.paths.src, '/app/**/*.less'),
-    path.join('!' + conf.paths.src, '/app/index.less')
+    path.join('!' + conf.paths.src, '/app/index.less'),
+    // Always ensure live-previewer file is imported last
+    path.join(conf.paths.src, '/app/stylesheets/live-previewer.less'),
   ], { read: false });
 
   var injectOptions = {

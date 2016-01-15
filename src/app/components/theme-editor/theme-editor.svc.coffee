@@ -35,7 +35,7 @@ angular.module 'mnoEnterpriseAngular'
 
   @getTheme = ->
     $log.debug('Loading custom theme')
-    $http.get('/styles/theme.less').then((response) ->
+    $http.get('styles/theme.less').then((response) ->
       data  = response.data
       return getLessVars(data)
     )
