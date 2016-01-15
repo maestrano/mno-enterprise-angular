@@ -97,12 +97,14 @@ ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
     # Gruik Gruik! Let's get the compiled css and save it to disk :D
     # style = document.getElementById('less:styles-app').innerHTML
 
-    style = themeToLess()
-    editor.busy = true
-    themeEditorSvc.saveTheme(style).then(
-      -> toastr.info('Theme saved')
-      -> toastr.error('Error while saving theme')
-    ).finally(-> editor.busy = false)
+    # Update preview
+    editor.update().then ->
+      style = themeToLess()
+      editor.busy = true
+      themeEditorSvc.saveTheme(style).then(
+        -> toastr.info('Theme saved')
+        -> toastr.error('Error while saving theme')
+      ).finally(-> editor.busy = false)
 
   editor.export = () ->
     # Update  the Text Area
@@ -116,7 +118,7 @@ ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
     anchor.attr({
       href: 'data:attachment/csv;charset=utf-8,' + encodeURI(output),
       target: '_blank',
-      download: 'theme.less'
+      download: 'live-previewer.less'
     })[0].click()
 
     anchor.remove() # Clean it up afterwards
