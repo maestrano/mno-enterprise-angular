@@ -29,11 +29,14 @@ gulp.task('styles', function () {
     ]
   };
 
+  // Ensure live-previewer file is loaded *after*
+  // the theme and variables ones.
   var injectFiles = gulp.src([
+    path.join(conf.paths.src, '/app/stylesheets/theme.less'),
+    path.join(conf.paths.src, '/app/stylesheets/variables.less'),
+    path.join(conf.paths.src, '/app/stylesheets/live-previewer.less'),
     path.join(conf.paths.src, '/app/**/*.less'),
     path.join('!' + conf.paths.src, '/app/index.less'),
-    // Always ensure live-previewer file is imported last
-    path.join(conf.paths.src, '/app/stylesheets/live-previewer.less'),
   ], { read: false });
 
   var injectOptions = {
