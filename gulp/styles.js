@@ -25,6 +25,7 @@ gulp.task('less-concat', function() {
   .pipe($.concat('app.less'))
   .pipe(wiredep(_.extend({}, conf.wiredep)))
   .pipe($.replace('../../../bower_components/', '../bower_components/'))
+  .pipe($.replace('../../bower_components/', '../bower_components/'))
   .pipe(gulp.dest(path.join(conf.paths.dist, '/styles/')))
 });
 
