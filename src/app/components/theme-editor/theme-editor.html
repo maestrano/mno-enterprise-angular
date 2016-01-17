@@ -1,11 +1,21 @@
 <div class="container top-buffer-1">
   <form>
+    <div class="row text-center">
+      <div  ng-hide="editor.busy">
+        <button ng-click="editor.reset()" class="btn btn-default">Reset to last save</button>
+        <button ng-click="editor.save()" class="btn btn-danger">Save</button>
+        <button ng-click="editor.reset({published:true})" class="btn btn-default">Reset to published style</button>
+        <button ng-click="editor.save({publish:true})" class="btn btn-danger">Publish</button>
+      </div>
+      <div ng-show="editor.busy"><i class="fa fa-spinner fa-spin fa-2x"></i></div>
+    </div>
+
     <uib-tabset>
       <uib-tab heading="Theme">
         <div class="row top-buffer-1">
           <div class="form-group col-md-6" ng-repeat="(color, value) in theme">
-            <label>{{color}} - {{labels[color]}}</label>
-            <input type="color" class="form-control" ng-model="theme[color]">
+            <label>{{labels[color]}} <br/><small class="text-muted">{{color}}</small></label>
+            <input type="color" class="form-control" ng-model="theme[color]" ng-change="editor.update()">
           </div>
         </div>
       </uib-tab>
@@ -15,7 +25,7 @@
           <div class="panel-body">
             <div class="form-group col-md-6" ng-repeat="(var, value) in vars">
               <label>{{var}}</label>
-              <input type="text" class="form-control" ng-model="variables[section][var]">
+              <input type="text" class="form-control" ng-model="variables[section][var]" ng-change="editor.update()">
             </div>
           </div>
         </div>
@@ -27,20 +37,20 @@
         </div>
         <button class='btn btn-warning' ng-click="editor.updateLogo()">Update Logo</button>
       </uib-tab>
+      <uib-tab heading="Import/Export">
+        <div class="row text-center">
+          <div  ng-hide="editor.busy">
+            <button ng-click="editor.import()" class="btn btn-danger">Import</button>
+            <button ng-click="editor.export()" class="btn btn-danger">Export</button>
+          </div>
+          <div ng-show="editor.busy"><i class="fa fa-spinner fa-spin fa-2x"></i></div>
+        </div>
+        <div class="row top-buffer-1">
+          <textarea class="form-control" ng-model="editor.output" rows="15" style="font-family: monospace"></textarea>
+        </div>
+      </uib-tab>
     </uib-tabset>
-    <div class="row text-center">
-      <div  ng-hide="editor.busy">
-        <button ng-click="editor.reset()" class="btn btn-default">Reset</button>
-        <button type="submit" ng-click="editor.update()" class="btn btn-primary">Preview</button>
-        <button ng-click="editor.export()" class="btn btn-danger">Export</button>
-        <button ng-click="editor.save()" class="btn btn-danger">Save</button>
-        <button ng-click="editor.save({publish:true})" class="btn btn-danger">Publish</button>
-      </div>
-      <div ng-show="editor.busy"><i class="fa fa-spinner fa-spin fa-2x"></i></div>
-    </div>
-    <div class="row top-buffer-1">
-      <textarea class="form-control" ng-model="editor.output" rows="15" style="font-family: monospace" readonly></textarea>
-    </div>
+
     <div class="top-buffer-1"></div>
   </form>
 </div>
