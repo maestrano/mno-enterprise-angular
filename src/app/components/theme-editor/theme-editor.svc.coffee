@@ -26,6 +26,10 @@ angular.module 'mnoEnterpriseAngular'
 
     $http.put(uploadUrl, data, opts)
 
+  @resetToPublishedTheme = ->
+    resetUrl = '/mnoe/jpi/v1/admin/theme/reset'
+    $http.post(resetUrl,'')
+
   @getTheme = ->
     $log.debug('Loading custom theme')
     $http.get('styles/theme-previewer.less').then((response) ->
