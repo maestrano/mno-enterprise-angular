@@ -17,8 +17,8 @@ gulp.task('less-concat', function() {
   var injectFiles = gulp.src([
     path.join(conf.paths.src, '/app/stylesheets/theme.less'),
     path.join(conf.paths.src, '/app/stylesheets/variables.less'),
-    path.join(conf.paths.src, '/app/stylesheets/live-previewer.less'),
-    path.join(conf.paths.src, '/app/stylesheets/live-previewer-tmp.less'),
+    path.join(conf.paths.src, '/app/stylesheets/theme-previewer-published.less'),
+    path.join(conf.paths.src, '/app/stylesheets/theme-previewer-tmp.less'),
     path.join(conf.paths.src, '/app/**/*.less'),
     path.join('!' + conf.paths.src, '/app/index.less'),
   ])
@@ -60,9 +60,9 @@ gulp.task('styles', function () {
   var injectFiles = gulp.src([
     path.join(conf.paths.src, '/app/stylesheets/theme.less'),
     path.join(conf.paths.src, '/app/stylesheets/variables.less'),
-    path.join(conf.paths.src, '/app/stylesheets/live-previewer.less'),
+    path.join(conf.paths.src, '/app/stylesheets/theme-previewer-published.less'),
     path.join(conf.paths.src, '/app/**/*.less'),
-    path.join('!' + conf.paths.src, '/app/stylesheets/live-previewer-tmp.less'),
+    path.join('!' + conf.paths.src, '/app/stylesheets/theme-previewer-tmp.less'),
     path.join('!' + conf.paths.src, '/app/index.less'),
   ], { read: false });
 
