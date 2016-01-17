@@ -15,7 +15,10 @@
         <div class="row top-buffer-1">
           <div class="form-group col-md-6" ng-repeat="(color, value) in theme">
             <label>{{labels[color]}} <br/><small class="text-muted">{{color}}</small></label>
-            <input type="color" class="form-control" ng-model="theme[color]" ng-change="editor.update()">
+            <input type="color" class="form-control"
+              ng-model="theme[color]"
+              ng-model-options="{ debounce: 300 }"
+              ng-change="editor.update()">
           </div>
         </div>
       </uib-tab>
@@ -25,7 +28,10 @@
           <div class="panel-body">
             <div class="form-group col-md-6" ng-repeat="(var, value) in vars">
               <label>{{var}}</label>
-              <input type="text" class="form-control" ng-model="variables[section][var]" ng-change="editor.update()">
+              <input type="text" class="form-control"
+                ng-model="variables[section][var]"
+                ng-model-options="{ debounce: 1000 }"
+                ng-change="editor.update()">
             </div>
           </div>
         </div>
