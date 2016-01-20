@@ -4,7 +4,7 @@
   <div uib-accordion class="accordion">
     <div uib-accordion-group is-open="vm.isPersoInfoOpen">
       <div uib-accordion-heading>
-        Personal Information  <span class="caret pull-right" ng-class="{'caret-down': !vm.isPersoInfoOpen, 'caret-up': vm.isPersoInfoOpen}"></span>
+        {{'personal-infos' | translate }}  <span class="caret pull-right" ng-class="{'caret-down': !vm.isPersoInfoOpen, 'caret-up': vm.isPersoInfoOpen}"></span>
       </div>
 
       <div class="alert alert-error" ng-show="vm.errors.user">

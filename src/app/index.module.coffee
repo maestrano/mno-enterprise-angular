@@ -9,6 +9,7 @@ angular.module 'mnoEnterpriseAngular', [
   'restangular',
   'platanus.inflector',
   'xeditable',
+  'pascalprecht.translate',
 
   'maestrano.impac'
 ]
