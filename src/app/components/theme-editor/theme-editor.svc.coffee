@@ -2,23 +2,16 @@ angular.module 'mnoEnterpriseAngular'
 .service 'themeEditorSvc', ($log, $http) ->
   _self = @
 
-  @saveTheme = (theme) ->
+  @saveTheme = (theme,opts = {}) ->
     uploadUrl = '/mnoe/jpi/v1/admin/theme/save'
 
-    # Define a boundary, I stole this from IE but you can use any string AFAIK
-    boundary = "---------------------------7da24f2e50046"
-    body = '--' + boundary + '\r\n'
-    # Parameter name is "file" and local filename is "temp.txt"
-    body += 'Content-Disposition: form-data; name="theme";' + 'filename="theme.less"\r\n'
-    # Add the file's mime-type
-    body += 'Content-type: plain/text\r\n\r\n'
-    # Add your data
-    body += theme + '\r\n'
-    body += '--'+ boundary + '--'
+    body = {
+      theme: theme,
+      publish: !!opts.publish
+    }
 
-    $http.post(uploadUrl, body, {
+    $http.post(uploadUrl, angular.toJson(body), {
       transformRequest: angular.identity,
-      headers: {'Content-Type': "multipart/form-data; boundary="+boundary}
     })
     .success(-> $log.debug('success'))
     .error(-> $log.debug('error'))
@@ -33,9 +26,13 @@ angular.module 'mnoEnterpriseAngular'
 
     $http.put(uploadUrl, data, opts)
 
+  @resetToPublishedTheme = ->
+    resetUrl = '/mnoe/jpi/v1/admin/theme/reset'
+    $http.post(resetUrl,'')
+
   @getTheme = ->
     $log.debug('Loading custom theme')
-    $http.get('/styles/theme.less').then((response) ->
+    $http.get('styles/theme-previewer.less').then((response) ->
       data  = response.data
       return getLessVars(data)
     )

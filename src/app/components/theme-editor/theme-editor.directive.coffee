@@ -1,4 +1,6 @@
 ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
+  'ngInject'
+
   #============================================
   # Theme Config
   #============================================
@@ -76,34 +78,43 @@ ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
   $scope.editor = editor = {busy: false, output: ''}
 
   editor.update = () ->
+    return true if editor.updating
     editor.busy = true
-
     vars = mergeLessVars()
 
-    # Timeout to not refresh ui before freezing it with the less compilation
-    $timeout(
-      -> less.modifyVars(vars).then(-> editor.busy = false)
-    , 100)
+    # Apply style
+    less.modifyVars(vars).then ->
+      editor.busy = false
+      $scope.$apply()
 
-  editor.reset = () ->
+  editor.reset = (opts = {published:false}) ->
     editor.busy = true
-    $scope.theme = theme = angular.copy(default_theme)
-    $scope.variables = variables = angular.copy(default_variables)
-    editor.update()
+    if opts.published
+      themeEditorSvc.resetToPublishedTheme()
+        .then(-> loadLastSavedTheme())
+        .then(-> editor.update())
+    else
+      $scope.theme = theme = angular.copy(default_theme)
+      $scope.variables = variables = angular.copy(default_variables)
+      editor.update()
 
-  editor.save = () ->
-    # Gruik Gruik! Let's get the compiled css and save it to disk :D
-    # style = document.getElementById('less:styles-app').innerHTML
+  editor.local_save = ->
+    default_theme = angular.copy($scope.theme)
+    default_variables = angular.copy($scope.variables)
 
+  editor.save = (opts = {publish: false}) ->
     style = themeToLess()
     editor.busy = true
-    themeEditorSvc.saveTheme(style).then(
-      -> toastr.info('Theme saved')
+    theme_action = if opts.publish then "published" else "saved"
+    themeEditorSvc.saveTheme(style,opts).then(
+      ->
+        editor.local_save()
+        toastr.info("Theme #{theme_action}")
       -> toastr.error('Error while saving theme')
     ).finally(-> editor.busy = false)
 
   editor.export = () ->
-    # Update  the Text Area
+    # Update the Text Area
     editor.output = output = themeToLess()
 
     # Create and download the less file
@@ -114,12 +125,19 @@ ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
     anchor.attr({
       href: 'data:attachment/csv;charset=utf-8,' + encodeURI(output),
       target: '_blank',
-      download: 'theme.less'
+      download: 'live-previewer.less'
     })[0].click()
 
     anchor.remove() # Clean it up afterwards
 
     return true
+
+  editor.import = ->
+    editor.busy = true
+    loadThemeData(themeEditorSvc.parseLessVars(editor.output))
+    editor.update().then ->
+      editor.busy = false
+      toastr.info('Theme has been imported')
 
   editor.updateLogo = () ->
     logo = angular.element($('#theme-main-logo'))[0].files[0]
@@ -150,32 +168,39 @@ ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
   # Build a JS object than can be passed to lessjs
   mergeLessVars = ->
     lessVars = angular.extend({}, theme)
+    console.log(variables)
     _.forEach(variables, (vars, key) ->
+      console.log(lessVars)
       angular.extend(lessVars, vars)
     )
     return lessVars
 
   # Load custom theme
-  loadCustomTheme = ->
+  loadLastSavedTheme = ->
     themeEditorSvc.getTheme().then(
       (data) ->
-        _.forEach(theme, (value, key) ->
-          if data[key]
-            theme[key] = data[key]
-        )
-
-        _.forEach(variables, (vars, section) ->
-          _.forEach(vars, (value, key) ->
-            if data[key]
-              variables[section][key] = data[key]
-          )
-        )
+        loadThemeData(data)
+        editor.local_save()
       (error) ->
         $log.info('No custom theme found')
     )
 
+  loadThemeData = (data) ->
+    _.forEach(theme, (value, key) ->
+      if data[key]
+        theme[key] = data[key]
+    )
+
+    _.forEach(variables, (vars, section) ->
+      _.forEach(vars, (value, key) ->
+        if data[key]
+          variables[section][key] = data[key]
+      )
+    )
+
   # Init
-  loadCustomTheme()
+  loadLastSavedTheme()
+  toastr.info("Scroll down to start editing the dashboard style",null,{timeOut: 6000})
 
 angular.module 'mnoEnterpriseAngular'
   .directive('themeEditor', ->
