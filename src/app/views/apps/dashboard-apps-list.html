@@ -1,6 +1,6 @@
 <div id="dashboard-apps-list">
   <h2 class="section-title">
-    Dashboard
+    {{'mno_enterprise.templates.dashboard.apps_list.title' | translate}}
   </h2>
 
   <!-- Loader -->
@@ -31,7 +31,7 @@
               <br>
               <div>
                 <br>
-                <button ng-click="openAppDeletionModal(app)" ng-show="helper.canDeleteApp()" class="btn btn-danger">Delete</button>
+                <button ng-click="openAppDeletionModal(app)" ng-show="helper.canDeleteApp()" class="btn btn-danger">{{'mno_enterprise.templates.dashboard.apps_list.delete' | translate}}</button>
               </div>
             </div>
 
@@ -64,7 +64,7 @@
                 </a>
               </div>
 
-              <a ng-href="{{appsListHelper.appActionUrl(app)}}" target="_blank" ng-hide="appsListHelper.isLaunchHidden(app)" class="btn btn-warning">Launch App</a>
+              <a ng-href="{{appsListHelper.appActionUrl(app)}}" target="_blank" ng-hide="appsListHelper.isLaunchHidden(app)" class="btn btn-warning">{{'mno_enterprise.templates.dashboard.apps_list.launch_app' | translate}}</a>
 
               <span ng-show="app.status == 'terminating' || app.status == 'terminated'">(deleted)</span>
               <br>

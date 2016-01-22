@@ -50,13 +50,12 @@ angular.module 'mnoEnterpriseAngular'
   .config(($translateProvider) ->
     $translateProvider.useSanitizeValueStrategy('escape')
 
-    $translateProvider.translations('en', {
-      'personal-infos': 'Personal Information'
-    })
+    $translateProvider.useLocalStorage()
 
-    $translateProvider.translations('fr', {
-      'personal-infos': 'Informations personelles'
-    })
+    $translateProvider.useStaticFilesLoader({
+      prefix: 'locales/',
+      suffix: '.locale.json'
+    });
 
     $translateProvider.preferredLanguage('en')
   )
