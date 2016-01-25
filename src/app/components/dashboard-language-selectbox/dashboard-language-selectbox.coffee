@@ -4,14 +4,13 @@ angular.module 'mnoEnterpriseAngular'
     return {
       restrict: 'EA'
       template: '''
-        <select ng-model="selectedLangKey" ng-change="changeLanguage()">
-          <option value="en">English</option>
-          <option value="id">Indonesian</option>
-          <option value="zh">Chinese</option>
+        <select ng-model="selectedLangKey" ng-change="changeLanguage()" ng-options="locale.id as locale.name for locale in locales track by locale.id">
         </select>
       '''
-      controller: ($scope, $translate) ->
-        'ngInject'
+      controller: ($scope, $translate, LOCALES) ->
+
+        $scope.locales = LOCALES.locales
+        $scope.selectedLangKey = _.find(LOCALES.locales, {id: $translate.use()})
 
         $scope.changeLanguage = () ->
           $translate.use($scope.selectedLangKey)

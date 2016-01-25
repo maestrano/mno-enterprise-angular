@@ -47,15 +47,16 @@ angular.module 'mnoEnterpriseAngular'
     ])
   )
 
-  .config(($translateProvider) ->
-    $translateProvider.useSanitizeValueStrategy('escape')
-
-    $translateProvider.useLocalStorage()
-
+  .config(($translateProvider, LOCALES) ->
+    # Path to translations files
     $translateProvider.useStaticFilesLoader({
       prefix: 'locales/',
       suffix: '.locale.json'
-    });
+    })
 
-    $translateProvider.preferredLanguage('en')
+    $translateProvider.preferredLanguage(LOCALES.preferredLocale)
+    $translateProvider.fallbackLanguage(LOCALES.fallbackLanguage)
+    $translateProvider.useSanitizeValueStrategy('escape')
+    $translateProvider.useMissingTranslationHandlerLog()
+    $translateProvider.useLocalStorage()
   )
