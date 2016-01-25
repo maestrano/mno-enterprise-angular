@@ -1,4 +1,4 @@
-<h2 class="section-title">Company</h2>
+<h2 class="section-title">{{ 'mno_enterprise.templates.dashboard.organization.index.title' | translate }}</h2>
 
 <div class="row dashboard-organization">
 
@@ -40,17 +40,15 @@
       <!--         Billing Section          -->
       <!-------------------------------------->
       <div uib-tab ng-show="vm.isBillingShown()" active="vm.tabs.billing">
-        <div uib-tab-heading>Billing</div>
-
+        <div uib-tab-heading>{{ 'mno_enterprise.templates.dashboard.organization.index.billing.title' | translate }}</div>
 
         <!-- Directive: DashboardOrganizationArrears -->
         <!-- <div dashboard-organization-arrears></div> -->
 
-
         <div uib-accordion class="accordion">
           <div uib-accordion-group is-open="isCrbgOpen">
             <div uib-accordion-heading>
-                Current Billing <span class="caret pull-right" ng-class="{'caret-down': !isCrbgOpen, 'caret-up': isCrbgOpen}"></span>
+              {{ 'mno_enterprise.templates.dashboard.organization.index.billing.current_billing' | translate }} <span class="caret pull-right" ng-class="{'caret-down': !isCrbgOpen, 'caret-up': isCrbgOpen}"></span>
             </div>
 
             <!-- Directive: DashboardOrganizationBilling -->
@@ -63,7 +61,7 @@
 
           <div uib-accordion-group is-open="isBdtOpen">
             <div uib-accordion-heading>
-                Billing Details <span class="caret pull-right" ng-class="{'caret-down': !isBdtOpen, 'caret-up': isBdtOpen}"></span>
+              {{ 'mno_enterprise.templates.dashboard.organization.index.billing.billing_details' | translate }} <span class="caret pull-right" ng-class="{'caret-down': !isBdtOpen, 'caret-up': isBdtOpen}"></span>
             </div>
 
             <!-- Directive: DashboardOrganizationBilling -->
@@ -71,15 +69,12 @@
               <div dashboard-organization-credit-card></div>
             </div>
 
-
             <!-- End: accordion-group credit card form -->
           </div>
 
-
-
           <div uib-accordion-group is-open="isPsIvOpen">
             <div uib-accordion-heading>
-                Past Invoices <span class="caret pull-right" ng-class="{'caret-down': !isPsIvOpen, 'caret-up': isPsIvOpen}"></span>
+              {{ 'mno_enterprise.templates.dashboard.organization.index.billing.past_invoices' | translate }} <span class="caret pull-right" ng-class="{'caret-down': !isPsIvOpen, 'caret-up': isPsIvOpen}"></span>
             </div>
 
             <!-- Directive: DashboardOrganizationInvoices -->
@@ -89,7 +84,6 @@
 
             <!-- End: accordion-group past invoices -->
           </div>
-
 
           <!-- End: accordion -->
         </div>
@@ -101,7 +95,7 @@
       <!--        Members Section           -->
       <!-------------------------------------->
       <div uib-tab active="vm.tabs.members">
-        <div uib-tab-heading>Members</div>
+        <div uib-tab-heading>{{ 'mno_enterprise.templates.dashboard.organization.index.members.title' | translate }}</div>
 
         <!-- Directive: DashboardOrganizationMembers -->
         <div class="well">
@@ -118,12 +112,12 @@
       <!--     Team Management Section      -->
       <!-------------------------------------->
       <div uib-tab active="tabs.teams">
-        <div uib-tab-heading>Teams</div>
+        <div uib-tab-heading>{{ 'mno_enterprise.templates.dashboard.organization.index.teams.title' | translate }}</div>
 
         <div>
           <h4 class="text-bg-inverse">
-            Team Management
-            <span class="text-muted"><small><em>&nbsp;Control access to your apps</em></small></span>
+            {{ 'mno_enterprise.templates.dashboard.organization.index.teams.subtitle' | translate }}
+            <span class="text-muted"><small><em>&nbsp;{{ 'mno_enterprise.templates.dashboard.organization.index.teams.control_access' | translate }}</em></small></span>
           </h4>
 
           <!-- Directive: DashboardOrganizationSettings -->
@@ -140,7 +134,7 @@
       <!--    Company Settings Section      -->
       <!-------------------------------------->
       <div uib-tab ng-show="vm.isSettingsShown()" active="vm.tabs.settings">
-        <div uib-tab-heading>Settings</div>
+        <div uib-tab-heading>{{ 'mno_enterprise.templates.dashboard.organization.index.settings.title' | translate }}</div>
 
         <div class="well">
           <!-- Directive: DashboardOrganizationSettings -->

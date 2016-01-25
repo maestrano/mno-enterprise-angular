@@ -1,8 +1,7 @@
 <div class="row">
   <div class="col-md-12">
-    <p>
-      Your billing for the current invoicing period is:
-      <b>{{ billing.current.value | currency: billing.current.options.symbol }} ({{ billing.current.options.iso_code }})</b>
+    <p translate="mno_enterprise.templates.dashboard.organization.billing.current_billing_html" translate-value-amount="{{ billing.current.value | currency: defaultCurrency + '$'}}">
+      {{ 'mno_enterprise.templates.dashboard.organization.billing.current_billing_html' | translate }}
     </p>
   </div>
 </div>
@@ -20,7 +19,7 @@
     <p>
       <small>
         <em>
-          Note that the amount for your current invoicing period is indicative and might not reflect the latest changes in your current billing.
+          {{ 'mno_enterprise.templates.dashboard.organization.billing.disclaimer' | translate }}
         </em>
       </small>
     </p>
@@ -29,9 +28,9 @@
 
 <div class="row">
   <div class="col-md-12">
-    <h5>About our billing cycle</h5>
+    <h5>{{ 'mno_enterprise.templates.dashboard.organization.billing.about_title' | translate }}</h5>
     <p>
-      Our invoicing period runs from the 25th of the previous month to the 24th of the current month. Any amount due (current spending minus credit) is charged on the 2nd of the following month.
+      {{ 'mno_enterprise.templates.dashboard.organization.billing.about_body' | translate }}
     </p>
   </div>
 </div>
