@@ -23,10 +23,10 @@
         </li>
       </ul>
       <div class="create-new">
-        <a href="" ng-click="selectBox.createNewOrga()"><small>New Company</small></a>
+        <a href="" ng-click="selectBox.createNewOrga()"><small>{{ 'mno_enterprise.templates.dashboard.menu.new_company' | translate }}</small></a>
       </div>
       <div class="admin-link" ng-if="selectBox.user.admin_role">
-        <a href="/admin/"><small>Access Admin Panel</small></a>
+        <a href="/admin/"><small>{{ 'mno_enterprise.templates.dashboard.menu.access_admin_panel' | translate }}</small></a>
       </div>
     </div>
 
