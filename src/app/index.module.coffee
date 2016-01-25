@@ -3,6 +3,7 @@ angular.module 'mnoEnterpriseAngular', [
   'ngAria',
   'ngCookies',
   'ngMessages',
+  'ngSanitize',
   'ui.router',
   'ui.bootstrap',
   'toastr',
