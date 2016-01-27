@@ -56,7 +56,7 @@ angular.module 'mnoEnterpriseAngular'
 
     $translateProvider.preferredLanguage(LOCALES.preferredLocale)
     $translateProvider.fallbackLanguage(LOCALES.fallbackLanguage)
-    $translateProvider.useSanitizeValueStrategy('sanitize')
+    $translateProvider.useSanitizeValueStrategy('sanitizeParameters')
     $translateProvider.useMissingTranslationHandlerLog()
     $translateProvider.useLocalStorage()
   )
