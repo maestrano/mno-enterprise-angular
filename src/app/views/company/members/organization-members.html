@@ -4,52 +4,59 @@
 <div class="row" ng-show="isInviteShown()">
   <button class="btn btn-sm btn-warning" ng-click="inviteMembers()">
     <i class="fa fa-user-plus"></i>
-    Invite Users
+    {{ 'mno_enterprise.templates.dashboard.organization.members.invite_users' | translate }}
   </button>
 </div>
 
 <div class="table-cell">
   <div class="row th-row hidden-xs">
-    <div class="cell col-sm-2">Name</div>
-    <div class="cell col-sm-2">Surname</div>
-    <div class="cell col-sm-4">Email</div>
-    <div class="cell col-sm-2">Role</div>
+    <div class="cell col-sm-2">{{ 'mno_enterprise.templates.dashboard.organization.members.name' | translate }}</div>
+    <div class="cell col-sm-2">{{ 'mno_enterprise.templates.dashboard.organization.members.surname' | translate }}</div>
+    <div class="cell col-sm-4">{{ 'mno_enterprise.templates.dashboard.organization.members.email' | translate }}</div>
+    <div class="cell col-sm-2">{{ 'mno_enterprise.templates.dashboard.organization.members.role' | translate }}</div>
   </div>
 
   <div class="row td-row" ng-repeat="member in members">
     <div class="cell col-sm-2">
-      <span class="cell-label visible-xs-inline">Name:</span>
+      <span class="cell-label visible-xs-inline">
+        {{ 'mno_enterprise.templates.dashboard.organization.members.name' | translate }}:
+      </span>
       {{ member.name }}
     </div>
 
     <div class="cell col-sm-2">
-      <span class="cell-label visible-xs-inline">Surname: </span>
+      <span class="cell-label visible-xs-inline">
+        {{ 'mno_enterprise.templates.dashboard.organization.members.surname' | translate }}:
+      </span>
       {{ member.surname }}
     </div>
 
     <div class="cell col-sm-4">
-      <span class="cell-label visible-xs-inline">Email: <br/></span>
+      <span class="cell-label visible-xs-inline">
+        {{ 'mno_enterprise.templates.dashboard.organization.members.email' | translate }}:
+        <br/>
+      </span>
       {{ member.email }}
     </div>
 
     <div class="cell col-sm-2">
-      <span class="cell-label visible-xs-inline">Role:</span>
+      <span class="cell-label visible-xs-inline">
+        {{ 'mno_enterprise.templates.dashboard.organization.members.role' | translate }}:
+      </span>
       {{ memberRoleLabel(member) }}
     </div>
-
     <div class="cell col-sm-2">
       <a ng-click="editMember(member)" class="btn btn-sm edit-member-button-star-ref" ng-show="isEditShown(member)">
         <i class="fa fa-pencil-square-o"></i>
-        <span class="cell-label visible-xs-inline"><br/>Edit</span>
+        <span class="cell-label visible-xs-inline"><br/>{{ 'mno_enterprise.templates.dashboard.organization.members.edit' | translate }}</span>
       </a>
       <a ng-click="removeMember(member)" class="btn btn-sm btn-link remove-member-button-star-ref" ng-show="isRemoveShown(member)">
         <i class="fa fa-remove"></i>
-        <span class="cell-label visible-xs-inline"><br/>Remove</span>
+        <span class="cell-label visible-xs-inline"><br/>{{ 'mno_enterprise.templates.dashboard.organization.members.remove' | translate }}</span>
       </a>
     </div>
   </div>
 </div>
-
 
 <!--
   Member Invite modal
@@ -57,7 +64,7 @@
 <script type="text/ng-template" id="dashboard/organization/members/invite-modal.html">
   <!-- Modal Header -->
   <div class="modal-header">
-    <div class="close" type="button" ng-click="inviteModal.close()" >×</div>
+    <div class="close" type="button" ng-click="inviteModal.close()">×</div>
     <h3 ng-bind-html="inviteModal.title()"></h3>
   </div>
 
@@ -68,21 +75,21 @@
     <div ng-switch-when="enterEmails" class="text-center">
 
       <div class="alert alert-error" ng-show="inviteModal.invalidEmails.length > 0">
-        <ng-pluralize count="inviteModal.invalidEmails.length"
-                      when="{'one': 'The following email address is invalid: ',
-                       'other': 'The following email addresses are invalid: '}">
-        </ng-pluralize> '{{inviteModal.invalidEmails.join("', '")}}'
+        <ng-pluralize count="inviteModal.invalidEmails.length" when="{'one': 'The following email address is invalid: ',
+                       'other': 'The following email addresses are invalid: '}"></ng-pluralize>
+        '{{inviteModal.invalidEmails.join("', '")}}'
       </div>
 
       <div class="row">
         <div class="col-sm-12">
-            <p>Enter the email addresses of the people you want to invite in your company</p>
-            <p>
-              One address per line, e.g.:<br>
-              user1@company.com<br>
-              user2@company.com
-            </p>
-          </div>
+          <p>{{ 'mno_enterprise.templates.dashboard.organization.members.invite_modal.description' | translate }}</p>
+          <p>
+            {{ 'mno_enterprise.templates.dashboard.organization.members.invite_modal.example' | translate }}
+            <br>
+            user1@company.com<br>
+            user2@company.com
+          </p>
+        </div>
       </div>
 
       <div class="row">
@@ -93,7 +100,7 @@
 
       <div class="row">
         <div class="col-sm-12">
-          <p>Please note that for security reasons unaccepted invites will automatically expire after 3 days.</p>
+          <p>{{ 'mno_enterprise.templates.dashboard.organization.members.invite_modal.disclaimer' | translate }}</p>
         </div>
       </div>
     </div>
@@ -105,25 +112,32 @@
 
           <div class="table-cell inverse">
             <div class="row th-row hidden-xs">
-              <div class="cell col-sm-4">Email</div>
-              <div class="cell col-sm-3">Role</div>
-              <div class="cell col-sm-3" ng-show="inviteModal.isTeamListShown()">Team</div>
+              <div class="cell col-sm-4">{{ 'mno_enterprise.templates.dashboard.organization.members.email' | translate }}</div>
+              <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.organization.members.role' | translate }}</div>
+              <div class="cell col-sm-3" ng-show="inviteModal.isTeamListShown()">{{ 'mno_enterprise.templates.dashboard.organization.members.team' | translate }}</div>
             </div>
 
             <div class="row td-row" ng-repeat="member in inviteModal.members">
               <div class="cell col-sm-4">
-                <span class="cell-label visible-xs-inline">Email: <br/></span>
+                <span class="cell-label visible-xs-inline">
+                  {{ 'mno_enterprise.templates.dashboard.organization.members.email' | translate }}:
+                  <br/>
+                </span>
                 {{ member.email }}
               </div>
 
               <div class="cell col-sm-3">
-                <span class="cell-label visible-xs-inline">Role:</span>
+                <span class="cell-label visible-xs-inline">{{ 'mno_enterprise.templates.dashboard.organization.members.role' | translate }}:</span>
                 <select ng-model="member.role" ng-options="role for role in inviteModal.roleList" class="form-control"></select>
               </div>
               <div class="cell col-sm-3" ng-show="inviteModal.isTeamListShown()">
-                <span class="cell-label visible-xs-inline">Team:</span>
+                <span class="cell-label visible-xs-inline">
+                  {{ 'mno_enterprise.templates.dashboard.organization.members.team' | translate }}:
+                </span>
                 <select ng-model="member.team_id" ng-options="team.id as team.name for team in inviteModal.teamList" class="form-control">
-                  <option value='' selected>-- Select Team --</option>
+                  <option value='' selected>
+                    {{ 'mno_enterprise.templates.dashboard.organization.members.team_select' | translate }}
+                  </option>
                 </select>
               </div>
             </div>
@@ -139,11 +153,18 @@
     <div class="row">
       <div class="col-md-12">
         <button class="btn btn-shaded" ng-click="inviteModal.close()" ng-show="!inviteModal.isLoading">
-          Cancel
+          {{ 'mno_enterprise.templates.dashboard.organization.members.invite_modal.cancel' | translate }}
         </button>
         <button class="btn btn-warning" ng-disabled="!inviteModal.isNextEnabled() || inviteModal.isLoading" ng-click="inviteModal.next()">
-          <span ng-show="inviteModal.isLoading"><i class="fa fa-spinner fa-pulse fa-fw"></i></span>
-          {{inviteModal.labelForAction()}}
+          <span ng-show="inviteModal.isLoading">
+            <i class="fa fa-spinner fa-pulse fa-fw"></i>
+          </span>
+          <span ng-show="inviteModal.labelForAction() === 'Next'">
+            {{ 'mno_enterprise.templates.dashboard.organization.members.invite_modal.next' | translate }}
+          </span>
+          <span ng-show="inviteModal.labelForAction() === 'Invite'">
+            {{ 'mno_enterprise.templates.dashboard.organization.members.invite_modal.invite' | translate }}
+          </span>
         </button>
       </div>
     </div>
@@ -175,20 +196,20 @@
           <div ng-switch-when="Member">
             <i class="fa fa-cloud fa-4x"></i>
             <br/><br/>
-            <p>A member can see other members and access the company apps</p>
+            <p>{{ 'mno_enterprise.templates.dashboard.organization.members.edition_modal.roles.member' | translate }}</p>
           </div>
           <div ng-switch-when="Power User">
             <i class="fa fa-cloud fa-4x"></i>
             <i class="fa fa-power-off fa-4x"></i>
             <br/><br/>
-            <p>A Power User can see other members and start idle company apps (on per hour plan)</p>
+            <p>{{ 'mno_enterprise.templates.dashboard.organization.members.edition_modal.roles.power_user' | translate }}</p>
           </div>
           <div ng-switch-when="Admin">
             <i class="fa fa-cloud fa-4x"></i>
             <i class="fa fa-power-off fa-4x"></i>
             <i class="fa fa-users fa-4x"></i>
             <br/><br/>
-            <p>An Admin can manage other members (except Super Admin users) and manage the company apps</p>
+            <p>{{ 'mno_enterprise.templates.dashboard.organization.members.edition_modal.roles.admin' | translate }}</p>
           </div>
           <div ng-switch-when="Super Admin">
             <i class="fa fa-cloud fa-4x"></i>
@@ -196,7 +217,7 @@
             <i class="fa fa-users fa-4x"></i>
             <i class="fa fa-cc-mastercard fa-4x"></i>
             <br/><br/>
-            <p>A Super Admin has all power within the company including access to billing management</p>
+            <p>{{ 'mno_enterprise.templates.dashboard.organization.members.edition_modal.roles.super_admin' | translate }}</p>
           </div>
         </div>
 
@@ -216,26 +237,27 @@
   <div class="modal-footer">
     <div class="row">
       <div class="col-sm-12">
-        <button class="btn btn-default" ng-click="editionModal.close()" ng-show="!editionModal.isLoading">Cancel</button>
+        <button class="btn btn-default" ng-click="editionModal.close()" ng-show="!editionModal.isLoading">
+          {{ 'mno_enterprise.templates.dashboard.organization.members.edition_modal.cancel' | translate }}
+        </button>
         <button class="btn btn-warning" ng-click="editionModal.change()" ng-disabled="editionModal.isChangeDisabled() || editionModal.isLoading">
           <span ng-show="editionModal.isLoading">
             <i class="fa fa-spinner fa-pulse fa-fw"></i>
           </span>
-          Change
+          {{ 'mno_enterprise.templates.dashboard.organization.members.edition_modal.change' | translate }}
         </button>
       </div>
     </div>
   </div>
 </script>
 
-
 <!--
   Member Removal Modal
 -->
 <script type="text/ng-template" id="dashboard/organization/members/removal-modal.html">
   <div class="modal-header">
-    <div class="close" type="button" ng-click="deletionModal.close()" >×</div>
-    <h3>Confirm action</h3>
+    <div class="close" type="button" ng-click="deletionModal.close()">×</div>
+    <h3>{{ 'mno_enterprise.templates.dashboard.organization.members.removal_modal.title' | translate }}</h3>
   </div>
 
   <div class="modal-body">
@@ -252,7 +274,15 @@
 
     <div class="row">
       <div class="col-sm-12">
-        <p class="align-center" ng-bind-html="deletionModal.confirmationText()"></p>
+        <p ng-if="deletionModal.hasName()" class="align-center"
+          translate="mno_enterprise.templates.dashboard.organization.members.removal_modal.body_name"
+          translate-value-name="{{ deletionModal.member.name }}"
+          translate-value-surname="{{ deletionModal.member.surname }}">
+        </p>
+        <p ng-if="!deletionModal.hasName()" class="align-center"
+          translate="mno_enterprise.templates.dashboard.organization.members.removal_modal.body_email"
+          translate-value-email="{{ deletionModal.member.email }}">
+        </p>
       </div>
     </div>
   </div>
@@ -260,10 +290,14 @@
   <div class="modal-footer">
     <div class="row">
       <div class="col-sm-12">
-        <button class="btn btn-default" ng-click="deletionModal.close()" ng-show="!deletionModal.isLoading">Cancel</button>
+        <button class="btn btn-default" ng-click="deletionModal.close()" ng-show="!deletionModal.isLoading">
+          {{ 'mno_enterprise.templates.dashboard.organization.members.removal_modal.cancel' | translate }}
+        </button>
         <button class="btn btn-danger" ng-click="deletionModal.remove()" ng-disabled="deletionModal.isLoading">
-          <span ng-show="deletionModal.isLoading"><i class="fa fa-spinner fa-pulse fa-fw"></i></span>
-          Remove
+          <span ng-show="deletionModal.isLoading">
+            <i class="fa fa-spinner fa-pulse fa-fw"></i>
+          </span>
+          {{ 'mno_enterprise.templates.dashboard.organization.members.removal_modal.remove' | translate }}
         </button>
       </div>
     </div>
