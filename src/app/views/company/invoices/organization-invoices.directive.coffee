@@ -1,7 +1,7 @@
 
-DashboardOrganizationInvoicesCtrl = ($scope, $window, MnoeOrganizations, Utilities, Miscellaneous) ->
+DashboardOrganizationInvoicesCtrl = ($scope, $window, MnoeOrganizations) ->
   'ngInject'
-  
+
   #====================================
   # Pre-Initialization
   #====================================
