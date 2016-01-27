@@ -1,6 +1,6 @@
 <div class="modal-header">
   <div class="close" type="button" ng-click="teamDeletionModal.close()" >×</div>
-  <h3>Confirm action</h3>
+  <h3>{{ 'mno_enterprise.templates.dashboard.teams.team_delete_modal.title' | translate }}</h3>
 </div>
 
 <div class="modal-body">
@@ -17,9 +17,9 @@
 
   <div class="row">
     <div class="col-sm-12">
-      <p class="align-center">
-        Are you really sure you want to remove {{teamDeletionModal.team.name}}?
-      </p>
+      <p class="align-center"
+        translate="mno_enterprise.templates.dashboard.teams.team_delete_modal.confirmation"
+        translate-value-teamname="{{teamDeletionModal.team.name}}">
     </div>
   </div>
 </div>
@@ -27,9 +27,12 @@
 <div class="modal-footer">
   <div class="row">
     <div class="col-sm-12">
-      <button class="btn btn-default" ng-click="teamDeletionModal.close()" ng-show="!teamDeletionModal.isLoading">Cancel</button>
+      <button class="btn btn-default" ng-click="teamDeletionModal.close()" ng-show="!teamDeletionModal.isLoading">
+        {{ 'mno_enterprise.templates.dashboard.teams.team_delete_modal.cancel' | translate }}
+      </button>
       <button class="btn btn-danger" ng-click="teamDeletionModal.proceed()" ng-disabled="teamDeletionModal.isLoading">
-        <span ng-show="teamDeletionModal.isLoading"><i class="fa fa-spinner fa-pulse fa-fw"></i></span> Remove
+        <span ng-show="teamDeletionModal.isLoading"><i class="fa fa-spinner fa-pulse fa-fw"></i></span>
+        {{ 'mno_enterprise.templates.dashboard.teams.team_delete_modal.remove' | translate }}
       </button>
     </div>
   </div>

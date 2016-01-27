@@ -7,13 +7,13 @@
     <div class="row text-bg-inverse">
       <div class="col-sm-12 text-center">
         <p>
-          You do not have any teams! Teams are a great way of controlling who has access to applications within your company.
+          {{ 'mno_enterprise.templates.dashboard.teams.index.no_teams_warning' | translate }}
         </p>
 
         <button type="button" class="btn btn-lg btn-grey btn-grey-bordered" ng-click="matrix.addTeam()">
           <i class="fa fa-plus" style="margin-bottom:-2px;"></i>
           &nbsp;
-          Add a Team Now!
+          {{ 'mno_enterprise.templates.dashboard.teams.index.add_team' | translate }}
         </button>
       </div>
     </div>
@@ -25,7 +25,7 @@
       <div class="col-sm-12">
         <span class="text-left text-muted">
           <small><em>
-            Admins and Super Admins always have access to all apps. Members unallocated to any team will have access to all apps by default.
+            {{ 'mno_enterprise.templates.dashboard.teams.index.admin_permission_warning' | translate }}
           </em></small>
         </span>
       </div>
@@ -56,11 +56,11 @@
                   <button type="button" class="btn btn-grey btn-grey-bordered" ng-click="matrix.addTeam()">
                     <i class="fa fa-plus" style="margin-bottom:-2px;"></i>
                     &nbsp;
-                    add team
+                    {{ 'mno_enterprise.templates.dashboard.teams.index.add_team_light' | translate }}
                   </button>
                 </th>
 
-                <th style="width:6%;">All</th>
+                <th style="width:6%;">{{ 'mno_enterprise.templates.dashboard.teams.index.all' | translate }}</th>
               </tr>
             </thead>
 
@@ -101,11 +101,11 @@
         <!-- Matrix: right part (detailed permissions) -->
         <div class="col-xs-8 table-right">
           <div class="text-center" ng-show="!hasApps()">
-            <p>It looks like you do not have any application at the moment.</p>
+            <p>{{ 'mno_enterprise.templates.dashboard.teams.index.no_apps_warning' | translate }}</p>
             <a type="button" class="btn btn-lg btn-grey btn-grey-bordered" href="#/marketplace">
               <i class="fa fa-plus" style="margin-bottom:-2px;"></i>
               &nbsp;
-              Add an App Now!
+              {{ 'mno_enterprise.templates.dashboard.teams.index.add_app' | translate }}
             </a>
           </div>
 

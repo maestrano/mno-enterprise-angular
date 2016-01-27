@@ -1,6 +1,6 @@
 <div class="modal-header">
   <div class="close" type="button" ng-click="addTeamModal.close()" >×</div>
-  <h3>Create New Team</h3>
+  <h3>{{ 'mno_enterprise.templates.dashboard.teams.team_add_modal.title' | translate }}</h3>
 </div>
 
 <div class="modal-body">
@@ -17,7 +17,7 @@
 
   <div class="row">
     <div class="col-sm-6 col-sm-offset-3 text-center">
-      <p>Enter a name for your new team</p>
+      <p>{{ 'mno_enterprise.templates.dashboard.teams.team_add_modal.enter_team_name' | translate }}</p>
       <div class="spacer1"></div>
       <input type="text" class="form-control" ng-model="addTeamModal.model.name" required/>
     </div>
@@ -27,9 +27,11 @@
 <div class="modal-footer">
   <div class="row">
     <div class="col-sm-12">
-      <button class="btn btn-default" ng-click="addTeamModal.close()" ng-show="!addTeamModal.isLoading">Cancel</button>
+      <button class="btn btn-default" ng-click="addTeamModal.close()" ng-show="!addTeamModal.isLoading">
+        {{ 'mno_enterprise.templates.dashboard.teams.team_add_modal.cancel' | translate }}
+      </button>
       <button class="btn btn-info" ng-click="addTeamModal.proceed()" ng-disabled="addTeamModal.isProceedDisabled() || addTeamModal.isLoading">
-        <span ng-show="addTeamModal.isLoading"><i class="fa fa-spinner fa-pulse fa-fw"></i></span> Create
+        <span ng-show="addTeamModal.isLoading"><i class="fa fa-spinner fa-pulse fa-fw"></i></span> {{ 'mno_enterprise.templates.dashboard.teams.team_add_modal.create' | translate }}
       </button>
     </div>
   </div>

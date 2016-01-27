@@ -1,6 +1,6 @@
 <div class="modal-header">
   <div class="close" type="button" ng-click="memberAddModal.close()" >×</div>
-  <h3>Add Team Members</h3>
+  <h3>{{ 'mno_enterprise.templates.dashboard.teams.member_add_modal.title' | translate }}</h3>
 </div>
 
 <div class="modal-body">
@@ -17,13 +17,13 @@
 
   <div class="row" ng-show="!memberAddModal.canAddUsers()">
     <div class="col-sm-6 col-sm-offset-3 text-center">
-      <p>All your company members already belong to this team</p>
+      <p>{{ 'mno_enterprise.templates.dashboard.teams.member_add_modal.all_belong_to_team_warning' | translate }}</p>
     </div>
   </div>
 
   <div class="row" ng-show="memberAddModal.canAddUsers()">
     <div class="col-sm-6 col-sm-offset-3 text-center">
-      <p>Select the company members your wish to add to this team</p>
+      <p>{{ 'mno_enterprise.templates.dashboard.teams.member_add_modal.select_company_members' | translate }}</p>
       <div class="spacer1"></div>
 
       <!-- List Available Users to add -->
@@ -47,9 +47,9 @@
 <div class="modal-footer">
   <div class="row">
     <div class="col-sm-12">
-      <button class="btn btn-default" ng-click="memberAddModal.close()" ng-show="!memberAddModal.isLoading">Cancel</button>
+      <button class="btn btn-default" ng-click="memberAddModal.close()" ng-show="!memberAddModal.isLoading">{{ 'mno_enterprise.templates.dashboard.teams.member_add_modal.cancel' | translate }}</button>
       <button class="btn btn-danger" ng-click="memberAddModal.proceed()" ng-disabled="memberAddModal.isLoading">
-        <span ng-show="memberAddModal.isLoading"><i class="fa fa-spinner fa-pulse fa-fw"></i></span> Add
+        <span ng-show="memberAddModal.isLoading"><i class="fa fa-spinner fa-pulse fa-fw"></i></span> {{ 'mno_enterprise.templates.dashboard.teams.member_add_modal.add' | translate }}
       </button>
     </div>
   </div>

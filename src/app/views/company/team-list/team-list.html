@@ -9,87 +9,94 @@
 
     <div ng-repeat="team in teams" class='teams-accordion-star-ref'>
 
-        <div uib-accordion-group is-open="team.$isAccOpen">
-          <div uib-accordion-heading>
-              {{ team.name }}
-              <span class="caret pull-right" ng-class="{'caret-down': !team.$isAccOpen, 'caret-up': team.$isAccOpen}"></span>
+      <div uib-accordion-group is-open="team.$isAccOpen">
+        <div uib-accordion-heading>
+          {{ team.name }}
+          <span class="caret pull-right" ng-class="{'caret-down': !team.$isAccOpen, 'caret-up': team.$isAccOpen}"></span>
+        </div>
+
+        <div class="row text-center" ng-show="isTeamEmpty(team)">
+          <p class="text-muted">
+            <em>{{ 'mno_enterprise.templates.dashboard.teams.team_list.add_team_members' | translate:{teamname: team.name} }}</em>
+          </p>
+
+          <div ng-show="canManageTeam()">
+            <button class="btn btn-sm btn-grey" ng-click="memberAddModal.open(team)">
+              <i class="fa fa-user-plus"></i>
+              {{ 'mno_enterprise.templates.dashboard.teams.team_list.add_team_members' | translate }}
+            </button>
           </div>
+        </div>
 
-          <div class="row text-center" ng-show="isTeamEmpty(team)">
-            <p class="text-muted">
-              <em>{{ team.name }} does not have any team member yet!</em>
-            </p>
-
-            <div ng-show="canManageTeam()">
-              <button class="btn btn-sm btn-grey" ng-click="memberAddModal.open(team)">
-                <i class="fa fa-user-plus"></i>
-                Add Team Members
-              </button>
-            </div>
+        <div class="row" ng-show="!isTeamEmpty(team)">
+          <div class="col-sm-12" ng-show="canManageTeam()">
+            <button class="btn btn-sm btn-grey" ng-click="memberAddModal.open(team)">
+              <i class="fa fa-user-plus"></i>
+              {{ 'mno_enterprise.templates.dashboard.teams.team_list.add_team_members' | translate }}
+            </button>
           </div>
+        </div>
 
-          <div class="row" ng-show="!isTeamEmpty(team)">
-            <div class="col-sm-12" ng-show="canManageTeam()">
-              <button class="btn btn-sm btn-grey" ng-click="memberAddModal.open(team)">
-                <i class="fa fa-user-plus"></i>
-                Add Team Members
-              </button>
-            </div>
-          </div>
+        <!-- List of team members -->
+        <div class="row" ng-show="!isTeamEmpty(team)">
+          <div class="col-sm-12">
 
-          <!-- List of team members -->
-          <div class="row" ng-show="!isTeamEmpty(team)">
-            <div class="col-sm-12">
+            <div class="table-cell">
 
-              <div class="table-cell">
-
-                <div class="row th-row hidden-xs">
-                  <div class="cell col-sm-3 col-md-2">Name</div>
-                  <div class="cell col-sm-4 col-md-2">Surname</div>
-                  <div class="cell col-md-4 hidden-xs hidden-sm">Email</div>
-                  <div class="cell col-sm-3 col-md-2 hidden-xs">Role</div>
-                </div>
-
-                <div class="row td-row" ng-repeat="member in team.users">
-                  <div class="cell col-sm-3 col-md-2">
-                    <span class="cell-label visible-xs-inline">Name:</span>
-                    {{ member.name }}
-                  </div>
-
-                  <div class="cell col-sm-4 col-md-2">
-                    <span class="cell-label visible-xs-inline">Surname: </span>
-                    {{ member.surname }}
-                  </div>
-
-                  <div class="cell col-md-4 hidden-xs hidden-sm">
-                    <span class="cell-label visible-xs-inline">Email: </span>
-                    {{ member.email }}
-                  </div>
-
-                  <div class="cell col-sm-3 col-md-2 hidden-xs">
-                    <span class="cell-label visible-xs-inline">Role: </span>
-                    {{ member.role }}
-                  </div>
-
-                  <div class="cell col-sm-2" ng-show="canManageTeam()">
-                    <a ng-click="memberRemovalModal.open(team,member)" class="btn btn-sm btn-link">
-                      <i class="fa fa-remove hidden-xs"></i>
-                      <span class="cell-label visible-xs-inline">&nbsp;Remove</span>
-                    </a>
-                  </div>
-                </div>
-
-                <!-- End: table-cell -->
+              <div class="row th-row hidden-xs">
+                <div class="cell col-sm-3 col-md-2">{{ 'mno_enterprise.templates.dashboard.teams.team_list.tbl_name' | translate }}</div>
+                <div class="cell col-sm-4 col-md-2">{{ 'mno_enterprise.templates.dashboard.teams.team_list.tbl_surname' | translate }}</div>
+                <div class="cell col-md-4 hidden-xs hidden-sm">{{ 'mno_enterprise.templates.dashboard.teams.team_list.tbl_email' | translate }}</div>
+                <div class="cell col-sm-3 col-md-2 hidden-xs">{{ 'mno_enterprise.templates.dashboard.teams.team_list.tbl_role' | translate }}</div>
               </div>
 
-              <!-- End: col-sm-12 -->
+              <div class="row td-row" ng-repeat="member in team.users">
+                <div class="cell col-sm-3 col-md-2">
+                  <span class="cell-label visible-xs-inline">
+                    {{ 'mno_enterprise.templates.dashboard.teams.team_list.tbl_name' | translate }}:</span>
+                  {{ member.name }}
+                </div>
+
+                <div class="cell col-sm-4 col-md-2">
+                  <span class="cell-label visible-xs-inline">
+                    {{ 'mno_enterprise.templates.dashboard.teams.team_list.tbl_surname' | translate }}:
+                  </span>
+                  {{ member.surname }}
+                </div>
+
+                <div class="cell col-md-4 hidden-xs hidden-sm">
+                  <span class="cell-label visible-xs-inline">
+                    {{ 'mno_enterprise.templates.dashboard.teams.team_list.tbl_email' | translate }}:
+                  </span>
+                  {{ member.email }}
+                </div>
+
+                <div class="cell col-sm-3 col-md-2 hidden-xs">
+                  <span class="cell-label visible-xs-inline">
+                    {{ 'mno_enterprise.templates.dashboard.teams.team_list.tbl_role' | translate }}:
+                  </span>
+                  {{ member.role }}
+                </div>
+
+                <div class="cell col-sm-2" ng-show="canManageTeam()">
+                  <a ng-click="memberRemovalModal.open(team,member)" class="btn btn-sm btn-link">
+                    <i class="fa fa-remove hidden-xs"></i>
+                    <span class="cell-label visible-xs-inline">&nbsp;{{ 'mno_enterprise.templates.dashboard.teams.team_list.remove' | translate }}</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- End: table-cell -->
             </div>
 
-            <!-- End: row list of users -->
+            <!-- End: col-sm-12 -->
           </div>
 
-          <!-- End: accordion-group current billing -->
+          <!-- End: row list of users -->
         </div>
+
+        <!-- End: accordion-group current billing -->
+      </div>
 
       <!-- End: ng-repeat:teams -->
     </div>
