@@ -30,7 +30,7 @@ function browserSyncInit(baseDir, browser) {
   var dashboardRewriteMiddleware = function (req, res, next) {
     req.url = req.url.replace(/^\/dashboard\//, "/");
     next();
-  }
+  };
 
   /*
    * You can add a proxy to your backend by uncommenting the line below.

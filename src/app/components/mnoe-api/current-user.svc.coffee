@@ -41,6 +41,10 @@ angular.module 'mnoEnterpriseAngular'
           response
       )
 
+    @refresh = ->
+      userPromise = null
+      _self.get()
+
     # Update the current user infos
     @update = (user) ->
       MnoeApiSvc.all('current_user').doPUT({user: user}).then(

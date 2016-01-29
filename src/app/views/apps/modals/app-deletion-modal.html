@@ -1,6 +1,6 @@
 <div class="modal-header">
   <button type="button" class="close" aria-label="Close" ng-click="modalOptions.close()"><span aria-hidden="true">&times;</span></button>
-  <h4 class="modal-title">Confirm app deletion</h4>
+  <h4 class="modal-title">{{ 'mno_enterprise.templates.dashboard.app_deletion.title' | translate }}</h4>
 </div>
 <div class="modal-body">
   <div class="alert alert-error" ng-show="modal.errors">
@@ -9,7 +9,7 @@
       <li ng-repeat="error in modal.errors">{{error}}</li>
     </ul>
   </div>
-  <p class="text-center"><small>In order to delete your app, please enter the following statement in the box below.</small></p>
+  <p class="text-center"><small>{{ 'mno_enterprise.templates.dashboard.app_deletion.instructions' | translate }}</small></p>
   <p class="text-error text-center">{{modal.sentence}}</p>
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
@@ -18,8 +18,11 @@
   </div>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-default" ng-click="modal.cancel()">Cancel</button>
+  <button type="button" class="btn btn-default" ng-click="modal.cancel()">
+    {{ 'mno_enterprise.templates.dashboard.app_deletion.cancel' | translate }}
+  </button>
   <button type="button" class="btn btn-danger" ng-disabled="modal.sentence != sentenceCheck" ng-click="modal.deleteApp()">
-    <span ng-show="modal.loading"><i class="fa fa-spinner fa-spin"></i>&nbsp;</span>Delete {{modal.app.name}}
+    <span ng-show="modal.loading"><i class="fa fa-spinner fa-spin"></i>&nbsp;</span>
+    {{ 'mno_enterprise.templates.dashboard.app_deletion.delete' | translate }}
   </button>
 </div>

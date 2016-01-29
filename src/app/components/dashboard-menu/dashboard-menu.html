@@ -5,12 +5,12 @@
 <nav class="navbar navbar-fixed-top navbar-inverse visible-xs" role="navigation">
   <div class="navbar-header">
     <button type="button" class="navbar-toggle" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
-      <span class="sr-only">Toggle navigation</span>
+      <span class="sr-only">{{ 'mno_enterprise.templates.dashboard.menu.toggle_navigation' | translate }}</span>
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" href="#">Dashboard</a>
+    <a class="navbar-brand" href="#">{{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}</a>
   </div>
   <div class="collapse navbar-collapse" uib-collapse="navCollapsed">
     <ul class="nav navbar-nav">
@@ -18,22 +18,22 @@
       <!-- My account section        -->
       <!-- ------------------------- -->
       <li>
-        <a ui-sref="home.apps" ui-sref-active="active">Dashboard</a>
+        <a ui-sref="home.apps" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}</a>
       </li>
       <li>
-        <a ui-sref="home.impac" ui-sref-active="active">Impac!</a>
+        <a ui-sref="home.impac" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.impac' | translate }}</a>
       </li>
       <li>
-        <a ui-sref="home.account" ui-sref-active="active">My Account</a>
+        <a ui-sref="home.account" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.my_account' | translate }}</a>
       </li>
       <li>
-        <a ui-sref="home.company" ui-sref-active="active">Company</a>
+        <a ui-sref="home.company" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.company' | translate }}</a>
       </li>
       <li>
-        <a ui-sref="home.marketplace" ui-sref-active="active">Marketplace</a>
+        <a ui-sref="home.marketplace" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.marketplace' | translate }}</a>
       </li>
       <li>
-        <a ui-sref="logout">Logout</a>
+        <a ui-sref="logout">{{ 'mno_enterprise.templates.dashboard.menu.logout' | translate }}</a>
       </li>
     </ul>
   </div>
@@ -50,32 +50,32 @@
     </a>
 
     <a ui-sref="home.apps" class="dashboard-button" ui-sref-active="active">
-      <div class='content'>Dashboard</div>
+      <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}</div>
       <i class="dhb-icon-dashboard"></i>
     </a>
 
     <a ui-sref="home.impac" class="dashboard-button top-buffer-1" ui-sref-active="active">
-      <div class='content'>Impac!</div>
+      <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.impac' | translate }}</div>
       <i class="dhb-icon-impac"></i>
     </a>
 
     <a ui-sref="home.account" class="dashboard-button top-buffer-1" ui-sref-active="active">
-      <div class='content'>My Account</div>
+      <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.my_account' | translate }}</div>
       <i class="dhb-icon-account"></i>
     </a>
 
     <a ui-sref="home.company" class="dashboard-button top-buffer-1" ui-sref-active="active">
-      <div class='content'>Company</div>
+      <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.company' | translate }}</div>
       <i class="dhb-icon-company"></i>
     </a>
 
     <a ui-sref="home.marketplace" class="dashboard-button top-buffer-1" ui-sref-active="active">
-      <div class='content'>Marketplace</div>
+      <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.marketplace' | translate }}</div>
       <i class="dhb-icon-marketplace"></i>
     </a>
 
     <a ui-sref="logout" class="dashboard-button top-buffer-1">
-      <div class='content'>Logout</div>
+      <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.logout' | translate }}</div>
       <i class="dhb-icon-logout"></i>
     </a>
   </div>

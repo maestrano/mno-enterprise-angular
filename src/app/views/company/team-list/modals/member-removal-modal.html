@@ -1,6 +1,6 @@
 <div class="modal-header">
   <div class="close" type="button" ng-click="memberRemovalModal.close()" >×</div>
-  <h3>Confirm action</h3>
+  <h3>{{ 'mno_enterprise.templates.dashboard.teams.member_removal_modal.title' | translate }}</h3>
 </div>
 
 <div class="modal-body">
@@ -17,9 +17,10 @@
 
   <div class="row">
     <div class="col-sm-12">
-      <p class="align-center">
-        Are you sure you want to remove {{memberRemovalModal.user.name}} {{memberRemovalModal.user.surname}} from {{memberRemovalModal.team.name}}?
-      </p>
+      <p class="align-center"
+        translate="mno_enterprise.templates.dashboard.teams.member_removal_modal.confirmation"
+        translate-value-fullname="{{memberRemovalModal.user.name}} {{memberRemovalModal.user.surname}}"
+        translate-value-teamname="{{memberRemovalModal.team.name}}">
     </div>
   </div>
 </div>
@@ -27,9 +28,10 @@
 <div class="modal-footer">
   <div class="row">
     <div class="col-sm-12">
-      <button class="btn btn-default" ng-click="memberRemovalModal.close()" ng-show="!memberRemovalModal.isLoading">Cancel</button>
+      <button class="btn btn-default" ng-click="memberRemovalModal.close()" ng-show="!memberRemovalModal.isLoading">{{ 'mno_enterprise.templates.dashboard.teams.member_removal_modal.cancel' | translate }}</button>
       <button class="btn btn-danger" ng-click="memberRemovalModal.proceed()" ng-disabled="memberRemovalModal.isLoading">
-        <span ng-show="memberRemovalModal.isLoading"><i class="fa fa-spinner fa-pulse fa-fw"></i></span> Remove
+        <span ng-show="memberRemovalModal.isLoading"><i class="fa fa-spinner fa-pulse fa-fw"></i></span>
+        {{ 'mno_enterprise.templates.dashboard.teams.member_removal_modal.remove' | translate }}
       </button>
     </div>
   </div>

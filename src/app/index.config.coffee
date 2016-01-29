@@ -42,7 +42,21 @@ angular.module 'mnoEnterpriseAngular'
     # Configure SCE to authorize the Maestrano domains
     # (see: https://docs.angularjs.org/api/ng/provider/$sceDelegateProvider)
     $sceDelegateProvider.resourceUrlWhitelist([
-        # Allow same origin resource loads.
-        'self'
+      # Allow same origin resource loads.
+      'self'
     ])
+  )
+
+  .config(($translateProvider, LOCALES) ->
+    # Path to translations files
+    $translateProvider.useStaticFilesLoader({
+      prefix: 'locales/',
+      suffix: '.locale.json'
+    })
+
+    $translateProvider.preferredLanguage(LOCALES.preferredLocale)
+    $translateProvider.fallbackLanguage(LOCALES.fallbackLanguage)
+    $translateProvider.useSanitizeValueStrategy('sanitizeParameters')
+    $translateProvider.useMissingTranslationHandlerLog()
+    $translateProvider.useLocalStorage()
   )

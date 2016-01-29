@@ -1,26 +1,32 @@
 <div class="table-cell">
   <div class="row th-row hidden-xs">
-    <div class="cell col-sm-3">Period</div>
-    <div class="cell col-sm-3">Amount</div>
-    <div class="cell col-sm-3">Paid</div>
-    <div class="cell col-sm-3 text-center">Download</div>
+    <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.organization.invoices.period' | translate }}</div>
+    <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.organization.invoices.amount' | translate }}</div>
+    <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.organization.invoices.paid' | translate }}</div>
+    <div class="cell col-sm-3 text-center">{{ 'mno_enterprise.templates.dashboard.organization.invoices.download' | translate }}</div>
   </div>
 
   <div class="row td-row" ng-repeat="invoice in invoices">
     <div class="cell col-sm-3">
-      <span class="cell-label visible-xs-inline">Period: <br/></span>
+      <span class="cell-label visible-xs-inline">{{ 'mno_enterprise.templates.dashboard.organization.invoices.period' | translate }}:<br/></span>
       {{ invoice.period }}
     </div>
 
     <div class="cell col-sm-3">
-      <span class="cell-label visible-xs-inline">Amount: </span>{{ invoice.amount.value | currency: invoice.amount.options.symbol }} ({{ invoice.amount.options.iso_code }})</div>
+      <span class="cell-label visible-xs-inline">
+        {{ 'mno_enterprise.templates.dashboard.organization.invoices.amount' | translate }}:
+      </span>
+      {{ invoice.amount.value | currency: invoice.amount.options.symbol }} ({{ invoice.amount.options.iso_code }})</div>
 
-    <div class="cell col-sm-3"><span class="cell-label visible-xs-inline">Paid: </span>{{ {true: 'Yes', false:'No'}[invoice.paid] }}</div>
+    <div class="cell col-sm-3">
+      <span class="cell-label visible-xs-inline">{{ 'mno_enterprise.templates.dashboard.organization.invoices.paid' | translate }}:</span>
+      {{ {true: 'Yes', false: 'No'}[invoice.paid] }}
+    </div>
 
     <div class="cell col-sm-3 text-center">
       <a ng-href="{{invoice.link}}" target="_blank" class="btn btn-sm">
         <i class="fa fa-cloud-download"></i>
-        <span class="cell-label visible-xs-inline"><br/>Download</span>
+        <span class="cell-label visible-xs-inline"><br/>{{ 'mno_enterprise.templates.dashboard.organization.invoices.download' | translate }}</span>
       </a>
     </div>
   </div>

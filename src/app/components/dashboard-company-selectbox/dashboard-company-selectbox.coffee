@@ -16,7 +16,6 @@ DashboardCompanySelectboxCtrl = ($scope, $location, $stateParams, $cookies, $sce
   }
 
   selectBox.changeTo = (organization) ->
-    #selectBox.organization = organization
     MnoeOrganizations.get(organization.id)
     selectBox.close()
 
@@ -45,6 +44,10 @@ DashboardCompanySelectboxCtrl = ($scope, $location, $stateParams, $cookies, $sce
   # Post-Initialization
   #====================================
   $scope.$watch MnoeOrganizations.getSelectedId, (val) ->
+    if val?
+      selectBox.selectOrganization()
+
+  $scope.$watch MnoeOrganizations.getSelected, (val) ->
     if val?
       selectBox.selectOrganization()
 

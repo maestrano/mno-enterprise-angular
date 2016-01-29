@@ -1,6 +1,6 @@
 <div id="dashboard-apps-list">
   <h2 class="section-title">
-    Dashboard
+    {{'mno_enterprise.templates.dashboard.apps_list.title' | translate}}
   </h2>
 
   <!-- Loader -->
@@ -18,20 +18,23 @@
               <a ng-click="displayOptions[app.id] = !displayOptions[app.id]" ng-show="helper.displayCogwheel()" class="options" href=""><i class="fa fa-times"></i></a>
 
               <!-- Data Sync Button -->
-              <div ng-show="appsListHelper.isDataSyncShown(app)">
+              <div ng-show="helper.isDataSyncShown(app)">
                 <br>
-                <a class="btn btn-info" href="{{ appsListHelper.dataSyncPath(app) }}" mno-helptext="Trigger a manual sync between {{app.appName}} and Maestrano.">Manual Data Sync</a>
+                <a class="btn btn-info" ng-href="{{helper.dataSyncPath(app)}}" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.apps_list.manual_data_sync_tooltip' | translate:{ appname: app.app_name } }}">{{ 'mno_enterprise.templates.dashboard.apps_list.manual_data_sync' | translate }}</a>
               </div>
 
               <!-- Data Disconnect Button -->
-              <div ng-show="appsListHelper.isDataDisconnectShown(app)">
+              <div ng-show="helper.isDataDisconnectShown(app)">
                 <br>
-                <a class="btn btn-danger" ng-really-message="Are you sure you want to disconnect {{app.appName}} and Maestrano?" ng-really-click="appsListHelper.dataDisconnectClick(app)" href="" mno-helptext="Disconnect the link between {{app.appName}} and Maestrano.">Disconnect Link</a>
+                <a class="btn btn-danger" ng-click="helper.dataDisconnectClick(app)" href="" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.apps_list.disconnect_link_tooltip' | translate:{ appname: app.app_name } }}">
+                  {{ 'mno_enterprise.templates.dashboard.apps_list.disconnect_link' | translate }}
+                </a>
               </div>
               <br>
+              <!-- App Deletion Button -->
               <div>
                 <br>
-                <button ng-click="openAppDeletionModal(app)" ng-show="helper.canDeleteApp()" class="btn btn-danger">Delete</button>
+                <button ng-click="openAppDeletionModal(app)" ng-show="helper.canDeleteApp()" class="btn btn-danger">{{'mno_enterprise.templates.dashboard.apps_list.delete' | translate}}</button>
               </div>
             </div>
 
@@ -39,36 +42,42 @@
             <div ng-switch-default>
               <a ng-click="displayOptions[app.id] = !displayOptions[app.id]" ng-show="helper.displayCogwheel()" class="options" href=""><i class="fa fa-cog"></i></a>
               <br>
-              <a ng-href="{{appsListHelper.appActionUrl(app)}}" target="_blank">
+              <a ng-href="{{ helper.appActionUrl(app) }}" target="_blank">
                 <img class="app-logo" ng-src="{{app.logo}}">
               </a>
-              <br>
               <div editable-text="app.name" onaftersave="updateAppName(app)" class='title' style="border:0px;">{{app.name}}</div>
 
               <!-- Connected company name -->
-              <div ng-show="appsListHelper.companyName(app)">
-                <div class='app-line' style="border:0px;" uib-tooltip="{{appsListHelper.companyName(app)}}">
-                  Linked to: {{ appsListHelper.companyName(app) | truncate:25 }}
+              <div ng-show="helper.companyName(app)">
+                <div class='app-line' style="border:0px;" uib-tooltip="{{helper.companyName(app)}}">
+                  {{ 'mno_enterprise.templates.dashboard.apps_list.linked_to' | translate }}: {{ helper.companyName(app) | truncate:25 }}
                 </div>
               </div>
 
               <!-- Connector Version -->
-              <div ng-show="appsListHelper.connectorVersion(app)">
-                <div class='app-line' style="border:0px;">MYOB Version: {{appsListHelper.connectorVersion(app)}}</div>
+              <div ng-show="helper.connectorVersion(app)">
+                <div class='app-line' style="border:0px;">MYOB Version: {{helper.connectorVersion(app)}}</div>
               </div>
 
               <!-- OAuth Connect Button -->
               <div ng-show="appsListHelper.isOauthConnectBtnShown(app)">
                 <a class="btn btn-warning" ng-href="{{appsListHelper.oAuthConnectPath(app)}}">
-                  Connect
+                  {{ 'mno_enterprise.templates.dashboard.apps_list.connect' | translate }}
                 </a>
               </div>
 
-              <a ng-href="{{appsListHelper.appActionUrl(app)}}" target="_blank" ng-hide="appsListHelper.isLaunchHidden(app)" class="btn btn-warning">Launch App</a>
+              <!-- OAuth Connect Button -->
+              <a ng-href="{{helper.appActionUrl(app)}}" target="_blank" class="btn btn-warning">
+                {{'mno_enterprise.templates.dashboard.apps_list.launch_app' | translate}}
+              </a>
 
-              <span ng-show="app.status == 'terminating' || app.status == 'terminated'">(deleted)</span>
+              <span ng-show="app.status == 'terminating' || app.status == 'terminated'">
+                ({{ 'mno_enterprise.templates.dashboard.apps_list.deleted' | translate }})
+              </span>
               <br>
-              <a ng-show="app.tutorial" ng-href="{{app.tutorial}}" class='tutorial' target="_blank">Tutorials</a>
+              <a ng-show="app.tutorial" ng-href="{{app.tutorial}}" class='tutorial' target="_blank">
+                {{ 'mno_enterprise.templates.dashboard.apps_list.tutorial' | translate }}
+              </a>
             </div>
           </div>
         </div>
@@ -81,6 +90,5 @@
         </div>
       </div>
     </div>
-    <div dashboard-bootstrap-wizard='true' ng-show='helper.displayBootstrapWizard()'></div>
   </div>
 </div>

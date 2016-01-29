@@ -4,7 +4,7 @@
 #============================================
 DashboardOrganizationMembersCtrl = ($scope, $modal, $sce, MnoeOrganizations, MnoeTeams, DhbOrganizationSvc, Utilities) ->
   'ngInject'
-  
+
   #====================================
   # Pre-Initialization
   #====================================
@@ -130,12 +130,9 @@ DashboardOrganizationMembersCtrl = ($scope, $modal, $sce, MnoeOrganizations, Mno
     self = deletionModal
     self.$instance.close()
 
-  deletionModal.confirmationText = ->
+  deletionModal.hasName = ->
     m = deletionModal.member
-    if m.entity == 'User' && m.name?
-      return $sce.trustAsHtml("Do you really want to remove <strong>#{m.name} #{m.surname}</strong> from your company?")
-    else
-      return $sce.trustAsHtml("Do you really want to remove <strong>#{m.email}</strong> from your company?")
+    m.entity == 'User' && m.name?
 
   deletionModal.remove = ->
     self = deletionModal
