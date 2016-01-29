@@ -1,6 +1,6 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('DashboardAppsListCtrl',
-    ($scope, $interval, $q, $stateParams, $uibModal, MnoConfirm, MnoeOrganizations, MnoeAppInstances) ->
+    ($scope, $interval, $q, $stateParams, $window, $uibModal, MnoConfirm, MnoeOrganizations, MnoeAppInstances) ->
 
       #====================================
       # Pre-Initialization
@@ -30,11 +30,47 @@ angular.module 'mnoEnterpriseAngular'
       $scope.helper.canDeleteApp = ->
         MnoeOrganizations.can.destroy.appInstance()
 
-      $scope.helper.canChangePlanApp = (app)->
-        app.stack == 'cube' && MnoeOrganizations.can.update.appInstance()
+      $scope.helper.isDataSyncShown = (instance) ->
+        instance.stack == 'connector' && instance.oauth_keys_valid
 
-      $scope.helper.displayBootstrapWizard = ->
-        MnoeOrganizations.can.update.appInstance()
+      $scope.helper.dataSyncPath = (instance) ->
+        "/mnoe/webhook/oauth/#{instance.uid}/sync"
+
+      $scope.helper.isDataDisconnectShown = (instance) ->
+        instance.stack == 'connector' && instance.oauth_keys_valid
+
+      $scope.helper.dataDisconnectClick = (instance) ->
+        modalOptions =
+          closeButtonText: 'Cancel'
+          actionButtonText: 'Delete app'
+          headerText: 'Delete ' + instance.app_name + '?'
+          bodyText: 'Are you sure you want to delete this app?'
+
+        MnoConfirm.showModal(modalOptions).then(
+          ->
+            $window.location.href = "/mnoe/webhook/oauth/#{instance.uid}/disconnect"
+        )
+
+      $scope.helper.appActionUrl = (instance) ->
+        "/mnoe/launch/#{instance.uid}"
+
+      $scope.helper.companyName = (instance) ->
+        if instance.stack == 'connector' && instance.oauth_keys_valid && instance.oauth_company_name
+          return instance.oauth_company_name
+        false
+
+      $scope.helper.connectorVersion = (instance) ->
+        if instance.stack == 'connector' && instance.oauth_keys_valid && instance.connectorVersion
+          return capitalize(instance.connectorVersion)
+        false
+
+      $scope.helper.isOauthConnectBtnShown = (instance) ->
+        instance.app_nid != 'office-365' &&
+        instance.stack == 'connector' &&
+        !instance.oauth_keys_valid
+
+      $scope.helper.oAuthConnectPath = (instance)->
+        "/mnoe/webhook/oauth/#{instance.uid}/authorize"
 
       $scope.updateAppName = (app) ->
         origApp = $scope.originalApps["app_instance_#{app.id}"]

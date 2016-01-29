@@ -32,14 +32,15 @@ angular.module 'mnoEnterpriseAngular'
       angular.extend tempModalDefaults, modalDefaults, customModalDefaults
 
       if !tempModalDefaults.controller
-        tempModalDefaults.controller = ['$scope', '$modalInstance', ($scope, $modalInstance) ->
+        tempModalDefaults.controller = ($scope, $uibModalInstance) ->
+          'ngInject'
+
           $scope.modalOptions = tempModalOptions
           $scope.modalOptions.ok = (result) ->
-            $modalInstance.close(result)
+            $uibModalInstance.close(result)
           $scope.modalOptions.close = (result) ->
-            $modalInstance.dismiss('cancel')
-      ]
+            $uibModalInstance.dismiss('cancel')
 
-      $modal.open(tempModalDefaults).result
+      $uibModal.open(tempModalDefaults).result
 
     return @
