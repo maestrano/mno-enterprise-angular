@@ -9,8 +9,9 @@ angular.module 'mnoEnterpriseAngular'
 
       MnoeCurrentUser.get().then(
         (response) ->
+
           currentOrgId = parseInt(MnoeOrganizations.selectedId)
-          userOrgs = response.organizations
+          userOrgs = MnoeCurrentUser.user.organizations
 
           if userOrgs && currentOrgId
             deferred.resolve({organizations: userOrgs, currentOrgId: currentOrgId})

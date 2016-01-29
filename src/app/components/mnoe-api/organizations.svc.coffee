@@ -26,6 +26,8 @@ angular.module 'mnoEnterpriseAngular'
       )
 
     @get = (id) ->
+      return if id == _self.selectedId
+
       _self.selectedId = id
 
       # Get the selected organization
@@ -37,15 +39,20 @@ angular.module 'mnoEnterpriseAngular'
           response
       )
 
-    @reload = ->
-      _self.get(_self.selectedId)
-
     @create = (organization) ->
       MnoeApiSvc.all('/organizations').post(organization).then(
         (response) ->
-          _self.selected = response.plain()
-          MnoeCurrentUser.user.organizations.push(_self.selected.organization)
+          # Add the new org in the menu
           _self.selectedId = _self.selected.organization.id
+          MnoeCurrentUser.user.organizations.push(response.plain().organization)
+
+          # Reload the permissions
+          MnoeCurrentUser.refresh().then(
+            ->
+              _self.selected = response.plain()
+              _self.selectedId = _self.selected.organization.id
+          )
+
           response
       )
 
