@@ -3,6 +3,9 @@ angular.module 'mnoEnterpriseAngular'
     login: '/mnoe/auth/users/sign_in',
     logout: '/mnoe/auth/users/sign_out'
   })
+  .constant('LOCALSTORAGE', {
+    appInstancesKey: 'appInstances'
+  })
   .constant('LOCALES', {
     'locales': [
       { id: 'en_US', name: 'English', flag: '' },

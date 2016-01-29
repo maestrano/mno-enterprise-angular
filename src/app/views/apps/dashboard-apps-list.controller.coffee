@@ -105,6 +105,6 @@ angular.module 'mnoEnterpriseAngular'
           MnoeAppInstances.getAppInstances().then(
             (response) ->
               $scope.isLoading = false
-              $scope.apps = response
+              $scope.apps = MnoeAppInstances.appInstances
           )
   )
