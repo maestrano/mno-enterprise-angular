@@ -38,7 +38,7 @@ angular.module 'mnoEnterpriseAngular'
         _warning('setobject_error')
 
     @getObject = (key, defaultValue) ->
-      angular.fromJson($window.localStorage[key]) or defaultValue or {}
+      angular.fromJson($window.localStorage[key]) or defaultValue
 
     @getKeys = ->
       keys = []
