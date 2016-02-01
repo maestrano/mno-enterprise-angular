@@ -60,14 +60,14 @@
               </div>
 
               <!-- OAuth Connect Button -->
-              <div ng-show="appsListHelper.isOauthConnectBtnShown(app)">
-                <a class="btn btn-warning" ng-href="{{appsListHelper.oAuthConnectPath(app)}}">
+              <div ng-show="helper.isOauthConnectBtnShown(app)">
+                <a class="btn btn-warning" ng-href="{{helper.oAuthConnectPath(app)}}">
                   {{ 'mno_enterprise.templates.dashboard.apps_list.connect' | translate }}
                 </a>
               </div>
 
-              <!-- OAuth Connect Button -->
-              <a ng-href="{{helper.appActionUrl(app)}}" target="_blank" class="btn btn-warning">
+              <!-- Launch App Button -->
+              <a ng-href="{{helper.appActionUrl(app)}}" target="_blank" ng-hide="helper.isLaunchHidden(app)" class="btn btn-warning">
                 {{'mno_enterprise.templates.dashboard.apps_list.launch_app' | translate}}
               </a>
 
