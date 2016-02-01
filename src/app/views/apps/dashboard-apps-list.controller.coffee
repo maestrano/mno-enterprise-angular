@@ -42,9 +42,9 @@ angular.module 'mnoEnterpriseAngular'
       $scope.helper.dataDisconnectClick = (instance) ->
         modalOptions =
           closeButtonText: 'Cancel'
-          actionButtonText: 'Delete app'
-          headerText: 'Delete ' + instance.app_name + '?'
-          bodyText: 'Are you sure you want to delete this app?'
+          actionButtonText: 'Disconnect app'
+          headerText: "Disconnect #{instance.app_name}?"
+          bodyText: "Are you sure you want to disconnect #{instance.app_name} and Maestrano?"
 
         MnoConfirm.showModal(modalOptions).then(
           ->
@@ -71,6 +71,15 @@ angular.module 'mnoEnterpriseAngular'
 
       $scope.helper.oAuthConnectPath = (instance)->
         "/mnoe/webhook/oauth/#{instance.uid}/authorize"
+
+      $scope.helper.isLaunchHidden = (instance) ->
+        instance.status == 'terminating' ||
+        instance.status == 'terminated' ||
+        $scope.helper.isOauthConnectBtnShown(instance) ||
+        $scope.helper.isNewOfficeApp(instance)
+
+      $scope.helper.isNewOfficeApp = (instance) ->
+        instance.stack == 'connector' && instance.appNid == 'office-365' && (moment(instance.createdAt) > moment().subtract({minutes:5}))
 
       $scope.updateAppName = (app) ->
         origApp = $scope.originalApps["app_instance_#{app.id}"]

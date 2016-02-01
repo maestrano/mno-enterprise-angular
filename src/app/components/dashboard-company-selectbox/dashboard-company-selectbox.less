@@ -4,8 +4,7 @@ dashboard-company-selectbox {
   /*-----------------------------------------------------------------------*/
   .company-select-box {
     position: absolute;
-    top: 0px;
-    right: 0px;
+    right: 0;
     background-color: @dashboard-cpy-select-bg-color;
     color: @dashboard-cpy-select-header-text-color;
     font-size: @dashboard-cpy-select-header-text-size;
@@ -82,8 +81,5 @@ dashboard-company-selectbox {
         color: @dashboard-cpy-select-link-admin-color;
       }
     }
-
-    // Play well with menu at the top in responsive mode
-    @media (max-width: @screen-sm-min) { top: 40px; }
   }
 }
