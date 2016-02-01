@@ -13,7 +13,7 @@
 # => PUT /mnoe/jpi/v1/current_user/update_password
 
 angular.module 'mnoEnterpriseAngular'
-  .service 'MnoeCurrentUser', (MnoeApiSvc, $window, URI) ->
+  .service 'MnoeCurrentUser', (MnoeApiSvc, $window, $state, URI) ->
     _self = @
 
     # Store the current_user promise
