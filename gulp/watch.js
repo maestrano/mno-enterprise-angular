@@ -39,4 +39,12 @@ gulp.task('watch', ['inject'], function () {
   gulp.watch(path.join(conf.paths.src, '/app/**/*.html'), function(event) {
     browserSync.reload(event.path);
   });
+
+  // Copy changed file in frontend to mno-enterprise-angular
+  gulp.watch(path.join(conf.paths.customisation, '/**/*'), function(event){
+    if(event.type === 'changed') {
+      gulp.src(event.path, { 'base': conf.paths.customisation })
+        .pipe(gulp.dest('./'));
+    }
+  });
 });
