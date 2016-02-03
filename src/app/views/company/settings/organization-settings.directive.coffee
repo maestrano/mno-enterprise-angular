@@ -23,10 +23,10 @@ DashboardOrganizationSettingsCtrl = ($scope, $window, MnoeOrganizations, Utiliti
   $scope.save = ->
     $scope.isLoading = true
     MnoeOrganizations.update($scope.model).then(
-      (organization) ->
+      (response) ->
         $scope.errors = ''
-        angular.copy(organization, $scope.model)
-        angular.copy(organization, $scope.origModel)
+        angular.copy(response.organization, $scope.model)
+        angular.copy(response.organization, $scope.origModel)
       (errors) ->
         $scope.errors = Utilities.processRailsError(errors)
     ).finally(-> $scope.isLoading = false)
@@ -34,13 +34,13 @@ DashboardOrganizationSettingsCtrl = ($scope, $window, MnoeOrganizations, Utiliti
   # Cancel the temporary changes made by the
   # user
   $scope.cancel = ->
-    angular.copy($scope.origModel,$scope.model)
+    angular.copy($scope.origModel, $scope.model)
     $scope.errors = ''
 
   # Check if the user has started editing the
   # form
   $scope.isChanged = ->
-    !angular.equals($scope.model,$scope.origModel)
+    !angular.equals($scope.model, $scope.origModel)
 
   # Check whether we should display the cancel
   # button or not

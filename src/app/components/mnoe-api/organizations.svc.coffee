@@ -61,7 +61,13 @@ angular.module 'mnoEnterpriseAngular'
       payload = { organization: organization }
       MnoeApiSvc.one('/organizations', _self.selectedId).customPUT(payload).then(
         (response) ->
-          _self.selected = response.plain()
+          response = response.plain()
+          # Update the selected organisation
+          angular.extend(_self.selected.organization, response.organization)
+
+          # Update the organisation in user organisations list
+          angular.extend(_.find(MnoeCurrentUser.user.organizations, { id: response.organization.id }), response.organization)
+
           response
       )
 
