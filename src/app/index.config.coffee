@@ -61,3 +61,14 @@ angular.module 'mnoEnterpriseAngular'
     $translateProvider.useMissingTranslationHandlerLog()
     $translateProvider.useLocalStorage()
   )
+
+  #======================================================================================
+  # IMPAC-ROUTES: Configuring routes
+  #======================================================================================
+  .config (ImpacRoutesProvider, IMPAC_CONFIG) ->
+    data =
+      showWidgetPath: "#{IMPAC_CONFIG.protocol}://#{IMPAC_CONFIG.host}#{IMPAC_CONFIG.paths.get_widget}"
+      impacKpisBasePath: "#{IMPAC_CONFIG.protocol}://#{IMPAC_CONFIG.host}#{IMPAC_CONFIG.paths.kpis}"
+      localKpisBasePath: "/mnoe/impac/v2/kpis"
+
+    ImpacRoutesProvider.configureRoutes(data)

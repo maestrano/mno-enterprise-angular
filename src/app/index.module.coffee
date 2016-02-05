@@ -1,4 +1,7 @@
 angular.module 'mnoEnterpriseAngular', [
+  # Runtime configuration
+  'mnoEnterprise.configuration',
+
   'ngAnimate',
   'ngAria',
   'ngCookies',
