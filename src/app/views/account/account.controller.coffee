@@ -1,6 +1,6 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('DashboardAccountCtrl',
-    ($log, toastr, MnoeCurrentUser, MnoErrorsHandler, Miscellaneous, Utilities) ->
+    ($log, $timeout, toastr, MnoeCurrentUser, MnoErrorsHandler, Miscellaneous, Utilities) ->
 
       vm = @
 
@@ -10,9 +10,14 @@ angular.module 'mnoEnterpriseAngular'
       vm.success = {}
 
       # User model init
-      vm.isPersoInfoOpen = true
       vm.user = { model: {}, password: {}, loading:false }
       userOrig = null
+
+      # Delay the first accordion group opening
+      # to avoid a page load glitch
+      $timeout (->
+        vm.isPersoInfoOpen = true
+      ), 250
 
       vm.user.hasChanged = ->
         !(_.isEqual(vm.user.model, userOrig))
