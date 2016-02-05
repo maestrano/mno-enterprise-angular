@@ -1,4 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
+
   .config(($logProvider, toastrConfig) ->
     'ngInject'
 

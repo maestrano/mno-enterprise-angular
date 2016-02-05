@@ -4,8 +4,11 @@ angular.module 'mnoEnterpriseAngular'
     return {
       restrict: 'EA'
       template: '''
-        <select ng-model="selectedLangKey" ng-change="changeLanguage()" ng-options="locale.id as locale.name for locale in locales">
-        </select>
+        <span class="selector-line form-inline form-group form-group-sm">
+          <label class="control-label" for="language-select">Language</label>
+          <select id="language-select" class="form-control" ng-model="selectedLangKey" ng-change="changeLanguage()" ng-options="locale.id as locale.name for locale in locales">
+          </select>
+        </span>
       '''
       controller: ($scope, $translate, LOCALES) ->
 
