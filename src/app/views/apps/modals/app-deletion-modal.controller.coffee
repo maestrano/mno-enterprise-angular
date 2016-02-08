@@ -11,13 +11,11 @@ angular.module 'mnoEnterpriseAngular'
         MnoeAppInstances.terminate($scope.modal.app.id).then(
           (success) ->
             MnoeAppInstances.getAppInstances()
-            $scope.modal.loading = false
             $scope.modal.errors = null
             $uibModalInstance.close()
           (error) ->
-            $scope.modal.loading = false
             $scope.modal.errors = Utilities.processRailsError(error)
-        )
+        ).finally(-> $scope.modal.loading = false)
 
       cancel: ->
         $uibModalInstance.dismiss('cancel')
