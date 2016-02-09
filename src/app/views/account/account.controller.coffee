@@ -79,6 +79,11 @@ angular.module 'mnoEnterpriseAngular'
         ).finally( -> vm.user.loading = false )
 
       # ----------------------------------------------------
+      # i18n and l10n section
+      # ----------------------------------------------------
+      vm.isLocalizationOpen = false
+
+      # ----------------------------------------------------
       # Account Deletion
       # ----------------------------------------------------
       # Removed: cf. git log

@@ -161,6 +161,7 @@
   "mno_enterprise.templates.components.loading_lounge.app_not_found": "Aplikasi tidak ditemukan",
   "mno_enterprise.templates.components.loading_lounge.app_not_managed_by_us": "Aplikasi yang Anda minta tampaknya tidak dikelola oleh kami.",
   "mno_enterprise.templates.components.loading_lounge.did_you_type_the_right_url": "Anda yakin sudah mengetik url yang benar?",
+  "mno_enterprise.templates.dashboard.account.my_account": "Akun Saya",
   "mno_enterprise.templates.dashboard.account.personal_information": "Informasi Pribadi",
   "mno_enterprise.templates.dashboard.account.user_form_name": "Nama",
   "mno_enterprise.templates.dashboard.account.user_form_surname": "Nama belakang",

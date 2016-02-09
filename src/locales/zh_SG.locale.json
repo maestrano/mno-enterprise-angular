@@ -160,6 +160,7 @@
   "mno_enterprise.templates.components.loading_lounge.app_not_found": "找不到应用程序",
   "mno_enterprise.templates.components.loading_lounge.app_not_managed_by_us": "您要求的应用程序似乎不是由我们管理。",
   "mno_enterprise.templates.components.loading_lounge.did_you_type_the_right_url": "您确定您已输入正确的网址？",
+  "mno_enterprise.templates.dashboard.account.my_account": "我的帐户",
   "mno_enterprise.templates.dashboard.account.personal_information": "个人信息",
   "mno_enterprise.templates.dashboard.account.user_form_name": "名字",
   "mno_enterprise.templates.dashboard.account.user_form_surname": "姓氏",
