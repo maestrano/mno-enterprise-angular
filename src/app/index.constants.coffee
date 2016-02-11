@@ -8,10 +8,10 @@ angular.module 'mnoEnterpriseAngular'
   })
   .constant('LOCALES', {
     'locales': [
-      { id: 'en_US', name: 'English', flag: '' },
-      { id: 'id_ID', name: 'Indonesian', flag: '' },
-      { id: 'zh_SG', name: 'Chinese (Singapore)', flag: '' }
+      { id: 'en', name: 'English', flag: '' },
+      { id: 'id', name: 'Indonesian', flag: '' },
+      { id: 'zh', name: 'Chinese (Singapore)', flag: '' }
     ],
-    'preferredLocale': 'en_US',
-    'fallbackLanguage': 'en_US'
+    'preferredLocale': 'en',
+    'fallbackLanguage': 'en'
   })
