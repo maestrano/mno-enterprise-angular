@@ -1,6 +1,6 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('DashboardAccountCtrl',
-    ($log, toastr, MnoeCurrentUser, MnoErrorsHandler, Miscellaneous, Utilities) ->
+    ($log, toastr, MnoeCurrentUser, MnoErrorsHandler, Miscellaneous, Utilities, I18N_CONFIG) ->
 
       vm = @
 
@@ -81,6 +81,7 @@ angular.module 'mnoEnterpriseAngular'
       # ----------------------------------------------------
       # i18n and l10n section
       # ----------------------------------------------------
+      vm.isLocalizationVisible = I18N_CONFIG.enabled
       vm.isLocalizationOpen = false
 
       # ----------------------------------------------------
