@@ -18,10 +18,10 @@
   </div>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-default" ng-click="modal.cancel()">
+  <button type="button" class="btn btn-default" ng-show="!modal.loading" ng-click="modal.cancel()">
     {{ 'mno_enterprise.templates.dashboard.app_deletion.cancel' | translate }}
   </button>
-  <button type="button" class="btn btn-danger" ng-disabled="modal.sentence != sentenceCheck" ng-click="modal.deleteApp()">
+  <button type="button" class="btn btn-danger" ng-disabled="(modal.sentence != sentenceCheck) || modal.loading" ng-click="modal.deleteApp()">
     <span ng-show="modal.loading"><i class="fa fa-spinner fa-spin"></i>&nbsp;</span>
     {{ 'mno_enterprise.templates.dashboard.app_deletion.delete' | translate }}
   </button>
