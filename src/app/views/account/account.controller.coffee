@@ -1,6 +1,6 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('DashboardAccountCtrl',
-    ($log, ,$timeout toastr, MnoeCurrentUser, MnoErrorsHandler, Miscellaneous, Utilities, I18N_CONFIG) ->
+    ($log, $timeout, toastr, MnoeCurrentUser, MnoErrorsHandler, Miscellaneous, Utilities, I18N_CONFIG) ->
 
       vm = @
 
