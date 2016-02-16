@@ -10,13 +10,35 @@ angular.module 'mnoEnterpriseAngular'
           </select>
         </span>
       '''
-      controller: ($scope, $translate, LOCALES) ->
+      controller: ($scope, $translate, $location, $uibModal, MnoConfirm, LOCALES) ->
 
         $scope.locales = LOCALES.locales
         $scope.selectedLangKey = $translate.use()
 
-        $scope.changeLanguage = () ->
-          $translate.use($scope.selectedLangKey)
+        # Save the previous value of the list
+        $scope.$watch('selectedLangKey', (newVal, oldVal) ->
+          $scope.previousLocale = oldVal;
+        )
 
+        # Triggered when the locale change, locale can be reverted using $scope.previousLocale
+        $scope.changeLanguage = () ->
+          locale = _.findWhere(LOCALES.locales, { id: $scope.selectedLangKey })
+          console.log locale
+
+          modalOptions =
+            closeButtonText: 'Cancel'
+            actionButtonText: 'Change language'
+            headerText: "Change language to #{locale.name}?"
+            bodyText: "Are you sure you want to change language to #{locale.name}?"
+
+          MnoConfirm.showModal(modalOptions).then(
+            ->
+              # Success
+              $translate.use($scope.selectedLangKey)
+              $scope.selectedLangKey = $translate.use()
+            ->
+              # Error
+              $scope.selectedLangKey = $scope.previousLocale
+          )
     }
   )
