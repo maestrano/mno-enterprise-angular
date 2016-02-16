@@ -17,7 +17,7 @@ angular.module 'mnoEnterpriseAngular'
 
         # Save the previous value of the list
         $scope.$watch('selectedLangKey', (newVal, oldVal) ->
-          $scope.previousLocale = oldVal;
+          $scope.previousLocale = oldVal
         )
 
         # Triggered when the locale change, locale can be reverted using $scope.previousLocale
