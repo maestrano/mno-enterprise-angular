@@ -15,9 +15,6 @@
     </div>
 
     <div class="box-content scrollbar-hidden" uib-collapse="selectBox.isClosed">
-
-      <dashboard-language-selectbox></dashboard-language-selectbox>
-
       <ul class="list-unstyled">
         <li ng-repeat="organization in selectBox.user.organizations | orderBy:'name'" >
           <a href="" ng-click="selectBox.changeTo(organization)">

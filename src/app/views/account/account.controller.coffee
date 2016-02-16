@@ -1,6 +1,6 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('DashboardAccountCtrl',
-    ($log, $timeout, toastr, MnoeCurrentUser, MnoErrorsHandler, Miscellaneous, Utilities) ->
+    ($log, $timeout, toastr, MnoeCurrentUser, MnoErrorsHandler, Miscellaneous, Utilities, I18N_CONFIG) ->
 
       vm = @
 
@@ -82,6 +82,12 @@ angular.module 'mnoEnterpriseAngular'
             $log.error('Error while updating user: ', error)
             MnoErrorsHandler.processServerError(error, form)
         ).finally( -> vm.user.loading = false )
+
+      # ----------------------------------------------------
+      # i18n and l10n section
+      # ----------------------------------------------------
+      vm.isLocalizationVisible = I18N_CONFIG.enabled
+      vm.isLocalizationOpen = false
 
       # ----------------------------------------------------
       # Account Deletion

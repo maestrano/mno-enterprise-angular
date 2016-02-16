@@ -4,7 +4,7 @@
   <div uib-accordion class="accordion top-buffer-2">
     <div uib-accordion-group is-open="vm.isPersoInfoOpen">
       <div uib-accordion-heading>
-        {{ 'mno_enterprise.templates.dashboard.account.personal_information' | translate }} <span class="caret pull-right" ng-class="{'caret-down': !vm.isPersoInfoOpen, 'caret-up': vm.isPersoInfoOpen}"></span>
+        {{ 'mno_enterprise.templates.dashboard.account.personal_information' | translate }} <span class="fa pull-right" ng-class="{'fa-caret-down': !vm.isPersoInfoOpen, 'fa-caret-up': vm.isPersoInfoOpen}"></span>
       </div>
 
       <div class="alert alert-error" ng-show="vm.errors.user">
@@ -57,13 +57,12 @@
       </form>
     </div>
 
-
     <!--
       Change Password Section
-      -->
+    -->
     <div uib-accordion-group is-open="vm.isChangePasswordOpen">
       <div uib-accordion-heading>
-          {{ 'mno_enterprise.templates.dashboard.account.change_password' | translate }} <span class="caret pull-right" ng-class="{'caret-down': !vm.isChangePasswordOpen, 'caret-up': vm.isChangePasswordOpen}"></span>
+          {{ 'mno_enterprise.templates.dashboard.account.change_password' | translate }} <span class="fa pull-right" ng-class="{'fa-caret-down': !vm.isChangePasswordOpen, 'fa-caret-up': vm.isChangePasswordOpen}"></span>
       </div>
       <form name='vm.form' novalidate>
         <mno-password class="top-buffer-1"
@@ -88,6 +87,16 @@
           </div>
         </div>
       </form>
+    </div>
+
+    <!--
+      Change locale section
+    -->
+    <div uib-accordion-group ng-if="vm.isLocalizationVisible" is-open="vm.isLocalizationOpen">
+      <div uib-accordion-heading>
+          {{ 'mno_enterprise.templates.dashboard.account.language' | translate }} <span class="fa pull-right" ng-class="{'fa-caret-down': !vm.isChangePasswordOpen, 'fa-caret-up': vm.isChangePasswordOpen}"></span>
+      </div>
+      <dashboard-language-selectbox></dashboard-language-selectbox>
     </div>
 
     <!--
