@@ -1,6 +1,7 @@
 angular.module 'mnoEnterpriseAngular'
   .constant('URI', {
     login: '/mnoe/auth/users/sign_in',
+    dashboard: '/dashboard/',
     logout: '/mnoe/auth/users/sign_out'
   })
   .constant('LOCALSTORAGE', {

@@ -10,7 +10,7 @@ angular.module 'mnoEnterpriseAngular'
           </select>
         </span>
       '''
-      controller: ($scope, $translate, $location, $uibModal, MnoConfirm, LOCALES) ->
+      controller: ($scope, $translate, $window, $uibModal, MnoConfirm, LOCALES, URI) ->
 
         $scope.locales = LOCALES.locales
         $scope.selectedLangKey = $translate.use()
@@ -35,7 +35,7 @@ angular.module 'mnoEnterpriseAngular'
             ->
               # Success
               $translate.use($scope.selectedLangKey)
-              $scope.selectedLangKey = $translate.use()
+              $window.location.href = "/#{$scope.selectedLangKey}#{URI.dashboard}"
             ->
               # Error
               $scope.selectedLangKey = $scope.previousLocale
