@@ -1,6 +1,25 @@
-#dashboard {
-  position: relative;
+#layout-loading {
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0;
+  right: 0;
+  background-color: @dashboard-bg-color;
+  z-index: 1000;
+  padding-top: 50px;
 
+  &.ng-hide {
+    transition: all linear 1s;
+    opacity: 0;
+  }
+
+  .layout-loading-text {
+    display: inline-block;
+    padding-top: 15px;
+  }
+}
+
+#dashboard {
   @media (max-width: @screen-xs-max) {
     padding-top: 40px;
   }
