@@ -381,7 +381,7 @@
   "mno_enterprise.templates.dashboard.account.passwd_form_confirm": "Confirm Password",
   "mno_enterprise.templates.dashboard.account.passwd_form_save": "Save",
   "mno_enterprise.templates.dashboard.account.passwd_form_cancel": "Cancel",
-  "mno_enterprise.templates.dashboard.account.language": "Language",
+  "mno_enterprise.templates.dashboard.account.settings": "Settings",
   "mno_enterprise.templates.dashboard.app_deletion.title": "Confirm app deletion",
   "mno_enterprise.templates.dashboard.app_deletion.instructions": "In order to delete your app, please enter the following statement in the box below.",
   "mno_enterprise.templates.dashboard.app_deletion.cancel": "Cancel",
