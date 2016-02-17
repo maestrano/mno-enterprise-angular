@@ -20,10 +20,9 @@
     "restangular": "~1.5.1",
     "impac-angular": "git@github.com:maestrano/impac-angular.git#v1.1.1",
     "less": "~2.5.3",
-    "angular-translate": "~2.8.1",
-    "angular-translate-loader-static-files": "~2.8.1",
-    "angular-translate-storage-local": "~2.8.1",
-    "angular-translate-handler-log": "~2.8.1",
+    "angular-translate": "~2.9.1",
+    "angular-translate-loader-static-files": "~2.9.1",
+    "angular-translate-handler-log": "~2.9.1",
     "angular-sanitize": "~1.4.9"
   },
   "devDependencies": {

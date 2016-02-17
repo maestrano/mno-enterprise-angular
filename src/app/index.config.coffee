@@ -55,11 +55,9 @@ angular.module 'mnoEnterpriseAngular'
       suffix: '.locale.json'
     })
 
-    $translateProvider.preferredLanguage(LOCALES.preferredLocale)
     $translateProvider.fallbackLanguage(LOCALES.fallbackLanguage)
     $translateProvider.useSanitizeValueStrategy('sanitizeParameters')
     $translateProvider.useMissingTranslationHandlerLog()
-    $translateProvider.useLocalStorage()
   )
 
   #======================================================================================
