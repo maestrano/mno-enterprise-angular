@@ -18,7 +18,7 @@
     "font-awesome": "~4.5.0",
     "jquery": "~2.1.4",
     "restangular": "~1.5.1",
-    "impac-angular": "git@github.com:maestrano/impac-angular.git#v1.1.1",
+    "impac-angular": "git@github.com:maestrano/impac-angular.git#d197412a8f253fcaf8951926a4ac44a39c27e7e6",
     "less": "~2.5.3",
     "angular-translate": "~2.9.1",
     "angular-translate-loader-static-files": "~2.9.1",
