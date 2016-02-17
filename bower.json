@@ -22,7 +22,6 @@
     "less": "~2.5.3",
     "angular-translate": "~2.9.1",
     "angular-translate-loader-static-files": "~2.9.1",
-    "angular-translate-storage-local": "~2.9.1",
     "angular-translate-handler-log": "~2.9.1",
     "angular-sanitize": "~1.4.9"
   },
