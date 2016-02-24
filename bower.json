@@ -18,7 +18,7 @@
     "font-awesome": "~4.5.0",
     "jquery": "~2.1.4",
     "restangular": "~1.5.1",
-    "impac-angular": "git@github.com:maestrano/impac-angular.git#d197412a8f253fcaf8951926a4ac44a39c27e7e6",
+    "impac-angular": "git@github.com:maestrano/impac-angular.git#3e15cedec3c631609714c636b4360c12223765c6",
     "less": "~2.5.3",
     "angular-translate": "~2.9.1",
     "angular-translate-loader-static-files": "~2.9.1",
@@ -48,6 +48,8 @@
   },
   "resolutions": {
     "angular-bootstrap": "~0.14.3",
-    "angular": "~1.4.0"
+    "angular": "~1.4.0",
+    "moment": "^2.11.2",
+    "jquery": "~2.2.1"
   }
 }

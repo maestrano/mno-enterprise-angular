@@ -64,9 +64,17 @@ angular.module 'mnoEnterpriseAngular'
   # IMPAC-ROUTES: Configuring routes
   #======================================================================================
   .config (ImpacRoutesProvider, IMPAC_CONFIG) ->
+    mnoHub = IMPAC_CONFIG.paths.mnohub_api
+    impacPrefix = "/impac"
+
     data =
-      showWidgetPath: "#{IMPAC_CONFIG.protocol}://#{IMPAC_CONFIG.host}#{IMPAC_CONFIG.paths.get_widget}"
-      impacKpisBasePath: "#{IMPAC_CONFIG.protocol}://#{IMPAC_CONFIG.host}#{IMPAC_CONFIG.paths.kpis}"
-      localKpisBasePath: "/mnoe/impac/v2/kpis"
+      mnoHub: mnoHub
+      impacPrefix: impacPrefix
+      impacApi: "#{IMPAC_CONFIG.protocol}://#{IMPAC_CONFIG.host}/api"
+      dashboards:
+        index: "#{mnoHub}#{impacPrefix}/dashboards"
+      widgets:
+        index: "#{mnoHub}#{impacPrefix}/widgets"
+        create: "#{mnoHub}#{impacPrefix}/dashboards/:dashboard_id/widgets"
 
     ImpacRoutesProvider.configureRoutes(data)
