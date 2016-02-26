@@ -35,7 +35,9 @@ angular.module 'mnoEnterpriseAngular'
         (response) ->
           # Save the organization
           _self.selected = response.plain()
-          $cookies.put('dhb_ref_id', _self.selectedId)
+
+          # Use user id to avoid another user to load with an unknown organisation
+          $cookies.put("#{MnoeCurrentUser.user.id}_dhb_ref_id", _self.selectedId)
           response
       )
 
@@ -94,8 +96,8 @@ angular.module 'mnoEnterpriseAngular'
         $log.debug "MnoeOrganizations.getCurrentId: dhbRefId", _self.selectedId
         return dhbRefId
 
-      # Attempt to load last organization from cookie
-      else if (val = $cookies.get('dhb_ref_id'))
+      # Attempt to load last organization from cookie of the user
+      else if (val = $cookies.get("#{MnoeCurrentUser.user.id}_dhb_ref_id"))
         _self.get(val)
         $log.debug "MnoeOrganizations.getCurrentId: cookie", _self.selectedId
         return val
