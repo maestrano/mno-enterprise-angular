@@ -8,7 +8,25 @@
 
 # MNO Enterprise Angular Frontend
 
-## Gulp tasks
+## How to run in development mode
+
+### Prerequisite
+
+Create and setup a Rails project to bootstrap an instance of Maestrano Enterprise Express as describe in the [mno-enterprise Github repository](https://github.com/maestrano/mno-enterprise).
+
+Run this Maestrano Enterprise Express project, it should now be available at http://localhost:7000.
+
+This project will serve as a backend for our mno-enterprise-angular development environment.
+
+### Install & run mno-enterprise-angular
+
+* Clone this repository, and `cd mno-enterprise-angular`
+* Run `npm install && bower install`
+* To start the project, run `gulp serve`
+
+A new browser tab should be open at address http://localhost:7001, with Browsersync enabled, waiting to auto-refresh in case template or CoffeeScript code is changed, or inject any modified styles.
+
+## List of gulp tasks
 
 * `gulp` or `gulp build` to build an optimized version of your application in `/dist`
 * `gulp serve` to launch a browser sync server on your source files
@@ -17,30 +35,3 @@
 * `gulp test:auto` to launch your unit tests with Karma in watch mode
 * `gulp protractor` to launch your e2e tests with Protractor
 * `gulp protractor:dist` to launch your e2e tests with Protractor on the dist files
-
-## How to build this frontend on a Mno-Enterprise app
-
-In the enterprise app directory:
-
-Install dependencies
-* run `npm install gulp gulp-util gulp-load-plugins del gulp-git`
-
-* run `gulp clone-frontend;gulp run-npm-install`
-
-This command will clone the frontend repository in the `.tmp-frontend` directory
-and download its npm and bower dependencies.
-You can change the **mno-enterprise-angular** frontend repository address and branch
-by updating `git_frontend_repo` and `git_frontend_branch` variables in gulpfile.js
-
-* run `gulp copy-custom-files`
-
-Your custom files in the `frontend` directory will be duplicated in `.tmp-frontend` directory.
-Your custom files must respect the `mno-enterprise-angular/src` code organization.
-
-(eg. if the file `frontend/src/app/stylesheets/theme.less` is present in the host project, it will replace the one in `.tmp-frontend/src/app/stylesheets/theme.less`)
-
-* run `gulp run-frontend-build;gulp copy-dist-files`
-
-The **mno-enterprise-angular** project will be built with your custom files and duplicated in the `public` folder.
-
-Repeat step 2 & 3, anytime you need to copy your custom files and recompile your frontend project.
