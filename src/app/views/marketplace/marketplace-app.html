@@ -40,7 +40,7 @@
               <div class="row">
                 <div class="col-xs-12 col-sm-4 col-sm-offset-4 col-md-8 col-md-offset-2">
                   <div class="btn-fluid-wrapper">
-                    <a class="btn btn-warning btn-promo" ng-href="{{vm.provisionLink()}}">
+                    <a href="" ng-click="vm.provisionLink()" class="btn btn-warning btn-promo">
                       {{ 'mno_enterprise.templates.dashboard.marketplace.show.start_app' | translate }}
                     </a>
                   </div>
@@ -48,7 +48,6 @@
               </div>
 
               <div class="row">
-
                 <div class="col-xs-12 col-sm-4 col-sm-offset-4 col-md-8 col-md-offset-2">
                   <ul class="app-features">
                     <li ng-show="vm.app.is_responsive">

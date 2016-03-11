@@ -47,6 +47,12 @@ angular.module 'mnoEnterpriseAngular'
       MnoeApiSvc.one('/app_instances', appInstance.id).patch({name: appInstance.name})
 
     @terminate = (id) ->
-      MnoeApiSvc.one('app_instances', id).remove()
+      MnoeApiSvc.one('app_instances', id).remove().then(
+        (response) ->
+          _.remove(_self.appInstances, {id: id})
+      )
+
+    @clearCache = () ->
+      MnoLocalStorage.removeItem(LOCALSTORAGE.appInstancesKey)
 
     return @
