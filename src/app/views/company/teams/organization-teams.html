@@ -4,7 +4,7 @@
 
   <!-- No teams view -->
   <div ng-show="!isLoading && !hasTeams()">
-    <div class="row text-bg-inverse">
+    <div class="row text-bg-inverse top-buffer-2">
       <div class="col-sm-12 text-center">
         <p>
           {{ 'mno_enterprise.templates.dashboard.teams.index.no_teams_warning' | translate }}
@@ -46,7 +46,6 @@
       </div>
 
       <div class="row">
-
         <!-- Matrix: left part (team & 'all' checkbox) -->
         <div class="col-xs-4 table-left">
           <table class="permission-matrix">
