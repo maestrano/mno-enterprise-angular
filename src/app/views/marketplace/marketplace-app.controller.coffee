@@ -40,9 +40,7 @@ angular.module 'mnoEnterpriseAngular'
 
       # Open the ShoppingCart
       cart.open = ->
-        if (d = DhbOrganizationSvc.data) && (o = d.organization) && o.id
-          cart.config.organizationId = o.id
-
+        cart.config.organizationId = MnoeOrganizations.selectedId
         cart.bundle = { app_instances: [{app: { id: vm.app.id }}] }
         cart.isOpen = true
 

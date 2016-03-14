@@ -21,8 +21,32 @@ angular.module 'mnoEnterpriseAngular'
           team
       )
 
+    @updateTeamName = (team) ->
+      payload = { team: _.pick(team, "name") }
+      MnoeApiSvc.one('teams', team.id).patch(payload).then(
+        (response) ->
+          newTeam = response.plain().team
+          listTeam = _.find(_self.teams, {id: team.id})
+          angular.copy(newTeam, listTeam)
+          response
+      )
+
+    @updateTeamAppInstances = (team, appInstances) ->
+      payload = { team: {app_instances: appInstances} }
+      MnoeApiSvc.one('teams', team.id).patch(payload).then(
+        (response) ->
+          newTeam = response.plain().team
+          listTeam = _.find(_self.teams, {id: team.id})
+          angular.copy(newTeam, listTeam)
+          response
+      )
+
     @deleteTeam = (teamId) ->
-      MnoeApiSvc.one('teams', teamId).remove()
+      MnoeApiSvc.one('teams', teamId).remove().then(
+        (response) ->
+          _.remove(_self.teams, {id: teamId})
+          response
+      )
 
     @addUsers = (teamId, users) ->
       payload = { team: { users: users } }
