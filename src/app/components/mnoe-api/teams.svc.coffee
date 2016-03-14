@@ -3,7 +3,7 @@ angular.module 'mnoEnterpriseAngular'
     _self = @
 
     # Store teams
-    @teams = null
+    @teams = []
 
     @getTeams = ->
       MnoeApiSvc.one('organizations', MnoeOrganizations.selectedId).one('teams').getList().then(
