@@ -83,6 +83,48 @@ angular.module 'mnoEnterpriseAngular'
           response.plain()
       )
 
+    # Accept an array of invites
+    # [{ email: 'bla@bla.com', role: 'Admin' }]
+    # Or
+    # a single email address
+    # Or
+    # a an array of email addresses
+    # Or
+    # a newline separated list of email addresses
+    @inviteMembers = (invites) ->
+      baseList = []
+      if angular.isString(invites)
+        baseList = invites.split("\n")
+      else
+        baseList = invites
+
+      finalList = []
+      _.each baseList, (e) ->
+        if angular.isObject(e)
+          finalList.push(e)
+        else
+          finalList.push({email: e})
+
+      data = { invites: finalList }
+      MnoeApiSvc.one('organizations', _self.selectedId).doPUT(data, '/invite_members').then(
+        (response) ->
+          response.members
+      )
+
+    @updateMember = (member) ->
+      data = { member: member }
+      MnoeApiSvc.one('organizations', _self.selectedId).doPUT(data, '/update_member').then(
+        (response) ->
+          response.members
+      )
+
+    @deleteMember = (member) ->
+      data = { member: _.pick(member, "email") }
+      MnoeApiSvc.one('organizations', _self.selectedId).doPUT(data, '/remove_member').then(
+        (response) ->
+          response.members
+      )
+
     # Load the current organization if defined (url, cookie or first)
     @getCurrentId = (user = null, dhbRefId = null) ->
       # Return the already selected id

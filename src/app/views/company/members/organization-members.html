@@ -8,7 +8,10 @@
   </button>
 </div>
 
-<div class="table-cell">
+<!-- Loader -->
+<mno-loader ng-show="isLoading"></mno-loader>
+
+<div class="table-cell" ng-show="!isLoading">
   <div class="row th-row hidden-xs">
     <div class="cell col-sm-2">{{ 'mno_enterprise.templates.dashboard.organization.members.name' | translate }}</div>
     <div class="cell col-sm-2">{{ 'mno_enterprise.templates.dashboard.organization.members.surname' | translate }}</div>

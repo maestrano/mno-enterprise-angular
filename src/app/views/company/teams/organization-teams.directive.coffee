@@ -1,6 +1,6 @@
 
 # TODO: Remove DhbTeamSvc
-DashboardOrganizationTeamsCtrl = ($scope, $window, $modal, $q, MnoeOrganizations, MnoeTeams, MnoeAppInstances, DhbTeamSvc, Utilities) ->
+DashboardOrganizationTeamsCtrl = ($scope, $window, $modal, $q, MnoeOrganizations, MnoeTeams, MnoeAppInstances, Utilities) ->
   'ngInject'
 
   #====================================
@@ -42,33 +42,33 @@ DashboardOrganizationTeamsCtrl = ($scope, $window, $modal, $q, MnoeOrganizations
   # If appInstance is equal to the string 'all'
   # then it checks if the team has access to all
   # appInstances
-  matrix.hasAccess = (team,appInstance) ->
+  matrix.hasAccess = (team, appInstance) ->
     if angular.isString(appInstance) && appInstance == 'all'
       _.reduce($scope.appInstances,
-        (memo,elem) ->
-          memo && _.find(team.app_instances,(i)-> i.id == elem.id)?
-        ,true
+        (memo, elem) ->
+          memo && _.find(team.app_instances, (i)-> i.id == elem.id)?
+        , true
       )
     else
-      _.find(team.app_instances,(i)-> i.id == appInstance.id)?
+      _.find(team.app_instances, (i)-> i.id == appInstance.id)?
 
   # Add access to the app if the team does not have
   # access and remove access if the team already
   # have access
-  matrix.toggleAccess = (team,appInstance) ->
+  matrix.toggleAccess = (team, appInstance) ->
     self = matrix
-    if (self.hasAccess(team,appInstance))
-      self.removeAccess(team,appInstance)
+    if (self.hasAccess(team, appInstance))
+      self.removeAccess(team, appInstance)
     else
-      self.addAccess(team,appInstance)
+      self.addAccess(team, appInstance)
 
   # Add access to a specified appInstance
   # If appInstance is equal to the string 'all'
   # then it adds permissions to all appInstances
-  matrix.addAccess = (team,appInstance) ->
+  matrix.addAccess = (team, appInstance) ->
     if angular.isString(appInstance) && appInstance == 'all'
       team.app_instances.length = 0
-      angular.copy($scope.appInstances,team.app_instances)
+      angular.copy($scope.appInstances, team.app_instances)
     else
       unless _.find(team.app_instances, (e)-> e.id == appInstance.id)?
         team.app_instances.push(appInstance)
@@ -117,13 +117,13 @@ DashboardOrganizationTeamsCtrl = ($scope, $window, $modal, $q, MnoeOrganizations
     _.each $scope.teams, (team) ->
       # Force empty array if no app_instances permissions
       realAppInstances = if team.app_instances.length >0 then team.app_instances else [{}]
-      qs.push DhbTeamSvc.team.update(team.id,{app_instances: realAppInstances})
+      qs.push MnoeTeams.updateTeamAppInstances(team, realAppInstances)
 
     $q.all(qs).then(
       (->)
         self.errors = ''
         self.updateOriginalTeams()
-      ,(errorsArray) ->
+      (errorsArray) ->
         self.errors = Utilities.processRailsError(errorsArray[0])
     ).finally(-> self.isLoading = false)
 
@@ -137,7 +137,7 @@ DashboardOrganizationTeamsCtrl = ($scope, $window, $modal, $q, MnoeOrganizations
     if team.name.length == 0
       team.name = origTeam.name
     else
-      DhbTeamSvc.team.update(team.id,{name: team.name}).then(
+      MnoeTeams.updateTeamName(team).then(
         (->)
           origTeam.name = team.name
         , ->

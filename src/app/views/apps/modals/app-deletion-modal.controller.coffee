@@ -10,7 +10,6 @@ angular.module 'mnoEnterpriseAngular'
         $scope.modal.loading = true
         MnoeAppInstances.terminate($scope.modal.app.id).then(
           (success) ->
-            MnoeAppInstances.getAppInstances()
             $scope.modal.errors = null
             $uibModalInstance.close()
           (error) ->

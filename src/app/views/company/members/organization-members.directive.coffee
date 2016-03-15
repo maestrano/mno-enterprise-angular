@@ -2,7 +2,7 @@
 #============================================
 #
 #============================================
-DashboardOrganizationMembersCtrl = ($scope, $modal, $sce, MnoeOrganizations, MnoeTeams, DhbOrganizationSvc, Utilities) ->
+DashboardOrganizationMembersCtrl = ($scope, $modal, $sce, MnoeOrganizations, MnoeTeams, Utilities) ->
   'ngInject'
 
   #====================================
@@ -10,6 +10,7 @@ DashboardOrganizationMembersCtrl = ($scope, $modal, $sce, MnoeOrganizations, Mno
   #====================================
   $scope.members = []
   $scope.teams = []
+  $scope.isLoading = true
 
   #====================================
   # Scope Management
@@ -18,6 +19,7 @@ DashboardOrganizationMembersCtrl = ($scope, $modal, $sce, MnoeOrganizations, Mno
   $scope.initialize = (members, teams = nil) ->
     angular.copy(members, $scope.members)
     angular.copy(teams, $scope.teams) if teams
+    $scope.isLoading = false
 
   $scope.editMember = (member) ->
     $scope.editionModal.open(member)
@@ -96,12 +98,12 @@ DashboardOrganizationMembersCtrl = ($scope, $modal, $sce, MnoeOrganizations, Mno
     self = editionModal
     self.isLoading = true
     obj = { email: self.member.email, role: self.selectedRole }
-    DhbOrganizationSvc.members.update(obj).then(
+    MnoeOrganizations.updateMember(obj).then(
       (members) ->
         self.errors = ''
-        angular.copy(members,$scope.members)
+        angular.copy(members, $scope.members)
         self.close()
-      , (errors) ->
+      (errors) ->
         self.errors = Utilities.processRailsError(errors)
     ).finally(-> self.isLoading = false)
 
@@ -137,11 +139,10 @@ DashboardOrganizationMembersCtrl = ($scope, $modal, $sce, MnoeOrganizations, Mno
   deletionModal.remove = ->
     self = deletionModal
     self.isLoading = true
-    obj = { email: self.member.email }
-    DhbOrganizationSvc.members.remove(obj).then(
+    MnoeOrganizations.deleteMember(deletionModal.member).then(
       (members) ->
         self.errors = ''
-        angular.copy(members,$scope.members)
+        angular.copy(members, $scope.members)
         self.close()
       (errors) ->
         self.errors = Utilities.processRailsError(errors)
@@ -203,7 +204,6 @@ DashboardOrganizationMembersCtrl = ($scope, $modal, $sce, MnoeOrganizations, Mno
     self = inviteModal
     if self.step == 'enterEmails'
       inviteModal.processEmails()
-
     else
       inviteModal.inviteMembers()
 
@@ -238,10 +238,10 @@ DashboardOrganizationMembersCtrl = ($scope, $modal, $sce, MnoeOrganizations, Mno
   inviteModal.inviteMembers = ->
     self = inviteModal
     self.isLoading = true
-    DhbOrganizationSvc.members.invite(self.members).then(
+    MnoeOrganizations.inviteMembers(self.members).then(
       (members) ->
         self.errors = ''
-        angular.copy(members,$scope.members)
+        angular.copy(members, $scope.members)
         self.close()
       (errors) ->
         self.errors = Utilities.processRailsError(errors)
