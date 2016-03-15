@@ -17,8 +17,8 @@ DashboardOrganizationMembersCtrl = ($scope, $modal, $sce, MnoeOrganizations, Mno
   #====================================
   # Initialize the data used by the directive
   $scope.initialize = (members, teams = nil) ->
-    angular.copy(members, $scope.members)
-    angular.copy(teams, $scope.teams) if teams
+    $scope.members = members
+    $scope.teams = teams if teams
     $scope.isLoading = false
 
   $scope.editMember = (member) ->
