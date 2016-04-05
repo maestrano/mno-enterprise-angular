@@ -83,18 +83,6 @@ angular.module 'mnoEnterpriseAngular'
       $scope.helper.isNewOfficeApp = (instance) ->
         instance.stack == 'connector' && instance.appNid == 'office-365' && (moment(instance.createdAt) > moment().subtract({minutes:5}))
 
-      $scope.updateAppName = (app) ->
-        origApp = $scope.originalApps["app_instance_#{app.id}"]
-        if app.name.length == 0
-          app.name = origApp.name
-        else
-          MnoeAppInstances.update(app).then(
-            ->
-              origApp.name = app.name
-            ->
-              app.name = origApp.name
-          )
-
       #====================================
       # App deletion modal
       #====================================

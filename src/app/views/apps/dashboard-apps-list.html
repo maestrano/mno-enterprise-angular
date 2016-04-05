@@ -45,7 +45,7 @@
               <a ng-href="{{ helper.appActionUrl(app) }}" target="_blank">
                 <img class="app-logo" ng-src="{{app.logo}}">
               </a>
-              <div editable-text="app.name" onaftersave="updateAppName(app)" class='title' style="border:0px;">{{app.name}}</div>
+              <div class='title'>{{::app.name}}</div>
 
               <!-- Connected company name -->
               <div ng-show="helper.companyName(app)">
