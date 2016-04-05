@@ -46,7 +46,11 @@ angular.module 'mnoEnterpriseAngular'
     @terminate = (id) ->
       MnoeApiSvc.one('app_instances', id).remove().then(
         (response) ->
+          # Remove the corresponding app from the list
           _.remove(_self.appInstances, {id: id})
+
+          # Update the local storage cache
+          MnoLocalStorage.setObject(LOCALSTORAGE.appInstancesKey, _self.appInstances)
       )
 
     @clearCache = () ->
