@@ -78,3 +78,14 @@ angular.module 'mnoEnterpriseAngular'
         create: "#{mnoHub}#{impacPrefix}/dashboards/:dashboard_id/widgets"
 
     ImpacRoutesProvider.configureRoutes(data)
+
+
+  #======================================================================================
+  # IMPAC-THEMING: Configuring colour theme, layout, labels, descriptions, and features
+  #======================================================================================
+  .config (ImpacThemingProvider) ->
+    options =
+      dataNotFoundConfig:
+        linkUrl: '#/marketplace'
+ 
+     ImpacThemingProvider.configure(options)
