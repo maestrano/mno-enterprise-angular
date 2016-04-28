@@ -34,6 +34,11 @@
   background-color: @table-cell-row-even-bg-color;
 }
 
+.table-cell .td-row .cell {
+  // Add '...' at the end of text if too long for the cell
+  .ellipsis();
+}
+
 .table-cell .td-row .cell > .cell-label {
   font-weight: bold;
 }
