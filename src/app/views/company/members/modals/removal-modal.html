@@ -1,0 +1,47 @@
+<div class="modal-header">
+  <div class="close" type="button" ng-click="deletionModal.close()">×</div>
+  <h3>{{ 'mno_enterprise.templates.dashboard.organization.members.removal_modal.title' | translate }}</h3>
+</div>
+
+<div class="modal-body">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="alert alert-error" ng-show="deletionModal.errors">
+        <button class="close" ng-click="deletionModal.errors=''">×</button>
+        <ul>
+          <li ng-repeat="error in deletionModal.errors">{{error}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <p ng-if="deletionModal.hasName()" class="align-center"
+         translate="mno_enterprise.templates.dashboard.organization.members.removal_modal.body_name"
+         translate-value-name="{{ deletionModal.member.name }}"
+         translate-value-surname="{{ deletionModal.member.surname }}">
+      </p>
+      <p ng-if="!deletionModal.hasName()" class="align-center"
+         translate="mno_enterprise.templates.dashboard.organization.members.removal_modal.body_email"
+         translate-value-email="{{ deletionModal.member.email }}">
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <div class="row">
+    <div class="col-sm-12">
+      <button class="btn btn-default" ng-click="deletionModal.close()" ng-show="!deletionModal.isLoading">
+        {{ 'mno_enterprise.templates.dashboard.organization.members.removal_modal.cancel' | translate }}
+      </button>
+      <button class="btn btn-danger" ng-click="deletionModal.remove()" ng-disabled="deletionModal.isLoading">
+          <span ng-show="deletionModal.isLoading">
+            <i class="fa fa-spinner fa-pulse fa-fw"></i>
+          </span>
+        {{ 'mno_enterprise.templates.dashboard.organization.members.removal_modal.remove' | translate }}
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,80 @@
+<!--Modal Header -->
+<div class="modal-header">
+  <div class="close" ng-click="editionModal.close()" type="button">×</div>
+  <h4 ng-show="editionModal.member.name && editionModal.member.surname"
+      translate="mno_enterprise.templates.dashboard.organization.members.invite_modal.title_name"
+      translate-value-name="{{ editionModal.member.name }}"
+      translate-value-surname="{{ editionModal.member.surname }}"></h4>
+  <h4 ng-show="!editionModal.member.name && !editionModal.member.surname"
+      translate="mno_enterprise.templates.dashboard.organization.members.invite_modal.title_email"
+      translate-value-email="{{ editionModal.member.email }}"></h4>
+</div>
+
+<!--Modal Body -->
+<div class="modal-body">
+  <div class="alert alert-error" ng-show="editionModal.errors">
+    <button class="close" ng-click="editionModal.errors=''">×</button>
+    <ul>
+      <li ng-repeat="error in editionModal.errors">{{error}}</li>
+    </ul>
+  </div>
+
+  <div class="row role-management">
+    <div class="col-sm-12">
+      <div ng-switch on="editionModal.selectedRole">
+        <div ng-switch-when="Member">
+          <i class="fa fa-cloud fa-4x"></i>
+          <br/><br/>
+          <p>{{ 'mno_enterprise.templates.dashboard.organization.members.edition_modal.roles.member' | translate }}</p>
+        </div>
+        <div ng-switch-when="Power User">
+          <i class="fa fa-cloud fa-4x"></i>
+          <i class="fa fa-power-off fa-4x"></i>
+          <br/><br/>
+          <p>{{ 'mno_enterprise.templates.dashboard.organization.members.edition_modal.roles.power_user' | translate }}</p>
+        </div>
+        <div ng-switch-when="Admin">
+          <i class="fa fa-cloud fa-4x"></i>
+          <i class="fa fa-power-off fa-4x"></i>
+          <i class="fa fa-users fa-4x"></i>
+          <br/><br/>
+          <p>{{ 'mno_enterprise.templates.dashboard.organization.members.edition_modal.roles.admin' | translate }}</p>
+        </div>
+        <div ng-switch-when="Super Admin">
+          <i class="fa fa-cloud fa-4x"></i>
+          <i class="fa fa-power-off fa-4x"></i>
+          <i class="fa fa-users fa-4x"></i>
+          <i class="fa fa-cc-mastercard fa-4x"></i>
+          <br/><br/>
+          <p>{{ 'mno_enterprise.templates.dashboard.organization.members.edition_modal.roles.super_admin' | translate }}</p>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-default" ng-class="editionModal.classForRole(role)" ng-click="editionModal.select(role)" ng-repeat="role in editionModal.config.roles" type="button">
+          {{role}}
+        </button>
+      </div>
+      <!-- End: col -->
+    </div>
+    <!-- End: Row -->
+  </div>
+  <!-- End: Modal Body -->
+</div>
+
+<!--Modal Footer -->
+<div class="modal-footer">
+  <div class="row">
+    <div class="col-sm-12">
+      <button class="btn btn-default" ng-click="editionModal.close()" ng-show="!editionModal.isLoading">
+        {{ 'mno_enterprise.templates.dashboard.organization.members.edition_modal.cancel' | translate }}
+      </button>
+      <button class="btn btn-warning" ng-click="editionModal.change()" ng-disabled="editionModal.isChangeDisabled() || editionModal.isLoading">
+          <span ng-show="editionModal.isLoading">
+            <i class="fa fa-spinner fa-pulse fa-fw"></i>
+          </span>
+        {{ 'mno_enterprise.templates.dashboard.organization.members.edition_modal.change' | translate }}
+      </button>
+    </div>
+  </div>
+</div>

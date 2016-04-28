@@ -478,6 +478,8 @@
   "mno_enterprise.templates.dashboard.organization.members.team_select": "-- Select Team --",
   "mno_enterprise.templates.dashboard.organization.members.edit": "Edit",
   "mno_enterprise.templates.dashboard.organization.members.remove": "Remove",
+  "mno_enterprise.templates.dashboard.organization.members.invite_modal.title_name": "Edit Member: {{name}} {{surname}}",
+  "mno_enterprise.templates.dashboard.organization.members.invite_modal.title_email": "Edit Member: {{email}}",
   "mno_enterprise.templates.dashboard.organization.members.invite_modal.description": "Enter the email addresses of the people you want to invite in your company",
   "mno_enterprise.templates.dashboard.organization.members.invite_modal.example": "One address per line, e.g.:",
   "mno_enterprise.templates.dashboard.organization.members.invite_modal.disclaimer": "Please note that for security reasons unaccepted invites will automatically expire after 3 days.",

@@ -52,7 +52,7 @@ DashboardOrganizationMembersCtrl = ($scope, $modal, $sce, MnoeOrganizations, Mno
   editionModal.config = {
     instance: {
       backdrop: 'static'
-      templateUrl: 'dashboard/organization/members/edition-modal.html'
+      templateUrl: 'app/views/company/members/modals/edition-modal.html'
       size: 'lg'
       windowClass: 'inverse member-edit'
       scope: $scope
@@ -67,13 +67,6 @@ DashboardOrganizationMembersCtrl = ($scope, $modal, $sce, MnoeOrganizations, Mno
     self.$instance = $modal.open(self.config.instance)
     self.isLoading = false
     editionModal.member = member
-
-  editionModal.title = ->
-    m = editionModal.member
-    if m.entity == 'User'
-      return $sce.trustAsHtml("Edit Member: #{m.name} #{m.surname}")
-    else
-      return $sce.trustAsHtml("Edit Member: #{m.email}")
 
   editionModal.close = ->
     self = editionModal
@@ -114,7 +107,7 @@ DashboardOrganizationMembersCtrl = ($scope, $modal, $sce, MnoeOrganizations, Mno
   deletionModal.config = {
     instance: {
       backdrop: 'static'
-      templateUrl: 'dashboard/organization/members/removal-modal.html'
+      templateUrl: 'app/views/company/members/modals/removal-modal.html'
       size: 'lg'
       windowClass: 'inverse member-edit'
       scope: $scope
@@ -155,7 +148,7 @@ DashboardOrganizationMembersCtrl = ($scope, $modal, $sce, MnoeOrganizations, Mno
   inviteModal.config = {
     instance: {
       backdrop: 'static'
-      templateUrl: 'dashboard/organization/members/invite-modal.html'
+      templateUrl: 'app/views/company/members/modals/invite-modal.html'
       size: 'lg'
       windowClass: 'inverse member-edit'
       scope: $scope
