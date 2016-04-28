@@ -17,10 +17,14 @@
 
   <div class="row">
     <div class="col-sm-12">
-      <p class="align-center"
+      <p class="align-center" ng-show="memberRemovalModal.user.name && memberRemovalModal.user.surname"
         translate="mno_enterprise.templates.dashboard.teams.member_removal_modal.confirmation"
         translate-value-fullname="{{memberRemovalModal.user.name}} {{memberRemovalModal.user.surname}}"
-        translate-value-teamname="{{memberRemovalModal.team.name}}">
+        translate-value-teamname="{{memberRemovalModal.team.name}}"></p>
+      <p class="align-center" ng-show="!memberRemovalModal.user.name && !memberRemovalModal.user.surname"
+         translate="mno_enterprise.templates.dashboard.teams.member_removal_modal.confirmation"
+         translate-value-fullname="{{memberRemovalModal.user.email}}"
+         translate-value-teamname="{{memberRemovalModal.team.name}}"></p>
     </div>
   </div>
 </div>
