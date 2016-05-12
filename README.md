@@ -6,6 +6,8 @@
                                       |___|
 ```
 
+[![Code Climate](https://codeclimate.com/github/maestrano/mno-enterprise-angular/badges/gpa.svg)](https://codeclimate.com/github/maestrano/mno-enterprise-angular)
+
 # MNO Enterprise Angular Frontend
 
 ## How to run in development mode

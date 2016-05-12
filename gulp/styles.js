@@ -20,8 +20,9 @@ gulp.task('less-concat', function() {
     path.join(conf.paths.src, '/app/stylesheets/theme-previewer-published.less'),
     path.join(conf.paths.src, '/app/stylesheets/theme-previewer-tmp.less'),
     path.join(conf.paths.src, '/app/**/*.less'),
-    path.join('!' + conf.paths.src, '/app/index.less'),
-  ])
+    path.join(conf.paths.src, '/fonts/**/*.less'),
+    path.join('!' + conf.paths.src, '/app/index.less')
+  ]);
 
   var injectOptions = {
     transform: function(filePath,file) {
@@ -62,8 +63,9 @@ gulp.task('styles', function () {
     path.join(conf.paths.src, '/app/stylesheets/variables.less'),
     path.join(conf.paths.src, '/app/stylesheets/theme-previewer-published.less'),
     path.join(conf.paths.src, '/app/**/*.less'),
+    path.join(conf.paths.src, '/fonts/**/*.less'),
     path.join('!' + conf.paths.src, '/app/stylesheets/theme-previewer-tmp.less'),
-    path.join('!' + conf.paths.src, '/app/index.less'),
+    path.join('!' + conf.paths.src, '/app/index.less')
   ], { read: false });
 
   var injectOptions = {

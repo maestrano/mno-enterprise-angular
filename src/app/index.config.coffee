@@ -87,5 +87,5 @@ angular.module 'mnoEnterpriseAngular'
     options =
       dataNotFoundConfig:
         linkUrl: '#/marketplace'
- 
-     ImpacThemingProvider.configure(options)
+
+    ImpacThemingProvider.configure(options)
