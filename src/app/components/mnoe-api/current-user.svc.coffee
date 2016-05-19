@@ -33,10 +33,6 @@ angular.module 'mnoEnterpriseAngular'
           if !response.logged_in
             $window.location.href = URI.login
 
-          # if there is no organization, then by default we show the account tab
-          if response.organizations.length == 0
-            $state.go('home.account')
-
           angular.copy(response, _self.user)
           response
       )
