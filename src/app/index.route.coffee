@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .config ($stateProvider, $urlRouterProvider, URI) ->
+  .config ($stateProvider, $urlRouterProvider, URI, I18N_CONFIG) ->
 
     $stateProvider
       .state 'home',
@@ -44,7 +44,10 @@ angular.module 'mnoEnterpriseAngular'
 
           # Logout and redirect the user
           $http.delete(URI.logout).then( ->
-            $window.location.href = "/#{$translate.use()}#{URI.login}"
+            if I18N_CONFIG.enabled
+              $window.location.href = "/#{$translate.use()}#{URI.login}"
+            else
+              $window.location.href = "#{URI.login}"
           )
 
     $urlRouterProvider.otherwise '/apps'
