@@ -3,7 +3,7 @@
 #============================================
 angular.module 'mnoEnterpriseAngular'
   .controller('DashboardMarketplaceAppCtrl',
-    ($stateParams, $sce, $window, MnoeMarketplace, MnoeOrganizations, MnoeAppInstances) ->
+    ($stateParams, $sce, $window, MnoeMarketplace, MnoeOrganizations, MnoeAppInstances, PRICING_CONFIG) ->
 
       vm = this
 
@@ -21,13 +21,15 @@ angular.module 'mnoEnterpriseAngular'
         vm.app.description = $sce.trustAsHtml(app.description)
         vm.isLoading = false
 
-      # Check that the testimonial is not empty
+      # Check that the  is not empty
       vm.isTestimonialShown = (testimonial) ->
         testimonial.text? && testimonial.text.length > 0
 
       vm.provisionLink = () ->
         MnoeAppInstances.clearCache()
         $window.location.href = "/mnoe/provision/new?apps[]=#{vm.app.nid}&organization_id=#{MnoeOrganizations.selectedId}"
+
+      vm.isPriceShown = PRICING_CONFIG && PRICING_CONFIG.enabled
 
       #====================================
       # Cart Management

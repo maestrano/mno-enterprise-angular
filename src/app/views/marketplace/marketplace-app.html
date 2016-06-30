@@ -83,6 +83,7 @@
           <!-- End pics/details row -->
         </div>
 
+
         <!-- Testimonials row -->
         <div class="row">
           <div class="col-md-6" ng-repeat="testimonial in vm.app.testimonials | limitTo:2" ng-show="vm.isTestimonialShown(testimonial)">
@@ -105,6 +106,29 @@
             <div class="well top-buffer-1" ng-bind-html="vm.app.description"></div>
           </div>
         </div>
+
+      <!-- Pricing -->
+      <div ng-show="vm.isPriceShown" class="row top-buffer-1">
+        <div class="col-md-12">
+          <div class="well" ng-switch="vm.app.pricing_plans">
+            <h2>Price</h2>
+            <ul ng-if="vm.app.pricing_plans.AUD">
+              <li ng-repeat="plan in vm.app.pricing_plans.AUD">
+                <b>{{plan.name}}</b>: {{plan.description}}<br>
+                <span>{{plan.currency}} {{plan.price.value}} {{plan.factor}}</span>
+              </li>
+            </ul>
+            <ul ng-if="!vm.app.pricing_plans.AUD && vm.app.pricing_plans.default">
+              <li ng-repeat="plan in vm.app.pricing_plans.default">
+                <b>{{plan.name}}</b>: {{plan.description}}<br>
+                <span ng-if="plan.price.value">{{plan.currency}} {{plan.price.value}} {{plan.factor}}</span>
+                <span ng-if="!plan.price.value">{{plan.currency}} {{plan.price}} {{plan.factor}}</span>
+              </li>
+            </ul>
+            <span ng-if="!vm.app.single_billing" class="text-muted">Note: Credits cannot be used on this app as billing is managed by the third party provider</span>
+          </div>
+        </div>
+      </div>
 
         <!-- End show-content -->
     </div>
