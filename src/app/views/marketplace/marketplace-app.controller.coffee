@@ -21,7 +21,7 @@ angular.module 'mnoEnterpriseAngular'
         vm.app.description = $sce.trustAsHtml(app.description)
         vm.isLoading = false
 
-      # Check that the  is not empty
+      # Check that the testimonial is not empty
       vm.isTestimonialShown = (testimonial) ->
         testimonial.text? && testimonial.text.length > 0
 
