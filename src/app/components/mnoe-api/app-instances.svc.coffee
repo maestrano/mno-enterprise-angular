@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .service 'MnoeAppInstances', ($q, MnoeApiSvc, MnoeOrganizations, MnoLocalStorage, LOCALSTORAGE) ->
+  .service 'MnoeAppInstances', ($q, MnoeApiSvc, MnoeOrganizations, MnoLocalStorage, MnoeCurrentUser, LOCALSTORAGE) ->
     _self = @
 
     # Store selected organization app instances
@@ -10,9 +10,10 @@ angular.module 'mnoEnterpriseAngular'
       promise = fetchAppInstances()
 
       # If app instances are stored return it
-      cache = MnoLocalStorage.getObject(LOCALSTORAGE.appInstancesKey)
+      cache = MnoLocalStorage.getObject(MnoeCurrentUser.user.id + "_" + LOCALSTORAGE.appInstancesKey)
       if cache?
         # Process the cache
+        @clearCache
         processAppInstances(cache)
         # Return the promised cache
         return $q.resolve(cache)
@@ -28,7 +29,7 @@ angular.module 'mnoEnterpriseAngular'
       MnoeApiSvc.one('organizations', MnoeOrganizations.selectedId).one('/app_instances').get().then(
         (response) ->
           # Save the response in the local storage
-          MnoLocalStorage.setObject(LOCALSTORAGE.appInstancesKey, response.app_instances)
+          MnoLocalStorage.setObject(MnoeCurrentUser.user.id + "_" + LOCALSTORAGE.appInstancesKey, response.app_instances)
           # Process the response
           processAppInstances(response.app_instances)
       )
@@ -50,10 +51,10 @@ angular.module 'mnoEnterpriseAngular'
           _.remove(_self.appInstances, {id: id})
 
           # Update the local storage cache
-          MnoLocalStorage.setObject(LOCALSTORAGE.appInstancesKey, _self.appInstances)
+          MnoLocalStorage.setObject(MnoeCurrentUser.user.id + "_" + LOCALSTORAGE.appInstancesKey, _self.appInstances)
       )
 
     @clearCache = () ->
-      MnoLocalStorage.removeItem(LOCALSTORAGE.appInstancesKey)
+      MnoLocalStorage.removeItem(MnoeCurrentUser.user.id + "_" + LOCALSTORAGE.appInstancesKey)
 
     return @
