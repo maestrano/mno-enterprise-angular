@@ -3,7 +3,7 @@
 #============================================
 angular.module 'mnoEnterpriseAngular'
   .controller('DashboardMarketplaceAppCtrl',
-    ($stateParams, $sce, $window, MnoeMarketplace, MnoeOrganizations, MnoeAppInstances) ->
+    ($stateParams, $sce, $window, MnoeMarketplace, MnoeOrganizations, MnoeAppInstances, PRICING_CONFIG) ->
 
       vm = this
 
@@ -28,6 +28,8 @@ angular.module 'mnoEnterpriseAngular'
       vm.provisionLink = () ->
         MnoeAppInstances.clearCache()
         $window.location.href = "/mnoe/provision/new?apps[]=#{vm.app.nid}&organization_id=#{MnoeOrganizations.selectedId}"
+
+      vm.isPriceShown = PRICING_CONFIG && PRICING_CONFIG.enabled
 
       #====================================
       # Cart Management
