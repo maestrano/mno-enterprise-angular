@@ -14,6 +14,6 @@ angular.module 'mnoEnterpriseAngular', [
   'platanus.inflector',
   'xeditable',
   'pascalprecht.translate',
-
-  'maestrano.impac'
+  'maestrano.impac',
+  'ngPageTitle'
 ]
