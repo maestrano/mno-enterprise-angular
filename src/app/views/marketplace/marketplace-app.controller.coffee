@@ -31,6 +31,11 @@ angular.module 'mnoEnterpriseAngular'
 
       vm.isPriceShown = PRICING_CONFIG && PRICING_CONFIG.enabled
 
+      vm.pricing_plans = () ->
+        plans = vm.app.pricing_plans
+        currency = (PRICING_CONFIG && PRICING_CONFIG.currency) || 'AUD'
+        plans[currency] || plans.AUD || plans.default
+
       #====================================
       # Cart Management
       #====================================
