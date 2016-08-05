@@ -13,6 +13,8 @@ angular.module 'mnoEnterpriseAngular'
         # Display the layout
         layout.isLoggedIn = true
 
+        layout.current_user = MnoeCurrentUser.user
+
         # Load the current organization if defined (url param, cookie or first)
         MnoeOrganizations.getCurrentId(response, $stateParams.dhbRefId)
 
