@@ -2,7 +2,16 @@
 
 ## [Unreleased](https://github.com/maestrano/mno-enterprise-angular/tree/HEAD)
 
-[Full Changelog](https://github.com/maestrano/mno-enterprise-angular/compare/v1.0.0-rc.10...HEAD)
+[Full Changelog](https://github.com/maestrano/mno-enterprise-angular/compare/v1.0.0-rc.11...HEAD)
+
+## [v1.0.0-rc.11](https://github.com/maestrano/mno-enterprise-angular/tree/v1.0.0-rc.11) (2016-08-05)
+
+[Full Changelog](https://github.com/maestrano/mno-enterprise-angular/compare/v1.0.0-rc.10...v1.0.0-rc.11)
+
+**Implemented enhancements:**
+
+- \[MNOE-122\] Current user available in layout scope [\#36](https://github.com/maestrano/mno-enterprise-angular/pull/36) ([alexnoox](https://github.com/alexnoox))
+- \[MNOE-120\] Display Application pricing in different currency [\#35](https://github.com/maestrano/mno-enterprise-angular/pull/35) ([x4d3](https://github.com/x4d3))
 
 ## [v1.0.0-rc.10](https://github.com/maestrano/mno-enterprise-angular/tree/v1.0.0-rc.10) (2016-07-13)
 
