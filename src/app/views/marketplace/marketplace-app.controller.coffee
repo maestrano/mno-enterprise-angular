@@ -20,6 +20,9 @@ angular.module 'mnoEnterpriseAngular'
         angular.copy(app, vm.app)
         vm.app.description = $sce.trustAsHtml(app.description)
         vm.isLoading = false
+        plans = vm.app.pricing_plans
+        currency = (PRICING_CONFIG && PRICING_CONFIG.currency) || 'AUD'
+        vm.pricing_plans = plans[currency] || plans.AUD || plans.default
 
       # Check that the testimonial is not empty
       vm.isTestimonialShown = (testimonial) ->
@@ -30,6 +33,8 @@ angular.module 'mnoEnterpriseAngular'
         $window.location.href = "/mnoe/provision/new?apps[]=#{vm.app.nid}&organization_id=#{MnoeOrganizations.selectedId}"
 
       vm.isPriceShown = PRICING_CONFIG && PRICING_CONFIG.enabled
+
+
 
       #====================================
       # Cart Management

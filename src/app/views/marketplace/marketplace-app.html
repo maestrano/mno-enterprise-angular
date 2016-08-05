@@ -111,14 +111,8 @@
         <div class="col-md-12">
           <div class="well" ng-switch="vm.app.pricing_plans">
             <h2>Price</h2>
-            <ul ng-if="vm.app.pricing_plans.AUD">
-              <li ng-repeat="plan in vm.app.pricing_plans.AUD">
-                <b>{{plan.name}}</b>: {{plan.description}}<br>
-                <span>{{plan.currency}} {{plan.price.value}} {{plan.factor}}</span>
-              </li>
-            </ul>
-            <ul ng-if="!vm.app.pricing_plans.AUD && vm.app.pricing_plans.default">
-              <li ng-repeat="plan in vm.app.pricing_plans.default">
+            <ul>
+              <li ng-repeat="plan in vm.pricing_plans">
                 <b>{{plan.name}}</b>: {{plan.description}}<br>
                 <span ng-if="plan.price.value">{{plan.currency}} {{plan.price.value}} {{plan.factor}}</span>
                 <span ng-if="!plan.price.value">{{plan.currency}} {{plan.price}} {{plan.factor}}</span>
