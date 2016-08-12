@@ -1,5 +1,12 @@
 <div id="impac">
-  <h2 class="section-title">Impac!</h2>
-
-  <impac-dashboard></impac-dashboard>
+	<div ng-show="isAdminRole()">
+	  <dashboard-apps-dock></dashboard-apps-dock>
+	  <impac-dashboard></impac-dashboard>
+	</div>
+	<div ng-show="!isAdminRole()">
+		<span class="alert-no-admin" onclick="location='/dashboard/#/apps'">
+      <strong>Warning!</strong> You are not allow to see this content. Click here to be redirected.
+    </span>
+  </div>
 </div>
+

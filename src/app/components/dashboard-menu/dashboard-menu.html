@@ -49,13 +49,13 @@
       <div class='brand-logo'></div>
     </a>
 
-    <a ui-sref="home.apps" class="dashboard-button" ui-sref-active="active">
+    <a ng-if="!isAdminRole()" ui-sref="home.apps" class="dashboard-button" ui-sref-active="active">
       <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}</div>
       <i class="dhb-icon-dashboard"></i>
     </a>
 
-    <a ui-sref="home.impac" class="dashboard-button top-buffer-1" ui-sref-active="active">
-      <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.impac' | translate }}</div>
+    <a ng-if="isAdminRole()" ui-sref="home.impac" class="dashboard-button top-buffer-1" ui-sref-active="active">
+      <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}</div>
       <i class="dhb-icon-impac"></i>
     </a>
 

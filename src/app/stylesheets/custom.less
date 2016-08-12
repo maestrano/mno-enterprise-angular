@@ -1,0 +1,78 @@
+.btn.btn-grey { // add new team now! button
+  background-color: @decorator-inverse-color !important;
+}
+
+.text-bg-inverse { // Company teams, message when there is no team
+  color: @text-color !important;
+}
+
+form label {
+  color: darken(green, 25%) !important;
+}
+
+.panel-title { // My account tabs names
+  color: @text-strong-color !important;
+  background-color: @bg-inverse-color;
+}
+
+.testimonial { // Message in impac when there is not Dashboard
+  &.promo-dark {
+    color: @decorator-inverse-color !important;
+    padding: 30px !important;
+  }
+}
+
+.analytics .dashboard-settings.sync-apps span { // Impac synced message
+  margin-right: 5px;
+  color: @text-strong-color;
+}
+
+.dashboard-marketplace-app { // Message when there are no apps in impac
+  .show-content .ribbon-testimonial .from .name {
+    color: @text-strong-color !important;
+  }
+}
+
+.text-error {
+  color: #f03838;
+}
+
+.btn-danger { // Delete buttons, they are not variables as they should be always red.
+  color: #fff;
+  background-color: #f03838;
+  border-color: #727272;
+}
+
+.table-cell .th-row { // In Company, the Members tab, text.
+  color: @text-color !important;
+}
+
+.btn-primary { // When create a new dashboard, the button Add.
+  background-color: @decorator-inverse-color;
+}
+
+.analytics .time-period-info { // Impac is sync or not message
+  color: @impac-widget-text-color;
+}
+
+.analytics .widget-item .top-line .top-buttons .confirm-delete-popover h4 { // Message when delete widgets
+  color: #fff;
+}
+
+.analytics #widget-selector { // Impac widget menu. Ask noux if he likes this and apply it to Impac! 
+    border-radius: 10px;
+}
+
+// Fix impac empty dashboard display
+// TODO: Remove, it will be soon included in Impac!
+.spacer2 {
+  margin-bottom: 20px;
+}
+
+.spacer4 {
+  margin-bottom: 40px;
+}
+
+#impac > div:nth-child(1) > impac-dashboard > div.analytics.show-dhb > div:nth-child(7) {
+  display: none;
+}
