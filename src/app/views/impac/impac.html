@@ -4,8 +4,9 @@
 	  <impac-dashboard></impac-dashboard>
 	</div>
 	<div ng-show="!isAdminRole()">
-		<span class="alert-no-admin" onclick="location='/dashboard/#/apps'">
-      <strong>Warning!</strong> You are not allow to see this content. Click here to be redirected.
+		<span class="alert-no-admin">
+      <strong>Warning!</strong>
+      <a ui-sref="home.apps" ui-sref-active="active">You are not allow to see this content. Click here to be redirected to the {{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}.</a>
     </span>
   </div>
 </div>

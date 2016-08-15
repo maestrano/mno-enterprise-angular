@@ -1,6 +1,5 @@
 <div id="app-dock-container" class="hidden-xs">
   <div id="app-dock">
-    <div app-deletion-modal=true></div>
     <ul class="dock list-unstyled" ng-class="{minimized: appDock.isMinimized, animated: appDock.isAnimated()}">
       <li ng-repeat="app in apps" ng-class="{active: isActiveApp(app.id)}" class="dock-icon">
         <div class="title" tooltip="{{app.name.length > 14 ? app.name : null}}" , tooltip-placement="bottom">{{app.name | truncate:14:"...":true}}</div>
@@ -10,7 +9,7 @@
           <div class="inner-dock-menu">
             <!-- EO Connectors Buttons -->
             <div class="menu-item ng-hide" ng-hide="helper.isLaunchHidden(app)">
-              <a ng-click="setActiveApp($event, app.id); launchAction(app);"><i class="fa fa-play-circle"></i>Launch</a>
+              <a ng-click="launchAction(app,$event);"><i class="fa fa-play-circle"></i>Launch</a>
             </div>
             <div class="menu-item ng-hide" ng-show="helper.isOauthConnectBtnShown(app)">
                 <a href="" ng-click="helper.oAuthConnectPath(app)"><i class="fa fa-play-circle" >

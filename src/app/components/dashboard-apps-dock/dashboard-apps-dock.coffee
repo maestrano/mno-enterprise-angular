@@ -27,9 +27,6 @@ DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, MnoeOrganizations
   $scope.helper.displaySettings = ->
     MnoeOrganizations.can.update.appInstance()
 
-  $scope.helper.dataSyncPath = (instance) ->
-    "/mnoe/webhook/oauth/#{instance.uid}/sync"
-
   $scope.helper.isLaunchHidden = (app) ->
     app.status == 'terminating' ||
     app.status == 'terminated' ||
@@ -47,39 +44,16 @@ DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, MnoeOrganizations
   $scope.helper.oAuthConnectPath = (instance)->
     MnoeAppInstances.clearCache()
     $window.location.href = "/mnoe/webhook/oauth/#{instance.uid}/authorize"
-          
-  # Create My Account Behavior
-  # If app requires custom we open the popup, otherwise we open the link directly
-  $scope.createAction = (app) ->
-    if app.customInfoRequired
-      $scope.showCustomInfo(app, 'create')
-    else
-      true # Don't cancel the link click
 
-    # Launch cloud application
-    # If app requires custom we open the popup, otherwise we open the link directly
-  $scope.launchAction = (app) ->
+  # Launch cloud application
+  # If app requires custom we open the popup, otherwise we open the link directly
+  $scope.launchAction = (app, $event) ->
+    $scope.setActiveApp(event, app.id)
     if app.customInfoRequired
-      $scope.showCustomInfo(app, 'launch')
       return false
     else
       $window.open("/mnoe/launch/#{app.uid}", '_blank')
       return true
-      
-  $scope.connectAction = (app) ->
-    if app.appNid == 'myob' || app.appNid == 'xero'
-      $scope.showCustomInfo(app, 'connect')
-    else
-    true # Don't cancel the link click
- 
-  $scope.createAccountUrl = (app) ->
-    if app.customInfoRequired
-      null
-    else
-    $scope.appsListHelper.appActionUrl(app)
-
-  $scope.modal.close = ->
-    $scope.modal.$instance.close()
 
   $scope.setActiveApp = (event, app) ->
     if $scope.isActiveApp(app)
@@ -116,9 +90,9 @@ DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, MnoeOrganizations
           $scope.apps = MnoeAppInstances.appInstances
       )
 
-  #====================================
-  # Modals Controllers
-  #====================================
+#====================================
+# Modals Controllers
+#====================================
 angular.module 'mnoEnterpriseAngular'
   .directive('dashboardAppsDock', ($window) ->
     return {

@@ -1,9 +1,8 @@
 angular.module 'mnoEnterpriseAngular'
   .controller 'LoginRouterCtrl', ($scope, MnoeCurrentUser, $window) ->
     'ngInject'
-	
-    $scope.redirect = ->
-    MnoeCurrentUser.get().then(
+
+    $scope.init = MnoeCurrentUser.get().then(
       (success) ->
         self.current_user_role = MnoeCurrentUser.user.organizations[0].current_user_role
         if self.current_user_role == 'Super Admin' || self.current_user_role == 'Admin'
