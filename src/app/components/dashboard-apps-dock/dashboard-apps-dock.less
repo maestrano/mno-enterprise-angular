@@ -116,9 +116,9 @@ ul.dock {
       padding: 5px 0px;
       .border-top-radius(5px);
       .border-bottom-radius(5px);
-      background-color: @bg-dock-menu-color;
+      background-color: @mno-bg-settings-dock-menu;
 
-      .box-shadow(@box-dock-shadow);
+      .box-shadow(@mno-box-dock-shadow);
 
       .menu-item {
         cursor: pointer;
@@ -230,7 +230,7 @@ ul.dock  > li.prev img.app-logo {
 }
 
 #mobile-dock {
-  background-color: @decorator-alt-color;
+  background-color: @bg-on-bg-inverse-color;
   z-index: 1030;
 
   &.collapse.in {
@@ -245,6 +245,8 @@ ul.dock  > li.prev img.app-logo {
     border-bottom: 1px solid darken(@decorator-alt-color, 10%);
 
     .app-line {
+      display: flex;
+      justify-content: center;
     }
 
     &:hover, &.active {
@@ -264,7 +266,7 @@ ul.dock  > li.prev img.app-logo {
     i.fa {
       font-size: 5em;
       margin: 0 20px;
-      color: @fluroblue;
+      color: @decorator-alt-color;
       cursor: pointer;
     }
 
@@ -286,3 +288,5 @@ ul.dock  > li.prev img.app-logo {
     }
   }
 }
+
+

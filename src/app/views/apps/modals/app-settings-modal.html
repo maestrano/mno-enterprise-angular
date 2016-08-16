@@ -1,13 +1,14 @@
 <div id="app-settings-modal">
   <div class="modal-header">
     <div class="close" type="button" aria-label="Close" ng-click="modal.close()">×</div>
-    <h3><b>Settings</b> - <span class="app-name">{{app.name}}</span></h3>
+    <h3><b>{{ 'activemodel.attributes.mno_enterprise/impac/widget.settings' | translate }}</b> - <span class="app-name">{{app.name}}</span></h3>
   </div>
   <div class="modal-body">
     <div class="container-fluid">
       <div class="row top-buffer-1">
         <div class="col-md-3">
-          <span class="title">Status</span>
+          <span class="title">{{ 'activemodel.attributes.mno_enterprise/app_instance.status' | translate }}</span>
+
         </div>
         <div class="col-md-8">
           <span class="label" ng-class="app.status">{{app.status}}</span>
@@ -16,7 +17,7 @@
       <hr>
       <div class="row">
         <div class="col-md-3">
-          <span class="title">Name</span>
+          <span class="title">{{ 'activemodel.attributes.mno_enterprise/impac/widget.name' | translate }}</span>
         </div>
         <div class="col-md-8">
           <div editable-text="app.name" onaftersave="updateAppName(app)" class="app-name">{{app.name}}
@@ -30,7 +31,7 @@
       <!-- Add on settings -->
       <div ng-show="helper.isAddOnSettingShown(app)">
         <hr>
-        <button ng-click="helper.addOnSettingLauch(app)" class="btn btn-warning">Access add-on settings</button>
+        <button ng-click="helper.addOnSettingLauch(app)" class="btn btn-warning">{{ 'activemodel.attributes.mno_enterprise/impac/widget.access_add-on_settings' | translate }}</button>
       </div>
 
       <!-- Data Sharing -->
@@ -38,7 +39,7 @@
         <hr>
         <div class="row">
           <div class="col-md-3">
-            <span class="title">Data Sharing</span>
+            <span class="title">{{ 'mno_enterprise.templates.dashboard.apps_list.manual_data_sharing' | translate }}</span>
           </div>
           <div class="col-md-8">
 
@@ -68,16 +69,16 @@
       <!-- Deletion -->
       <hr>
       <div ng-show="helper.canDeleteApp()">
-        <button class="btn btn-danger" ng-hide="app.showDelete" ng-click="app.showDelete = !app.showDelete">Delete</button>
+        <button class="btn btn-danger" ng-hide="app.showDelete" ng-click="app.showDelete = !app.showDelete">{{ 'mno_enterprise.templates.dashboard.apps_list.delete' | translate }}</button>
         <div ng-show="app.showDelete">
-          <h4>Confirm app deletion</h4>
+          <h4>{{ 'mno_enterprise.templates.dashboard.app_deletion.title' | translate }}</h4>
           <div ng-show="app.plan.currentBillingType == 'monthly'">
             <p class="text-error">
-              Please note this app is on a monthly plan. Your billing for this app will be calculated pro rata.
+              {{ 'mno_enterprise.templates.dashboard.app_deletion.billing' | translate }}
             </p>
           </div>
           <p>
-            In order to delete your app, please enter the following statement in the box below:</span>
+            {{ 'mno_enterprise.templates.dashboard.app_deletion.instructions' | translate }}</span>
             <br/>
             <span class="text-error  align-center"><strong>{{sentence}}</strong></span>
           </p>
@@ -85,8 +86,8 @@
             <input type="text" class="sentence-check" ng-model="sentenceCheck" required>
           </div>
           <div class="buttons">
-            <button class="btn" ng-click="app.showDelete=false" >Cancel</button>
-            <button class="btn btn-danger" ng-click="deleteApp()" ng-disabled="sentence != sentenceCheck">Delete</button>
+            <button class="btn" ng-click="app.showDelete=false" >{{ 'mno_enterprise.templates.dashboard.app_deletion.cancel' | translate}}</button>
+            <button class="btn btn-danger" ng-click="deleteApp()" ng-disabled="sentence != sentenceCheck"> {{ 'mno_enterprise.templates.dashboard.app_deletion.delete' | translate }} </button>
           </div>
         </div>
       </div>
@@ -94,9 +95,9 @@
       <!-- Developer details -->
       <div ng-show="helper.canDeleteApp()">
         <hr>
-        <a class="text-muted" href="" ng-click="app.showDevDetails = !app.showDevDetails"><em>{{ app.showDevDetails && 'Hide' || 'Show'}} developer details</em></a>
+        <a class="text-muted" href="" ng-click="app.showDevDetails = !app.showDevDetails"><em> {{ app.showDevDetails && 'Hide' || 'Show'}} {{ 'mno_enterprise.templates.dashboard.app.developer_details' | translate }} </em></a>
         <div ng-show="app.showDevDetails">
-          <h4>Developer details</h4>
+          <h4>{{ 'mno_enterprise.templates.dashboard.app.developer_details' | translate }} </h4>
           <div class="developer-details">
             <dl class="dl-horizontal">
               <dt>Organization id:</dt>
