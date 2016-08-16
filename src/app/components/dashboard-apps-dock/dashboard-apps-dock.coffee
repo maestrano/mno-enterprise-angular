@@ -15,11 +15,6 @@ DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, MnoeOrganizations
   # Scope initialization
   $scope.modal ||= {}
 
-  # Mobile dock: max-height need to be an absolute value for the scrolling to work
-  pageHeight = jQuery(window).height()
-  navHeight = pageHeight * 0.7
-  jQuery('#mobile-dock').css({ maxHeight: navHeight + 'px' })
-
   # ----------------------------------------------------------
   # Permissions helper
   # ----------------------------------------------------------
@@ -47,7 +42,7 @@ DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, MnoeOrganizations
 
   # Launch cloud application
   # If app requires custom we open the popup, otherwise we open the link directly
-  $scope.launchAction = (app, $event) ->
+  $scope.launchAction = (app, event) ->
     $scope.setActiveApp(event, app.id)
     if app.customInfoRequired
       return false
@@ -100,6 +95,10 @@ angular.module 'mnoEnterpriseAngular'
         visibleIfEmpty: '=?'
       },
       link: (scope, element) ->
+        # Mobile dock: max-height need to be an absolute value for the scrolling to work
+        pageHeight = angular.element(window).height()
+        navHeight = pageHeight * 0.7
+        angular.element('#mobile-dock').css({ maxHeight: navHeight + 'px' })
 
         element.on('mouseover', (e) ->
           if scope.activeApp == null
