@@ -1,12 +1,25 @@
+DashboardMenuCtrl = ($scope, MnoeCurrentUser) ->
+  'ngInject'
+
+  MnoeCurrentUser.get().then(
+    (success) ->
+      self.current_user_role = MnoeCurrentUser.user.organizations[0].current_user_role
+
+    $scope.isAdminRole = ->
+      self.current_user_role == 'Super Admin' || self.current_user_role == 'Admin'
+  )
 
 #============================================
 # Dashboard Menu
 #============================================
 angular.module 'mnoEnterpriseAngular'
   .directive('dashboardMenu', ->
+
     return {
       restrict: 'EA'
       templateUrl: 'app/components/dashboard-menu/dashboard-menu.html',
+      controller: DashboardMenuCtrl
+
 
       # We need to manually close the collapse menu as we actually stay on the same page
       link: (scope, elem, attrs) ->
@@ -23,4 +36,4 @@ angular.module 'mnoEnterpriseAngular'
           angular.element(this).animate({width:80}, 150)
         )
     }
-  )
+)

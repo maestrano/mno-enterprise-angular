@@ -1,9 +1,19 @@
 #impac {
-  impac-dashboard > div.analytics.show-dhb > div:nth-child(8) > div.col-md-8.col-md-offset-2 {
-    .top-buffer-7();
+  // TODO: should be in mnoe-angular?
+  impac-dashboard {
+    display: block;
+    margin-top: 40px;
   }
 
-  #no-widgets-container > div > div:nth-child(1) > div.align-center > button {
-    .top-buffer-2();
+  .alert-no-admin {
+    padding: 100px;
+    font-size: 40px;
+    cursor: pointer;
+    position: fixed;
+    color: red;
+
+    &:hover {
+      color: @decorator-inverse-color;
+    }
   }
 }
