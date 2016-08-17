@@ -1,14 +1,3 @@
-DashboardMenuCtrl = ($scope, MnoeCurrentUser) ->
-  'ngInject'
-
-  MnoeCurrentUser.get().then(
-    (success) ->
-      self.current_user_role = MnoeCurrentUser.user.organizations[0].current_user_role
-
-    $scope.isAdminRole = ->
-      self.current_user_role == 'Super Admin' || self.current_user_role == 'Admin'
-  )
-
 #============================================
 # Dashboard Menu
 #============================================
@@ -18,8 +7,19 @@ angular.module 'mnoEnterpriseAngular'
     return {
       restrict: 'EA'
       templateUrl: 'app/components/dashboard-menu/dashboard-menu.html',
-      controller: DashboardMenuCtrl
+      controller: ($scope, $state, MnoeOrganizations) ->
 
+        $scope.isLoading = true
+
+        $scope.$watch(MnoeOrganizations.getSelected, (newValue, oldValue) ->
+          if newValue?
+            # Impac! is displayed only to admin and super admin
+            $scope.isAdmin = (MnoeOrganizations.role.isAdmin() || MnoeOrganizations.role.isSuperAdmin())
+            $scope.isLoading = false
+            $state.go('home.login') if oldValue? && newValue != oldValue
+        )
+
+        return
 
       # We need to manually close the collapse menu as we actually stay on the same page
       link: (scope, elem, attrs) ->

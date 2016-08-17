@@ -1,13 +1,13 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller 'LoginRouterCtrl', ($scope, MnoeCurrentUser, $window, $state) ->
-    'ngInject'
+  .controller 'LoginRouterCtrl', ($scope, MnoeOrganizations, $window, $state) ->
 
-    $scope.init = MnoeCurrentUser.get().then(
-      (success) ->
-        self.current_user_role = MnoeCurrentUser.user.organizations[0].current_user_role
-        if self.current_user_role == 'Super Admin' || self.current_user_role == 'Admin'
-          # window.location.href = "/dashboard/#/impac"
+    $scope.$watch(MnoeOrganizations.getSelected, (newValue) ->
+      if newValue?
+        # Impac! is displayed only to admin and super admin
+        if (MnoeOrganizations.role.isAdmin() || MnoeOrganizations.role.isSuperAdmin())
           $state.go('home.impac')
         else
           $state.go('home.apps')
     )
+
+    return
