@@ -9,22 +9,16 @@
           <div class="inner-dock-menu">
             <!-- EO Connectors Buttons -->
             <div class="menu-item ng-hide" ng-hide="helper.isLaunchHidden(app)">
-<<<<<<< HEAD
+
               <a ng-click="launchAction(app,$event);"><i class="fa fa-play-circle"></i>{{ 'mno_enterprise.templates.impac.dock.launch' | translate }}</a>
-=======
-              <a ng-click="launchAction(app,$event);"><i class="fa fa-play-circle"></i>{{ 'mno_enterprise.templates.dashboard.apps_list.launch' | translate }}</a>
->>>>>>> upstream/feature/dock
             </div>
             <div class="menu-item ng-hide" ng-show="helper.isOauthConnectBtnShown(app)">
                 <a href="" ng-click="helper.oAuthConnectPath(app)"><i class="fa fa-play-circle" >
                 </i> {{ 'mno_enterprise.templates.impac.dock.connect' | translate }}</a>
             </div>
             <div class="menu-item ng-hide" ng-show="helper.displaySettings()">
-<<<<<<< HEAD
+
               <a ng-click="showSettingsModal(app)"><i class="fa fa-cog"></i> {{ 'mno_enterprise.templates.impac.dock.settings.settings' | translate }} </a>
-=======
-              <a ng-click="showSettingsModal(app)"><i class="fa fa-cog"></i> {{ "mno_enterprise.templates.dashboard.organization.index.settings.title" | translate }} </a>
->>>>>>> upstream/feature/dock
             </div>
           </div>
         </div>
@@ -33,11 +27,7 @@
         <div class="add-app">
           <a ui-sref="home.marketplace">
             <i class="fa fa-plus-circle"></i>
-<<<<<<< HEAD
             <span> {{ 'mno_enterprise.templates.impac.dock.add_more_apps' | translate }} </span>
-=======
-            <span> {{ 'mno_enterprise.templates.dashboard.apps_list.add_more_apps' | translate }} </span>
->>>>>>> upstream/feature/dock
           </a>
         </div>
       </li>
@@ -55,11 +45,7 @@
 
 <div id="app-dock-mobile-container" class="visible-xs">
   <div class="mobile-dock align-center btn" ng-click="launchApp.isClosed = !launchApp.isClosed">
-<<<<<<< HEAD
     </i>{{ 'mno_enterprise.templates.impac.dock.launch' | translate }}</a>
-=======
-    </i>{{ 'mno_enterprise.templates.dashboard.apps_list.launch' | translate }}</a>
->>>>>>> upstream/feature/dock
     <i class="fa fa-chevron-down pull-right" ng-hide="launchApp.isClosed"></i>
   </div>
   <div id="mobile-dock" collapse="launchApp.isClosed">
@@ -71,12 +57,9 @@
             <a class="btn btn-warning" ng-href="{{app.tutorial}}"><span class="fa fa-book"></span> </i>{{ 'mno_enterprise.templates.dashboard.apps_list.tutorial' | translate }}</a></a>
             <br>
           </div>
-<<<<<<< HEAD
-=======
           <div ng-show="helper.displaySettings()">
             <a class="btn btn-warning" ng-click="showSettingsModal(app)"><span class="fa fa-cog"></span> {{ "mno_enterprise.templates.dashboard.organization.index.settings.title" | translate }}</a>
           </div>
->>>>>>> upstream/feature/dock
         </div>
         <div class="app-line" ng-switch-default>
           <a ng-click="showSettingsModal(app)" class="fa fa-cog"></a>
@@ -85,40 +68,18 @@
           <div>
             <div class="title">{{app.name}}</div>
             <div ng-hide="helper.isLaunchHidden(app)">
-<<<<<<< HEAD
               <a ng-click="launchAction(app,$event);" class="btn btn-warning">{{ 'mno_enterprise.templates.impac.dock.launch' | translate }}</a>
             </div>
 
             <div ng-show="helper.isOauthConnectBtnShown(app)">
                 <a href="" ng-click="helper.oAuthConnectPath(app)" class="btn btn-warning">{{ 'mno_enterprise.templates.impac.dock.connect' | translate }}</a>
-=======
-              <a ng-click="launchAction(app,$event);" class="btn btn-warning">{{ 'mno_enterprise.templates.dashboard.apps_list.launch' | translate }}</a>
-            </div>
 
-            <div ng-show="helper.isOauthConnectBtnShown(app)">
-                <a href="" ng-click="helper.oAuthConnectPath(app)" class="btn btn-warning">{{ 'mno_enterprise.templates.dashboard.apps_list.connect' | translate }}</a>
->>>>>>> upstream/feature/dock
-            </div>
-          </div>
-          <i class="fa fa-angle-right"></i>
-        </div>
-      </li>
-        <div class="align-center">
-          <a ui-sref="home.marketplace" class="btn add-app">
-<<<<<<< HEAD
             <span class="fa fa-plus"></span><span> {{ 'mno_enterprise.templates.impac.dock.add_more_apps' | translate }}</span>
-=======
-            <span class="fa fa-plus"></span><span> {{ 'mno_enterprise.templates.dashboard.apps_list.add_more_apps' | translate }}</span>
->>>>>>> upstream/feature/dock
           </a>
         </div>
     </ul>
     <div class="align-center">
-<<<<<<< HEAD
       <button class="btn btn-warning" ng-click="launchApp.isClosed = true">{{ 'mno_enterprise.templates.impac.dock.cancel' | translate }}</button>
-=======
-      <button class="btn btn-warning" ng-click="launchApp.isClosed = true">{{ 'mno_enterprise.templates.dashboard.app_deletion.cancel' | translate }}</button>
->>>>>>> upstream/feature/dock
     </div>
   </div>
 </div>
