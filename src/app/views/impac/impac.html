@@ -1,13 +1,8 @@
-<div id="impac">
-	<div ng-show="isAdminRole()">
-	  <dashboard-apps-dock></dashboard-apps-dock>
+<div ng-show="isDockEnabled">
+	<dashboard-apps-dock></dashboard-apps-dock>
+</div>
+<div id="impac" ng-show="vm.isLoaded">
+	<div ng-if="vm.isImpacShown">
 	  <impac-dashboard></impac-dashboard>
 	</div>
-	<div ng-show="!isAdminRole()">
-		<span class="alert-no-admin">
-      <strong>Warning!</strong>
-      <a ui-sref="home.apps" ui-sref-active="active">You are not allow to see this content. Click here to be redirected to the {{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}.</a>
-    </span>
-  </div>
 </div>
-
