@@ -12,16 +12,16 @@
     </button>
     <a class="navbar-brand" href="#">{{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}</a>
   </div>
-  <div class="collapse navbar-collapse" uib-collapse="navCollapsed">
+  <div ng-show="!isLoading" class="collapse navbar-collapse" uib-collapse="navCollapsed">
     <ul class="nav navbar-nav">
       <!-- ------------------------- -->
       <!-- My account section        -->
       <!-- ------------------------- -->
       <li>
-        <a ui-sref="home.apps" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}</a>
+        <a ng-if="!isAdmin" ui-sref="home.apps" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}</a>
       </li>
       <li>
-        <a ng-if="isAdminRole()" ui-sref="home.impac" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.impac' | translate }}</a>
+        <a ng-if="isAdmin" ui-sref="home.impac" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.impac' | translate }}</a>
       </li>
       <li>
         <a ui-sref="home.account" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.my_account' | translate }}</a>
@@ -43,18 +43,18 @@
 <!--    Side Navbar       -->
 <!-------------------------->
 <nav class="col-xs-1 hidden-xs scrollbar-hidden">
-  <div class="menu vertical expanded">
+  <div ng-show="!isLoading" class="menu vertical expanded">
     <!--Home page link-->
     <a href="/">
       <div class='brand-logo'></div>
     </a>
 
-    <a ng-if="!isAdminRole()" ui-sref="home.apps" class="dashboard-button" ui-sref-active="active">
+    <a ng-if="!isAdmin" ng-cloak ui-sref="home.apps" class="dashboard-button" ui-sref-active="active">
       <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}</div>
       <i class="dhb-icon-dashboard"></i>
     </a>
 
-    <a ng-if="isAdminRole()" ui-sref="home.impac" class="dashboard-button top-buffer-1" ui-sref-active="active">
+    <a ng-if="isAdmin" ng-cloak ui-sref="home.impac" class="dashboard-button top-buffer-1" ui-sref-active="active">
       <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}</div>
       <i class="dhb-icon-impac"></i>
     </a>

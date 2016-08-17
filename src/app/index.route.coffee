@@ -10,6 +10,9 @@ angular.module 'mnoEnterpriseAngular'
         templateUrl: 'app/views/layout.html'
         controller: 'LayoutController'
         controllerAs: 'layout'
+      .state 'home.login',
+        url: '/login'
+        controller: 'LoginRouterCtrl'
       .state 'home.apps',
         data:
           pageTitle:'Apss'
@@ -22,6 +25,7 @@ angular.module 'mnoEnterpriseAngular'
         url: '/impac'
         templateUrl: 'app/views/impac/impac.html'
         controller: 'ImpacController'
+        controllerAs: 'vm'
       .state 'home.account',
         data:
           pageTitle:'Account'
@@ -43,9 +47,6 @@ angular.module 'mnoEnterpriseAngular'
         templateUrl: 'app/views/marketplace/marketplace.html'
         controller: 'DashboardMarketplaceCtrl'
         controllerAs: 'vm'
-      .state 'home.login',
-        url: '/login'
-        controller: 'LoginRouterCtrl'
       .state 'home.marketplace.app',
         data:
           pageTitle:'Marketplace-App'

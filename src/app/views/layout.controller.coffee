@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller 'LayoutController', ($stateParams, $location, MnoeCurrentUser, MnoeOrganizations, MnoeMarketplace) ->
+  .controller 'LayoutController', ($stateParams, $state, $q, MnoeCurrentUser, MnoeOrganizations, MnoeMarketplace) ->
     'ngInject'
 
     layout = this
@@ -8,21 +8,21 @@ angular.module 'mnoEnterpriseAngular'
     layout.isLoggedIn = false
 
     # App initialization
-    MnoeCurrentUser.get().then(
-      (response) ->
+    userPromise = MnoeCurrentUser.get()
+
+    # Load the current organization if defined (url param, cookie or first)
+    organizationPromise = MnoeOrganizations.getCurrentId($stateParams.dhbRefId)
+
+    $q.all([userPromise, organizationPromise]).then(
+      ->
         # Display the layout
         layout.isLoggedIn = true
-
-        layout.current_user = MnoeCurrentUser.user
-
-        # Load the current organization if defined (url param, cookie or first)
-        MnoeOrganizations.getCurrentId(response, $stateParams.dhbRefId)
 
         # Pre-load the market place
         MnoeMarketplace.getApps()
 
         # Remove param from url
-        $location.search('dhbRefId', null)
+        $state.go('.', {dhbRefId: undefined})
     )
 
     return
