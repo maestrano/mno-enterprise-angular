@@ -96,11 +96,7 @@ ul.dock {
     left: 50%;
     top: 100%;
     z-index: 1000;
-
-    // Temp / To Review
     margin-top: 68px;
-    // display: none;
-
     visibility:hidden;
     opacity:0;
     transition: visibility 0s linear 0.5s,opacity 0.5s linear;
@@ -116,24 +112,25 @@ ul.dock {
       padding: 5px 0px;
       .border-top-radius(5px);
       .border-bottom-radius(5px);
-      background-color: @mno-dock-settings-menu-bg-color;
+      background-color: @mno-dock-sub-menu-bg-color;
 
-      .box-shadow(@mno-dock-box-shadow);
+      .box-shadow(@mno-dock-sub-menu-box-shadow);
       .menu-item {
         cursor: pointer;
         padding: 5px 20px;
 
         &:hover {
-          color: white !important;
-          .border-top-radius(5px);
-          .border-bottom-radius(5px);
           background-color: @mno-dock-sub-menu-hover;
+
+          a {
+            color: @mno-dock-sub-menu-text-hover-color;
+          }
         }
 
         a {
-          color: @mno-dock-sub-menu-text-color;
           display: flex;
           text-decoration: none;
+          color: @mno-dock-sub-menu-text-color;
 
           &.connect-btn-center, img.connect-btn-center {
             margin: auto;
@@ -206,7 +203,7 @@ ul.dock.animated  > li:hover, ul.dock > li.active {
   }
 }
 
-ul.dock  > li.prev img.app-logo {
+ul.dock > li.prev img.app-logo {
   .scale(1.4);
   margin: 5px 1.4em 5px;
 }
@@ -218,82 +215,58 @@ ul.dock  > li.prev img.app-logo {
   bottom: 0;
   width: 100%;
   z-index: 1030;
-  color: @mno-dock-add-app-border-color;
 
-  .mobile-dock {
+  .mobile-dock-button {
     width: 100%;
     text-transform: uppercase;
     padding: 10px;
-    background-color: @mno-dock-bg-color;
-  }
-}
-
-#mobile-dock {
-
-  background-color: @mno-dock-settings-menu-bg-color;
-
-  z-index: 1030;
-
-  &.collapse.in {
-    overflow-y: auto;
+    color: @mno-dock-mobile-button-color;
+    background-color: @mno-dock-mobile-button-bg-color;
   }
 
-  .btn {
-    text-transform: uppercase;
-  }
+  #mobile-dock {
+    z-index: 1030;
 
-  ul > li {
-    border-bottom: 1px solid darken(@mno-dock-bg-color, 10%);
-
-    .app-line {
-      display: flex;
-      justify-content: center;
+    &.collapse.in {
+      overflow-y: auto;
     }
 
-    &:hover, &.active {
-      background-color: lighten(@mno-dock-bg-color, 20%);
+    .btn {
+      text-transform: uppercase;
     }
 
-    .title {
-      font-weight: bold;
-    }
+    ul {
+      margin-bottom: 0;
+      background-color: @mno-dock-mobile-bg-color;
 
-    img.app-logo {
-      .square(48px);
-      margin: 10px;
-      margin-right: 20px;
-    }
+      & > li {
+        border-bottom: @mno-dock-mobile-app-border-bottom;
+        padding-top: 5px;
+        padding-bottom: 5px;
 
-    .fa-cog {
-      display: flex;
-      margin-right: 50px;
-      margin-top: 25px;
-    }
+        .app-line {
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
 
-    i.fa {
-      font-size: 5em;
-      margin: 0 20px;
-      color: @mno-dock-bg-color;
-      cursor: pointer;
-    }
+          .title {
+            color: @mno-dock-mobile-app-name-color;
+            font-weight: bold;
+          }
 
-    .btn-shaded{
-      margin: 0 10px;
-      color: white;
+          img.app-logo {
+            .square(48px);
+          }
+        }
+
+        &:hover, &.active {
+          background-color: @mno-dock-mobile-app-active-color;
+        }
+      }
     }
 
     .add-app {
-      border: 2px solid lighten(@mno-dock-bg-color, 20%);
-      color: lighten(@mno-dock-bg-color, 10%);
-      background: inherit;
-      min-width: 40%;
-      margin: 10px;
-
-      &:hover {
-        background-color: darken(@mno-dock-bg-color, 10%);;
-      }
+      color: @mno-dock-mobile-add-app-color;
     }
   }
 }
-
-

@@ -8,11 +8,9 @@ angular.module 'mnoEnterpriseAngular'
     #====================================
     # Post-Initialization
     #====================================
-    $scope.$watch(MnoeOrganizations.getSelectedId, (newValue, oldValue) ->
+    $scope.$watch(MnoeOrganizations.getSelectedId, (newValue) ->
       vm.isLoaded = false
-
-      # Reload the dashboard
-      ImpacDashboardsSvc.reload(true) if newValue? && oldValue? && newValue != oldValue
+      vm.isImpacShown = false
 
       # Fetch current organization to check if user is allowed
       MnoeOrganizations.get().then(
@@ -20,7 +18,6 @@ angular.module 'mnoEnterpriseAngular'
           # Impac is displayed only to admin and super admin
           vm.isImpacShown = (MnoeOrganizations.role.isAdmin() || MnoeOrganizations.role.isSuperAdmin())
 
-          # The user is not allowed to se impac, he is redirected
           if !vm.isImpacShown
             $state.go('home.login')
 

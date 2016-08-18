@@ -1,19 +1,8 @@
 #impac {
-  // TODO: should be in mnoe-angular?
-  impac-dashboard {
-    display: block;
-    margin-top: 40px;
-  }
-
-  .alert-no-admin {
-    padding: 100px;
-    font-size: 40px;
-    cursor: pointer;
-    position: fixed;
-    color: red;
-
-    &:hover {
-      color: @decorator-inverse-color;
+  impac-dashboard.with-dock {
+    @media(min-width: @screen-md-min) {
+      display: block;
+      .top-buffer-4;
     }
   }
 }

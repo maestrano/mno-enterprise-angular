@@ -1,9 +1,9 @@
 <div class="dashboard-marketplace-app">
     <!-- Header -->
-    <div class="row show-header top-buffer-1">
+    <div class="row show-header top-buffer-4">
       <div class="col-md-12">
         <a ui-sref="home.marketplace()" class="text-muted">
-          < {{ 'mno_enterprise.templates.dashboard.marketplace.show.back' | translate }}
+          <i class="fa fa-chevron-left"></i> {{ 'mno_enterprise.templates.dashboard.marketplace.show.back' | translate }}
         </a>
 
         <div class="media">
@@ -14,7 +14,6 @@
             <h2 class="media-heading">{{vm.app.name}}</h2>
           </div>
         </div>
-
       </div>
     </div>
 
@@ -23,7 +22,6 @@
 
         <!-- Pics/details row -->
         <div class="row">
-
           <div class="col-md-8">
             <div class="well carousel">
               <div carousel interval="3000">
@@ -32,7 +30,6 @@
                 </div>
               </div>
             </div>
-
           </div>
 
           <div class="col-md-4">
