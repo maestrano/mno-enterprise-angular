@@ -28,7 +28,6 @@
 
         <!-- App Cards-->
         <div class="col-sm-6 col-md-4" ng-repeat="app in vm.apps | filter:vm.appsFilter | filter:vm.searchTerm">
-
           <a class="marketplace-app-card" ui-sref="home.marketplace.app({appId: app.id})">
             <div class="media">
               <div class="pull-left">
@@ -43,7 +42,6 @@
               </div>
             </div>
           </a>
-
         </div>
 
         <!-- End: marketplace-list -->

@@ -22,7 +22,7 @@
       </li>
       <li ng-if="!isDockEnabled">
         <a ng-if="isAdmin" ui-sref="home.apps" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}</a>
-      </li>      
+      </li>
 
       <li ng-if="!isDockEnabled">
         <a ng-if="isAdmin" ui-sref="home.impac" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.impac' | translate }}</a>
@@ -57,28 +57,22 @@
     <a href="/">
       <div class='brand-logo'></div>
     </a>
-    <div ng-if="!isDockEnabled">
-      <a ng-if="isAdmin" ng-cloak ui-sref="home.apps" class="dashboard-button" ui-sref-active="active">
-        <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}</div>
-        <i class="dhb-icon-dashboard"></i>
-      </a>
-    </div>    
-    <a ng-if="!isAdmin" ng-cloak ui-sref="home.apps" class="dashboard-button" ui-sref-active="active">
+
+    <a ng-if="(!isDockEnabled && isAdmin) || !isAdmin" ui-sref="home.apps" class="dashboard-button top-buffer-1" ui-sref-active="active">
       <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}</div>
       <i class="dhb-icon-dashboard"></i>
     </a>
-    <div ng-if="isDockEnabled">
-      <a ng-if="isAdmin" ng-cloak ui-sref="home.impac" class="dashboard-button top-buffer-1" ui-sref-active="active">
-        <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}</div>
-        <i class="dhb-icon-impac"></i>
-      </a>
-    </div>
-    <div ng-if="!isDockEnabled">
-      <a ng-if="isAdmin" ng-cloak ui-sref="home.impac" class="dashboard-button top-buffer-1" ui-sref-active="active">
-        <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.impac' | translate }}</div>
-        <i class="dhb-icon-impac"></i>
-      </a>
-    </div>
+
+    <a ng-if="isDockEnabled && isAdmin" ui-sref="home.impac" class="dashboard-button top-buffer-1" ui-sref-active="active">
+      <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}</div>
+      <i class="dhb-icon-impac"></i>
+    </a>
+
+    <a ng-if="!isDockEnabled && isAdmin" ui-sref="home.impac" class="dashboard-button top-buffer-1" ui-sref-active="active">
+      <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.impac' | translate }}</div>
+      <i class="dhb-icon-impac"></i>
+    </a>
+
     <a ui-sref="home.account" class="dashboard-button top-buffer-1" ui-sref-active="active">
       <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.my_account' | translate }}</div>
       <i class="dhb-icon-account"></i>

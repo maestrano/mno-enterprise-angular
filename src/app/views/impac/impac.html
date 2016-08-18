@@ -1,8 +1,8 @@
-<div ng-show="isDockEnabled">
-	<dashboard-apps-dock></dashboard-apps-dock>
-</div>
-<div id="impac" ng-show="vm.isLoaded">
-	<div ng-if="vm.isImpacShown">
-	  <impac-dashboard></impac-dashboard>
-	</div>
+<div id="impac">
+  <h2 ng-if="!isDockEnabled" class="section-title">Impac!</h2>
+  <dashboard-apps-dock ng-if="isDockEnabled"></dashboard-apps-dock>
+
+  <div ng-show="vm.isLoaded">
+    <impac-dashboard ng-if="vm.isImpacShown" ng-class="{'with-dock': isDockEnabled}"></impac-dashboard>
+  </div>
 </div>
