@@ -2,12 +2,12 @@
 
 <div class="row dashboard-organization">
 
-  <mno-loader ng-show="vm.isLoading" class="top-buffer-2"></mno-loader>
+  <mno-loader ng-show="vm.isLoading" class="top-buffer-4"></mno-loader>
 
   <!-------------------------------------->
   <!--            Normal View           -->
   <!-------------------------------------->
-  <div class="col-md-12 top-buffer-2" ng-if="!vm.isTabSetShown() && !vm.isLoading">
+  <div class="col-md-12 top-buffer-4" ng-if="!vm.isTabSetShown() && !vm.isLoading">
 
     <!-- Directive: DashboardOrganizationMembers -->
     <div class="well">
@@ -28,7 +28,7 @@
   <!-------------------------------------->
   <!--         Super Admin View         -->
   <!-------------------------------------->
-  <div class="col-md-12 top-buffer-2" ng-if="vm.isTabSetShown() && !vm.isLoading">
+  <div class="col-md-12 top-buffer-4" ng-if="vm.isTabSetShown() && !vm.isLoading">
 
     <div uib-tabset>
 

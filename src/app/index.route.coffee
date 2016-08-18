@@ -1,5 +1,6 @@
 angular.module 'mnoEnterpriseAngular'
   .config ($stateProvider, $urlRouterProvider, URI, I18N_CONFIG) ->
+
     $stateProvider
       .state 'home',
         data:
@@ -9,9 +10,12 @@ angular.module 'mnoEnterpriseAngular'
         templateUrl: 'app/views/layout.html'
         controller: 'LayoutController'
         controllerAs: 'layout'
+      .state 'home.login',
+        url: '/login'
+        controller: 'LoginRouterCtrl'
       .state 'home.apps',
         data:
-          pageTitle:'Apps'
+          pageTitle:'Apss'
         url: '/apps'
         templateUrl: 'app/views/apps/dashboard-apps-list.html'
         controller: 'DashboardAppsListCtrl'
@@ -21,6 +25,7 @@ angular.module 'mnoEnterpriseAngular'
         url: '/impac'
         templateUrl: 'app/views/impac/impac.html'
         controller: 'ImpacController'
+        controllerAs: 'vm'
       .state 'home.account',
         data:
           pageTitle:'Account'
@@ -63,4 +68,4 @@ angular.module 'mnoEnterpriseAngular'
               $window.location.href = "#{URI.login}"
           )
 
-    $urlRouterProvider.otherwise '/apps'
+    $urlRouterProvider.otherwise '/login'

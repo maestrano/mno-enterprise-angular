@@ -6,7 +6,7 @@ angular.module 'mnoEnterpriseAngular'
     organizationsApi = MnoeApiSvc.all('organizations')
 
     # Store the selected entity id
-    # Mostly used to refresh the UI befor the selected entity is requested
+    # Mostly used to refresh the UI before the selected entity is requested
     @selectedId = null
 
     @getSelectedId = ->
@@ -25,13 +25,15 @@ angular.module 'mnoEnterpriseAngular'
           response
       )
 
-    @get = (id) ->
-      return if id == _self.selectedId
+    organizationPromise = null
+    @get = (id = null) ->
+      # return the cached promise if not a new call
+      return organizationPromise if ((!id? || id == _self.selectedId) && organizationPromise != null)
 
-      _self.selectedId = id
+      _self.selectedId = id if id?
 
       # Get the selected organization
-      organizationPromise = MnoeApiSvc.one('/organizations', id).get().then(
+      organizationPromise = MnoeApiSvc.one('/organizations', _self.selectedId).get().then(
         (response) ->
           # Save the organization
           _self.selected = response.plain()
@@ -126,31 +128,28 @@ angular.module 'mnoEnterpriseAngular'
       )
 
     # Load the current organization if defined (url, cookie or first)
-    @getCurrentId = (user = null, dhbRefId = null) ->
-      # Return the already selected id
-      if _self.selectedId
-        $log.debug "MnoeOrganizations.getCurrentId: selectedId", _self.selectedId
-        return _self.selectedId
-
+    @getCurrentId = (dhbRefId = null) ->
       # Attempt to load organization from param
-      else if dhbRefId
-        _self.get(dhbRefId)
+      if dhbRefId
+        _self.selectedId = dhbRefId
+        $cookies.put("#{MnoeCurrentUser.user.id}_dhb_ref_id", _self.selectedId)
         $log.debug "MnoeOrganizations.getCurrentId: dhbRefId", _self.selectedId
-        return dhbRefId
-
-      # Attempt to load last organization from cookie of the user
-      else if (val = $cookies.get("#{MnoeCurrentUser.user.id}_dhb_ref_id"))
-        _self.get(val)
-        $log.debug "MnoeOrganizations.getCurrentId: cookie", _self.selectedId
-        return val
-
-      # Load first organization from user
+        return $q.resolve(_self.selectedId)
       else
-        # If the app is initializing, return the correct organization id
-        organization = user.organizations[0]
-        _self.get(organization.id)
-        $log.debug "MnoeOrganizations.getCurrentId: first", _self.selectedId
-        return organization.id
+        # Load user's first organization or from cookie
+        MnoeCurrentUser.get().then(
+          (response) ->
+            if (val = $cookies.get("#{MnoeCurrentUser.user.id}_dhb_ref_id"))
+              # Load organization id stored in cookie
+              _self.get(val)
+              $log.debug "MnoeOrganizations.getCurrentId: cookie", _self.selectedId
+              return _self.selectedId
+            else
+              # Load user's first organization id
+              _self.get(response.organizations[0].id)
+              $log.debug "MnoeOrganizations.getCurrentId: first", _self.selectedId
+              return _self.selectedId
+        )
 
     #======================================
     # User Role

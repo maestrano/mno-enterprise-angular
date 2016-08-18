@@ -1,0 +1,88 @@
+<div id="app-dock-container" class="hidden-xs hidden-sm">
+  <div id="app-dock">
+    <ul class="dock list-unstyled" ng-class="{minimized: appDock.isMinimized, animated: appDock.isAnimated()}">
+      <li ng-repeat="app in apps" ng-class="{active: isActiveApp(app.id)}" class="dock-icon">
+        <div class="title" tooltip="{{app.name.length > 14 ? app.name : null}}" tooltip-placement="bottom">{{app.name | truncate:14:"...":true}}</div>
+        <img class="app-logo" ng-src="{{app.logo}}" ng-click="setActiveApp($event, app.id)">
+        <div class="dock-menu">
+          <div class="dock-arrow"><i class="fa fa-chevron-up"></i></div>
+          <div class="inner-dock-menu">
+            <!-- EO Connectors Buttons -->
+            <div class="menu-item ng-hide" ng-hide="helper.isLaunchHidden(app)">
+
+              <a ng-click="launchAction(app,$event);"><i class="fa fa-play-circle"></i>{{ 'mno_enterprise.templates.impac.dock.launch' | translate }}</a>
+            </div>
+            <div class="menu-item ng-hide" ng-show="helper.isOauthConnectBtnShown(app)">
+                <a href="" ng-click="helper.oAuthConnectPath(app)"><i class="fa fa-play-circle" >
+                </i> {{ 'mno_enterprise.templates.impac.dock.connect' | translate }}</a>
+            </div>
+            <div class="menu-item ng-hide" ng-show="helper.displaySettings()">
+
+              <a ng-click="showSettingsModal(app)"><i class="fa fa-cog"></i> {{ 'mno_enterprise.templates.impac.dock.settings.settings' | translate }} </a>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="add-app">
+          <a ui-sref="home.marketplace">
+            <i class="fa fa-plus-circle"></i>
+            <span> {{ 'mno_enterprise.templates.impac.dock.add_more_apps' | translate }} </span>
+          </a>
+        </div>
+      </li>
+      <li class="expand-menu">
+        <div>
+          <a ng-click="appDock.toggle()" ng-switch="appDock.isMinimized">
+            <i class="fa fa-chevron-down" ng-switch-when="true"></i>
+            <i class="fa fa-chevron-up" ng-switch-when="false"></i>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div id="app-dock-mobile-container" class="visible-xs visible-sm">
+  <div class="mobile-dock-button align-center btn" ng-click="launchApp.isClosed = !launchApp.isClosed">
+    </i>{{ 'mno_enterprise.templates.impac.dock.launch' | translate }}</a>
+    <i class="fa fa-chevron-down pull-right" ng-hide="launchApp.isClosed"></i>
+  </div>
+  <div id="mobile-dock" collapse="launchApp.isClosed">
+    <ul class="list-unstyled">
+      <li ng-repeat="app in apps" ng-class="{active: isActiveApp(app.id)}" ng-switch on="isActiveApp(app.id)">
+        <div class="app-line" ng-switch-when="true">
+          <i class="fa fa-angle-left" ng-click="setActiveApp($event, app.id)"></i>
+          <div ng-show="app.tutorial">
+            <a class="btn btn-warning" ng-href="{{app.tutorial}}"><span class="fa fa-book"></span> </i>{{ 'mno_enterprise.templates.dashboard.apps_list.tutorial' | translate }}</a></a>
+            <br>
+          </div>
+          <div ng-show="helper.displaySettings()">
+            <a class="btn btn-warning" ng-click="showSettingsModal(app)"><span class="fa fa-cog"></span> {{ "mno_enterprise.templates.dashboard.organization.index.settings.title" | translate }}</a>
+          </div>
+        </div>
+
+        <div class="app-line" ng-switch-default>
+          <button ng-click="showSettingsModal(app)" class="btn btn-primary">
+            <i class="fa fa-cog"></i>
+          </button>
+          <img class="app-logo" ng-src="{{app.logo}}">
+          <div>
+            <div class="title">{{app.name}}</div>
+            <div ng-hide="helper.isLaunchHidden(app)">
+              <a ng-click="launchAction(app,$event);" class="btn btn-warning">{{ 'mno_enterprise.templates.impac.dock.launch' | translate }}</a>
+            </div>
+            <div ng-show="helper.isOauthConnectBtnShown(app)">
+              <a href="" ng-click="helper.oAuthConnectPath(app)" class="btn btn-warning">{{ 'mno_enterprise.templates.impac.dock.connect' | translate }}</a>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <a ui-sref="home.marketplace" class="btn btn-link add-app">
+        <i class="fa fa-plus"></i><span> {{ 'mno_enterprise.templates.impac.dock.add_more_apps' | translate }}</span>
+      </a>
+    </ul>
+  </div>
+</div>
+

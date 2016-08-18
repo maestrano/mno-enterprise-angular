@@ -1,0 +1,272 @@
+#app-dock-container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  text-align: center;
+}
+
+ul.dock {
+  position: relative;
+  display: inline-block;
+  background-color: @mno-dock-bg-color;
+  opacity: 1;
+  padding: 5px;
+  z-index: 999;
+  .border-bottom-radius(5px);
+  height: 90px;
+  .transition(height 0.3s);
+
+  & > li {
+    display: inline-block;
+    position: relative;
+    vertical-align: top;
+
+    .title {
+      position: absolute;
+      top: 0;
+      color: @mno-dock-app-title-color;
+      display: none;
+      width: 100%;
+      text-align: center;
+    }
+
+    img.app-logo {
+      outline: none;
+      cursor: pointer;
+      margin: 5px;
+      .square(@mno-dock-app-logo-square-width);
+      .transition(all 0.3s);
+      .border-top-radius(5px);
+      .border-bottom-radius(5px);
+      .transform-origin(50% 0%); // Origin from top
+    }
+
+    .add-app {
+      cursor: pointer;
+      margin: 5px;
+      .square(@mno-dock-app-logo-square-width);
+      .transition(all 0.3s);
+      .transform-origin(50% 0%); // Origin from top
+      border: 1px solid @mno-dock-add-app-border-color;
+      .border-top-radius(5px);
+      .border-bottom-radius(5px);
+
+      display: table;
+
+      a {
+        display: table-cell;
+        vertical-align: middle;
+        color: @mno-dock-add-app-text-color;
+      }
+    }
+  }
+
+  // Expand button
+  li.expand-menu {
+    border-left: 1px solid @mno-dock-expand-left-border-color;
+    height: 100%;
+
+    & > div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+
+      a {
+        padding-left: 6px;
+        padding-right: 5px;
+        .transition(height 0.3s);
+        cursor: pointer;
+        color: @mno-dock-expand-arrow-color;
+
+        &:hover {
+          text-decoration: none;
+          color: @mno-dock-expand-arrow-color-hover;
+        }
+      }
+    }
+  }
+
+  //=======================================
+  // Submenu
+  //=======================================
+  .dock-menu {
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    z-index: 1000;
+    margin-top: 68px;
+    visibility:hidden;
+    opacity:0;
+    transition: visibility 0s linear 0.5s,opacity 0.5s linear;
+
+    div.dock-arrow {
+      position: relative;
+      right: 50%;
+    }
+
+    div.inner-dock-menu { // Inner div holding the menu
+      position: relative;
+      right: 50%;
+      padding: 5px 0px;
+      .border-top-radius(5px);
+      .border-bottom-radius(5px);
+      background-color: @mno-dock-sub-menu-bg-color;
+
+      .box-shadow(@mno-dock-sub-menu-box-shadow);
+      .menu-item {
+        cursor: pointer;
+        padding: 5px 20px;
+
+        &:hover {
+          background-color: @mno-dock-sub-menu-hover;
+
+          a {
+            color: @mno-dock-sub-menu-text-hover-color;
+          }
+        }
+
+        a {
+          display: flex;
+          text-decoration: none;
+          color: @mno-dock-sub-menu-text-color;
+
+          &.connect-btn-center, img.connect-btn-center {
+            margin: auto;
+          }
+
+          i.fa {
+            color: @mno-dock-sub-menu-icon;
+            margin-top: 3px;
+            margin-right: 6px;
+          }
+        }
+
+        .connector-logo {
+          margin-top:3px;
+          margin-bottom:3px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  & > li.active {
+    .dock-menu {
+      // display: block;
+      visibility: visible;
+      opacity: 1;
+      transition-delay: 0s;
+    }
+  }
+}
+
+ul.dock.minimized {
+  height: @mno-dock-app-logo-square-width;
+  .transition(height 0.3s);
+
+  img.app-logo, .add-app {
+    .square(@mno-dock-app-logo-minimized-square-width);
+  }
+
+  .add-app {
+    span {
+      .transition(all 0.3s);
+      display: none;
+    }
+  }
+
+  .dock-menu {
+    margin-top: @mno-dock-app-logo-minimized-square-width;
+  }
+}
+
+ul.dock.animated  > li:hover, ul.dock > li.active {
+  img.app-logo {
+    transform: scale(1.8) translate(0, 10px);
+    margin: 5px 1.6em 5px;
+    z-index: 9999;
+
+    border: @mno-dock-app-box-border;
+    .box-shadow(@mno-dock-app-box-shadow);
+  }
+
+  .title {
+    display: block;
+  }
+
+  /* one element after and element before (with JS)*/
+  & + li img.app-logo, ul.dock > li.prev img.app-logo {
+    .scale(1.4);
+    margin: 5px 1.6em 5px;
+  }
+}
+
+ul.dock > li.prev img.app-logo {
+  .scale(1.4);
+  margin: 5px 1.4em 5px;
+}
+
+// Mobile
+#app-dock-mobile-container {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 1030;
+
+  .mobile-dock-button {
+    width: 100%;
+    text-transform: uppercase;
+    padding: 10px;
+    color: @mno-dock-mobile-button-color;
+    background-color: @mno-dock-mobile-button-bg-color;
+  }
+
+  #mobile-dock {
+    z-index: 1030;
+
+    &.collapse.in {
+      overflow-y: auto;
+    }
+
+    .btn {
+      text-transform: uppercase;
+    }
+
+    ul {
+      margin-bottom: 0;
+      background-color: @mno-dock-mobile-bg-color;
+
+      & > li {
+        border-bottom: @mno-dock-mobile-app-border-bottom;
+        padding-top: 5px;
+        padding-bottom: 5px;
+
+        .app-line {
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+
+          .title {
+            color: @mno-dock-mobile-app-name-color;
+            font-weight: bold;
+          }
+
+          img.app-logo {
+            .square(48px);
+          }
+        }
+
+        &:hover, &.active {
+          background-color: @mno-dock-mobile-app-active-color;
+        }
+      }
+    }
+
+    .add-app {
+      color: @mno-dock-mobile-add-app-color;
+    }
+  }
+}

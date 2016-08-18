@@ -2,7 +2,7 @@
 #============================================
 #
 #============================================
-DashboardCompanySelectboxCtrl = ($scope, $location, $stateParams, $cookies, $sce, $uibModal, MnoeCurrentUser, MnoeOrganizations, ModalSvc) ->
+DashboardCompanySelectboxCtrl = ($scope, $location, $stateParams, $cookies, $sce, $uibModal, MnoeCurrentUser, MnoeOrganizations, MnoeAppInstances, ModalSvc) ->
   'ngInject'
 
   #====================================
@@ -16,6 +16,7 @@ DashboardCompanySelectboxCtrl = ($scope, $location, $stateParams, $cookies, $sce
   }
 
   selectBox.changeTo = (organization) ->
+    MnoeAppInstances.clearCache()
     MnoeOrganizations.get(organization.id)
     selectBox.close()
 
