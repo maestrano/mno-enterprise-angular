@@ -89,3 +89,13 @@ angular.module 'mnoEnterpriseAngular'
         linkUrl: '#/marketplace'
 
     ImpacThemingProvider.configure(options)
+
+
+  #======================================================================================
+  # IMPAC-ASSETS: Configuring assests
+  #======================================================================================
+  .config (ImpacAssetsProvider) ->
+    paths =
+      impacDashboardBackground: 'images/impac_background.png'
+
+    ImpacAssetsProvider.configure(paths)
