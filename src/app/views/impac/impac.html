@@ -1,5 +1,6 @@
-<dashboard-apps-dock></dashboard-apps-dock>
-
+<div ng-show="isDockEnabled">
+	<dashboard-apps-dock></dashboard-apps-dock>
+</div>
 <div id="impac" ng-show="vm.isLoaded">
 	<div ng-if="vm.isImpacShown">
 	  <impac-dashboard></impac-dashboard>

@@ -1,14 +1,13 @@
 <div id="app-settings-modal">
   <div class="modal-header">
     <div class="close" type="button" aria-label="Close" ng-click="modal.close()">×</div>
-    <h3><b>{{ 'activemodel.attributes.mno_enterprise/impac/widget.settings' | translate }}</b> - <span class="app-name">{{app.name}}</span></h3>
+    <h3><b>{{ 'mno_enterprise.templates.impac.dock.settings.settings' | translate }}</b> - <span class="app-name">{{app.name}}</span></h3>
   </div>
   <div class="modal-body">
     <div class="container-fluid">
       <div class="row top-buffer-1">
         <div class="col-md-3">
-          <span class="title">{{ 'activemodel.attributes.mno_enterprise/app_instance.status' | translate }}</span>
-
+          <span class="title">{{ 'mno_enterprise.templates.impac.dock.settings.status' | translate }}</span>
         </div>
         <div class="col-md-8">
           <span class="label" ng-class="app.status">{{app.status}}</span>
@@ -17,7 +16,7 @@
       <hr>
       <div class="row">
         <div class="col-md-3">
-          <span class="title">{{ 'activemodel.attributes.mno_enterprise/impac/widget.name' | translate }}</span>
+          <span class="title">{{ 'mno_enterprise.templates.impac.dock.settings.app_name' | translate }}</span>
         </div>
         <div class="col-md-8">
           <div editable-text="app.name" onaftersave="updateAppName(app)" class="app-name">{{app.name}}
@@ -31,7 +30,7 @@
       <!-- Add on settings -->
       <div ng-show="helper.isAddOnSettingShown(app)">
         <hr>
-        <button ng-click="helper.addOnSettingLauch(app)" class="btn btn-warning">{{ 'activemodel.attributes.mno_enterprise/impac/widget.access_add-on_settings' | translate }}</button>
+        <button ng-click="helper.addOnSettingLauch(app)" class="btn btn-warning">{{ 'mno_enterprise.templates.impac.dock.settings.access_add-on_settings' | translate }}</button>
       </div>
 
       <!-- Data Sharing -->
@@ -39,13 +38,13 @@
         <hr>
         <div class="row">
           <div class="col-md-3">
-            <span class="title">{{ 'mno_enterprise.templates.dashboard.apps_list.manual_data_sharing' | translate }}</span>
+            <span class="title">{{ 'mno_enterprise.templates.impac.dock.settings.manual_data_sharing' | translate }}</span>
           </div>
           <div class="col-md-8">
 
             <!-- Connected company name -->
             <div ng-show="helper.companyName(app)">
-              Linked to: {{ helper.companyName(app) | truncate:45 }}
+              {{ 'mno_enterprise.templates.impac.dock.settings.linked_to' | translate }}: {{ helper.companyName(app) | truncate:45 }}
             </div>
           </div>
         </div>
@@ -53,14 +52,14 @@
           <!-- Data Sync Button -->
           <div class="left-side">
             <div ng-show="helper.isDataSyncShown(app)">
-              <a class="btn btn-info" ng-href="{{helper.dataSyncPath(app)}}" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.apps_list.manual_data_sync_tooltip' | translate:{ appname: app.app_name } }}">{{ 'mno_enterprise.templates.dashboard.apps_list.manual_data_sync' | translate }}</a>
+              <a class="btn btn-info" ng-href="{{helper.dataSyncPath(app)}}" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.apps_list.manual_data_sync_tooltip' | translate:{ appname: app.app_name } }}">{{ 'mno_enterprise.templates.impac.dock.settings.manual_data_sync' | translate }}</a>
             </div>
           </div>
 
           <!-- Data Disconnect Button -->
           <div ng-show="helper.isDataDisconnectShown(app)">
             <a class="btn btn-danger" ng-click="helper.dataDisconnectClick(app)" href="" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.apps_list.disconnect_link_tooltip' | translate:{ appname: app.app_name } }}">
-              {{ 'mno_enterprise.templates.dashboard.apps_list.disconnect_link' | translate }}
+              {{ 'mno_enterprise.templates.impac.dock.settings.disconnect_link' | translate }}
             </a>
           </div>
         </div>
@@ -69,16 +68,16 @@
       <!-- Deletion -->
       <hr>
       <div ng-show="helper.canDeleteApp()">
-        <button class="btn btn-danger" ng-hide="app.showDelete" ng-click="app.showDelete = !app.showDelete">{{ 'mno_enterprise.templates.dashboard.apps_list.delete' | translate }}</button>
+        <button class="btn btn-danger" ng-hide="app.showDelete" ng-click="app.showDelete = !app.showDelete">{{ 'mno_enterprise.templates.impac.dock.settings.delete' | translate }}</button>
         <div ng-show="app.showDelete">
-          <h4>{{ 'mno_enterprise.templates.dashboard.app_deletion.title' | translate }}</h4>
+          <h4>{{ 'mno_enterprise.templates.impac.dock.settings.confirm_app_deletion' | translate }}</h4>
           <div ng-show="app.plan.currentBillingType == 'monthly'">
             <p class="text-error">
-              {{ 'mno_enterprise.templates.dashboard.app_deletion.billing' | translate }}
+              {{ 'mno_enterprise.templates.impac.dock.settings.please_note_this_app' | translate }}
             </p>
           </div>
           <p>
-            {{ 'mno_enterprise.templates.dashboard.app_deletion.instructions' | translate }}</span>
+            {{ 'mno_enterprise.templates.impac.dock.settings.delete_instructions' | translate }}</span>
             <br/>
             <span class="text-error  align-center"><strong>{{sentence}}</strong></span>
           </p>
@@ -86,8 +85,8 @@
             <input type="text" class="sentence-check" ng-model="sentenceCheck" required>
           </div>
           <div class="buttons">
-            <button class="btn" ng-click="app.showDelete=false" >{{ 'mno_enterprise.templates.dashboard.app_deletion.cancel' | translate}}</button>
-            <button class="btn btn-danger" ng-click="deleteApp()" ng-disabled="sentence != sentenceCheck"> {{ 'mno_enterprise.templates.dashboard.app_deletion.delete' | translate }} </button>
+            <button class="btn" ng-click="app.showDelete=false" >{{ 'mno_enterprise.templates.impac.dock.settings.cancel' | translate}}</button>
+            <button class="btn btn-danger" ng-click="deleteApp()" ng-disabled="sentence != sentenceCheck"> {{ 'mno_enterprise.templates.impac.dock.settings.delete' | translate }} </button>
           </div>
         </div>
       </div>
@@ -95,14 +94,14 @@
       <!-- Developer details -->
       <div ng-show="helper.canDeleteApp()">
         <hr>
-        <a class="text-muted" href="" ng-click="app.showDevDetails = !app.showDevDetails"><em> {{ app.showDevDetails && 'Hide' || 'Show'}} {{ 'mno_enterprise.templates.dashboard.app.developer_details' | translate }} </em></a>
+        <a class="text-muted" href="" ng-click="app.showDevDetails = !app.showDevDetails"><em> {{ app.showDevDetails && 'Hide' || 'Show'}} {{ 'mno_enterprise.templates.impac.dock.settings.developer_details' | translate }} </em></a>
         <div ng-show="app.showDevDetails">
-          <h4>{{ 'mno_enterprise.templates.dashboard.app.developer_details' | translate }} </h4>
+          <h4>{{ 'mno_enterprise.templates.impac.dock.settings.developer_details' | translate }} </h4>
           <div class="developer-details">
             <dl class="dl-horizontal">
-              <dt>Organization id:</dt>
+              <dt>{{ 'mno_enterprise.templates.impac.dock.settings.organization_id' | translate }}:</dt>
               <dd>{{organization_uid}}</dd>
-              <dt>Group id (uid):</dt>
+              <dt>{{ 'mno_enterprise.templates.impac.dock.settings.group_id' | translate }}:</dt>
               <dd>{{app.uid}}</dd>
             </dl>
           </div>

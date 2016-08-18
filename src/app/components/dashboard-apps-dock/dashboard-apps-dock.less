@@ -116,10 +116,9 @@ ul.dock {
       padding: 5px 0px;
       .border-top-radius(5px);
       .border-bottom-radius(5px);
-      background-color: @mno-bg-settings-dock-menu;
+      background-color: @mno-dock-settings-menu-bg-color;
 
-      .box-shadow(@mno-box-dock-shadow);
-
+      .box-shadow(@mno-dock-box-shadow);
       .menu-item {
         cursor: pointer;
         padding: 5px 20px;
@@ -128,7 +127,6 @@ ul.dock {
           color: white !important;
           .border-top-radius(5px);
           .border-bottom-radius(5px);
-
           background-color: @mno-dock-sub-menu-hover;
         }
 
@@ -226,12 +224,14 @@ ul.dock  > li.prev img.app-logo {
     width: 100%;
     text-transform: uppercase;
     padding: 10px;
-    background-color: @decorator-inverse-color;
+    background-color: @mno-dock-bg-color;
   }
 }
 
 #mobile-dock {
-  background-color: @bg-on-bg-inverse-color;
+
+  background-color: @mno-dock-settings-menu-bg-color;
+
   z-index: 1030;
 
   &.collapse.in {
@@ -243,7 +243,7 @@ ul.dock  > li.prev img.app-logo {
   }
 
   ul > li {
-    border-bottom: 1px solid darken(@decorator-alt-color, 10%);
+    border-bottom: 1px solid darken(@mno-dock-bg-color, 10%);
 
     .app-line {
       display: flex;
@@ -251,7 +251,7 @@ ul.dock  > li.prev img.app-logo {
     }
 
     &:hover, &.active {
-      background-color: lighten(@decorator-alt-color, 20%);
+      background-color: lighten(@mno-dock-bg-color, 20%);
     }
 
     .title {
@@ -264,10 +264,16 @@ ul.dock  > li.prev img.app-logo {
       margin-right: 20px;
     }
 
+    .fa-cog {
+      display: flex;
+      margin-right: 50px;
+      margin-top: 25px;
+    }
+
     i.fa {
       font-size: 5em;
       margin: 0 20px;
-      color: @decorator-alt-color;
+      color: @mno-dock-bg-color;
       cursor: pointer;
     }
 
@@ -277,14 +283,14 @@ ul.dock  > li.prev img.app-logo {
     }
 
     .add-app {
-      border: 2px solid lighten(@decorator-alt-color, 20%);
-      color: lighten(@decorator-alt-color, 10%);
+      border: 2px solid lighten(@mno-dock-bg-color, 20%);
+      color: lighten(@mno-dock-bg-color, 10%);
       background: inherit;
       min-width: 40%;
       margin: 10px;
 
       &:hover {
-        background-color: darken(@decorator-alt-color, 10%);;
+        background-color: darken(@mno-dock-bg-color, 10%);;
       }
     }
   }
