@@ -1,4 +1,4 @@
-<div id="app-dock-container" class="hidden-xs">
+<div id="app-dock-container" class="hidden-xs hidden-sm">
   <div id="app-dock">
     <ul class="dock list-unstyled" ng-class="{minimized: appDock.isMinimized, animated: appDock.isAnimated()}">
       <li ng-repeat="app in apps" ng-class="{active: isActiveApp(app.id)}" class="dock-icon">
@@ -43,8 +43,8 @@
   </div>
 </div>
 
-<div id="app-dock-mobile-container" class="visible-xs">
-  <div class="mobile-dock align-center btn" ng-click="launchApp.isClosed = !launchApp.isClosed">
+<div id="app-dock-mobile-container" class="visible-xs visible-sm">
+  <div class="mobile-dock-button align-center btn" ng-click="launchApp.isClosed = !launchApp.isClosed">
     </i>{{ 'mno_enterprise.templates.impac.dock.launch' | translate }}</a>
     <i class="fa fa-chevron-down pull-right" ng-hide="launchApp.isClosed"></i>
   </div>
@@ -61,26 +61,28 @@
             <a class="btn btn-warning" ng-click="showSettingsModal(app)"><span class="fa fa-cog"></span> {{ "mno_enterprise.templates.dashboard.organization.index.settings.title" | translate }}</a>
           </div>
         </div>
+
         <div class="app-line" ng-switch-default>
-          <a ng-click="showSettingsModal(app)" class="fa fa-cog"></a>
+          <button ng-click="showSettingsModal(app)" class="btn btn-primary">
+            <i class="fa fa-cog"></i>
+          </button>
           <img class="app-logo" ng-src="{{app.logo}}">
-          
           <div>
             <div class="title">{{app.name}}</div>
             <div ng-hide="helper.isLaunchHidden(app)">
               <a ng-click="launchAction(app,$event);" class="btn btn-warning">{{ 'mno_enterprise.templates.impac.dock.launch' | translate }}</a>
             </div>
-
             <div ng-show="helper.isOauthConnectBtnShown(app)">
-                <a href="" ng-click="helper.oAuthConnectPath(app)" class="btn btn-warning">{{ 'mno_enterprise.templates.impac.dock.connect' | translate }}</a>
-
-            <span class="fa fa-plus"></span><span> {{ 'mno_enterprise.templates.impac.dock.add_more_apps' | translate }}</span>
-          </a>
+              <a href="" ng-click="helper.oAuthConnectPath(app)" class="btn btn-warning">{{ 'mno_enterprise.templates.impac.dock.connect' | translate }}</a>
+            </div>
+          </div>
         </div>
+      </li>
+
+      <a ui-sref="home.marketplace" class="btn btn-link add-app">
+        <i class="fa fa-plus"></i><span> {{ 'mno_enterprise.templates.impac.dock.add_more_apps' | translate }}</span>
+      </a>
     </ul>
-    <div class="align-center">
-      <button class="btn btn-warning" ng-click="launchApp.isClosed = true">{{ 'mno_enterprise.templates.impac.dock.cancel' | translate }}</button>
-    </div>
   </div>
 </div>
 

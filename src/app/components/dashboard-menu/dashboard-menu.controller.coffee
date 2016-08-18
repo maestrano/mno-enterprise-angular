@@ -14,9 +14,8 @@ angular.module 'mnoEnterpriseAngular'
         $scope.$watch(MnoeOrganizations.getSelected, (newValue, oldValue) ->
           if newValue?
             # Impac! is displayed only to admin and super admin
-            $scope.isDockOn = DOCK_CONFIG.enabled
             $scope.isAdmin = (MnoeOrganizations.role.isAdmin() || MnoeOrganizations.role.isSuperAdmin())
-            $scope.isDockEnabled = (MnoeOrganizations.role.isAdmin() || MnoeOrganizations.role.isSuperAdmin()) && $scope.isDockOn
+            $scope.isDockEnabled = DOCK_CONFIG.enabled
             $scope.isLoading = false
             $state.go('home.login') if oldValue? && newValue != oldValue
         )

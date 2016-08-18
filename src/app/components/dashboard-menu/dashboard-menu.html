@@ -12,7 +12,7 @@
     </button>
     <a class="navbar-brand" href="#">{{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}</a>
   </div>
-  <div ng-show="!isLoading" class="collapse navbar-collapse" uib-collapse="navCollapsed">
+  <div class="collapse navbar-collapse" uib-collapse="navCollapsed">
     <ul class="nav navbar-nav">
       <!-- ------------------------- -->
       <!-- My account section        -->
@@ -51,8 +51,8 @@
 <!-------------------------->
 <!--    Side Navbar       -->
 <!-------------------------->
-<nav class="col-xs-1 hidden-xs scrollbar-hidden">
-  <div ng-show="!isLoading" class="menu vertical expanded">
+<div class="menu-wrapper col-xs-1 hidden-xs">
+  <nav class="menu vertical">
     <!--Home page link-->
     <a href="/">
       <div class='brand-logo'></div>
@@ -92,5 +92,5 @@
       <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.logout' | translate }}</div>
       <i class="dhb-icon-logout"></i>
     </a>
-  </div>
-</nav>
+  </nav>
+</div>
