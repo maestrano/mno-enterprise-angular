@@ -31,7 +31,6 @@
       </div>
     </div>
 
-
     <!-------------------------------------->
     <!--        Permissions matrix        -->
     <!-------------------------------------->
@@ -52,7 +51,7 @@
             <thead>
               <tr>
                 <th class="td-first">
-                  <button type="button" class="btn btn-grey btn-grey-bordered" ng-click="matrix.addTeam()">
+                  <button type="button" class="btn btn-warning" ng-click="matrix.addTeam()">
                     <i class="fa fa-plus" style="margin-bottom:-2px;"></i>
                     &nbsp;
                     {{ 'mno_enterprise.templates.dashboard.teams.index.add_team_light' | translate }}
@@ -72,7 +71,7 @@
                   </div>
 
                   <span class="team-remove">
-                      <button class="btn btn-grey" ng-click="matrix.removeTeam(team)">
+                      <button class="btn btn-warning" ng-click="matrix.removeTeam(team)">
                         <i class="fa fa-remove hidden-xs"></i>
                       </button>
                   </span>
@@ -86,7 +85,7 @@
               <tr class="btn-group-row" ng-show="matrix.isChanged()">
                 <td class="text-center" colspan="2">
                   <div ng-show="matrix.isChanged() && !matrix.isLoading">
-                    <button type="button" class="btn btn-grey btn-grey-bordered" ng-click="matrix.cancel()">Cancel</button>
+                    <button type="button" class="btn btn-default" ng-click="matrix.cancel()">Cancel</button>
                     <button type="button" class="btn btn-warning" ng-click="matrix.save()">Save</button>
                   </div>
                   <!-- Loader -->
@@ -100,8 +99,8 @@
         <!-- Matrix: right part (detailed permissions) -->
         <div class="col-xs-8 table-right">
           <div class="text-center" ng-show="!hasApps()">
-            <p>{{ 'mno_enterprise.templates.dashboard.teams.index.no_apps_warning' | translate }}</p>
-            <a type="button" class="btn btn-lg btn-grey btn-grey-bordered" href="#/marketplace">
+            <p class="top-buffer-3">{{ 'mno_enterprise.templates.dashboard.teams.index.no_apps_warning' | translate }}</p>
+            <a type="button" class="btn btn-warning" href="#/marketplace">
               <i class="fa fa-plus" style="margin-bottom:-2px;"></i>
               &nbsp;
               {{ 'mno_enterprise.templates.dashboard.teams.index.add_app' | translate }}
