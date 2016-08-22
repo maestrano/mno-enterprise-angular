@@ -4,17 +4,16 @@
 
   <!-- No teams view -->
   <div ng-show="!isLoading && !hasTeams()">
-    <div class="row text-bg-inverse top-buffer-2">
-      <div class="col-sm-12 text-center">
-        <p>
-          {{ 'mno_enterprise.templates.dashboard.teams.index.no_teams_warning' | translate }}
-        </p>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="well text-center">
+          <p>{{ 'mno_enterprise.templates.dashboard.teams.index.no_teams_warning' | translate }}</p>
 
-        <button type="button" class="btn btn-lg btn-grey btn-grey-bordered" ng-click="matrix.addTeam()">
-          <i class="fa fa-plus" style="margin-bottom:-2px;"></i>
-          &nbsp;
-          {{ 'mno_enterprise.templates.dashboard.teams.index.add_team' | translate }}
-        </button>
+          <button type="button" class="btn btn-lg btn-warning top-buffer-1" ng-click="matrix.addTeam()">
+            <i class="fa fa-plus"></i>
+            {{ 'mno_enterprise.templates.dashboard.teams.index.add_team' | translate }}
+          </button>
+        </div>
       </div>
     </div>
   </div>
