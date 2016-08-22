@@ -52,12 +52,11 @@
               <tr>
                 <th class="td-first">
                   <button type="button" class="btn btn-warning" ng-click="matrix.addTeam()">
-                    <i class="fa fa-plus" style="margin-bottom:-2px;"></i>
+                    <i class="fa fa-plus"></i>
                     &nbsp;
                     {{ 'mno_enterprise.templates.dashboard.teams.index.add_team_light' | translate }}
                   </button>
                 </th>
-
                 <th style="width:6%;">{{ 'mno_enterprise.templates.dashboard.teams.index.all' | translate }}</th>
               </tr>
             </thead>
@@ -101,7 +100,7 @@
           <div class="text-center" ng-show="!hasApps()">
             <p class="top-buffer-3">{{ 'mno_enterprise.templates.dashboard.teams.index.no_apps_warning' | translate }}</p>
             <a type="button" class="btn btn-warning" href="#/marketplace">
-              <i class="fa fa-plus" style="margin-bottom:-2px;"></i>
+              <i class="fa fa-plus"></i>
               &nbsp;
               {{ 'mno_enterprise.templates.dashboard.teams.index.add_app' | translate }}
             </a>
