@@ -90,12 +90,12 @@ angular.module 'mnoEnterpriseAngular'
 
     ImpacThemingProvider.configure(options)
 
-
   #======================================================================================
   # IMPAC-ASSETS: Configuring assests
   #======================================================================================
   .config (ImpacAssetsProvider) ->
-    paths =
-      impacDashboardBackground: 'images/impac_background.png'
+    options =
+      defaultImagesPath: '/dashboard/images'
 
-    ImpacAssetsProvider.configure(paths)
+    ImpacAssetsProvider.configure(options)
+
