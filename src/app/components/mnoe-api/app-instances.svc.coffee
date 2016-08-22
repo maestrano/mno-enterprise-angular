@@ -13,7 +13,6 @@ angular.module 'mnoEnterpriseAngular'
       cache = MnoLocalStorage.getObject(MnoeCurrentUser.user.id + "_" + LOCALSTORAGE.appInstancesKey)
       if cache?
         # Process the cache
-        @clearCache
         processAppInstances(cache)
         # Return the promised cache
         return $q.resolve(cache)

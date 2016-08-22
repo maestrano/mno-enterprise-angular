@@ -4,17 +4,16 @@
 
   <!-- No teams view -->
   <div ng-show="!isLoading && !hasTeams()">
-    <div class="row text-bg-inverse top-buffer-2">
-      <div class="col-sm-12 text-center">
-        <p>
-          {{ 'mno_enterprise.templates.dashboard.teams.index.no_teams_warning' | translate }}
-        </p>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="well text-center">
+          <p>{{ 'mno_enterprise.templates.dashboard.teams.index.no_teams_warning' | translate }}</p>
 
-        <button type="button" class="btn btn-lg btn-grey btn-grey-bordered" ng-click="matrix.addTeam()">
-          <i class="fa fa-plus" style="margin-bottom:-2px;"></i>
-          &nbsp;
-          {{ 'mno_enterprise.templates.dashboard.teams.index.add_team' | translate }}
-        </button>
+          <button type="button" class="btn btn-lg btn-warning top-buffer-1" ng-click="matrix.addTeam()">
+            <i class="fa fa-plus"></i>
+            {{ 'mno_enterprise.templates.dashboard.teams.index.add_team' | translate }}
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -30,7 +29,6 @@
         </span>
       </div>
     </div>
-
 
     <!-------------------------------------->
     <!--        Permissions matrix        -->
@@ -52,13 +50,12 @@
             <thead>
               <tr>
                 <th class="td-first">
-                  <button type="button" class="btn btn-grey btn-grey-bordered" ng-click="matrix.addTeam()">
-                    <i class="fa fa-plus" style="margin-bottom:-2px;"></i>
+                  <button type="button" class="btn btn-warning" ng-click="matrix.addTeam()">
+                    <i class="fa fa-plus"></i>
                     &nbsp;
                     {{ 'mno_enterprise.templates.dashboard.teams.index.add_team_light' | translate }}
                   </button>
                 </th>
-
                 <th style="width:6%;">{{ 'mno_enterprise.templates.dashboard.teams.index.all' | translate }}</th>
               </tr>
             </thead>
@@ -72,7 +69,7 @@
                   </div>
 
                   <span class="team-remove">
-                      <button class="btn btn-grey" ng-click="matrix.removeTeam(team)">
+                      <button class="btn btn-warning" ng-click="matrix.removeTeam(team)">
                         <i class="fa fa-remove hidden-xs"></i>
                       </button>
                   </span>
@@ -86,7 +83,7 @@
               <tr class="btn-group-row" ng-show="matrix.isChanged()">
                 <td class="text-center" colspan="2">
                   <div ng-show="matrix.isChanged() && !matrix.isLoading">
-                    <button type="button" class="btn btn-grey btn-grey-bordered" ng-click="matrix.cancel()">Cancel</button>
+                    <button type="button" class="btn btn-default" ng-click="matrix.cancel()">Cancel</button>
                     <button type="button" class="btn btn-warning" ng-click="matrix.save()">Save</button>
                   </div>
                   <!-- Loader -->
@@ -100,9 +97,9 @@
         <!-- Matrix: right part (detailed permissions) -->
         <div class="col-xs-8 table-right">
           <div class="text-center" ng-show="!hasApps()">
-            <p>{{ 'mno_enterprise.templates.dashboard.teams.index.no_apps_warning' | translate }}</p>
-            <a type="button" class="btn btn-lg btn-grey btn-grey-bordered" href="#/marketplace">
-              <i class="fa fa-plus" style="margin-bottom:-2px;"></i>
+            <p class="top-buffer-3">{{ 'mno_enterprise.templates.dashboard.teams.index.no_apps_warning' | translate }}</p>
+            <a type="button" class="btn btn-warning" href="#/marketplace">
+              <i class="fa fa-plus"></i>
               &nbsp;
               {{ 'mno_enterprise.templates.dashboard.teams.index.add_app' | translate }}
             </a>

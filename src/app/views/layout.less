@@ -1,3 +1,5 @@
+@menu-left-width: 80px;
+
 #layout-loading {
   position: absolute;
   top: 0px;
@@ -21,7 +23,31 @@
 }
 
 #dashboard {
+  margin-left: @menu-left-width;
+
+  /* Fix the container width if the screen is sm+ */
+  @media screen and (min-width: @screen-sm-min) {
+    .container {
+      width: @container-sm - @menu-left-width;
+    }
+  }
+
+  /* Fix the container width if the screen is md+ */
+  @media screen and (min-width: @screen-md-min) {
+    .container {
+      width: @container-md - @menu-left-width;
+    }
+  }
+
+  /* Fix the container width if the screen is lg+ */
+  @media screen and (min-width: @screen-lg-min) {
+    .container {
+      width: @container-lg - @menu-left-width;
+    }
+  }
+
   @media (max-width: @screen-xs-max) {
     padding-top: 40px;
+    margin-left: 0;
   }
 }
