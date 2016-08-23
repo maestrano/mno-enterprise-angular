@@ -87,6 +87,9 @@ angular.module 'mnoEnterpriseAngular'
     options =
       dataNotFoundConfig:
         linkUrl: '#/marketplace'
+      dhbErrorsConfig:
+        firstTimeCreated:
+          note: ''
 
     ImpacThemingProvider.configure(options)
 

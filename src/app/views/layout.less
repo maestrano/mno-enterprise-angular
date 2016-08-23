@@ -25,6 +25,14 @@
 #dashboard {
   margin-left: @menu-left-width;
 
+  .container {
+    position: relative;
+  }
+
+  @media (max-width: @screen-xs-max) {
+    padding-top: 40px;
+  }
+
   /* Fix the container width if the screen is sm+ */
   @media screen and (min-width: @screen-sm-min) {
     .container {
@@ -44,10 +52,5 @@
     .container {
       width: @container-lg - @menu-left-width;
     }
-  }
-
-  @media (max-width: @screen-xs-max) {
-    padding-top: 40px;
-    margin-left: 0;
   }
 }
