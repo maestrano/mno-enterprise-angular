@@ -46,7 +46,7 @@ angular.module 'mnoEnterpriseAngular'
       false
 
     $scope.helper.isAddOnSettingShown = (app) ->
-      app.addOn
+      app.add_on
 
     $scope.helper.addOnSettingLauch = (app) ->
       $window.open("/mnoe/launch/#{app.uid}?settings=true", '_blank')
