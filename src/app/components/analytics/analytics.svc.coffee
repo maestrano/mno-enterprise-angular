@@ -1,6 +1,15 @@
 angular.module 'mnoEnterpriseAngular'
-  .service 'AnalyticsSvc', (MnoeCurrentUser, INTERCOM_ID) ->
-  
+  .service 'AnalyticsSvc', (MnoeCurrentUser, INTERCOM_ID, $window) ->
+
+    @bootIntercom = (userData) ->
+      $window.Intercom('boot', userData ) if $window.Intercom
+
+    @updateIntercom = (userData) ->
+      $window.Intercom('update', userData ) if $window.Intercom
+
+    @shutdownIntercom = ->
+      Intercom('shutdown') if $window.Intercom
+
     @getUserData = ->
       MnoeCurrentUser.get().then(
         (response)->
