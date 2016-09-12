@@ -1,8 +1,6 @@
 angular.module 'mnoEnterpriseAngular'
   .controller 'IndexController', ($scope, $sce, GOOGLE_TAG_CONTAINER_ID, INTERCOM_ID) ->
     'ngInject'
-    
-    $scope.intercom_id = INTERCOM_ID
 
     $scope.google_tag_scripts = $sce.trustAsHtml("""
         <noscript>

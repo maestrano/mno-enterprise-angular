@@ -62,8 +62,7 @@ angular.module 'mnoEnterpriseAngular'
 
           # Logout and redirect the user
           $http.delete(URI.logout).then( ->
-            #When user logs out, call to end the Intercom session and clear the cookie.
-            AnalyticsSvc.shutdownIntercom()
+            AnalyticsSvc.logOut()
             if I18N_CONFIG.enabled
               $window.location.href = "/#{$translate.use()}#{URI.login}"
             else

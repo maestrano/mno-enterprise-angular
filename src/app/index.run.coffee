@@ -53,15 +53,10 @@ angular.module 'mnoEnterpriseAngular'
       toastr[message.type](message.msg, _.capitalize(message.type), timeout: 10000)
       $location.search('flash', null) # remove the flash from url
 
-  .run(($rootScope, AnalyticsSvc, INTERCOM_ID) ->
-    # Will push user data to intercom and boot it
-    AnalyticsSvc.getUserData().then((userData)->
-      AnalyticsSvc.bootIntercom(userData)
-    )
+  .run(($rootScope, AnalyticsSvc) ->
+    AnalyticsSvc.init()
+    
     $rootScope.$on('$stateChangeSuccess', ->
-      # Will update intercom in every page change so intercom knows we're still active and load new messages
-      AnalyticsSvc.getUserData().then((userData)->
-        AnalyticsSvc.updateIntercom(userData)
-      )
+      AnalyticsSvc.update()
     )
   )
