@@ -405,6 +405,7 @@
   "mno_enterprise.templates.dashboard.horizontal_menu.company": "Company",
   "mno_enterprise.templates.dashboard.horizontal_menu.marketplace": "Marketplace",
   "mno_enterprise.templates.dashboard.horizontal_menu.logout": "Log off",
+  "mno_enterprise.templates.dashboard.menu.support": "Support",
   "mno_enterprise.templates.dashboard.menu.toggle_navigation": "Toggle navigation",
   "mno_enterprise.templates.dashboard.menu.dashboard": "Dashboard",
   "mno_enterprise.templates.dashboard.menu.impac": "Impac!",
