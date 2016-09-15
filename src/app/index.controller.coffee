@@ -27,6 +27,3 @@ angular.module 'mnoEnterpriseAngular'
     """)if INTERCOM_ID?
 
     return
-
-
-

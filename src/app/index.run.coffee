@@ -44,9 +44,10 @@ angular.module 'mnoEnterpriseAngular'
 
     $translate.use(locale)
   )
-  
+
   # Display flash messages from the backend in toastr
-  # They're passed this way: ?flash={"msg":"An error message.","type":"error"}
+  # They're passed this way:
+  #   ?flash={"msg":"An error message.","type":"error"}
   .run (toastr, $location) ->
     if flash = $location.search().flash
       message = JSON.parse(flash)
@@ -55,7 +56,7 @@ angular.module 'mnoEnterpriseAngular'
 
   .run(($rootScope, AnalyticsSvc) ->
     AnalyticsSvc.init()
-    
+
     $rootScope.$on('$stateChangeSuccess', ->
       AnalyticsSvc.update()
     )
