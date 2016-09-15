@@ -5,11 +5,13 @@ dashboard-company-selectbox {
   .company-select-box {
     position: absolute;
     right: 0;
+    width: @dashboard-cpy-select-width;
     background-color: @dashboard-cpy-select-bg-color;
     color: @dashboard-cpy-select-header-text-color;
     font-size: @dashboard-cpy-select-header-text-size;
-    padding: @dashboard-cpy-select-padding;
     border-radius: @dashboard-cpy-select-border-radius;
+    border-left: 1px solid @dashboard-cpy-select-border-color;
+    border-bottom: 1px solid @dashboard-cpy-select-border-color;
     z-index: 10;
 
     // Change company button
@@ -27,58 +29,127 @@ dashboard-company-selectbox {
 
     // Section always visible
     .box-header {
+      cursor: pointer;
       text-align: right;
+      outline: none;
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+
+      img {
+        border-radius: 50%;
+        height: @dashboard-cpy-select-pic-width;
+        width: @dashboard-cpy-select-pic-width;
+      }
+
+      .title {
+        margin: 0 10px;
+        width: calc(~'100% -' (2 * @dashboard-cpy-select-pic-width));
+        text-align: left;
+
+        .company {
+          width: 100%;
+          display: block;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        .name {
+          font-weight: bold;
+          color: @dashboard-cpy-select-header-text-bold-color;
+        }
+      }
+      .expand-menu {
+        margin-left: auto;
+      }
     }
 
     // Section visible when change company is clicked
     .box-content {
-      margin-top: 10px;
       border-top: solid 1px @dashboard-cpy-select-link-color;
       .border-bottom-radius(5px);
-    }
-    .box-content ul {
-      list-style: none;
-      padding-top: 15px;
-      max-height: 400px;
-      min-width: 250px;
-      overflow-y: auto;
-    }
-    .box-content ul li a {
-      color: @dashboard-cpy-select-link-color;
-      line-height: 25px;
-      display: block;
-      padding-left: 5px;
 
-      &:hover {
-        text-decoration: none;
-        color: @dashboard-cpy-select-link-hover-color;
-        background-color: @dashboard-cpy-select-link-hover-bg-color;
+      hr {
+        margin: 0;
+        border-top: 1px solid @dashboard-cpy-select-border-color;
       }
-    }
 
-    // Circle next to company name
-    // Indicate which company is currently viewed on dashboard
-    .box-content ul li a i.fa {
-      width: 13px;
-      margin-right: 6px;
-      text-align: center;
-      color: @dashboard-cpy-select-link-color;
-    }
+      // List of companies
+      ul {
+        list-style: none;
+        padding: 15px 20px 0 20px;
+        max-height: 400px;
+        min-width: 250px;
+        overflow-y: auto;
 
-    // Create new company
-    .box-content .default-link, .box-content .admin-link {
-      text-align: center;
-    }
-    .box-content .default-link a {
-      color: @dashboard-cpy-select-link-create-color;
-    }
+        > li {
+          position: relative;
+          outline: none;
 
-    // Admin platform link
-    .box-content .admin-link {
-      margin-top: 3px;
+          // Circle next to company name
+          // Indicate which company is currently viewed on dashboard
+          > a {
+            padding: 4px;
+            display: flex;
 
+            > i {
+              flex: 0 0 20px;
+              width: 13px;
+              padding: 2px 0;
+              display: inline-flex;
+              text-align: center;
+              color: @dashboard-cpy-select-link-icon-color;
+            }
+
+            > span {
+              text-align: left;
+              display: inline-flex;
+              flex: 1 1 auto;
+            }
+          }
+        }
+      }
+
+      // General look of the links
       a {
-        color: @dashboard-cpy-select-link-admin-color;
+        color: @dashboard-cpy-select-link-color;
+        line-height: 17px;
+        display: block;
+        padding: 4px 0 4px 20px;
+
+        &:hover {
+          text-decoration: none;
+          color: @dashboard-cpy-select-link-hover-color;
+          background-color: @dashboard-cpy-select-link-hover-bg-color;
+        }
+
+        // Icon on the side of the link
+        i {
+          width: 20px;
+          text-align: center;
+          font-size: 11pt;
+        }
+      }
+
+
+      .default-link {
+        padding: 10px 20px;
+        text-align: left;
+
+        .btn {
+          width: 100%;
+          margin-bottom: 10px;
+          padding: 3px;
+
+          a {
+            color: @dashboard-cpy-select-link-create-text-color;
+            padding: 2px;
+
+            &:hover {
+              background: transparent;
+            }
+          }
+        }
       }
     }
   }

@@ -4,35 +4,41 @@
 <!-------------------------->
 <div class="company-select-box">
   <div class="wrapper">
-    <div class="box-header">
-      <span class="title">{{ selectBox.user.name }} {{ selectBox.user.surname }}</span>
-      -
-      <span class="title">{{ selectBox.organization.name }}</span>
-      <a type="button" class="btn switch-company" ng-click="selectBox.toggle()">
-        <i ng-class="!selectBox.isClosed && 'active'"></i>
-      </a>
+    <div class="box-header" ng-click="selectBox.toggle()">
+      <img ng-src="{{selectBox.user.avatar_url}}" src="{{selectBox.user.avatar_url}}" />
+      <div class="title">
+        <span class="name ng-binding">{{ selectBox.user.name }} {{ selectBox.user.surname }}</span><br>
+        <span class="company ng-binding">{{ selectBox.organization.name }}</span>
+      </div>
+      <i class="expand-menu fa" ng-class="selectBox.isClosed? 'fa-chevron-down': 'fa-chevron-up'"></i>
     </div>
 
     <div class="box-content scrollbar-hidden" uib-collapse="selectBox.isClosed">
       <ul class="list-unstyled">
-        <li ng-repeat="organization in selectBox.user.organizations | orderBy:'name'" >
-          <a href="" ng-click="selectBox.changeTo(organization)">
-            <i class="fa" ng-class="organization === selectBox.organization ? 'fa-dot-circle-o' : 'fa-circle-o'"></i> {{organization.name}}
+        <li ng-repeat="organization in selectBox.user.organizations | orderBy:'name'"  ng-click="selectBox.changeTo(organization)">
+          <a>
+            <i class="fa" ng-class="organization === selectBox.organization ? 'fa-dot-circle-o' : 'fa-circle-o'"></i>
+            <span>{{organization.name}}</span>
           </a>
         </li>
       </ul>
-      <hr>
       <div class="default-link">
-        <a href="" ng-click="selectBox.createNewOrga()"><small>{{ 'mno_enterprise.templates.dashboard.menu.new_company' | translate }}</small></a>
+        <button type="button" class="btn btn-warning" ng-click="selectBox.createNewOrga()">
+          <a>{{ 'mno_enterprise.templates.dashboard.menu.new_company' | translate }}</a>
+        </button>
       </div>
-      <div class="admin-link" ng-if="selectBox.user.admin_role">
-        <a href="/admin/"><small>{{ 'mno_enterprise.templates.dashboard.menu.access_admin_panel' | translate }}</small></a>
+      <div ng-if="selectBox.user.admin_role">
+        <hr>
+        <a href="/admin/" class="default-link">
+          <i class="fa fa-cog"></i>
+          <span>{{ 'mno_enterprise.templates.dashboard.menu.access_admin_panel' | translate }}</span>
+        </a>
       </div>
-      <hr>
-      <div class="default-link">
-        <a ui-sref="logout">
-          <i class="fa fa-lock"></i>
-          <small>{{ 'mno_enterprise.templates.dashboard.menu.logout' | translate }}</small>
+      <div>
+        <hr>
+        <a ui-sref="logout" class="default-link">
+          <i class="fa fa-sign-out"></i>
+          <span>{{ 'mno_enterprise.templates.dashboard.menu.logout' | translate }}</span>
         </a>
       </div>
     </div>

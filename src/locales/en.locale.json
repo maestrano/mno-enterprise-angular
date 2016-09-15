@@ -412,7 +412,7 @@
   "mno_enterprise.templates.dashboard.menu.company": "Company",
   "mno_enterprise.templates.dashboard.menu.marketplace": "Marketplace",
   "mno_enterprise.templates.dashboard.menu.logout": "Logout",
-  "mno_enterprise.templates.dashboard.menu.new_company": "New Company",
+  "mno_enterprise.templates.dashboard.menu.new_company": "Add a New Company",
   "mno_enterprise.templates.dashboard.menu.access_admin_panel": "Access Admin Panel",
   "mno_enterprise.templates.dashboard.marketplace.index.title": "Marketplace",
   "mno_enterprise.templates.dashboard.marketplace.index.select_all": "All",
