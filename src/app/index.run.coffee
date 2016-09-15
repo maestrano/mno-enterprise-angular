@@ -54,8 +54,8 @@ angular.module 'mnoEnterpriseAngular'
       toastr[message.type](message.msg, _.capitalize(message.type), timeout: 10000)
       $location.search('flash', null) # remove the flash from url
 
-  .run(($rootScope, AnalyticsSvc) ->
-    AnalyticsSvc.init()
+  .run(($rootScope, $timeout, AnalyticsSvc) ->
+    $timeout ( -> AnalyticsSvc.init() )
 
     $rootScope.$on('$stateChangeSuccess', ->
       AnalyticsSvc.update()
