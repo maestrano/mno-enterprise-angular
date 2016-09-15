@@ -10,7 +10,7 @@
         <span class="name ng-binding">{{ selectBox.user.name }} {{ selectBox.user.surname }}</span><br>
         <span class="company ng-binding">{{ selectBox.organization.name }}</span>
       </div>
-      <i class="expand-menu fa" ng-class="{true:'fa-chevron-down', false:'fa-chevron-up'}[selectBox.isClosed]"></i>
+      <i class="expand-menu fa" ng-class="selectBox.isClosed? 'fa-chevron-down': 'fa-chevron-up'"></i>
     </div>
 
     <div class="box-content scrollbar-hidden" uib-collapse="selectBox.isClosed">
