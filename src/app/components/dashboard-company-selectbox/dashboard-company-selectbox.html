@@ -5,15 +5,13 @@
 <div class="company-select-box">
   <div class="wrapper">
     <div class="box-header" ng-click="selectBox.toggle()">
-      <img ng-src="https://gravatar.com/avatar/bdf3b925560f85ec05e68544ae23ec99.png?s=50&amp;d=mm" src="https://gravatar.com/avatar/bdf3b925560f85ec05e68544ae23ec99.png?s=50&amp;d=mm" />
+
+      <img ng-src="{{selectBox.user.avatar_url}}" src="{{selectBox.user.avatar_url}}" />
       <div class="title">
         <span class="name ng-binding">{{ selectBox.user.name }} {{ selectBox.user.surname }}</span><br>
-        <span class="company ng-binding" tooltip-placement="bottom" tooltip="{{ selectBox.organization.name }}">{{ selectBox.organization.name }}</span>
+        <span class="company ng-binding">{{ selectBox.organization.name }}</span>
       </div>
-      <div class="expand-menu" ng-switch="selectBox.isClosed">
-        <i class="fa fa-chevron-down ng-scope" ng-switch-when="true"></i>
-        <i class="fa fa-chevron-up ng-scope" ng-switch-when="false"></i>
-      </div>
+      <i class="expand-menu fa" ng-class="{true:'fa-chevron-down', false:'fa-chevron-up'}[selectBox.isClosed]"></i>
     </div>
 
     <div class="box-content scrollbar-hidden" uib-collapse="selectBox.isClosed">
