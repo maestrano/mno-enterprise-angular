@@ -76,6 +76,15 @@ angular.module 'mnoEnterpriseAngular'
       widgets:
         index: "#{mnoHub}#{impacPrefix}/widgets"
         create: "#{mnoHub}#{impacPrefix}/dashboards/:dashboard_id/widgets"
+      kpis:
+        index: "#{mnoHub}#{impacPrefix}/kpis"
+        create: "#{mnoHub}#{impacPrefix}/dashboards/:dashboard_id/kpis"
+        update: "#{mnoHub}#{impacPrefix}/kpis/:id"
+        del: "#{mnoHub}#{impacPrefix}/kpis/:id"
+      alerts:
+        index: "#{mnoHub}#{impacPrefix}/alerts"
+        create: "#{mnoHub}#{impacPrefix}/:kpi_id/alerts"
+        del: "#{mnoHub}#{impacPrefix}/alerts/:id"
 
     ImpacRoutesProvider.configureRoutes(data)
 
