@@ -160,7 +160,7 @@ dashboard-company-selectbox {
       position: fixed;
       border-left: none;
       border-top: 1px solid @dashboard-cpy-select-border-color;
-      top: 41px;
+      top: calc(~'1px + ' @navbar-height);  // Add top border
     }
   }
 }
