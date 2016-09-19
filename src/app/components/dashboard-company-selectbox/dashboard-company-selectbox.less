@@ -153,4 +153,14 @@ dashboard-company-selectbox {
       }
     }
   }
+
+  @media (max-width: @screen-sm) {
+    .company-select-box {
+      width: 100%;
+      position: fixed;
+      border-left: none;
+      border-top: 1px solid @dashboard-cpy-select-border-color;
+      top: calc(~'1px + ' @navbar-height);  // Add top border
+    }
+  }
 }
