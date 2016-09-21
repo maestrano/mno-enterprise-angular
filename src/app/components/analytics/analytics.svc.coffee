@@ -7,6 +7,7 @@ angular.module 'mnoEnterpriseAngular'
         MnoeCurrentUser.get().then(
           (response)->
             userData = {
+              user_id: response.id,
               app_id: INTERCOM_ID,
               name: response.name,
               surname: response.surname,
@@ -14,6 +15,10 @@ angular.module 'mnoEnterpriseAngular'
               email: response.email,
               created_at: response.created_at
             }
+
+            # Add Intercom secure hash
+            userData.user_hash = response.user_hash if response.user_hash
+
             $window.Intercom('boot', userData)
         )
 
