@@ -3,7 +3,7 @@
 #============================================
 angular.module 'mnoEnterpriseAngular'
   .controller('DashboardMarketplaceAppCtrl',
-    ($stateParams, $sce, $window, MnoeMarketplace, MnoeOrganizations, MnoeAppInstances, PRICING_CONFIG) ->
+    ($q, $stateParams, $sce, $window, MnoeMarketplace, MnoeOrganizations, MnoeAppInstances, PRICING_CONFIG) ->
 
       vm = this
 
@@ -12,12 +12,13 @@ angular.module 'mnoEnterpriseAngular'
       #====================================
       vm.isLoading = true
       vm.app = {}
-
+      vm.appInstance = null
       #====================================
       # Scope Management
       #====================================
-      vm.initialize = (app) ->
+      vm.initialize = (app, appInstance) ->
         angular.copy(app, vm.app)
+        vm.appInstance = appInstance
         vm.app.description = $sce.trustAsHtml(app.description)
         vm.isLoading = false
         plans = vm.app.pricing_plans
@@ -28,9 +29,15 @@ angular.module 'mnoEnterpriseAngular'
       vm.isTestimonialShown = (testimonial) ->
         testimonial.text? && testimonial.text.length > 0
 
+      vm.isApplicationAlreadyInstalled = () ->
+        !vm.app.multi_instantiable && vm.appInstance
+
       vm.provisionLink = () ->
         MnoeAppInstances.clearCache()
         $window.location.href = "/mnoe/provision/new?apps[]=#{vm.app.nid}&organization_id=#{MnoeOrganizations.selectedId}"
+
+      vm.launchAppInstance = () ->
+        $window.open("/mnoe/launch/#{vm.appInstance.uid}", '_blank')
 
       vm.isPriceShown = PRICING_CONFIG && PRICING_CONFIG.enabled
 
@@ -54,12 +61,19 @@ angular.module 'mnoEnterpriseAngular'
       #====================================
       # Post-Initialization
       #====================================
-      MnoeMarketplace.getApps($stateParams.appId).then(
+
+      $q.all([MnoeMarketplace.getApps(), MnoeAppInstances.getAppInstances()]).then(
         (response)->
-          app = _.findWhere(response.apps, { slug: $stateParams.appId })
-          app ||= _.findWhere(response.apps, { id: parseInt($stateParams.appId) })
-          vm.initialize(app)
+          apps = response[0].apps
+          appInstances = response[1]
+          appId = parseInt($stateParams.appId)
+          app = _.findWhere(apps, { slug: $stateParams.appId })
+          app ||= _.findWhere(apps, { id:  appId})
+          appInstance = _.find(appInstances, { app_nid: app.nid})
+          vm.initialize(app, appInstance)
       )
+
+
 
       return
   )
