@@ -83,7 +83,7 @@ angular.module 'mnoEnterpriseAngular'
         del: "#{mnoHub}#{impacPrefix}/kpis/:id"
       alerts:
         index: "#{mnoHub}#{impacPrefix}/alerts"
-        create: "#{mnoHub}#{impacPrefix}/:kpi_id/alerts"
+        create: "#{mnoHub}#{impacPrefix}/kpis/:kpi_id/alerts"
         del: "#{mnoHub}#{impacPrefix}/alerts/:id"
 
     ImpacRoutesProvider.configureRoutes(data)
