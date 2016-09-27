@@ -205,6 +205,7 @@
   "mno_enterprise.templates.dashboard.marketplace.index.title": "Pasar",
   "mno_enterprise.templates.dashboard.marketplace.index.select_all": "Semua",
   "mno_enterprise.templates.dashboard.marketplace.show.back": "Kembali",
+  "mno_enterprise.templates.dashboard.marketplace.show.conflicting_app": "You cannot install this App as it is incompatible with:",
   "mno_enterprise.templates.dashboard.marketplace.show.start_app": "Mulai Sekarang!",
   "mno_enterprise.templates.dashboard.marketplace.show.launch_app": "Peluncuran Aplikasi",
   "mno_enterprise.templates.dashboard.marketplace.show.tag_responsive": "Responsif",

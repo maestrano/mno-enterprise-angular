@@ -37,11 +37,16 @@
             <div class="well text-center well-details">
               <div class="row">
                 <div class="col-xs-12 col-sm-4 col-sm-offset-4 col-md-8 col-md-offset-2">
-                  <div class="btn-fluid-wrapper">
-                    <a href="" ng-show="!vm.isApplicationAlreadyInstalled()" ng-click="vm.provisionLink()" class="btn btn-warning btn-promo">
+                  <div class="btn-fluid-wrapper" ng-switch on="vm.appInstallationStatus()">
+                    <div ng-switch-when="CONFLICT" class="message">
+                      <i class="fa fa-exclamation-triangle"></i>
+                      {{ 'mno_enterprise.templates.dashboard.marketplace.show.conflicting_app' | translate }}
+                      <a ui-sref="home.marketplace.app({appId: vm.conflictingAppInstance.app_id})">{{vm.conflictingAppInstance.app_name}}</a>
+                    </div>
+                    <a href="" ng-switch-when="INSTALLABLE" ng-click="vm.provisionLink()" class="btn btn-warning btn-promo">
                       {{ 'mno_enterprise.templates.dashboard.marketplace.show.start_app' | translate }}
                     </a>
-                    <a href="" ng-show="vm.isApplicationAlreadyInstalled()" ng-click="vm.launchAppInstance()" class="btn btn-warning btn-promo btn-lg">
+                    <a href="" ng-switch-when="INSTALLED" ng-click="vm.launchAppInstance()" class="btn btn-warning btn-promo btn-lg">
                       {{ 'mno_enterprise.templates.dashboard.marketplace.show.launch_app' | translate }}
                     </a>
                   </div>

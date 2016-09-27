@@ -16,9 +16,10 @@ angular.module 'mnoEnterpriseAngular'
       #====================================
       # Scope Management
       #====================================
-      vm.initialize = (app, appInstance) ->
+      vm.initialize = (app, appInstance, conflictingAppInstance) ->
         angular.copy(app, vm.app)
         vm.appInstance = appInstance
+        vm.conflictingAppInstance = conflictingAppInstance
         vm.app.description = $sce.trustAsHtml(app.description)
         vm.isLoading = false
         plans = vm.app.pricing_plans
@@ -29,8 +30,17 @@ angular.module 'mnoEnterpriseAngular'
       vm.isTestimonialShown = (testimonial) ->
         testimonial.text? && testimonial.text.length > 0
 
-      vm.isApplicationAlreadyInstalled = () ->
-        !vm.app.multi_instantiable && vm.appInstance
+      vm.appInstallationStatus = () ->
+        if vm.appInstance
+          if vm.app.multi_instantiable
+            "INSTALLABLE"
+          else
+            "INSTALLED"
+        else
+          if vm.conflictingAppInstance
+            "CONFLICT"
+          else
+            "INSTALLABLE"
 
       vm.provisionLink = () ->
         MnoeAppInstances.clearCache()
@@ -67,10 +77,25 @@ angular.module 'mnoEnterpriseAngular'
           apps = response[0].apps
           appInstances = response[1]
           appId = parseInt($stateParams.appId)
+          appsPerNid = {}
+          appsPerNid[a.nid] = a for a in apps
+
           app = _.findWhere(apps, { slug: $stateParams.appId })
           app ||= _.findWhere(apps, { id:  appId})
           appInstance = _.find(appInstances, { app_nid: app.nid})
-          vm.initialize(app, appInstance)
+          # Find conflicting app instance with
+          if app.subcategories
+            names = app.subcategories.map (c) -> c.name
+
+            conflictingAppInstance = _.find(appInstances, (appInst) ->
+              appInstanceApp = appsPerNid[appInst.app_nid]
+              _.find(appInstanceApp.subcategories, (subCategory) ->
+                not subCategory.multi_instantiable and  subCategory.name in names
+              )
+            )
+
+          vm.initialize(app, appInstance, conflictingAppInstance)
+
       )
 
 
