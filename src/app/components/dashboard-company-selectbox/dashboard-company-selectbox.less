@@ -13,6 +13,7 @@ dashboard-company-selectbox {
     border-left: 1px solid @dashboard-cpy-select-border-color;
     border-bottom: 1px solid @dashboard-cpy-select-border-color;
     z-index: 10;
+    border-bottom-left-radius: 10px;
 
     // Change company button
     .btn.switch-company {
@@ -92,6 +93,11 @@ dashboard-company-selectbox {
             padding: 4px;
             display: flex;
 
+            &:hover {
+              background-color: @dashboard-cpy-select-link-hover-bg-color;
+              border-bottom-left-radius: 0px;
+            }
+
             > i {
               flex: 0 0 20px;
               width: 13px;
@@ -121,6 +127,7 @@ dashboard-company-selectbox {
           text-decoration: none;
           color: @dashboard-cpy-select-link-hover-color;
           background-color: @dashboard-cpy-select-link-hover-bg-color;
+          border-bottom-left-radius: 10px;
         }
 
         // Icon on the side of the link

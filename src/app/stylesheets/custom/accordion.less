@@ -6,10 +6,26 @@
 
   .panel-group > .panel,
   .panel-group > .panel > .panel-heading {
-    color: @text-strong-color;
-    background-color: @bg-inverse-color;
+    color: @dashboard-account-tabs-text-color;
+    background-color: @dashboard-account-panel-bg-color;
     border: none;
     box-shadow: none;
+  }
+
+  mno-inline-message .mno-inline-checked {
+    color: @dashboard-account-inline-text-color-checked;
+  }
+  
+  mno-inline-message .mno-inline-unchecked {
+    color: @dashboard-account-inline-text-color-unchecked;
+  }
+
+  label {
+    color: @dashboard-account-panel-text-color;
+  }
+
+  .form-control {
+    background-color: @input-bg;
   }
 
   .panel-group .panel .panel-body {
@@ -30,6 +46,7 @@
 
     .panel-title > div,
     .panel-title > a {
+      background-color: @dashboard-account-tabs-bg-color;
       font-size: 90%;
       display: block;
       padding-left: 10px;

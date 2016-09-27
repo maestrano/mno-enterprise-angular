@@ -136,6 +136,16 @@
 @dashboard-apps-tile-add-bg-color:              @dashboard-apps-tile-text-color;
 
 /*-----------------------------------------------------------------------*/
+/*                      Dashboard > My account Section                   */
+/*-----------------------------------------------------------------------*/
+@dashboard-account-tabs-bg-color:                    @bg-inverse-color;
+@dashboard-account-tabs-text-color:                  @text-strong-color;
+@dashboard-account-panel-bg-color:                   @decorator-main-color;
+@dashboard-account-panel-text-color:                 @text-strong-color;
+@dashboard-account-inline-text-color-checked:        @bg-inverse-color;
+@dashboard-account-inline-text-color-unchecked:      @elem-cozy-color;
+
+/*-----------------------------------------------------------------------*/
 /*                      Dashboard > Company Section                      */
 /*-----------------------------------------------------------------------*/
 // Tab Heading
@@ -185,8 +195,9 @@
 @mno-dock-sub-menu-text-color:                  white;
 @mno-dock-sub-menu-text-hover-color:            darken(white, 10%);
 
+// Mobile dock
 @mno-dock-mobile-bg-color:                      @bg-on-bg-inverse-color;
-@mno-dock-mobile-button-color:                  @text-strong-color;
+@mno-dock-mobile-button-color:                  @text-inverse-strong-color;
 @mno-dock-mobile-button-bg-color:               @decorator-inverse-color;
 @mno-dock-mobile-app-active-color:              lighten(@mno-dock-bg-color, 20%);
 @mno-dock-mobile-app-border-bottom:             1px solid darken(@mno-dock-bg-color, 10%);
@@ -324,11 +335,10 @@
 /*-----------------------------------------------------------------------*/
 /*                          Form Customization                           */
 /*-----------------------------------------------------------------------*/
-@input-bg: @bg-on-bg-inverse-color;
-@input-color: @text-inverse-color;
-@input-color-placeholder: @input-color;
-
-@input-label-color: @text-inverse-color;
+@input-bg:                      @bg-on-bg-inverse-color;
+@input-color:                   @text-inverse-color;
+@input-color-placeholder:       @input-color;
+@input-label-color:             @text-inverse-color;
 
 /*-----------------------------------------------------------------------*/
 /*                         Buttons Customization                         */
@@ -336,12 +346,19 @@
 
 // General
 @btn-font-weight:                500;
+@btn-bg-color:                   @elem-cozy-color;
+@btn-text-color:                 @text-inverse-strong-color;
+@btn-border-color:               darken(@btn-bg-color, 10%);
 
-// Warning
-@btn-warning-color:              #fff;
+// Danger
+@btn-danger-bg-color:            @elem-danger-color;
+@btn-danger-text-color:          @text-inverse-strong-color;
+@btn-danger-border-color:        darken(@btn-danger-bg-color, 10%);
 
-// Success
-@btn-success-color:              #fff;
+// Cancel buttons
+@btn-cancel-bg-color:            @bg-inverse-color;
+@btn-cancel-text-color:          @text-strong-color;
+@btn-cancel-border-color:        darken(@bg-inverse-color, 10%);
 
 /*-----------------------------------------------------------------------*/
 /*                            Footer                                     */
