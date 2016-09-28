@@ -42,51 +42,15 @@
     }
   }
 
-  &.btn-info {
-    color: @btn-text-color;
-    background-color: @btn-bg-color;
-    border-color: @btn-border-color;
-  }
-
-  &.btn-danger {
-    color: @btn-danger-text-color;
-    background-color: @btn-danger-bg-color;
-    border-color: @btn-danger-border-color;
-
-    &:hover {
-      background-color: darken(@btn-danger-bg-color, 10%);
-    }
-  }
-
-  &.btn-primary {
-    color: @btn-text-color;
-    background-color: @btn-bg-color;
-    border-color: darken(@btn-bg-color, 10%);
-
-    &:hover {
-      background-color: darken(@btn-bg-color, 10%);
-    }
-  }
-
-  &.btn-warning {
-    color: @btn-text-color;
-    background-color: @btn-bg-color;
-    border-color: @btn-border-color;
-
-    &:hover {
-      background-color: darken(@btn-bg-color, 10%);
-    }
-  }
-
   &.btn-shaded {
-    background-color: @btn-cancel-bg-color;
+    background-color: @bg-inverse-color;
     border: solid 1px @bg-inverse-intense-color;
-    color: @btn-cancel-text-color;
+    color: @text-inverse-color;
     font-weight: 400;
-    border-color: @btn-cancel-border-color;
 
     &:hover {
-      background-color: darken(@btn-cancel-bg-color,10%);
+      color: lighten(@text-inverse-color,5%);
+      background-color: lighten(@bg-inverse-color,5%);
     }
   }
 
