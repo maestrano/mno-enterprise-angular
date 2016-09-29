@@ -49,21 +49,8 @@ DashboardOrganizationSettingsCtrl = ($scope, $window, MnoeOrganizations, Utiliti
 
   # Should we enable the save button
   $scope.isSaveEnabled = ->
-    f = $scope.forms
+    f = $scope.formsd
     $scope.isChanged() && f.settings.$valid
-
-  # Return the class to add to the btn
-  # based on soa_enabled
-  $scope.connecBtnClassFor = (action) ->
-    if action == 'enable'
-      return ( $scope.model.soa_enabled && 'btn-info')
-    else
-      return ( !$scope.model.soa_enabled && 'btn-info')
-
-  # Action to be perform when user clicks on 'enable'
-  # or 'disable'
-  $scope.connecBtnClickOn = (action) ->
-    $scope.model.soa_enabled = (action == 'enable')
 
   #====================================
   # Post-Initialization
