@@ -7,6 +7,11 @@
     <small>
       <em class="text-muted">
       - {{ 'mno_enterprise.templates.dashboard.organization.credit_card.subtitle' | translate }}
+      <div>
+        <i class="mnoe-icon mnoe-icon-cpy-logo-eway" alt="eWay Logo Shield"></i>
+        <i class="mnoe-icon mnoe-icon-cpy-logo-cba" alt="CBA Logo"></i>
+        <img style="cursor:pointer;" src="https://seal.godaddy.com/images/3/en/siteseal_gd_3_h_l_m.gif" ng-click="openGodaddySslSeal()" />
+      </div>
       </em>
     </small>
   </h4>
@@ -14,6 +19,14 @@
   <div class="clearfix"></div>
   <hr>
   <form name="forms.creditCard" role="form" novalidate class="form-horizontal">
+    <div class="form-group">
+      <div class="col-xs-6 pull-right text-right cc-icons">
+        <i class="mnoe-icon mnoe-icon-cc-icons-mno-cc-visa" ng-class="classForIconType('visa')"></i>
+        <i class="mnoe-icon mnoe-icon-cc-icons-mno-cc-mastercard" ng-class="classForIconType('mastercard')"></i>
+        <i class="mnoe-icon mnoe-icon-cc-icons-mno-cc-amex" ng-class="classForIconType('amex')"></i>
+        <i class="mnoe-icon mnoe-icon-cc-icons-mno-cc-jcb" ng-class="classForIconType('jcb')"></i>
+      </div>
+    </div>
 
     <div class="form-group">
       <label class="col-sm-2 control-label">{{ 'mno_enterprise.templates.dashboard.organization.credit_card.cc_form.title' | translate }}</label>
@@ -45,7 +58,7 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">{{ 'mno_enterprise.templates.dashboard.organization.credit_card.cc_form.cvv' | translate }}</label>
       <div class="col-sm-3">
-        <input type="text" class="form-control" ng-model="model.verification_value" required/>
+        <input type="text" class="form-control" placeholder="{{ 'mno_enterprise.templates.dashboard.organization.credit_card.cc_form.cvv' | translate }}" ng-model="model.verification_value" required/>
       </div>
     </div>
 

@@ -87,6 +87,10 @@
     box-shadow: none;
     border: none;
     margin: 0px 0px 25px 0px;
+
+    .cc-icons i {
+      display: inline-block;
+    }
   }
 
   .panel-group .panel .panel-heading {
@@ -102,8 +106,19 @@
   //-----------------------------------
   // CC Form
   //-----------------------------------
-  .cc-header small img {
-    max-height: 30px;
+  .cc-header small div {
+    display: inline-block;
+    vertical-align: top;
+    
+    i {
+      display: inline-block;
+      zoom: 0.40;
+      vertical-align: top;
+    }
+    img {
+      max-height: 30px;
+      vertical-align: top;
+    }
   }
 
   .cc-header-eft {
