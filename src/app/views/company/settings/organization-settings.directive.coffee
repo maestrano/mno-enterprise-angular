@@ -49,7 +49,7 @@ DashboardOrganizationSettingsCtrl = ($scope, $window, MnoeOrganizations, Utiliti
 
   # Should we enable the save button
   $scope.isSaveEnabled = ->
-    f = $scope.formsd
+    f = $scope.forms
     $scope.isChanged() && f.settings.$valid
 
   #====================================

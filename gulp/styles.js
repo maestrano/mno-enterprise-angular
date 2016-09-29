@@ -3,7 +3,6 @@
 var path = require('path');
 var gulp = require('gulp');
 var conf = require('./conf');
-var gulpif = require('gulp-if');
 var sprity = require('sprity');
 
 var browserSync = require('browser-sync');
@@ -24,7 +23,7 @@ gulp.task('sprites', function () {
     name: 'sprites/mnoe-sprites',
     prefix: 'mnoe-icon',
   })
-  .pipe(gulpif('*.png', gulp.dest(path.join(conf.paths.src, '/images/')), gulp.dest(path.join(conf.paths.src, '/images/sprites/'))))
+  .pipe($.if('*.png', gulp.dest(path.join(conf.paths.src, '/images/')), gulp.dest(path.join(conf.paths.src, '/images/sprites/'))))
 });
 
 // Concatenate all LESS files in one
