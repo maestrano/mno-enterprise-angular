@@ -25,17 +25,13 @@ angular.module 'mnoEnterpriseAngular'
       # Workaround as the API is not standard (return a hash map not an array)
       # (Prefix operation by '/' to avoid data extraction)
       # TODO: Standard API
-      MnoeOrganizations.getCurrentId().then(
-        (selectedId) ->
-          MnoeApiSvc.one('organizations', selectedId).one('/app_instances').get().then(
-            (response) ->
-              # Save the response in the local storage
-              MnoLocalStorage.setObject(MnoeCurrentUser.user.id + "_" + LOCALSTORAGE.appInstancesKey, response.app_instances)
-              # Process the response
-              processAppInstances(response.app_instances)
-        )
+      MnoeApiSvc.one('organizations', MnoeOrganizations.selectedId).one('/app_instances').get().then(
+        (response) ->
+          # Save the response in the local storage
+          MnoLocalStorage.setObject(MnoeCurrentUser.user.id + "_" + LOCALSTORAGE.appInstancesKey, response.app_instances)
+          # Process the response
+          processAppInstances(response.app_instances)
       )
-
 
     # Process app instances to append them to the public variable
     processAppInstances = (appInstances) ->
