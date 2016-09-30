@@ -25,6 +25,7 @@
     "gulp-eslint": "~1.0.0",
     "gulp-filter": "~3.0.1",
     "gulp-flatten": "~0.2.0",
+    "gulp-if": "^2.0.1",
     "gulp-inject": "~3.0.0",
     "gulp-insert": "^0.5.0",
     "gulp-less": "~3.0.3",
@@ -52,10 +53,10 @@
     "lodash": "~3.10.1",
     "main-bower-files": "~2.9.0",
     "phantomjs": "~1.9.18",
+    "sprity": "~1.0.8",
     "uglify-save-license": "~0.4.1",
     "wiredep": "~2.2.2",
-    "wrench": "~1.5.8",
-    "sprity": "~1.0.8"
+    "wrench": "~1.5.8"
   },
   "engines": {
     "node": ">=0.10.0"
