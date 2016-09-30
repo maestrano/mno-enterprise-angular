@@ -32,6 +32,7 @@
 @login-bg-color:                     @bg-main-color;
 @login-box-grid-position:            { margin-top: 80px; .make-sm-column(4); .make-sm-column-offset(4); };
 
+@login-box-corners:                  0px;
 @login-box-title-color:              @decorator-main-color;
 @login-box-title:                    { text-transform: uppercase; };
 @login-box-title-display-box-arrow:  false;
@@ -136,6 +137,16 @@
 @dashboard-apps-tile-add-bg-color:              @dashboard-apps-tile-text-color;
 
 /*-----------------------------------------------------------------------*/
+/*                      Dashboard > My account Section                   */
+/*-----------------------------------------------------------------------*/
+@dashboard-account-tabs-bg-color:                    @bg-inverse-color;
+@dashboard-account-tabs-text-color:                  @text-strong-color;
+@dashboard-account-panel-bg-color:                   @decorator-main-color;
+@dashboard-account-panel-text-color:                 @text-strong-color;
+@dashboard-account-inline-text-color-checked:        @bg-inverse-color;
+@dashboard-account-inline-text-color-unchecked:      @elem-cozy-color;
+
+/*-----------------------------------------------------------------------*/
 /*                      Dashboard > Company Section                      */
 /*-----------------------------------------------------------------------*/
 // Tab Heading
@@ -185,8 +196,9 @@
 @mno-dock-sub-menu-text-color:                  white;
 @mno-dock-sub-menu-text-hover-color:            darken(white, 10%);
 
+// Mobile dock
 @mno-dock-mobile-bg-color:                      @bg-on-bg-inverse-color;
-@mno-dock-mobile-button-color:                  @text-strong-color;
+@mno-dock-mobile-button-color:                  @text-inverse-strong-color;
 @mno-dock-mobile-button-bg-color:               @decorator-inverse-color;
 @mno-dock-mobile-app-active-color:              lighten(@mno-dock-bg-color, 20%);
 @mno-dock-mobile-app-border-bottom:             1px solid darken(@mno-dock-bg-color, 10%);
@@ -324,11 +336,10 @@
 /*-----------------------------------------------------------------------*/
 /*                          Form Customization                           */
 /*-----------------------------------------------------------------------*/
-@input-bg: @bg-on-bg-inverse-color;
-@input-color: @text-inverse-color;
-@input-color-placeholder: @input-color;
-
-@input-label-color: @text-inverse-color;
+@input-bg:                      @bg-on-bg-inverse-color;
+@input-color:                   @text-inverse-color;
+@input-color-placeholder:       @input-color;
+@input-label-color:             @text-inverse-color;
 
 /*-----------------------------------------------------------------------*/
 /*                         Buttons Customization                         */
