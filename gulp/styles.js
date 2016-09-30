@@ -3,7 +3,8 @@
 var path = require('path');
 var gulp = require('gulp');
 var conf = require('./conf');
-
+var sprity = require('sprity');
+var gulpif = require('gulp-if');
 var browserSync = require('browser-sync');
 
 var $ = require('gulp-load-plugins')();
@@ -11,6 +12,19 @@ var $ = require('gulp-load-plugins')();
 var wiredep = require('wiredep').stream;
 var _ = require('lodash');
 var rename = require("gulp-rename");
+
+
+// generate sprites
+gulp.task('sprites', function () {
+  return sprity.src({
+    src: './src/images/sprites/*/*.{png,jpg}',
+    style: 'mnoe-sprites.less',
+    margin: 0,
+    name: 'sprites/mnoe-sprites',
+    prefix: 'mnoe-icon',
+  })
+  .pipe(gulpif('*.png', gulp.dest(path.join(conf.paths.src, '/images/')), gulp.dest(path.join(conf.paths.src, '/images/sprites/'))))
+});
 
 // Concatenate all LESS files in one
 gulp.task('less-concat', function() {
@@ -21,6 +35,7 @@ gulp.task('less-concat', function() {
     path.join(conf.paths.src, '/app/stylesheets/theme-previewer-tmp.less'),
     path.join(conf.paths.src, '/app/**/*.less'),
     path.join(conf.paths.src, '/fonts/**/*.less'),
+    path.join(conf.paths.src, '/images/**/*.less'),
     path.join('!' + conf.paths.src, '/app/index.less')
   ]);
 
@@ -64,6 +79,7 @@ gulp.task('styles', function () {
     path.join(conf.paths.src, '/app/stylesheets/theme-previewer-published.less'),
     path.join(conf.paths.src, '/app/**/*.less'),
     path.join(conf.paths.src, '/fonts/**/*.less'),
+    path.join(conf.paths.src, '/images/**/*.less'),
     path.join('!' + conf.paths.src, '/app/stylesheets/theme-previewer-tmp.less'),
     path.join('!' + conf.paths.src, '/app/index.less')
   ], { read: false });
