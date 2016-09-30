@@ -164,6 +164,7 @@
   "mno_enterprise.templates.dashboard.marketplace.index.select_all": "全部",
   "mno_enterprise.templates.dashboard.marketplace.show.back": "返回",
   "mno_enterprise.templates.dashboard.marketplace.show.start_app": "立即开始！",
+  "mno_enterprise.templates.dashboard.marketplace.show.launch_app": "启动应用程序",
   "mno_enterprise.templates.dashboard.marketplace.show.tag_responsive": "响应式",
   "mno_enterprise.templates.dashboard.marketplace.show.tag_star": "Star!™ Tutorials",
   "mno_enterprise.templates.dashboard.marketplace.show.tag_connec": "Connec!™ Ready",

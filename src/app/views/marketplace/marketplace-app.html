@@ -1,5 +1,6 @@
 <div class="dashboard-marketplace-app">
-    <!-- Header -->
+  <mno-loader ng-show="vm.isLoading" class="top-buffer-4"></mno-loader>
+  <!-- Header -->
     <div class="row show-header top-buffer-4">
       <div class="col-md-12">
         <a ui-sref="home.marketplace()" class="text-muted">
@@ -18,7 +19,7 @@
     </div>
 
     <!-- Content -->
-    <div class="show-content top-buffer-1">
+    <div class="show-content top-buffer-1" ng-show="!vm.isLoading">
 
         <!-- Pics/details row -->
         <div class="row">
@@ -36,9 +37,17 @@
             <div class="well text-center well-details">
               <div class="row">
                 <div class="col-xs-12 col-sm-4 col-sm-offset-4 col-md-8 col-md-offset-2">
-                  <div class="btn-fluid-wrapper">
-                    <a href="" ng-click="vm.provisionLink()" class="btn btn-warning btn-promo">
+                  <div class="btn-fluid-wrapper" ng-switch on="vm.appInstallationStatus()">
+                    <div ng-switch-when="CONFLICT" class="message">
+                      <i class="fa fa-exclamation-triangle"></i>
+                      {{ 'mno_enterprise.templates.dashboard.marketplace.show.conflicting_app' | translate }}
+                      <a ui-sref="home.marketplace.app({appId: vm.conflictingAppInstance.app_id})">{{vm.conflictingAppInstance.app_name}}</a>
+                    </div>
+                    <a href="" ng-switch-when="INSTALLABLE" ng-click="vm.provisionLink()" class="btn btn-warning btn-promo">
                       {{ 'mno_enterprise.templates.dashboard.marketplace.show.start_app' | translate }}
+                    </a>
+                    <a href="" ng-switch-when="INSTALLED" ng-click="vm.launchAppInstance()" class="btn btn-warning btn-promo btn-lg">
+                      {{ 'mno_enterprise.templates.dashboard.marketplace.show.launch_app' | translate }}
                     </a>
                   </div>
                 </div>
