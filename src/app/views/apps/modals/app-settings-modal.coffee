@@ -53,7 +53,7 @@ angular.module 'mnoEnterpriseAngular'
       return true
 
     $scope.helper.dataDisconnectClick = (app) ->
-  
+
       modalOptions =
         closeButtonText: 'Cancel'
         actionButtonText: 'Disconnect app'
@@ -66,4 +66,3 @@ angular.module 'mnoEnterpriseAngular'
           $window.location.href = "/mnoe/webhook/oauth/#{app.uid}/disconnect"
       )
   )
-
