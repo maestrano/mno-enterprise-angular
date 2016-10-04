@@ -33,7 +33,7 @@
     <!-------------------------------------->
     <!--        Permissions matrix        -->
     <!-------------------------------------->
-    <div class="permission-matrix-wrapper hidden-xs scrollbar-lightgrey">
+    <div class="permission-matrix-wrapper hidden-xs">
       <div class="row" ng-show="matrix.errors">
         <div class="alert alert-error">
           <button class="close" ng-click="matrix.errors=''">×</button>
@@ -49,10 +49,9 @@
           <table class="permission-matrix">
             <thead>
               <tr>
-                <th class="td-first">
+                <th class="th-first">
                   <button type="button" class="btn btn-warning" ng-click="matrix.addTeam()">
                     <i class="fa fa-plus"></i>
-                    &nbsp;
                     {{ 'mno_enterprise.templates.dashboard.teams.index.add_team_light' | translate }}
                   </button>
                 </th>
@@ -100,7 +99,6 @@
             <p class="top-buffer-3">{{ 'mno_enterprise.templates.dashboard.teams.index.no_apps_warning' | translate }}</p>
             <a type="button" class="btn btn-warning" href="#/marketplace">
               <i class="fa fa-plus"></i>
-              &nbsp;
               {{ 'mno_enterprise.templates.dashboard.teams.index.add_app' | translate }}
             </a>
           </div>
@@ -123,11 +121,6 @@
                 <td ng-repeat="appInstance in appInstances">
                   <input type="checkbox" ng-checked="matrix.hasAccess(team,appInstance)" ng-click="matrix.toggleAccess(team,appInstance)">
                 </td>
-                <td></td>
-              </tr>
-
-              <tr class="btn-group-row">
-                <td ng-repeat="appInstance in appInstances"></td>
                 <td></td>
               </tr>
             </tbody>

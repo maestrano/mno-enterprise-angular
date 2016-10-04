@@ -64,6 +64,30 @@
   background-color: lighten(@bg-inverse-color,5%);
 }
 
+.table-cell .btn-link.btn-link-info {
+  color: @brand-info !important;
+
+  &:hover, &:focus {
+    color: darken(@brand-info, 30%) !important;
+  }
+}
+
+.table-cell .btn-link.btn-link-warning {
+  color: @brand-warning !important;
+
+  &:hover, &:focus {
+    color: darken(@brand-warning, 30%) !important;
+  }
+}
+
+.table-cell .btn-link.btn-link-danger {
+  color: @brand-danger !important;
+
+  &:hover, &:focus {
+    color: darken(@brand-danger, 30%) !important;
+  }
+}
+
 // Table style in a well
 .well .table-cell .th-row,
 .well .table-cell .td-row {

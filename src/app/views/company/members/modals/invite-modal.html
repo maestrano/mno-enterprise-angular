@@ -88,7 +88,7 @@
 <div class="modal-footer">
   <div class="row">
     <div class="col-md-12">
-      <button class="btn btn-shaded" ng-click="inviteModal.close()" ng-show="!inviteModal.isLoading">
+      <button class="btn btn-default" ng-click="inviteModal.close()" ng-show="!inviteModal.isLoading">
         {{ 'mno_enterprise.templates.dashboard.organization.members.invite_modal.cancel' | translate }}
       </button>
       <button class="btn btn-warning" ng-disabled="!inviteModal.isNextEnabled() || inviteModal.isLoading" ng-click="inviteModal.next()">

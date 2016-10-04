@@ -21,6 +21,9 @@
   }
 
   .panel-group .panel .panel-body {
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+
     p {
       font-weight: 300;
     }
@@ -31,14 +34,13 @@
   }
 
   .panel-group .panel .panel-heading {
-    padding: 0px;
-    background-color: white;
+    padding: 0;
+    background-color: @dashboard-account-panel-bg-color;
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
 
     .panel-title > div,
     .panel-title > a {
-      background-color: @dashboard-account-tabs-bg-color;
       font-size: 90%;
       display: block;
       padding-left: 10px;
@@ -62,7 +64,6 @@
     }
   }
 }
-
 
 // Accordion Black background style
 .accordion.inverse {

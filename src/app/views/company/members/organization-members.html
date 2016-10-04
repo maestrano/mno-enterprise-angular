@@ -49,11 +49,11 @@
       {{ memberRoleLabel(member) }}
     </div>
     <div class="cell col-sm-2">
-      <a ng-click="editMember(member)" class="btn btn-sm edit-member-button-star-ref" ng-show="isEditShown(member)">
+      <a ng-click="editMember(member)" class="btn btn-link btn-link-warning" ng-show="isEditShown(member)">
         <i class="fa fa-pencil-square-o"></i>
         <span class="cell-label visible-xs-inline"><br/>{{ 'mno_enterprise.templates.dashboard.organization.members.edit' | translate }}</span>
       </a>
-      <a ng-click="removeMember(member)" class="btn btn-sm btn-link remove-member-button-star-ref" ng-show="isRemoveShown(member)">
+      <a ng-click="removeMember(member)" class="btn btn-link btn-link-danger" ng-show="isRemoveShown(member)">
         <i class="fa fa-remove"></i>
         <span class="cell-label visible-xs-inline"><br/>{{ 'mno_enterprise.templates.dashboard.organization.members.remove' | translate }}</span>
       </a>
