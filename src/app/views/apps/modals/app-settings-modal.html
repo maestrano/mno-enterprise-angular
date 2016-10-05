@@ -85,7 +85,7 @@
             <input type="text" class="sentence-check" ng-model="sentenceCheck" required>
           </div>
           <div class="buttons">
-            <button class="btn" ng-click="app.showDelete=false" >{{ 'mno_enterprise.templates.impac.dock.settings.cancel' | translate}}</button>
+            <button class="btn btn-default" ng-click="app.showDelete=false" >{{ 'mno_enterprise.templates.impac.dock.settings.cancel' | translate}}</button>
             <button class="btn btn-danger" ng-click="deleteApp()" ng-disabled="sentence != sentenceCheck">
               <span ng-show="modal.loading"><i class="fa fa-spinner fa-spin"></i>&nbsp;</span>
               {{ 'mno_enterprise.templates.impac.dock.settings.delete' | translate }} </button>
