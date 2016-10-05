@@ -2,7 +2,7 @@
 #============================================
 #
 #============================================
-DashboardCompanySelectboxCtrl = ($scope, $location, $stateParams, $cookies, $sce, $uibModal, MnoeCurrentUser, MnoeOrganizations, MnoeAppInstances, ModalSvc) ->
+DashboardCompanySelectboxCtrl = ($scope, $location, $stateParams, $cookies, $sce, $uibModal, MnoeCurrentUser, MnoeOrganizations, MnoeAppInstances) ->
   'ngInject'
 
   #====================================
@@ -34,12 +34,19 @@ DashboardCompanySelectboxCtrl = ($scope, $location, $stateParams, $cookies, $sce
     selectBox.close()
 
   #====================================
-  # New Orga Modal
+  # Create Company Modal
   #====================================
-  newOrgModal = ModalSvc.newOrgModal({
-    callback: (data) ->
-      selectBox.changeTo(data)
-  })
+  selectBox.openCreateCompanyModal = ->
+    modalInstance = $uibModal.open(
+      templateUrl: 'app/components/dashboard-company-selectbox/modals/create-company.html'
+      controller: 'CreateCompanyModalCtrl'
+      size: 'lg'
+      windowClass: 'inverse'
+    )
+    modalInstance.result.then(
+      (selectedItem) ->
+        selectBox.changeTo(selectedItem)
+    )
 
   #====================================
   # Post-Initialization

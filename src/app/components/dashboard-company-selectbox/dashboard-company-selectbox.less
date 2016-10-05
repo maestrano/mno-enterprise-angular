@@ -44,7 +44,7 @@ dashboard-company-selectbox {
 
       .title {
         margin: 0 10px;
-        width: calc(~'100% -' (2 * @dashboard-cpy-select-pic-width));
+        width: ~'calc(100% -' (2 * @dashboard-cpy-select-pic-width) ~')';
         text-align: left;
 
         .company {
@@ -166,7 +166,7 @@ dashboard-company-selectbox {
       position: fixed;
       border-left: none;
       border-top: 1px solid @dashboard-cpy-select-border-color;
-      top: calc(~'1px + ' @navbar-height);  // Add top border
+      top: ~'calc(1px + ' @navbar-height ~')';  // Add top border
     }
   }
 }
