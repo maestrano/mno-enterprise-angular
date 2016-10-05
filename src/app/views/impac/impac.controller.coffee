@@ -1,16 +1,15 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller 'ImpacController', ($scope, $state, MnoeOrganizations, ImpacDashboardsSvc, DOCK_CONFIG) ->
+  .controller 'ImpacController', ($scope, $state, MnoeOrganizations, DOCK_CONFIG) ->
     'ngInject'
 
     vm = this
-    $scope.isDockEnabled = DOCK_CONFIG.enabled
+    vm.isDockEnabled = DOCK_CONFIG.enabled
 
     #====================================
     # Post-Initialization
     #====================================
     $scope.$watch(MnoeOrganizations.getSelectedId, (newValue) ->
-      vm.isLoaded = false
-      vm.isImpacShown = false
+      vm.isImpacShown = true
 
       # Fetch current organization to check if user is allowed
       MnoeOrganizations.get().then(
@@ -20,8 +19,6 @@ angular.module 'mnoEnterpriseAngular'
 
           if !vm.isImpacShown
             $state.go('home.login')
-
-          vm.isLoaded = true
       ) if newValue?
     )
 
