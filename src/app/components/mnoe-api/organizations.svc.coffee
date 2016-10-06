@@ -216,14 +216,14 @@ angular.module 'mnoEnterpriseAngular'
     _self.can.update = {
       appInstance: (obj = null) -> _self.can.create.appInstance(obj) # call similar permission
       billing: (obj = null) -> _self.can.create.billing(obj) # call similar permission
-      member: (obj = null) -> _self.can.create.member(obj) # call similar permission
+      member: (obj = null, hasOneSuperAdmin = true) -> _self.can.create.member(obj) && (obj.role != 'Super Admin' || !_self.role.isSuperAdmin() || !hasOneSuperAdmin)
       organizationSettings: (obj = null) -> _self.can.create.organizationSettings(obj) # call similar permission
     }
 
     _self.can.destroy = {
       appInstance: (obj = null) -> _self.can.create.appInstance(obj) # call similar permission
       billing: (obj = null) -> _self.can.create.billing(obj) # call similar permission
-      member: (obj = null) -> _self.can.create.member(obj) # call similar permission
+      member: (obj = null, hasOneSuperAdmin = true) -> _self.can.create.member(obj) && (obj.role != 'Super Admin' || !_self.role.isSuperAdmin() || !hasOneSuperAdmin)
       organizationSettings: (obj = null) -> _self.can.create.organizationSettings(obj) # call similar permission
     }
 

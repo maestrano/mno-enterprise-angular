@@ -11,6 +11,8 @@ DashboardOrganizationMembersCtrl = ($scope, $modal, $sce, MnoeOrganizations, Mno
   $scope.members = []
   $scope.teams = []
   $scope.isLoading = true
+  updateNbOfSuperAdmin = ->
+    $scope.hasManySuperAdmin = _.filter($scope.members, {'role': 'Super Admin'}).length <= 1
 
   #====================================
   # Scope Management
@@ -20,6 +22,7 @@ DashboardOrganizationMembersCtrl = ($scope, $modal, $sce, MnoeOrganizations, Mno
     $scope.members = members
     $scope.teams = teams if teams
     $scope.isLoading = false
+    updateNbOfSuperAdmin()
 
   $scope.editMember = (member) ->
     $scope.editionModal.open(member)
@@ -34,10 +37,10 @@ DashboardOrganizationMembersCtrl = ($scope, $modal, $sce, MnoeOrganizations, Mno
     MnoeOrganizations.can.create.member()
 
   $scope.isEditShown = (member) ->
-    MnoeOrganizations.can.update.member(member)
+    MnoeOrganizations.can.update.member(member, $scope.hasManySuperAdmin)
 
   $scope.isRemoveShown = (member) ->
-    MnoeOrganizations.can.destroy.member(member)
+    MnoeOrganizations.can.destroy.member(member, $scope.hasManySuperAdmin)
 
   $scope.memberRoleLabel = (member) ->
     if member.entity == 'User'
@@ -95,6 +98,7 @@ DashboardOrganizationMembersCtrl = ($scope, $modal, $sce, MnoeOrganizations, Mno
       (members) ->
         self.errors = ''
         angular.copy(members, $scope.members)
+        updateNbOfSuperAdmin()
         self.close()
       (errors) ->
         self.errors = Utilities.processRailsError(errors)
