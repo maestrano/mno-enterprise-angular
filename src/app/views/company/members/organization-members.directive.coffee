@@ -11,8 +11,6 @@ DashboardOrganizationMembersCtrl = ($scope, $modal, $sce, MnoeOrganizations, Mno
   $scope.members = []
   $scope.teams = []
   $scope.isLoading = true
-  updateNbOfSuperAdmin = ->
-    $scope.hasManySuperAdmin = _.filter($scope.members, {'role': 'Super Admin'}).length <= 1
 
   #====================================
   # Scope Management
@@ -47,6 +45,9 @@ DashboardOrganizationMembersCtrl = ($scope, $modal, $sce, MnoeOrganizations, Mno
       return member.role
     else
       return "Invited (#{member.role})"
+
+  updateNbOfSuperAdmin = ->
+    $scope.hasManySuperAdmin = _.filter($scope.members, {'role': 'Super Admin'}).length <= 1
 
   #====================================
   # User Edition Modal
@@ -239,6 +240,7 @@ DashboardOrganizationMembersCtrl = ($scope, $modal, $sce, MnoeOrganizations, Mno
       (members) ->
         self.errors = ''
         angular.copy(members, $scope.members)
+        updateNbOfSuperAdmin()
         self.close()
       (errors) ->
         self.errors = Utilities.processRailsError(errors)
