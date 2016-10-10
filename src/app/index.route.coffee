@@ -15,7 +15,7 @@ angular.module 'mnoEnterpriseAngular'
         controller: 'LoginRouterCtrl'
       .state 'home.apps',
         data:
-          pageTitle:'Apss'
+          pageTitle:'Apps'
         url: '/apps'
         templateUrl: 'app/views/apps/dashboard-apps-list.html'
         controller: 'DashboardAppsListCtrl'
