@@ -19,4 +19,10 @@ angular.module 'mnoEnterpriseAngular'
       return marketplacePromise if marketplacePromise?
       marketplacePromise = marketplaceApi.get()
 
+    @addApp = (data)->
+      MnoeApiSvc.oneUrl('/provision').post(data).then(
+        (response) ->
+          console.log 'RESPONSE AFTER PROVISION'
+          console.log response
+      )
     return @

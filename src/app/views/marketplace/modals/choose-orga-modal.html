@@ -1,0 +1,61 @@
+
+<!-- Modal Header -->
+<div class="modal-header">
+  <div class="close" type="button" ng-click="vm.cancelChooseAppModal()" >×</div>
+</div>
+<!-- Modal Body -->
+<div class="modal-body">
+
+  <div class="row" ng-show="!modal.isLoading()" >
+    <div class="main-area">
+
+      <!-- Steps Content -->
+      <div ng-switch on="modal.currentSubStep()">
+
+        <div ng-switch-when="loading">
+          <div class="text-center">
+            <img ng-src="{{assetPath['loader-darkblue-bg.gif']}}" alt="Loading"/>
+          </div>
+        </div>
+
+        <div ng-switch-default>
+          <div class="row">
+            <div class="text-center">
+              <h3>{{ 'mno_enterprise.templates.dashboard.marketplace.app_selection.select_orga' | translate }}</h3>
+            </div>
+          </div>
+
+          <div class="row">
+            <form name="selectOrgaForm" novalidate class="form form-horizontal align-center">
+              <div class="col-md-6 col-md-offset-3">
+                <div class="form-group">
+                  <select
+                    ng-model="vm.current_organization.id"
+                    ng-click="vm.updateUserAuthorization()"
+                    ng-options="org.id as org.name for org in vm.authorized_organizations track by org.id" class="form-control" style="min-width:176px;"></select>
+                </div>
+              </div>
+
+            </form>
+          </div>
+
+          <div class="row">
+            <p class="text-center" ng-hide="vm.current_organization.isUserAuthorized">
+              {{ 'mno_enterprise.templates.dashboard.marketplace.app_selection.unauthorized_to_add_app' | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal Footer -->
+<div class="modal-footer">
+  <div class="row">
+    <div class="col-md-12">
+      <button ng-click="vm.changeOrganisation()" class="btn btn-info btn-promo arrow" ng-disabled="!vm.current_organization.isUserAuthorized">
+        Next
+      </button>
+    </div>
+  </div>
+</div>

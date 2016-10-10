@@ -3,7 +3,7 @@
 #============================================
 angular.module 'mnoEnterpriseAngular'
   .controller('DashboardMarketplaceAppCtrl',
-    ($q, $scope, $stateParams, $sce, $window, MnoeMarketplace, MnoeOrganizations, MnoeAppInstances, PRICING_CONFIG) ->
+    ($q, $scope, $stateParams, $state, $sce, $window, MnoeMarketplace, $uibModal, MnoeOrganizations, MnoeCurrentUser, MnoeAppInstances, PRICING_CONFIG) ->
 
       vm = this
 
@@ -30,6 +30,55 @@ angular.module 'mnoEnterpriseAngular'
         currency = (PRICING_CONFIG && PRICING_CONFIG.currency) || 'AUD'
         vm.pricing_plans = plans[currency] || plans.AUD || plans.default
 
+        # Get the current organization id
+        MnoeOrganizations.getCurrentId().then(
+          (orgId) ->
+            vm.current_organization = {
+              id: orgId
+            }
+
+            #  Get the list of organizations
+            MnoeCurrentUser.get().then(
+              (response) ->
+                vm.organizations = {}  # Hash of organizations id -> {obj}
+                vm.authorized_organizations = {}
+
+                vm.filterAuthorizedOrga(response.organizations)
+            )
+        )
+
+
+      # Filter the authorized organizations for this user
+      vm.filterAuthorizedOrga = (organizations) ->
+        organizations.map(
+          (orga) ->
+            vm.organizations[orga.id] = orga
+            vm.authorized_organizations[orga.id] = orga if MnoeOrganizations.role.atLeastPowerUser(orga.current_user_role)
+        )
+
+      # Check if the user is allowed to add apps to the given organization
+      vm.isUserAuthorized = (orgId) ->
+        currentUserRole = vm.organizations[orgId].current_user_role
+        MnoeOrganizations.role.atLeastPowerUser(currentUserRole)
+
+      # Change current organization
+      vm.updateUserAuthorization = () ->
+        vm.current_organization.isUserAuthorized = vm.isUserAuthorized(vm.current_organization.id)
+
+      vm.changeOrganisation = ->
+        MnoeOrganizations.get(vm.current_organization.id).then(
+          (response) ->
+        )
+
+      vm.addApplication = ->
+        data = {
+          organization_id: vm.current_organization.id
+          app: ["sagelive"]
+        }
+        MnoeMarketplace.addApp(data)
+        console.log "Wawwwwww"
+
+
       # Check that the testimonial is not empty
       vm.isTestimonialShown = (testimonial) ->
         testimonial.text? && testimonial.text.length > 0
@@ -52,7 +101,13 @@ angular.module 'mnoEnterpriseAngular'
 
       vm.provisionLink = () ->
         MnoeAppInstances.clearCache()
-        $window.location.href = "/mnoe/provision/new?apps[]=#{vm.app.nid}&organization_id=#{MnoeOrganizations.selectedId}"
+
+        # Get the authorization status for the current organization
+        vm.current_organization.isUserAuthorized = vm.isUserAuthorized(vm.current_organization.id)
+        if vm.current_organization.isUserAuthorized
+          vm.addApplication()
+        else  # Open a modal to change the organization
+          vm.openChooseAppModal()
 
       vm.launchAppInstance = () ->
         $window.open("/mnoe/launch/#{vm.appInstance.uid}", '_blank')
@@ -73,6 +128,29 @@ angular.module 'mnoEnterpriseAngular'
         cart.config.organizationId = MnoeOrganizations.selectedId
         cart.bundle = { app_instances: [{app: { id: vm.app.id }}] }
         cart.isOpen = true
+
+      #====================================
+      # Choose App Modal
+      #====================================
+
+      vm.openChooseAppModal = ->
+        vm.chooseAppModalInstance = $uibModal.open({
+          backdrop: 'static'
+          size: 'lg'
+          templateUrl: 'app/views/marketplace/modals/choose-orga-modal.html'
+          windowClass: 'inverse'
+          scope: $scope
+        })
+
+      vm.closeChooseAppModal = ->
+        vm.chooseAppModalInstance.close()
+
+      vm.cancelChooseAppModal = ->
+        MnoeOrganizations.getCurrentId().then(
+          (orgId) ->
+            vm.current_organization.id = orgId
+        )
+        vm.chooseAppModalInstance.close()
 
       #====================================
       # Post-Initialization

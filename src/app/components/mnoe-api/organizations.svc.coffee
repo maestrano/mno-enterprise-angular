@@ -156,29 +156,33 @@ angular.module 'mnoEnterpriseAngular'
     #======================================
     @role = {}
 
-    _self.role.isSuperAdmin = ->
+    _self.role.isSuperAdmin = (role) ->
+      return role == 'Super Admin' if role
       _self.selected? && _self.selected.current_user.role == 'Super Admin'
 
-    _self.role.isAdmin = ->
+    _self.role.isAdmin = (role) ->
+      return role == 'Admin' if role
       _self.selected? && _self.selected.current_user.role == 'Admin'
 
-    _self.role.isPowerUser = ->
+    _self.role.isPowerUser = (role) ->
+      return role == 'Power User' if role
       _self.selected? && _self.selected.current_user.role == 'Power User'
 
-    _self.role.isMember = ->
+    _self.role.isMember = (role) ->
+      return role == 'Member' if role
       _self.selected? && _self.selected.current_user.role == 'Member'
 
     _self.role.atLeastMember = ->
       true
 
-    _self.role.atLeastPowerUser = ->
-      _self.role.isPowerUser() || _self.role.isAdmin() || _self.role.isSuperAdmin()
+    _self.role.atLeastPowerUser = (role) ->
+      _self.role.isPowerUser(role) || _self.role.isAdmin(role) || _self.role.isSuperAdmin(role)
 
-    _self.role.atLeastAdmin = ->
-      _self.role.isAdmin() || _self.role.isSuperAdmin()
+    _self.role.atLeastAdmin = (role) ->
+      _self.role.isAdmin(role) || _self.role.isSuperAdmin(role)
 
-    _self.role.atLeastSuperAdmin = ->
-      _self.role.isSuperAdmin()
+    _self.role.atLeastSuperAdmin = (role) ->
+      _self.role.isSuperAdmin(role)
 
     #======================================
     # Access Management
