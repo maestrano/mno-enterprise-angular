@@ -1,4 +1,4 @@
-<div id="app-dock-container" class="hidden-xs hidden-sm">
+<div id="app-dock-container" class="hidden-xs hidden-sm hidden-print">
   <div id="app-dock">
     <ul class="dock list-unstyled" ng-class="{minimized: appDock.isMinimized, animated: appDock.isAnimated()}">
       <li ng-repeat="app in apps" ng-class="{active: isActiveApp(app.id)}" class="dock-icon">
@@ -43,7 +43,7 @@
   </div>
 </div>
 
-<div id="app-dock-mobile-container" class="visible-xs visible-sm">
+<div id="app-dock-mobile-container" class="visible-xs visible-sm hidden-print">
   <div class="mobile-dock-button align-center btn" ng-click="launchApp.isClosed = !launchApp.isClosed">
     </i>{{ 'mno_enterprise.templates.impac.dock.launch' | translate }}</a>
     <i class="fa fa-chevron-down pull-right" ng-hide="launchApp.isClosed"></i>
