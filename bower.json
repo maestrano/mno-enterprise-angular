@@ -49,8 +49,8 @@
   },
   "resolutions": {
     "angular-bootstrap": "~0.14.3",
-    "moment": "^2.11.2",
-    "angular": "1.4.12",
-    "angular-messages": "~1.4.10"
+    "angular": "1.5.8",
+    "angular-messages": "^1.5.3",
+    "moment": "^2.11.2"
   }
 }
