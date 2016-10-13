@@ -44,6 +44,7 @@ angular.module 'mnoEnterpriseAngular'
                 vm.authorized_organizations = {}
 
                 vm.filterAuthorizedOrga(response.organizations)
+                vm.hasAuthorizedOrganizations = !_.isEmpty(vm.authorized_organizations)
             )
         )
 
@@ -71,13 +72,7 @@ angular.module 'mnoEnterpriseAngular'
         )
 
       vm.addApplication = ->
-        data = {
-          organization_id: vm.current_organization.id
-          app: ["sagelive"]
-        }
-        MnoeMarketplace.addApp(data)
-        console.log "Wawwwwww"
-
+        MnoeOrganizations.purchaseApp(vm.app, vm.current_organization.id)
 
       # Check that the testimonial is not empty
       vm.isTestimonialShown = (testimonial) ->
