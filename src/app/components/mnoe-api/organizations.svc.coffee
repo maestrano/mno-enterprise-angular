@@ -85,7 +85,6 @@ angular.module 'mnoEnterpriseAngular'
           response.plain()
       )
 
-
     # Add a new instance of an app
     @purchaseApp = (app, orgId = _self.selectedId) ->
       MnoeApiSvc.one('organizations', orgId).all('/app_instances').post({nid: app.nid}).then(
@@ -98,6 +97,7 @@ angular.module 'mnoEnterpriseAngular'
         (error) ->
           toastr.error(app.name + " has not been added, please try again.")
       )
+
     # Accept an array of invites
     # [{ email: 'bla@bla.com', role: 'Admin' }]
     # Or

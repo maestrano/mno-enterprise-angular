@@ -48,7 +48,6 @@ angular.module 'mnoEnterpriseAngular'
             )
         )
 
-
       # Filter the authorized organizations for this user
       vm.filterAuthorizedOrga = (organizations) ->
         organizations.map(
