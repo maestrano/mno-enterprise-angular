@@ -15,10 +15,9 @@ angular.module 'mnoEnterpriseAngular'
       MnoeOrganizations.get().then(
         ->
           # Impac is displayed only to admin and super admin
-          vm.isImpacShown = (MnoeOrganizations.role.isAdmin() || MnoeOrganizations.role.isSuperAdmin())
+          vm.isImpacShown = MnoeOrganizations.role.atLeastAdmin()
+          $state.go('home.login') unless vm.isImpacShown
 
-          if !vm.isImpacShown
-            $state.go('home.login')
       ) if newValue?
     )
 
