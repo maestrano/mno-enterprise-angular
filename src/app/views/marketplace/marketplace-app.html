@@ -41,7 +41,7 @@
                     <div ng-switch-when="CONFLICT" class="message">
                       <i class="fa fa-exclamation-triangle"></i>
                       {{ 'mno_enterprise.templates.dashboard.marketplace.show.conflicting_app' | translate }}
-                      <a ui-sref="home.marketplace.app({appId: vm.conflictingAppInstance.app_id})">{{vm.conflictingAppInstance.app_name}}</a>
+                      <a ui-sref="home.marketplace.app({appId: vm.conflictingApp.id})">{{vm.conflictingApp.name}}</a>
                     </div>
                     <a href="" ng-switch-when="INSTALLABLE" ng-click="vm.provisionLink()" class="btn btn-warning btn-promo">
                       {{ 'mno_enterprise.templates.dashboard.marketplace.show.start_app' | translate }}
