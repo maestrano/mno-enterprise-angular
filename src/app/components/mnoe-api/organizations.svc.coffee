@@ -171,19 +171,19 @@ angular.module 'mnoEnterpriseAngular'
 
     _self.role.isSuperAdmin = (role) ->
       return role == 'Super Admin' if role
-      _self.selected? && _self.selected.current_user.role == 'Super Admin'
+      _self.selected? && _self.selected.current_user? && _self.selected.current_user.role == 'Super Admin'
 
     _self.role.isAdmin = (role) ->
       return role == 'Admin' if role
-      _self.selected? && _self.selected.current_user.role == 'Admin'
+      _self.selected? && _self.selected.current_user? && _self.selected.current_user.role == 'Admin'
 
     _self.role.isPowerUser = (role) ->
       return role == 'Power User' if role
-      _self.selected? && _self.selected.current_user.role == 'Power User'
+      _self.selected? && _self.selected.current_user? && _self.selected.current_user.role == 'Power User'
 
     _self.role.isMember = (role) ->
       return role == 'Member' if role
-      _self.selected? && _self.selected.current_user.role == 'Member'
+      _self.selected? && _self.selected.current_user? && _self.selected.current_user.role == 'Member'
 
     _self.role.atLeastMember = ->
       true
