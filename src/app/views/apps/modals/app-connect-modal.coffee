@@ -2,25 +2,21 @@ angular.module 'mnoEnterpriseAngular'
 .controller('DashboardAppConnectModalCtrl', ($scope, $uibModalInstance, app, $httpParamSerializer, $window, $http) ->
 
   $scope.app = app
+  $scope.path = "/mnoe/webhook/oauth/" + app.uid + "/authorize?"
+  $scope.form = {
+    perform: true
+  }
 
   # Customization for myob & xero
   if app.app_nid == "myob"
-    $scope.path = "/mnoe/webhook/oauth/" + app.uid + "/authorize?"
+    $scope.form.version: "essentials"
     $scope.myob = {
       versions: [{name: "Account Right Live", value: "account_right"}, {name: "Essentials", value: "essentials"}]
     }
-    $scope.form = {
-      perform: true
-      version: "essentials"
-    }
   else if app.app_nid == "xero"
-    $scope.path = "/mnoe/webhook/oauth/" + app.uid + "/authorize?"
+    $scope.form.xero_country = "AU"
     $scope.xero = {
       countries: [{name: "Australia", value: "AU"}, {name: "USA", value: "US"}]
-    }
-    $scope.form = {
-      perform: true
-      xero_country: "AU"
     }
 
   $scope.connect = (form) ->
