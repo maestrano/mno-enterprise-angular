@@ -1,0 +1,29 @@
+<div id="app-connect-modal">
+  <div class="modal-header">
+    <div class="close" type="button" aria-label="Close" ng-click="close()">×</div>
+    <h3 class="modal-title">Connect to {{app.name}}</h3>
+  </div>
+  <div class="modal-body">
+    <h4 class="align-center">{{ "mno_enterprise.webhook.o_auth.providers.myob.which_version_used" | translate }}</h4>
+    <div class="spacer1"></div>
+
+    <form>
+      <input type="hidden" ng-model="form.perform"/>
+      <div class="spacer1"></div>
+
+      <div class="form-group align-center">
+        <label>{{ "mno_enterprise.webhook.o_auth.providers.myob.my_version_is" | translate }}</label>
+        <select ng-model="form.version" name="version"
+                ng-options="version.value as version.name for version in myob.versions"></select>
+      </div>
+
+      <div class="form-group">
+        <button type="submit" class="btn btn-warning" ng-click="connect(form)">{{ "mno_enterprise.webhook.o_auth.providers.myob.connect" | translate }}</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-default" ng-click="close()">{{ "mno_enterprise.webhook.o_auth.providers.cancel" | translate }}</button>
+  </div>
+</div>

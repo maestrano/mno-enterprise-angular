@@ -46,8 +46,11 @@
                     <a href="" ng-switch-when="INSTALLABLE" ng-click="vm.provisionLink()" class="btn btn-warning btn-promo">
                       {{ 'mno_enterprise.templates.dashboard.marketplace.show.start_app' | translate }}
                     </a>
-                    <a href="" ng-switch-when="INSTALLED" ng-click="vm.launchAppInstance()" class="btn btn-warning btn-promo btn-lg">
+                    <a href="" ng-switch-when="INSTALLED_LAUNCH" ng-click="vm.launchAppInstance()" class="btn btn-warning btn-promo btn-lg">
                       {{ 'mno_enterprise.templates.dashboard.marketplace.show.launch_app' | translate }}
+                    </a>
+                    <a href="" ng-switch-when="INSTALLED_CONNECT" ng-click="vm.connectAppInstance()" class="btn btn-warning btn-promo btn-lg">
+                      {{ 'mno_enterprise.templates.dashboard.marketplace.show.connect_app' | translate }}
                     </a>
                   </div>
                 </div>

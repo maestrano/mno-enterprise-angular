@@ -86,12 +86,16 @@ angular.module 'mnoEnterpriseAngular'
           if vm.app.multi_instantiable
             "INSTALLABLE"
           else
-            "INSTALLED"
+            if vm.app.app_nid != 'office-365' && vm.app.stack == 'connector' && !vm.app.oauth_keys_valid
+              "INSTALLED_CONNECT"
+            else
+              "INSTALLED_LAUNCH"
         else
           if vm.conflictingApp
             "CONFLICT"
           else
             "INSTALLABLE"
+
 
       vm.provisionLink = () ->
         MnoeAppInstances.clearCache()
@@ -103,8 +107,26 @@ angular.module 'mnoEnterpriseAngular'
         else  # Open a modal to change the organization
           vm.openChooseAppModal()
 
-      vm.launchAppInstance = () ->
+      vm.launchAppInstance = ->
         $window.open("/mnoe/launch/#{vm.appInstance.uid}", '_blank')
+
+      #====================================
+      # App Connect modal
+      #====================================
+      vm.connectAppInstance = ->
+        templateUrl = switch
+          when vm.appInstance.app_nid == "xero" then "app/views/apps/modals/app-connect-modal-xero.html"
+          when vm.appInstance.app_nid == "myob" then "app/views/apps/modals/app-connect-modal-myob.html"
+          else false
+        vm.launchAppInstance() if !templateUrl
+
+        modalInstance = $uibModal.open(
+          templateUrl: templateUrl
+          controller: 'DashboardAppConnectModalCtrl'
+          resolve:
+            app: ->
+              vm.appInstance
+        )
 
       vm.isPriceShown = PRICING_CONFIG && PRICING_CONFIG.enabled
 

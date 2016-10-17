@@ -13,7 +13,7 @@
               <a ng-click="launchAction(app,$event);"><i class="fa fa-play-circle"></i>{{ 'mno_enterprise.templates.impac.dock.launch' | translate }}</a>
             </div>
             <div class="menu-item ng-hide" ng-show="helper.isOauthConnectBtnShown(app)">
-                <a href="" ng-click="helper.oAuthConnectPath(app)"><i class="fa fa-play-circle" >
+                <a ng-click="showConnectModal(app)"><i class="fa fa-play-circle" >
                 </i> {{ 'mno_enterprise.templates.impac.dock.connect' | translate }}</a>
             </div>
             <div class="menu-item ng-hide" ng-show="helper.displaySettings()">
@@ -73,7 +73,7 @@
               <a ng-click="launchAction(app,$event);" class="btn btn-warning">{{ 'mno_enterprise.templates.impac.dock.launch' | translate }}</a>
             </div>
             <div ng-show="helper.isOauthConnectBtnShown(app)">
-              <a href="" ng-click="helper.oAuthConnectPath(app)" class="btn btn-warning">{{ 'mno_enterprise.templates.impac.dock.connect' | translate }}</a>
+              <a href="" ng-click="showConnectModal(app)" class="btn btn-warning">{{ 'mno_enterprise.templates.impac.dock.connect' | translate }}</a>
             </div>
           </div>
         </div>

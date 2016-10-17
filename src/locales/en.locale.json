@@ -421,6 +421,7 @@
   "mno_enterprise.templates.dashboard.marketplace.show.conflicting_app": "You cannot install this App as it is incompatible with:",
   "mno_enterprise.templates.dashboard.marketplace.show.start_app": "Start Now!",
   "mno_enterprise.templates.dashboard.marketplace.show.launch_app": "Launch App",
+  "mno_enterprise.templates.dashboard.marketplace.show.connect_app": "Connect App",
   "mno_enterprise.templates.dashboard.marketplace.show.tag_responsive": "Responsive",
   "mno_enterprise.templates.dashboard.marketplace.show.tag_star": "Star!™ Tutorials",
   "mno_enterprise.templates.dashboard.marketplace.show.tag_connec": "Connec!™ Ready",
@@ -703,11 +704,13 @@
   "mno_enterprise.provision.select_organization.select": "Please select the organization you are making this new order for",
   "mno_enterprise.provision.select_organization.submit": "Go",
   "mno_enterprise.webhook.o_auth.authorize.you_are_redirected": "You are about to be connected via our integration partner",
+  "mno_enterprise.webhook.o_auth.providers.cancel": "Cancel",
   "mno_enterprise.webhook.o_auth.providers.myob.which_version_used": "Which version of MYOB do you use?",
   "mno_enterprise.webhook.o_auth.providers.myob.my_version_is": "My version of MYOB is:",
   "mno_enterprise.webhook.o_auth.providers.myob.connect": "Connect",
   "mno_enterprise.webhook.o_auth.providers.xero.how_do_you_want_to_connect": "How do you want us to connect your Xero account?",
   "mno_enterprise.webhook.o_auth.providers.xero.which_extra_modules": "Do you want to connect any of the following extra modules?",
+  "mno_enterprise.webhook.o_auth.providers.xero.payroll": "Payroll",
   "mno_enterprise.webhook.o_auth.providers.xero.which_country_for_the_account": "What is the country associated with your Xero account?",
   "mno_enterprise.webhook.o_auth.providers.xero.connect": "Connect"
 }
