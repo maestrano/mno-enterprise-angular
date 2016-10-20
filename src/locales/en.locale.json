@@ -708,9 +708,11 @@
   "mno_enterprise.webhook.o_auth.providers.myob.which_version_used": "Which version of MYOB do you use?",
   "mno_enterprise.webhook.o_auth.providers.myob.my_version_is": "My version of MYOB is:",
   "mno_enterprise.webhook.o_auth.providers.myob.connect": "Connect",
+  "mno_enterprise.webhook.o_auth.providers.myob.connect_to": "Connect to {{appname}}",
   "mno_enterprise.webhook.o_auth.providers.xero.how_do_you_want_to_connect": "How do you want us to connect your Xero account?",
   "mno_enterprise.webhook.o_auth.providers.xero.which_extra_modules": "Do you want to connect any of the following extra modules?",
   "mno_enterprise.webhook.o_auth.providers.xero.payroll": "Payroll",
   "mno_enterprise.webhook.o_auth.providers.xero.which_country_for_the_account": "What is the country associated with your Xero account?",
-  "mno_enterprise.webhook.o_auth.providers.xero.connect": "Connect"
+  "mno_enterprise.webhook.o_auth.providers.xero.connect": "Connect",
+  "mno_enterprise.webhook.o_auth.providers.xero.connect_to": "Connect to {{appname}}"
 }

@@ -1,35 +1,37 @@
 <div id="app-connect-modal">
   <div class="modal-header">
     <div class="close" type="button" aria-label="Close" ng-click="close()">×</div>
-    <h3 class="modal-title">Connect to {{app.name}}</h3>
+    <h3 class="modal-title"
+        translate="mno_enterprise.webhook.o_auth.providers.xero.connect_to"
+        translate-values="{appname: app.name}"></h3>
   </div>
 
   <div class="modal-body">
-    <h4 class="align-center">{{ "mno_enterprise.webhook.o_auth.providers.xero.how_do_you_want_to_connect" | translate }}</h4>
-    <div class="spacer1"></div>
+    <h4 class="text-center">{{"mno_enterprise.webhook.o_auth.providers.xero.how_do_you_want_to_connect" | translate}}</h4>
+    <div class="top-buffer-1"></div>
 
     <form>
       <input type="hidden" ng-model="form.perform"/>
-      <div class="spacer2"></div>
-      <div class="form-group align-center">
-        <h5>{{ "mno_enterprise.webhook.o_auth.providers.xero.which_extra_modules" | translate }}</h5>
-        <label>{{ "mno_enterprise.webhook.o_auth.providers.xero.payroll" | translate }}</label>
+      <div class="top-buffer-2"></div>
+      <div class="form-group text-center">
+        <h5>{{"mno_enterprise.webhook.o_auth.providers.xero.which_extra_modules" | translate}}</h5>
+        <label>{{"mno_enterprise.webhook.o_auth.providers.xero.payroll" | translate}}</label>
         <input type="checkbox" ng-model="payroll" name="extra_params[]"/>
       </div>
 
-      <div class="form-group align-center" ng-if="payroll" ng-cloak="true">
-        <h5>{{ "mno_enterprise.webhook.o_auth.providers.xero.which_country_for_the_account" | translate }}</h5>
+      <div class="form-group text-center" ng-if="payroll" ng-cloak="true">
+        <h5>{{"mno_enterprise.webhook.o_auth.providers.xero.which_country_for_the_account" | translate}}</h5>
         <select ng-model="form.xero_country" name="xero_country"
-                ng-options="country.value as country.name for country in xero.countries"></select>
+                ng-options="country.value as country.name for country in countries"></select>
       </div>
 
       <div class="form-group">
-        <button type="submit" class="btn btn-warning" ng-click="connect(form)">{{ "mno_enterprise.webhook.o_auth.providers.myob.connect" | translate }}</button>
+        <button type="submit" class="btn btn-warning" ng-click="connect(form)">{{"mno_enterprise.webhook.o_auth.providers.myob.connect" | translate}}</button>
       </div>
     </form>
   </div>
 
   <div class="modal-footer">
-    <button class="btn btn-default" ng-click="close()">{{ "mno_enterprise.webhook.o_auth.providers.cancel" | translate }}</button>
+    <button class="btn btn-default" ng-click="close()">{{"mno_enterprise.webhook.o_auth.providers.cancel" | translate}}</button>
   </div>
 </div>

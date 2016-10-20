@@ -79,15 +79,20 @@ DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, MnoeOrganizations
   # App Connect modal
   #====================================
   $scope.showConnectModal = (app) ->
-    templateUrl = switch
-      when app.app_nid == "xero" then "app/views/apps/modals/app-connect-modal-xero.html"
-      when app.app_nid == "myob" then "app/views/apps/modals/app-connect-modal-myob.html"
-      else false
-    $scope.helper.oAuthConnectPath(app) if !templateUrl
+    switch app.app_nid
+      when "xero" then modalInfo = {
+        template: "app/views/apps/modals/app-connect-modal-xero.html",
+        controller: 'DashboardAppConnectXeroModalCtrl'
+      }
+      when "myob" then modalInfo = {
+        template: "app/views/apps/modals/app-connect-modal-myob.html",
+        controller: 'DashboardAppConnectMyobModalCtrl'
+      }
+      else $scope.helper.oAuthConnectPath(app)
 
     modalInstance = $uibModal.open(
-      templateUrl: templateUrl
-      controller: 'DashboardAppConnectModalCtrl'
+      templateUrl: modalInfo.template
+      controller: modalInfo.controller
       resolve:
         app: ->
           app

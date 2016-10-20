@@ -79,7 +79,7 @@ angular.module 'mnoEnterpriseAngular'
 
       # Return the different status of the app regarding its installation
       # - INSTALLABLE:  The app may be installed
-      # - INSTALLED:    The app is already installed, and cannot be multi instantiated
+      # - INSTALLED_CONNECT/INSTALLED_LAUNCH: The app is already installed, and cannot be multi instantiated
       # - CONFLICT:     Another app, with a common subcategory that is not multi-instantiable has already been installed
       vm.appInstallationStatus = () ->
         if vm.appInstance
@@ -96,7 +96,6 @@ angular.module 'mnoEnterpriseAngular'
           else
             "INSTALLABLE"
 
-
       vm.provisionLink = () ->
         MnoeAppInstances.clearCache()
 
@@ -105,7 +104,7 @@ angular.module 'mnoEnterpriseAngular'
         if vm.current_organization.isUserAuthorized
           vm.addApplication()
         else  # Open a modal to change the organization
-          vm.openChooseAppModal()
+          vm.openChooseOrgaModal()
 
       vm.launchAppInstance = ->
         $window.open("/mnoe/launch/#{vm.appInstance.uid}", '_blank')
@@ -114,15 +113,20 @@ angular.module 'mnoEnterpriseAngular'
       # App Connect modal
       #====================================
       vm.connectAppInstance = ->
-        templateUrl = switch
-          when vm.appInstance.app_nid == "xero" then "app/views/apps/modals/app-connect-modal-xero.html"
-          when vm.appInstance.app_nid == "myob" then "app/views/apps/modals/app-connect-modal-myob.html"
-          else false
-        vm.launchAppInstance() if !templateUrl
+        switch vm.appInstance.app_nid
+          when "xero" then modalInfo = {
+            template: "app/views/apps/modals/app-connect-modal-xero.html",
+            controller: 'DashboardAppConnectXeroModalCtrl'
+          }
+          when "myob" then modalInfo = {
+            template: "app/views/apps/modals/app-connect-modal-myob.html",
+            controller: 'DashboardAppConnectMyobModalCtrl'
+          }
+          else vm.launchAppInstance()
 
         modalInstance = $uibModal.open(
-          templateUrl: templateUrl
-          controller: 'DashboardAppConnectModalCtrl'
+          templateUrl: modalInfo.template
+          controller: modalInfo.controller
           resolve:
             app: ->
               vm.appInstance
@@ -148,9 +152,8 @@ angular.module 'mnoEnterpriseAngular'
       #====================================
       # Choose App Modal
       #====================================
-
-      vm.openChooseAppModal = ->
-        vm.chooseAppModalInstance = $uibModal.open({
+      vm.openChooseOrgaModal = ->
+        vm.chooseOrgaModalInstance = $uibModal.open({
           backdrop: 'static'
           size: 'lg'
           templateUrl: 'app/views/marketplace/modals/choose-orga-modal.html'
@@ -158,15 +161,15 @@ angular.module 'mnoEnterpriseAngular'
           scope: $scope
         })
 
-      vm.closeChooseAppModal = ->
-        vm.chooseAppModalInstance.close()
+      vm.closeChooseOrgaModal = ->
+        vm.chooseOrgaModalInstance.close()
 
-      vm.cancelChooseAppModal = ->
+      vm.cancelChooseOrgaModal = ->
         MnoeOrganizations.getCurrentId().then(
           (orgId) ->
             vm.current_organization.id = orgId
         )
-        vm.chooseAppModalInstance.close()
+        vm.chooseOrgaModalInstance.close()
 
       #====================================
       # Post-Initialization

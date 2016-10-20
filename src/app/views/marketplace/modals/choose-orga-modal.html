@@ -1,14 +1,14 @@
 
 <!-- Modal Header -->
 <div class="modal-header">
-  <div class="close" type="button" ng-click="vm.cancelChooseAppModal()" >×</div>
+  <div class="close" type="button" ng-click="vm.cancelChooseOrgaModal()" >×</div>
 </div>
 <!-- Modal Body -->
 <div class="modal-body">
 
-  <div class="row" ng-show="!modal.isLoading()" >
+  <div class="row" ng-hide="vm.isLoading" >
     <div class="main-area">
-      <div ng-if="!vm.hasAuthorizedOrganizations">
+      <div ng-unless="vm.hasAuthorizedOrganizations">
         <div class="text-center">
           <h3>{{ 'mno_enterprise.templates.dashboard.marketplace.app_selection.no_orga_authorized' | translate }}</h3>
           <p>{{ 'mno_enterprise.templates.dashboard.marketplace.app_selection.unauthorized_to_add_app' | translate }}</p>
@@ -52,7 +52,7 @@
       <button ng-if="vm.hasAuthorizedOrganizations" ng-click="vm.addApplication()" class="btn btn-warning arrow" ng-disabled="!vm.current_organization.isUserAuthorized">
         {{ 'mno_enterprise.templates.dashboard.marketplace.app_selection.next' | translate}}
       </button>
-      <button ng-if="!vm.hasAuthorizedOrganizations" ng-click="vm.cancelChooseAppModal()" class="btn btn-default">
+      <button ng-unless="vm.hasAuthorizedOrganizations" ng-click="vm.cancelChooseOrgaModal()" class="btn btn-default">
         {{ 'mno_enterprise.templates.dashboard.marketplace.app_selection.cancel' | translate}}
       </button>
     </div>
