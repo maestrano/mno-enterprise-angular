@@ -1,0 +1,60 @@
+
+<!-- Modal Header -->
+<div class="modal-header">
+  <div class="close" type="button" ng-click="closeChooseOrgaModal()" >×</div>
+</div>
+<!-- Modal Body -->
+<div class="modal-body">
+
+  <div class="row" ng-hide="isLoading" >
+    <div class="main-area">
+      <div ng-if="!hasAuthorizedOrganizations">
+        <div class="text-center">
+          <h3>{{ 'mno_enterprise.templates.dashboard.marketplace.app_selection.no_orga_authorized' | translate }}</h3>
+          <p>{{ 'mno_enterprise.templates.dashboard.marketplace.app_selection.unauthorized_to_add_app' | translate }}</p>
+        </div>
+      </div>
+      <div ng-if="hasAuthorizedOrganizations">
+        <div class="col-md-12">
+          <div class="text-center">
+            <h3>{{ 'mno_enterprise.templates.dashboard.marketplace.app_selection.select_orga' | translate }}</h3>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <form name="selectOrgaForm" novalidate class="form form-horizontal align-center">
+            <div class="col-md-6 col-md-offset-3">
+              <div class="form-group">
+                <select
+                  ng-model="current_organization.id"
+                  ng-click="updateUserAuthorization()"
+                  ng-options="org.id as org.name for (key, org) in authorized_organizations track by org.id"
+                  class="form-control" style="min-width:176px;"></select>
+              </div>
+            </div>
+
+          </form>
+        </div>
+
+        <div class="col-md-12">
+          <p class="text-center" ng-hide="current_organization.isUserAuthorized">
+            {{ 'mno_enterprise.templates.dashboard.marketplace.app_selection.unauthorized_to_add_app' | translate }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal Footer -->
+<div class="modal-footer">
+  <div class="row">
+    <div class="col-md-12">
+      <button ng-if="hasAuthorizedOrganizations" ng-click="addApplication()" class="btn btn-warning arrow" ng-disabled="!current_organization.isUserAuthorized">
+        {{ 'mno_enterprise.templates.dashboard.marketplace.app_selection.next' | translate}}
+      </button>
+      <button ng-click="closeChooseOrgaModal()" class="btn btn-default">
+        {{ 'mno_enterprise.templates.dashboard.marketplace.app_selection.cancel' | translate}}
+      </button>
+    </div>
+  </div>
+</div>

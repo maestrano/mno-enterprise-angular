@@ -1,6 +1,6 @@
 # Service for managing the users.
 angular.module 'mnoEnterpriseAngular'
-  .service 'MnoeOrganizations', ($state, $cookies, $log, $q, MnoeApiSvc, MnoeCurrentUser) ->
+  .service 'MnoeOrganizations', ($state, $cookies, $log, $q, MnoeApiSvc, MnoeCurrentUser, toastr) ->
     _self = @
 
     organizationsApi = MnoeApiSvc.all('organizations')
@@ -85,6 +85,19 @@ angular.module 'mnoEnterpriseAngular'
           response.plain()
       )
 
+    # Add a new instance of an app
+    @purchaseApp = (app, orgId = _self.selectedId) ->
+      MnoeApiSvc.one('organizations', orgId).all('/app_instances').post({nid: app.nid}).then(
+        (response) ->
+          toastr.success(app.name + " has been successfully added.")
+
+          # Change current organization if another one has been selected
+          organizationPromise = null
+          _self.get(orgId)
+        (error) ->
+          toastr.error(app.name + " has not been added, please try again.")
+      )
+
     # Accept an array of invites
     # [{ email: 'bla@bla.com', role: 'Admin' }]
     # Or
@@ -156,29 +169,33 @@ angular.module 'mnoEnterpriseAngular'
     #======================================
     @role = {}
 
-    _self.role.isSuperAdmin = ->
-      _self.selected? && _self.selected.current_user.role == 'Super Admin'
+    _self.role.isSuperAdmin = (role) ->
+      return role == 'Super Admin' if role
+      _self.selected? && _self.selected.current_user? && _self.selected.current_user.role == 'Super Admin'
 
-    _self.role.isAdmin = ->
-      _self.selected? && _self.selected.current_user.role == 'Admin'
+    _self.role.isAdmin = (role) ->
+      return role == 'Admin' if role
+      _self.selected? && _self.selected.current_user? && _self.selected.current_user.role == 'Admin'
 
-    _self.role.isPowerUser = ->
-      _self.selected? && _self.selected.current_user.role == 'Power User'
+    _self.role.isPowerUser = (role) ->
+      return role == 'Power User' if role
+      _self.selected? && _self.selected.current_user? && _self.selected.current_user.role == 'Power User'
 
-    _self.role.isMember = ->
-      _self.selected? && _self.selected.current_user.role == 'Member'
+    _self.role.isMember = (role) ->
+      return role == 'Member' if role
+      _self.selected? && _self.selected.current_user? && _self.selected.current_user.role == 'Member'
 
     _self.role.atLeastMember = ->
       true
 
-    _self.role.atLeastPowerUser = ->
-      _self.role.isPowerUser() || _self.role.isAdmin() || _self.role.isSuperAdmin()
+    _self.role.atLeastPowerUser = (role) ->
+      _self.role.isPowerUser(role) || _self.role.isAdmin(role) || _self.role.isSuperAdmin(role)
 
-    _self.role.atLeastAdmin = ->
-      _self.role.isAdmin() || _self.role.isSuperAdmin()
+    _self.role.atLeastAdmin = (role) ->
+      _self.role.isAdmin(role) || _self.role.isSuperAdmin(role)
 
-    _self.role.atLeastSuperAdmin = ->
-      _self.role.isSuperAdmin()
+    _self.role.atLeastSuperAdmin = (role) ->
+      _self.role.isSuperAdmin(role)
 
     #======================================
     # Access Management

@@ -3,7 +3,7 @@
 #============================================
 angular.module 'mnoEnterpriseAngular'
   .controller('DashboardMarketplaceAppCtrl',
-    ($q, $scope, $stateParams, $sce, $window, MnoeMarketplace, MnoeOrganizations, MnoeAppInstances, PRICING_CONFIG) ->
+    ($q, $scope, $stateParams, $state, $sce, $window, MnoeMarketplace, $uibModal, MnoeOrganizations, MnoeCurrentUser, MnoeAppInstances, PRICING_CONFIG) ->
 
       vm = this
 
@@ -30,20 +30,32 @@ angular.module 'mnoEnterpriseAngular'
         currency = (PRICING_CONFIG && PRICING_CONFIG.currency) || 'AUD'
         vm.pricing_plans = plans[currency] || plans.AUD || plans.default
 
+        # Get the user role in this organization
+        MnoeCurrentUser.get().then(
+          (response) ->
+            vm.user_role = _.find(response.organizations, {id: parseInt(MnoeOrganizations.selectedId)}).current_user_role
+        )
+
+      vm.addApplication = ->
+        MnoeOrganizations.purchaseApp(vm.app, MnoeOrganizations.selectedId)
+
       # Check that the testimonial is not empty
       vm.isTestimonialShown = (testimonial) ->
         testimonial.text? && testimonial.text.length > 0
 
       # Return the different status of the app regarding its installation
       # - INSTALLABLE:  The app may be installed
-      # - INSTALLED:    The app is already installed, and cannot be multi instantiated
+      # - INSTALLED_CONNECT/INSTALLED_LAUNCH: The app is already installed, and cannot be multi instantiated
       # - CONFLICT:     Another app, with a common subcategory that is not multi-instantiable has already been installed
       vm.appInstallationStatus = () ->
         if vm.appInstance
           if vm.app.multi_instantiable
             "INSTALLABLE"
           else
-            "INSTALLED"
+            if vm.app.app_nid != 'office-365' && vm.app.stack == 'connector' && !vm.app.oauth_keys_valid
+              "INSTALLED_CONNECT"
+            else
+              "INSTALLED_LAUNCH"
         else
           if vm.conflictingApp
             "CONFLICT"
@@ -52,10 +64,50 @@ angular.module 'mnoEnterpriseAngular'
 
       vm.provisionLink = () ->
         MnoeAppInstances.clearCache()
-        $window.location.href = "/mnoe/provision/new?apps[]=#{vm.app.nid}&organization_id=#{MnoeOrganizations.selectedId}"
 
-      vm.launchAppInstance = () ->
+        # Get the authorization status for the current organization
+        if MnoeOrganizations.role.atLeastPowerUser(vm.user_role)
+          vm.addApplication()
+        else  # Open a modal to change the organization
+          vm.openChooseOrgaModal()
+
+      vm.launchAppInstance = ->
         $window.open("/mnoe/launch/#{vm.appInstance.uid}", '_blank')
+
+      #====================================
+      # App Connect modal
+      #====================================
+      vm.connectAppInstance = ->
+        switch vm.appInstance.app_nid
+          when "xero" then modalInfo = {
+            template: "app/views/apps/modals/app-connect-modal-xero.html",
+            controller: 'DashboardAppConnectXeroModalCtrl'
+          }
+          when "myob" then modalInfo = {
+            template: "app/views/apps/modals/app-connect-modal-myob.html",
+            controller: 'DashboardAppConnectMyobModalCtrl'
+          }
+          else vm.launchAppInstance()
+
+        $uibModal.open(
+          templateUrl: modalInfo.template
+          controller: modalInfo.controller
+          resolve:
+            app: ->
+              vm.appInstance
+        )
+
+      #====================================
+      # Choose App Modal
+      #====================================
+      vm.openChooseOrgaModal = ->
+        $uibModal.open(
+          backdrop: 'static'
+          windowClass: 'inverse'
+          size: 'lg'
+          templateUrl: 'app/views/marketplace/modals/choose-orga-modal.html'
+          controller: 'MarketplaceChooseOrgaModalCtrl'
+        )
 
       vm.isPriceShown = PRICING_CONFIG && PRICING_CONFIG.enabled
 
