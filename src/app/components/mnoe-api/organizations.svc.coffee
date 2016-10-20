@@ -28,7 +28,7 @@ angular.module 'mnoEnterpriseAngular'
     organizationPromise = null
     @get = (id = null) ->
       # return the cached promise if not a new call
-      return organizationPromise if ((!id? || id == _self.selectedId) && organizationPromise != null)
+      return organizationPromise if ((!id? || id == _self.selectedId) && organizationPromise?)
 
       _self.selectedId = id if id?
 
