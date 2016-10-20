@@ -37,10 +37,7 @@ angular.module 'mnoEnterpriseAngular'
         )
 
       vm.addApplication = ->
-        MnoeOrganizations.purchaseApp(vm.app, MnoeOrganizations.selectedId).then(
-          () ->
-            $state.go('home.impac')
-        )
+        MnoeOrganizations.purchaseApp(vm.app, MnoeOrganizations.selectedId).then(-> $state.go('home.impac'))
 
       # Check that the testimonial is not empty
       vm.isTestimonialShown = (testimonial) ->

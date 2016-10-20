@@ -40,10 +40,7 @@ angular.module 'mnoEnterpriseAngular'
 
   # Add a new app instance to the current user organization
   $scope.addApplication = ->
-    MnoeOrganizations.purchaseApp($scope.app, $scope.current_organization.id).then(
-      () ->
-        $state.go('home.impac')
-    )
+    MnoeOrganizations.purchaseApp($scope.app, $scope.current_organization.id).then(-> $state.go('home.impac'))
 
   # Close the current modal
   $scope.closeChooseOrgaModal = ->
