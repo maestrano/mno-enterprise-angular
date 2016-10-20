@@ -2,7 +2,7 @@
 #============================================
 #
 #============================================
-DashboardOrganizationMembersCtrl = ($scope, $modal, $sce, MnoeOrganizations, MnoeTeams, Utilities) ->
+DashboardOrganizationMembersCtrl = ($scope, $modal, $sce, MnoeOrganizations, MnoeCurrentUser, MnoeTeams, Utilities) ->
   'ngInject'
 
   #====================================
@@ -38,7 +38,9 @@ DashboardOrganizationMembersCtrl = ($scope, $modal, $sce, MnoeOrganizations, Mno
     MnoeOrganizations.can.update.member(member, $scope.hasManySuperAdmin)
 
   $scope.isRemoveShown = (member) ->
-    MnoeOrganizations.can.destroy.member(member, $scope.hasManySuperAdmin)
+    # Only if the user is allowed to remove a member and is not removing himself
+    MnoeOrganizations.can.destroy.member(member, $scope.hasManySuperAdmin) && member.email != MnoeCurrentUser.user.email
+
 
   $scope.memberRoleLabel = (member) ->
     if member.entity == 'User'
@@ -61,8 +63,11 @@ DashboardOrganizationMembersCtrl = ($scope, $modal, $sce, MnoeOrganizations, Mno
       windowClass: 'inverse member-edit'
       scope: $scope
     }
-    roles: ['Member','Power User','Admin','Super Admin']
   }
+  if MnoeOrganizations.getCurrentUserRole() == 'Super Admin'
+    editionModal.config.roles = ['Member','Power User','Admin','Super Admin']
+  else
+    editionModal.config.roles = ['Member','Power User','Admin']
 
   editionModal.open = (member) ->
     self = editionModal
