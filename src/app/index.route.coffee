@@ -10,9 +10,6 @@ angular.module 'mnoEnterpriseAngular'
         templateUrl: 'app/views/layout.html'
         controller: 'LayoutController'
         controllerAs: 'layout'
-      .state 'home.login',
-        url: '/login'
-        controller: 'LoginRouterCtrl'
       .state 'home.apps',
         data:
           pageTitle:'Apps'
@@ -69,4 +66,4 @@ angular.module 'mnoEnterpriseAngular'
               $window.location.href = "#{URI.login}"
           )
 
-    $urlRouterProvider.otherwise '/login'
+    $urlRouterProvider.otherwise '/impac'

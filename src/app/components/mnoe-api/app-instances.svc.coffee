@@ -53,6 +53,9 @@ angular.module 'mnoEnterpriseAngular'
           MnoLocalStorage.setObject(MnoeCurrentUser.user.id + "_" + LOCALSTORAGE.appInstancesKey, _self.appInstances)
       )
 
+    @emptyAppInstances = () ->
+      @appInstances.length = 0
+
     @clearCache = () ->
       MnoLocalStorage.removeItem(MnoeCurrentUser.user.id + "_" + LOCALSTORAGE.appInstancesKey)
 

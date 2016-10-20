@@ -1,28 +1,17 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller 'LayoutController', ($stateParams, $state, $q, MnoeCurrentUser, MnoeOrganizations, MnoeMarketplace) ->
+  .controller 'LayoutController', ($scope, $stateParams, $state, $q, MnoeCurrentUser, MnoeOrganizations) ->
     'ngInject'
 
-    layout = this
-
-    # Hide the layout
-    layout.isLoggedIn = false
-
-    # App initialization
-    userPromise = MnoeCurrentUser.get()
-
-    # Load the current organization if defined (url param, cookie or first)
-    organizationPromise = MnoeOrganizations.getCurrentId($stateParams.dhbRefId)
-
-    $q.all([userPromise, organizationPromise]).then(
-      ->
-        # Display the layout
-        layout.isLoggedIn = true
-
-        # Pre-load the market place
-        MnoeMarketplace.getApps()
-
-        # Remove param from url
-        $state.go('.', {dhbRefId: undefined})
+    # Impac! is displayed only to admin and super admin
+    $scope.$watch(MnoeOrganizations.getSelectedId, (newValue) ->
+      MnoeCurrentUser.get().then(
+        (response) ->
+          selectedOrg = _.find(response.organizations, {id: parseInt(newValue)})
+          if selectedOrg.current_user_role == "Super Admin" || selectedOrg.current_user_role == "Admin"
+            $state.go('home.impac')
+          else
+            $state.go('home.apps')
+      ) if newValue?
     )
 
     return

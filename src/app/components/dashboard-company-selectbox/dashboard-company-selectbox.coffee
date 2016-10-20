@@ -16,6 +16,7 @@ DashboardCompanySelectboxCtrl = ($scope, $location, $stateParams, $cookies, $sce
   }
 
   selectBox.changeTo = (organization) ->
+    MnoeAppInstances.emptyAppInstances()
     MnoeAppInstances.clearCache()
     MnoeOrganizations.get(organization.id)
     selectBox.close()

@@ -8,17 +8,20 @@ angular.module 'mnoEnterpriseAngular'
       restrict: 'EA'
       templateUrl: 'app/components/dashboard-menu/dashboard-menu.html',
 
-      controller: ($scope, $state, MnoeOrganizations, DOCK_CONFIG) ->
-        $scope.isLoading = true
+      controller: ($scope, MnoeCurrentUser, MnoeOrganizations, DOCK_CONFIG) ->
+        $scope.isDockEnabled = DOCK_CONFIG.enabled
 
-        $scope.$watch(MnoeOrganizations.getSelected, (newValue, oldValue) ->
-          if newValue?
-            # Impac! is displayed only to admin and super admin
-            $scope.isAdmin = MnoeOrganizations.role.isAtLeastAdmin()
-            $scope.isDockEnabled = DOCK_CONFIG.enabled
-            $scope.isLoading = false
+        $scope.$watch(MnoeOrganizations.getSelectedId, (newValue) ->
+          # Impac! is displayed only to admin and super admin
+          MnoeCurrentUser.get().then(
+            (response) ->
+              selectedOrg = _.find(response.organizations, {id: parseInt(newValue)})
+              if selectedOrg.current_user_role == "Super Admin" || selectedOrg.current_user_role == "Admin"
+                $scope.isAdmin = true
+              else
+                $scope.isAdmin = false
 
-            $state.go('home.apps') unless $scope.isAdmin
+          ) if newValue?
         )
 
         return

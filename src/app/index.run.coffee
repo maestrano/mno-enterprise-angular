@@ -48,16 +48,39 @@ angular.module 'mnoEnterpriseAngular'
   # Display flash messages from the backend in toastr
   # They're passed this way:
   #   ?flash={"msg":"An error message.","type":"error"}
-  .run (toastr, $location) ->
+  .run((toastr, $location) ->
     if flash = $location.search().flash
       message = JSON.parse(flash)
       toastr[message.type](message.msg, _.capitalize(message.type), timeout: 10000)
       $location.search('flash', null) # remove the flash from url
+  )
 
   .run(($rootScope, $timeout, AnalyticsSvc) ->
     $timeout ( -> AnalyticsSvc.init() )
 
     $rootScope.$on('$stateChangeSuccess', ->
       AnalyticsSvc.update()
+    )
+  )
+
+  # App initialization: Retrieve current user and current organization, then preload marketplace
+  .run(($rootScope, $q, $stateParams, MnoeCurrentUser, MnoeOrganizations, MnoeMarketplace) ->
+
+    # Hide the layout with a loader
+    $rootScope.isLoggedIn = false
+
+    # Load the current user
+    userPromise = MnoeCurrentUser.get()
+
+    # Load the current organization if defined (url param, cookie or first)
+    organizationPromise = MnoeOrganizations.getCurrentId($stateParams.dhbRefId)
+
+    $q.all([userPromise, organizationPromise]).then(
+      ->
+        # Display the layout
+        $rootScope.isLoggedIn = true
+
+        # Pre-load the market place
+        MnoeMarketplace.getApps()
     )
   )

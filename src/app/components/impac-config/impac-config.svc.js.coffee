@@ -5,7 +5,7 @@ angular.module 'mnoEnterpriseAngular'
       MnoeCurrentUser.get()
 
     @getOrganizations = ->
-      userOrgs = MnoeCurrentUser.get().then(
+      userOrgsPromise = MnoeCurrentUser.get().then(
         ->
           userOrgs = MnoeCurrentUser.user.organizations
 
@@ -16,7 +16,7 @@ angular.module 'mnoEnterpriseAngular'
           return userOrgs
       )
 
-      currentOrgId = MnoeOrganizations.get().then(
+      currentOrgIdPromise = MnoeOrganizations.get(MnoeOrganizations.selectedId).then(
         ->
           currentOrgId = parseInt(MnoeOrganizations.selectedId)
 
@@ -27,7 +27,7 @@ angular.module 'mnoEnterpriseAngular'
           return currentOrgId
       )
 
-      $q.all([userOrgs, currentOrgId]).then(
+      $q.all([userOrgsPromise, currentOrgIdPromise]).then(
         (responses) ->
           return {organizations: responses[0], currentOrgId: responses[1]}
       )

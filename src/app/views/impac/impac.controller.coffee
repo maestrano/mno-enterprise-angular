@@ -1,23 +1,25 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller 'ImpacController', ($scope, $state, MnoeOrganizations, DOCK_CONFIG) ->
+  .controller 'ImpacController', ($scope, $state, ImpacDashboardsSvc, MnoeCurrentUser, MnoeOrganizations, DOCK_CONFIG) ->
     'ngInject'
 
     vm = this
+    vm.isImpacShown = false
     vm.isDockEnabled = DOCK_CONFIG.enabled
 
     #====================================
     # Post-Initialization
     #====================================
-    $scope.$watch(MnoeOrganizations.getSelectedId, (newValue) ->
-      vm.isImpacShown = true
-
-      # Fetch current organization to check if user is allowed
-      MnoeOrganizations.get().then(
-        ->
-          # Impac is displayed only to admin and super admin
-          vm.isImpacShown = MnoeOrganizations.role.atLeastAdmin()
-          $state.go('home.login') unless vm.isImpacShown
-
+    $scope.$watch(MnoeOrganizations.getSelectedId, (newValue, oldValue) ->
+      MnoeCurrentUser.get().then(
+        (response) ->
+          selectedOrg = _.find(response.organizations, {id: parseInt(newValue)})
+          # Needs to be at least admin to display impac! or user is redirected to apps dashboard
+          if selectedOrg.current_user_role == "Super Admin" || selectedOrg.current_user_role == "Admin"
+            # Display impac! and force it to reload if necessary
+            vm.isImpacShown = true
+            ImpacDashboardsSvc.reload(true) if newValue? && oldValue? && newValue != oldValue
+          else
+            $state.go('home.apps')
       ) if newValue?
     )
 
