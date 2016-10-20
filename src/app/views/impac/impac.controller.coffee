@@ -14,7 +14,7 @@ angular.module 'mnoEnterpriseAngular'
         (response) ->
           selectedOrg = _.find(response.organizations, {id: parseInt(newValue)})
           # Needs to be at least admin to display impac! or user is redirected to apps dashboard
-          if selectedOrg.current_user_role == "Super Admin" || selectedOrg.current_user_role == "Admin"
+          if MnoeOrganizations.role.atLeastAdmin(selectedOrg.current_user_role)
             # Display impac! and force it to reload if necessary
             vm.isImpacShown = true
             ImpacDashboardsSvc.reload(true) if newValue? && oldValue? && newValue != oldValue

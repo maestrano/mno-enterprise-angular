@@ -16,11 +16,7 @@ angular.module 'mnoEnterpriseAngular'
           MnoeCurrentUser.get().then(
             (response) ->
               selectedOrg = _.find(response.organizations, {id: parseInt(newValue)})
-              if selectedOrg.current_user_role == "Super Admin" || selectedOrg.current_user_role == "Admin"
-                $scope.isAdmin = true
-              else
-                $scope.isAdmin = false
-
+              $scope.isAdmin = MnoeOrganizations.role.atLeastAdmin(selectedOrg.current_user_role)
           ) if newValue?
         )
 
