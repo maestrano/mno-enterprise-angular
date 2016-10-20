@@ -30,48 +30,14 @@ angular.module 'mnoEnterpriseAngular'
         currency = (PRICING_CONFIG && PRICING_CONFIG.currency) || 'AUD'
         vm.pricing_plans = plans[currency] || plans.AUD || plans.default
 
-        # Get the current organization id
-        MnoeOrganizations.getCurrentId().then(
-          (orgId) ->
-            vm.current_organization = {
-              id: orgId
-            }
-
-            #  Get the list of organizations
-            MnoeCurrentUser.get().then(
-              (response) ->
-                vm.organizations = {}  # Hash of organizations id -> {obj}
-                vm.authorized_organizations = {}
-
-                vm.filterAuthorizedOrga(response.organizations)
-                vm.hasAuthorizedOrganizations = !_.isEmpty(vm.authorized_organizations)
-            )
-        )
-
-      # Filter the authorized organizations for this user
-      vm.filterAuthorizedOrga = (organizations) ->
-        organizations.map(
-          (orga) ->
-            vm.organizations[orga.id] = orga
-            vm.authorized_organizations[orga.id] = orga if MnoeOrganizations.role.atLeastPowerUser(orga.current_user_role)
-        )
-
-      # Check if the user is allowed to add apps to the given organization
-      vm.isUserAuthorized = (orgId) ->
-        currentUserRole = vm.organizations[orgId].current_user_role
-        MnoeOrganizations.role.atLeastPowerUser(currentUserRole)
-
-      # Change current organization
-      vm.updateUserAuthorization = () ->
-        vm.current_organization.isUserAuthorized = vm.isUserAuthorized(vm.current_organization.id)
-
-      vm.changeOrganisation = ->
-        MnoeOrganizations.get(vm.current_organization.id).then(
+        # Get the user role in this organization
+        MnoeCurrentUser.get().then(
           (response) ->
+            vm.user_role = _.find(response.organizations, {id: parseInt(MnoeOrganizations.selectedId)}).current_user_role
         )
 
       vm.addApplication = ->
-        MnoeOrganizations.purchaseApp(vm.app, vm.current_organization.id)
+        MnoeOrganizations.purchaseApp(vm.app, MnoeOrganizations.selectedId)
 
       # Check that the testimonial is not empty
       vm.isTestimonialShown = (testimonial) ->
@@ -100,8 +66,7 @@ angular.module 'mnoEnterpriseAngular'
         MnoeAppInstances.clearCache()
 
         # Get the authorization status for the current organization
-        vm.current_organization.isUserAuthorized = vm.isUserAuthorized(vm.current_organization.id)
-        if vm.current_organization.isUserAuthorized
+        if MnoeOrganizations.role.atLeastPowerUser(vm.user_role)
           vm.addApplication()
         else  # Open a modal to change the organization
           vm.openChooseOrgaModal()
@@ -124,12 +89,24 @@ angular.module 'mnoEnterpriseAngular'
           }
           else vm.launchAppInstance()
 
-        modalInstance = $uibModal.open(
+        $uibModal.open(
           templateUrl: modalInfo.template
           controller: modalInfo.controller
           resolve:
             app: ->
               vm.appInstance
+        )
+
+      #====================================
+      # Choose App Modal
+      #====================================
+      vm.openChooseOrgaModal = ->
+        $uibModal.open(
+          backdrop: 'static'
+          windowClass: 'inverse'
+          size: 'lg'
+          templateUrl: 'app/views/marketplace/modals/choose-orga-modal.html'
+          controller: 'MarketplaceChooseOrgaModalCtrl'
         )
 
       vm.isPriceShown = PRICING_CONFIG && PRICING_CONFIG.enabled
@@ -148,28 +125,6 @@ angular.module 'mnoEnterpriseAngular'
         cart.config.organizationId = MnoeOrganizations.selectedId
         cart.bundle = { app_instances: [{app: { id: vm.app.id }}] }
         cart.isOpen = true
-
-      #====================================
-      # Choose App Modal
-      #====================================
-      vm.openChooseOrgaModal = ->
-        vm.chooseOrgaModalInstance = $uibModal.open({
-          backdrop: 'static'
-          size: 'lg'
-          templateUrl: 'app/views/marketplace/modals/choose-orga-modal.html'
-          windowClass: 'inverse'
-          scope: $scope
-        })
-
-      vm.closeChooseOrgaModal = ->
-        vm.chooseOrgaModalInstance.close()
-
-      vm.cancelChooseOrgaModal = ->
-        MnoeOrganizations.getCurrentId().then(
-          (orgId) ->
-            vm.current_organization.id = orgId
-        )
-        vm.chooseOrgaModalInstance.close()
 
       #====================================
       # Post-Initialization
