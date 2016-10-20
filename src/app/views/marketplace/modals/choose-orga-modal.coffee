@@ -12,6 +12,7 @@ angular.module 'mnoEnterpriseAngular'
   $scope.current_organization = {
     id: MnoeOrganizations.selectedId
   }
+
   #  Get the list of all the user organizations
   MnoeCurrentUser.get().then(
     (response) ->  # Hash of organizations id -> {organization obj}
@@ -39,7 +40,10 @@ angular.module 'mnoEnterpriseAngular'
 
   # Add a new app instance to the current user organization
   $scope.addApplication = ->
-    MnoeOrganizations.purchaseApp($scope.app, $scope.current_organization.id)
+    MnoeOrganizations.purchaseApp($scope.app, $scope.current_organization.id).then(
+      () ->
+        $state.go('home.impac')
+    )
 
   # Close the current modal
   $scope.closeChooseOrgaModal = ->
