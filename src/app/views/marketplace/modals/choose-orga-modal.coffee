@@ -33,10 +33,11 @@ angular.module 'mnoEnterpriseAngular'
 
   # Add a new app instance to the current user organization
   $scope.addApplication = ->
+    $scope.isLoading = true
     MnoeOrganizations.purchaseApp($scope.app, $scope.current_organization.id).then(
       (response) ->
         $uibModalInstance.close(response)
-    )
+    ).finally(-> $scope.isLoading = false)
 
   # Close the current modal
   $scope.closeChooseOrgaModal = ->
