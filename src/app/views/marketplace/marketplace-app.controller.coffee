@@ -2,8 +2,8 @@
 #
 #============================================
 angular.module 'mnoEnterpriseAngular'
-  .controller('DashboardMarketplaceAppCtrl',
-    ($q, $scope, $stateParams, $state, $sce, $window, MnoeMarketplace, $uibModal, MnoeOrganizations, MnoeCurrentUser, MnoeAppInstances, PRICING_CONFIG) ->
+  .controller('DashboardMarketplaceAppCtrl',($q, $scope, $stateParams, $state, $sce, $window, toastr,
+    MnoeMarketplace, $uibModal, MnoeOrganizations, MnoeCurrentUser, MnoeAppInstances, PRICING_CONFIG) ->
 
       vm = this
 
@@ -17,6 +17,9 @@ angular.module 'mnoEnterpriseAngular'
       # An already installed app, conflicting with the app because it contains a common subcategory
       # that is not multi instantiable, if any
       vm.conflictingApp = null
+      # Enabling pricing
+      vm.isPriceShown = PRICING_CONFIG && PRICING_CONFIG.enabled
+
       #====================================
       # Scope Management
       #====================================
@@ -25,19 +28,15 @@ angular.module 'mnoEnterpriseAngular'
         vm.appInstance = appInstance
         vm.conflictingApp = conflictingApp
         vm.app.description = $sce.trustAsHtml(app.description)
-        vm.isLoading = false
+
         plans = vm.app.pricing_plans
         currency = (PRICING_CONFIG && PRICING_CONFIG.currency) || 'AUD'
         vm.pricing_plans = plans[currency] || plans.AUD || plans.default
 
         # Get the user role in this organization
-        MnoeCurrentUser.get().then(
-          (response) ->
-            vm.user_role = _.find(response.organizations, {id: parseInt(MnoeOrganizations.selectedId)}).current_user_role
-        )
+        MnoeOrganizations.get().then((response) -> vm.user_role = response.current_user.role)
 
-      vm.addApplication = ->
-        MnoeOrganizations.purchaseApp(vm.app, MnoeOrganizations.selectedId).then(-> $state.go('home.impac'))
+        vm.isLoading = false
 
       # Check that the testimonial is not empty
       vm.isTestimonialShown = (testimonial) ->
@@ -62,17 +61,36 @@ angular.module 'mnoEnterpriseAngular'
           else
             "INSTALLABLE"
 
-      vm.provisionLink = () ->
+      vm.provisionApp = () ->
+        vm.isLoadingButton = true
         MnoeAppInstances.clearCache()
 
         # Get the authorization status for the current organization
         if MnoeOrganizations.role.atLeastPowerUser(vm.user_role)
-          vm.addApplication()
+          purchasePromise = MnoeOrganizations.purchaseApp(vm.app, MnoeOrganizations.selectedId)
         else  # Open a modal to change the organization
-          vm.openChooseOrgaModal()
+          purchasePromise = openChooseOrgaModal().result
+
+        purchasePromise.then(
+          ->
+            $state.go('home.impac')
+            toastr.success(vm.app.name + " has been successfully added.")
+          (error) ->
+            toastr.error(vm.app.name + " has not been added, please try again.")
+            MnoErrorsHandler.processServerError(error)
+        ).finally(-> vm.isLoadingButton = false)
 
       vm.launchAppInstance = ->
         $window.open("/mnoe/launch/#{vm.appInstance.uid}", '_blank')
+
+      openChooseOrgaModal = ->
+        $uibModal.open(
+          backdrop: 'static'
+          templateUrl: 'app/views/marketplace/modals/choose-orga-modal.html'
+          controller: 'MarketplaceChooseOrgaModalCtrl'
+          resolve:
+            app: vm.app
+        )
 
       #====================================
       # App Connect modal
@@ -93,23 +111,8 @@ angular.module 'mnoEnterpriseAngular'
           templateUrl: modalInfo.template
           controller: modalInfo.controller
           resolve:
-            app: ->
-              vm.appInstance
+            app: vm.appInstance
         )
-
-      #====================================
-      # Choose App Modal
-      #====================================
-      vm.openChooseOrgaModal = ->
-        $uibModal.open(
-          backdrop: 'static'
-          windowClass: 'inverse'
-          size: 'lg'
-          templateUrl: 'app/views/marketplace/modals/choose-orga-modal.html'
-          controller: 'MarketplaceChooseOrgaModalCtrl'
-        )
-
-      vm.isPriceShown = PRICING_CONFIG && PRICING_CONFIG.enabled
 
       #====================================
       # Cart Management

@@ -429,7 +429,7 @@
   "mno_enterprise.templates.dashboard.marketplace.app_selection.cancel": "Cancel",
   "mno_enterprise.templates.dashboard.marketplace.app_selection.select_orga": "Select an organization",
   "mno_enterprise.templates.dashboard.marketplace.app_selection.no_orga_authorized": "Invalid purchase",
-  "mno_enterprise.templates.dashboard.marketplace.app_selection.unauthorized_to_add_app": "Unfortunately you do not have permission to purchase products for this organization.",
+  "mno_enterprise.templates.dashboard.marketplace.app_selection.unauthorized_to_add_app": "Unfortunately you do not have permission to purchase products for this organization. Please select another organization.",
   "mno_enterprise.templates.dashboard.organization.arrears.title": "Sorry we couldn't process this payment",
   "mno_enterprise.templates.dashboard.organization.arrears.explanation": "Your account is currently in arrears as we were unable to charge your designated credit card.",
   "mno_enterprise.templates.dashboard.organization.arrears.recommendation": "Please make sure your credit card details are up to date, then click the button below.",
