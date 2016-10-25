@@ -15,7 +15,7 @@
 
     <div class="box-content scrollbar-hidden" uib-collapse="selectBox.isClosed">
       <ul class="list-unstyled">
-        <li ng-repeat="organization in selectBox.user.organizations | orderBy:'name'"  ng-click="selectBox.changeTo(organization)">
+        <li ng-repeat="organization in selectBox.user.organizations | orderBy:'name'" ng-click="selectBox.changeTo(organization)">
           <a>
             <i class="fa" ng-class="organization === selectBox.organization ? 'fa-dot-circle-o' : 'fa-circle-o'"></i>
             <span>{{organization.name}}</span>
