@@ -7,7 +7,7 @@
         <button ng-click="editor.reset({published:true})" class="btn btn-default">Reset to published style</button>
         <button ng-click="editor.save({publish:true})" class="btn btn-danger">Publish</button>
       </div>
-      <div ng-show="editor.busy"><i class="fa fa-spinner fa-spin fa-2x"></i></div>
+      <div ng-show="editor.busy"><i class="fa fa-spinner fa-pulse fa-2x"></i></div>
     </div>
 
     <uib-tabset>
@@ -49,7 +49,7 @@
             <button ng-click="editor.import()" class="btn btn-danger">Import</button>
             <button ng-click="editor.export()" class="btn btn-danger">Export</button>
           </div>
-          <div ng-show="editor.busy"><i class="fa fa-spinner fa-spin fa-2x"></i></div>
+          <div ng-show="editor.busy"><i class="fa fa-spinner fa-pulse fa-2x"></i></div>
         </div>
         <div class="row top-buffer-1">
           <textarea class="form-control" ng-model="editor.output" rows="15" style="font-family: monospace"></textarea>

@@ -1,6 +1,6 @@
 # Service for managing the users.
 angular.module 'mnoEnterpriseAngular'
-  .service 'MnoeOrganizations', ($state, $cookies, $log, $q, MnoeApiSvc, MnoeCurrentUser, toastr) ->
+  .service 'MnoeOrganizations', ($state, $cookies, $log, $q, MnoeApiSvc, MnoeCurrentUser) ->
     _self = @
 
     organizationsApi = MnoeApiSvc.all('organizations')
@@ -89,13 +89,9 @@ angular.module 'mnoEnterpriseAngular'
     @purchaseApp = (app, orgId = _self.selectedId) ->
       MnoeApiSvc.one('organizations', orgId).all('/app_instances').post({nid: app.nid}).then(
         (response) ->
-          toastr.success(app.name + " has been successfully added.")
-
           # Change current organization if another one has been selected
-          organizationPromise = null
           _self.get(orgId)
-        (error) ->
-          toastr.error(app.name + " has not been added, please try again.")
+          response
       )
 
     # Accept an array of invites
