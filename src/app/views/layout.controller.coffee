@@ -6,11 +6,13 @@ angular.module 'mnoEnterpriseAngular'
     $scope.$watch(MnoeOrganizations.getSelectedId, (newValue) ->
       MnoeCurrentUser.get().then(
         (response) ->
-          selectedOrg = _.find(response.organizations, {id: parseInt(newValue)})
-          if MnoeOrganizations.role.atLeastAdmin(selectedOrg.current_user_role)
-            $state.go('home.impac')
-          else
-            $state.go('home.apps')
+          # We only check the role for those states
+          if $state.is('home.impac') || $state.is('home.apps')
+            selectedOrg = _.find(response.organizations, {id: parseInt(newValue)})
+            if MnoeOrganizations.role.atLeastAdmin(selectedOrg.current_user_role)
+              $state.go('home.impac')
+            else
+              $state.go('home.apps')
       ) if newValue?
     )
 

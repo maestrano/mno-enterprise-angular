@@ -1,12 +1,4 @@
 angular.module 'mnoEnterpriseAngular'
-  # Impac configuration
-  .run((ImpacLinking, ImpacConfigSvc) ->
-    data =
-      user: ImpacConfigSvc.getUserData
-      organizations: ImpacConfigSvc.getOrganizations
-
-    ImpacLinking.linkData(data)
-  )
 
   # xeditable-anugular configuration
   .run((editableOptions) ->

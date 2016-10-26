@@ -17,7 +17,7 @@ angular.module 'mnoEnterpriseAngular'
           if MnoeOrganizations.role.atLeastAdmin(selectedOrg.current_user_role)
             # Display impac! and force it to reload if necessary
             vm.isImpacShown = true
-            ImpacDashboardsSvc.reload(true) if newValue? && oldValue? && newValue != oldValue
+            ImpacDashboardsSvc.reload(true) if newValue? && oldValue? && parseInt(newValue) != parseInt(oldValue)
           else
             $state.go('home.apps')
       ) if newValue?
