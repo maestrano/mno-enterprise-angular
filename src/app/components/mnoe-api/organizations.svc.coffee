@@ -46,16 +46,17 @@ angular.module 'mnoEnterpriseAngular'
     @create = (organization) ->
       MnoeApiSvc.all('/organizations').post(organization).then(
         (response) ->
-          # Add the new org in the menu
-          _self.selectedId = _self.selected.organization.id
-          MnoeCurrentUser.user.organizations.push(response.plain().organization)
-
-          # Reload the permissions
+          # Reload the permissions and save organization id in a cookie
           MnoeCurrentUser.refresh().then(
             ->
               _self.selected = response.plain()
               _self.selectedId = _self.selected.organization.id
+              $cookies.put("#{MnoeCurrentUser.user.id}_dhb_ref_id", _self.selectedId)
           )
+
+          # Add the new org in the menu
+          _self.selectedId = _self.selected.organization.id
+          MnoeCurrentUser.user.organizations.push(response.plain().organization)
 
           response
       )

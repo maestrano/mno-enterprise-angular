@@ -2,7 +2,7 @@
 #============================================
 #
 #============================================
-DashboardCompanySelectboxCtrl = ($scope, $location, $stateParams, $cookies, $sce, $uibModal, MnoeCurrentUser, MnoeOrganizations, MnoeAppInstances) ->
+DashboardCompanySelectboxCtrl = ($scope, $location, $state, $stateParams, $cookies, $sce, $uibModal, MnoeCurrentUser, MnoeOrganizations, MnoeAppInstances) ->
   'ngInject'
 
   #====================================
@@ -31,10 +31,6 @@ DashboardCompanySelectboxCtrl = ($scope, $location, $stateParams, $cookies, $sce
   selectBox.close = ->
     selectBox.isClosed = true
 
-  selectBox.createNewOrga = ->
-    newOrgModal.open()
-    selectBox.close()
-
   #====================================
   # Create Company Modal
   #====================================
@@ -48,6 +44,7 @@ DashboardCompanySelectboxCtrl = ($scope, $location, $stateParams, $cookies, $sce
     modalInstance.result.then(
       (selectedItem) ->
         selectBox.changeTo(selectedItem)
+        $state.go('home.impac')
     )
 
   #====================================
