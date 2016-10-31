@@ -3,7 +3,7 @@
 #============================================
 angular.module 'mnoEnterpriseAngular'
   .controller('DashboardMarketplaceAppCtrl',($q, $scope, $stateParams, $state, $sce, $window, toastr,
-    MnoeMarketplace, $uibModal, MnoeOrganizations, MnoeCurrentUser, MnoeAppInstances, PRICING_CONFIG) ->
+    MnoeMarketplace, $uibModal, MnoeOrganizations, MnoeCurrentUser, MnoeAppInstances, MnoErrorsHandler, PRICING_CONFIG) ->
 
       vm = this
 
