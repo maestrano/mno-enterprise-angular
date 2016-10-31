@@ -1,6 +1,6 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('DashboardCompanyCtrl',
-    ($scope, MnoeOrganizations) ->
+    ($scope, MnoeOrganizations, MnoeTeams) ->
       vm = @
 
       #====================================
@@ -37,8 +37,12 @@ angular.module 'mnoEnterpriseAngular'
       #====================================
       # Post-Initialization
       #====================================
+      $scope.$watch MnoeOrganizations.getSelectedId, (val) ->
+        if val?
+          vm.isLoading = true
+          MnoeTeams.getTeams(true)
+
       $scope.$watch MnoeOrganizations.getSelected, (val) ->
-        vm.isLoading = true
         if val?
           vm.initialize()
 
