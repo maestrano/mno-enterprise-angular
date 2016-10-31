@@ -25,32 +25,38 @@ angular.module 'mnoEnterpriseAngular'
   )
 
   .config ($httpProvider) ->
-    $httpProvider.interceptors.push ($q, $window) ->
+    $httpProvider.interceptors.push ($q, $window, $injector, $log) ->
       {
         responseError: (rejection) ->
-          if rejection.status == 401
-            # Redirect to login page
-            console.log "User is not connected!"
-            $window.location.href = '/'
+          toastr = $injector.get('toastr')
 
-          $q.reject rejection
+          switch rejection.status
+            # Unauthenticated
+            when 401
+              # Redirect to login page
+              console.log "User is not connected!"
+              $window.location.href = '/'
+
+            # Password expired
+            when 403
+              if rejection.data.error && rejection.data.error == "Your password is expired. Please renew your password."
+                $log.info('[PasswordExpiredInterceptor] Password Expired!')
+                $window.location.href = "/mnoe/auth/users/password_expired"
+                # return an empty promise to skip all chaining promises
+                return $q.defer().promise
+              else
+                return $q.reject(rejection)
+
+            # Redirect to an error page when MnoHub is not available
+            when 429, 503
+              $log.info('[MnoHubErrorInterceptor] MnoHub error, redirecting to error page')
+              $window.location.href = "/mnoe/errors/#{rejection.status}"
+              toastr.error("errors.#{rejection.status}.description", "errors.#{rejection.status}.title")
+              return $q.defer().promise
+
+            else
+              $q.reject rejection
       }
-
-  .factory('PasswordExpiredInterceptor', ($log, $q, $location, $window) ->
-    return {
-      'responseError': (response) ->
-        if response.status == 403 && response.data.error && response.data.error == "Your password is expired. Please renew your password."
-          $log.info('[PasswordExpiredInterceptor] Password Expired!')
-          $window.location.href = "/mnoe/auth/users/password_expired"
-          # return an empty promise to skip all chaining promises
-          return $q.defer().promise
-        else
-          return $q.reject(response)
-    }
-  )
-
-  .config ($httpProvider) ->
-    $httpProvider.interceptors.push('PasswordExpiredInterceptor')
 
   .config(($sceDelegateProvider) ->
     'ngInject'
