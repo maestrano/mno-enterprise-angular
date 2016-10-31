@@ -5,8 +5,12 @@ angular.module 'mnoEnterpriseAngular'
     # Store teams
     @teams = []
 
-    @getTeams = ->
-      MnoeApiSvc.one('organizations', MnoeOrganizations.selectedId).one('teams').getList().then(
+    teamsPromise = null
+
+    @getTeams = (force = false) ->
+      return teamsPromise if teamsPromise != null && !force
+
+      teamsPromise = MnoeApiSvc.one('organizations', MnoeOrganizations.selectedId).one('teams').getList().then(
         (response) ->
           _self.teams = response.plain()
           _self.teams

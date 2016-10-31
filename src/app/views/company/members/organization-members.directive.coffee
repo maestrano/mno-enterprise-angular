@@ -244,11 +244,11 @@ DashboardOrganizationMembersCtrl = ($scope, $modal, $sce, MnoeOrganizations, Mno
   #====================================
   # Post-Initialization
   #====================================
-  $scope.$watch(MnoeOrganizations.getSelected, (newValue) ->
+  $scope.$watch(MnoeOrganizations.getSelectedId, (newValue) ->
     if newValue?
       # Get the new teams for this organization
       MnoeTeams.getTeams().then(
-        (response) ->
+        ->
           $scope.initialize(MnoeOrganizations.selected.organization.members, MnoeTeams.teams)
       )
   )

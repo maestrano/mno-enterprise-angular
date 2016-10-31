@@ -151,7 +151,7 @@ DashboardOrganizationTeamListCtrl = ($scope, $window, $modal, $q, MnoeCurrentUse
   #====================================
   # Post-Initialization
   #====================================
-  $scope.$watch(MnoeOrganizations.getSelected, (newValue) ->
+  $scope.$watch(MnoeOrganizations.getSelectedId, (newValue) ->
     if newValue?
       # Get the new teams for this organization
       MnoeTeams.getTeams().then(
