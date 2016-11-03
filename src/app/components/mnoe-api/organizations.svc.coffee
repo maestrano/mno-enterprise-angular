@@ -46,19 +46,17 @@ angular.module 'mnoEnterpriseAngular'
     @create = (organization) ->
       MnoeApiSvc.all('/organizations').post(organization).then(
         (response) ->
-          # Reload the permissions and save organization id in a cookie
+          deferred = $q.defer()
+
+          # Reload the permission table
           MnoeCurrentUser.refresh().then(
             ->
-              _self.selected = response.plain()
-              _self.selectedId = _self.selected.organization.id
-              $cookies.put("#{MnoeCurrentUser.user.id}_dhb_ref_id", _self.selectedId)
+              # The promise is resolved and
+              # return the newly created organisation
+              deferred.resolve(response.organization)
           )
 
-          # Add the new org in the menu
-          _self.selectedId = _self.selected.organization.id
-          MnoeCurrentUser.user.organizations.push(response.plain().organization)
-
-          response
+          deferred.promise
       )
 
     # TODO: Standardize API tobe able to use Restangular default behaviour (_self.selected.put())

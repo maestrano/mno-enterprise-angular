@@ -2,7 +2,7 @@
 #============================================
 #
 #============================================
-DashboardCompanySelectboxCtrl = ($scope, $location, $state, $stateParams, $cookies, $sce, $uibModal, MnoeCurrentUser, MnoeOrganizations, MnoeAppInstances) ->
+DashboardCompanySelectboxCtrl = ($scope, $state, $stateParams, $uibModal, MnoeCurrentUser, MnoeOrganizations, MnoeAppInstances) ->
   'ngInject'
 
   #====================================
@@ -15,19 +15,24 @@ DashboardCompanySelectboxCtrl = ($scope, $location, $state, $stateParams, $cooki
     organization: ''
   }
 
+  # Switch to another company
   selectBox.changeTo = (organization) ->
+    # Do nothing if click on the already selected company
     return if organization.id == parseInt(MnoeOrganizations.selectedId)
+    # Switch to selected company
     MnoeAppInstances.emptyAppInstances()
     MnoeAppInstances.clearCache()
     MnoeOrganizations.get(organization.id)
     selectBox.close()
 
-  selectBox.selectOrganization = ->
+  selectOrganization = ->
     selectBox.organization = _.find(MnoeCurrentUser.user.organizations, { id: parseInt(MnoeOrganizations.selectedId) })
 
+  # Toggle the select box
   selectBox.toggle = ->
     selectBox.isClosed = !selectBox.isClosed
 
+  # Close the select box
   selectBox.close = ->
     selectBox.isClosed = true
 
@@ -40,10 +45,11 @@ DashboardCompanySelectboxCtrl = ($scope, $location, $state, $stateParams, $cooki
       controller: 'CreateCompanyModalCtrl'
       size: 'lg'
       windowClass: 'inverse'
+      backdrop: 'static'
     )
     modalInstance.result.then(
-      (selectedItem) ->
-        selectBox.changeTo(selectedItem)
+      (organization) ->
+        selectBox.changeTo(organization)
         $state.go('home.impac')
     )
 
@@ -52,11 +58,7 @@ DashboardCompanySelectboxCtrl = ($scope, $location, $state, $stateParams, $cooki
   #====================================
   $scope.$watch MnoeOrganizations.getSelectedId, (val) ->
     if val?
-      selectBox.selectOrganization()
-
-  $scope.$watch MnoeOrganizations.getSelected, (val) ->
-    if val?
-      selectBox.selectOrganization()
+      selectOrganization()
 
 angular.module 'mnoEnterpriseAngular'
   .directive('dashboardCompanySelectbox', ->
