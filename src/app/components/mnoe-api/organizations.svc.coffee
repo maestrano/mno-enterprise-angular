@@ -12,12 +12,6 @@ angular.module 'mnoEnterpriseAngular'
     @getSelectedId = ->
       _self.selectedId
 
-    # Store the current user role
-    @currentUserRole = null
-
-    @getCurrentUserRole = ->
-      _self.currentUserRole
-
     # Store the selected entity
     @selected = null
 
@@ -43,10 +37,6 @@ angular.module 'mnoEnterpriseAngular'
         (response) ->
           # Save the organization
           _self.selected = response.plain()
-
-          # Update the user role in this organization
-          updateUserRole()
-
           # Use user id to avoid another user to load with an unknown organisation
           $cookies.put("#{MnoeCurrentUser.user.id}_dhb_ref_id", _self.selectedId)
           response
@@ -66,8 +56,6 @@ angular.module 'mnoEnterpriseAngular'
           # Add the new org in the menu
           _self.selectedId = _self.selected.organization.id
           MnoeCurrentUser.user.organizations.push(response.plain().organization)
-          # Update the user role for this organization
-          updateUserRole()
 
           response
       )
@@ -139,9 +127,9 @@ angular.module 'mnoEnterpriseAngular'
       MnoeApiSvc.one('organizations', _self.selectedId).doPUT(data, '/update_member').then(
         (response) ->
           # Update the current user role if it was changed
-          if member.email == MnoeCurrentUser.user.email
-            _self.currentUserRole = member.role
-
+          if member.email == _self.selected.current_user.email
+            _self.selected.current_user.role = member.role
+          # Return the list of members
           response.members
       )
 
@@ -157,10 +145,6 @@ angular.module 'mnoEnterpriseAngular'
       # Attempt to load organization from param
       if dhbRefId
         _self.selectedId = dhbRefId
-
-        # Update the user role in this organization
-        updateUserRole()
-
         $cookies.put("#{MnoeCurrentUser.user.id}_dhb_ref_id", _self.selectedId)
         $log.debug "MnoeOrganizations.getCurrentId: dhbRefId", _self.selectedId
         return $q.resolve(_self.selectedId)
@@ -172,15 +156,11 @@ angular.module 'mnoEnterpriseAngular'
               # Load organization id stored in cookie
               _self.get(val)
               $log.debug "MnoeOrganizations.getCurrentId: cookie", _self.selectedId
-              # Update the user role in this organization
-              updateUserRole()
               return _self.selectedId
             else
               # Load user's first organization id
               _self.get(response.organizations[0].id)
               $log.debug "MnoeOrganizations.getCurrentId: first", _self.selectedId
-              # Update the user role in this organization
-              updateUserRole()
               return _self.selectedId
         )
 
@@ -217,9 +197,6 @@ angular.module 'mnoEnterpriseAngular'
     _self.role.atLeastSuperAdmin = (role) ->
       _self.role.isSuperAdmin(role)
 
-    updateUserRole = ->
-      _self.currentUserRole = _.find(MnoeCurrentUser.user.organizations, {id: parseInt(_self.selectedId)}).current_user_role
-
     #======================================
     # Access Management
     #======================================
@@ -242,14 +219,14 @@ angular.module 'mnoEnterpriseAngular'
     _self.can.update = {
       appInstance: (obj = null) -> _self.can.create.appInstance(obj) # call similar permission
       billing: (obj = null) -> _self.can.create.billing(obj) # call similar permission
-      member: (obj = null, hasOneSuperAdmin = true) -> _self.can.create.member(obj) && (obj.role != 'Super Admin' || !_self.role.isSuperAdmin() || !hasOneSuperAdmin)
+      member: (obj = null) -> _self.can.create.member(obj) && (obj.role != 'Super Admin' || _self.role.isSuperAdmin())
       organizationSettings: (obj = null) -> _self.can.create.organizationSettings(obj) # call similar permission
     }
 
     _self.can.destroy = {
       appInstance: (obj = null) -> _self.can.create.appInstance(obj) # call similar permission
       billing: (obj = null) -> _self.can.create.billing(obj) # call similar permission
-      member: (obj = null, hasOneSuperAdmin = true) -> _self.can.create.member(obj) && (obj.role != 'Super Admin' || !_self.role.isSuperAdmin() || !hasOneSuperAdmin)
+      member: (obj = null) -> _self.can.create.member(obj) && (obj.role != 'Super Admin' || _self.role.isSuperAdmin())
       organizationSettings: (obj = null) -> _self.can.create.organizationSettings(obj) # call similar permission
     }
 

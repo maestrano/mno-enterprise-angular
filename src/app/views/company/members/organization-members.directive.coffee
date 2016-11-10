@@ -35,7 +35,10 @@ DashboardOrganizationMembersCtrl = ($scope, $modal, $sce, MnoeOrganizations, Mno
     MnoeOrganizations.can.create.member()
 
   $scope.isEditShown = (member) ->
-    MnoeOrganizations.can.update.member(member, $scope.hasManySuperAdmin)
+    if !$scope.hasManySuperAdmin && member.email == MnoeCurrentUser.user.email && $scope.user_role == 'Super Admin'
+      false
+    else
+      MnoeOrganizations.can.update.member(member)
 
   $scope.isRemoveShown = (member) ->
     # Only if the user is allowed to remove a member and is not removing himself
@@ -49,7 +52,14 @@ DashboardOrganizationMembersCtrl = ($scope, $modal, $sce, MnoeOrganizations, Mno
       return "Invited (#{member.role})"
 
   updateNbOfSuperAdmin = ->
-    $scope.hasManySuperAdmin = _.filter($scope.members, {'role': 'Super Admin'}).length <= 1
+    $scope.hasManySuperAdmin = _.filter($scope.members, {'role': 'Super Admin'}).length > 1
+
+  rolesToDisplay = ->
+    $scope.user_role = _.find(MnoeCurrentUser.user.organizations, {id: parseInt(MnoeOrganizations.selectedId)}).current_user_role if !$scope.user_role
+    if $scope.user_role == 'Super Admin'
+      editionModal.config.roles = ['Member','Power User','Admin','Super Admin']
+    else
+      editionModal.config.roles = ['Member','Power User','Admin']
 
   #====================================
   # User Edition Modal
@@ -64,10 +74,7 @@ DashboardOrganizationMembersCtrl = ($scope, $modal, $sce, MnoeOrganizations, Mno
       scope: $scope
     }
   }
-  if MnoeOrganizations.getCurrentUserRole() == 'Super Admin'
-    editionModal.config.roles = ['Member','Power User','Admin','Super Admin']
-  else
-    editionModal.config.roles = ['Member','Power User','Admin']
+  rolesToDisplay()
 
   editionModal.open = (member) ->
     self = editionModal
@@ -105,6 +112,10 @@ DashboardOrganizationMembersCtrl = ($scope, $modal, $sce, MnoeOrganizations, Mno
         self.errors = ''
         angular.copy(members, $scope.members)
         updateNbOfSuperAdmin()
+        # Update user role
+        if obj.email == MnoeCurrentUser.user.email
+          $scope.user_role = obj.role
+          rolesToDisplay()
         self.close()
       (errors) ->
         self.errors = Utilities.processRailsError(errors)
