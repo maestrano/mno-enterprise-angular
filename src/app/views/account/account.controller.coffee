@@ -90,6 +90,20 @@ angular.module 'mnoEnterpriseAngular'
       vm.isLocalizationOpen = false
 
       # ----------------------------------------------------
+      # Developer Section
+      # ----------------------------------------------------
+      vm.isDevOpen = false
+      vm.user.registerDeveloper = ->
+        MnoeCurrentUser.registerDeveloper(vm.user.model).then(
+          (success) ->
+            angular.extend(vm.user.model, success)
+        )
+        
+      vm.user.revealedSecretKey = false
+      vm.user.revealSecretKey = ->
+        vm.user.revealedSecretKey = !vm.user.revealedSecretKey
+
+      # ----------------------------------------------------
       # Account Deletion
       # ----------------------------------------------------
       # Removed: cf. git log
