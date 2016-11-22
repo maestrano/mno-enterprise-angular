@@ -94,14 +94,14 @@ angular.module 'mnoEnterpriseAngular'
       # ----------------------------------------------------
       vm.isDevOpen = false
       vm.user.registerDeveloper = ->
-        MnoeCurrentUser.registerDeveloper(vm.user.model).then(
+        MnoeCurrentUser.registerDeveloper().then(
           (success) ->
             angular.extend(vm.user.model, success)
         )
-        
-      vm.user.revealedSecretKey = false
-      vm.user.revealSecretKey = ->
-        vm.user.revealedSecretKey = !vm.user.revealedSecretKey
+
+      vm.isSecretKeyRevealed = false
+      vm.user.switchSecretKey = ->
+        vm.isSecretKeyRevealed = !vm.isSecretKeyRevealed
 
       # ----------------------------------------------------
       # Account Deletion
