@@ -68,7 +68,6 @@
 //--------------------------------------
 @dashboard-side-menu-padding:                   30px 0px 0px 14px;
 @dashboard-side-menu-bg-color:                  @bg-inverse-color;
-@dashboard-side-menu-horizontal:                { min-width:550px; };
 
 @dashboard-side-menu-brand-logo-img:            "../images/main-logo.png";
 @dashboard-side-menu-brand-logo:                { background-size: 204px; width: 51px; margin-left: 5px; };
@@ -105,7 +104,6 @@
 @dashboard-cpy-select-bg-color:                 @bg-inverse-color;
 @dashboard-cpy-select-border-radius:            0 0 0 6px;
 @dashboard-cpy-select-border-color:             @text-inverse-link-color;
-@dashboard-cpy-select-padding:                  15px 25px;
 
 @dashboard-cpy-select-header-text-bold-color:   @text-inverse-color;
 @dashboard-cpy-select-header-text-color:        @text-inverse-link-color;
@@ -117,10 +115,7 @@
 @dashboard-cpy-select-link-hover-color:         @text-inverse-link-hover-color;
 @dashboard-cpy-select-link-hover-bg-color:      @bg-inverse-link-hover;
 @dashboard-cpy-select-link-create-text-color:   @text-inverse-strong-color;
-@dashboard-cpy-select-link-create-color:        @decorator-alt-color;
-@dashboard-cpy-select-link-admin-color:         @elem-positive-color;
 
-@dashboard-cpy-select-switch-btn-color:         @dashboard-cpy-select-header-text-color;
 @dashboard-cpy-select-switch-btn-bg-color:      @dashboard-cpy-select-bg-color;
 @dashboard-cpy-select-switch-btn-icon:          { .icon-fa(caret-down); }; //pass a ruleset
 @dashboard-cpy-select-switch-btn-icon-active:   { .icon-fa(caret-up); }; //pass a ruleset
@@ -153,7 +148,7 @@
 /*-----------------------------------------------------------------------*/
 @dashboard-account-tabs-bg-color:                    @bg-inverse-color;
 @dashboard-account-tabs-text-color:                  @text-inverse-color;
-@dashboard-account-panel-bg-color:                   @decorator-alt-color;
+@dashboard-account-panel-bg-color:                   @bg-on-bg-inverse-color;
 @dashboard-account-panel-text-color:                 @text-strong-color;
 @dashboard-account-inline-text-color-checked:        #33d375;
 @dashboard-account-inline-text-color-unchecked:      @elem-cozy-color;
@@ -247,7 +242,7 @@
 // Widgets
 //--------------------------------------
 // Global
-@impac-widget-background-color:                 @bg-inverse-color;
+@impac-widget-background-color:                 @bg-on-bg-inverse-color;
 @impac-widget-text-color:                       @text-inverse-color;
 @impac-widget-text-color-light:                 lighten(@impac-widget-text-color,70%);
 @impac-widget-borders-color:                    lighten(@impac-widget-text-color-light,10%);
@@ -255,7 +250,7 @@
 
 // Title
 @impac-widget-title-text-color:                 darken(@impac-widget-text-color,5%);
-@impac-widget-title-bg:                         @impac-widget-background-color;
+@impac-widget-title-bg:                         @bg-inverse-color;
 @impac-widget-title-border:                     solid 1px @impac-widget-borders-color;
 @impac-widget-title-text-transform:             uppercase;
 @impac-widget-title-text-size:                  12px;
