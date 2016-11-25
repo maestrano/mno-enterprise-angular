@@ -1,13 +1,13 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('DashboardAccountCtrl',
-    ($log, $timeout, toastr, MnoeCurrentUser, MnoErrorsHandler, Miscellaneous, Utilities, I18N_CONFIG) ->
+    ($log, $timeout, toastr, MnoeCurrentUser, MnoErrorsHandler, Miscellaneous, Utilities, I18N_CONFIG, DEVELOPER_SECTION_CONFIG) ->
 
       vm = @
-
       # Scope init
       vm.countryCodes = Miscellaneous.countryCodes
       vm.errors = {}
       vm.success = {}
+      vm.isDeveloperSectionEnabled = DEVELOPER_SECTION_CONFIG.enabled
 
       # User model init
       vm.user = { model: {}, password: {}, loading:false }
@@ -88,6 +88,20 @@ angular.module 'mnoEnterpriseAngular'
       # ----------------------------------------------------
       vm.isLocalizationVisible = I18N_CONFIG.enabled
       vm.isLocalizationOpen = false
+
+      # ----------------------------------------------------
+      # Developer Section
+      # ----------------------------------------------------
+      vm.isDevOpen = false
+      vm.user.registerDeveloper = ->
+        MnoeCurrentUser.registerDeveloper().then(
+          (success) ->
+            angular.extend(vm.user.model, success)
+        )
+
+      vm.isSecretKeyRevealed = false
+      vm.user.switchSecretKey = ->
+        vm.isSecretKeyRevealed = !vm.isSecretKeyRevealed
 
       # ----------------------------------------------------
       # Account Deletion

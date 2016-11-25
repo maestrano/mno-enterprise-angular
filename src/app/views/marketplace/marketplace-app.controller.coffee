@@ -74,7 +74,23 @@ angular.module 'mnoEnterpriseAngular'
         purchasePromise.then(
           ->
             $state.go('home.impac')
-            toastr.success(vm.app.name + " has been successfully added.")
+
+            switch vm.app.stack
+              when 'cloud' then toastr.success(
+                'mno_enterprise.templates.dashboard.marketplace.show.success_launch_notification_body',
+                'mno_enterprise.templates.dashboard.marketplace.show.success_notification_title',
+                {extraData: {name: vm.app.name}, timeout: 10000}
+              )
+              when 'cube' then toastr.success(
+                'mno_enterprise.templates.dashboard.marketplace.show.success_launch_notification_body',
+                'mno_enterprise.templates.dashboard.marketplace.show.success_notification_title',
+                {extraData: {name: vm.app.name}, timeout: 10000}
+              )
+              when 'connector' then toastr.success(
+                'mno_enterprise.templates.dashboard.marketplace.show.success_connect_notification_body',
+                'mno_enterprise.templates.dashboard.marketplace.show.success_notification_title',
+                {extraData: {name: vm.app.name}, timeout: 10000}
+              )
           (error) ->
             toastr.error(vm.app.name + " has not been added, please try again.")
             MnoErrorsHandler.processServerError(error)

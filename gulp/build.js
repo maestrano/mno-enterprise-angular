@@ -69,7 +69,7 @@ gulp.task('html', ['inject', 'partials'], function () {
     .pipe(htmlFilter.restore)
     .pipe(gulp.dest(path.join(conf.paths.dist, '/')))
     .pipe($.size({ title: path.join(conf.paths.dist, '/'), showFiles: true }));
-  });
+});
 
 // Only applies for fonts from bower dependencies
 // Custom fonts are handled by the "other" task

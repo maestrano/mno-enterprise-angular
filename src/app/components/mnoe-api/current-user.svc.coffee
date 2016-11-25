@@ -45,9 +45,14 @@ angular.module 'mnoEnterpriseAngular'
     @update = (user) ->
       MnoeApiSvc.all('current_user').doPUT({user: user}).then(
         (response) ->
-          console.log response
           angular.copy(response, _self.user)
           response
+      )
+
+    @registerDeveloper = () ->
+      MnoeApiSvc.all('/current_user').doPUT({},'/register_developer').then(
+        (response) ->
+          response.current_user
       )
 
     # Update user password

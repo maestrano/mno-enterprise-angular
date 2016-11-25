@@ -37,7 +37,6 @@ angular.module 'mnoEnterpriseAngular'
         (response) ->
           # Save the organization
           _self.selected = response.plain()
-
           # Use user id to avoid another user to load with an unknown organisation
           $cookies.put("#{MnoeCurrentUser.user.id}_dhb_ref_id", _self.selectedId)
           response
@@ -125,6 +124,10 @@ angular.module 'mnoEnterpriseAngular'
       data = { member: member }
       MnoeApiSvc.one('organizations', _self.selectedId).doPUT(data, '/update_member').then(
         (response) ->
+          # Update the current user role if it was changed
+          if member.email == _self.selected.current_user.email
+            _self.selected.current_user.role = member.role
+          # Return the list of members
           response.members
       )
 
@@ -214,14 +217,14 @@ angular.module 'mnoEnterpriseAngular'
     _self.can.update = {
       appInstance: (obj = null) -> _self.can.create.appInstance(obj) # call similar permission
       billing: (obj = null) -> _self.can.create.billing(obj) # call similar permission
-      member: (obj = null) -> _self.can.create.member(obj) # call similar permission
+      member: (obj = null) -> _self.can.create.member(obj) && (obj.role != 'Super Admin' || _self.role.isSuperAdmin())
       organizationSettings: (obj = null) -> _self.can.create.organizationSettings(obj) # call similar permission
     }
 
     _self.can.destroy = {
       appInstance: (obj = null) -> _self.can.create.appInstance(obj) # call similar permission
       billing: (obj = null) -> _self.can.create.billing(obj) # call similar permission
-      member: (obj = null) -> _self.can.create.member(obj) # call similar permission
+      member: (obj = null) -> _self.can.create.member(obj) && (obj.role != 'Super Admin' || _self.role.isSuperAdmin())
       organizationSettings: (obj = null) -> _self.can.create.organizationSettings(obj) # call similar permission
     }
 

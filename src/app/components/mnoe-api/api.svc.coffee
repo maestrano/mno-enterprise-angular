@@ -3,7 +3,6 @@ angular.module 'mnoEnterpriseAngular'
     return Restangular.withConfig((RestangularProvider) ->
       RestangularProvider.setBaseUrl('/mnoe/jpi/v1')
       RestangularProvider.setDefaultHeaders({Accept: "application/json"})
-
       # Unwrap api response
       RestangularProvider.addResponseInterceptor(
         (data, operation, what, url, response, deferred) ->
