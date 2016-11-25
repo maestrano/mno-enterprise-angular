@@ -70,5 +70,9 @@
 .default-link {
   .btn-warning {
     background-color: @decorator-main-color;
+
+    &:hover {
+      background-color: darken(@decorator-main-color, 10%);
+    }
   }
 }
