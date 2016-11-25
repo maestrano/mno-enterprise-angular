@@ -439,7 +439,7 @@
   "mno_enterprise.templates.dashboard.marketplace.show.tag_star": "Star!™ Tutorials",
   "mno_enterprise.templates.dashboard.marketplace.show.tag_connec": "Connec!™ Ready",
   "mno_enterprise.templates.dashboard.marketplace.show.success_notification_title": "{{name}} has been added to your account",
-  "mno_enterprise.templates.dashboard.marketplace.show.success_start_notification_body": "To start using {{name}}, click on the {{name}} icon then click on \"Launch\".",
+  "mno_enterprise.templates.dashboard.marketplace.show.success_launch_notification_body": "To start using {{name}}, click on the {{name}} icon then click on \"Launch\".",
   "mno_enterprise.templates.dashboard.marketplace.show.success_connect_notification_body": "To start using {{name}}, click on the {{name}} icon then click on \"Connect\".",
   "mno_enterprise.templates.dashboard.marketplace.app_selection.next": "Next",
   "mno_enterprise.templates.dashboard.marketplace.app_selection.cancel": "Cancel",

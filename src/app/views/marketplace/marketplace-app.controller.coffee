@@ -76,8 +76,13 @@ angular.module 'mnoEnterpriseAngular'
             $state.go('home.impac')
 
             switch vm.app.stack
-              when 'cloud' or 'cube' then toastr.success(
-                'mno_enterprise.templates.dashboard.marketplace.show.success_start_notification_body',
+              when 'cloud' then toastr.success(
+                'mno_enterprise.templates.dashboard.marketplace.show.success_launch_notification_body',
+                'mno_enterprise.templates.dashboard.marketplace.show.success_notification_title',
+                {extraData: {name: vm.app.name}, timeout: 10000}
+              )
+              when 'cube' then toastr.success(
+                'mno_enterprise.templates.dashboard.marketplace.show.success_launch_notification_body',
                 'mno_enterprise.templates.dashboard.marketplace.show.success_notification_title',
                 {extraData: {name: vm.app.name}, timeout: 10000}
               )
