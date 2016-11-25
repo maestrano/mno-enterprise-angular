@@ -92,54 +92,53 @@
     <!--
       Developer section
     -->
-    <div ng-if='vm.isDeveloperSectionEnabled'>
-      <div uib-accordion-group is-open="vm.isDevOpen">
-        <div uib-accordion-heading>{{ 'mno_enterprise.templates.dashboard.account.developer' | translate }} <span class="fa pull-right" ng-class="{'fa-caret-down': !vm.isDevOpen, 'fa-caret-up': vm.isDevOpen}"></span>
+    <div uib-accordion-group ng-if="vm.isDeveloperSectionEnabled" is-open="vm.isDevOpen">
+      <div uib-accordion-heading>{{ 'mno_enterprise.templates.dashboard.account.developer' | translate }} <span class="fa pull-right" ng-class="{'fa-caret-down': !vm.isDevOpen, 'fa-caret-up': vm.isDevOpen}"></span>
+      </div>
+      <div ng-if="!vm.user.model.api_key && !vm.user.model.api_secret" class="row">
+        <div class='col-md-12'>
+          <p>{{ 'mno_enterprise.templates.dashboard.account.are_you_developer' | translate }}</p>
+          <button class='btn btn-warning' ng-click="vm.user.registerDeveloper()">{{ 'mno_enterprise.templates.dashboard.account.register' | translate }}</button>
         </div>
-        <div ng-if="!vm.user.model.api_key && !vm.user.model.api_secret" class="row">
-          <div class='col-md-12'>
-            <p>{{ 'mno_enterprise.templates.dashboard.account.are_you_developer' | translate }}</p>
-            <button class='btn btn-warning' ng-click="vm.user.registerDeveloper()">{{ 'mno_enterprise.templates.dashboard.account.register' | translate }}</button>
+      </div>
+      <div ng-if="vm.user.model.api_key && vm.user.model.api_secret">
+        <div class="row">
+          <strong class="col-sm-3">{{ 'mno_enterprise.templates.dashboard.account.api_key' | translate }}: </strong>
+          <div class="col-sm-9">{{vm.user.model.api_key}}</div>
+        </div>
+        <div class="row">
+          <strong class="col-sm-3">{{ 'mno_enterprise.templates.dashboard.account.secret_key' | translate }}:</strong>
+          <div class="col-sm-9">
+            <span ng-show="vm.isSecretKeyRevealed">{{vm.user.model.api_secret}}</span>
+            <button ng-hide="vm.isSecretKeyRevealed" class='btn btn-warning' ng-click="vm.user.switchSecretKey()">{{ 'mno_enterprise.templates.dashboard.account.show' | translate }}</button>
+            <button ng-show="vm.isSecretKeyRevealed" class='btn btn-warning' ng-click="vm.user.switchSecretKey()">{{ 'mno_enterprise.templates.dashboard.account.hide' | translate }}</button>
           </div>
         </div>
-        <div ng-if="vm.user.model.api_key && vm.user.model.api_secret">
-          <div class="row">
-            <strong class="col-sm-3">{{ 'mno_enterprise.templates.dashboard.account.api_key' | translate }}: </strong>
-            <div class="col-sm-9">{{vm.user.model.api_key}}</div>
+        <div class="row">
+          <strong class="col-sm-3">{{ 'mno_enterprise.templates.dashboard.account.organizations' | translate }}: </strong>
+          <div class="col-sm-9">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>{{ 'mno_enterprise.templates.dashboard.account.name' | translate }}</th>
+                  <th>{{ 'mno_enterprise.templates.dashboard.account.uid' | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="org in vm.user.model.organizations track by $index">
+                  <td>{{org.name}}</td>
+                  <td>{{org.uid}}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <div class="row">
-            <strong class="col-sm-3">{{ 'mno_enterprise.templates.dashboard.account.secret_key' | translate }}:</strong>
-            <div class="col-sm-9">
-              <span ng-show="vm.isSecretKeyRevealed">{{vm.user.model.api_secret}}</span>
-              <button ng-hide="vm.isSecretKeyRevealed" class='btn btn-warning' ng-click="vm.user.switchSecretKey()">{{ 'mno_enterprise.templates.dashboard.account.show' | translate }}</button>
-              <button ng-show="vm.isSecretKeyRevealed" class='btn btn-warning' ng-click="vm.user.switchSecretKey()">{{ 'mno_enterprise.templates.dashboard.account.hide' | translate }}</button>
-            </div>
-          </div>
-          <div class="row">
-            <strong class="col-sm-3">{{ 'mno_enterprise.templates.dashboard.account.organizations' | translate }}: </strong>
-            <div class="col-sm-9">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th>{{ 'mno_enterprise.templates.dashboard.account.name' | translate }}</th>
-                    <th>{{ 'mno_enterprise.templates.dashboard.account.uid' | translate }}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr ng-repeat="org in vm.user.model.organizations track by $index">
-                    <td>{{org.name}}</td>
-                    <td>{{org.uid}}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div class="row" style="text-align: center; margin-top: 20px;">
-            <p>{{ 'mno_enterprise.templates.dashboard.account.view_developer_docs' | translate }} <a href="https://maestrano.atlassian.net/wiki/pages/viewpage.action?pageId=20742248" target="_blank"><strong>{{ 'mno_enterprise.templates.dashboard.account.here' | translate }}</strong> </a></p>
-          </div>
+        </div>
+        <div class="row" style="text-align: center; margin-top: 20px;">
+          <p>{{ 'mno_enterprise.templates.dashboard.account.view_developer_docs' | translate }} <a href="https://maestrano.atlassian.net/wiki/pages/viewpage.action?pageId=20742248" target="_blank"><strong>{{ 'mno_enterprise.templates.dashboard.account.here' | translate }}</strong> </a></p>
         </div>
       </div>
     </div>
+
 
     <!--
       Change locale section
