@@ -4,13 +4,13 @@ angular.module 'mnoEnterpriseAngular'
 # IMPAC-ROUTES: Configuring routes
 #======================================================================================
 .config((ImpacRoutesProvider, IMPAC_CONFIG) ->
-  mnoHub = IMPAC_CONFIG.settings.paths.mnohub_api
+  mnoHub = IMPAC_CONFIG.paths.mnohub_api
   impacPrefix = "/impac"
 
   data =
     mnoHub: mnoHub
     impacPrefix: impacPrefix
-    impacApi: "#{IMPAC_CONFIG.settings.protocol}://#{IMPAC_CONFIG.settings.host}/api"
+    impacApi: "#{IMPAC_CONFIG.protocol}://#{IMPAC_CONFIG.host}/api"
     dashboards:
       index: "#{mnoHub}#{impacPrefix}/dashboards"
     widgets:
@@ -61,9 +61,7 @@ angular.module 'mnoEnterpriseAngular'
     user: ImpacConfigSvc.getUserData
     organizations: ImpacConfigSvc.getOrganizations
 
-  pusher_key = IMPAC_CONFIG.keys.pusher_client
-
-  angular.merge(data, {pusher_key: pusher_key}) if pusher_key
+  data.pusher_key = IMPAC_CONFIG.pusher.key if IMPAC_CONFIG.pusher? && IMPAC_CONFIG.pusher.key?
 
   ImpacLinking.linkData(data)
 )
