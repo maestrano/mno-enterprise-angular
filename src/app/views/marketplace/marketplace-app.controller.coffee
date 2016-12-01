@@ -19,12 +19,16 @@ angular.module 'mnoEnterpriseAngular'
       vm.conflictingApp = null
       # Enabling pricing
       vm.isPriceShown = PRICING_CONFIG && PRICING_CONFIG.enabled
+      vm.averageRating = 5
 
       #====================================
       # Scope Management
       #====================================
       vm.initialize = (app, appInstance, conflictingApp) ->
         angular.copy(app, vm.app)
+        vm.ratings = app.ratings
+        ratingValue = parseFloat(vm.app.average_rating)
+        vm.averageRating = ratingValue
         vm.appInstance = appInstance
         vm.conflictingApp = conflictingApp
         vm.app.description = $sce.trustAsHtml(app.description)
@@ -128,6 +132,17 @@ angular.module 'mnoEnterpriseAngular'
           controller: modalInfo.controller
           resolve:
             app: vm.appInstance
+        )
+      #====================================
+      # Create Rating Modal
+      #====================================
+      vm.openCreateRatingModal = ->
+        modalInstance = $uibModal.open(
+          templateUrl: 'app/views/marketplace/modals/create-rating-modal.html'
+          controller: 'CreateRatingModalCtrl'
+          size: 'lg'
+          windowClass: 'inverse'
+          backdrop: 'static'
         )
 
       #====================================

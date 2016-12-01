@@ -132,6 +132,25 @@
           </div>
         </div>
       </div>
+      
+      <div class="average">
+        <average-star-rating ng-model="vm.averageRating" max="5"><average-star-rating>
+      </div>
+
+      {{ 'mno_enterprise.templates.dashboard.marketplace.show.company_feedback' | translate }}:
+      <button type="button" class="btn btn-warning" ng-click="vm.openCreateRatingModal()">
+        <a> {{ 'mno_enterprise.templates.dashboard.marketplace.show.write_review' | translate }}</a>
+      </button>
+      <div ng-repeat="userRating in vm.ratings"> 
+        <blockquote>
+          {{userRating.user_name}}
+          {{userRating.description}}
+          {{userRating.organization_name}}
+          {{userRating.rating}}
+          <star-rating ng-model="userRating.rating" ></star-rating><br/>
+        </blockquote>
+      </div>
+
 
         <!-- End show-content -->
     </div>
