@@ -3,10 +3,11 @@
     <div class="close" type="button" ng-click="modal.cancel()" >×</div>
     <h3>{{ 'mno_enterprise.templates.dashboard.marketplace.show.review' | translate}}
 
+    <div class="pull-right">
       <div class="average">
         <star-rating ng-model="appRating" ></star-rating><br/>
       </div>
-  
+    </div>
       <textarea class="form-control" rows="5" ng-model="modal.model.comment" placeholder="{{ 'mno_enterprise.templates.dashboard.marketplace.show.tell_others' | translate}}" id="comment"></textarea>
   </div>
   <div class="modal-footer">

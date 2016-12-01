@@ -26,9 +26,10 @@ angular.module 'mnoEnterpriseAngular'
       #====================================
       vm.initialize = (app, appInstance, conflictingApp) ->
         angular.copy(app, vm.app)
-        vm.ratings = app.ratings
-        ratingValue = parseFloat(vm.app.average_rating)
-        vm.averageRating = ratingValue
+        for ratings in app.ratings
+          _.map(ratings.rating = {rating: ratings.rating })
+        vm.ratings = app.ratings.reverse()
+        vm.averageRating = parseFloat(vm.app.average_rating).toFixed(1)
         vm.appInstance = appInstance
         vm.conflictingApp = conflictingApp
         vm.app.description = $sce.trustAsHtml(app.description)
@@ -42,6 +43,10 @@ angular.module 'mnoEnterpriseAngular'
 
         vm.isLoading = false
 
+      # Filter to show only approved comments
+      vm.isCommentApproved = (comment) ->
+        return comment.status == 'approved'
+        
       # Check that the testimonial is not empty
       vm.isTestimonialShown = (testimonial) ->
         testimonial.text? && testimonial.text.length > 0
@@ -143,6 +148,10 @@ angular.module 'mnoEnterpriseAngular'
           size: 'lg'
           windowClass: 'inverse'
           backdrop: 'static'
+        )
+        modalInstance.result.then(
+          (response) ->
+            vm.initialize()
         )
 
       #====================================

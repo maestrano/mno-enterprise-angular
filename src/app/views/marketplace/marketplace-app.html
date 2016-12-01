@@ -6,8 +6,13 @@
         <a ui-sref="home.marketplace()" class="text-muted">
           <i class="fa fa-chevron-left"></i> {{ 'mno_enterprise.templates.dashboard.marketplace.show.back' | translate }}
         </a>
-
-        <div class="media">
+        <div class="media" ng-show="!vm.isLoading">
+          <div class="pull-right">
+              <div class="average">
+                <average-star-rating ng-model="vm.averageRating" max="5"><average-star-rating>
+                ({{vm.averageRating}})
+              </div>
+          </div>
           <div class="pull-left">
             <img class="media-object" ng-src="{{vm.app.logo}}" ng-alt="{{vm.app.name}}">
           </div>
@@ -133,24 +138,25 @@
         </div>
       </div>
       
-      <div class="average">
-        <average-star-rating ng-model="vm.averageRating" max="5"><average-star-rating>
-      </div>
+      <div>
+      </div>    
 
-      {{ 'mno_enterprise.templates.dashboard.marketplace.show.company_feedback' | translate }}:
-      <button type="button" class="btn btn-warning" ng-click="vm.openCreateRatingModal()">
-        <a> {{ 'mno_enterprise.templates.dashboard.marketplace.show.write_review' | translate }}</a>
-      </button>
-      <div ng-repeat="userRating in vm.ratings"> 
-        <blockquote>
-          {{userRating.user_name}}
-          {{userRating.description}}
-          {{userRating.organization_name}}
-          {{userRating.rating}}
-          <star-rating ng-model="userRating.rating" ></star-rating><br/>
-        </blockquote>
+      <div class="ribbon-testimonial ribbon-white">
+        <div class="body">
+          {{ 'mno_enterprise.templates.dashboard.marketplace.show.company_feedback' | translate }}:
+          <button type="button" class="btn btn-warning" ng-click="vm.openCreateRatingModal()">
+            <a> {{ 'mno_enterprise.templates.dashboard.marketplace.show.write_review' | translate }}</a>
+          </button>
+          <div ng-repeat="userRating in vm.ratings | filter: vm.isCommentApproved | orderBy:'reverse'"> 
+            <blockquote>
+              <footer>{{userRating.user_name}} from <cite title="{{userRating.organization_name}}">{{userRating.organization_name}}</cite>
+                <star-rating ng-model="userRating.rating" ></star-rating>({{userRating.rating.rating}})<br/>
+              </footer>
+              {{userRating.description}}
+            </blockquote>
+          </div>
+        </div>
       </div>
-
 
         <!-- End show-content -->
     </div>
