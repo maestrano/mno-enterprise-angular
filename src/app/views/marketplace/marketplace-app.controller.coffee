@@ -76,25 +76,32 @@ angular.module 'mnoEnterpriseAngular'
             $state.go('home.impac')
 
             switch vm.app.stack
-              when 'cloud' then toastr.success(
-                'mno_enterprise.templates.dashboard.marketplace.show.success_launch_notification_body',
-                'mno_enterprise.templates.dashboard.marketplace.show.success_notification_title',
-                {extraData: {name: vm.app.name}, timeout: 10000}
-              )
-              when 'cube' then toastr.success(
-                'mno_enterprise.templates.dashboard.marketplace.show.success_launch_notification_body',
-                'mno_enterprise.templates.dashboard.marketplace.show.success_notification_title',
-                {extraData: {name: vm.app.name}, timeout: 10000}
-              )
-              when 'connector' then toastr.success(
-                'mno_enterprise.templates.dashboard.marketplace.show.success_connect_notification_body',
-                'mno_enterprise.templates.dashboard.marketplace.show.success_notification_title',
-                {extraData: {name: vm.app.name}, timeout: 10000}
-              )
+              when 'cloud' then displayLaunchToastr(vm.app)
+              when 'cube' then displayLaunchToastr(vm.app)
+              when 'connector'
+                if vm.app.nid == 'office-365'
+                  # Office 365 must display 'Launch'
+                  displayLaunchToastr(vm.app)
+                else
+                  displayConnectToastr(vm.app)
           (error) ->
             toastr.error(vm.app.name + " has not been added, please try again.")
             MnoErrorsHandler.processServerError(error)
         ).finally(-> vm.isLoadingButton = false)
+
+      displayLaunchToastr = (app) ->
+        toastr.success(
+          'mno_enterprise.templates.dashboard.marketplace.show.success_launch_notification_body',
+          'mno_enterprise.templates.dashboard.marketplace.show.success_notification_title',
+          {extraData: {name: app.name}, timeout: 10000}
+        )
+
+      displayConnectToastr = (app) ->
+        toastr.success(
+          'mno_enterprise.templates.dashboard.marketplace.show.success_connect_notification_body',
+          'mno_enterprise.templates.dashboard.marketplace.show.success_notification_title',
+          {extraData: {name: app.name}, timeout: 10000}
+        )
 
       vm.launchAppInstance = ->
         $window.open("/mnoe/launch/#{vm.appInstance.uid}", '_blank')
