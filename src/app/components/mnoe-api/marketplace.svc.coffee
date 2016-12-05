@@ -6,17 +6,21 @@
 # Return the list off apps and categories
 #   {categories: [], apps: []}
 angular.module 'mnoEnterpriseAngular'
-  .service 'MnoeMarketplace', ($log, MnoeApiSvc) ->
+  .service 'MnoeMarketplace', ($log, MnoeApiSvc, $stateParams) ->
     _self = @
 
     # Using this syntax will not trigger the data extraction in MnoeApiSvc
     # as the /marketplace payload isn't encapsulated in "{ marketpalce: categories {...}, apps {...} }"
     marketplaceApi = MnoeApiSvc.oneUrl('/marketplace')
-
     marketplacePromise = null
 
     @getApps = () ->
       return marketplacePromise if marketplacePromise?
       marketplacePromise = marketplaceApi.get()
+
+    @updateApp = (data, appId) ->
+      MnoeApiSvc.one('marketplace', parseInt(appId)).doPUT({app_user_rating: data.rating }, 'add_rating').then(
+        (response) ->
+      )
 
     return @
