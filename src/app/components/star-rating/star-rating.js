@@ -15,28 +15,33 @@ angular.module("mnoEnterpriseAngular")
       onRatingSelected : "&?",
       readonly: "=?"
     },
-    link : function(scope, elem, attrs) {
+    link : function(scope) {
       if (scope.max == undefined) { scope.max = 5; }
+
+      scope.toggle = function(index) {
+        if (scope.readonly == undefined || scope.readonly == false){
+          scope.ratingValue = index + 1;
+          if (scope.onRatingSelected) {
+            scope.onRatingSelected({
+              rating: index + 1
+            });
+          }
+        }
+      };
+
       function updateStars() {
         scope.stars = [];
         for (var i = 0; i < scope.max; i++) {
           scope.stars.push({
-            filled : (i < scope.ratingValue.rating)
+            filled : (i < scope.ratingValue)
           });
         }
-      };
-      scope.toggle = function(index) {
-        if (scope.readonly == undefined || scope.readonly == false){
-          scope.ratingValue.rating = index + 1;
-          scope.onRatingSelected({
-            rating: index + 1
-          });
-        }
-      };
-      scope.$watch("ratingValue.rating", function(oldVal, newVal) {
+      }
+
+      scope.$watch("ratingValue", function(oldVal, newVal) {
         if (newVal) { updateStars(); }
       });
     }
-  };  
+  };
 })
 

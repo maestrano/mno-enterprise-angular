@@ -26,9 +26,6 @@ angular.module 'mnoEnterpriseAngular'
       #====================================
       vm.initialize = (app, appInstance, conflictingApp) ->
         angular.copy(app, vm.app)
-        for ratings in app.ratings
-          _.map(ratings.rating = {rating: ratings.rating })
-        vm.ratings = app.ratings.reverse()
         vm.averageRating = parseFloat(vm.app.average_rating).toFixed(1)
         vm.appInstance = appInstance
         vm.conflictingApp = conflictingApp
@@ -43,10 +40,6 @@ angular.module 'mnoEnterpriseAngular'
 
         vm.isLoading = false
 
-      # Filter to show only approved comments
-      vm.isCommentApproved = (comment) ->
-        return comment.status == 'approved'
-        
       # Check that the testimonial is not empty
       vm.isTestimonialShown = (testimonial) ->
         testimonial.text? && testimonial.text.length > 0
@@ -145,13 +138,14 @@ angular.module 'mnoEnterpriseAngular'
         modalInstance = $uibModal.open(
           templateUrl: 'app/views/marketplace/modals/create-rating-modal.html'
           controller: 'CreateRatingModalCtrl'
+          controllerAs: 'vm',
           size: 'lg'
           windowClass: 'inverse'
           backdrop: 'static'
         )
         modalInstance.result.then(
           (response) ->
-            vm.initialize()
+            vm.app.ratings.push(response)
         )
 
       #====================================
