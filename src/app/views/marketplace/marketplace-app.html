@@ -8,10 +8,10 @@
       </a>
       <div class="media" ng-show="!vm.isLoading">
         <div class="app-rating pull-right">
-          <div ng-show="vm.isRateDisplayed">  
+          <div ng-show="vm.isRateDisplayed">
             <average-star-rating ng-model="vm.averageRating" display-rating="true" max="5"></average-star-rating>
           </div>
-          <div ng-show="!vm.isRateDisplayed">  
+          <div ng-show="!vm.isRateDisplayed">
             {{ 'mno_enterprise.templates.dashboard.marketplace.show.no_reviews' | translate }}
           </div>
         </div>
@@ -144,19 +144,19 @@
     <div id="comments">
       <div class="add-review">
         {{'mno_enterprise.templates.dashboard.marketplace.show.company_feedback' | translate}}:
-        <button type="button" class="btn btn-warning" ng-click="vm.openCreateRatingModal()">
+        <button type="button" class="btn btn-warning" ng-click="vm.openCreateReviewModal()">
           {{ 'mno_enterprise.templates.dashboard.marketplace.show.write_review' | translate }}
         </button>
       </div>
 
-      <blockquote class="well" ng-repeat="userRating in vm.app.ratings | orderBy:'-created_at'">
-        <average-star-rating ng-model="userRating.rating" readonly="true" class="pull-right"></average-star-rating>
-        <span>{{userRating.description}}</span>
+      <blockquote class="well" ng-repeat="review in vm.app.reviews track by review.id| orderBy:'-created_at'">
+        <average-star-rating ng-model="review.rating" readonly="true" class="pull-right"></average-star-rating>
+        <span>{{review.description}}</span>
         <footer>
-          <span>{{userRating.user_name}} {{ 'mno_enterprise.templates.dashboard.marketplace.show.from' | translate }} </span>
-          <cite title="{{userRating.organization_name}}">{{userRating.organization_name}}</cite> {{ 'mno_enterprise.templates.dashboard.marketplace.show.on' | translate }}
-            <span ng-if="userRating.created_at"> {{userRating.created_at | date: "dd-MM-yyyy" }}</span>
-            <span ng-if="!userRating.created_at"> {{ 'mno_enterprise.templates.dashboard.marketplace.show.just_now' | translate }}</span>
+          <span>{{review.user_name}} {{ 'mno_enterprise.templates.dashboard.marketplace.show.from' | translate }} </span>
+          <cite title="{{review.organization_name}}">{{review.organization_name}}</cite> {{ 'mno_enterprise.templates.dashboard.marketplace.show.on' | translate }}
+            <span ng-if="review.created_at"> {{review.created_at | date: "dd-MM-yyyy" }}</span>
+            <span ng-if="!review.created_at"> {{ 'mno_enterprise.templates.dashboard.marketplace.show.just_now' | translate }}</span>
           </div>
         </footer>
       </blockquote>

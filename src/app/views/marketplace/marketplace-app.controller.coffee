@@ -27,7 +27,6 @@ angular.module 'mnoEnterpriseAngular'
       vm.initialize = (app, appInstance, conflictingApp) ->
         angular.copy(app, vm.app)
         vm.averageRating = parseFloat(vm.app.average_rating).toFixed(1)
-        console.log(vm.app.ratings)
         vm.isRateDisplayed = (app.average_rating != null)
         vm.appInstance = appInstance
         vm.conflictingApp = conflictingApp
@@ -143,10 +142,10 @@ angular.module 'mnoEnterpriseAngular'
       #====================================
       # Create Rating Modal
       #====================================
-      vm.openCreateRatingModal = ->
+      vm.openCreateReviewModal = ->
         modalInstance = $uibModal.open(
-          templateUrl: 'app/views/marketplace/modals/create-rating-modal.html'
-          controller: 'CreateRatingModalCtrl'
+          templateUrl: 'app/views/marketplace/modals/create-review-modal.html'
+          controller: 'CreateReviewModalCtrl'
           controllerAs: 'vm',
           size: 'lg'
           windowClass: 'inverse'
@@ -154,8 +153,7 @@ angular.module 'mnoEnterpriseAngular'
         )
         modalInstance.result.then(
           (response) ->
-            console.log(response)
-            vm.app.ratings.push(response)
+            vm.app.reviews.push(response)
         )
 
       #====================================

@@ -18,9 +18,12 @@ angular.module 'mnoEnterpriseAngular'
       return marketplacePromise if marketplacePromise?
       marketplacePromise = marketplaceApi.get()
 
-    @updateApp = (data, appId) ->
-      MnoeApiSvc.one('marketplace', parseInt(appId)).doPUT({app_user_rating: data.rating }, 'add_rating').then(
+    @addAppReview = (appId, data) ->
+      payload = {app_review: data}
+      MnoeApiSvc.one('marketplace', parseInt(appId)).post('app_review', payload).then(
         (response) ->
+          app_review = response.plain()
+          app_review
       )
 
     return @
