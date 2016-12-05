@@ -27,6 +27,7 @@ angular.module 'mnoEnterpriseAngular'
       vm.initialize = (app, appInstance, conflictingApp) ->
         angular.copy(app, vm.app)
         vm.averageRating = parseFloat(vm.app.average_rating).toFixed(1)
+        vm.isRateDisplayed = (app.average_rating != null)
         vm.appInstance = appInstance
         vm.conflictingApp = conflictingApp
         vm.app.description = $sce.trustAsHtml(app.description)

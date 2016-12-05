@@ -8,8 +8,12 @@
       </a>
       <div class="media" ng-show="!vm.isLoading">
         <div class="app-rating pull-right">
-          <average-star-rating ng-model="vm.averageRating" display-rating="true" max="5"></average-star-rating>
-
+          <div ng-show="vm.isRateDisplayed">  
+            <average-star-rating ng-model="vm.averageRating" display-rating="true" max="5"></average-star-rating>
+          </div>
+          <div ng-show="!vm.isRateDisplayed">  
+            {{ 'mno_enterprise.templates.dashboard.marketplace.show.no_reviews' | translate }}
+          </div>
         </div>
         <div class="pull-left">
           <img class="media-object" ng-src="{{vm.app.logo}}" ng-alt="{{vm.app.name}}">
@@ -150,7 +154,7 @@
         <span>{{userRating.description}}</span>
         <footer>
           <span>{{userRating.user_name}} from</span>
-          <cite title="{{userRating.organization_name}}">{{userRating.organization_name}}</cite>
+          <cite title="{{userRating.organization_name}}">{{userRating.organization_name}}</cite> <span>on {{userRating.created_at | date: "dd-MM-yyyy" }}</span>
         </footer>
       </blockquote>
     </div>
