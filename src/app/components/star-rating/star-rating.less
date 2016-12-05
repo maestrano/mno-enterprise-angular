@@ -1,37 +1,60 @@
-.rating {
-  margin: 0;
-  padding: 0;
-  display: inline-block;
-  
-  li {
-    padding: 1px;
-    color: #ddd;
-    font-size: 20px;
-    text-shadow: .05em .05em #aaa;
-    list-style-type: none;
+average-star-rating, star-rating {
+  position: relative;
+  display: block;
+
+  .rating {
+    margin: 0;
+    padding: 0;
     display: inline-block;
-    cursor: pointer;
-    &.filled {
-      color: #fd0; //#21568b
+
+    li {
+      padding: 1px;
+      color: #ddd;
+      font-size: 20px;
+      text-shadow: .05em .05em #aaa;
+      list-style-type: none;
+      display: inline-block;
+      cursor: pointer;
+      outline: none;
+
+      &.filled {
+        color: #fd0; //#21568b
+      }
+    }
+
+    &.readonly li.filled {
+      color: #666;
     }
   }
-  &.readonly li.filled {
-    color: #666;
-  }
-}
 
-.average-rating-container {
-  position:relative;
-  height:31px;
-  width:103px;
-  overflow:hidden;
-  
-  .background,
-  .foreground {
+  .average-rating-container {
+    display: inline-block;
+    position: relative;
+    height: 31px;
+    width: 103px;
+    overflow: hidden;
+
+    &.withrating {
+      margin-right: 37px;
+    }
+
+    .rating li {
+      cursor: inherit;
+    }
+
+    .background,
+    .foreground {
+      position: absolute;
+      top: 0;
+      left: 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+  }
+
+  .badge {
     position: absolute;
-    top:0;
-    left:0;
-    overflow:hidden;
-    white-space: nowrap;
+    top: 5px;
+    right: 0;
   }
 }

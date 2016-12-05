@@ -4,7 +4,7 @@ angular.module("mnoEnterpriseAngular")
 .directive("averageStarRating", function() {
   return {
     restrict : "EA",
-    template : "<div class='average-rating-container'>" +
+    template : "<div class='average-rating-container' ng-class='{withrating: displayRating}'}>" +
                "  <ul class='rating background' class='readonly'>" +
                "    <li ng-repeat='star in stars' class='star'>" +
                "      <i class='fa fa-star'></i>" + //&#9733
@@ -15,13 +15,17 @@ angular.module("mnoEnterpriseAngular")
                "      <i class='fa fa-star'></i>" + //&#9733
                "    </li>" +
                "  </ul>" +
-               "</div>",
+               "</div>" +
+               "<span ng-if='displayRating' class='badge'>{{averageRatingValue}}</span>",
     scope : {
-      averageRatingValue : "=ngModel",
-      max : "=?", //optional: default is 5
+      averageRatingValue: "=ngModel",
+      displayRating: '=?', //optional: default is false
+      max: "=?" //optional: default is 5
     },
-    link : function(scope, elem, attrs) {
+    link : function(scope) {
+      if (scope.displayRating == undefined) { scope.displayRating = false; }
       if (scope.max == undefined) { scope.max = 5; }
+
       function updateStars() {
         scope.stars = [];
         for (var i = 0; i < scope.max; i++) {
@@ -29,7 +33,8 @@ angular.module("mnoEnterpriseAngular")
         }
         var starContainerMaxWidth = 100; //%
         scope.filledInStarsContainerWidth = scope.averageRatingValue / scope.max * starContainerMaxWidth;
-      };
+      }
+
       scope.$watch("averageRatingValue", function(oldVal, newVal) {
         if (newVal) { updateStars(); }
       });

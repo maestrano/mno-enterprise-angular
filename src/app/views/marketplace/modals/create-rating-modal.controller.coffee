@@ -1,24 +1,25 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('CreateRatingModalCtrl', ($scope, $uibModalInstance, Utilities, MnoeMarketplace, MnoeOrganizations, $stateParams) ->
+  .controller('CreateRatingModalCtrl', ($scope, $stateParams, $uibModalInstance, Utilities, MnoeMarketplace, MnoeOrganizations) ->
 
-    $scope.modal = { model: {} }
-    $scope.appRating = {rating: 5}
-    $scope.app = {}
+    vm = this
 
-    $scope.modal.cancel = ->
+    vm.modal = {model: {}}
+    vm.appRating = 5
+    vm.app = {}
+
+    vm.modal.cancel = ->
       $uibModalInstance.dismiss('cancel')
 
-    $scope.modal.proceed = () ->
-      $scope.modal.isLoading = true
-      data = { rating: { rating: $scope.appRating.rating, description: $scope.modal.model.comment, organization_id: MnoeOrganizations.getSelectedId() }}
+    vm.modal.proceed = () ->
+      vm.modal.isLoading = true
+      data = {rating: {rating: vm.appRating, description: vm.modal.model.comment, organization_id: MnoeOrganizations.getSelectedId()}}
       MnoeMarketplace.updateApp(data, $stateParams.appId).then(
         (response) ->
-          delete $scope.modal.errors
-          # backend does not send a response yet
+          delete vm.modal.errors
           $uibModalInstance.close(response)
         (errors) ->
           $scope.modal.errors = Utilities.processRailsError(errors)
-      ).finally(->
-        $scope.modal.isLoading = false
-      )
+      ).finally(-> $scope.modal.isLoading = false)
+
+    return
   )
