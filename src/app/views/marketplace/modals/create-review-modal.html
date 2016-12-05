@@ -1,4 +1,4 @@
-<form id="create-rating-modal" name="form" novalidate>
+<form id="create-review-modal" name="form" novalidate>
   <div class="modal-header">
     <div class="close" type="button" ng-click="vm.modal.cancel()" >×</div>
     <h3>{{ 'mno_enterprise.templates.dashboard.marketplace.show.review' | translate}}</h3>
@@ -8,7 +8,7 @@
     <div class="pull-right">
       <star-rating ng-model="vm.appRating"></star-rating><br/>
     </div>
-    <textarea class="form-control" rows="5" ng-model="vm.modal.model.comment" placeholder="{{ 'mno_enterprise.templates.dashboard.marketplace.show.tell_others' | translate}}" id="comment"></textarea>
+    <textarea class="form-control" rows="5" ng-model="vm.modal.model.description" placeholder="{{ 'mno_enterprise.templates.dashboard.marketplace.show.tell_others' | translate}}" id="comment"></textarea>
   </div>
   <div class="modal-footer">
     <div class="row">
