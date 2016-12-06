@@ -149,7 +149,7 @@
         </button>
       </div>
 
-      <blockquote class="well" ng-repeat="review in vm.app.reviews track by review.id| orderBy:'-created_at'">
+      <blockquote class="well" ng-repeat="review in vm.app.reviews | orderBy:'-created_at'">
         <average-star-rating ng-model="review.rating" readonly="true" class="pull-right"></average-star-rating>
         <span>{{review.description}}</span>
         <footer>
