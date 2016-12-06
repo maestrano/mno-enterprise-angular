@@ -56,10 +56,12 @@ angular.module 'mnoEnterpriseAngular'
 #======================================================================================
 # IMPAC-LINKING: Configuring linking
 #======================================================================================
-.run((ImpacLinking, ImpacConfigSvc) ->
+.run((ImpacLinking, ImpacConfigSvc, IMPAC_CONFIG) ->
   data =
     user: ImpacConfigSvc.getUserData
     organizations: ImpacConfigSvc.getOrganizations
+
+  data.pusher_key = IMPAC_CONFIG.pusher.key if IMPAC_CONFIG.pusher? && IMPAC_CONFIG.pusher.key?
 
   ImpacLinking.linkData(data)
 )
