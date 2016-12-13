@@ -11,10 +11,10 @@
 /*                       Twitter Bootstrap colors                        */
 /*-----------------------------------------------------------------------*/
 @brand-success:                  @elem-positive-color;
-@brand-warning:                  @text-inverse-color;
-@brand-info:                     @text-inverse-color;
-@brand-danger:                   @text-strong-color;
-@brand-primary:                  @text-inverse-color;
+@brand-warning:                  @mno-demo-orange;
+@brand-info:                     @mno-demo-aqua-green;
+@brand-danger:                   @mno-demo-strawberry;
+@brand-primary:                  @mno-demo-aqua-green;
 
 /*-----------------------------------------------------------------------*/
 /*                          Fonts & Text                                 */
@@ -109,7 +109,7 @@
 @dashboard-cpy-select-header-text-color:        @text-inverse-link-color;
 @dashboard-cpy-select-header-text-size:         13px;
 
-@dashboard-cpy-select-link-icon-color:          @text-inverse-select-box-color;
+@dashboard-cpy-select-link-icon-color:          @text-decoration-color;
 
 @dashboard-cpy-select-link-color:               @text-inverse-link-color;
 @dashboard-cpy-select-link-hover-color:         @text-inverse-link-hover-color;
@@ -146,7 +146,8 @@
 @dashboard-account-tabs-text-color:                  @text-inverse-color;
 @dashboard-account-panel-header-bg-color:            @bg-inverse-color;
 @dashboard-account-panel-body-bg-color:              @bg-on-bg-inverse-color;
-@dashboard-account-panel-text-color:                 @text-inverse-color;
+@dashboard-account-panel-header-text-color:          @text-inverse-color;
+@dashboard-account-panel-text-color:                 @text-strong-color;
 @dashboard-account-inline-text-color-checked:        #33d375;
 @dashboard-account-inline-text-color-unchecked:      @elem-cozy-color;
 
@@ -177,6 +178,9 @@
 //--------------------------------------
 @dashboard-cpy-teams-matrix-bg-color:            @bg-inverse-color;
 @dashboard-cpy-teams-matrix-border-color:        @bg-inverse-color;
+@dashboard-cpy-teams-matrix-text-color:          @text-inverse-color;
+@dashboard-cpy-teams-matrix-text-hover-color:    @text-inverse-color;
+@dashboard-cpy-teams-matrix-text-edit-color:     @text-strong-color;
 
 /*-----------------------------------------------------------------------*/
 /*                              Dock                                     */
@@ -197,7 +201,7 @@
 @mno-dock-sub-menu-box-shadow:                  0 6px 12px rgba(0, 0, 0, 0.175);
 @mno-dock-sub-menu-bg-color:                    @text-strong-color;
 @mno-dock-sub-menu-hover:                       @decorator-main-color;
-@mno-dock-sub-menu-icon:                        @decorator-inverse-color;
+@mno-dock-sub-menu-icon:                        @text-decoration-color;
 @mno-dock-sub-menu-text-color:                  white;
 @mno-dock-sub-menu-text-hover-color:            darken(white, 10%);
 
@@ -247,7 +251,7 @@
 @impac-widget-link-color:                       @decorator-inverse-color;
 
 // Title
-@impac-widget-title-text-color:                 darken(@impac-widget-text-color,5%);
+@impac-widget-title-text-color:                 white;
 @impac-widget-title-bg:                         @bg-inverse-color;
 @impac-widget-title-border:                     solid 1px @impac-widget-borders-color;
 @impac-widget-title-text-transform:             uppercase;
@@ -290,7 +294,7 @@
 @dashboard-marketplace-search-border-color:           @bg-inverse-intense-color;
 
 @dashboard-marketplace-tile-bg-color:                 @bg-inverse-color;
-@dashboard-marketplace-tile-text-color:               @text-strong-color;
+@dashboard-marketplace-tile-text-color:               @text-inverse-strong-color;
 @dashboard-marketplace-tile-img-border-color:         @dashboard-marketplace-tile-bg-color;
 
 @dashboard-marketplace-tile-hover-bg-color:           @decorator-main-color;
@@ -305,17 +309,19 @@
 /*-----------------------------------------------------------------------*/
 /*                     Responsive Table (cell table)                     */
 /*-----------------------------------------------------------------------*/
-@table-cell-row-spacing:               10px;
+@table-cell-header-row-spacing:        10px;
+@table-cell-header-row-padding:        3px;
+@table-cell-row-spacing:               0px;
 @table-cell-row-padding:               3px;
 
 @table-cell-header-text-size:          12px;
-@table-cell-header-text-color:         @bg-inverse-color;
-@table-cell-header-bg-color:           @bg-main-color;
+@table-cell-header-text-color:         @mno-demo-white;
+@table-cell-header-bg-color:           lighten(@mno-demo-brown, 5%);
 @table-cell-header-additional-rule:    { text-transform: uppercase; };
 
 @table-cell-row-text-size:             13px;
-@table-cell-row-odd-bg-color:          fade(@bg-main-color,30%);
-@table-cell-row-even-bg-color:         fade(@bg-main-color,10%);
+@table-cell-row-odd-bg-color:          darken(@mno-demo-light-yellow,4%);
+@table-cell-row-even-bg-color:         darken(@mno-demo-light-yellow,0%);
 
 /*-----------------------------------------------------------------------*/
 /*                          Navbar Customization                         */
@@ -332,7 +338,7 @@
 /*                          Form Customization                           */
 /*-----------------------------------------------------------------------*/
 @input-bg:                      @bg-on-bg-inverse-color;
-@input-color:                   @text-inverse-color;
+@input-color:                   @text-strong-color;
 @input-color-placeholder:       @input-color;
 @input-label-color:             @text-inverse-color;
 

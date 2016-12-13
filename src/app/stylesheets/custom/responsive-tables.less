@@ -3,7 +3,19 @@
 // see templates/dashboard/organization/invoices.html
 // for an example
 //-----------------------------------------
-.table-cell .th-row,
+.table-cell .th-row {
+  margin-top: @table-cell-header-row-spacing;
+  margin-left: 0px;
+  margin-right: 0px;
+  padding-top: @table-cell-header-row-padding;
+  padding-bottom: @table-cell-header-row-padding;
+  color: @table-cell-header-text-color;
+  background-color: @table-cell-header-bg-color;
+  font-size: @table-cell-header-text-size;
+  line-height: (@table-cell-header-text-size + @table-cell-row-padding)*2;
+  @table-cell-header-additional-rule();
+}
+
 .table-cell .td-row {
   margin-top: @table-cell-row-spacing;
   margin-bottom: @table-cell-row-spacing;
@@ -11,14 +23,6 @@
   margin-right: 0px;
   padding-top: @table-cell-row-padding;
   padding-bottom: @table-cell-row-padding;
-}
-
-.table-cell .th-row {
-  color: @text-color;
-  background-color: @table-cell-header-bg-color;
-  font-size: @table-cell-header-text-size;
-  line-height: (@table-cell-header-text-size + @table-cell-row-padding)*2;
-  @table-cell-header-additional-rule();
 }
 
 .table-cell .td-row {

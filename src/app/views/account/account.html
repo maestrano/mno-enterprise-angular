@@ -49,7 +49,7 @@
               <span ng-show="vm.user.loading"><i class="fa fa-spinner fa-pulse fa-fw"></i></span>
               {{ 'mno_enterprise.templates.dashboard.account.user_form_save' | translate }}
             </button>
-            <button ng-show="vm.user.hasChanged() && !vm.user.loading" class='btn ng-hide' ng-click="vm.user.cancelChanges()">
+            <button ng-show="vm.user.hasChanged() && !vm.user.loading" class='btn btn-default ng-hide' ng-click="vm.user.cancelChanges()">
               {{ 'mno_enterprise.templates.dashboard.account.user_form_cancel' | translate }}
             </button>
           </div>
