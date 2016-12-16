@@ -8,7 +8,7 @@
     <div class="pull-right">
       <star-rating ng-model="vm.appRating"></star-rating><br/>
     </div>
-    <textarea class="form-control" rows="5" ng-model="vm.modal.model.description" placeholder="{{ 'mno_enterprise.templates.dashboard.marketplace.show.tell_others' | translate}}" id="comment"></textarea>
+    <textarea class="form-control" rows="5" maxlength="500" ng-model="vm.modal.model.description" placeholder="{{ 'mno_enterprise.templates.dashboard.marketplace.show.tell_others' | translate}}" id="comment"></textarea>
   </div>
   <div class="modal-footer">
     <div class="row">
