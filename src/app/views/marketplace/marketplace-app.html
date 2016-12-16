@@ -149,7 +149,7 @@
         </button>
       </div>
 
-      <blockquote class="well" ng-repeat="review in vm.app.reviews | orderBy:'-created_at'">
+      <blockquote class="well" dir-paginate="review in vm.app.reviews | orderBy:'-created_at'| itemsPerPage: vm.commentsPerPage">
         <average-star-rating ng-model="review.rating" readonly="true" class="pull-right"></average-star-rating>
         <span>{{review.description}}</span>
         <footer>
@@ -158,6 +158,9 @@
             <span ng-if="review.created_at"> {{review.created_at | date: "dd-MM-yyyy" }}</span>
             <span ng-if="!review.created_at"> {{ 'mno_enterprise.templates.dashboard.marketplace.show.just_now' | translate }}</span>
           </div>
+        <div class="pages-selector">
+          <dir-pagination-controls></dir-pagination-controls>
+        </div>  
         </footer>
       </blockquote>
     </div>
