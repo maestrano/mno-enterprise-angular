@@ -43,7 +43,7 @@
                       {{ 'mno_enterprise.templates.dashboard.marketplace.show.conflicting_app' | translate }}
                       <a ui-sref="home.marketplace.app({appId: vm.conflictingApp.id})">{{vm.conflictingApp.name}}</a>
                     </div>
-                    <a href="" ng-switch-when="INSTALLABLE" ng-click="vm.provisionApp()" ng-disabled="vm.isLoadingButton" class="btn btn-warning btn-promo">
+                    <a href="" ng-switch-when="INSTALLABLE" ng-click="vm.isLoadingButton || vm.provisionApp()" ng-disabled="vm.isLoadingButton" class="btn btn-warning btn-promo">
                       <span ng-show="vm.isLoadingButton"><i class="fa fa-spinner fa-pulse"></i>&nbsp;</span>
                       {{ 'mno_enterprise.templates.dashboard.marketplace.show.start_app' | translate }}
                     </a>
