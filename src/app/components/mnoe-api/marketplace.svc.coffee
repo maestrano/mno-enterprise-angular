@@ -20,7 +20,7 @@ angular.module 'mnoEnterpriseAngular'
 
     @addAppReview = (appId, data) ->
       payload = {app_review: data}
-      MnoeApiSvc.one('marketplace', parseInt(appId)).post('app_review', payload).then(
+      MnoeApiSvc.one('marketplace', parseInt(appId)).post('/app_review', payload).then(
         (response) ->
           app_review = response.plain()
           app_review

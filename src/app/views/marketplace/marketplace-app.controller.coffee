@@ -41,6 +41,14 @@ angular.module 'mnoEnterpriseAngular'
 
         vm.isLoading = false
 
+      # Update the comments and avergae review
+      vm.updateReview = (response) ->
+        # Select and push to comments the last comment added
+        [ ..., newReview] = response.app.reviews
+        vm.app.reviews.push(newReview)
+        vm.averageRating = parseFloat(response.app.average_rating).toFixed(1)
+        vm.isRateDisplayed = true
+
       # Check that the testimonial is not empty
       vm.isTestimonialShown = (testimonial) ->
         testimonial.text? && testimonial.text.length > 0
@@ -153,7 +161,7 @@ angular.module 'mnoEnterpriseAngular'
         )
         modalInstance.result.then(
           (response) ->
-            vm.app.reviews.push(response)
+            vm.updateReview(response)
         )
 
       #====================================
