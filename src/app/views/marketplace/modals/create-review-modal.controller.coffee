@@ -5,6 +5,7 @@ angular.module 'mnoEnterpriseAngular'
   vm.modal = {model: {}}
   vm.appRating = 5
   vm.app = {}
+  vm.commentMaxLenght = 500
 
   vm.modal.cancel = ->
     $uibModalInstance.dismiss('cancel')
