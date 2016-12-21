@@ -25,6 +25,7 @@ angular.module 'mnoEnterpriseAngular'
       # Scope Management
       #====================================
       vm.initialize = (app, appInstance, conflictingApp) ->
+        fetchReviews(app.id)
         angular.copy(app, vm.app)
         vm.commentsPerPage = 5
         vm.averageRating = parseFloat(vm.app.average_rating).toFixed(1)
@@ -155,6 +156,15 @@ angular.module 'mnoEnterpriseAngular'
         modalInstance.result.then(
           (response) ->
             vm.app.reviews.push(response)
+        )
+
+      #====================================
+      # Fetch Reviews
+      #====================================
+      fetchReviews = (appId) ->
+        MnoeMarketplace.getReviews(appId).then(
+          (response) ->
+            vm.app.reviews = response.app_reviews
         )
 
       #====================================
