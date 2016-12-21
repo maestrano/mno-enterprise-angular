@@ -448,6 +448,7 @@
   "mno_enterprise.templates.dashboard.marketplace.show.just_now": "Just Now",
   "mno_enterprise.templates.dashboard.marketplace.show.company_feedback": "Company feedback",
   "mno_enterprise.templates.dashboard.marketplace.show.review": "Review",
+  "mno_enterprise.templates.dashboard.marketplace.show.rate": "(rate the app)",
   "mno_enterprise.templates.dashboard.marketplace.show.tell_others": "Tell others what you think about this application (optional)",
   "mno_enterprise.templates.dashboard.marketplace.show.cancel": "Cancel",
   "mno_enterprise.templates.dashboard.marketplace.show.submit": "Submit",

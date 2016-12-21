@@ -23,7 +23,7 @@ angular.module 'mnoEnterpriseAngular'
         $uibModalInstance.close(response)
       (errors) ->
         vm.modal.errors = Utilities.processRailsError(errors)
-    ).finally(-> $scope.modal.isLoading = false)
+    ).finally(-> vm.modal.isLoading = false)
 
   return
 )

@@ -13,12 +13,20 @@ angular.module("mnoEnterpriseAngular")
       ratingValue : "=ngModel",
       max : "=?", //optional: default is 5
       onRatingSelected : "&?",
-      readonly: "=?"
+      readonly: "=?",
+      hasClicked: '='
     },
+
     link : function(scope) {
       if (scope.max == undefined) { scope.max = 5; }
 
+      scope.readonly = true
+
       scope.toggle = function(index) {
+        if (scope.hasClicked == undefined || scope.hasClicked == false) {
+          scope.hasClicked = true;
+          scope.readonly = false;
+        };
         if (scope.readonly == undefined || scope.readonly == false){
           scope.ratingValue = index + 1;
           if (scope.onRatingSelected) {

@@ -6,7 +6,10 @@
   <!-- Modal Body -->
   <div class="modal-body">
     <div class="pull-right">
-      <star-rating ng-model="vm.appRating"></star-rating><br/>
+      <star-rating ng-model="vm.appRating" has-clicked="vm.hasClicked"></star-rating><br/>
+    </div>
+    <div class="pull-right" ng-if="!vm.hasClicked">
+      <h5>{{ 'mno_enterprise.templates.dashboard.marketplace.show.rate' | translate}}</h5>
     </div>
     <textarea class="form-control" rows="5" ng-trim="false" maxlength="{{vm.commentMaxLenght}}" ng-model="vm.modal.model.description" placeholder="{{ 'mno_enterprise.templates.dashboard.marketplace.show.tell_others' | translate}}" id="comment"></textarea>
   </div>
@@ -15,7 +18,7 @@
       <div class="col-sm-12">
         <span>{{vm.commentMaxLenght - vm.modal.model.description.length}}</span>
         <button class="btn btn-default" ng-click="vm.modal.cancel()" ng-show="!vm.modal.isLoading">{{ 'mno_enterprise.templates.dashboard.marketplace.show.cancel' | translate}}</button>
-        <button class='btn btn-info' ng-click="vm.modal.proceed()" ng-disabled="vm.modal.isLoading || form.$invalid">
+        <button class='btn btn-info' ng-click="vm.modal.proceed()" ng-disabled="vm.modal.isLoading || form.$invalid || !vm.hasClicked">
           <span ng-show="vm.modal.isLoading"><i class="fa fa-spinner fa-pulse fa-fw"></i></span>
           {{ 'mno_enterprise.templates.dashboard.marketplace.show.submit' | translate}}
         </button>
