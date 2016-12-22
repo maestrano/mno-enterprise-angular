@@ -25,7 +25,22 @@ angular.module 'mnoEnterpriseAngular'
       # Scope Management
       #====================================
       vm.initialize = (app, appInstance, conflictingApp) ->
-        fetchReviews(app.id)
+        # Variables initialization
+        vm.reviews =
+          loading: true
+          appId: app.id
+          search: ''
+          nbItems: 10
+          page: 1
+          pageChangedCb: (appId, nbItems, page) ->
+            vm.reviews.nbItems = nbItems
+            vm.reviews.page = page
+            offset = (page  - 1) * nbItems
+            fetchReviews(appId, nbItems, offset)
+
+        # Fetch reviews
+        fetchReviews(app.id, vm.reviews.nbItems, 0)
+        
         angular.copy(app, vm.app)
         vm.commentsPerPage = 5
         vm.averageRating = parseFloat(vm.app.average_rating).toFixed(1)
@@ -33,7 +48,6 @@ angular.module 'mnoEnterpriseAngular'
         vm.appInstance = appInstance
         vm.conflictingApp = conflictingApp
         vm.app.description = $sce.trustAsHtml(app.description)
-
         plans = vm.app.pricing_plans
         currency = (PRICING_CONFIG && PRICING_CONFIG.currency) || 'AUD'
         vm.pricing_plans = plans[currency] || plans.AUD || plans.default
@@ -42,6 +56,17 @@ angular.module 'mnoEnterpriseAngular'
         MnoeOrganizations.get().then((response) -> vm.user_role = response.current_user.role)
 
         vm.isLoading = false
+
+      #====================================
+      # Fetch Reviews
+      #====================================
+      fetchReviews = (appId, limit, offset, sort = 'created_at.desc') ->
+        vm.reviews.loading = true
+        MnoeMarketplace.getReviews(appId, limit, offset, sort).then(
+          (response) ->
+            vm.appReviews = response.app_reviews
+            vm.areReviews = vm.appReviews.length > 0
+        ).finally(-> vm.reviews.loading = false)
 
       # Check that the testimonial is not empty
       vm.isTestimonialShown = (testimonial) ->
@@ -155,16 +180,7 @@ angular.module 'mnoEnterpriseAngular'
         )
         modalInstance.result.then(
           (response) ->
-            vm.app.reviews.push(response)
-        )
-
-      #====================================
-      # Fetch Reviews
-      #====================================
-      fetchReviews = (appId) ->
-        MnoeMarketplace.getReviews(appId).then(
-          (response) ->
-            vm.app.reviews = response.app_reviews
+            vm.appReviews.unshift(response)
         )
 
       #====================================
