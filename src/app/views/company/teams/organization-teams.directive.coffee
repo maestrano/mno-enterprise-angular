@@ -1,6 +1,6 @@
 
 # TODO: Remove DhbTeamSvc
-DashboardOrganizationTeamsCtrl = ($scope, $window, $modal, $q, MnoeOrganizations, MnoeTeams, MnoeAppInstances, Utilities) ->
+DashboardOrganizationTeamsCtrl = ($scope, $window, $uibModal, $q, MnoeOrganizations, MnoeTeams, MnoeAppInstances, Utilities) ->
   'ngInject'
 
   #====================================
@@ -162,7 +162,7 @@ DashboardOrganizationTeamsCtrl = ($scope, $window, $modal, $q, MnoeOrganizations
   addTeamModal.open = ->
     self = addTeamModal
     self.model = {}
-    self.$instance = $modal.open(self.config.instance)
+    self.$instance = $uibModal.open(self.config.instance)
     self.isLoading = false
 
   # Close the modal
@@ -211,7 +211,7 @@ DashboardOrganizationTeamsCtrl = ($scope, $window, $modal, $q, MnoeOrganizations
   teamDeletionModal.open = (team) ->
     self = teamDeletionModal
     self.team = team
-    self.$instance = $modal.open(self.config.instance)
+    self.$instance = $uibModal.open(self.config.instance)
     self.isLoading = false
     self.errors = ''
 

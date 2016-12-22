@@ -1,7 +1,7 @@
 #============================================
 #
 #============================================
-DashboardOrganizationTeamListCtrl = ($scope, $window, $modal, $q, MnoeCurrentUser, MnoeOrganizations, MnoeTeams, MnoeAppInstances, Utilities) ->
+DashboardOrganizationTeamListCtrl = ($scope, $window, $uibModal, $q, MnoeCurrentUser, MnoeOrganizations, MnoeTeams, MnoeAppInstances, Utilities) ->
   'ngInject'
 
   #====================================
@@ -59,7 +59,7 @@ DashboardOrganizationTeamListCtrl = ($scope, $window, $modal, $q, MnoeCurrentUse
     self.team = team
     self.users = []
     self.userList = self.getAvailableUsers(team)
-    self.$instance = $modal.open(self.config.instance)
+    self.$instance = $uibModal.open(self.config.instance)
     self.isLoading = false
 
   memberAddModal.close = ->
@@ -129,7 +129,7 @@ DashboardOrganizationTeamListCtrl = ($scope, $window, $modal, $q, MnoeCurrentUse
     self = memberRemovalModal
     self.team = team
     self.user = user
-    self.$instance = $modal.open(self.config.instance)
+    self.$instance = $uibModal.open(self.config.instance)
     self.isLoading = false
 
   memberRemovalModal.close = ->
