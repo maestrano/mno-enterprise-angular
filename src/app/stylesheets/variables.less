@@ -308,13 +308,18 @@
 @table-cell-row-padding:               3px;
 
 @table-cell-header-text-size:          12px;
-@table-cell-header-text-color:         @bg-on-bg-inverse-color;
+@table-cell-header-text-color:         @text-inverse-strong-color;
 @table-cell-header-bg-color:           lighten(@bg-inverse-color, 5%);
 @table-cell-header-additional-rule:    { text-transform: uppercase; };
 
 @table-cell-row-text-size:             13px;
 @table-cell-row-odd-bg-color:          darken(@bg-main-color,4%);
 @table-cell-row-even-bg-color:         darken(@bg-main-color,0%);
+
+@table-inverse-cell-header-text-color: @text-inverse-strong-color;
+@table-inverse-cell-header-bg-color:   lighten(@bg-inverse-color, 5%);
+@table-inverse-cell-row-odd-bg-color:  darken(@bg-main-color,4%);
+@table-inverse-cell-row-even-bg-color: darken(@bg-main-color,0%);
 
 /*-----------------------------------------------------------------------*/
 /*                          Navbar Customization                         */
