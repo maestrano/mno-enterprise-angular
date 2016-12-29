@@ -5,8 +5,8 @@
 //-----------------------------------------
 .table-cell .th-row {
   margin-top: @table-cell-header-row-spacing;
-  margin-left: 0px;
-  margin-right: 0px;
+  margin-left: 0;
+  margin-right: 0;
   padding-top: @table-cell-header-row-padding;
   padding-bottom: @table-cell-header-row-padding;
   color: @table-cell-header-text-color;
@@ -19,8 +19,8 @@
 .table-cell .td-row {
   margin-top: @table-cell-row-spacing;
   margin-bottom: @table-cell-row-spacing;
-  margin-left: 0px;
-  margin-right: 0px;
+  margin-left: 0;
+  margin-right: 0;
   padding-top: @table-cell-row-padding;
   padding-bottom: @table-cell-row-padding;
 }
@@ -51,12 +51,11 @@
   font-size: 20px;
 }
 @media (max-width: @screen-sm) {
-  .table-cell .td-row .cell > a { padding-left: 0px; }
+  .table-cell .td-row .cell > a { padding-left: 0; }
 }
 
 // Inverse Style
 .table-cell.inverse .th-row {
-  background-color: @bg-inverse-intense-color;
   color: white;
 }
 

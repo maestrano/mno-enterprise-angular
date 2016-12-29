@@ -1,13 +1,13 @@
 .ribbon-testimonial {
 
   .body {
-    background-color:@bg-main-color;
+    background-color: @bg-on-bg-inverse-color;
     border-radius: 5px;
-    padding:20px;
-    color:@text-strong-color;
-    font-weight:300;
-    font-size:16px;
-    font-style:italic;
+    padding: 20px;
+    color: @text-strong-color;
+    font-weight: 300;
+    font-size: 16px;
+    font-style: italic;
 
     .arrow {
       .rotate(45deg);
@@ -15,38 +15,29 @@
       height: 0;
       border-top: 18px solid transparent;
       border-bottom: 18px solid transparent;
-      border-right:18px solid @decorator-main-color;
-      position:absolute;
-      right:28px;
-      margin-top:8px;
+      border-right: 18px solid @decorator-main-color;
+      position: absolute;
+      right: 28px;
+      margin-top: 8px;
     }
   }
 
   .from {
-    margin:7px 0px 0px 30px;
+    margin: 7px 0px 0px 30px;
+
     .name {
-      display:inline;
-      font-size:14px;
-      font-weight:700;
+      display: inline;
+      font-size: 14px;
+      font-weight: 700;
       color: @text-inverse-color;
     }
 
     .company {
-      display:inline;
-      font-size:14px;
-      font-weight:300;
+      display: inline;
+      font-size: 14px;
+      font-weight: 300;
       color: @decorator-inverse-color;
     }
-
   }
 }
 
-.ribbon-testimonial.ribbon-white {
-  .body {
-    background-color: white;
-  }
-
-  .arrow {
-    border-right:18px solid #ccc;
-  }
-}
