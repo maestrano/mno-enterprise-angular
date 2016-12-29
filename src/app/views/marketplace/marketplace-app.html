@@ -147,10 +147,10 @@
       </div>
       <div class='login-icon'>
         <span ng-show="vm.reviews.loading"><i class="fa fa-refresh fa-spin fa-3x fa-fw"></i></span>
-      </div>  
-      <span ng-if="!vm.areReviews && !vm.reviews.loading" class='pages-selector'><h3>{{ 'mno_enterprise.templates.dashboard.marketplace.show.no_reviews' | translate }} {{vm.app.name}}</h3></span>
-      <div ng-if='!vm.reviews.loading && vm.areReviews'>
-        <blockquote class="well" dir-paginate="appReview in vm.appReviews | itemsPerPage: vm.commentsPerPage">
+      </div>
+      <span ng-if="vm.reviews.list.length == 0 && !vm.reviews.loading" class='pages-selector'><h3>{{ 'mno_enterprise.templates.dashboard.marketplace.show.no_reviews' | translate }} {{vm.app.name}}</h3></span>
+      <div ng-hide='vm.reviews.loading'>
+        <blockquote class="well" ng-repeat="appReview in vm.reviews.list">
           <average-star-rating ng-model="review.rating" readonly="true" class="pull-right"></average-star-rating>
           <span>{{appReview.description}}</span>
           <footer>
@@ -161,7 +161,6 @@
           </footer>
         </blockquote>
         <div class="pages-selector">
-          <dir-pagination-controls></dir-pagination-controls>
           <mno-pagination
             class="pull-right"
             page="vm.reviews.page"
@@ -171,7 +170,7 @@
             is-loading="vm.reviews.loading">
           </mno-pagination>
         </div>
-      </div>  
+      </div>
     </div>
   </div>
 </div>

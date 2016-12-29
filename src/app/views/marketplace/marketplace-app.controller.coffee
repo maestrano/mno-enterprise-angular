@@ -40,9 +40,9 @@ angular.module 'mnoEnterpriseAngular'
 
         # Fetch reviews
         fetchReviews(app.id, vm.reviews.nbItems, 0)
-        
+
         angular.copy(app, vm.app)
-        vm.commentsPerPage = 5
+
         vm.averageRating = parseFloat(vm.app.average_rating).toFixed(1)
         vm.isRateDisplayed = (app.average_rating != null)
         vm.appInstance = appInstance
@@ -64,8 +64,8 @@ angular.module 'mnoEnterpriseAngular'
         vm.reviews.loading = true
         MnoeMarketplace.getReviews(appId, limit, offset, sort).then(
           (response) ->
-            vm.appReviews = response.app_reviews
-            vm.areReviews = vm.appReviews.length > 0
+            vm.reviews.totalItems = response.headers('x-total-count')
+            vm.reviews.list = response.data
         ).finally(-> vm.reviews.loading = false)
 
       # Check that the testimonial is not empty
@@ -180,7 +180,7 @@ angular.module 'mnoEnterpriseAngular'
         )
         modalInstance.result.then(
           (response) ->
-            vm.appReviews.unshift(response)
+            vm.reviews.list.unshift(response)
         )
 
       #====================================
