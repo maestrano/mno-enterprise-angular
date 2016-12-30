@@ -2,7 +2,7 @@
 # Pagination Directive
 #
 angular.module 'mnoEnterpriseAngular'
-  .constant('ITEMS_PER_PAGE', [10, 20, 50, 100])
+  .constant('ITEMS_PER_PAGE', [5, 10, 20, 50, 100])
 
 angular.module 'mnoEnterpriseAngular'
   .directive('mnoPagination', (ITEMS_PER_PAGE) ->

@@ -150,26 +150,24 @@
       </div>
       <span ng-if="vm.reviews.list.length == 0 && !vm.reviews.loading" class='pages-selector'><h3>{{ 'mno_enterprise.templates.dashboard.marketplace.show.no_reviews' | translate }} {{vm.app.name}}</h3></span>
       <div ng-hide='vm.reviews.loading'>
-        <blockquote class="well" ng-repeat="appReview in vm.reviews.list">
+        <blockquote class="well" ng-repeat="review in vm.reviews.list">
           <average-star-rating ng-model="review.rating" readonly="true" class="pull-right"></average-star-rating>
-          <span>{{appReview.description}}</span>
+          <span>{{review.description}}</span>
           <footer>
-            <span>{{appReview.user_name}} {{ 'mno_enterprise.templates.dashboard.marketplace.show.from' | translate }} </span>
-            <cite title="{{appReview.organization_name}}">{{appReview.organization_name}}</cite> {{ 'mno_enterprise.templates.dashboard.marketplace.show.on' | translate }}
-            <span ng-if="appReview.created_at"> {{appReview.created_at | date: "dd-MM-yyyy" }}</span>
-            <span ng-if="!appReview.created_at"> {{ 'mno_enterprise.templates.dashboard.marketplace.show.just_now' | translate }}</span>
+            <span>{{review.user_name}} {{ 'mno_enterprise.templates.dashboard.marketplace.show.from' | translate }} </span>
+            <cite title="{{review.organization_name}}">{{review.organization_name}}</cite> {{ 'mno_enterprise.templates.dashboard.marketplace.show.on' | translate }}
+            <span ng-if="review.created_at"> {{review.created_at | date: "dd/MM/yyyy" }}</span>
+            <span ng-if="!review.created_at"> {{ 'mno_enterprise.templates.dashboard.marketplace.show.just_now' | translate }}</span>
           </footer>
         </blockquote>
-        <div class="pages-selector">
-          <mno-pagination
-            class="pull-right"
-            page="vm.reviews.page"
-            nb-items="vm.reviews.nbItems"
-            total-items="vm.reviews.totalItems"
-            on-change-cb="vm.reviews.pageChangedCb(vm.app.id, nbItems, page)"
-            is-loading="vm.reviews.loading">
-          </mno-pagination>
-        </div>
+
+        <mno-pagination
+          page="vm.reviews.page"
+          nb-items="vm.reviews.nbItems"
+          total-items="vm.reviews.totalItems"
+          on-change-cb="vm.reviews.pageChangedCb(vm.app.id, nbItems, page)"
+          is-loading="vm.reviews.loading">
+        </mno-pagination>
       </div>
     </div>
   </div>

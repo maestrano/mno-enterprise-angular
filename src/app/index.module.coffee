@@ -17,6 +17,5 @@ angular.module 'mnoEnterpriseAngular', [
   'xeditable',
   'pascalprecht.translate',
   'maestrano.impac',
-  'angularUtils.directives.dirPagination',
   'ngPageTitle'
 ]

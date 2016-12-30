@@ -452,6 +452,8 @@
   "mno_enterprise.templates.dashboard.marketplace.show.tell_others": "Tell others what you think about this application (optional)",
   "mno_enterprise.templates.dashboard.marketplace.show.cancel": "Cancel",
   "mno_enterprise.templates.dashboard.marketplace.show.submit": "Submit",
+  "mno_enterprise.templates.dashboard.marketplace.show.success_toastr": "Your review has been taken into account.",
+  "mno_enterprise.templates.dashboard.marketplace.show.error_toastr": "An error occurred while saving your review.",
   "mno_enterprise.templates.dashboard.marketplace.app_selection.next": "Next",
   "mno_enterprise.templates.dashboard.marketplace.app_selection.cancel": "Cancel",
   "mno_enterprise.templates.dashboard.marketplace.app_selection.select_orga": "Select an organization",
