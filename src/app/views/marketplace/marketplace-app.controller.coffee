@@ -185,10 +185,10 @@ angular.module 'mnoEnterpriseAngular'
           (response) ->
             # Increment # of items
             vm.reviews.totalItems++
-            # Remove last element
-            vm.reviews.list.pop()
             # Add new element at the beginning
             vm.reviews.list.unshift(response.app_review)
+            # Remove last element if needed
+            vm.reviews.list.pop() if vm.reviews.list.length > vm.reviews.nbItems
             # Update average rating
             vm.averageRating = parseFloat(response.average_rating).toFixed(1)
         )
