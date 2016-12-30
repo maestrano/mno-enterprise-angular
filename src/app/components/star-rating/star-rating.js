@@ -38,10 +38,10 @@ angular.module("mnoEnterpriseAngular")
         }
       }
 
-      scope.$watch("ratingValue", function(oldVal, newVal) {
-        if (newVal) { updateStars(); }
+      scope.$watch("ratingValue", function(newVal) {
+        if (newVal !== null) { updateStars(); }
       });
     }
   };
-})
+});
 

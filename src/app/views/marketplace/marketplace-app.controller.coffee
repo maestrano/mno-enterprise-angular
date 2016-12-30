@@ -41,7 +41,7 @@ angular.module 'mnoEnterpriseAngular'
         # Fetch initials reviews
         fetchReviews(app.id, vm.reviews.nbItems, 0)
         vm.averageRating = parseFloat(vm.app.average_rating).toFixed(1)
-        vm.isRateDisplayed = (vm.app.average_rating != null)
+        vm.isRateDisplayed = vm.averageRating?
 
         vm.appInstance = appInstance
         vm.conflictingApp = conflictingApp

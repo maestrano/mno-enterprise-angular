@@ -3,7 +3,7 @@ angular.module 'mnoEnterpriseAngular'
   vm = this
 
   vm.modal = {model: {}}
-  vm.appRating = 5
+  vm.appRating = 0
   vm.app = {}
   vm.commentMaxLenght = 500
 
