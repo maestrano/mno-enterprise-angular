@@ -10,7 +10,7 @@ angular.module 'mnoEnterpriseAngular'
     _self = @
 
     # Using this syntax will not trigger the data extraction in MnoeApiSvc
-    # as the /marketplace payload isn't encapsulated in "{ marketpalce: categories {...}, apps {...} }"
+    # as the /marketplace payload isn't encapsulated in "{ marketplace: categories {...}, apps {...} }"
     marketplaceApi = MnoeApiSvc.oneUrl('/marketplace')
     marketplacePromise = null
 
@@ -24,7 +24,7 @@ angular.module 'mnoEnterpriseAngular'
 
     @addAppReview = (appId, data) ->
       payload = {app_review: data}
-      MnoeFullApiSvc.one('marketplace', parseInt(appId)).post('app_reviews', payload).then(
+      MnoeFullApiSvc.one('marketplace', parseInt(appId)).post('/app_reviews', payload).then(
         (response) ->
           app_review = response.data.plain()
           app_review
