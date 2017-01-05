@@ -43,16 +43,16 @@
                       {{ 'mno_enterprise.templates.dashboard.marketplace.show.conflicting_app' | translate }}
                       <a ui-sref="home.marketplace.app({appId: vm.conflictingApp.id})">{{vm.conflictingApp.name}}</a>
                     </div>
-                    <a href="" ng-switch-when="INSTALLABLE" ng-click="vm.provisionApp()" ng-disabled="vm.isLoadingButton" class="btn btn-warning btn-promo">
+                    <button ng-switch-when="INSTALLABLE" ng-click="vm.provisionApp()" ng-disabled="vm.isLoadingButton" class="btn btn-warning btn-promo">
                       <span ng-show="vm.isLoadingButton"><i class="fa fa-spinner fa-pulse"></i>&nbsp;</span>
                       {{ 'mno_enterprise.templates.dashboard.marketplace.show.start_app' | translate }}
-                    </a>
-                    <a href="" ng-switch-when="INSTALLED_LAUNCH" ng-click="vm.launchAppInstance()" class="btn btn-warning btn-promo btn-lg">
+                    </button>
+                    <button ng-switch-when="INSTALLED_LAUNCH" ng-click="vm.launchAppInstance()" class="btn btn-warning btn-promo btn-lg">
                       {{ 'mno_enterprise.templates.dashboard.marketplace.show.launch_app' | translate }}
-                    </a>
-                    <a href="" ng-switch-when="INSTALLED_CONNECT" ng-click="vm.connectAppInstance()" class="btn btn-warning btn-promo btn-lg">
+                    </button>
+                    <button ng-switch-when="INSTALLED_CONNECT" ng-click="vm.connectAppInstance()" class="btn btn-warning btn-promo btn-lg">
                       {{ 'mno_enterprise.templates.dashboard.marketplace.show.connect_app' | translate }}
-                    </a>
+                    </button>
                   </div>
                 </div>
               </div>
