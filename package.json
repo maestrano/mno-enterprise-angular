@@ -1,6 +1,6 @@
 {
-  "name": "mnoEnterpriseAngular",
-  "version": "0.0.0",
+  "name": "mno-enterprise-angular",
+  "version": "1.0.0",
   "dependencies": {},
   "scripts": {
     "postinstall": "bower install --quiet --config.interactive=false",
