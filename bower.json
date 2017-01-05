@@ -2,32 +2,33 @@
   "name": "mno-enterprise-angular",
   "version": "0.0.0",
   "dependencies": {
-    "angular": "~1.4.10",
-    "angular-aria": "~1.4.10",
-    "angular-animate": "~1.4.10",
-    "angular-bootstrap": "~0.14.3",
-    "angular-cookies": "~1.4.10",
-    "angular-messages": "~1.4.10",
-    "angular-moment": "~0.10.3",
+    "angular": "~1.6.0",
+    "angular-aria": "~1.6.0",
+    "angular-animate": "~1.6.0",
+    "angular-bootstrap": "~2.3.0",
+    "angular-cookies": "~1.6.0",
+    "angular-messages": "~1.6.0",
+    "angular-moment": "~1.0.0",
+    "angular-sanitize": "~1.6.0",
     "angular-toastr": "~1.7.0",
-    "angular-ui-router": "~0.2.15",
-    "angular-inflector": "~0.2.3",
-    "angular-xeditable": "~0.1.9",
-    "animate.css": "~3.4.0",
+    "angular-translate": "~2.13.0",
+    "angular-translate-loader-static-files": "~2.13.0",
+    "angular-translate-handler-log": "~2.13.0",
+    "angular-ui-router": "~0.3.0",
+    "angular-inflector": "~0.2.0",
+    "angular-xeditable": "~0.5.0",
+    "animate.css": "~3.5.2",
     "bootstrap": "~3.3.5",
-    "font-awesome": "~4.5.0",
-    "jquery": "~2.2.1",
-    "restangular": "~1.5.1",
-    "impac-angular": "git@github.com:maestrano/impac-angular.git#release/1.4.6",
+    "font-awesome": "~4.7.0",
+    "impac-angular": "~1.5.0.rc1",
+    "jquery": "~3.1.0",
     "less": "~2.5.3",
-    "angular-translate": "~2.9.1",
-    "angular-translate-loader-static-files": "~2.9.1",
-    "angular-translate-handler-log": "~2.9.1",
-    "angular-sanitize": "~1.4.9",
-    "ng-page-title": "^1.1.1"
+    "lodash": "~3.10.1",
+    "ng-page-title": "^1.1.1",
+    "restangular": "~1.5.1"
   },
   "devDependencies": {
-    "angular-mocks": "~1.4.10"
+    "angular-mocks": "~1.6.0"
   },
   "overrides": {
     "bootstrap": {
@@ -48,9 +49,6 @@
     }
   },
   "resolutions": {
-    "angular": "~1.5.0",
-    "angular-bootstrap": "0.14.3",
-    "angular-messages": "~1.5.0",
-    "moment": "~2.11.0"
+    "angular": "~1.6.0"
   }
 }

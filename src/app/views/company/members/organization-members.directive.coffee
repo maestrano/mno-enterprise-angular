@@ -2,7 +2,7 @@
 #============================================
 #
 #============================================
-DashboardOrganizationMembersCtrl = ($scope, $modal, $sce, MnoeOrganizations, MnoeCurrentUser, MnoeTeams, Utilities) ->
+DashboardOrganizationMembersCtrl = ($scope, $uibModal, $sce, MnoeOrganizations, MnoeCurrentUser, MnoeTeams, Utilities) ->
   'ngInject'
 
   #====================================
@@ -80,7 +80,7 @@ DashboardOrganizationMembersCtrl = ($scope, $modal, $sce, MnoeOrganizations, Mno
     self = editionModal
     self.member = member
     self.selectedRole = member.role
-    self.$instance = $modal.open(self.config.instance)
+    self.$instance = $uibModal.open(self.config.instance)
     self.isLoading = false
     editionModal.member = member
 
@@ -138,7 +138,7 @@ DashboardOrganizationMembersCtrl = ($scope, $modal, $sce, MnoeOrganizations, Mno
   deletionModal.open = (member) ->
     self = deletionModal
     self.member = member
-    self.$instance = $modal.open(self.config.instance)
+    self.$instance = $uibModal.open(self.config.instance)
     self.isLoading = false
     self.member = member
 
@@ -185,7 +185,7 @@ DashboardOrganizationMembersCtrl = ($scope, $modal, $sce, MnoeOrganizations, Mno
 
   inviteModal.open = () ->
     self = inviteModal
-    self.$instance = $modal.open(self.config.instance)
+    self.$instance = $uibModal.open(self.config.instance)
     self.isLoading = false
     self.members = []
     self.userEmails = ''
