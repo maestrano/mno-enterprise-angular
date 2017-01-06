@@ -1,0 +1,18 @@
+<div class="nb-items-col">
+  <label>{{ 'mno_enterprise.templates.dashboard.marketplace.show.number_of_reviews ' | translate }}</label>
+  <select class="items-per-page-select form-control"
+    ng-model="nbItems"
+    ng-change="onPageChange()"
+    ng-options="i for i in nbItemsValues"
+    ng-disabled="isLoading">
+  </select>
+</div>
+
+<uib-pagination ng-model="page" ng-show="totalItems > nbItems"
+  total-items="totalItems"
+  items-per-page="nbItems"
+  ng-change="onPageChange()"
+  max-size="pagination.maxPages"
+  rotate="false"
+  ng-disabled="isLoading">
+</uib-pagination>
