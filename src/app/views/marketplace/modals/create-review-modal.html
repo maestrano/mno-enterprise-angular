@@ -1,7 +1,7 @@
 <form id="create-review-modal" name="form" novalidate>
   <div class="modal-header">
     <div class="close" type="button" ng-click="vm.modal.cancel()" >×</div>
-    <h3>{{ 'mno_enterprise.templates.dashboard.marketplace.show.review' | translate}}</h3>
+    <h3>{{'mno_enterprise.templates.dashboard.marketplace.show.review' | translate}}</h3>
   </div>
   <!-- Modal Body -->
   <div class="modal-body">
@@ -15,7 +15,7 @@
       <div class="col-sm-12">
         <span>{{vm.commentMaxLenght - vm.modal.model.description.length}}</span>
         <button class="btn btn-default" ng-click="vm.modal.cancel()" ng-show="!vm.modal.isLoading">{{ 'mno_enterprise.templates.dashboard.marketplace.show.cancel' | translate}}</button>
-        <button class='btn btn-info' ng-click="vm.modal.proceed()" ng-disabled="vm.modal.isLoading || form.$invalid">
+        <button class='btn btn-info' ng-click="vm.modal.proceed()" ng-disabled="vm.modal.isLoading || vm.appRating === 0 || form.$invalid">
           <span ng-show="vm.modal.isLoading"><i class="fa fa-spinner fa-pulse fa-fw"></i></span>
           {{ 'mno_enterprise.templates.dashboard.marketplace.show.submit' | translate}}
         </button>
