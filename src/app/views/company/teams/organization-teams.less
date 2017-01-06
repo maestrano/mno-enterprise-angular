@@ -14,14 +14,18 @@
 
       .editable.editable-click,
       a.editable.editable-click {
-        color: @decorator-alt-color;
+        color: @dashboard-cpy-teams-matrix-text-color;
         border: none;
 
         &:hover {
-          color: @decorator-alt-color;
-          border-bottom: dashed 1px fadeout(@decorator-alt-color,60%);
+          color: @dashboard-cpy-teams-matrix-text-hover-color;
+          border-bottom: dashed 1px @dashboard-cpy-teams-matrix-text-hover-color;
         }
       }
+    }
+
+    form.editable-wrap .editable-controls input {
+      color: @dashboard-cpy-teams-matrix-text-edit-color;
     }
   }
 
@@ -42,64 +46,62 @@
   }
 
   table.permission-matrix {
-      width: 100%;
+    width: 100%;
 
-      thead > tr > th:first-child,
-      tbody > tr > td:first-child {
-        width: 20%;
+    thead > tr > th:first-child,
+    tbody > tr > td:first-child {
+      width: 20%;
+    }
+
+    tr > th.th-first {
+      text-align: left;
+    }
+
+    tr td.td-first {
+      text-align: left;
+      padding-left: 10px;
+      line-height: 52px;
+    }
+
+    thead > tr {
+      th {
+        color: @dashboard-cpy-teams-matrix-text-color;
+        text-align: center;
+        border-bottom: solid 2px darken(@dashboard-cpy-teams-matrix-border-color,5%);
+        padding-bottom: 10px;
+        vertical-align: bottom;
+        height: 95px;
       }
 
-      tr > th.th-first {
-        text-align: left;
+      th img {
+        height: 40px;
+        width: 40px;
+        margin: 10px auto;
+      }
+    }
+
+    tbody > tr {
+      td {
+        height: 60px;
+        padding: 0px;
+        text-align: center;
+        border-bottom: solid 1px darken(@dashboard-cpy-teams-matrix-border-color,5%);
       }
 
-      tr td.td-first {
-        text-align: left;
-        padding-left: 10px;
-        line-height: 52px;
+      &.btn-group-row > td {
+        border: none;
+        vertical-align: bottom;
       }
 
-      thead > tr {
-        th {
-          text-align: center;
-          border-bottom: solid 2px darken(@dashboard-cpy-teams-matrix-border-color,5%);
-          padding-bottom: 10px;
-          vertical-align: bottom;
-          height: 95px;
-        }
-
-        th img {
-          height: 40px;
-          width: 40px;
-          margin: 10px auto;
-        }
+      td.team-name .team-remove {
+        margin-left: 5px;
+        visibility: hidden;
       }
 
-      tbody > tr {
-        td {
-          height: 60px;
-          padding: 0px;
-          text-align: center;
-          border-bottom: solid 1px darken(@dashboard-cpy-teams-matrix-border-color,5%);
-        }
-
-        &.btn-group-row > td {
-          border: none;
-          vertical-align: bottom;
-        }
-
-        td.team-name .team-remove {
-          margin-left: 5px;
-          visibility: hidden;
-        }
-
-        td.team-name:hover .team-remove {
-          visibility: visible;
-        }
-
+      td.team-name:hover .team-remove {
+        visibility: visible;
       }
-
-
+    }
   }
 
   .permission-matrix-wrapper .table-right thead > tr > th,

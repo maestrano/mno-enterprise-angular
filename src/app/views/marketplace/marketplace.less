@@ -29,13 +29,24 @@
   //-------------------------------
   .marketplace-app-card {
     background-color: @dashboard-marketplace-tile-bg-color;
-    color: rgb(51, 51, 51);
+    color: @dashboard-marketplace-tile-text-color;
     cursor: pointer;
     @dashboard-marketplace-app-card();
 
+    img.media-object {
+      max-width: 100px;
+      border: solid 1px @dashboard-marketplace-tile-img-border-color;
+      border-radius: 5px;
+    }
+
     &:hover {
       text-decoration: none;
+      color: @dashboard-marketplace-tile-hover-text-color;
       background-color: @dashboard-marketplace-tile-hover-bg-color;
+
+      img.media-object {
+        border: solid 1px @dashboard-marketplace-tile-hover-img-border-color;
+      }
     }
   }
 
