@@ -36,7 +36,7 @@ angular.module 'mnoEnterpriseAngular'
             offset = (page  - 1) * nbItems
             fetchReviews(appId, nbItems, offset)
 
-        vm.app = app
+        angular.copy(app, vm.app)
 
         # Fetch initials reviews
         fetchReviews(app.id, vm.reviews.nbItems, 0)
