@@ -7,8 +7,8 @@
     <div class="box-header" ng-click="selectBox.toggle()">
       <img ng-src="{{selectBox.user.avatar_url}}" src="{{selectBox.user.avatar_url}}" />
       <div class="title">
-        <span class="name ng-binding">{{ selectBox.user.name }} {{ selectBox.user.surname }}</span><br>
-        <span class="company ng-binding">{{ selectBox.organization.name }}</span>
+        <span class="name">{{ selectBox.user.name }} {{ selectBox.user.surname }}</span><br>
+        <span class="company text-primary">{{ selectBox.organization.name }}</span>
       </div>
       <i class="expand-menu fa" ng-class="selectBox.isClosed? 'fa-chevron-down': 'fa-chevron-up'"></i>
     </div>
