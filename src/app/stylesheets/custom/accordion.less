@@ -1,41 +1,19 @@
 // Base style
 .accordion {
-  .panel-group > .panel {
+  .panel-group .panel {
     margin: 25px 0px;
   }
 
-  .panel-group > .panel,
-  .panel-group > .panel > .panel-heading {
-    background-color: @dashboard-account-panel-body-bg-color;
+  .panel-group .panel,
+  .panel-group .panel > .panel-heading {
+    background-color: @dashboard-account-panel-header-bg-color;
     border: none;
     box-shadow: none;
   }
 
-  label {
-    color: @dashboard-account-panel-text-color;
-  }
-
-  .form-control {
-    background-color: @input-bg;
-  }
-
-  .panel-group .panel .panel-body {
-    border-bottom-left-radius: 3px;
-    border-bottom-right-radius: 3px;
-
-    p {
-      font-weight: 300;
-    }
-
-    ul > li {
-      font-weight: 300;
-    }
-  }
-
-  .panel-group .panel .panel-heading {
+  .panel-group .panel > .panel-heading {
     color: @dashboard-account-panel-header-text-color;
     padding: 0;
-    background-color: @dashboard-account-panel-header-bg-color;
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
 
@@ -48,62 +26,29 @@
       height: 54px;
       cursor: pointer;
 
-      &:hover {
+      &:hover, &:focus {
         text-decoration: none;
       }
     }
 
-    .panel-title a.btn.pull-right {
-      margin-top: 10px;
-      margin-right: 10px;
-    }
-
-    .panel-title span.pull-right {
+    .panel-title .fa.pull-right {
       margin-right: 20px;
       margin-top: 20px;
     }
   }
-}
 
-// Accordion Black background style
-.accordion.inverse {
-
-  .panel-group > .panel,
-  .panel-group > .panel > .panel-heading {
-    background-color: @bg-inverse-color;
+  .panel-group .panel-collapse > .panel-body {
+    background-color: @dashboard-account-panel-body-bg-color;
     border: none;
-    box-shadow: none;
-  }
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
 
-  .panel-group > .panel > .panel-heading > .panel-title .text-muted {
-    color: @text-inverse-color;
-    font-weight: 700;
-  }
+    label {
+      color: @dashboard-account-panel-text-color;
+    }
 
-  .panel-group > .panel > .panel-collapse > .panel-body {
-    border-top: solid 1px black;
-  }
-
-  .panel-group > .panel > .panel-heading > .panel-title > .caret-up,
-  .panel-group > .panel > .panel-heading > .panel-title > .caret-down {
-    color: @text-inverse-color;
-  }
-}
-
-// Accordion Compact style
-.accordion.accordion-compact {
-  margin-top: 40px;
-
-  .panel-group .panel .panel-heading .panel-title > a {
-    line-height: 35px;
-    height: 35px;
-  }
-
-  .panel-group .panel .panel-heading .panel-title span.caret.pull-right {
-    margin-top: 17px;
-  }
-
-  .panel-group .panel {
-    margin: 11px 0px;
+    p, ul > li {
+      font-weight: 300;
+    }
   }
 }

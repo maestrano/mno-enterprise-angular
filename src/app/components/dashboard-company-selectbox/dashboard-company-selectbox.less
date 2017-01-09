@@ -58,36 +58,36 @@ dashboard-company-selectbox {
     // Section visible when change company is clicked
     .box-content {
       border-top: solid 1px @dashboard-cpy-select-link-color;
-      .border-bottom-radius(5px);
 
-      hr {
-        margin: 0;
-        border-top: 1px solid @dashboard-cpy-select-border-color;
+      // General look of the links
+      a {
+        line-height: 17px;
+        display: block;
+        padding: 4px 0 4px 20px;
+        outline: none;
       }
 
       // List of companies
       ul {
-        list-style: none;
         padding: 15px 20px 0 20px;
         max-height: 400px;
         min-width: 250px;
         overflow-y: auto;
 
         > li {
-          position: relative;
-          outline: none;
 
-          // Circle next to company name
-          // Indicate which company is currently viewed on dashboard
-          > a {
+          > a.company-link {
+            text-decoration: none;
             padding: 4px;
             display: flex;
 
             &:hover {
               background-color: @dashboard-cpy-select-link-hover-bg-color;
-              border-bottom-left-radius: 0px;
+              border-bottom-left-radius: 0;
             }
 
+            // Circle next to company name
+            // Indicate which company is currently viewed on dashboard
             > i {
               flex: 0 0 20px;
               width: 13px;
@@ -106,45 +106,31 @@ dashboard-company-selectbox {
         }
       }
 
-      // General look of the links
-      a {
+      .default-link {
         color: @dashboard-cpy-select-link-color;
-        line-height: 17px;
-        display: block;
-        padding: 4px 0 4px 20px;
+        padding: 10px 20px;
+        text-align: left;
+        border-top: 1px solid @dashboard-cpy-select-border-color;
 
-        &:hover {
-          text-decoration: none;
-          color: @dashboard-cpy-select-link-hover-color;
-          background-color: @dashboard-cpy-select-link-hover-bg-color;
-          border-bottom-left-radius: 5px;
+        .btn {
+          width: 100%;
+          padding: 3px;
         }
 
-        // Icon on the side of the link
+        // Icon on the left side of the link
         i {
           width: 20px;
           text-align: center;
           font-size: 11pt;
         }
-      }
 
+        &:hover {
+          text-decoration: none;
+          color: @dashboard-cpy-select-link-hover-color;
+          background-color: @dashboard-cpy-select-link-hover-bg-color;
 
-      .default-link {
-        padding: 10px 20px;
-        text-align: left;
-
-        .btn {
-          width: 100%;
-          margin-bottom: 10px;
-          padding: 3px;
-
-          a {
-            color: @dashboard-cpy-select-link-create-text-color;
-            padding: 2px;
-
-            &:hover {
-              background: transparent;
-            }
+          &:last-child {
+            border-bottom-left-radius: 5px;
           }
         }
       }

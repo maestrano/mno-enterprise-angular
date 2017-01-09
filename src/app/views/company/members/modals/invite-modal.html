@@ -49,8 +49,8 @@
         <div class="table-cell inverse">
           <div class="row th-row hidden-xs">
             <div class="cell col-sm-4">{{ 'mno_enterprise.templates.dashboard.organization.members.email' | translate }}</div>
-            <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.organization.members.role' | translate }}</div>
-            <div class="cell col-sm-3" ng-show="inviteModal.isTeamListShown()">{{ 'mno_enterprise.templates.dashboard.organization.members.team' | translate }}</div>
+            <div class="cell col-sm-4">{{ 'mno_enterprise.templates.dashboard.organization.members.role' | translate }}</div>
+            <div class="cell col-sm-4" ng-show="inviteModal.isTeamListShown()">{{ 'mno_enterprise.templates.dashboard.organization.members.team' | translate }}</div>
           </div>
 
           <div class="row td-row" ng-repeat="member in inviteModal.members">

@@ -36,21 +36,21 @@
           <div class="col-md-4">
             <div class="well text-center well-details">
               <div class="row">
-                <div class="col-xs-12 col-sm-4 col-sm-offset-4 col-md-8 col-md-offset-2">
-                  <div class="btn-fluid-wrapper" ng-switch on="vm.appInstallationStatus()">
+                <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2">
+                  <div ng-switch on="vm.appInstallationStatus()">
                     <div ng-switch-when="CONFLICT" class="message">
                       <i class="fa fa-exclamation-triangle"></i>
                       {{ 'mno_enterprise.templates.dashboard.marketplace.show.conflicting_app' | translate }}
                       <a ui-sref="home.marketplace.app({appId: vm.conflictingApp.id})">{{vm.conflictingApp.name}}</a>
                     </div>
-                    <button ng-switch-when="INSTALLABLE" ng-click="vm.provisionApp()" ng-disabled="vm.isLoadingButton" class="btn btn-warning btn-promo">
+                    <button ng-switch-when="INSTALLABLE" ng-click="vm.provisionApp()" ng-disabled="vm.isLoadingButton" class="btn btn-warning btn-lg btn-block">
                       <span ng-show="vm.isLoadingButton"><i class="fa fa-spinner fa-pulse"></i>&nbsp;</span>
                       {{ 'mno_enterprise.templates.dashboard.marketplace.show.start_app' | translate }}
                     </button>
-                    <button ng-switch-when="INSTALLED_LAUNCH" ng-click="vm.launchAppInstance()" class="btn btn-warning btn-promo btn-lg">
+                    <button ng-switch-when="INSTALLED_LAUNCH" ng-click="vm.launchAppInstance()" class="btn btn-warning btn-lg btn-block">
                       {{ 'mno_enterprise.templates.dashboard.marketplace.show.launch_app' | translate }}
                     </button>
-                    <button ng-switch-when="INSTALLED_CONNECT" ng-click="vm.connectAppInstance()" class="btn btn-warning btn-promo btn-lg">
+                    <button ng-switch-when="INSTALLED_CONNECT" ng-click="vm.connectAppInstance()" class="btn btn-warning btn-lg btn-block">
                       {{ 'mno_enterprise.templates.dashboard.marketplace.show.connect_app' | translate }}
                     </button>
                   </div>
@@ -58,17 +58,17 @@
               </div>
 
               <div class="row">
-                <div class="col-xs-12 col-sm-4 col-sm-offset-4 col-md-8 col-md-offset-2">
+                <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
                   <ul class="app-features">
                     <li ng-show="vm.app.is_responsive">
                       <img src="images/icons/mobile-responsive-logo.png" alt="responsive icon">
                       {{ 'mno_enterprise.templates.dashboard.marketplace.show.tag_responsive' | translate }}
                     </li>
-                    <li ng-show="vm.app.is_star_ready" mno-helptext="Your live tutorials directly inside your app">
+                    <li ng-show="vm.app.is_star_ready" uib-tooltip="Your live tutorials directly inside your app">
                       <img src="images/icons/star-enabled-logo.png" alt="Star icon">
                       {{ 'mno_enterprise.templates.dashboard.marketplace.show.tag_star' | translate }}
                     </li>
-                    <li ng-show="vm.app.is_connec_ready" mno-helptext="Your Data automatically shared between your applications">
+                    <li ng-show="vm.app.is_connec_ready" uib-tooltip="Your Data automatically shared between your applications">
                       <img ng-src="images/icons/connec-enabled-logo.png" alt="Connec icon">
                       {{ 'mno_enterprise.templates.dashboard.marketplace.show.tag_connec' | translate }}
                     </li>
@@ -77,15 +77,13 @@
               </div>
 
               <div class="row">
-                <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-12 col-md-offset-0">
-
+                <div class="col-xs-12">
                   <ul class="key-benefits">
                     <li ng-repeat="benefit in vm.app.key_benefits track by $index">
                       <i class="fa fa-check"></i>
                       {{benefit}}
                     </li>
                   </ul>
-
                 </div>
               </div>
             </div>
@@ -96,7 +94,7 @@
         <!-- Testimonials row -->
         <div class="row">
           <div class="col-md-6" ng-repeat="testimonial in vm.app.testimonials | limitTo:2" ng-show="vm.isTestimonialShown(testimonial)">
-            <div class="ribbon-testimonial ribbon-white">
+            <div class="ribbon-testimonial">
                 <div class="body">
                   {{testimonial.text}}
                   <div class="arrow"></div>

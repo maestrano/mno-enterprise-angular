@@ -21,13 +21,14 @@
   // Content - General
   //-------------------------------
   .show-content .well {
-    background-color: white;
+    color: @dashboard-marketplace-show-sections-text-color;
+    background-color: @dashboard-marketplace-show-sections-bg-color;
     border: none;
     border-radius: 2px;
-  }
-  .show-content .btn.btn-promo {
-    padding-left: 0;
-    padding-right: 0;
+
+    h2 {
+      margin-top: 0;
+    }
   }
 
   //-------------------------------
@@ -116,10 +117,11 @@
   // Content - Testimonials
   //-------------------------------
   .show-content .ribbon-testimonial .body {
-    color: @dashboard-marketplace-tile-text-color;
+    color: @dashboard-marketplace-show-sections-text-color;
+    background-color: @dashboard-marketplace-show-sections-bg-color;
   }
 
   .show-content .ribbon-testimonial .from .name {
-    color: @bg-inverse-color;
+    color: @dashboard-marketplace-show-sections-text-color;
   }
 }

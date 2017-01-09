@@ -65,8 +65,7 @@
           {{ 'mno_enterprise.templates.dashboard.account.change_password' | translate }} <span class="fa pull-right" ng-class="{'fa-caret-down': !vm.isChangePasswordOpen, 'fa-caret-up': vm.isChangePasswordOpen}"></span>
       </div>
       <form name='vm.form' novalidate>
-        <mno-password class="top-buffer-1"
-          form="vm.form"
+        <mno-password form="vm.form"
           data="vm.user.password"
           current="true"
           confirm="true"
