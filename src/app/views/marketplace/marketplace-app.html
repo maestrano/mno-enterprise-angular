@@ -25,11 +25,11 @@
         <div class="row">
           <div class="col-md-8">
             <div class="well carousel">
-              <div carousel interval="3000">
-                <div slide ng-repeat="picture in vm.app.pictures" class="screenshot">
+              <uib-carousel interval="3000">
+                <uib-slide ng-repeat="picture in vm.app.pictures" class="screenshot">
                   <img ng-src={{picture}} alt="screenshot">
-                </div>
-              </div>
+                </uib-slide>
+              </uib-carousel>
             </div>
           </div>
 
