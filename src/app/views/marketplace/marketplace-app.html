@@ -138,7 +138,7 @@
     </div>
 
     <!-- Comments & Ratings -->
-    <div id="comments">
+    <div id="comments" ng-if="vm.isReviewingEnabled">
       <div class="add-review">
         {{'mno_enterprise.templates.dashboard.marketplace.show.company_feedback' | translate}}:
         <button type="button" class="btn btn-warning" ng-click="vm.openCreateReviewModal()">

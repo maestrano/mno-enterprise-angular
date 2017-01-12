@@ -3,7 +3,8 @@
 #============================================
 angular.module 'mnoEnterpriseAngular'
   .controller('DashboardMarketplaceAppCtrl',($q, $scope, $stateParams, $state, $sce, $window, toastr,
-    MnoeMarketplace, $uibModal, MnoeOrganizations, MnoeCurrentUser, MnoeAppInstances, MnoErrorsHandler, PRICING_CONFIG) ->
+    MnoeMarketplace, $uibModal, MnoeOrganizations, MnoeCurrentUser, MnoeAppInstances, MnoErrorsHandler,
+    PRICING_CONFIG, REVIEWS_CONFIG) ->
 
       vm = this
 
@@ -19,6 +20,8 @@ angular.module 'mnoEnterpriseAngular'
       vm.conflictingApp = null
       # Enabling pricing
       vm.isPriceShown = PRICING_CONFIG && PRICING_CONFIG.enabled
+      # Enabling reviews
+      vm.isReviewingEnabled = REVIEWS_CONFIG && REVIEWS_CONFIG.enabled
       vm.averageRating = 5
 
       #====================================
@@ -39,9 +42,10 @@ angular.module 'mnoEnterpriseAngular'
         angular.copy(app, vm.app)
 
         # Fetch initials reviews
-        fetchReviews(app.id, vm.reviews.nbItems, 0)
-        vm.averageRating = vm.app.average_rating? && parseFloat(vm.app.average_rating).toFixed(1)
-        vm.isRateDisplayed = !!vm.averageRating
+        if vm.isReviewingEnabled
+          fetchReviews(app.id, vm.reviews.nbItems, 0)
+          vm.averageRating = vm.app.average_rating? && parseFloat(vm.app.average_rating).toFixed(1)
+          vm.isRateDisplayed = !!vm.averageRating
 
         vm.appInstance = appInstance
         vm.conflictingApp = conflictingApp
