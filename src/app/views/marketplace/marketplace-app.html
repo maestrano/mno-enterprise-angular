@@ -1,139 +1,174 @@
 <div class="dashboard-marketplace-app">
   <mno-loader ng-show="vm.isLoading" class="top-buffer-4"></mno-loader>
   <!-- Header -->
-    <div class="row show-header top-buffer-4">
-      <div class="col-md-12">
-        <a ui-sref="home.marketplace()" class="text-muted">
-          <i class="fa fa-chevron-left"></i> {{ 'mno_enterprise.templates.dashboard.marketplace.show.back' | translate }}
-        </a>
-
-        <div class="media">
-          <div class="pull-left">
-            <img class="media-object" ng-src="{{vm.app.logo}}" ng-alt="{{vm.app.name}}">
+  <div class="row show-header top-buffer-4">
+    <div class="col-md-12">
+      <a ui-sref="home.marketplace()" class="text-muted">
+        <i class="fa fa-chevron-left"></i> {{ 'mno_enterprise.templates.dashboard.marketplace.show.back' | translate }}
+      </a>
+      <div class="media" ng-show="!vm.isLoading">
+        <div class="app-rating pull-right">
+          <div ng-show="vm.isRateDisplayed">
+            <average-star-rating ng-model="vm.averageRating" display-rating="true" max="5"></average-star-rating>
           </div>
-          <div class="media-body">
-            <h2 class="media-heading">{{vm.app.name}}</h2>
-          </div>
+        </div>
+        <div class="pull-left">
+          <img class="media-object" ng-src="{{vm.app.logo}}" ng-alt="{{vm.app.name}}">
+        </div>
+        <div class="media-body">
+          <h2 class="media-heading">{{vm.app.name}}</h2>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Content -->
-    <div class="show-content top-buffer-1" ng-show="!vm.isLoading">
+  <!-- Content -->
+  <div class="show-content top-buffer-1" ng-show="!vm.isLoading">
 
-        <!-- Pics/details row -->
-        <div class="row">
-          <div class="col-md-8">
-            <div class="well carousel">
-              <div carousel interval="3000">
-                <div slide ng-repeat="picture in vm.app.pictures" class="screenshot">
-                  <img ng-src={{picture}} alt="screenshot">
-                </div>
+      <!-- Pics/details row -->
+      <div class="row">
+        <div class="col-md-8">
+          <div class="well carousel">
+            <div carousel interval="3000">
+              <div slide ng-repeat="picture in vm.app.pictures" class="screenshot">
+                <img ng-src={{picture}} alt="screenshot">
               </div>
             </div>
           </div>
+        </div>
 
-          <div class="col-md-4">
-            <div class="well text-center well-details">
-              <div class="row">
-                <div class="col-xs-12 col-sm-4 col-sm-offset-4 col-md-8 col-md-offset-2">
-                  <div class="btn-fluid-wrapper" ng-switch on="vm.appInstallationStatus()">
-                    <div ng-switch-when="CONFLICT" class="message">
-                      <i class="fa fa-exclamation-triangle"></i>
-                      {{ 'mno_enterprise.templates.dashboard.marketplace.show.conflicting_app' | translate }}
-                      <a ui-sref="home.marketplace.app({appId: vm.conflictingApp.id})">{{vm.conflictingApp.name}}</a>
-                    </div>
-                    <button ng-switch-when="INSTALLABLE" ng-click="vm.provisionApp()" ng-disabled="vm.isLoadingButton" class="btn btn-warning btn-promo">
-                      <span ng-show="vm.isLoadingButton"><i class="fa fa-spinner fa-pulse"></i>&nbsp;</span>
-                      {{ 'mno_enterprise.templates.dashboard.marketplace.show.start_app' | translate }}
-                    </button>
-                    <button ng-switch-when="INSTALLED_LAUNCH" ng-click="vm.launchAppInstance()" class="btn btn-warning btn-promo btn-lg">
-                      {{ 'mno_enterprise.templates.dashboard.marketplace.show.launch_app' | translate }}
-                    </button>
-                    <button ng-switch-when="INSTALLED_CONNECT" ng-click="vm.connectAppInstance()" class="btn btn-warning btn-promo btn-lg">
-                      {{ 'mno_enterprise.templates.dashboard.marketplace.show.connect_app' | translate }}
-                    </button>
+        <div class="col-md-4">
+          <div class="well text-center well-details">
+            <div class="row">
+              <div class="col-xs-12 col-sm-4 col-sm-offset-4 col-md-8 col-md-offset-2">
+                <div class="btn-fluid-wrapper" ng-switch on="vm.appInstallationStatus()">
+                  <div ng-switch-when="CONFLICT" class="message">
+                    <i class="fa fa-exclamation-triangle"></i>
+                    {{ 'mno_enterprise.templates.dashboard.marketplace.show.conflicting_app' | translate }}
+                    <a ui-sref="home.marketplace.app({appId: vm.conflictingApp.id})">{{vm.conflictingApp.name}}</a>
                   </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-xs-12 col-sm-4 col-sm-offset-4 col-md-8 col-md-offset-2">
-                  <ul class="app-features">
-                    <li ng-show="vm.app.is_responsive">
-                      <img src="images/icons/mobile-responsive-logo.png" alt="responsive icon">
-                      {{ 'mno_enterprise.templates.dashboard.marketplace.show.tag_responsive' | translate }}
-                    </li>
-                    <li ng-show="vm.app.is_star_ready" mno-helptext="Your live tutorials directly inside your app">
-                      <img src="images/icons/star-enabled-logo.png" alt="Star icon">
-                      {{ 'mno_enterprise.templates.dashboard.marketplace.show.tag_star' | translate }}
-                    </li>
-                    <li ng-show="vm.app.is_connec_ready" mno-helptext="Your Data automatically shared between your applications">
-                      <img ng-src="images/icons/connec-enabled-logo.png" alt="Connec icon">
-                      {{ 'mno_enterprise.templates.dashboard.marketplace.show.tag_connec' | translate }}
-                    </li>
-                  </ul>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-12 col-md-offset-0">
-
-                  <ul class="key-benefits">
-                    <li ng-repeat="benefit in vm.app.key_benefits track by $index">
-                      <i class="fa fa-check"></i>
-                      {{benefit}}
-                    </li>
-                  </ul>
-
+                  <a href="" ng-switch-when="INSTALLABLE" ng-click="vm.provisionApp()" ng-disabled="vm.isLoadingButton" class="btn btn-warning btn-promo">
+                    <span ng-show="vm.isLoadingButton"><i class="fa fa-spinner fa-pulse"></i>&nbsp;</span>
+                    {{ 'mno_enterprise.templates.dashboard.marketplace.show.start_app' | translate }}
+                  </a>
+                  <a href="" ng-switch-when="INSTALLED_LAUNCH" ng-click="vm.launchAppInstance()" class="btn btn-warning btn-promo btn-lg">
+                    {{ 'mno_enterprise.templates.dashboard.marketplace.show.launch_app' | translate }}
+                  </a>
+                  <a href="" ng-switch-when="INSTALLED_CONNECT" ng-click="vm.connectAppInstance()" class="btn btn-warning btn-promo btn-lg">
+                    {{ 'mno_enterprise.templates.dashboard.marketplace.show.connect_app' | translate }}
+                  </a>
                 </div>
               </div>
             </div>
-          </div>
-          <!-- End pics/details row -->
-        </div>
 
-        <!-- Testimonials row -->
-        <div class="row">
-          <div class="col-md-6" ng-repeat="testimonial in vm.app.testimonials | limitTo:2" ng-show="vm.isTestimonialShown(testimonial)">
-            <div class="ribbon-testimonial ribbon-white">
-                <div class="body">
-                  {{testimonial.text}}
-                  <div class="arrow"></div>
-                </div>
-              <div class="from">
-                <div class="name">{{testimonial.author}}</div>
-                <div class="company">{{testimonial.company}}</div>
+            <div class="row">
+              <div class="col-xs-12 col-sm-4 col-sm-offset-4 col-md-8 col-md-offset-2">
+                <ul class="app-features">
+                  <li ng-show="vm.app.is_responsive">
+                    <img src="images/icons/mobile-responsive-logo.png" alt="responsive icon">
+                    {{ 'mno_enterprise.templates.dashboard.marketplace.show.tag_responsive' | translate }}
+                  </li>
+                  <li ng-show="vm.app.is_star_ready" mno-helptext="Your live tutorials directly inside your app">
+                    <img src="images/icons/star-enabled-logo.png" alt="Star icon">
+                    {{ 'mno_enterprise.templates.dashboard.marketplace.show.tag_star' | translate }}
+                  </li>
+                  <li ng-show="vm.app.is_connec_ready" mno-helptext="Your Data automatically shared between your applications">
+                    <img ng-src="images/icons/connec-enabled-logo.png" alt="Connec icon">
+                    {{ 'mno_enterprise.templates.dashboard.marketplace.show.tag_connec' | translate }}
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-12 col-md-offset-0">
+
+                <ul class="key-benefits">
+                  <li ng-repeat="benefit in vm.app.key_benefits track by $index">
+                    <i class="fa fa-check"></i>
+                    {{benefit}}
+                  </li>
+                </ul>
+
               </div>
             </div>
           </div>
         </div>
+        <!-- End pics/details row -->
+      </div>
 
-        <!-- Description row -->
-        <div class="row">
-          <div class="col-md-12">
-            <div class="well top-buffer-1" ng-bind-html="vm.app.description"></div>
-          </div>
-        </div>
-
-      <!-- Pricing -->
-      <div ng-if="vm.isPriceShown" class="row top-buffer-1">
-        <div class="col-md-12">
-          <div class="well" ng-switch="vm.app.pricing_plans">
-            <h2>Price</h2>
-            <ul>
-              <li ng-repeat="plan in vm.pricing_plans">
-                <b>{{plan.name}}</b>: {{plan.description}}<br>
-                <span ng-if="plan.price.value">{{plan.currency}} {{plan.price.value}} {{plan.factor}}</span>
-                <span ng-if="!plan.price.value">{{plan.currency}} {{plan.price}} {{plan.factor}}</span>
-              </li>
-            </ul>
-            <span ng-if="!vm.app.single_billing" class="text-muted">Note: Credits cannot be used on this app as billing is managed by the third party provider</span>
+      <!-- Testimonials row -->
+      <div class="row">
+        <div class="col-md-6" ng-repeat="testimonial in vm.app.testimonials | limitTo:2" ng-show="vm.isTestimonialShown(testimonial)">
+          <div class="ribbon-testimonial ribbon-white">
+              <div class="body">
+                {{testimonial.text}}
+                <div class="arrow"></div>
+              </div>
+            <div class="from">
+              <div class="name">{{testimonial.author}}</div>
+              <div class="company">{{testimonial.company}}</div>
+            </div>
           </div>
         </div>
       </div>
 
-        <!-- End show-content -->
+      <!-- Description row -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="well top-buffer-1" ng-bind-html="vm.app.description"></div>
+        </div>
+      </div>
+
+    <!-- Pricing -->
+    <div ng-if="vm.isPriceShown" class="row top-buffer-1">
+      <div class="col-md-12">
+        <div class="well" ng-switch="vm.app.pricing_plans">
+          <h2>Price</h2>
+          <ul>
+            <li ng-repeat="plan in vm.pricing_plans">
+              <b>{{plan.name}}</b>: {{plan.description}}<br>
+              <span ng-if="plan.price.value">{{plan.currency}} {{plan.price.value}} {{plan.factor}}</span>
+              <span ng-if="!plan.price.value">{{plan.currency}} {{plan.price}} {{plan.factor}}</span>
+            </li>
+          </ul>
+          <span ng-if="!vm.app.single_billing" class="text-muted">Note: Credits cannot be used on this app as billing is managed by the third party provider</span>
+        </div>
+      </div>
     </div>
 
+    <!-- Comments & Ratings -->
+    <div id="comments" ng-if="vm.isReviewingEnabled">
+      <div class="add-review">
+        {{'mno_enterprise.templates.dashboard.marketplace.show.company_feedback' | translate}}:
+        <button type="button" class="btn btn-warning" ng-click="vm.openCreateReviewModal()">
+          {{ 'mno_enterprise.templates.dashboard.marketplace.show.write_review' | translate }}
+        </button>
+      </div>
+      <div class='login-icon'>
+        <span ng-show="vm.reviews.loading"><i class="fa fa-refresh fa-spin fa-3x fa-fw"></i></span>
+      </div>
+      <span ng-if="vm.reviews.list.length == 0 && !vm.reviews.loading" class='pages-selector'><h3>{{ 'mno_enterprise.templates.dashboard.marketplace.show.no_reviews' | translate }} {{vm.app.name}}</h3></span>
+      <div ng-hide='vm.reviews.loading'>
+        <blockquote class="well" ng-repeat="review in vm.reviews.list">
+          <average-star-rating ng-model="review.rating" readonly="true" class="pull-right"></average-star-rating>
+          <span>{{review.description}}</span>
+          <footer>
+            <span>{{review.user_name}} {{ 'mno_enterprise.templates.dashboard.marketplace.show.from' | translate }} </span>
+            <cite title="{{review.organization_name}}">{{review.organization_name}}</cite> {{ 'mno_enterprise.templates.dashboard.marketplace.show.on' | translate }}
+            <span ng-if="review.created_at"> {{review.created_at | date: "dd/MM/yyyy" }}</span>
+            <span ng-if="!review.created_at"> {{ 'mno_enterprise.templates.dashboard.marketplace.show.just_now' | translate }}</span>
+          </footer>
+        </blockquote>
+
+        <mno-pagination
+          page="vm.reviews.page"
+          nb-items="vm.reviews.nbItems"
+          total-items="vm.reviews.totalItems"
+          on-change-cb="vm.reviews.pageChangedCb(vm.app.id, nbItems, page)"
+          is-loading="vm.reviews.loading">
+        </mno-pagination>
+      </div>
+    </div>
+  </div>
 </div>
