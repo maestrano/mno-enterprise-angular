@@ -52,6 +52,14 @@ angular.module 'mnoEnterpriseAngular'
           templateUrl: 'app/views/marketplace/marketplace-app.html'
           controller: 'DashboardMarketplaceAppCtrl'
           controllerAs: 'vm'
+      .state 'home.marketplace.compare',
+        data:
+          pageTitle:'Marketplace-App-Compare'
+        url: '^/marketplace/apps/compare'
+        views: '@home':
+          templateUrl: 'app/views/marketplace/marketplace-compare.html'
+          controller: 'DashboardMarketplaceCompareCtrl'
+          controllerAs: 'vm'
       .state 'logout',
         url: '/logout'
         controller: ($window, $http, $translate, AnalyticsSvc) ->

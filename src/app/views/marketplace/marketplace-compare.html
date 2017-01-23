@@ -1,0 +1,73 @@
+<div class="dashboard-marketplace-compare">
+  <mno-loader ng-show="vm.isLoading" class="top-buffer-4"></mno-loader>
+  <!-- Header -->
+  <div class="row show-header top-buffer-4">
+    <div class="col-md-12">
+      <a ui-sref="home.marketplace()" class="text-muted">
+        <i class="fa fa-chevron-left"></i> {{ 'mno_enterprise.templates.dashboard.marketplace.show.back' | translate }}
+      </a>
+    </div>
+  </div>
+  <div class="marketplace-compare-wrap" ng-show="!vm.isLoading">
+    <div class="row">
+      <div class="col-md-12">
+        <h1>Comparison</h1>
+        <!-- <h2>{{vm.greeting.message}}</h2> -->
+        <div class="marketplace-compare-info">
+          <table class="marketplace-compare-table table table-bordered">
+            <tr>
+              <th></th>
+              <td ng-repeat="app in vm.apps | limitTo:4"><a ui-sref="home.marketplace.app({appId: app.id})"><img class="media-object" ng-src="{{app.logo}}" ng-alt="{{app.name}}"></a></td>
+            </tr>
+            <tr>
+              <th>Application Provider</th>
+              <td ng-repeat="app in vm.apps | limitTo:4">{{app.name}}</td>
+            </tr>
+            <tr>
+              <th>Category</th>
+              <td ng-repeat="app in vm.apps | limitTo:4">{{app.categories[2]}}</td>
+            </tr>
+            <tr>
+              <th>Key benefits</th>
+              <td ng-repeat="app in vm.apps | limitTo:4">{{app.key_benefits}}</td>
+            </tr>
+            <tr>
+              <th>Short description</th>
+              <td ng-repeat="app in vm.apps | limitTo:4">{{app.tiny_description}}</td>
+            </tr>
+            <tr>
+              <th>Rating</th>
+              <td>sadas</td>
+              <td>5</td>
+              <td>4</td>
+              <td>5</td>
+            </tr>
+            <tr>
+              <th>Number of agencies using the application</th>
+              <td>sadas</td>
+              <td>10</td>
+              <td>6</td>
+              <td>5</td>
+            </tr>
+            <tr>
+              <th>Pricing</th>
+              <td>18</td>
+              <td>20</td>
+              <td>10</td>
+              <td>6</td>
+              <!-- <td ng-repeat="plan in vm.pricing_plans">{{plan.currency}} {{plan.price.value}} {{plan.factor}}</td> -->
+            </tr>
+            <tr class="text-center">
+              <th></th>
+              <td><button class="btn btn-warning btn-lg">Buy now!</button></td>
+              <td><button class="btn btn-warning btn-lg">Buy now!</button></td>
+              <td><button class="btn btn-warning btn-lg">Buy now!</button></td>
+              <td><button class="btn btn-warning btn-lg">Buy now!</button></td>
+            </tr>
+
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

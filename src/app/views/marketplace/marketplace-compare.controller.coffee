@@ -1,8 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .service('greeting', ->
-    greeting = this
-    greeting.message = 'Default')
-  .controller('DashboardMarketplaceCtrl', (MnoeMarketplace, greeting) ->
+  .controller('DashboardMarketplaceCompareCtrl', (MnoeMarketplace, toastr, $scope, greeting) ->
     'ngInject'
 
     vm = this
@@ -12,21 +9,12 @@ angular.module 'mnoEnterpriseAngular'
     # Initialization
     #====================================
     vm.isLoading = true
-    vm.selectedCategory = ''
-    vm.searchTerm = ''
 
-    #====================================
-    # Scope Management
-    #====================================
-    vm.linkFor = (app) ->
-      "#/marketplace/#{app.id}"
-
-    vm.appsFilter = (app) ->
-      if (vm.searchTerm? && vm.searchTerm.length > 0) || !vm.selectedCategory
-        return true
-      else
-        return _.contains(app.categories, vm.selectedCategory)
-
+    vm.checkedCount = ->
+      vm.apps.filter((app) ->
+        app.is_responsive
+      ).length
+      toastr.pop('info', "title", "text")
 
     #====================================
     # Calls
@@ -38,9 +26,10 @@ angular.module 'mnoEnterpriseAngular'
 
         vm.categories = response.categories
         vm.apps = response.apps
+        vm.pricing_plans = response.pricing_plans
 
         vm.isLoading = false
     )
 
     return
-)
+  )
