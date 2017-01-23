@@ -7,6 +7,12 @@ angular.module 'mnoEnterpriseAngular'
   if $scope.type == 'answer'
     $scope.questionText = iteractionObject.object.text
 
+  if $scope.type == 'edit'
+    $scope.iteractionText = iteractionObject.object.text
+
+  if $scope.type == 'delete'
+    $scope.modifier = iteractionObject.type.modifier
+
   # Close the current modal
   $scope.closeModal = ->
     $uibModalInstance.dismiss()
@@ -19,6 +25,11 @@ angular.module 'mnoEnterpriseAngular'
         iteractionObject.object.push({text: $scope.iteractionText, answers: []})
       when 'answer'
         iteractionObject.object.answers.push({text: $scope.iteractionText})
+      when 'edit'
+        iteractionObject.object.text = $scope.iteractionText
+      when 'delete'
+        iteractionObject.object.splice(iteractionObject.type.key, 1)
+
 
     $uibModalInstance.dismiss()
 

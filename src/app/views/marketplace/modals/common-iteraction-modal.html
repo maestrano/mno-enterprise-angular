@@ -7,6 +7,7 @@
     <p> {{ questionText }} </p>
     <h3>Publish an answer to this question: </h3>
   </div>
+  <h3 ng-show="type == 'edit'">Edit: </h3>
   <h3 ng-show="type == 'delete'">
     <span ng-show="modifier == 'comment'">Do you really want to delete your comment?</span>
     <span ng-show="modifier != 'comment'">Delete</span>
