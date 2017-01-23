@@ -35,7 +35,7 @@ angular.module 'mnoEnterpriseAngular'
 .config((ImpacThemingProvider) ->
   options =
     dataNotFoundConfig:
-      linkUrl: '#/marketplace'
+      linkUrl: '/dashboard/#!/marketplace'
     dhbErrorsConfig:
       firstTimeCreated:
         note: ''
