@@ -4,6 +4,9 @@ angular.module 'mnoEnterpriseAngular'
   $scope.iteractionText = ''
   $scope.type = iteractionObject.type.context
 
+  if $scope.type == 'answer'
+    $scope.questionText = iteractionObject.object.text
+
   # Close the current modal
   $scope.closeModal = ->
     $uibModalInstance.dismiss()
@@ -12,6 +15,10 @@ angular.module 'mnoEnterpriseAngular'
     switch $scope.type
       when 'comment'
         iteractionObject.object.comments.push({text: $scope.iteractionText})
+      when 'question'
+        iteractionObject.object.push({text: $scope.iteractionText, answers: []})
+      when 'answer'
+        iteractionObject.object.answers.push({text: $scope.iteractionText})
 
     $uibModalInstance.dismiss()
 

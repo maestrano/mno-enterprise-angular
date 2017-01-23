@@ -41,7 +41,10 @@ angular.module 'mnoEnterpriseAngular'
         vm.app.testimonials.forEach((testimonial) ->
           testimonial.comments = []
         )
-        
+
+        vm.app.questions = []
+
+
         vm.isLoading = false
 
       # Check that the testimonial is not empty

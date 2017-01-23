@@ -172,6 +172,40 @@
               </div>
             </div>
           </div>
+          <!-- Questions -->
+          <div class="col-md-12" ng-show="!vm.rewieTab" ng-repeat="(i, question) in vm.app.questions | limitTo:2">
+            <div class="ribbon-question">
+              <div class="row">
+                <div class="col-md-9">
+                  <div class="row question-body">
+                    <div class="col-md-2 question-title">
+                      Question
+                    </div>
+                    <div class="col-md-10">
+                      {{ question.text }}
+                    </div>
+                  </div>
+                  <div class="row question-answers">
+                    <div class="col-md-2 question-title">
+                      Answers:
+                    </div>
+                    <div class="col-md-10" >
+                      <div class="question-answer" ng-repeat="(i, answer) in question.answers">
+                        <p> {{ answer.text }} </p>
+                        <button class="btn" type="button" name="button" ng-click="vm.openCommonModal({type: {context: 'delete', modifier: 'answer'}, object: question.answers})">Delete</button>
+                        <button class="btn" type="button" name="button" ng-click="vm.openCommonModal({type: {context: 'edit'}, object: answer})">Edit</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3 question-actions">
+                  <button class="btn" name="button" ng-click="vm.openCommonModal({type: {context: 'answer'}, object: question})">Answer to this Question</button>
+                  <button class="btn" name="button" ng-click="vm.openCommonModal({type: {context: 'edit'}, object: question})">Edit this Question</button>
+                  <button class="btn" name="button" ng-click="vm.openCommonModal({type: {context: 'delete', modifier: 'question', key: i}, object: vm.app.questions})">Delete this Question</button>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="col-md-12 pagination">
             <div class="pagination-container">
               <span><i class="fa fa-arrow-left"></i> Back</span>
