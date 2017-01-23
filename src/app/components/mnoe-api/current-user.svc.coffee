@@ -29,11 +29,14 @@ angular.module 'mnoEnterpriseAngular'
       userPromise = MnoeApiSvc.one('current_user').get().then(
         (response) ->
           response = response.plain()
-
           if !response.logged_in
+            console.log "User is not logged in"
             $window.location.href = URI.login
-
-          angular.copy(response, _self.user)
+          else if !response.confirmed_at
+            console.log "User is not confirmed"
+            $window.location.href = URI.lounge
+          else
+            angular.copy(response, _self.user)
           response
       )
 

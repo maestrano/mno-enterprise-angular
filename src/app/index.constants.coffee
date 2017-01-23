@@ -1,6 +1,7 @@
 angular.module 'mnoEnterpriseAngular'
   .constant('URI', {
     login: '/mnoe/auth/users/sign_in',
+    lounge: '/mnoe/auth/users/confirmation/lounge',
     dashboard: '/dashboard/',
     logout: '/mnoe/auth/users/sign_out'
   })
