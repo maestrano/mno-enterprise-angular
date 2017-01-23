@@ -1,0 +1,30 @@
+<div class="modal-header">
+  <div class="close" type="button" ng-click="closeModal()" >×</div>
+  <h3 ng-show="type == 'comment'">Comment this feedback: </h3>
+  <h3 ng-show="type == 'delete'">
+    <span ng-show="modifier == 'comment'">Do you really want to delete your comment?</span>
+    <span ng-show="modifier != 'comment'">Delete</span>
+  </h3>
+
+</div>
+
+<div class="modal-body" ng-show="type != 'delete'">
+  <div class="main-area comment-input">
+    <textarea ng-model="iteractionText" rows="8" cols="40"></textarea>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <div class="row">
+    <div class="col-md-12">
+      <button class="btn btn-default" ng-click="closeModal()">
+        <span ng-show="type != 'delete'">Cancel</span>
+        <span ng-show="type == 'delete'">No</span>
+      </button>
+      <button class="btn btn-default" ng-click="submitIteraction()">
+        <span ng-show="type != 'delete'">Submit</span>
+        <span ng-show="type == 'delete'">Yes</span>
+      </button>
+    </div>
+  </div>
+</div>
