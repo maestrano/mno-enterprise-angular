@@ -19,6 +19,9 @@ angular.module 'mnoEnterpriseAngular'
       vm.conflictingApp = null
       # Enabling pricing
       vm.isPriceShown = PRICING_CONFIG && PRICING_CONFIG.enabled
+      # Flag for comments and questions tabs
+      vm.rewieTab = true
+
 
       #====================================
       # Scope Management
@@ -35,6 +38,12 @@ angular.module 'mnoEnterpriseAngular'
 
         # Get the user role in this organization
         MnoeOrganizations.get().then((response) -> vm.user_role = response.current_user.role)
+
+        vm.app.testimonials.forEach((testimonial) ->
+          testimonial.comments = []
+        )
+
+        vm.app.questions = []
 
         vm.isLoading = false
 
@@ -60,6 +69,9 @@ angular.module 'mnoEnterpriseAngular'
             "CONFLICT"
           else
             "INSTALLABLE"
+
+      vm.toggleCommentInput = (e) ->
+        vm.showCommentInput = !vm.showCommentInput
 
       vm.provisionApp = () ->
         vm.isLoadingButton = true
@@ -106,6 +118,8 @@ angular.module 'mnoEnterpriseAngular'
       vm.launchAppInstance = ->
         $window.open("/mnoe/launch/#{vm.appInstance.uid}", '_blank')
 
+
+
       openChooseOrgaModal = ->
         $uibModal.open(
           backdrop: 'static'
@@ -137,6 +151,16 @@ angular.module 'mnoEnterpriseAngular'
             app: vm.appInstance
         )
 
+      #====================================
+      # Common modal
+      #====================================
+      vm.openCommonModal = (iteractionObject) ->
+        $uibModal.open(
+          templateUrl: 'app/views/marketplace/modals/common-iteraction-modal.html'
+          controller: 'CommonIteractionModal'
+          resolve:
+            iteractionObject: iteractionObject
+        )
       #====================================
       # Cart Management
       #====================================
