@@ -24,6 +24,41 @@
     margin-top: 20px;
   }
 
+  .marketplace-list .tooltip {
+    opacity: 1;
+    overflow: hidden;
+    @media (max-width: @screen-sm) {
+      display: none;
+    }
+  }
+
+  // Info box styles
+  .marketplace-list .tooltip .tooltip-inner {
+    position: relative;
+    padding: 10px;
+    width: @dashboard-marketplace-tooltip-width;
+    max-width: @dashboard-marketplace-tooltip-width;
+    background-color: @mno-demo-white;
+
+    font-size: 14px;
+    max-height: 300px;
+    font-weight: normal !important;
+    color: @mno-demo-brown;
+    border: 1px solid @mno-demo-brown;
+
+    // Shadow at the bottom
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: block;
+      box-shadow: @dashboard-marketplace-tooltip-shadow;
+      height: 50px;
+    }
+  }
+  
   //-------------------------------
   // App Card
   //-------------------------------
