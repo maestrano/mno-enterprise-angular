@@ -124,4 +124,58 @@
   .show-content .ribbon-testimonial .from .name {
     color: @dashboard-marketplace-show-sections-text-color;
   }
+
+  .tabs {
+    margin: 15px 0;
+    display: flex;
+
+    button {
+      border-radius: 0;
+    }
+
+    button:last-child {
+      margin-left: auto;
+    }
+
+    .active {
+      background-color: #2a87fe;
+    }
+  }
+
+  .testimonial-panel {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .testimonial-filter {
+    margin-left: auto;
+    margin-right: 10px;
+  }
+
+  .testimonial-average {
+
+    i:first-child {
+      margin-left: 5px;
+    }
+  }
+}
+
+.comment-input {
+  textarea {
+    width: 100%;
+    resize: none;
+  }
+}
+
+.pagination {
+  display: flex;
+
+  .pagination-container {
+    margin: auto;
+  }
+
+  .pagination-pages {
+    margin: 0 10px;
+  }
 }
