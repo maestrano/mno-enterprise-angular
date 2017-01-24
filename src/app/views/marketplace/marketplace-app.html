@@ -91,28 +91,129 @@
           <!-- End pics/details row -->
         </div>
 
-        <!-- Testimonials row -->
-        <div class="row">
-          <div class="col-md-6" ng-repeat="testimonial in vm.app.testimonials | limitTo:2" ng-show="vm.isTestimonialShown(testimonial)">
-            <div class="ribbon-testimonial">
-                <div class="body">
-                  {{testimonial.text}}
-                  <div class="arrow"></div>
-                </div>
-              <div class="from">
-                <div class="name">{{testimonial.author}}</div>
-                <div class="company">{{testimonial.company}}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <!-- Description row -->
         <div class="row">
           <div class="col-md-12">
             <div class="well top-buffer-1" ng-bind-html="vm.app.description"></div>
           </div>
         </div>
+
+        <!-- Testimonials row -->
+        <div class="row">
+          <div class="col-md-12 tabs">
+            <button class="btn" ng-class="{active: vm.rewieTab}" type="button" name="button" ng-click="vm.rewieTab = true">Reviews</button>
+            <button class="btn" ng-class="{active: !vm.rewieTab}" type="button" name="button" ng-click="vm.rewieTab = false">Questions</button>
+            <button class="btn" type="button" name="button" ng-show="!vm.rewieTab" ng-click="vm.openCommonModal({type: {context: 'question'}, object: vm.app.questions})">Ask a question</button>
+          </div>
+          <div class="col-md-12 testimonial-panel" ng-show="vm.rewieTab">
+            <div class="testimonial-average">
+              Average:
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star-o"></i>
+            </div>
+            <div class="testimonial-filter">
+              <select class="" name="">
+                <option>Filter by rating</option>
+              </select>
+            </div>
+            <button class="btn" type="button" name="button">Write a review</button>
+          </div>
+          <!-- Reviews -->
+          <div class="col-md-12" ng-repeat="(i, testimonial) in vm.app.testimonials | limitTo:2" ng-show="vm.isTestimonialShown(testimonial) && vm.rewieTab">
+            <div class="ribbon-testimonial">
+              <div class="row">
+                <div class="col-md-2">
+                  <div class="from">
+                    <div class="name">{{testimonial.author}}</div>
+                    <div class="company">{{testimonial.company}}</div>
+                  </div>
+                </div>
+                <div class="col-md-10 body clearfix">
+                  <div class="testimonial-rating clearfix">
+                    <div>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star-o"></i>
+                    </div>
+                  </div>
+                  <p>
+                    {{testimonial.text}}
+                  </p>
+                  <div class="bottom-panel">
+                    <p> posted on 24/11/2016 </p>
+                    <p> Edit by the admin </p>
+                    <div class="actions">
+                      <button class="btn" type="button" name="button" ng-click="vm.openCommonModal({type: {context: 'delete', modifier: 'testimonial', key: i}, object: vm.app.testimonials})">Delete</button>
+                      <button class="btn" type="button" name="button" ng-click="vm.openCommonModal({type: {context: 'edit'}, object: testimonial})">Edit</button>
+                      <button class="btn" type="button" name="button" ng-click="vm.openCommonModal({type: {context: 'comment'}, object: testimonial})">Comment</button>
+                    </div>
+                  </div>
+                  <!-- Comments -->
+                  <div class="comments" ng-repeat="(i, comment) in testimonial.comments">
+                    <div class="comments-item">
+                      <p>
+                        <span>Comment from user 5 Agency 9(09/15/17)</span>
+                        {{ comment.text }}
+                      </p>
+                      <div class="bottom-panel">
+                        <div class="actions">
+                          <button class="btn" type="button" name="button" ng-click="vm.openCommonModal({type: {context: 'delete', modifier: 'comment', key: i}, object: testimonial.comments})">Delete</button>
+                          <button class="btn" type="button" name="button" ng-click="vm.openCommonModal({type: {context: 'edit'}, object: comment})">Edit</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Questions -->
+          <div class="col-md-12" ng-show="!vm.rewieTab" ng-repeat="(i, question) in vm.app.questions | limitTo:2">
+            <div class="ribbon-question">
+              <div class="row">
+                <div class="col-md-9">
+                  <div class="row question-body">
+                    <div class="col-md-2 question-title">
+                      Question
+                    </div>
+                    <div class="col-md-10">
+                      {{ question.text }}
+                    </div>
+                  </div>
+                  <div class="row question-answers">
+                    <div class="col-md-2 question-title">
+                      Answers:
+                    </div>
+                    <div class="col-md-10" >
+                      <div class="question-answer" ng-repeat="(i, answer) in question.answers">
+                        <p> {{ answer.text }} </p>
+                        <button class="btn" type="button" name="button" ng-click="vm.openCommonModal({type: {context: 'delete', modifier: 'answer'}, object: question.answers})">Delete</button>
+                        <button class="btn" type="button" name="button" ng-click="vm.openCommonModal({type: {context: 'edit'}, object: answer})">Edit</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3 question-actions">
+                  <button class="btn" name="button" ng-click="vm.openCommonModal({type: {context: 'answer'}, object: question})">Answer to this Question</button>
+                  <button class="btn" name="button" ng-click="vm.openCommonModal({type: {context: 'edit'}, object: question})">Edit this Question</button>
+                  <button class="btn" name="button" ng-click="vm.openCommonModal({type: {context: 'delete', modifier: 'question', key: i}, object: vm.app.questions})">Delete this Question</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 pagination">
+            <div class="pagination-container">
+              <span><i class="fa fa-arrow-left"></i> Back</span>
+              <span class="pagination-pages">Pages 2/4</span>
+              <span>Next<i class="fa fa-arrow-right"></i></span>
+            </div>
+          </div>
+      </div>
 
       <!-- Pricing -->
       <div ng-if="vm.isPriceShown" class="row top-buffer-1">
