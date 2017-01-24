@@ -47,7 +47,7 @@
   <div class="row">
     <div class="col-sm-12">
       <button class="btn btn-default" ng-click="memberAddModal.close()" ng-show="!memberAddModal.isLoading">{{ 'mno_enterprise.templates.dashboard.teams.member_add_modal.cancel' | translate }}</button>
-      <button class="btn btn-warning" ng-click="memberAddModal.proceed()" ng-disabled="memberAddModal.isLoading">
+      <button class="btn btn-warning" ng-if="memberAddModal.canAddUsers()" ng-click="memberAddModal.proceed()" ng-disabled="memberAddModal.isLoading">
         <span ng-show="memberAddModal.isLoading"><i class="fa fa-spinner fa-pulse fa-fw"></i></span> {{ 'mno_enterprise.templates.dashboard.teams.member_add_modal.add' | translate }}
       </button>
     </div>
