@@ -19,14 +19,14 @@
         <div class="col-sm-4">
           <input type="text" class="form-control" placeholder="{{ 'mno_enterprise.templates.dashboard.marketplace.index.search' | translate }}" ng-model="vm.searchTerm" ng-change="vm.selectedCategory = ''"/>
         </div>
-        <div class="col-sm-4 text-center">
+        <div ng-show="!vm.isMarketplaceCompare" class="col-sm-4 text-center">
           <button ng-click="compare = !compare" ng-hide="compare" class="btn btn-primary">
             <span>Compare application</span>
           </button>
           <div ng-show="compare" class="marketplace-compare-action">
             <div>Select up to 4 applications</div>
-            <button class="btn btn-primary" ui-sref="home.marketplace.compare">Compare (<span class="marketplace-compare-number">{{ (vm.apps | filter:{is_responsive: true }).length }}</span>)</button>
-            <button class="btn btn-primary" ng-click="compare = !compare">Cancel</button>
+            <button class="btn btn-primary" ng-click="vm.Comparison($event)">Compare (<span class="marketplace-compare-number">{{vm.calculateChecked()}}</span>)</button>
+            <button class="btn btn-primary" ng-click="vm.unCheckedApps(); compare = !compare">Cancel</button>
           </div>
         </div>
       </div>
@@ -37,11 +37,10 @@
       <div class="marketplace-list">
 
         <!-- App Cards-->
-        <!-- <h2>{{ vm.greeting.message }}</h2> -->
         <div class="col-sm-6 col-md-4" ng-repeat="app in vm.apps | filter:vm.appsFilter | filter:vm.searchTerm">
           <div class="marketplace-app-card-checkbox" ng-show="compare">
             <label>
-              <input type="checkbox" ng-model="app.is_responsive">
+              <input type="checkbox" ng-model="app.is_compare">
             </label>
           </div>
           <a class="marketplace-app-card" ui-sref="home.marketplace.app({appId: app.id})">

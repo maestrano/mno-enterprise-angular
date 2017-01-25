@@ -1,35 +1,33 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('DashboardMarketplaceCompareCtrl', (MnoeMarketplace, toastr, $scope, greeting) ->
-    'ngInject'
+  .controller('DashboardMarketplaceCompareCtrl', ($scope, $stateParams, $state,
+    MnoeMarketplace, PRICING_CONFIG) ->
 
-    vm = this
-    vm.greeting = greeting
+      vm = this
 
-    #====================================
-    # Initialization
-    #====================================
-    vm.isLoading = true
+      vm.isPriceShown = PRICING_CONFIG && PRICING_CONFIG.enabled
 
-    vm.checkedCount = ->
-      vm.apps.filter((app) ->
-        app.is_responsive
-      ).length
-      toastr.pop('info', "title", "text")
+      #====================================
+      # Initialization
+      #====================================
+      vm.isLoading = true
 
-    #====================================
-    # Calls
-    #====================================
-    MnoeMarketplace.getApps().then(
-      (response) ->
-        # Remove restangular decoration
-        response = response.plain()
+      currency = (PRICING_CONFIG && PRICING_CONFIG.currency) || 'AUD'
+      vm.pricing_plans = [currency] || 'AUD' || 'default'
 
-        vm.categories = response.categories
-        vm.apps = response.apps
-        vm.pricing_plans = response.pricing_plans
+      #====================================
+      # Calls
+      #====================================
+      MnoeMarketplace.getApps().then(
+        (response) ->
+          # Remove restangular decoration
+          response = response.plain()
 
-        vm.isLoading = false
-    )
+          vm.categories = response.categories
+          vm.apps = response.apps
 
-    return
+          vm.isLoading = false
+
+      )
+
+      return
   )
