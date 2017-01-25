@@ -1,4 +1,5 @@
 .ribbon-testimonial {
+  margin-bottom: 30px;
 
   .body {
     background-color: @bg-on-bg-inverse-color;
@@ -20,24 +21,66 @@
       right: 28px;
       margin-top: 8px;
     }
+
+    .bottom-panel {
+      margin-top: 20px;
+      display: flex;
+      flex-flow: row;
+      align-items: center;
+
+      p {
+        margin: 0;
+      }
+
+      p:nth-child(2) {
+        margin-left: 20px;
+      }
+    }
+
+    .actions {
+      margin-left: auto;
+    }
+
+    .comments {
+      margin: 15px 0 0 auto;
+      padding: 10px;
+      background-color: @bg-main-color;
+      width: 70%;
+
+      span {
+        display: block;
+        font-style: italic;
+        margin-bottom: 10px;
+      }
+    }
+
+    .comments-item:not(:last-child) {
+      margin-bottom: 15px;
+    }
   }
 
   .from {
-    margin: 7px 0px 0px 30px;
+    margin: 7px 0px 0px 15px;
 
     .name {
-      display: inline;
       font-size: 14px;
       font-weight: 700;
       color: @text-inverse-color;
     }
 
     .company {
-      display: inline;
       font-size: 14px;
       font-weight: 300;
       color: @decorator-inverse-color;
     }
   }
-}
 
+  .testimonial-rating {
+    margin-bottom: 10px;
+
+    div {
+      float: right;
+      font-size: 2rem;
+    }
+  }
+}

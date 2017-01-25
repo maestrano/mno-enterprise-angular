@@ -36,6 +36,12 @@ angular.module 'mnoEnterpriseAngular'
         # Get the user role in this organization
         MnoeOrganizations.get().then((response) -> vm.user_role = response.current_user.role)
 
+        vm.app.testimonials.forEach((testimonial) ->
+          testimonial.comments = []
+        )
+
+        vm.app.questions = []
+
         vm.isLoading = false
 
       # Check that the testimonial is not empty
@@ -136,6 +142,70 @@ angular.module 'mnoEnterpriseAngular'
           resolve:
             app: vm.appInstance
         )
+
+      #====================================
+      # Comment modal
+      #====================================
+      vm.openCommentModal = (testimonial) ->
+        $uibModal.open(
+          templateUrl: 'app/views/marketplace/modals/comment-modal.html'
+          controller: 'CommentModal'
+        ).result.then (
+          (response) ->
+            testimonial.comments.push({text: response})
+          )
+      #====================================
+      # Question modal
+      #====================================
+      vm.openQuestionModal = (questions) ->
+        $uibModal.open(
+          templateUrl: 'app/views/marketplace/modals/question-modal.html'
+          controller: 'QuestionModal'
+        ).result.then (
+          (response) ->
+            questions.questions.push({text: response, answers: []})
+          )
+
+      #====================================
+      # Answer modal
+      #====================================
+      vm.openAnswerModal = (question) ->
+        $uibModal.open(
+          templateUrl: 'app/views/marketplace/modals/answer-modal.html'
+          controller: 'AnswerModal'
+          resolve:
+            question: question
+        ).result.then (
+          (response) ->
+            question.answers.push({text: response})
+          )
+
+      #====================================
+      # Edit modal
+      #====================================
+      vm.openEditModal = (object) ->
+        $uibModal.open(
+          templateUrl: 'app/views/marketplace/modals/edit-modal.html'
+          controller: 'EditModal'
+          resolve:
+            object: object
+        ).result.then (
+          (response) ->
+            object.text = response
+          )
+
+      #====================================
+      # Deletion modal
+      #====================================
+      vm.openDeleteModal = (object, key) ->
+        $uibModal.open(
+          templateUrl: 'app/views/marketplace/modals/delete-modal.html'
+          controller: 'DeleteModal'
+        ).result.then (
+          (response) ->
+            if response
+              object.splice(key, 1)
+          )
 
       #====================================
       # Cart Management

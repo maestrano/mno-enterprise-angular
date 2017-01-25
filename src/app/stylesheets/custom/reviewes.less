@@ -1,0 +1,85 @@
+.review {
+  margin-bottom: 30px;
+
+  .body {
+    background-color: @bg-on-bg-inverse-color;
+    border-radius: 5px;
+    padding: 20px;
+    color: @text-strong-color;
+    font-weight: 300;
+    font-size: 16px;
+    font-style: italic;
+
+    .arrow {
+      .rotate(45deg);
+      width: 0;
+      height: 0;
+      border-top: 18px solid transparent;
+      border-bottom: 18px solid transparent;
+      border-right: 18px solid @decorator-main-color;
+      position: absolute;
+      right: 28px;
+      margin-top: 8px;
+    }
+
+    .bottom-panel {
+      margin-top: 20px;
+      display: flex;
+      flex-flow: row;
+      align-items: center;
+
+      p {
+        margin: 0;
+      }
+
+      p:nth-child(2) {
+        margin-left: 20px;
+      }
+    }
+
+    .actions {
+      margin-left: auto;
+    }
+
+    .comments {
+      margin: 15px 0 0 auto;
+      padding: 10px;
+      background-color: @comment-bg;
+      width: 70%;
+
+      span {
+        display: block;
+        font-style: italic;
+        margin-bottom: 10px;
+      }
+    }
+
+    .comments-item:not(:last-child) {
+      margin-bottom: 15px;
+    }
+  }
+
+  .from {
+    margin: 7px 0px 0px 15px;
+
+    .name {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .company {
+      font-size: 14px;
+      font-weight: 300;
+      color: @company-color;
+    }
+  }
+
+  .review-rating {
+    margin-bottom: 10px;
+
+    div {
+      float: right;
+      font-size: 2rem;
+    }
+  }
+}

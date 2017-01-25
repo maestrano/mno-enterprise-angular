@@ -92,25 +92,160 @@
         </div>
 
         <!-- Testimonials row -->
-        <div class="row">
-          <div class="col-md-6" ng-repeat="testimonial in vm.app.testimonials | limitTo:2" ng-show="vm.isTestimonialShown(testimonial)">
-            <div class="ribbon-testimonial">
-                <div class="body">
-                  {{testimonial.text}}
-                  <div class="arrow"></div>
-                </div>
-              <div class="from">
-                <div class="name">{{testimonial.author}}</div>
-                <div class="company">{{testimonial.company}}</div>
-              </div>
-            </div>
-          </div>
-        </div>
+       <div class="row">
+         <div class="col-md-6" ng-repeat="testimonial in vm.app.testimonials | limitTo:2" ng-show="vm.isTestimonialShown(testimonial)">
+           <div class="ribbon-testimonial">
+               <div class="body">
+                 {{testimonial.text}}
+                 <div class="arrow"></div>
+               </div>
+             <div class="from">
+               <div class="name">{{testimonial.author}}</div>
+               <div class="company">{{testimonial.company}}</div>
+             </div>
+           </div>
+         </div>
+       </div>
 
         <!-- Description row -->
         <div class="row">
           <div class="col-md-12">
             <div class="well top-buffer-1" ng-bind-html="vm.app.description"></div>
+          </div>
+        </div>
+
+        <!-- Reviews and question tabs -->
+        <uib-tabset>
+
+          <uib-tab index="0" heading="Reviews">
+            <div class="row">
+              <div class="col-md-12 review-panel">
+                <div class="review-average">
+                  Average:
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star-o"></i>
+                  (23 ratings)
+                </div>
+                <div class="review-filter">
+                  <select class="" name="">
+                    <option>Filter by rating</option>
+                  </select>
+                  <button class="btn" type="button" name="button">Write a review</button>
+                </div>
+              </div>
+              <!-- Reviews -->
+              <div class="col-md-12" ng-repeat="(i, testimonial) in vm.app.testimonials | limitTo:2" ng-show="vm.isTestimonialShown(testimonial)">
+                <div class="review">
+                  <div class="row">
+                    <div class="col-md-2">
+                      <div class="from">
+                        <div class="name">{{testimonial.author}}</div>
+                        <div class="company">{{testimonial.company}}</div>
+                      </div>
+                    </div>
+                    <div class="col-md-10 body clearfix">
+                      <div class="review-rating clearfix">
+                        <div>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star-o"></i>
+                        </div>
+                      </div>
+                      <p>
+                        {{testimonial.text}}
+                      </p>
+                      <div class="bottom-panel">
+                        <p> posted on 24/11/2016 </p>
+                        <p> Edit by the admin </p>
+                        <div class="actions">
+                          <button class="btn" type="button" name="button" ng-click="vm.openDeleteModal(vm.app.testimonials, i)">Delete</button>
+                          <button class="btn" type="button" name="button" ng-click="vm.openEditModal(testimonial)">Edit</button>
+                          <button class="btn" type="button" name="button" ng-click="vm.openCommentModal(testimonial)">Comment</button>
+                        </div>
+                      </div>
+                      <!-- Comments -->
+                      <div class="comments" ng-repeat="(i, comment) in testimonial.comments">
+                        <div class="comments-item">
+                          <p>
+                            <span>Comment from user 5 Agency 9(09/15/17)</span>
+                            {{ comment.text }}
+                          </p>
+                          <div class="bottom-panel">
+                            <div class="actions">
+                              <button class="btn" type="button" name="button" ng-click="vm.openDeleteModal(estimonial.comments, i)">Delete</button>
+                              <button class="btn" type="button" name="button" ng-click="vm.openEditModal(comment)">Edit</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </uib-tab>
+
+          <uib-tab index="1" heading="Questions">
+            <div class="row question">
+              <div class="col-md-12 clearfix">
+                <div class="question-panel">
+                  <form class="" action="index.html" method="post">
+                    <input type="text" name="name" value="" placeholder="search a question, find an answer">
+                    <button class="fa fa-search" type="button" name="button"></button>
+                  </form>
+                  <button class="btn" type="button" name="button" ng-click="vm.openQuestionModal({questions: vm.app.questions})">Ask a question</button>
+                </div>
+              </div>
+              <div class="col-md-12" ng-repeat="(i, question) in vm.app.questions | limitTo:2">
+                <div class="ribbon-question">
+                  <div class="row">
+                    <div class="col-md-9">
+                      <div class="row question-body">
+                        <div class="col-md-2 question-title">
+                          Question
+                        </div>
+                        <div class="col-md-10">
+                          {{ question.text }}
+                        </div>
+                      </div>
+                      <div class="row question-answers">
+                        <div class="col-md-2 question-title">
+                          Answers:
+                        </div>
+                        <div class="col-md-10" >
+                          <div class="question-answer" ng-repeat="(i, answer) in question.answers">
+                            <p> {{ answer.text }} </p>
+                            <button class="btn" type="button" name="button" ng-click="vm.openDeleteModal(question.answers, i)">Delete</button>
+                            <button class="btn" type="button" name="button" ng-click="vm.openEditModal(answer)">Edit</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3 question-actions">
+                      <button class="btn" name="button" ng-click="vm.openAnswerModal(question)">Answer to this Question</button>
+                      <button class="btn" name="button" ng-click="vm.openEditModal(question)">Edit this Question</button>
+                      <button class="btn" name="button" ng-click="vm.openDeleteModal(vm.app.questions, i)">Delete this Question</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </uib-tab>
+
+        </uib-tabset>
+
+        <div class="row">
+          <div class="col-md-12 pagination">
+            <div class="pagination-container">
+              <span><i class="fa fa-arrow-left"></i> Back</span>
+              <span class="pagination-pages">Pages 2/4</span>
+              <span>Next<i class="fa fa-arrow-right"></i></span>
+            </div>
           </div>
         </div>
 
