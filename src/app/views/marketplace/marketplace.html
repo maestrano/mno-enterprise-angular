@@ -20,13 +20,13 @@
           <input type="text" class="form-control" placeholder="{{ 'mno_enterprise.templates.dashboard.marketplace.index.search' | translate }}" ng-model="vm.searchTerm" ng-change="vm.selectedCategory = ''"/>
         </div>
         <div ng-show="!vm.isMarketplaceCompare" class="col-sm-4 text-center">
-          <button ng-click="compare = !compare" ng-hide="compare" class="btn btn-primary">
+          <button ng-click="vm.compareToggle()" ng-hide="vm.showCompare" class="btn btn-primary">
             <span>Compare application</span>
           </button>
-          <div ng-show="compare" class="marketplace-compare-action">
+          <div ng-show="vm.showCompare" class="marketplace-compare-action">
             <div>Select up to 4 applications</div>
             <button class="btn btn-primary" ng-click="vm.Comparison($event)">Compare (<span class="marketplace-compare-number">{{vm.calculateChecked()}}</span>)</button>
-            <button class="btn btn-primary" ng-click="vm.unCheckedApps(); compare = !compare">Cancel</button>
+            <button class="btn btn-primary" ng-click="vm.unCheckedApps(); vm.compareToggle()">Cancel</button>
           </div>
         </div>
       </div>
@@ -38,7 +38,7 @@
 
         <!-- App Cards-->
         <div class="col-sm-6 col-md-4" ng-repeat="app in vm.apps | filter:vm.appsFilter | filter:vm.searchTerm">
-          <div class="marketplace-app-card-checkbox" ng-show="compare">
+          <div class="marketplace-app-card-checkbox" ng-show="vm.showCompare">
             <label>
               <input type="checkbox" ng-model="app.is_compare">
             </label>

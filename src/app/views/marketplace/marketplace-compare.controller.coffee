@@ -19,14 +19,10 @@ angular.module 'mnoEnterpriseAngular'
       #====================================
       MnoeMarketplace.getApps().then(
         (response) ->
-          # Remove restangular decoration
           response = response.plain()
-
-          vm.categories = response.categories
           vm.apps = response.apps
 
           vm.isLoading = false
-
       )
 
       return

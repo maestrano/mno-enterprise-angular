@@ -11,6 +11,7 @@ angular.module 'mnoEnterpriseAngular'
       vm.selectedCategory = ''
       vm.searchTerm = ''
       vm.isMarketplaceCompare = MARKETPLACE_CONFIG.enabled
+      vm.showCompare = false
 
       #====================================
       # Scope Management
@@ -42,11 +43,15 @@ angular.module 'mnoEnterpriseAngular'
         else
           $state.go('home.marketplace.compare')
 
-
+      # Uncheck all checkboxes
       vm.unCheckedApps = () ->
         angular.forEach(vm.apps, (items) ->
           items.is_compare = false
         )
+
+      # Toggle compare block
+      vm.compareToggle = () ->
+        vm.showCompare = !vm.showCompare
 
 
       MnoeMarketplace.getApps().then(
