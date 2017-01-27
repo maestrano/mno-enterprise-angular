@@ -34,17 +34,16 @@ angular.module 'mnoEnterpriseAngular'
           app_review
       )
 
-    @addAppQuestion = (appId, data) ->
-      payload = {app_question: data}
-      MnoeFullApiSvc.one('marketplace', parseInt(appId)).post('/app_questions', payload).then(
-        (response) ->
-          app_question = response.data.plain()
-          app_question
-      )
-
     @editReview = (appId, feedback_id, feedback) ->
       payload = feedback
       MnoeFullApiSvc.one("marketplace/#{parseInt(appId)}/app_feedbacks/#{feedback_id}").patch(payload).then(
+        (response) ->
+          app_review = response.data.plain()
+          app_review
+      )
+
+    @deleteReview = (appId, feedback_id) ->
+      MnoeFullApiSvc.one("marketplace/#{parseInt(appId)}/app_feedbacks/#{feedback_id}").remove().then(
         (response) ->
           app_review = response.data.plain()
           app_review
@@ -58,9 +57,62 @@ angular.module 'mnoEnterpriseAngular'
           app_comment
       )
 
+    @editComment = (appId, comment_id, comment) ->
+      payload = {app_comment: comment}
+      MnoeFullApiSvc.one("marketplace/#{appId}/app_comments/#{comment_id}").patch(payload).then(
+        (response) ->
+          app_comment = response.data.plain()
+          app_comment
+      )
+
+    @deleteComment = (appId, comment_id) ->
+      MnoeFullApiSvc.one("marketplace/#{parseInt(appId)}/app_comments/#{comment_id}").remove().then(
+        (response) ->
+          app_comment = response.data.plain()
+          app_comment
+      )
+
+    @addAppQuestion = (appId, data) ->
+      payload = {app_question: data}
+      MnoeFullApiSvc.one('marketplace', parseInt(appId)).post('/app_questions', payload).then(
+        (response) ->
+          app_question = response.data.plain()
+          app_question
+      )
+
+    @editQuestion = (appId, question_id, question) ->
+      payload = question
+      MnoeFullApiSvc.one("marketplace/#{parseInt(appId)}/app_questions/#{question_id}").patch(payload).then(
+        (response) ->
+          app_question = response.data.plain()
+          app_question
+      )
+
+    @deleteQuestion = (appId, question_id) ->
+      MnoeFullApiSvc.one("marketplace/#{parseInt(appId)}/app_questions/#{question_id}").remove().then(
+        (response) ->
+          app_question = response.data.plain()
+          app_question
+      )
+
     @addAppQuestionAnswer = (appId, data) ->
       payload = {app_answer: data}
       MnoeFullApiSvc.one('marketplace', parseInt(appId)).post('/app_answers', payload).then(
+        (response) ->
+          app_answer = response.data.plain()
+          app_answer
+      )
+
+    @editAnswer = (appId, answer_id, answer) ->
+      payload = answer
+      MnoeFullApiSvc.one("marketplace/#{parseInt(appId)}/app_answers/#{answer_id}").patch(payload).then(
+        (response) ->
+          app_answer = response.data.plain()
+          app_answer
+      )
+
+    @deleteAnswer = (appId, answer_id) ->
+      MnoeFullApiSvc.one("marketplace/#{parseInt(appId)}/app_answers/#{answer_id}").remove().then(
         (response) ->
           app_answer = response.data.plain()
           app_answer

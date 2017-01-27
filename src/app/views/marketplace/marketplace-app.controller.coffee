@@ -21,10 +21,11 @@ angular.module 'mnoEnterpriseAngular'
       # Enabling pricing
       vm.isPriceShown = PRICING_CONFIG && PRICING_CONFIG.enabled
       # Enabling reviews
-      # vm.isReviewingEnabled = REVIEWS_CONFIG && REVIEWS_CONFIG.enabled
-      vm.isReviewingEnabled = true
+      vm.isReviewingEnabled = REVIEWS_CONFIG && REVIEWS_CONFIG.enabled
 
       vm.averageRating = 5
+
+
 
       vm.sortBy = 'created_at.desc'
 
@@ -33,6 +34,10 @@ angular.module 'mnoEnterpriseAngular'
       #====================================
       vm.initialize = (app, appInstance, conflictingApp) ->
         # Variables initialization
+
+        vm.userId = MnoeCurrentUser.user.id
+        vm.adminRole = MnoeCurrentUser.user.admin_role
+
         vm.reviews =
           loading: true
           nbItems: 5
@@ -61,7 +66,7 @@ angular.module 'mnoEnterpriseAngular'
         if vm.isReviewingEnabled
           fetchReviews(app.id, vm.reviews.nbItems, 0)
           fetchQuestions(app.id, vm.questions.nbItems, 0)
-          vm.averageRating = vm.app.average_rating? && parseFloat(vm.app.average_rating).toFixed(1)
+          vm.averageRating = vm.app.average_rating? && Math.round(parseFloat(vm.app.average_rating).toFixed(1))
           vm.isRateDisplayed = !!vm.averageRating
 
         vm.appInstance = appInstance
@@ -211,7 +216,7 @@ angular.module 'mnoEnterpriseAngular'
             # Remove last element if needed
             vm.reviews.list.pop() if vm.reviews.list.length > vm.reviews.nbItems
             # Update average rating
-            vm.averageRating = parseFloat(response.average_rating).toFixed(1)
+            vm.averageRating = Math.round(parseFloat(vm.app.average_rating).toFixed(1))
         )
 
       #====================================
@@ -232,7 +237,27 @@ angular.module 'mnoEnterpriseAngular'
           (response) ->
             vm.reviews.list[key].description = response.app_feedback.description
             vm.reviews.list[key].rating = response.app_feedback.rating
-            vm.averageRating = parseFloat(response.average_rating).toFixed(1)
+            vm.averageRating = Math.round(parseFloat(vm.app.average_rating).toFixed(1))
+        )
+
+      #====================================
+      # Delete review
+      #====================================
+      vm.openDeleteReviewModal = (review, key)->
+        modalInstance = $uibModal.open(
+          templateUrl: 'app/views/marketplace/modals/delete-modal.html'
+          controller: 'DeleteReviewModalCtrl'
+          controllerAs: 'vm',
+          size: 'lg'
+          windowClass: 'inverse'
+          backdrop: 'static'
+          resolve:
+            review: review
+        )
+        modalInstance.result.then(
+          (response) ->
+            vm.reviews.list.splice(key, 1)
+            vm.averageRating = Math.round(parseFloat(vm.app.average_rating).toFixed(1))
         )
 
       #====================================
@@ -255,6 +280,44 @@ angular.module 'mnoEnterpriseAngular'
         )
 
       #====================================
+      # Edit comment
+      #====================================
+      vm.openEditCommentModal = (comment, key, reviewKey)->
+        modalInstance = $uibModal.open(
+          templateUrl: 'app/views/marketplace/modals/edit-modal.html'
+          controller: 'EditCommentModalCtrl'
+          controllerAs: 'vm',
+          size: 'lg'
+          windowClass: 'inverse'
+          backdrop: 'static'
+          resolve:
+            object: comment
+        )
+        modalInstance.result.then(
+          (response) ->
+            vm.reviews.list[key].comments[reviewKey].description = response.app_comment.description
+        )
+
+      #====================================
+      # Delete comment
+      #====================================
+      vm.openDeleteCommentModal = (comment, key, reviewKey)->
+        modalInstance = $uibModal.open(
+          templateUrl: 'app/views/marketplace/modals/delete-modal.html'
+          controller: 'DeleteCommentModalCtrl'
+          controllerAs: 'vm',
+          size: 'lg'
+          windowClass: 'inverse'
+          backdrop: 'static'
+          resolve:
+            comment: comment
+        )
+        modalInstance.result.then(
+          (response) ->
+            vm.reviews.list[reviewKey].comments.splice(key, 1)
+        )
+
+      #====================================
       # Ask question
       #====================================
       vm.openCreateQuestionModal = ->
@@ -271,11 +334,49 @@ angular.module 'mnoEnterpriseAngular'
             vm.questions.list.unshift(response.app_question)
         )
 
+      #====================================
+      # Edit question
+      #====================================
+      vm.openEditQuestionModal = (question, key)->
+        modalInstance = $uibModal.open(
+          templateUrl: 'app/views/marketplace/modals/edit-modal.html'
+          controller: 'EditQuestionModalCtrl'
+          controllerAs: 'vm',
+          size: 'lg'
+          windowClass: 'inverse'
+          backdrop: 'static'
+          resolve:
+            question: question
+        )
+        modalInstance.result.then(
+          (response) ->
+            vm.questions.list[key].description = response.app_question.description
+        )
+
+      #====================================
+      # Delete question
+      #====================================
+      vm.openDeleteReviewModal = (question, key)->
+        modalInstance = $uibModal.open(
+          templateUrl: 'app/views/marketplace/modals/delete-modal.html'
+          controller: 'DeleteQuestionModalCtrl'
+          controllerAs: 'vm',
+          size: 'lg'
+          windowClass: 'inverse'
+          backdrop: 'static'
+          resolve:
+            object: question
+        )
+        modalInstance.result.then(
+          (response) ->
+            vm.questions.list.splice(key, 1)
+        )
+
 
       #====================================
       # Answers
       #====================================
-      vm.openCreateQuestionModal = (question, key) ->
+      vm.openCreateAnswerModal = (question, key) ->
         modalInstance = $uibModal.open(
           templateUrl: 'app/views/marketplace/modals/create-answer-modal.html'
           controller: 'CreateAnswerModalCtrl'
@@ -288,7 +389,46 @@ angular.module 'mnoEnterpriseAngular'
         )
         modalInstance.result.then(
           (response) ->
+            console.log(response)
             vm.questions.list[key].answers.unshift(response.app_answer)
+        )
+
+      #====================================
+      # Edit answer
+      #====================================
+      vm.openEditCommentModal = (answer, key, questionKey)->
+        modalInstance = $uibModal.open(
+          templateUrl: 'app/views/marketplace/modals/edit-modal.html'
+          controller: 'EditAnswerModalCtrl'
+          controllerAs: 'vm',
+          size: 'lg'
+          windowClass: 'inverse'
+          backdrop: 'static'
+          resolve:
+            object: answer
+        )
+        modalInstance.result.then(
+          (response) ->
+            vm.questions.list[questionKey].answers[key].description = response.app_answer.description
+        )
+
+      #====================================
+      # Delete answer
+      #====================================
+      vm.openDeleteAnswerModal = (answer, key, questionKey)->
+        modalInstance = $uibModal.open(
+          templateUrl: 'app/views/marketplace/modals/delete-modal.html'
+          controller: 'DeleteAnswerModalCtrl'
+          controllerAs: 'vm',
+          size: 'lg'
+          windowClass: 'inverse'
+          backdrop: 'static'
+          resolve:
+            object: answer
+        )
+        modalInstance.result.then(
+          (response) ->
+            vm.questions.list[questionKey].answers.splice(key, 1)
         )
 
       vm.searchQuestion = () ->

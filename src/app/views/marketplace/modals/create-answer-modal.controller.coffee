@@ -3,7 +3,6 @@ angular.module 'mnoEnterpriseAngular'
   vm = this
 
   vm.modal = {model: {}}
-  vm.app = {}
   vm.commentMaxLenght = 500
   vm.questionText = question.description
 
@@ -19,7 +18,7 @@ angular.module 'mnoEnterpriseAngular'
     }
     MnoeMarketplace.addAppQuestionAnswer($stateParams.appId, app_question).then(
       (response) ->
-        toastr.success('mno_enterprise.templates.dashboard.marketplace.show.success_toastr')
+        toastr.success('mno_enterprise.templates.dashboard.marketplace.show.success_toastr_2')
         $uibModalInstance.close(response)
       (errors) ->
         $log.error(errors)
