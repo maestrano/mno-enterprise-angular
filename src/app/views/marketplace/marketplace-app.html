@@ -137,38 +137,75 @@
       </div>
     </div>
 
-    <!-- Comments & Ratings -->
-    <div id="comments" ng-if="vm.isReviewingEnabled">
-      <div class="add-review">
-        {{'mno_enterprise.templates.dashboard.marketplace.show.company_feedback' | translate}}:
-        <button type="button" class="btn btn-warning" ng-click="vm.openCreateReviewModal()">
-          {{ 'mno_enterprise.templates.dashboard.marketplace.show.write_review' | translate }}
-        </button>
-      </div>
-      <div class='login-icon'>
-        <span ng-show="vm.reviews.loading"><i class="fa fa-refresh fa-spin fa-3x fa-fw"></i></span>
-      </div>
-      <span ng-if="vm.reviews.list.length == 0 && !vm.reviews.loading" class='pages-selector'><h3>{{ 'mno_enterprise.templates.dashboard.marketplace.show.no_reviews' | translate }} {{vm.app.name}}</h3></span>
-      <div ng-hide='vm.reviews.loading'>
-        <blockquote class="well" ng-repeat="review in vm.reviews.list">
-          <average-star-rating ng-model="review.rating" readonly="true" class="pull-right"></average-star-rating>
-          <span>{{review.description}}</span>
-          <footer>
-            <span>{{review.user_name}} {{ 'mno_enterprise.templates.dashboard.marketplace.show.from' | translate }} </span>
-            <cite title="{{review.organization_name}}">{{review.organization_name}}</cite> {{ 'mno_enterprise.templates.dashboard.marketplace.show.on' | translate }}
-            <span ng-if="review.created_at"> {{review.created_at | date: "dd/MM/yyyy" }}</span>
-            <span ng-if="!review.created_at"> {{ 'mno_enterprise.templates.dashboard.marketplace.show.just_now' | translate }}</span>
-          </footer>
-        </blockquote>
+    <uib-tabset>
+      <uib-tab index="0" heading="Feedbacks">
+        <!-- Comments & Ratings -->
+        <div id="comments" ng-if="vm.isReviewingEnabled">
+          <div class="add-review">
+            {{'mno_enterprise.templates.dashboard.marketplace.show.company_feedback' | translate}}:
+            <button type="button" class="btn btn-warning" ng-click="vm.openCreateReviewModal()">
+              {{ 'mno_enterprise.templates.dashboard.marketplace.show.write_review' | translate }}
+            </button>
+            <span class="pull-right">
+              Filter by:
+              <select class="" name="" ng-model="vm.sortBy" ng-click="vm.orderFeedbacks()">
+                <option value="rating.asc" >rating low to high</option>
+                <option value="rating.desc" >rating high to low</option>
+                <option value="created_at.asc">date high to low</option>
+                <option value="created_at.desc">date low to high</option>
+              </select>
+            </span>
+          </div>
+          <div class='login-icon'>
+            <span ng-show="vm.reviews.loading"><i class="fa fa-refresh fa-spin fa-3x fa-fw"></i></span>
+          </div>
+          <span ng-if="vm.reviews.list.length == 0 && !vm.reviews.loading" class='pages-selector'><h3>{{ 'mno_enterprise.templates.dashboard.marketplace.show.no_reviews' | translate }} {{vm.app.name}}</h3></span>
+          <div ng-hide='vm.reviews.loading'>
+            <blockquote class="well clearfix" ng-repeat="(i, review) in vm.reviews.list">
+              <average-star-rating ng-model="review.rating" readonly="true" class="pull-right"></average-star-rating>
+              <span>{{review.description}}</span>
+              <footer class="clearfix review-footer">
+                <span>{{review.user_name}} {{ 'mno_enterprise.templates.dashboard.marketplace.show.from' | translate }} </span>
+                <cite title="{{review.organization_name}}">{{review.organization_name}}</cite> {{ 'mno_enterprise.templates.dashboard.marketplace.show.on' | translate }}
+                <span ng-if="review.created_at"> {{review.created_at | date: "dd/MM/yyyy" }}</span>
+                <span ng-if="!review.created_at"> {{ 'mno_enterprise.templates.dashboard.marketplace.show.just_now' | translate }}</span>
+                <span class="pull-right">
+                  <button class="btn" type="button" name="button">Edit</button>
+                  <button class="btn" type="button" name="button">Delete</button>
+                  <button class="btn" type="button" name="button" ng-click="vm.openCreateCommentModal(review, i)">Comment</button>
+                </span>
+              </footer>
+              <div class="comment clearfix" ng-repeat="comment in review.comments">
+                <div class="comment-body">
+                  <p class="comment-description">{{comment.description}}</p>
+                  <p class="comment-attributes">
+                    <span>{{comment.user_name}} {{ 'mno_enterprise.templates.dashboard.marketplace.show.from' | translate }} </span>
+                    <cite title="{{review.organization_name}}">{{comment.organization_name}}</cite> {{ 'mno_enterprise.templates.dashboard.marketplace.show.on' | translate }}
+                    <span ng-if="review.created_at"> {{comment.created_at | date: "dd/MM/yyyy" }}</span>
+                    <span ng-if="!review.created_at"> {{ 'mno_enterprise.templates.dashboard.marketplace.show.just_now' | translate }}</span>
+                  </p>
+                  <span class="comment-actions">
+                    <button class="btn" type="button" name="button">Delete</button>
+                    <button class="btn" type="button" name="button">Edit</button>
+                  </span>
+                </div>
+              </div>
+            </blockquote>
 
-        <mno-pagination
-          page="vm.reviews.page"
-          nb-items="vm.reviews.nbItems"
-          total-items="vm.reviews.totalItems"
-          on-change-cb="vm.reviews.pageChangedCb(vm.app.id, nbItems, page)"
-          is-loading="vm.reviews.loading">
-        </mno-pagination>
-      </div>
-    </div>
+            <mno-pagination
+              page="vm.reviews.page"
+              nb-items="vm.reviews.nbItems"
+              total-items="vm.reviews.totalItems"
+              on-change-cb="vm.reviews.pageChangedCb(vm.app.id, nbItems, page)"
+              is-loading="vm.reviews.loading">
+            </mno-pagination>
+          </div>
+        </div>
+      </uib-tab>
+      <uib-tab index="1" heading="Questions">
+      </uib-tab>
+    </uib-tabset>
+
+
   </div>
 </div>

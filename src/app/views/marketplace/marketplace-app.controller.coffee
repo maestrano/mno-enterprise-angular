@@ -21,8 +21,12 @@ angular.module 'mnoEnterpriseAngular'
       # Enabling pricing
       vm.isPriceShown = PRICING_CONFIG && PRICING_CONFIG.enabled
       # Enabling reviews
-      vm.isReviewingEnabled = REVIEWS_CONFIG && REVIEWS_CONFIG.enabled
+      # vm.isReviewingEnabled = REVIEWS_CONFIG && REVIEWS_CONFIG.enabled
+      vm.isReviewingEnabled = true
+
       vm.averageRating = 5
+
+      vm.sortBy = 'created_at.desc'
 
       #====================================
       # Scope Management
@@ -37,7 +41,7 @@ angular.module 'mnoEnterpriseAngular'
             vm.reviews.nbItems = nbItems
             vm.reviews.page = page
             offset = (page  - 1) * nbItems
-            fetchReviews(appId, nbItems, offset)
+            fetchReviews(appId, nbItems, offset, vm.sortBy)
 
         angular.copy(app, vm.app)
 
@@ -197,12 +201,37 @@ angular.module 'mnoEnterpriseAngular'
             vm.averageRating = parseFloat(response.average_rating).toFixed(1)
         )
 
+      #====================================
+      # Comments
+      #====================================
+      vm.openCreateCommentModal = (feedback, key) ->
+        modalInstance = $uibModal.open(
+          templateUrl: 'app/views/marketplace/modals/create-comment-modal.html'
+          controller: 'CreateCommentModalCtrl'
+          controllerAs: 'vm',
+          size: 'lg'
+          windowClass: 'inverse'
+          backdrop: 'static'
+          resolve:
+            feedback: feedback
+        )
+        modalInstance.result.then(
+          (response) ->
+            vm.reviews.list[key].comments.unshift(response.app_comment)
+        )
+
+      vm.orderFeedbacks = () ->
+        fetchReviews(vm.app.id, vm.reviews.nbItems, 0, vm.sortBy)
+
       fetchReviews = (appId, limit, offset, sort = 'created_at.desc') ->
         vm.reviews.loading = true
         MnoeMarketplace.getReviews(appId, limit, offset, sort).then(
           (response) ->
             vm.reviews.totalItems = response.headers('x-total-count')
             vm.reviews.list = response.data
+            # vm.comments.list = response.data
+            # vm.question.list = response.data
+            # vm.answer.list = response.data
         ).finally(-> vm.reviews.loading = false)
 
       #====================================

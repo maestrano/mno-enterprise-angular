@@ -20,7 +20,11 @@ angular.module 'mnoEnterpriseAngular'
 
     @getReviews = (appId, limit, offset, sort) ->
       params = ({order_by: sort, limit: limit, offset: offset})
-      MnoeFullApiSvc.one('marketplace', parseInt(appId)).all('app_reviews').getList(params)
+      MnoeFullApiSvc.one('marketplace', parseInt(appId)).all('app_feedbacks').getList(params)
+
+    @getQuestion = (appId, limit, offset, sort) ->
+      params = ({order_by: sort, limit: limit, offset: offset})
+      MnoeFullApiSvc.one('marketplace', parseInt(appId)).all('app_questions').getList(params)
 
     @addAppReview = (appId, data) ->
       payload = {app_review: data}
@@ -28,6 +32,15 @@ angular.module 'mnoEnterpriseAngular'
         (response) ->
           app_review = response.data.plain()
           app_review
+      )
+
+    @addAppReviewComment = (appId, data) ->
+      payload = {app_comment: data}
+      console.log(payload)
+      MnoeFullApiSvc.one('marketplace', parseInt(appId)).post('/app_comments', payload).then(
+        (response) ->
+          app_comment = response.data.plain()
+          app_comment
       )
 
     return @

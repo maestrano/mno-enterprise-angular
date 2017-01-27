@@ -136,14 +136,53 @@
     color: @bg-inverse-color;
   }
 
+  .nav.nav-tabs {
+    margin-bottom: 15px;
+  }
+
   #comments {
     .add-review {
       text-align: left;
       margin-bottom: 15px;
     }
 
+    .review-actions {
+      float: right;
+    }
+
+    .review-footer {
+      margin-top: 15px;
+    }
+
     mno-pagination {
       margin-bottom: 15px;
+    }
+
+    .comment {
+      margin: 10px 0;
+      padding: 5px;
+    }
+
+    .comment-body {
+      float: right;
+      width: 70%;
+      min-width: 250px;
+      background-color: @comment-bg;
+      padding: 10px;
+    }
+
+    .comment-description {
+      font-size: 1.7rem;
+      color: @comment-text-color;
+    }
+
+    .comment-attributes {
+      font-size: 1.3rem;
+      color: @bg-inverse-color;
+    }
+
+    .comment-actions {
+      float: right;
     }
   }
 }
