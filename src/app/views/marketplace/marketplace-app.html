@@ -170,7 +170,7 @@
                 <span ng-if="review.created_at"> {{review.created_at | date: "dd/MM/yyyy" }}</span>
                 <span ng-if="!review.created_at"> {{ 'mno_enterprise.templates.dashboard.marketplace.show.just_now' | translate }}</span>
                 <span class="pull-right">
-                  <button class="btn" type="button" name="button">Edit</button>
+                  <button class="btn" type="button" name="button" ng-click="vm.openEditReviewModal(review, i)">Edit</button>
                   <button class="btn" type="button" name="button">Delete</button>
                   <button class="btn" type="button" name="button" ng-click="vm.openCreateCommentModal(review, i)">Comment</button>
                 </span>
@@ -203,6 +203,58 @@
         </div>
       </uib-tab>
       <uib-tab index="1" heading="Questions">
+        <div class="questions">
+          <div class="questions clearfix">
+            <div class="questions-panel pull-right">
+              <form>
+                <input type="text" name="name" value="" placeholder="search a question, find an answer" ng-model="vm.questions.searchWord">
+                <button class="fa fa-search" type="button" name="button" ng-click="vm.searchQuestion()"></button>
+              </form>
+              <button class="btn" type="button" name="button" ng-click="vm.openCreateQuestionModal()">Ask a question</button>
+            </div>
+          </div>
+          <div class='login-icon'>
+            <span ng-show="vm.questions.loading"><i class="fa fa-refresh fa-spin fa-3x fa-fw"></i></span>
+          </div>
+          <div class="row">
+            <div class="col-md-12" ng-repeat="(i, question) in vm.questions.list">
+              <div class="ribbon-question">
+                <div class="row">
+                  <div class="col-md-9">
+                    <div class="row question-body">
+                      <div class="col-md-2 question-title">
+                        Question
+                      </div>
+                      <div class="col-md-10">
+                        <p class="question-text">{{ question.description }}</p>
+                        <p class="question-attribute">Posted by: {{ question.user_name }} in {{ question.organization_name }} on {{ vm.getDate(question.created_at) }}</p>
+                      </div>
+                    </div>
+                    <div class="row question-answers">
+                      <div class="col-md-2 question-title">
+                        Answers:
+                      </div>
+                      <div class="col-md-10" >
+                        <div class="question-answer" ng-repeat="(i, answer) in question.answers">
+                          <p class="question-text">{{ answer.description }} </p>
+                          <p class="question-attribute">Posted by {{ answer.user_name }} in {{ answer.organization_name }} on {{ vm.getDate(answer.created_at) }}</p>
+                          <button class="btn" type="button" name="button" ng-click="vm.openDeleteModal(question.answers, i)" ng-show="vm.currentUser.user.admin_role">Delete</button>
+                          <button class="btn" type="button" name="button" ng-click="vm.openEditModal(answer)" ng-show="vm.currentUser.user.admin_role">Edit</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3 question-actions">
+                    <button class="btn" name="button" ng-click="vm.openCreateQuestionModal(question, i)">Answer to this Question</button>
+                    <button class="btn" name="button" ng-click="vm.openEditModal(question)">Edit this Question</button>
+                    <button class="btn" name="button" ng-click="vm.openDeleteModal(vm.app.questions, i)">Delete this Question</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </uib-tab>
     </uib-tabset>
 

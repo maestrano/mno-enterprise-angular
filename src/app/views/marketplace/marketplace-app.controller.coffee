@@ -43,11 +43,24 @@ angular.module 'mnoEnterpriseAngular'
             offset = (page  - 1) * nbItems
             fetchReviews(appId, nbItems, offset, vm.sortBy)
 
+
+        vm.questions =
+          laoding: true
+          nbItems: 100
+          page: 1
+          searchWord: ''
+          pageChangedCb: (appId, nbItems, page) ->
+            vm.questions.nbItems = nbItems
+            vm.questions.page = page
+            offset = (page  - 1) * nbItems
+            fetchQuestions(appId, nbItems, offset, searchWord)
+
         angular.copy(app, vm.app)
 
         # Fetch initials reviews
         if vm.isReviewingEnabled
           fetchReviews(app.id, vm.reviews.nbItems, 0)
+          fetchQuestions(app.id, vm.questions.nbItems, 0)
           vm.averageRating = vm.app.average_rating? && parseFloat(vm.app.average_rating).toFixed(1)
           vm.isRateDisplayed = !!vm.averageRating
 
@@ -202,6 +215,27 @@ angular.module 'mnoEnterpriseAngular'
         )
 
       #====================================
+      # Edit review
+      #====================================
+      vm.openEditReviewModal = (review, key)->
+        modalInstance = $uibModal.open(
+          templateUrl: 'app/views/marketplace/modals/edit-review-modal.html'
+          controller: 'EditReviewModalCtrl'
+          controllerAs: 'vm',
+          size: 'lg'
+          windowClass: 'inverse'
+          backdrop: 'static'
+          resolve:
+            review: review
+        )
+        modalInstance.result.then(
+          (response) ->
+            vm.reviews.list[key].description = response.app_feedback.description
+            vm.reviews.list[key].rating = response.app_feedback.rating
+            vm.averageRating = parseFloat(response.average_rating).toFixed(1)
+        )
+
+      #====================================
       # Comments
       #====================================
       vm.openCreateCommentModal = (feedback, key) ->
@@ -220,6 +254,46 @@ angular.module 'mnoEnterpriseAngular'
             vm.reviews.list[key].comments.unshift(response.app_comment)
         )
 
+      #====================================
+      # Ask question
+      #====================================
+      vm.openCreateQuestionModal = ->
+        modalInstance = $uibModal.open(
+          templateUrl: 'app/views/marketplace/modals/create-question-modal.html'
+          controller: 'CreateQuestionModalCtrl'
+          controllerAs: 'vm',
+          size: 'lg'
+          windowClass: 'inverse'
+          backdrop: 'static'
+        )
+        modalInstance.result.then(
+          (response) ->
+            vm.questions.list.unshift(response.app_question)
+        )
+
+
+      #====================================
+      # Answers
+      #====================================
+      vm.openCreateQuestionModal = (question, key) ->
+        modalInstance = $uibModal.open(
+          templateUrl: 'app/views/marketplace/modals/create-answer-modal.html'
+          controller: 'CreateAnswerModalCtrl'
+          controllerAs: 'vm',
+          size: 'lg'
+          windowClass: 'inverse'
+          backdrop: 'static'
+          resolve:
+            question: question
+        )
+        modalInstance.result.then(
+          (response) ->
+            vm.questions.list[key].answers.unshift(response.app_answer)
+        )
+
+      vm.searchQuestion = () ->
+        fetchQuestions(vm.app.id, vm.questions.nbItems, vm.questions.offset, vm.questions.searchWord)
+
       vm.orderFeedbacks = () ->
         fetchReviews(vm.app.id, vm.reviews.nbItems, 0, vm.sortBy)
 
@@ -229,10 +303,14 @@ angular.module 'mnoEnterpriseAngular'
           (response) ->
             vm.reviews.totalItems = response.headers('x-total-count')
             vm.reviews.list = response.data
-            # vm.comments.list = response.data
-            # vm.question.list = response.data
-            # vm.answer.list = response.data
         ).finally(-> vm.reviews.loading = false)
+
+      fetchQuestions = (appId, limit, offset, search = '') ->
+        vm.questions.loading = true
+        MnoeMarketplace.getQuestions(appId, limit, offset, search).then(
+          (response) ->
+            vm.questions.list = response.data
+        ).finally(-> vm.questions.loading = false)
 
       #====================================
       # Post-Initialization
