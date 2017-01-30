@@ -41,23 +41,11 @@
           <div class="well text-center well-details">
             <div class="row">
               <div class="col-xs-12 col-sm-4 col-sm-offset-4 col-md-8 col-md-offset-2">
-                <div class="btn-fluid-wrapper" ng-switch on="vm.appInstallationStatus()">
-                  <div ng-switch-when="CONFLICT" class="message">
-                    <i class="fa fa-exclamation-triangle"></i>
-                    {{ 'mno_enterprise.templates.dashboard.marketplace.show.conflicting_app' | translate }}
-                    <a ui-sref="home.marketplace.app({appId: vm.conflictingApp.id})">{{vm.conflictingApp.name}}</a>
-                  </div>
-                  <a href="" ng-switch-when="INSTALLABLE" ng-click="vm.provisionApp()" ng-disabled="vm.isLoadingButton" class="btn btn-warning btn-promo">
-                    <span ng-show="vm.isLoadingButton"><i class="fa fa-spinner fa-pulse"></i>&nbsp;</span>
-                    {{ 'mno_enterprise.templates.dashboard.marketplace.show.start_app' | translate }}
-                  </a>
-                  <a href="" ng-switch-when="INSTALLED_LAUNCH" ng-click="vm.launchAppInstance()" class="btn btn-warning btn-promo btn-lg">
-                    {{ 'mno_enterprise.templates.dashboard.marketplace.show.launch_app' | translate }}
-                  </a>
-                  <a href="" ng-switch-when="INSTALLED_CONNECT" ng-click="vm.connectAppInstance()" class="btn btn-warning btn-promo btn-lg">
-                    {{ 'mno_enterprise.templates.dashboard.marketplace.show.connect_app' | translate }}
-                  </a>
-                </div>
+                <mno-app-install-btn
+                  app="vm.app"
+                  app-instance= "vm.appInstance"
+                  conflicting-app="vm.conflictingApp">
+                </mno-app-install-btn>
               </div>
             </div>
 
