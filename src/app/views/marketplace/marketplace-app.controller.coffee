@@ -396,7 +396,7 @@ angular.module 'mnoEnterpriseAngular'
       #====================================
       # Edit answer
       #====================================
-      vm.openEditCommentModal = (answer, key, questionKey)->
+      vm.openEditAnswerModal = (answer, key, questionKey)->
         modalInstance = $uibModal.open(
           templateUrl: 'app/views/marketplace/modals/edit-modal.html'
           controller: 'EditAnswerModalCtrl'
