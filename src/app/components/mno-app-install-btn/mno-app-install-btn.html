@@ -1,0 +1,17 @@
+<div class="btn-fluid-wrapper" ng-switch on="$ctrl.appInstallationStatus()">
+  <div ng-switch-when="CONFLICT" class="message">
+    <i class="fa fa-exclamation-triangle"></i>
+    {{ 'mno_enterprise.templates.components.app_install_btn.conflicting_app' | translate }}
+    <a ui-sref="home.marketplace.app({appId: $ctrl.conflictingApp.id})">{{$ctrl.conflictingApp.name}}</a>
+  </div>
+  <a href="" ng-switch-when="INSTALLABLE" ng-click="$ctrl.provisionApp()" ng-disabled="$ctrl.isLoading" class="btn btn-warning btn-promo">
+    <span ng-show="$ctrl.isLoading"><i class="fa fa-spinner fa-pulse"></i></span>
+    {{ 'mno_enterprise.templates.components.app_install_btn.start_app' | translate }}
+  </a>
+  <a href="" ng-switch-when="INSTALLED_LAUNCH" ng-click="$ctrl.launchAppInstance()" class="btn btn-warning btn-promo btn-lg">
+    {{ 'mno_enterprise.templates.components.app_install_btn.launch_app' | translate }}
+  </a>
+  <a href="" ng-switch-when="INSTALLED_CONNECT" ng-click="$ctrl.connectAppInstance()" class="btn btn-warning btn-promo btn-lg">
+    {{ 'mno_enterprise.templates.components.app_install_btn.connect_app' | translate }}
+  </a>
+</div>
