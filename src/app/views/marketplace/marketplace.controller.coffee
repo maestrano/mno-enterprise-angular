@@ -10,7 +10,7 @@ angular.module 'mnoEnterpriseAngular'
       vm.isLoading = true
       vm.selectedCategory = ''
       vm.searchTerm = ''
-      vm.isMarketplaceCompare = MARKETPLACE_CONFIG.enabled
+      vm.isMarketplaceCompare = MARKETPLACE_CONFIG.compare.enabled
       vm.showCompare = false
 
       #====================================
@@ -29,13 +29,18 @@ angular.module 'mnoEnterpriseAngular'
       vm.calculateChecked = () ->
         count = 0
         angular.forEach vm.apps, (value) ->
-          if value.is_compare
+          if value.toCompare
             count++
           return
         count
 
+      vm.compareValidation = () ->
+        checkedApp = vm.calculateChecked()
+        if (checkedApp > 4)
+          toastr.error 'Need to select 2 to 4 items', 'Comparison'
+
       # Comparison function
-      vm.Comparison = (event) ->
+      vm.comparison = (event) ->
         event.preventDefault()
         checkedApp = vm.calculateChecked()
         if (checkedApp > 4 || checkedApp < 2)
@@ -44,9 +49,9 @@ angular.module 'mnoEnterpriseAngular'
           $state.go('home.marketplace.compare')
 
       # Uncheck all checkboxes
-      vm.unCheckedApps = () ->
+      vm.uncheckAllApps = () ->
         angular.forEach(vm.apps, (items) ->
-          items.is_compare = false
+          items.toCompare = false
         )
 
       # Toggle compare block

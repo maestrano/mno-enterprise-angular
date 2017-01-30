@@ -54,7 +54,7 @@ angular.module 'mnoEnterpriseAngular'
           controllerAs: 'vm'
       .state 'home.marketplace.compare',
         data:
-          pageTitle:'Marketplace-App-Compare'
+          pageTitle:'Compare apps'
         url: '^/marketplace/apps/compare'
         views: '@home':
           templateUrl: 'app/views/marketplace/marketplace-compare.html'
