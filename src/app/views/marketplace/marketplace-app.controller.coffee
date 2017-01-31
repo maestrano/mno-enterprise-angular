@@ -427,6 +427,18 @@ angular.module 'mnoEnterpriseAngular'
             vm.questions.list[questionKey].answers.splice(key, 1)
         )
 
+      vm.showHistory = (review) ->
+        modalInstance = $uibModal.open(
+          templateUrl:  'app/views/marketplace/modals/review-history-modal.html'
+          controller: 'ReviewHistoryModalCtrl'
+          controllerAs: 'vm',
+          size: 'lg'
+          windowClass: 'inverse'
+          backdrop: 'static'
+          resolve:
+            review: review
+        )
+
       vm.searchQuestion = () ->
         fetchQuestions(vm.app.id, vm.questions.nbItems, vm.questions.offset, vm.questions.searchWord)
 

@@ -18,6 +18,9 @@ angular.module 'mnoEnterpriseAngular'
       return marketplacePromise if marketplacePromise?
       marketplacePromise = marketplaceApi.get()
 
+    @getReview = (appId, reviewId) ->
+      MnoeApiSvc.one('marketplace', parseInt(appId)).one('app_reviews', parseInt(reviewId)).get()
+
     @getReviews = (appId, limit, offset, sort) ->
       params = ({order_by: sort, limit: limit, offset: offset})
       MnoeFullApiSvc.one('marketplace', parseInt(appId)).all('app_feedbacks').getList(params)
