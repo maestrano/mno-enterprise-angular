@@ -1,10 +1,13 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('DashboardMarketplaceCompareCtrl', ($scope, $stateParams, $state,
-    MnoeMarketplace, PRICING_CONFIG) ->
+    MnoeMarketplace, PRICING_CONFIG, REVIEWS_CONFIG) ->
 
       vm = this
 
+      # Enabling pricing
       vm.isPriceShown = PRICING_CONFIG && PRICING_CONFIG.enabled
+      # Enabling reviews
+      vm.isReviewingEnabled = REVIEWS_CONFIG && REVIEWS_CONFIG.enabled
 
       #====================================
       # Initialization

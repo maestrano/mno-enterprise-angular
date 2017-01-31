@@ -12,6 +12,7 @@ angular.module 'mnoEnterpriseAngular'
       vm.searchTerm = ''
       vm.isMarketplaceCompare = MARKETPLACE_CONFIG.compare.enabled
       vm.showCompare = false
+      vm.nbAppsToCompare = 0
 
       #====================================
       # Scope Management
@@ -25,28 +26,9 @@ angular.module 'mnoEnterpriseAngular'
         else
           return _.contains(app.categories, vm.selectedCategory)
 
-      # Calculate checkboxes
-      vm.calculateChecked = () ->
-        count = 0
-        angular.forEach vm.apps, (value) ->
-          if value.toCompare
-            count++
-          return
-        count
-
-      vm.compareValidation = () ->
-        checkedApp = vm.calculateChecked()
-        if (checkedApp > 4)
-          toastr.error 'Need to select 2 to 4 items', 'Comparison'
-
-      # Comparison function
-      vm.comparison = (event) ->
-        event.preventDefault()
-        checkedApp = vm.calculateChecked()
-        if (checkedApp > 4 || checkedApp < 2)
-          toastr.error 'Need to select 2 to 4 items', 'Comparison'
-        else
-          $state.go('home.marketplace.compare')
+      # Cancel comparison
+      vm.cancelComparison = ->
+        vm.showCompare = false
 
       # Uncheck all checkboxes
       vm.uncheckAllApps = () ->
@@ -55,9 +37,21 @@ angular.module 'mnoEnterpriseAngular'
         )
 
       # Toggle compare block
-      vm.compareToggle = () ->
-        vm.showCompare = !vm.showCompare
+      vm.enableComparison = ->
+        vm.nbAppsToCompare = 0
+        vm.uncheckAllApps()
+        vm.showCompare = true
 
+      vm.toggleAppToCompare = (app) ->
+        selected = app.toCompare
+        if selected && vm.nbAppsToCompare >= 4
+          toastr.info("mno_enterprise.templates.dashboard.marketplace.index.toastr.error")
+          app.toCompare = false
+        else
+          vm.nbAppsToCompare += if selected then 1 else (-1)
+
+      vm.canBeCompared = ->
+        return vm.nbAppsToCompare <= 4 && vm.nbAppsToCompare >=2
 
       MnoeMarketplace.getApps().then(
         (response) ->

@@ -16,45 +16,45 @@
           <table class="marketplace-compare-table table table-bordered">
             <tr>
               <th></th>
-              <td ng-repeat="app in vm.apps | filter:{toCompare: true } | limitTo:4"><a ui-sref="home.marketplace.app({appId: app.id})"><img class="media-object" ng-src="{{app.logo}}" alt="{{app.name}}"></a></td>
+              <td ng-repeat="app in vm.apps | filter:{toCompare: true } | limitTo:4"><a ui-sref="home.marketplace.app({appId: app.id})"><img class="media-object" ng-src="{{::app.logo}}" alt="{{::app.name}}"></a></td>
             </tr>
             <tr>
               <th>{{ 'mno_enterprise.templates.dashboard.marketplace.compare.application_provider' | translate }}</th>
-              <td ng-repeat="app in vm.apps | filter:{toCompare: true } | limitTo:4">{{app.name}}</td>
+              <td ng-repeat="app in vm.apps | filter:{toCompare: true } | limitTo:4">{{::app.name}}</td>
             </tr>
             <tr>
               <th>{{ 'mno_enterprise.templates.dashboard.marketplace.compare.category' | translate }}</th>
-              <td ng-repeat="app in vm.apps | filter:{toCompare: true } | limitTo:4">{{app.categories[2]}}</td>
+              <td ng-repeat="app in vm.apps | filter:{toCompare: true } | limitTo:4">{{::app.categories[2]}}</td>
             </tr>
             <tr>
               <th>{{ 'mno_enterprise.templates.dashboard.marketplace.compare.key_benefits' | translate }}</th>
               <td ng-repeat="app in vm.apps | filter:{toCompare: true } | limitTo:4">
                 <ul>
                   <li ng-repeat="benefit in app.key_benefits track by $index">
-                    {{benefit}}
+                    {{::benefit}}
                   </li>
                 </ul>
               </td>
             </tr>
             <tr>
               <th>{{ 'mno_enterprise.templates.dashboard.marketplace.compare.short_description' | translate }}</th>
-              <td ng-repeat="app in vm.apps | filter:{toCompare: true } | limitTo:4">{{app.tiny_description}}</td>
+              <td ng-repeat="app in vm.apps | filter:{toCompare: true } | limitTo:4">{{::app.tiny_description}}</td>
             </tr>
-            <tr>
+            <tr ng-if="vm.isReviewingEnabled">
               <th>{{ 'mno_enterprise.templates.dashboard.marketplace.compare.rating' | translate }}</th>
-              <td ng-repeat="app in vm.apps | filter:{toCompare: true } | limitTo:4">{{app.average_rating | number:1}}</td>
+              <td ng-repeat="app in vm.apps | filter:{toCompare: true } | limitTo:4"><star-rating readonly="true" ng-model="app.average_rating"></star-rating></td>
             </tr>
             <tr>
-              <th>{{ 'mno_enterprise.templates.dashboard.marketplace.compare.agencies_number' | translate }}</th>
-              <td ng-repeat="app in vm.apps | filter:{toCompare: true } | limitTo:4">{{app.running_instances_count}}</td>
+              <th>{{ 'mno_enterprise.templates.dashboard.marketplace.compare.companies_number' | translate }}</th>
+              <td ng-repeat="app in vm.apps | filter:{toCompare: true } | limitTo:4">{{::app.running_instances_count}}</td>
             </tr>
-            <tr ng-if="!vm.isPriceShown">
+            <tr ng-if="vm.isPriceShown">
               <th>{{ 'mno_enterprise.templates.dashboard.marketplace.compare.pricing' | translate }}</th>
               <td ng-repeat="app in vm.apps | filter:{toCompare: true } | limitTo:4">
                 <ul>
                   <li ng-repeat="plan in app.pricing_plans[vm.pricing_plans]">
-                    <b>{{plan.name}}</b><br>
-                    <span ng-if="plan.price.value">{{plan.currency}} {{plan.price.value}} {{plan.factor}}</span>
+                    <b>{{::plan.name}}</b><br>
+                    <span ng-if="plan.price.value">{{::plan.currency}} {{::plan.price.value}} {{::plan.factor}}</span>
                     <span ng-if="!plan.price.value">{{ 'mno_enterprise.templates.dashboard.marketplace.compare.pricing_not_available' | translate }}</span>
                   </li>
                 </ul>
