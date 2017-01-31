@@ -140,19 +140,19 @@
     <uib-tabset ng-if="vm.isReviewingEnabled">
       <uib-tab index="0" heading="Feedbacks">
         <!-- Comments & Ratings -->
-        <div id="comments" >
+        <div id="comments">
           <div class="add-review">
-            {{'mno_enterprise.templates.dashboard.marketplace.show.company_feedback' | translate}}:
+            {{ 'mno_enterprise.templates.dashboard.marketplace.show.company_feedback' | translate }}:
             <button type="button" class="btn btn-warning" ng-click="vm.openCreateReviewModal()">
               {{ 'mno_enterprise.templates.dashboard.marketplace.show.write_review' | translate }}
             </button>
             <span class="pull-right">
               {{ 'mno_enterprise.templates.dashboard.marketplace.show.filter' | translate }}
-              <select class="" name="" ng-model="vm.sortBy" ng-click="vm.orderFeedbacks()">
-                <option value="rating.asc" >{{ 'mno_enterprise.templates.dashboard.marketplace.show.filter_rating_ask' | translate }}</option>
-                <option value="rating.desc" >{{ 'mno_enterprise.templates.dashboard.marketplace.show.filter_rating_desc' | translate }}</option>
+              <select ng-model="vm.sortReviewsBy" ng-change="vm.orderFeedbacks()">
+                <option value="rating.asc">{{ 'mno_enterprise.templates.dashboard.marketplace.show.filter_rating_ask' | translate }}</option>
+                <option value="rating.desc">{{ 'mno_enterprise.templates.dashboard.marketplace.show.filter_rating_desc' | translate }}</option>
                 <option value="created_at.asc">{{ 'mno_enterprise.templates.dashboard.marketplace.show.filter_date_ask' | translate }}</option>
-                <option value="created_at.desc">{{ 'mno_enterprise.templates.dashboard.marketplace.show.filter_date_desc' | translate }}</option>
+                <option value="created_at.desc" selected="selected">{{ 'mno_enterprise.templates.dashboard.marketplace.show.filter_date_desc' | translate }}</option>
               </select>
             </span>
           </div>
@@ -161,36 +161,47 @@
           </div>
           <span ng-if="vm.reviews.list.length == 0 && !vm.reviews.loading" class='pages-selector'><h3>{{ 'mno_enterprise.templates.dashboard.marketplace.show.no_reviews' | translate }} {{vm.app.name}}</h3></span>
           <div ng-hide='vm.reviews.loading'>
-            <blockquote class="well clearfix" ng-repeat="(key, review) in vm.reviews.list">
-              <average-star-rating ng-model="review.rating" readonly="true" class="pull-right"></average-star-rating>
-              <span>{{review.description}}</span>
-              <footer class="clearfix review-footer">
-                <span>{{review.user_name}} {{ 'mno_enterprise.templates.dashboard.marketplace.show.from' | translate }} </span>
-                <cite title="{{review.organization_name}}">{{review.organization_name}}</cite> {{ 'mno_enterprise.templates.dashboard.marketplace.show.on' | translate }}
-                <span ng-if="review.created_at"> {{review.created_at | date: "dd/MM/yyyy" }}</span>
-                <span ng-if="!review.created_at"> {{ 'mno_enterprise.templates.dashboard.marketplace.show.just_now' | translate }}</span>
-                <span class="pull-right">
-                  <button class="btn" type="button" name="button" ng-if="review.user_id == vm.userId" ng-click="vm.openEditReviewModal(review, key)">{{'mno_enterprise.templates.dashboard.marketplace.show.edit' | translate}}</button>
-                  <button class="btn" type="button" name="button" ng-if="review.user_id == vm.userId" ng-click="vm.openDeleteReviewModal(review, key)">{{'mno_enterprise.templates.dashboard.marketplace.show.delete' | translate}}</button>
-                  <button class="btn" type="button" name="button" ng-click="vm.openCreateCommentModal(review, key)">Comment</button>
-                </span>
-              </footer>
-              <div class="comment clearfix" ng-repeat="(i, comment) in review.comments">
-                <div class="comment-body">
-                  <p class="comment-description">{{comment.description}}</p>
-                  <p class="comment-attributes">
-                    <span>{{comment.user_name}} {{ 'mno_enterprise.templates.dashboard.marketplace.show.from' | translate }} </span>
-                    <cite title="{{review.organization_name}}">{{comment.organization_name}}</cite> {{ 'mno_enterprise.templates.dashboard.marketplace.show.on' | translate }}
-                    <span ng-if="review.created_at"> {{comment.created_at | date: "dd/MM/yyyy" }}</span>
-                    <span ng-if="!review.created_at"> {{ 'mno_enterprise.templates.dashboard.marketplace.show.just_now' | translate }}</span>
-                  </p>
-                  <span class="comment-actions">
-                    <button class="btn" type="button" name="button" ng-if="comment.user_id == vm.userId" ng-click="vm.openDeleteCommentModal(comment, i, key)">{{'mno_enterprise.templates.dashboard.marketplace.show.delete' | translate}}</button>
-                    <button class="btn" type="button" name="button" ng-if="comment.user_id == vm.userId" ng-click="vm.openEditCommentModal(comment, i, key)">{{'mno_enterprise.templates.dashboard.marketplace.show.edit' | translate}}</button>
-                  </span>
+            <div class="well" ng-repeat="(key, review) in vm.reviews.list">
+              <!-- Review -->
+              <div class="row">
+                <div class="col-md-8">
+                  <blockquote>
+                    <span>{{review.description}}</span>
+                    <footer class="top-buffer-1">
+                      <span>{{review.user_name}} {{ 'mno_enterprise.templates.dashboard.marketplace.show.from' | translate }} </span>
+                      <cite title="{{review.organization_name}}">{{review.organization_name}}</cite> {{ 'mno_enterprise.templates.dashboard.marketplace.show.on' | translate }}
+                      <span ng-if="review.created_at"> {{review.created_at | date: "dd/MM/yyyy" }}</span>
+                      <span ng-if="!review.created_at"> {{ 'mno_enterprise.templates.dashboard.marketplace.show.just_now' | translate }}</span>
+                    </footer>
+                  </blockquote>
+                </div>
+                <div class="col-md-4 text-right">
+                  <average-star-rating ng-model="review.rating" readonly="true"></average-star-rating>
+                  <a class="btn btn-link btn-link-warning" href="" ng-if="review.user_id == vm.userId" ng-click="vm.openEditReviewModal(review, key)"><i class="fa fa-edit"></i> {{'mno_enterprise.templates.dashboard.marketplace.show.edit' | translate}}</a>
+                  <a class="btn btn-link btn-link-danger" href="" ng-if="review.user_id == vm.userId" ng-click="vm.openDeleteReviewModal(review, key)"><i class="fa fa-trash"></i> {{'mno_enterprise.templates.dashboard.marketplace.show.delete' | translate}}</a>
+                  <a class="btn btn-link btn-link-primary" href="" ng-click="vm.openCreateCommentModal(review, key)"><i class="fa fa-plus"></i> Comment</a>
                 </div>
               </div>
-            </blockquote>
+
+              <!-- Comments -->
+              <div class="clearfix" ng-repeat="(i, comment) in review.comments">
+                <div class="comment">
+                  <span class="pull-right top-buffer-1">
+                    <a class="btn btn-link btn-link-warning" ng-if="comment.user_id == vm.userId" ng-click="vm.openEditCommentModal(comment, i, key)"><i class="fa fa-edit"></i> {{'mno_enterprise.templates.dashboard.marketplace.show.edit' | translate}}</a>
+                    <a class="btn btn-link btn-link-danger" ng-if="comment.user_id == vm.userId" ng-click="vm.openDeleteCommentModal(comment, i, key)"><i class="fa fa-trash"></i> {{'mno_enterprise.templates.dashboard.marketplace.show.delete' | translate}}</a>
+                  </span>
+                  <blockquote>
+                    <p class="comment-description">{{comment.description}}</p>
+                    <footer class="top-buffer-1">
+                      <span>{{comment.user_name}} {{ 'mno_enterprise.templates.dashboard.marketplace.show.from' | translate }} </span>
+                      <cite title="{{review.organization_name}}">{{comment.organization_name}}</cite> {{ 'mno_enterprise.templates.dashboard.marketplace.show.on' | translate }}
+                      <span ng-if="review.created_at"> {{comment.created_at | date: "dd/MM/yyyy" }}</span>
+                      <span ng-if="!review.created_at"> {{ 'mno_enterprise.templates.dashboard.marketplace.show.just_now' | translate }}</span>
+                    </footer>
+                  </blockquote>
+                </div>
+              </div>
+            </div>
 
             <mno-pagination
               page="vm.reviews.page"
@@ -253,11 +264,8 @@
               </div>
             </div>
           </div>
-
         </div>
       </uib-tab>
     </uib-tabset>
-
-
   </div>
 </div>

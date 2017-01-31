@@ -25,9 +25,7 @@ angular.module 'mnoEnterpriseAngular'
 
       vm.averageRating = 5
 
-
-
-      vm.sortBy = 'created_at.desc'
+      vm.sortReviewsBy = 'created_at.desc'
 
       #====================================
       # Scope Management
@@ -46,8 +44,7 @@ angular.module 'mnoEnterpriseAngular'
             vm.reviews.nbItems = nbItems
             vm.reviews.page = page
             offset = (page  - 1) * nbItems
-            fetchReviews(appId, nbItems, offset, vm.sortBy)
-
+            fetchReviews(appId, nbItems, offset, vm.sortReviewsBy)
 
         vm.questions =
           laoding: true
@@ -372,9 +369,8 @@ angular.module 'mnoEnterpriseAngular'
             vm.questions.list.splice(key, 1)
         )
 
-
       #====================================
-      # Answers
+      # Answer
       #====================================
       vm.openCreateAnswerModal = (question, key) ->
         modalInstance = $uibModal.open(
@@ -435,7 +431,7 @@ angular.module 'mnoEnterpriseAngular'
         fetchQuestions(vm.app.id, vm.questions.nbItems, vm.questions.offset, vm.questions.searchWord)
 
       vm.orderFeedbacks = () ->
-        fetchReviews(vm.app.id, vm.reviews.nbItems, 0, vm.sortBy)
+        fetchReviews(vm.app.id, vm.reviews.nbItems, 0, vm.sortReviewsBy)
 
       fetchReviews = (appId, limit, offset, sort = 'created_at.desc') ->
         vm.reviews.loading = true

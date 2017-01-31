@@ -146,12 +146,8 @@
       margin-bottom: 15px;
     }
 
-    .review-actions {
-      float: right;
-    }
-
-    .review-footer {
-      margin-top: 15px;
+    blockquote {
+      margin-bottom: 0;
     }
 
     mno-pagination {
@@ -159,97 +155,76 @@
     }
 
     .comment {
-      margin: 10px 0;
-      padding: 5px;
-    }
-
-    .comment-body {
       float: right;
-      width: 70%;
-      min-width: 250px;
+      width: 85%;
       background-color: @comment-bg;
-      padding: 10px;
+      margin-top: 5px;
+      padding: 5px 15px;
     }
-
-    .comment-description {
-      font-size: 1.7rem;
-      color: @comment-text-color;
-    }
-
-    .comment-attributes {
-      font-size: 1.3rem;
-      color: @comment-attributes;
-    }
-
-    .comment-actions {
-      float: right;
-    }
-
-
   }
-}
 
-.questions {
-  .ribbon-question {
-    margin-top: 15px;
-    background-color: @bg-on-bg-inverse-color;
-    border-radius: 5px;
-    padding: 20px;
+  .questions {
+    .ribbon-question {
+      margin-top: 15px;
+      background-color: @bg-on-bg-inverse-color;
+      border-radius: 5px;
+      padding: 20px;
 
-    .question-body {
-      margin-bottom: 10px;
-    }
+      .question-body {
+        margin-bottom: 10px;
+      }
 
-    .question-title {
-      font-weight: bold;
-    }
+      .question-title {
+        font-weight: bold;
+      }
 
-    .question-actions {
-      display: flex;
-      flex-flow: column;
-      align-items: flex-end;
+      .question-actions {
+        display: flex;
+        flex-flow: column;
+        align-items: flex-end;
 
-      button:not(:last-child) {
-        margin-bottom: 5px;
+        button:not(:last-child) {
+          margin-bottom: 5px;
+        }
+      }
+
+      .question-answer {
+        margin-bottom: 10px;
+      }
+
+      .question-attribute {
+        font-size: 1rem;
+        font-style: italic;
       }
     }
 
-    .question-answer {
-      margin-bottom: 10px;
-    }
+    .questions-panel {
+      // float: right;
+      display: flex;
+      flex-flow: row wrap;
+      align-items: center;
 
-    .question-attribute {
-      font-size: 1rem;
-      font-style: italic;
-    }
-  }
+      input {
+        border-radius: 10px;
+        padding-left: 20px;
+        border: 1px solid black;
+      }
 
-  .questions-panel {
-    // float: right;
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
+      form {
+        position: relative;
+      }
 
-    input {
-      border-radius: 10px;
-      padding-left: 20px;
-      border: 1px solid black;
-    }
+      .fa {
+        position: absolute;
+        top: 4px;
+        left: -20px;
+        background-color: transparent;
+        border: none;
+      }
 
-    form {
-      position: relative;
-    }
-
-    .fa {
-      position: absolute;
-      top: 4px;
-      left: -20px;
-      background-color: transparent;
-      border: none;
-    }
-
-    button {
-      margin-left: 20px;
+      button {
+        margin-left: 20px;
+      }
     }
   }
 }
