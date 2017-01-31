@@ -4,7 +4,6 @@ angular.module 'mnoEnterpriseAngular'
 
   vm.modal = {model: {}}
   vm.appRating = 0
-  vm.app = {}
   vm.commentMaxLenght = 500
 
   vm.modal.cancel = ->
