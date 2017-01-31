@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('DashboardMarketplaceCtrl', ($q, $scope, $stateParams, $state, toastr,
+  .controller('DashboardMarketplaceCtrl', (toastr,
     MnoeMarketplace, PRICING_CONFIG, MARKETPLACE_CONFIG) ->
 
       vm = this
@@ -10,7 +10,7 @@ angular.module 'mnoEnterpriseAngular'
       vm.isLoading = true
       vm.selectedCategory = ''
       vm.searchTerm = ''
-      vm.isMarketplaceCompare = MARKETPLACE_CONFIG.compare.enabled
+      vm.isMarketplaceCompare = MARKETPLACE_CONFIG.comparison.enabled
       vm.showCompare = false
       vm.nbAppsToCompare = 0
 
