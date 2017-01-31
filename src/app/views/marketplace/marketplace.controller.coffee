@@ -1,6 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('DashboardMarketplaceCtrl', ($q, $scope, $stateParams, $state, toastr,
-    MnoeMarketplace, PRICING_CONFIG, MARKETPLACE_CONFIG) ->
+  .controller('DashboardMarketplaceCtrl', (toastr, MnoeMarketplace, MARKETPLACE_CONFIG) ->
 
       vm = this
 
