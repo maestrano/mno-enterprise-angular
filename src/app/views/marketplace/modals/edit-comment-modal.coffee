@@ -1,24 +1,24 @@
 angular.module 'mnoEnterpriseAngular'
-.controller('CreateReviewModalCtrl', ($log, $stateParams, $uibModalInstance, toastr, Utilities, MnoeMarketplace, MnoeOrganizations) ->
+.controller('EditCommentModalCtrl', ($log, $stateParams, $uibModalInstance, toastr, Utilities, MnoeMarketplace, object) ->
   vm = this
 
   vm.modal = {model: {}}
-  vm.appRating = 0
   vm.commentMaxLenght = 500
+
+  vm.modal.model.description = object.description
 
   vm.modal.cancel = ->
     $uibModalInstance.dismiss('cancel')
 
   vm.modal.proceed = () ->
     vm.modal.isLoading = true
-    app_review = {
-      rating: vm.appRating,
-      description: vm.modal.model.description,
-      organization_id: MnoeOrganizations.getSelectedId()
+    app_payload = {
+      description: vm.modal.model.description
     }
-    MnoeMarketplace.addAppReview($stateParams.appId, app_review).then(
+
+    MnoeMarketplace.editComment($stateParams.appId, object.id, app_payload).then(
       (response) ->
-        toastr.success('mno_enterprise.templates.dashboard.marketplace.show.success_toastr')
+        toastr.success('mno_enterprise.templates.dashboard.marketplace.show.success_toastr_2')
         $uibModalInstance.close(response)
       (errors) ->
         $log.error(errors)

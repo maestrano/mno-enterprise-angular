@@ -1,9 +1,8 @@
 angular.module 'mnoEnterpriseAngular'
-.controller('CreateReviewModalCtrl', ($log, $stateParams, $uibModalInstance, toastr, Utilities, MnoeMarketplace, MnoeOrganizations) ->
+.controller('CreateQuestionModalCtrl', ($log, $stateParams, $uibModalInstance, toastr, Utilities, MnoeMarketplace, MnoeOrganizations) ->
   vm = this
 
   vm.modal = {model: {}}
-  vm.appRating = 0
   vm.commentMaxLenght = 500
 
   vm.modal.cancel = ->
@@ -12,13 +11,12 @@ angular.module 'mnoEnterpriseAngular'
   vm.modal.proceed = () ->
     vm.modal.isLoading = true
     app_review = {
-      rating: vm.appRating,
       description: vm.modal.model.description,
       organization_id: MnoeOrganizations.getSelectedId()
     }
-    MnoeMarketplace.addAppReview($stateParams.appId, app_review).then(
+    MnoeMarketplace.addAppQuestion($stateParams.appId, app_review).then(
       (response) ->
-        toastr.success('mno_enterprise.templates.dashboard.marketplace.show.success_toastr')
+        toastr.success('mno_enterprise.templates.dashboard.marketplace.show.success_toastr_2')
         $uibModalInstance.close(response)
       (errors) ->
         $log.error(errors)

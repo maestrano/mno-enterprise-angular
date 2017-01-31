@@ -1,0 +1,18 @@
+<div class="modal-header">
+  <div class="close" type="button" ng-click="vm.closeModal  ()" >×</div>
+  <h3>{{'mno_enterprise.templates.dashboard.marketplace.show.modals.history.title' | translate}}</h3>
+</div>
+<div class="modal-body" id="modal-body">
+  <span ng-show="vm.isLoading"><i class="fa fa-refresh fa-spin fa-3x fa-fw"></i></span>
+  <ul ng-hide="vm.isLoading">
+    <li ng-repeat="version in vm.versions | filter: {event: 'update'}">
+      <em>{{version.created_at | date: "dd/MM/yyyy" }}:</em> {{version.description}}
+    </li>
+    <li>
+      <em>{{vm.review.updated_at | date: "dd/MM/yyyy" }}:</em> {{vm.review.description}}
+    </li>
+  </ul>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" type="button" ng-click="vm.closeModal()">{{'mno_enterprise.templates.dashboard.marketplace.show.modals.history.close' | translate}}</button>
+</div>

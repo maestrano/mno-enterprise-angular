@@ -110,7 +110,7 @@
   //-------------------------------
   .show-content ul.key-benefits {
     list-style: none;
-    padding-left: 0px;
+    padding-left: 0;
     text-align: left;
     margin-top: 20px;
   }
@@ -133,7 +133,11 @@
   }
 
   .show-content .ribbon-testimonial .from .name {
-    color: @bg-inverse-color;
+    color: @dashboard-marketplace-tile-name-color;
+  }
+
+  .nav.nav-tabs {
+    margin-bottom: 15px;
   }
 
   #comments {
@@ -142,8 +146,87 @@
       margin-bottom: 15px;
     }
 
+    blockquote {
+      margin-bottom: 0;
+    }
+
     mno-pagination {
       margin-bottom: 15px;
+    }
+
+    .comment {
+      float: right;
+      width: 85%;
+      background-color: @comment-bg;
+      margin-top: 5px;
+      padding: 5px 15px;
+    }
+  }
+
+  .questions {
+    margin-bottom: 15px;
+
+    .ribbon-question {
+      margin-top: 15px;
+      background-color: @question-ribbon-bg;
+      border-radius: 5px;
+      padding: 20px;
+
+      .question-body {
+        margin-bottom: 10px;
+      }
+
+      .question-title {
+        font-weight: bold;
+      }
+
+      .question-actions {
+        display: flex;
+        flex-flow: column;
+        align-items: flex-end;
+
+        button:not(:last-child) {
+          margin-bottom: 5px;
+        }
+      }
+
+      .question-answer {
+        margin-bottom: 10px;
+      }
+
+      .question-attribute {
+        font-size: 1rem;
+        font-style: italic;
+      }
+    }
+
+    .questions-panel {
+      display: flex;
+      flex-flow: row wrap;
+      align-items: center;
+
+      input {
+        border-radius: 3px;
+        padding-left: 20px;
+        border: @question-search-border;
+        width: 240px;
+      }
+
+      form {
+        position: relative;
+      }
+
+      button.fa {
+        position: absolute;
+        top: 4px;
+        left: -20px;
+        background-color: transparent;
+        border: none;
+      }
+
+      button {
+        margin-left: 20px;
+      }
     }
   }
 }
