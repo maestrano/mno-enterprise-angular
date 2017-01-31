@@ -136,14 +136,120 @@
     color: @bg-inverse-color;
   }
 
+  .nav.nav-tabs {
+    margin-bottom: 15px;
+  }
+
   #comments {
     .add-review {
       text-align: left;
       margin-bottom: 15px;
     }
 
+    .review-actions {
+      float: right;
+    }
+
+    .review-footer {
+      margin-top: 15px;
+    }
+
     mno-pagination {
       margin-bottom: 15px;
+    }
+
+    .comment {
+      margin: 10px 0;
+      padding: 5px;
+    }
+
+    .comment-body {
+      float: right;
+      width: 70%;
+      min-width: 250px;
+      background-color: @comment-bg;
+      padding: 10px;
+    }
+
+    .comment-description {
+      font-size: 1.7rem;
+      color: @comment-text-color;
+    }
+
+    .comment-attributes {
+      font-size: 1.3rem;
+      color: @bg-inverse-color;
+    }
+
+    .comment-actions {
+      float: right;
+    }
+
+
+  }
+}
+
+.questions {
+  .ribbon-question {
+    margin-top: 15px;
+    background-color: @bg-on-bg-inverse-color;
+    border-radius: 5px;
+    padding: 20px;
+
+    .question-body {
+      margin-bottom: 10px;
+    }
+
+    .question-title {
+      font-weight: bold;
+    }
+
+    .question-actions {
+      display: flex;
+      flex-flow: column;
+      align-items: flex-end;
+
+      button:not(:last-child) {
+        margin-bottom: 5px;
+      }
+    }
+
+    .question-answer {
+      margin-bottom: 10px;
+    }
+
+    .question-attribute {
+      font-size: 1rem;
+      font-style: italic;
+    }
+  }
+  
+  .questions-panel {
+    // float: right;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+
+    input {
+      border-radius: 10px;
+      padding-left: 20px;
+      border: 1px solid black;
+    }
+
+    form {
+      position: relative;
+    }
+
+    .fa {
+      position: absolute;
+      top: 4px;
+      left: -20px;
+      background-color: transparent;
+      border: none;
+    }
+
+    button {
+      margin-left: 20px;
     }
   }
 }

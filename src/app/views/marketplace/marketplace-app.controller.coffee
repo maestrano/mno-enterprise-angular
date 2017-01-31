@@ -21,8 +21,12 @@ angular.module 'mnoEnterpriseAngular'
       # Enabling pricing
       vm.isPriceShown = PRICING_CONFIG && PRICING_CONFIG.enabled
       # Enabling reviews
-      vm.isReviewingEnabled = REVIEWS_CONFIG && REVIEWS_CONFIG.enabled
+      # vm.isReviewingEnabled = REVIEWS_CONFIG && REVIEWS_CONFIG.enabled
+      vm.isReviewingEnabled = true
+
       vm.averageRating = 5
+
+      vm.sortBy = 'created_at.desc'
 
       #====================================
       # Scope Management
@@ -37,13 +41,26 @@ angular.module 'mnoEnterpriseAngular'
             vm.reviews.nbItems = nbItems
             vm.reviews.page = page
             offset = (page  - 1) * nbItems
-            fetchReviews(appId, nbItems, offset)
+            fetchReviews(appId, nbItems, offset, vm.sortBy)
+
+
+        vm.questions =
+          laoding: true
+          nbItems: 100
+          page: 1
+          searchWord: ''
+          pageChangedCb: (appId, nbItems, page) ->
+            vm.questions.nbItems = nbItems
+            vm.questions.page = page
+            offset = (page  - 1) * nbItems
+            fetchQuestions(appId, nbItems, offset, searchWord)
 
         angular.copy(app, vm.app)
 
         # Fetch initials reviews
         if vm.isReviewingEnabled
           fetchReviews(app.id, vm.reviews.nbItems, 0)
+          fetchQuestions(app.id, vm.questions.nbItems, 0)
           vm.averageRating = vm.app.average_rating? && parseFloat(vm.app.average_rating).toFixed(1)
           vm.isRateDisplayed = !!vm.averageRating
 
@@ -102,6 +119,170 @@ angular.module 'mnoEnterpriseAngular'
             vm.averageRating = parseFloat(response.average_rating).toFixed(1)
         )
 
+      #====================================
+      # Edit review
+      #====================================
+      vm.openEditReviewModal = (review, key)->
+        modalInstance = $uibModal.open(
+          templateUrl: 'app/views/marketplace/modals/edit-review-modal.html'
+          controller: 'EditReviewModalCtrl'
+          controllerAs: 'vm',
+          size: 'lg'
+          windowClass: 'inverse'
+          backdrop: 'static'
+          resolve:
+            review: review
+        )
+        modalInstance.result.then(
+          (response) ->
+            vm.reviews.list[key].description = response.app_feedback.description
+            vm.reviews.list[key].rating = response.app_feedback.rating
+            vm.averageRating = parseFloat(response.average_rating).toFixed(1)
+        )
+
+      #====================================
+      # Delete review
+      #====================================
+      vm.openDeleteReviewModal = (review, key)->
+        modalInstance = $uibModal.open(
+          templateUrl: 'app/views/marketplace/modals/delete-review-modal.html'
+          controller: 'DeleteReviewModalCtrl'
+          controllerAs: 'vm',
+          size: 'lg'
+          windowClass: 'inverse'
+          backdrop: 'static'
+          resolve:
+            review: review
+        )
+        modalInstance.result.then(
+          (response) ->
+            vm.reviews.list.splice(key, 1)
+            vm.averageRating = parseFloat(response.average_rating).toFixed(1)
+        )
+
+      #====================================
+      # Comments
+      #====================================
+      vm.openCreateCommentModal = (feedback, key) ->
+        modalInstance = $uibModal.open(
+          templateUrl: 'app/views/marketplace/modals/create-comment-modal.html'
+          controller: 'CreateCommentModalCtrl'
+          controllerAs: 'vm',
+          size: 'lg'
+          windowClass: 'inverse'
+          backdrop: 'static'
+          resolve:
+            feedback: feedback
+        )
+        modalInstance.result.then(
+          (response) ->
+            vm.reviews.list[key].comments.unshift(response.app_comment)
+        )
+
+      #====================================
+      # Edit comment
+      #====================================
+      vm.openEditCommentModal = (comment, key, reviewKey)->
+        modalInstance = $uibModal.open(
+          templateUrl: 'app/views/marketplace/modals/edit-comment-modal.html'
+          controller: 'EditCommentModalCtrl'
+          controllerAs: 'vm',
+          size: 'lg'
+          windowClass: 'inverse'
+          backdrop: 'static'
+          resolve:
+            comment: comment
+        )
+        modalInstance.result.then(
+          (response) ->
+            vm.reviews.list[key].comments[reviewKey].description = response.app_comment.description
+            # vm.reviews.list[key].rating = response.app_feedback.rating
+            # vm.averageRating = parseFloat(response.average_rating).toFixed(1)
+        )
+
+      #====================================
+      # Delete review
+      #====================================
+      vm.openDeleteCommentModal = (comment, key, reviewKey)->
+        modalInstance = $uibModal.open(
+          templateUrl: 'app/views/marketplace/modals/delete-comment-modal.html'
+          controller: 'DeleteCommentModalCtrl'
+          controllerAs: 'vm',
+          size: 'lg'
+          windowClass: 'inverse'
+          backdrop: 'static'
+          resolve:
+            comment: comment
+        )
+        modalInstance.result.then(
+          (response) ->
+            vm.reviews.list[reviewKey].comments.splice(key, 1)
+        )
+
+      #====================================
+      # Ask question
+      #====================================
+      vm.openCreateQuestionModal = ->
+        modalInstance = $uibModal.open(
+          templateUrl: 'app/views/marketplace/modals/create-question-modal.html'
+          controller: 'CreateQuestionModalCtrl'
+          controllerAs: 'vm',
+          size: 'lg'
+          windowClass: 'inverse'
+          backdrop: 'static'
+        )
+        modalInstance.result.then(
+          (response) ->
+            vm.questions.list.unshift(response.app_question)
+        )
+
+      #====================================
+      # Edit question
+      #====================================
+      vm.openEditQuestionModal = (question, key)->
+        console.log(question)
+        modalInstance = $uibModal.open(
+          templateUrl: 'app/views/marketplace/modals/edit-question-modal.html'
+          controller: 'EditQuestionModalCtrl'
+          controllerAs: 'vm',
+          size: 'lg'
+          windowClass: 'inverse'
+          backdrop: 'static'
+          resolve:
+            question: question
+        )
+        modalInstance.result.then(
+          (response) ->
+            vm.questions.list[key].description = response.app_question.description
+
+        )
+
+
+      #====================================
+      # Answers
+      #====================================
+      vm.openCreateQuestionModal = (question, key) ->
+        modalInstance = $uibModal.open(
+          templateUrl: 'app/views/marketplace/modals/create-answer-modal.html'
+          controller: 'CreateAnswerModalCtrl'
+          controllerAs: 'vm',
+          size: 'lg'
+          windowClass: 'inverse'
+          backdrop: 'static'
+          resolve:
+            question: question
+        )
+        modalInstance.result.then(
+          (response) ->
+            vm.questions.list[key].answers.unshift(response.app_answer)
+        )
+
+      vm.searchQuestion = () ->
+        fetchQuestions(vm.app.id, vm.questions.nbItems, vm.questions.offset, vm.questions.searchWord)
+
+      vm.orderFeedbacks = () ->
+        fetchReviews(vm.app.id, vm.reviews.nbItems, 0, vm.sortBy)
+
       fetchReviews = (appId, limit, offset, sort = 'created_at.desc') ->
         vm.reviews.loading = true
         MnoeMarketplace.getReviews(appId, limit, offset, sort).then(
@@ -109,6 +290,13 @@ angular.module 'mnoEnterpriseAngular'
             vm.reviews.totalItems = response.headers('x-total-count')
             vm.reviews.list = response.data
         ).finally(-> vm.reviews.loading = false)
+
+      fetchQuestions = (appId, limit, offset, search = '') ->
+        vm.questions.loading = true
+        MnoeMarketplace.getQuestions(appId, limit, offset, search).then(
+          (response) ->
+            vm.questions.list = response.data
+        ).finally(-> vm.questions.loading = false)
 
       #====================================
       # Post-Initialization
