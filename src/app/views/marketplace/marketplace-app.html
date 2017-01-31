@@ -138,7 +138,7 @@
     </div>
 
     <uib-tabset ng-if="vm.isReviewingEnabled">
-      <uib-tab index="0" heading="Feedbacks">
+      <uib-tab index="0" heading="Feedback">
         <!-- Comments & Ratings -->
         <div id="comments">
           <div class="add-review">
@@ -215,13 +215,13 @@
       </uib-tab>
       <uib-tab index="1" heading="Questions">
         <div class="questions">
-          <div class="questions clearfix">
+          <div class="clearfix">
             <div class="questions-panel pull-right">
               <form>
                 <input type="text" name="name" value="" placeholder="search a question, find an answer" ng-model="vm.questions.searchWord">
                 <button class="fa fa-search" type="button" name="button" ng-click="vm.searchQuestion()"></button>
               </form>
-              <button class="btn" type="button" name="button" ng-click="vm.openCreateQuestionModal()">{{'mno_enterprise.templates.dashboard.marketplace.show.question_ask' | translate}}</button>
+              <button class="btn btn-primary" type="button" name="button" ng-click="vm.openCreateQuestionModal()">{{'mno_enterprise.templates.dashboard.marketplace.show.question_ask' | translate}}</button>
             </div>
           </div>
           <div class='login-icon'>
@@ -249,16 +249,16 @@
                         <div class="question-answer" ng-repeat="(i, answer) in question.answers">
                           <p class="question-text">{{ answer.description }} </p>
                           <p class="question-attribute">Posted by {{ answer.user_name }} in {{ answer.organization_name }} on {{ answer.created_at | date: "dd/MM/yyyy" }}</p>
-                          <button class="btn btn-xs" type="button" name="button" ng-if="answer.user_id == vm.userId" ng-click="vm.openDeleteAnswerModal(answer, i, key)">{{'mno_enterprise.templates.dashboard.marketplace.show.delete' | translate}}</button>
-                          <button class="btn btn-xs" type="button" name="button" ng-if="answer.user_id == vm.userId" ng-click="vm.openEditCommentModal(answer, i, key)">{{'mno_enterprise.templates.dashboard.marketplace.show.edit' | translate}}</button>
+                          <button class="btn btn-xs btn-warning" type="button" name="button" ng-if="answer.user_id == vm.userId" ng-click="vm.openEditCommentModal(answer, i, key)">{{'mno_enterprise.templates.dashboard.marketplace.show.edit' | translate}}</button>
+                          <button class="btn btn-xs btn-danger" type="button" name="button" ng-if="answer.user_id == vm.userId" ng-click="vm.openDeleteAnswerModal(answer, i, key)">{{'mno_enterprise.templates.dashboard.marketplace.show.delete' | translate}}</button>
                         </div>
                       </div>
                     </div>
                   </div>
                   <div class="col-md-3 question-actions">
-                    <button class="btn" name="button" ng-click="vm.openCreateAnswerModal(question, key)">{{'mno_enterprise.templates.dashboard.marketplace.show.answer_q' | translate}}</button>
-                    <button class="btn" name="button" ng-if="question.user_id == vm.userId" ng-click="vm.openEditQuestionModal(question, key)">{{'mno_enterprise.templates.dashboard.marketplace.show.edit_q' | translate}}</button>
-                    <button class="btn" name="button" ng-if="question.user_id == vm.userId" ng-click="vm.openDeleteReviewModal(question, key)">{{'mno_enterprise.templates.dashboard.marketplace.show.delete_q' | translate}}</button>
+                    <a class="btn btn-link btn-link-primary" name="button" ng-click="vm.openCreateAnswerModal(question, key)"><i class="fa fa-plus"></i> {{'mno_enterprise.templates.dashboard.marketplace.show.answer_q' | translate}}</a>
+                    <a class="btn btn-link btn-link-warning" name="button" ng-if="question.user_id == vm.userId" ng-click="vm.openEditQuestionModal(question, key)"><i class="fa fa-edit"></i> {{'mno_enterprise.templates.dashboard.marketplace.show.edit_q' | translate}}</a>
+                    <a class="btn btn-link btn-link-danger" name="button" ng-if="question.user_id == vm.userId" ng-click="vm.openDeleteReviewModal(question, key)"><i class="fa fa-trash"></i> {{'mno_enterprise.templates.dashboard.marketplace.show.delete_q' | translate}}</a>
                   </div>
                 </div>
               </div>

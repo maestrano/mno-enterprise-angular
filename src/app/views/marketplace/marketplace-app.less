@@ -110,7 +110,7 @@
   //-------------------------------
   .show-content ul.key-benefits {
     list-style: none;
-    padding-left: 0px;
+    padding-left: 0;
     text-align: left;
     margin-top: 20px;
   }
@@ -133,7 +133,7 @@
   }
 
   .show-content .ribbon-testimonial .from .name {
-    color: @bg-inverse-color;
+    color: @dashboard-marketplace-tile-name-color;
   }
 
   .nav.nav-tabs {
@@ -164,9 +164,11 @@
   }
 
   .questions {
+    margin-bottom: 15px;
+
     .ribbon-question {
       margin-top: 15px;
-      background-color: @bg-on-bg-inverse-color;
+      background-color: @question-ribbon-bg;
       border-radius: 5px;
       padding: 20px;
 
@@ -199,22 +201,22 @@
     }
 
     .questions-panel {
-      // float: right;
       display: flex;
       flex-flow: row wrap;
       align-items: center;
 
       input {
-        border-radius: 10px;
+        border-radius: 3px;
         padding-left: 20px;
-        border: 1px solid black;
+        border: @question-search-border;
+        width: 240px;
       }
 
       form {
         position: relative;
       }
 
-      .fa {
+      button.fa {
         position: absolute;
         top: 4px;
         left: -20px;
