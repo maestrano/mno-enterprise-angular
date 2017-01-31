@@ -172,7 +172,7 @@
                       <cite title="{{review.organization_name}}">{{review.organization_name}}</cite> {{ 'mno_enterprise.templates.dashboard.marketplace.show.on' | translate }}
                       <span ng-if="review.created_at"> {{review.created_at | date: "dd/MM/yyyy" }}</span>
                       <span ng-if="!review.created_at"> {{ 'mno_enterprise.templates.dashboard.marketplace.show.just_now' | translate }}</span>
-                      <span ng-if="review.edited" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.marketplace.show.edited_tooltip' | translate }}" ng-click="vm.showHistory(review)"> - {{ 'mno_enterprise.templates.dashboard.marketplace.show.edited' | translate }} </span>
+                      <span ng-if="review.edited" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.marketplace.show.edited_tooltip' | translate }}" ng-click="vm.showHistory(review)"> - {{ 'mno_enterprise.templates.dashboard.marketplace.show.edited' | translate }}</span>
                     </footer>
                   </blockquote>
                 </div>
@@ -198,6 +198,7 @@
                       <cite title="{{review.organization_name}}">{{comment.organization_name}}</cite> {{ 'mno_enterprise.templates.dashboard.marketplace.show.on' | translate }}
                       <span ng-if="review.created_at"> {{comment.created_at | date: "dd/MM/yyyy" }}</span>
                       <span ng-if="!review.created_at"> {{ 'mno_enterprise.templates.dashboard.marketplace.show.just_now' | translate }}</span>
+                      <span ng-if="review.edited" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.marketplace.show.edited_tooltip' | translate }}" ng-click="vm.showHistory(comment)"> - {{ 'mno_enterprise.templates.dashboard.marketplace.show.edited' | translate }}</span>
                     </footer>
                   </blockquote>
                 </div>

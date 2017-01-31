@@ -234,6 +234,7 @@ angular.module 'mnoEnterpriseAngular'
           (response) ->
             vm.reviews.list[key].description = response.app_feedback.description
             vm.reviews.list[key].rating = response.app_feedback.rating
+            vm.reviews.list[key].edited = response.app_feedback.edited
             vm.averageRating = Math.round(parseFloat(vm.app.average_rating).toFixed(1))
         )
 
@@ -293,6 +294,7 @@ angular.module 'mnoEnterpriseAngular'
         modalInstance.result.then(
           (response) ->
             vm.reviews.list[key].comments[reviewKey].description = response.app_comment.description
+            vm.reviews.list[key].comments[reviewKey].edited = response.app_comment.edited
         )
 
       #====================================
@@ -428,7 +430,7 @@ angular.module 'mnoEnterpriseAngular'
         )
 
       vm.showHistory = (review) ->
-        modalInstance = $uibModal.open(
+        $uibModal.open(
           templateUrl:  'app/views/marketplace/modals/review-history-modal.html'
           controller: 'ReviewHistoryModalCtrl'
           controllerAs: 'vm',

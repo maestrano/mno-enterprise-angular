@@ -13,7 +13,7 @@ angular.module 'mnoEnterpriseAngular'
   #====================================
   # Post-Initialization
   #====================================
-  # Get the list of all the user organizations
+  # Get the review versions
   MnoeMarketplace.getReview(review.app_id, review.id).then(
     (response) ->
       vm.versions = response.versions

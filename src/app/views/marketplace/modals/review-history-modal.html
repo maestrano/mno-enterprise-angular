@@ -6,12 +6,10 @@
   <span ng-show="vm.isLoading"><i class="fa fa-refresh fa-spin fa-3x fa-fw"></i></span>
   <ul ng-hide="vm.isLoading">
     <li ng-repeat="version in vm.versions | filter: {event: 'update'}">
-      {{version.description}}
-      <span>{{version.created_at | date: "dd/MM/yyyy" }}</span>
+      <em>{{version.created_at | date: "dd/MM/yyyy" }}:</em> {{version.description}}
     </li>
     <li>
-      {{vm.review.description}}
-      <span>{{vm.review.updated_at | date: "dd/MM/yyyy" }}</span>
+      <em>{{vm.review.updated_at | date: "dd/MM/yyyy" }}:</em> {{vm.review.description}}
     </li>
   </ul>
 </div>
