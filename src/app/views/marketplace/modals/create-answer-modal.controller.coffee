@@ -18,11 +18,11 @@ angular.module 'mnoEnterpriseAngular'
     }
     MnoeMarketplace.addAppQuestionAnswer($stateParams.appId, app_question).then(
       (response) ->
-        toastr.success('mno_enterprise.templates.dashboard.marketplace.show.success_toastr_2')
+        toastr.success('mno_enterprise.templates.dashboard.marketplace.show.success_toastr_answer')
         $uibModalInstance.close(response)
       (errors) ->
         $log.error(errors)
-        toastr.error('mno_enterprise.templates.dashboard.marketplace.show.error_toastr')
+        toastr.error('mno_enterprise.templates.dashboard.marketplace.show.error_toastr_answer')
         Utilities.processRailsError(errors)
     ).finally(-> vm.modal.isLoading = false)
 
