@@ -42,7 +42,7 @@
             </tr>
             <tr ng-if="vm.isReviewingEnabled">
               <th>{{ 'mno_enterprise.templates.dashboard.marketplace.compare.rating' | translate }}</th>
-              <td ng-repeat="app in vm.apps | filter:{toCompare: true } | limitTo:4"><star-rating readonly="true" ng-model="app.average_rating"></star-rating></td>
+              <td ng-repeat="app in vm.apps | filter:{toCompare: true } | limitTo:4"><average-star-rating display-rating="true" ng-model="app.average_rating" max="5"></average-star-rating></td>
             </tr>
             <tr>
               <th>{{ 'mno_enterprise.templates.dashboard.marketplace.compare.companies_number' | translate }}</th>
