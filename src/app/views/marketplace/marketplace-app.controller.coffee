@@ -157,7 +157,6 @@ angular.module 'mnoEnterpriseAngular'
 
         MnoConfirm.showModal(modalOptions).then(
           (response) ->
-            console.log(response)
             vm.reviews.list.splice(key, 1)
             vm.averageRating = parseFloat(response.average_rating).toFixed(1)
         )
@@ -287,7 +286,6 @@ angular.module 'mnoEnterpriseAngular'
         )
         modalInstance.result.then(
           (response) ->
-            console.log(response)
             vm.questions.list[key].answers.unshift(response.app_answer)
         )
 
