@@ -6,6 +6,8 @@ angular.module 'mnoEnterpriseAngular'
   vm.commentMaxLenght = 500
 
   vm.modal.model.description = object.description
+  vm.modal.model.title = 'mno_enterprise.templates.dashboard.marketplace.show.edit_comment'
+  vm.modal.model.placeholder = 'mno_enterprise.templates.dashboard.marketplace.show.comment_placeholder'
 
   vm.modal.cancel = ->
     $uibModalInstance.dismiss('cancel')
