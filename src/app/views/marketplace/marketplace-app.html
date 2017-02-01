@@ -248,7 +248,7 @@
                   <div class="col-md-3 question-actions">
                     <a class="btn btn-link btn-link-primary" name="button" ng-if="vm.appInstance" ng-click="vm.openCreateAnswerModal(question, key)"><i class="fa fa-plus"></i> {{'mno_enterprise.templates.dashboard.marketplace.show.answer_q' | translate}}</a>
                     <a class="btn btn-link btn-link-warning" name="button" ng-if="question.user_id == vm.userId" ng-click="vm.openEditQuestionModal(question, key)"><i class="fa fa-edit"></i> {{'mno_enterprise.templates.dashboard.marketplace.show.edit_q' | translate}}</a>
-                    <a class="btn btn-link btn-link-danger" name="button" ng-if="question.user_id == vm.userId" ng-click="vm.openDeleteReviewModal(question, key)"><i class="fa fa-trash"></i> {{'mno_enterprise.templates.dashboard.marketplace.show.delete_q' | translate}}</a>
+                    <a class="btn btn-link btn-link-danger" name="button" ng-if="question.user_id == vm.userId" ng-click="vm.openDeleteQuestionModal(question, key)"><i class="fa fa-trash"></i> {{'mno_enterprise.templates.dashboard.marketplace.show.delete_q' | translate}}</a>
                   </div>
                 </div>
               </div>

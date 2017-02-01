@@ -2,8 +2,8 @@
 #
 #============================================
 angular.module 'mnoEnterpriseAngular'
-  .controller('DashboardMarketplaceAppCtrl',($q, $scope, $stateParams, $state, $sce, $window, toastr,
-    MnoeMarketplace, $uibModal, MnoeOrganizations, MnoeCurrentUser, MnoeAppInstances, MnoErrorsHandler,
+  .controller('DashboardMarketplaceAppCtrl',($q, $scope, $stateParams, $state, $sce, $window, $uibModal, toastr,
+    MnoeMarketplace, MnoeOrganizations, MnoeCurrentUser, MnoeAppInstances, MnoConfirm, MnoErrorsHandler,
     PRICING_CONFIG, REVIEWS_CONFIG) ->
 
       vm = this
@@ -147,20 +147,19 @@ angular.module 'mnoEnterpriseAngular'
       # Delete review
       #====================================
       vm.openDeleteReviewModal = (review, key)->
-        modalInstance = $uibModal.open(
-          templateUrl: 'app/views/marketplace/modals/delete-modal.html'
-          controller: 'DeleteReviewModalCtrl'
-          controllerAs: 'vm',
-          size: 'lg'
-          windowClass: 'inverse'
-          backdrop: 'static'
-          resolve:
-            review: review
-        )
-        modalInstance.result.then(
+        modalOptions =
+          headerText: "mno_enterprise.templates.dashboard.marketplace.show.review.delete_modal_header"
+          bodyText: "mno_enterprise.templates.dashboard.marketplace.show.review.delete_modal_body"
+          closeButtonText: 'mno_enterprise.templates.dashboard.marketplace.show.review.delete_modal_cancel'
+          actionButtonText: 'mno_enterprise.templates.dashboard.marketplace.show.review.delete_modal_delete'
+          actionCb: -> MnoeMarketplace.deleteReview($stateParams.appId, review.id)
+          type: 'danger'
+
+        MnoConfirm.showModal(modalOptions).then(
           (response) ->
+            console.log(response)
             vm.reviews.list.splice(key, 1)
-            vm.averageRating = Math.round(parseFloat(vm.app.average_rating).toFixed(1))
+            vm.averageRating = parseFloat(response.average_rating).toFixed(1)
         )
 
       #====================================
@@ -206,18 +205,16 @@ angular.module 'mnoEnterpriseAngular'
       # Delete comment
       #====================================
       vm.openDeleteCommentModal = (comment, key, reviewKey)->
-        modalInstance = $uibModal.open(
-          templateUrl: 'app/views/marketplace/modals/delete-modal.html'
-          controller: 'DeleteCommentModalCtrl'
-          controllerAs: 'vm',
-          size: 'lg'
-          windowClass: 'inverse'
-          backdrop: 'static'
-          resolve:
-            comment: comment
-        )
-        modalInstance.result.then(
-          (response) ->
+        modalOptions =
+          headerText: "mno_enterprise.templates.dashboard.marketplace.show.comment.delete_modal_header"
+          bodyText: "mno_enterprise.templates.dashboard.marketplace.show.comment.delete_modal_body"
+          closeButtonText: 'mno_enterprise.templates.dashboard.marketplace.show.comment.delete_modal_cancel'
+          actionButtonText: 'mno_enterprise.templates.dashboard.marketplace.show.comment.delete_modal_delete'
+          actionCb: -> MnoeMarketplace.deleteComment($stateParams.appId, comment.id)
+          type: 'danger'
+
+        MnoConfirm.showModal(modalOptions).then(
+          ->
             vm.reviews.list[reviewKey].comments.splice(key, 1)
         )
 
@@ -260,19 +257,17 @@ angular.module 'mnoEnterpriseAngular'
       #====================================
       # Delete question
       #====================================
-      vm.openDeleteReviewModal = (question, key)->
-        modalInstance = $uibModal.open(
-          templateUrl: 'app/views/marketplace/modals/delete-modal.html'
-          controller: 'DeleteQuestionModalCtrl'
-          controllerAs: 'vm',
-          size: 'lg'
-          windowClass: 'inverse'
-          backdrop: 'static'
-          resolve:
-            object: question
-        )
-        modalInstance.result.then(
-          (response) ->
+      vm.openDeleteQuestionModal = (question, key)->
+        modalOptions =
+          headerText: "mno_enterprise.templates.dashboard.marketplace.show.question.delete_modal_header"
+          bodyText: "mno_enterprise.templates.dashboard.marketplace.show.question.delete_modal_body"
+          closeButtonText: 'mno_enterprise.templates.dashboard.marketplace.show.question.delete_modal_cancel'
+          actionButtonText: 'mno_enterprise.templates.dashboard.marketplace.show.question.delete_modal_delete'
+          actionCb: -> MnoeMarketplace.deleteQuestion($stateParams.appId, question.id)
+          type: 'danger'
+
+        MnoConfirm.showModal(modalOptions).then(
+          ->
             vm.questions.list.splice(key, 1)
         )
 
@@ -319,18 +314,16 @@ angular.module 'mnoEnterpriseAngular'
       # Delete answer
       #====================================
       vm.openDeleteAnswerModal = (answer, key, questionKey)->
-        modalInstance = $uibModal.open(
-          templateUrl: 'app/views/marketplace/modals/delete-modal.html'
-          controller: 'DeleteAnswerModalCtrl'
-          controllerAs: 'vm',
-          size: 'lg'
-          windowClass: 'inverse'
-          backdrop: 'static'
-          resolve:
-            object: answer
-        )
-        modalInstance.result.then(
-          (response) ->
+        modalOptions =
+          headerText: "mno_enterprise.templates.dashboard.marketplace.show.answer.delete_modal_header"
+          bodyText: "mno_enterprise.templates.dashboard.marketplace.show.answer.delete_modal_body"
+          closeButtonText: 'mno_enterprise.templates.dashboard.marketplace.show.answer.delete_modal_cancel'
+          actionButtonText: 'mno_enterprise.templates.dashboard.marketplace.show.answer.delete_modal_delete'
+          actionCb: -> MnoeMarketplace.deleteAnswer($stateParams.appId, answer.id)
+          type: 'danger'
+
+        MnoConfirm.showModal(modalOptions).then(
+          ->
             vm.questions.list[questionKey].answers.splice(key, 1)
         )
 
