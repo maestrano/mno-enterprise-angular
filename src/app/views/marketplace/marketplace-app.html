@@ -135,14 +135,17 @@
               {{ 'mno_enterprise.templates.dashboard.marketplace.show.write_review' | translate }}
             </button>
             <span class="pull-right">
-              {{ 'mno_enterprise.templates.dashboard.marketplace.show.filter' | translate }}
-              <select ng-model="vm.sortReviewsBy" ng-change="vm.orderFeedbacks()">
+              <label>{{ 'mno_enterprise.templates.dashboard.marketplace.show.filter' | translate }}</label>
+              <select class="filter-reviews form-control" ng-model="vm.sortReviewsBy" ng-change="vm.orderFeedbacks()">
                 <option value="rating.asc">{{ 'mno_enterprise.templates.dashboard.marketplace.show.filter_rating_ask' | translate }}</option>
                 <option value="rating.desc">{{ 'mno_enterprise.templates.dashboard.marketplace.show.filter_rating_desc' | translate }}</option>
                 <option value="created_at.asc">{{ 'mno_enterprise.templates.dashboard.marketplace.show.filter_date_ask' | translate }}</option>
                 <option value="created_at.desc" selected="selected">{{ 'mno_enterprise.templates.dashboard.marketplace.show.filter_date_desc' | translate }}</option>
               </select>
             </span>
+          </div>
+          <div class="add-review" ng-if="!vm.appInstance">
+            {{ 'mno_enterprise.templates.dashboard.marketplace.show.no_app_no_review' | translate }}
           </div>
           <div class='login-icon'>
             <span ng-show="vm.reviews.loading"><i class="fa fa-refresh fa-spin fa-3x fa-fw"></i></span>
@@ -194,6 +197,7 @@
             </div>
 
             <mno-pagination
+              ng-if="vm.reviews.list.length != 0 "
               page="vm.reviews.page"
               nb-items="vm.reviews.nbItems"
               total-items="vm.reviews.totalItems"
@@ -208,7 +212,7 @@
           <div class="clearfix">
             <div class="questions-panel pull-right">
               <form>
-                <input type="text" name="name" value="" placeholder="search a question, find an answer" ng-model="vm.questions.searchWord">
+                <input class="form-control" type="text" name="name" value="" placeholder="{{'mno_enterprise.templates.dashboard.marketplace.show.question_search' | translate}}" ng-model="vm.questions.searchWord">
                 <button class="fa fa-search" type="button" name="button" ng-click="vm.searchQuestion()"></button>
               </form>
               <button class="btn btn-primary" type="button" name="button" ng-click="vm.openCreateQuestionModal()">{{'mno_enterprise.templates.dashboard.marketplace.show.question_ask' | translate}}</button>
