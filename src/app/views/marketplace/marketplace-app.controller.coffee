@@ -82,6 +82,8 @@ angular.module 'mnoEnterpriseAngular'
         vm.isTestimonialShown = (testimonial) ->
           testimonial.text? && testimonial.text.length > 0
 
+        vm.canUserEditReview = (review) ->
+          (review.user_id == vm.userId) && (review.edited_by_id == review.user_id || !review.edited_by_id)
         #====================================
         # Cart Management
         #====================================
@@ -137,9 +139,11 @@ angular.module 'mnoEnterpriseAngular'
         )
         modalInstance.result.then(
           (response) ->
-            vm.reviews.list[key].description = response.app_feedback.description
-            vm.reviews.list[key].rating = response.app_feedback.rating
-            vm.reviews.list[key].edited = response.app_feedback.edited
+            review = vm.reviews.list[key]
+            review.description = response.app_feedback.description
+            review.rating = response.app_feedback.rating
+            review.edited = response.app_feedback.edited
+            review.edited_by_id = response.app_feedback.edited_by_id
             vm.averageRating = Math.round(parseFloat(vm.app.average_rating).toFixed(1))
         )
 
@@ -197,8 +201,10 @@ angular.module 'mnoEnterpriseAngular'
         )
         modalInstance.result.then(
           (response) ->
-            vm.reviews.list[key].comments[reviewKey].description = response.app_comment.description
-            vm.reviews.list[key].comments[reviewKey].edited = response.app_comment.edited
+            comment = vm.reviews.list[key].comments[reviewKey]
+            comment.description = response.app_comment.description
+            comment.edited = response.app_comment.edited
+            comment.edited_by_id = response.app_comment.edited_by_id
         )
 
       #====================================
