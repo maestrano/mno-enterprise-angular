@@ -129,11 +129,13 @@
       <uib-tab index="0" heading="Feedback">
         <!-- Comments & Ratings -->
         <div id="comments">
-          <div class="add-review" ng-if="vm.appInstance">
-            {{ 'mno_enterprise.templates.dashboard.marketplace.show.company_feedback' | translate }}:
-            <button type="button" class="btn btn-warning" ng-click="vm.openCreateReviewModal()">
-              {{ 'mno_enterprise.templates.dashboard.marketplace.show.write_review' | translate }}
-            </button>
+          <div class="add-review">
+            <span ng-if="vm.appInstance">
+              {{ 'mno_enterprise.templates.dashboard.marketplace.show.company_feedback' | translate }}:
+              <button type="button" class="btn btn-warning" ng-click="vm.openCreateReviewModal()">
+                {{ 'mno_enterprise.templates.dashboard.marketplace.show.write_review' | translate }}
+              </button>
+            </span>
             <span class="pull-right">
               <label>{{ 'mno_enterprise.templates.dashboard.marketplace.show.filter' | translate }}</label>
               <select class="filter-reviews form-control" ng-model="vm.sortReviewsBy" ng-change="vm.orderFeedbacks()">
