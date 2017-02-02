@@ -23,7 +23,13 @@ angular.module 'mnoEnterpriseAngular'
       MnoeMarketplace.getApps().then(
         (response) ->
           response = response.plain()
-          vm.apps = response.apps
+          # Filter apps selected
+          vm.compared_apps = _.each(
+            _.filter(response.apps, (app)-> app.toCompare == true),
+            (app) ->  # Round average rating
+              app.average_rating = Math.round( app.average_rating * 10 ) / 10;
+              true
+          )
 
           vm.isLoading = false
       )
