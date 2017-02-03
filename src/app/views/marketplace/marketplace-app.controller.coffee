@@ -63,7 +63,7 @@ angular.module 'mnoEnterpriseAngular'
         if vm.isReviewingEnabled
           fetchReviews(app.id, vm.reviews.nbItems, 0)
           fetchQuestions(app.id, vm.questions.nbItems, 0)
-          vm.averageRating = vm.app.average_rating? && Math.round(parseFloat(vm.app.average_rating).toFixed(1))
+          vm.averageRating = parseFloat(vm.app.average_rating).toFixed(1)
           vm.isRateDisplayed = !!vm.averageRating
 
         vm.appInstance = appInstance

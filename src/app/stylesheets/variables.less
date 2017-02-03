@@ -356,10 +356,15 @@
 /*-----------------------------------------------------------------------*/
 /*                          Reviews and comments                         */
 /*-----------------------------------------------------------------------*/
+@no-review-bg-panel-color:       darken(@bg-on-bg-inverse-color, 5%);
+
 @comment-bg:                     @bg-main-color;
 @comment-text-color:             @text-strong-color;
 @comment-attributes-color:       @bg-inverse-color;
 
-@question-search-border:         1px solid #c5c5c5;
+@no-question-bg-panel-color:     darken(@bg-on-bg-inverse-color, 5%);
+@question-search-btn-bg:         @bg-inverse-color;
+@question-search-btn-color:      @text-inverse-color;
+@question-search-border:         1px solid @bg-inverse-color;
 @question-bg:                    @bg-on-bg-inverse-color;
 @question-ribbon-bg:             @bg-on-bg-inverse-color;

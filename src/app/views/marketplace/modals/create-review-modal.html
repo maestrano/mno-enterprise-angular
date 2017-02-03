@@ -1,11 +1,11 @@
 <form id="create-review-modal" name="form" novalidate>
   <div class="modal-header">
     <div class="close" type="button" ng-click="vm.modal.cancel()" >×</div>
-    <h3>{{'mno_enterprise.templates.dashboard.marketplace.show.review' | translate}}</h3>
+    <h3>{{'mno_enterprise.templates.dashboard.marketplace.show.review_title' | translate}}</h3>
   </div>
   <!-- Modal Body -->
   <div class="modal-body">
-    <div class="pull-right">
+    <div>
       <star-rating ng-model="vm.appRating"></star-rating><br/>
     </div>
     <textarea class="form-control" rows="5" ng-trim="false" maxlength="{{vm.commentMaxLenght}}" ng-model="vm.modal.model.description" placeholder="{{ 'mno_enterprise.templates.dashboard.marketplace.show.tell_others' | translate}}" id="comment"></textarea>

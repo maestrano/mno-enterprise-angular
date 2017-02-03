@@ -25,88 +25,88 @@
   <!-- Content -->
   <div class="show-content top-buffer-1" ng-show="!vm.isLoading">
 
-      <!-- Pics/details row -->
-      <div class="row">
-        <div class="col-md-8">
-          <div class="well carousel">
-            <div carousel interval="3000">
-              <div slide ng-repeat="picture in vm.app.pictures" class="screenshot">
-                <img ng-src={{picture}} alt="screenshot">
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-4">
-          <div class="well text-center well-details">
-            <div class="row">
-              <div class="col-xs-12 col-sm-4 col-sm-offset-4 col-md-8 col-md-offset-2">
-                <mno-app-install-btn
-                  app="vm.app"
-                  app-instance= "vm.appInstance"
-                  conflicting-app="vm.conflictingApp">
-                </mno-app-install-btn>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-xs-12 col-sm-4 col-sm-offset-4 col-md-8 col-md-offset-2">
-                <ul class="app-features">
-                  <li ng-show="vm.app.is_responsive">
-                    <img src="images/icons/mobile-responsive-logo.png" alt="responsive icon">
-                    {{ 'mno_enterprise.templates.dashboard.marketplace.show.tag_responsive' | translate }}
-                  </li>
-                  <li ng-show="vm.app.is_star_ready" mno-helptext="Your live tutorials directly inside your app">
-                    <img src="images/icons/star-enabled-logo.png" alt="Star icon">
-                    {{ 'mno_enterprise.templates.dashboard.marketplace.show.tag_star' | translate }}
-                  </li>
-                  <li ng-show="vm.app.is_connec_ready" mno-helptext="Your Data automatically shared between your applications">
-                    <img ng-src="images/icons/connec-enabled-logo.png" alt="Connec icon">
-                    {{ 'mno_enterprise.templates.dashboard.marketplace.show.tag_connec' | translate }}
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-12 col-md-offset-0">
-
-                <ul class="key-benefits">
-                  <li ng-repeat="benefit in vm.app.key_benefits track by $index">
-                    <i class="fa fa-check"></i>
-                    {{benefit}}
-                  </li>
-                </ul>
-
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- End pics/details row -->
-      </div>
-
-      <!-- Testimonials row -->
-      <div class="row">
-        <div class="col-md-6" ng-repeat="testimonial in vm.app.testimonials | limitTo:2" ng-show="vm.isTestimonialShown(testimonial)">
-          <div class="ribbon-testimonial ribbon-white">
-              <div class="body">
-                {{testimonial.text}}
-                <div class="arrow"></div>
-              </div>
-            <div class="from">
-              <div class="name">{{testimonial.author}}</div>
-              <div class="company">{{testimonial.company}}</div>
+    <!-- Pics/details row -->
+    <div class="row">
+      <div class="col-md-8">
+        <div class="well carousel">
+          <div carousel interval="3000">
+            <div slide ng-repeat="picture in vm.app.pictures" class="screenshot">
+              <img ng-src={{picture}} alt="screenshot">
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Description row -->
-      <div class="row">
-        <div class="col-md-12">
-          <div class="well top-buffer-1" ng-bind-html="vm.app.description"></div>
+      <div class="col-md-4">
+        <div class="well text-center well-details">
+          <div class="row">
+            <div class="col-xs-12 col-sm-4 col-sm-offset-4 col-md-8 col-md-offset-2">
+              <mno-app-install-btn
+                app="vm.app"
+                app-instance= "vm.appInstance"
+                conflicting-app="vm.conflictingApp">
+              </mno-app-install-btn>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-12 col-sm-4 col-sm-offset-4 col-md-8 col-md-offset-2">
+              <ul class="app-features">
+                <li ng-show="vm.app.is_responsive">
+                  <img src="images/icons/mobile-responsive-logo.png" alt="responsive icon">
+                  {{ 'mno_enterprise.templates.dashboard.marketplace.show.tag_responsive' | translate }}
+                </li>
+                <li ng-show="vm.app.is_star_ready" mno-helptext="Your live tutorials directly inside your app">
+                  <img src="images/icons/star-enabled-logo.png" alt="Star icon">
+                  {{ 'mno_enterprise.templates.dashboard.marketplace.show.tag_star' | translate }}
+                </li>
+                <li ng-show="vm.app.is_connec_ready" mno-helptext="Your Data automatically shared between your applications">
+                  <img ng-src="images/icons/connec-enabled-logo.png" alt="Connec icon">
+                  {{ 'mno_enterprise.templates.dashboard.marketplace.show.tag_connec' | translate }}
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-12 col-md-offset-0">
+
+              <ul class="key-benefits">
+                <li ng-repeat="benefit in vm.app.key_benefits track by $index">
+                  <i class="fa fa-check"></i>
+                  {{benefit}}
+                </li>
+              </ul>
+
+            </div>
+          </div>
         </div>
       </div>
+      <!-- End pics/details row -->
+    </div>
+
+    <!-- Testimonials row -->
+    <div class="row">
+      <div class="col-md-6" ng-repeat="testimonial in vm.app.testimonials | limitTo:2" ng-show="vm.isTestimonialShown(testimonial)">
+        <div class="ribbon-testimonial ribbon-white">
+          <div class="body">
+            {{testimonial.text}}
+            <div class="arrow"></div>
+          </div>
+          <div class="from">
+            <div class="name">{{testimonial.author}}</div>
+            <div class="company">{{testimonial.company}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Description row -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="well top-buffer-1" ng-bind-html="vm.app.description"></div>
+      </div>
+    </div>
 
     <!-- Pricing -->
     <div ng-if="vm.isPriceShown" class="row top-buffer-1">
@@ -116,8 +116,8 @@
           <ul>
             <li ng-repeat="plan in vm.pricing_plans">
               <b>{{plan.name}}</b>: {{plan.description}}<br>
-              <span ng-if="plan.price.value">{{plan.currency}} {{plan.price.value}} {{plan.factor}}</span>
-              <span ng-if="!plan.price.value">{{plan.currency}} {{plan.price}} {{plan.factor}}</span>
+              <span ng-show="plan.price.value">{{plan.currency}} {{plan.price.value}} {{plan.factor}}</span>
+              <span ng-hide="plan.price.value">{{plan.currency}} {{plan.price}} {{plan.factor}}</span>
             </li>
           </ul>
           <span ng-if="!vm.app.single_billing" class="text-muted">Note: Credits cannot be used on this app as billing is managed by the third party provider</span>
@@ -125,7 +125,7 @@
       </div>
     </div>
 
-    <uib-tabset ng-if="vm.isReviewingEnabled">
+    <uib-tabset ng-if="vm.isReviewingEnabled" class="bottom-buffer-10">
       <uib-tab index="0" heading="Feedback">
         <!-- Comments & Ratings -->
         <div id="comments">
@@ -136,7 +136,10 @@
                 {{ 'mno_enterprise.templates.dashboard.marketplace.show.write_review' | translate }}
               </button>
             </span>
-            <span class="pull-right">
+            <span ng-if="!vm.appInstance" class="add-review">
+              {{ 'mno_enterprise.templates.dashboard.marketplace.show.no_app_no_review' | translate }}
+            </span>
+            <span class="pull-right" ng-if="vm.reviews.list.length != 0">
               <label>{{ 'mno_enterprise.templates.dashboard.marketplace.show.filter' | translate }}</label>
               <select class="filter-reviews form-control" ng-model="vm.sortReviewsBy" ng-change="vm.orderFeedbacks()">
                 <option value="rating.asc">{{ 'mno_enterprise.templates.dashboard.marketplace.show.filter_rating_ask' | translate }}</option>
@@ -146,13 +149,14 @@
               </select>
             </span>
           </div>
-          <div class="add-review" ng-if="!vm.appInstance">
-            {{ 'mno_enterprise.templates.dashboard.marketplace.show.no_app_no_review' | translate }}
-          </div>
           <div class='login-icon'>
             <span ng-show="vm.reviews.loading"><i class="fa fa-refresh fa-spin fa-3x fa-fw"></i></span>
           </div>
-          <span ng-if="vm.reviews.list.length == 0 && !vm.reviews.loading" class='pages-selector'><h3>{{ 'mno_enterprise.templates.dashboard.marketplace.show.no_reviews' | translate }} {{vm.app.name}}</h3></span>
+          <div ng-if="vm.reviews.list.length == 0 && !vm.reviews.loading">
+            <span class='pages-selector no-review-container' translate translate-value-name="{{vm.app.name}}">
+              mno_enterprise.templates.dashboard.marketplace.show.no_review
+            </span>
+          </div>
           <div ng-hide='vm.reviews.loading'>
             <div class="well" ng-repeat="(key, review) in vm.reviews.list">
               <!-- Review -->
@@ -244,20 +248,33 @@
             <span ng-show="vm.questions.loading"><i class="fa fa-refresh fa-spin fa-3x fa-fw"></i></span>
           </div>
           <div class="row">
+            <div ng-if="vm.questions.list.length == 0">
+              <span class="no-question-container" translate translate-value-name="{{vm.app.name}}">
+                mno_enterprise.templates.dashboard.marketplace.show.question.no_question
+              </span>
+            </div>
+
             <div class="col-md-12" ng-repeat="(key, question) in vm.questions.list">
               <div class="ribbon-question">
                 <div class="row">
-                  <div class="col-md-9">
-                    <div class="row question-body">
+                  <div class="row question-body">
+                    <div class="col-sm-9">
                       <div class="col-md-2 question-title">
-                        {{'mno_enterprise.templates.dashboard.marketplace.show.question' | translate}}
+                        {{'mno_enterprise.templates.dashboard.marketplace.show.question_title' | translate}}
                       </div>
                       <div class="col-md-10">
                         <p class="question-text">{{ question.description }}</p>
                         <p class="question-attribute">Posted by: {{ question.user_name }} in {{ question.organization_name }} on {{ question.created_at | date: "dd/MM/yyyy" }}</p>
                       </div>
                     </div>
-                    <div class="row question-answers">
+                    <div class="col-sm-3 question-actions">
+                      <a class="btn btn-link btn-link-primary" name="button" ng-if="vm.appInstance" ng-click="vm.openCreateAnswerModal(question, key)"><i class="fa fa-plus"></i> {{'mno_enterprise.templates.dashboard.marketplace.show.answer_q' | translate}}</a>
+                      <a class="btn btn-link btn-link-warning" name="button" ng-if="question.user_id == vm.userId" ng-click="vm.openEditQuestionModal(question, key)"><i class="fa fa-edit"></i> {{'mno_enterprise.templates.dashboard.marketplace.show.edit_q' | translate}}</a>
+                      <a class="btn btn-link btn-link-danger" name="button" ng-if="question.user_id == vm.userId" ng-click="vm.openDeleteQuestionModal(question, key)"><i class="fa fa-trash"></i> {{'mno_enterprise.templates.dashboard.marketplace.show.delete_q' | translate}}</a>
+                    </div>
+                  </div>
+                  <div class="row question-answers">
+                    <div class="col-xs-12">
                       <div class="col-md-2 question-title">
                         {{'mno_enterprise.templates.dashboard.marketplace.show.answers' | translate}}
                       </div>
@@ -270,11 +287,6 @@
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="col-md-3 question-actions">
-                    <a class="btn btn-link btn-link-primary" name="button" ng-if="vm.appInstance" ng-click="vm.openCreateAnswerModal(question, key)"><i class="fa fa-plus"></i> {{'mno_enterprise.templates.dashboard.marketplace.show.answer_q' | translate}}</a>
-                    <a class="btn btn-link btn-link-warning" name="button" ng-if="question.user_id == vm.userId" ng-click="vm.openEditQuestionModal(question, key)"><i class="fa fa-edit"></i> {{'mno_enterprise.templates.dashboard.marketplace.show.edit_q' | translate}}</a>
-                    <a class="btn btn-link btn-link-danger" name="button" ng-if="question.user_id == vm.userId" ng-click="vm.openDeleteQuestionModal(question, key)"><i class="fa fa-trash"></i> {{'mno_enterprise.templates.dashboard.marketplace.show.delete_q' | translate}}</a>
                   </div>
                 </div>
               </div>
