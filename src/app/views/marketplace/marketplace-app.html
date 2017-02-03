@@ -116,8 +116,8 @@
           <ul>
             <li ng-repeat="plan in vm.pricing_plans">
               <b>{{plan.name}}</b>: {{plan.description}}<br>
-              <span ng-if="plan.price.value != null">{{plan.currency}} {{plan.price.value}} {{plan.factor}}</span>
-              <span ng-if="plan.price.value == null">{{plan.currency}} {{plan.price}} {{plan.factor}}</span>
+              <span ng-show="plan.price.value">{{plan.currency}} {{plan.price.value}} {{plan.factor}}</span>
+              <span ng-hide="plan.price.value">{{plan.currency}} {{plan.price}} {{plan.factor}}</span>
             </li>
           </ul>
           <span ng-if="!vm.app.single_billing" class="text-muted">Note: Credits cannot be used on this app as billing is managed by the third party provider</span>
