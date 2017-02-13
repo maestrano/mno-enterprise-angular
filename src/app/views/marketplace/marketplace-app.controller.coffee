@@ -181,7 +181,7 @@ angular.module 'mnoEnterpriseAngular'
         )
         modalInstance.result.then(
           (response) ->
-            vm.reviews.list[key].comments.unshift(response.app_comment)
+            vm.reviews.list[key].comments.push(response.app_comment)
         )
 
       #====================================
@@ -292,7 +292,7 @@ angular.module 'mnoEnterpriseAngular'
         )
         modalInstance.result.then(
           (response) ->
-            vm.questions.list[key].answers.unshift(response.app_answer)
+            vm.questions.list[key].answers.push(response.app_answer)
         )
 
       #====================================
