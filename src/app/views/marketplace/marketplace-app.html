@@ -238,7 +238,7 @@
           <div class="clearfix">
             <div class="questions-panel pull-right">
               <form>
-                <input class="form-control" type="text" name="name" value="" placeholder="{{'mno_enterprise.templates.dashboard.marketplace.show.question_search' | translate}}" ng-model="vm.questions.searchWord">
+                <input class="form-control" type="text" name="name" value="" placeholder="{{'mno_enterprise.templates.dashboard.marketplace.show.question_search' | translate}}" ng-model="vm.searchWord">
                 <button class="fa fa-search" type="button" name="button" ng-click="vm.searchQuestion()"></button>
               </form>
               <button class="btn btn-primary" type="button" name="button" ng-click="vm.openCreateQuestionModal()">{{'mno_enterprise.templates.dashboard.marketplace.show.question_ask' | translate}}</button>
@@ -254,7 +254,7 @@
               </span>
             </div>
 
-            <div class="col-md-12" ng-repeat="(key, question) in vm.questions.list">
+            <div class="col-md-12" ng-repeat="(key, question) in vm.filterQuestions(vm.questions.list)">
               <div class="ribbon-question">
                 <div class="row">
                   <div class="row question-body">
