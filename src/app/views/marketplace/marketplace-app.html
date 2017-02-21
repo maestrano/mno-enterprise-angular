@@ -282,7 +282,7 @@
                         <div class="question-answer" ng-repeat="(i, answer) in filteredAnswers = (question.answers | filter:{ status: 'approved' })">
                           <p class="question-text">{{ answer.description }} </p>
                           <p class="question-attribute">Posted by {{ answer.user_name }} in {{ answer.organization_name }} on {{ answer.created_at | date: "dd/MM/yyyy" }}</p>
-                          <button class="btn btn-xs btn-warning" type="button" name="button" ng-if="answer.user_id == vm.userId" ng-click="vm.openEditCommentModal(answer, i, key)">{{'mno_enterprise.templates.dashboard.marketplace.show.edit' | translate}}</button>
+                          <button class="btn btn-xs btn-warning" type="button" name="button" ng-if="answer.user_id == vm.userId" ng-click="vm.openEditAnswerModal(answer, i, key)">{{'mno_enterprise.templates.dashboard.marketplace.show.edit' | translate}}</button>
                           <button class="btn btn-xs btn-danger" type="button" name="button" ng-if="answer.user_id == vm.userId" ng-click="vm.openDeleteAnswerModal(answer, i, key)">{{'mno_enterprise.templates.dashboard.marketplace.show.delete' | translate}}</button>
                         </div>
                       </div>
