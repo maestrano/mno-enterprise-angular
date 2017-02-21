@@ -13,6 +13,7 @@ dashboard-company-selectbox {
     border-left: 1px solid @dashboard-cpy-select-border-color;
     border-bottom: 1px solid @dashboard-cpy-select-border-color;
     z-index: 999;
+    overflow: hidden;
 
     @media (max-width: @screen-sm) {
       border-radius: 0;
@@ -57,7 +58,8 @@ dashboard-company-selectbox {
 
     // Section visible when change company is clicked
     .box-content {
-      border-top: solid 1px @dashboard-cpy-select-link-color;
+      border-top: solid 1px @dashboard-cpy-select-list-border-color;
+      overflow: hidden;
 
       // General look of the links
       a {
@@ -110,7 +112,7 @@ dashboard-company-selectbox {
         color: @dashboard-cpy-select-link-color;
         padding: 10px 20px;
         text-align: left;
-        border-top: 1px solid @dashboard-cpy-select-border-color;
+        border-top: 1px solid @dashboard-cpy-select-list-border-color;
 
         .btn {
           width: 100%;
@@ -128,10 +130,6 @@ dashboard-company-selectbox {
           text-decoration: none;
           color: @dashboard-cpy-select-link-hover-color;
           background-color: @dashboard-cpy-select-link-hover-bg-color;
-
-          &:last-child {
-            border-bottom-left-radius: 5px;
-          }
         }
       }
     }

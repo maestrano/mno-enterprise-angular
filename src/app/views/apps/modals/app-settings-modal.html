@@ -67,7 +67,7 @@
 
       <!-- Deletion -->
       <hr>
-      <div ng-show="helper.canDeleteApp()">
+      <div ng-show="helper.canDeleteApp()" class="app-deletion">
         <button class="btn btn-danger" ng-hide="app.showDelete" ng-click="app.showDelete = !app.showDelete">{{ 'mno_enterprise.templates.impac.dock.settings.delete' | translate }}</button>
         <div ng-show="app.showDelete">
           <h4>{{ 'mno_enterprise.templates.impac.dock.settings.confirm_app_deletion' | translate }}</h4>
@@ -79,7 +79,7 @@
           <p>
             {{ 'mno_enterprise.templates.impac.dock.settings.delete_instructions' | translate }}</span>
             <br/>
-            <span class="text-error  align-center"><strong>{{sentence}}</strong></span>
+            <span class="text-error deletion-sentence align-center"><strong>{{sentence}}</strong></span>
           </p>
           <div>
             <input type="text" class="sentence-check" ng-model="sentenceCheck" required>
