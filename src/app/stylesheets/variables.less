@@ -100,7 +100,7 @@
 @dashboard-cpy-select-bg-color:                 @bg-inverse-color;
 @dashboard-cpy-select-border-radius:            0 0 0 6px;
 @dashboard-cpy-select-border-color:             @text-inverse-color;
-
+@dashboard-cpy-select-list-border-color:        lighten(@bg-inverse-color, 10%);
 @dashboard-cpy-select-header-text-bold-color:   @text-inverse-color;
 @dashboard-cpy-select-header-text-color:        @text-inverse-color;
 @dashboard-cpy-select-header-text-size:         13px;
@@ -243,9 +243,10 @@
 // Global
 @impac-widget-background-color:                 @bg-on-bg-inverse-color;
 @impac-widget-text-color:                       black;
-@impac-widget-text-color-light:                 lighten(@impac-widget-text-color,70%);
-@impac-widget-borders-color:                    lighten(@impac-widget-text-color-light,10%);
+@impac-widget-text-color-light:                 @text-strong-color;
+@impac-widget-borders-color:                    lighten(@impac-widget-text-color, 80%);
 @impac-widget-link-color:                       @decorator-inverse-color;
+@impac-widget-top-buttons-color:                lighten(@impac-widget-text-color, 70%);
 
 // Title
 @impac-widget-title-text-color:                 white;
@@ -345,3 +346,9 @@
 @input-color:                   @text-strong-color;
 @input-color-placeholder:       @input-color;
 @input-label-color:             @text-inverse-color;
+@deletion-sentence-color:       @brand-danger;
+
+/*-----------------------------------------------------------------------*/
+/*                                 Buttons                               */
+/*-----------------------------------------------------------------------*/
+@btn-danger-background:         @brand-danger;
