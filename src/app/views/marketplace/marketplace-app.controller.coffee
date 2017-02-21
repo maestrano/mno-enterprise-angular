@@ -83,7 +83,7 @@ angular.module 'mnoEnterpriseAngular'
           testimonial.text? && testimonial.text.length > 0
 
         vm.canUserEditReview = (review) ->
-          (review.user_id == vm.userId) && (review.edited_by_id == review.user_id || !review.edited_by_id)
+          (review.user_id == vm.userId) && (parseInt(review.edited_by_id) == review.user_id || !review.edited_by_id)
         #====================================
         # Cart Management
         #====================================
@@ -200,7 +200,7 @@ angular.module 'mnoEnterpriseAngular'
         )
         modalInstance.result.then(
           (response) ->
-            comment = vm.reviews.list[key].comments[reviewKey]
+            comment = vm.reviews.list[reviewKey].comments[key]
             comment.description = response.app_comment.description
             comment.edited = response.app_comment.edited
             comment.edited_by_id = response.app_comment.edited_by_id
