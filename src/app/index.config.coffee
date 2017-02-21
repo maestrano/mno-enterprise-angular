@@ -8,7 +8,7 @@ angular.module 'mnoEnterpriseAngular'
     # Set options third-party lib
     toastrConfig.timeOut = 5000
     toastrConfig.positionClass = 'toast-top-right'
-    toastrConfig.preventDuplicates = false
+    toastrConfig.preventDuplicates = true
     toastrConfig.progressBar = true
   )
 
