@@ -25,7 +25,7 @@ angular.module 'mnoEnterpriseAngular'
   # Check if the user is allowed to add apps to the given organization
   $scope.isUserAuthorized = (orgId) ->
     currentUserRole = $scope.organizations[orgId].current_user_role
-    MnoeOrganizations.role.atLeastPowerUser(currentUserRole)
+    MnoeOrganizations.role.atLeastAdmin(currentUserRole)
 
   # Update current user authorization based on the selected org
   $scope.updateUserAuthorization = ->
@@ -51,7 +51,7 @@ angular.module 'mnoEnterpriseAngular'
   filterAuthorizedOrga = (organizations) ->
     _.forEach(organizations, (org) ->
       $scope.organizations[org.id] = org
-      $scope.authorized_organizations[org.id] = org if MnoeOrganizations.role.atLeastPowerUser(org.current_user_role)
+      $scope.authorized_organizations[org.id] = org if MnoeOrganizations.role.atLeastAdmin(org.current_user_role)
     )
 
   #====================================
