@@ -254,7 +254,7 @@
               </span>
             </div>
 
-            <div class="col-md-12" ng-repeat="(key, question) in vm.filterQuestions(vm.questions.list)">
+            <div class="col-md-12" ng-repeat="(key, question) in vm.questions.list | filterQuestions:vm.searchWord">
               <div class="ribbon-question">
                 <div class="row">
                   <div class="row question-body">

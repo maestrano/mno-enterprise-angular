@@ -410,23 +410,5 @@ angular.module 'mnoEnterpriseAngular'
               vm.initialize(app, appInstance, conflictingApp)
           )
 
-      questionMatch = (question) ->
-        return question.description.toLowerCase().includes(vm.searchWord.toLowerCase())
-
-      answerMatch = (question) ->
-        result = false
-        _.each(question.answers, (answer) ->
-          result = true if answer.description.toLowerCase().includes(vm.searchWord.toLowerCase())
-          true
-        )
-        return result
-
-      vm.filterQuestions = (questions) ->
-        result = {}
-        angular.forEach(questions, (question, key) ->
-          result[key] = question if (questionMatch(question) || answerMatch(question))
-        )
-        return result
-
       return
   )
