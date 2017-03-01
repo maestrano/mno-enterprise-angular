@@ -13,6 +13,7 @@ angular.module 'mnoEnterpriseAngular'
       #====================================
       vm.isLoading = true
       vm.app = {}
+      vm.searchWord = ""
       # The already installed app instance of the app, if any
       vm.appInstance = null
       # An already installed app, conflicting with the app because it contains a common subcategory
