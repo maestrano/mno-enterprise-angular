@@ -293,6 +293,7 @@
 
 @dashboard-marketplace-tile-bg-color:                 @bg-on-bg-inverse-color;
 @dashboard-marketplace-tile-text-color:               @text-strong-color;
+@dashboard-marketplace-tile-name-color:               @bg-inverse-color;
 @dashboard-marketplace-tile-img-border-color:         @decorator-main-color;
 
 @dashboard-marketplace-tile-hover-bg-color:           @decorator-main-color;
@@ -342,13 +343,29 @@
 /*-----------------------------------------------------------------------*/
 /*                          Form Customization                           */
 /*-----------------------------------------------------------------------*/
-@input-bg:                      @bg-on-bg-inverse-color;
-@input-color:                   @text-strong-color;
-@input-color-placeholder:       @input-color;
-@input-label-color:             @text-inverse-color;
-@deletion-sentence-color:       @brand-danger;
+@input-bg:                       @bg-on-bg-inverse-color;
+@input-color:                    @text-strong-color;
+@input-color-placeholder:        @input-color;
+@input-label-color:              @text-inverse-color;
+@deletion-sentence-color:        @brand-danger;
 
 /*-----------------------------------------------------------------------*/
 /*                                 Buttons                               */
 /*-----------------------------------------------------------------------*/
-@btn-danger-background:         @brand-danger;
+@btn-danger-background:          @brand-danger;
+
+/*-----------------------------------------------------------------------*/
+/*                          Reviews and comments                         */
+/*-----------------------------------------------------------------------*/
+@no-review-bg-panel-color:       darken(@bg-on-bg-inverse-color, 5%);
+
+@comment-bg:                     @bg-main-color;
+@comment-text-color:             @text-strong-color;
+@comment-attributes-color:       @bg-inverse-color;
+
+@no-question-bg-panel-color:     darken(@bg-on-bg-inverse-color, 5%);
+@question-search-btn-bg:         @bg-inverse-color;
+@question-search-btn-color:      @text-inverse-color;
+@question-search-border:         1px solid @bg-inverse-color;
+@question-bg:                    @bg-on-bg-inverse-color;
+@question-ribbon-bg:             @bg-on-bg-inverse-color;

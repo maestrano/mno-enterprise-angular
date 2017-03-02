@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .service 'MnoConfirm', ($uibModal) ->
+  .service 'MnoConfirm', ($uibModal, $q) ->
     _self = this
 
     modalOptions =
@@ -7,6 +7,8 @@ angular.module 'mnoEnterpriseAngular'
       actionButtonText: 'OK'
       headerText: 'Proceed?'
       bodyText: 'Perform this action?'
+      actionCb: $q.resolve
+      type: 'primary'
 
     modalDefaults =
       backdrop: true
@@ -36,9 +38,15 @@ angular.module 'mnoEnterpriseAngular'
           'ngInject'
 
           $scope.modalOptions = tempModalOptions
-          $scope.modalOptions.ok = (result) ->
-            $uibModalInstance.close(result)
-          $scope.modalOptions.close = (result) ->
+
+          $scope.modalOptions.ok = () ->
+            $scope.modalOptions.isLoading = true
+            $scope.modalOptions.actionCb().then(
+              (response) ->
+                $uibModalInstance.close(response)
+            ).finally(-> $scope.modalOptions.isLoading = false)
+
+          $scope.modalOptions.close = () ->
             $uibModalInstance.dismiss('cancel')
 
       $uibModal.open(tempModalDefaults).result
