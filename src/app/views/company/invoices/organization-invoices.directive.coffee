@@ -1,5 +1,5 @@
 
-DashboardOrganizationInvoicesCtrl = ($scope, $window, MnoeOrganizations) ->
+DashboardOrganizationInvoicesCtrl = ($scope, $window, MnoeOrganizations, PAYMENT_CONFIG) ->
   'ngInject'
 
   #====================================
@@ -7,6 +7,7 @@ DashboardOrganizationInvoicesCtrl = ($scope, $window, MnoeOrganizations) ->
   #====================================
   $scope.isLoading = true
   $scope.invoices = []
+  $scope.payment_enabled = not PAYMENT_CONFIG.disabled
 
   #====================================
   # Post-Initialization
