@@ -2,7 +2,7 @@
   <div class="row th-row hidden-xs">
     <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.organization.invoices.period' | translate }}</div>
     <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.organization.invoices.amount' | translate }}</div>
-    <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.organization.invoices.paid' | translate }}</div>
+    <div class="cell col-sm-3" ng-if="payment_enabled">{{ 'mno_enterprise.templates.dashboard.organization.invoices.paid' | translate }}</div>
     <div class="cell col-sm-3 text-center">{{ 'mno_enterprise.templates.dashboard.organization.invoices.download' | translate }}</div>
   </div>
 
@@ -18,7 +18,7 @@
       </span>
       {{ invoice.amount.value | currency: invoice.amount.options.symbol }} ({{ invoice.amount.options.iso_code }})</div>
 
-    <div class="cell col-sm-3">
+    <div class="cell col-sm-3" ng-if="payment_enabled">
       <span class="cell-label visible-xs-inline">{{ 'mno_enterprise.templates.dashboard.organization.invoices.paid' | translate }}:</span>
       {{ {true: 'Yes', false: 'No'}[invoice.paid] }}
     </div>

@@ -1,6 +1,6 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('DashboardCompanyCtrl',
-    ($scope, MnoeOrganizations, MnoeTeams) ->
+    ($scope, MnoeOrganizations, MnoeTeams, PAYMENT_CONFIG) ->
       vm = @
 
       #====================================
@@ -13,6 +13,7 @@ angular.module 'mnoEnterpriseAngular'
         teams: false,
         settings: false
       }
+      vm.payment_enabled = not PAYMENT_CONFIG.disabled
 
       #====================================
       # Scope Management

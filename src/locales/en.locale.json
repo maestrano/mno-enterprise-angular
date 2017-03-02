@@ -483,6 +483,7 @@
   "mno_enterprise.templates.dashboard.organization.index.billing.current_billing": "Current Billing",
   "mno_enterprise.templates.dashboard.organization.index.billing.billing_details": "Billing Details",
   "mno_enterprise.templates.dashboard.organization.index.billing.past_invoices": "Past Invoices",
+  "mno_enterprise.templates.dashboard.organization.index.billing.account_statement": "Account statements",
   "mno_enterprise.templates.dashboard.organization.index.members.title": "Members",
   "mno_enterprise.templates.dashboard.organization.index.teams.title": "Teams",
   "mno_enterprise.templates.dashboard.organization.index.teams.subtitle": "Team Management",

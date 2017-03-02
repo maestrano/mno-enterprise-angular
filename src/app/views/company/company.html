@@ -55,7 +55,7 @@
             <!-- End: accordion-group current billing -->
           </div>
 
-          <div uib-accordion-group is-open="isBdtOpen">
+          <div uib-accordion-group is-open="isBdtOpen" ng-if="vm.payment.enabled">
             <div uib-accordion-heading>
               {{ 'mno_enterprise.templates.dashboard.organization.index.billing.billing_details' | translate }} <span class="fa pull-right" ng-class="{'fa-caret-down': !isBdtOpen, 'fa-caret-up': isBdtOpen}"></span>
             </div>
@@ -70,7 +70,8 @@
 
           <div uib-accordion-group is-open="isPsIvOpen">
             <div uib-accordion-heading>
-              {{ 'mno_enterprise.templates.dashboard.organization.index.billing.past_invoices' | translate }} <span class="fa pull-right" ng-class="{'fa-caret-down': !isPsIvOpen, 'fa-caret-up': isPsIvOpen}"></span>
+              {{vm.payment_enabled ? 'mno_enterprise.templates.dashboard.organization.index.billing.past_invoices' : 'mno_enterprise.templates.dashboard.organization.index.billing.account_statement' | translate }}
+              <span class="fa pull-right" ng-class="{'fa-caret-down': !isPsIvOpen, 'fa-caret-up': isPsIvOpen}"></span>
             </div>
 
             <!-- Directive: DashboardOrganizationInvoices -->
