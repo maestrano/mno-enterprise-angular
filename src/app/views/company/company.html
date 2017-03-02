@@ -55,7 +55,7 @@
             <!-- End: accordion-group current billing -->
           </div>
 
-          <div uib-accordion-group is-open="isBdtOpen" ng-if="vm.payment.enabled">
+          <div uib-accordion-group is-open="isBdtOpen" ng-if="vm.payment_enabled">
             <div uib-accordion-heading>
               {{ 'mno_enterprise.templates.dashboard.organization.index.billing.billing_details' | translate }} <span class="fa pull-right" ng-class="{'fa-caret-down': !isBdtOpen, 'fa-caret-up': isBdtOpen}"></span>
             </div>
