@@ -47,10 +47,11 @@
       </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group" ng-class="{'has-warning': !isAcceptedCardType()}">
       <label class="col-sm-2 control-label">{{ 'mno_enterprise.templates.dashboard.organization.credit_card.cc_form.number' | translate }}</label>
       <div class="col-sm-9">
         <input type="text" class="form-control" ng-model="model.number" required/>
+        <span class="help-block" ng-hide="isAcceptedCardType()">{{ 'mno_enterprise.templates.dashboard.organization.credit_card.cc_form.unaccepted_type' | translate }}</span>
       </div>
     </div>
 

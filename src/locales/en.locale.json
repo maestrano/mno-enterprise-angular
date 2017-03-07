@@ -545,6 +545,7 @@
   "mno_enterprise.templates.dashboard.organization.credit_card.cc_form.placeholder_name": "Name",
   "mno_enterprise.templates.dashboard.organization.credit_card.cc_form.placeholder_surname": "Surname",
   "mno_enterprise.templates.dashboard.organization.credit_card.cc_form.number": "Card Number",
+  "mno_enterprise.templates.dashboard.organization.credit_card.cc_form.unaccepted_type": "This card type is not accepted",
   "mno_enterprise.templates.dashboard.organization.credit_card.cc_form.cvv": "CVV",
   "mno_enterprise.templates.dashboard.organization.credit_card.cc_form.country": "Country",
   "mno_enterprise.templates.dashboard.organization.credit_card.cc_form.country_select": "-- SELECT --",
