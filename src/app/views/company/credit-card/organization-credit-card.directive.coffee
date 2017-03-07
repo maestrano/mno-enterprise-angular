@@ -14,6 +14,7 @@ DashboardOrganizationCreditCardCtrl = ($scope, $window, MnoeOrganizations, Misce
     validMonths: [1..12]
     validYears: [d = (new Date).getFullYear()..d+20]
     validCountries: Miscellaneous.countries
+    validCCTypes: ['visa', 'mastercard', 'amex', 'jcb']
   }
 
   #====================================

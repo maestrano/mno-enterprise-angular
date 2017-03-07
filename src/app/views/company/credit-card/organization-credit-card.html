@@ -21,10 +21,9 @@
   <form name="forms.creditCard" role="form" novalidate class="form-horizontal">
     <div class="form-group">
       <div class="col-xs-6 pull-right text-right cc-icons">
-        <i class="mnoe-icon mnoe-icon-cc-icons-mno-cc-visa" ></i>
-        <i class="mnoe-icon mnoe-icon-cc-icons-mno-cc-mastercard"></i>
-        <i class="mnoe-icon mnoe-icon-cc-icons-mno-cc-amex"></i>
-        <i class="mnoe-icon mnoe-icon-cc-icons-mno-cc-jcb"></i>
+        <span ng-repeat="ccType in config.validCCTypes">
+          <i class="mnoe-icon mnoe-icon-cc-icons-mno-cc-{{ccType}}" ng-class="classForIconType(ccType)"></i>
+        </span>
       </div>
     </div>
 
