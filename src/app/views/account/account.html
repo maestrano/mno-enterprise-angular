@@ -21,29 +21,29 @@
         <div class='row'>
           <div class='col-md-6'>
             <label>{{ 'mno_enterprise.templates.dashboard.account.user_form_name' | translate }}</label>
-            <input type='text' ng-model='vm.user.model.name' class='form-control'>
+            <input type='text' ng-model='vm.user.model.name' class='form-control' ng-readonly="!vm.isUserManagementEnabled">
           </div>
           <div class='col-md-6'>
             <label>{{ 'mno_enterprise.templates.dashboard.account.user_form_surname' | translate }}</label>
-            <input type='text' ng-model='vm.user.model.surname' class='form-control'>
+            <input type='text' ng-model='vm.user.model.surname' class='form-control' ng-readonly="!vm.isUserManagementEnabled">
           </div>
         </div>
         <div class='row'>
           <div class='col-md-6'>
             <label>{{ 'mno_enterprise.templates.dashboard.account.user_form_email' | translate }}</label>
-            <input type='text' ng-model='vm.user.model.email' class='form-control'>
+            <input type='text' ng-model='vm.user.model.email' class='form-control' ng-readonly="!vm.isUserManagementEnabled">
           </div>
           <div class='col-md-6'>
             <label>{{ 'mno_enterprise.templates.dashboard.account.user_form_phone' | translate }}</label>
             <div class="input-group">
               <div class="input-group-addon select">
-                <select ng-options="phone[0] as phone[1] for phone in vm.countryCodes" ng-model='vm.user.model.phone_country_code'></select>
+                <select ng-options="phone[0] as phone[1] for phone in vm.countryCodes" ng-model='vm.user.model.phone_country_code' ng-disabled="!vm.isUserManagementEnabled"></select>
               </div>
-              <input type='text' ng-model='vm.user.model.phone' class='form-control'>
+              <input type='text' ng-model='vm.user.model.phone' class='form-control' ng-readonly="!vm.isUserManagementEnabled">
             </div>
           </div>
         </div>
-        <div class='row'>
+        <div class='row' ng-if="vm.isUserManagementEnabled">
           <div class='col-md-12'>
             <button ng-disabled="!vm.user.hasChanged() || vm.user.loading" class='btn btn-warning' ng-click="vm.user.update()">
               <span ng-show="vm.user.loading"><i class="fa fa-spinner fa-pulse fa-fw"></i></span>
@@ -60,7 +60,7 @@
     <!--
       Change Password Section
     -->
-    <div uib-accordion-group is-open="vm.isChangePasswordOpen">
+    <div uib-accordion-group ng-if="vm.isUserManagementEnabled" is-open="vm.isChangePasswordOpen">
       <div uib-accordion-heading>
           {{ 'mno_enterprise.templates.dashboard.account.change_password' | translate }} <span class="fa pull-right" ng-class="{'fa-caret-down': !vm.isChangePasswordOpen, 'fa-caret-up': vm.isChangePasswordOpen}"></span>
       </div>
