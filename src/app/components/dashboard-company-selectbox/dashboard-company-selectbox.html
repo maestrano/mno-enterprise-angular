@@ -23,7 +23,7 @@
         </li>
       </ul>
 
-      <div class="default-link">
+      <div class="default-link" ng-if="selectBox.isOrganizationManagementEnabled">
         <button type="button" class="btn btn-warning" ng-click="selectBox.openCreateCompanyModal()">
           {{ 'mno_enterprise.templates.dashboard.menu.new_company' | translate }}
         </button>
