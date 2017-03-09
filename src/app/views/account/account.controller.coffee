@@ -1,6 +1,6 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('DashboardAccountCtrl',
-    ($log, $timeout, toastr, MnoeCurrentUser, MnoErrorsHandler, Miscellaneous, Utilities, I18N_CONFIG, DEVELOPER_SECTION_CONFIG) ->
+    ($log, $timeout, toastr, MnoeCurrentUser, MnoErrorsHandler, Miscellaneous, Utilities, I18N_CONFIG, DEVELOPER_SECTION_CONFIG, USER_MANAGEMENT) ->
 
       vm = @
       # Scope init
@@ -8,6 +8,7 @@ angular.module 'mnoEnterpriseAngular'
       vm.errors = {}
       vm.success = {}
       vm.isDeveloperSectionEnabled = DEVELOPER_SECTION_CONFIG.enabled
+      vm.isUserManagementEnabled = USER_MANAGEMENT.enabled
 
       # User model init
       vm.user = { model: {}, password: {}, loading:false }

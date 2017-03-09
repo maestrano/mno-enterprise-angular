@@ -2,7 +2,7 @@
 #============================================
 #
 #============================================
-DashboardCompanySelectboxCtrl = ($scope, $state, $stateParams, $uibModal, MnoeCurrentUser, MnoeOrganizations, MnoeAppInstances) ->
+DashboardCompanySelectboxCtrl = ($scope, $state, $stateParams, $uibModal, MnoeCurrentUser, MnoeOrganizations, MnoeAppInstances, ORGANIZATION_MANAGEMENT) ->
   'ngInject'
 
   #====================================
@@ -13,6 +13,7 @@ DashboardCompanySelectboxCtrl = ($scope, $state, $stateParams, $uibModal, MnoeCu
     isShown: false
     user: MnoeCurrentUser.user
     organization: ''
+    isOrganizationManagementEnabled: ORGANIZATION_MANAGEMENT.enabled
   }
 
   # Switch to another company
