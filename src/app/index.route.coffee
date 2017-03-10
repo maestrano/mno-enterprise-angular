@@ -84,4 +84,4 @@ angular.module 'mnoEnterpriseAngular'
             controller: 'DashboardMarketplaceCompareCtrl'
             controllerAs: 'vm'
 
-    $urlRouterProvider.otherwise '/impac'
+    $urlRouterProvider.otherwise '/reconcile'
