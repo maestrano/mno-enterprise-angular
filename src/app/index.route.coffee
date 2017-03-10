@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .config ($stateProvider, $urlRouterProvider, URI, I18N_CONFIG) ->
+  .config ($stateProvider, $urlRouterProvider, URI, I18N_CONFIG, MARKETPLACE_CONFIG) ->
 
     $stateProvider
       .state 'home',
@@ -37,29 +37,6 @@ angular.module 'mnoEnterpriseAngular'
         templateUrl: 'app/views/company/company.html'
         controller: 'DashboardCompanyCtrl'
         controllerAs: 'vm'
-      .state 'home.marketplace',
-        data:
-          pageTitle:'Marketplace'
-        url: '/marketplace'
-        templateUrl: 'app/views/marketplace/marketplace.html'
-        controller: 'DashboardMarketplaceCtrl'
-        controllerAs: 'vm'
-      .state 'home.marketplace.app',
-        data:
-          pageTitle:'Marketplace-App'
-        url: '^/marketplace/:appId'
-        views: '@home':
-          templateUrl: 'app/views/marketplace/marketplace-app.html'
-          controller: 'DashboardMarketplaceAppCtrl'
-          controllerAs: 'vm'
-      .state 'home.marketplace.compare',
-        data:
-          pageTitle:'Compare apps'
-        url: '^/marketplace/apps/compare'
-        views: '@home':
-          templateUrl: 'app/views/marketplace/marketplace-compare.html'
-          controller: 'DashboardMarketplaceCompareCtrl'
-          controllerAs: 'vm'
       .state 'logout',
         url: '/logout'
         controller: ($window, $http, $translate, AnalyticsSvc) ->
@@ -73,5 +50,31 @@ angular.module 'mnoEnterpriseAngular'
             else
               $window.location.href = "#{URI.login}"
           )
+
+    if MARKETPLACE_CONFIG.enabled
+      $stateProvider
+        .state 'home.marketplace',
+        data:
+          pageTitle:'Marketplace'
+        url: '/marketplace'
+        templateUrl: 'app/views/marketplace/marketplace.html'
+        controller: 'DashboardMarketplaceCtrl'
+        controllerAs: 'vm'
+        .state 'home.marketplace.app',
+        data:
+          pageTitle:'Marketplace-App'
+        url: '^/marketplace/:appId'
+        views: '@home':
+          templateUrl: 'app/views/marketplace/marketplace-app.html'
+          controller: 'DashboardMarketplaceAppCtrl'
+          controllerAs: 'vm'
+        .state 'home.marketplace.compare',
+        data:
+          pageTitle:'Compare apps'
+        url: '^/marketplace/apps/compare'
+        views: '@home':
+          templateUrl: 'app/views/marketplace/marketplace-compare.html'
+          controller: 'DashboardMarketplaceCompareCtrl'
+          controllerAs: 'vm'
 
     $urlRouterProvider.otherwise '/impac'

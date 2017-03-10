@@ -1,5 +1,5 @@
 <div id="app-dock-container" class="hidden-xs hidden-sm hidden-print">
-  <div id="app-dock">
+  <div ng-if="displayDock()" id="app-dock">
     <ul class="dock list-unstyled" ng-class="{minimized: appDock.isMinimized, animated: appDock.isAnimated()}">
       <li ng-repeat="app in apps" ng-class="{active: isActiveApp(app.id)}" class="dock-icon">
         <div class="title" tooltip="{{app.name.length > 14 ? app.name : null}}" tooltip-placement="bottom">{{app.name | truncate:14:"...":true}}</div>
@@ -24,7 +24,7 @@
         </div>
       </li>
       <li>
-        <div class="add-app">
+        <div ng-if="isMarketplaceEnabled" class="add-app">
           <a ui-sref="home.marketplace">
             <i class="fa fa-plus-circle"></i>
             <span> {{ 'mno_enterprise.templates.impac.dock.add_more_apps' | translate }} </span>
@@ -79,7 +79,7 @@
         </div>
       </li>
 
-      <a ui-sref="home.marketplace" class="btn btn-link add-app">
+      <a ng-if="isMarketplaceEnabled" ui-sref="home.marketplace" class="btn btn-link add-app">
         <i class="fa fa-plus"></i><span> {{ 'mno_enterprise.templates.impac.dock.add_more_apps' | translate }}</span>
       </a>
     </ul>
