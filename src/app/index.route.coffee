@@ -51,16 +51,15 @@ angular.module 'mnoEnterpriseAngular'
               $window.location.href = "#{URI.login}"
           )
 
-    if MARKETPLACE_CONFIG.enabled
-      $stateProvider
-        .state 'home.marketplace',
+    $stateProvider
+      .state 'home.marketplace',
         data:
           pageTitle:'Marketplace'
         url: '/marketplace'
         templateUrl: 'app/views/marketplace/marketplace.html'
         controller: 'DashboardMarketplaceCtrl'
         controllerAs: 'vm'
-        .state 'home.marketplace.app',
+      .state 'home.marketplace.app',
         data:
           pageTitle:'Marketplace-App'
         url: '^/marketplace/:appId'
@@ -68,7 +67,7 @@ angular.module 'mnoEnterpriseAngular'
           templateUrl: 'app/views/marketplace/marketplace-app.html'
           controller: 'DashboardMarketplaceAppCtrl'
           controllerAs: 'vm'
-        .state 'home.marketplace.compare',
+      .state 'home.marketplace.compare',
         data:
           pageTitle:'Compare apps'
         url: '^/marketplace/apps/compare'
