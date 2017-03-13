@@ -6,7 +6,7 @@ angular.module 'mnoEnterpriseAngular'
       conflictingApp: '='
     },
     templateUrl: 'app/components/mno-app-install-btn/mno-app-install-btn.html',
-    controller: ($state, $window, $uibModal, toastr, MnoeAppInstances, MnoErrorsHandler, MnoeOrganizations) ->
+    controller: ($state, $window, $uibModal, toastr, MnoeAppInstances, MnoErrorsHandler, MnoeCurrentUser, MnoeOrganizations) ->
       vm = this
 
       # Return the different status of the app regarding its installation
@@ -28,12 +28,15 @@ angular.module 'mnoEnterpriseAngular'
           else
             "INSTALLABLE"
 
+      vm.canProvisionApp = false
+
       vm.provisionApp = () ->
+        return if !vm.canProvisionApp
         vm.isLoading = true
         MnoeAppInstances.clearCache()
 
         # Get the authorization status for the current organization
-        if MnoeOrganizations.role.atLeastPowerUser(vm.user_role)
+        if MnoeOrganizations.role.atLeastAdmin(vm.user_role)
           purchasePromise = MnoeOrganizations.purchaseApp(vm.app, MnoeOrganizations.selectedId)
         else  # Open a modal to change the organization
           purchasePromise = openChooseOrgaModal().result
@@ -106,6 +109,20 @@ angular.module 'mnoEnterpriseAngular'
           resolve:
             app: vm.appInstance
         )
+
+      #====================================
+      # Initialize
+      #====================================
+      vm.init = ->
+        MnoeCurrentUser.get().then(
+          (response) ->  # Get number of organizations with at least an admin role
+            vm.authorizedOrganizations = _.filter(response.organizations, (org) ->
+              MnoeOrganizations.role.atLeastAdmin(org.current_user_role)
+            )
+            vm.canProvisionApp = !_.isEmpty(vm.authorizedOrganizations)
+        )
+
+      vm.init()
 
       return
   }

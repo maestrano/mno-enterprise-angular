@@ -1,7 +1,7 @@
 
 DashboardOrganizationCreditCardCtrl = ($scope, $window, MnoeOrganizations, Miscellaneous, Utilities) ->
   'ngInject'
-  
+
   #====================================
   # Pre-Initialization
   #====================================
@@ -14,6 +14,7 @@ DashboardOrganizationCreditCardCtrl = ($scope, $window, MnoeOrganizations, Misce
     validMonths: [1..12]
     validYears: [d = (new Date).getFullYear()..d+20]
     validCountries: Miscellaneous.countries
+    validCCTypes: ['visa', 'mastercard', 'amex', 'jcb']
   }
 
   #====================================
@@ -23,6 +24,10 @@ DashboardOrganizationCreditCardCtrl = ($scope, $window, MnoeOrganizations, Misce
   $scope.initialize = (creditCard) ->
     angular.copy(creditCard, $scope.model)
     angular.copy(creditCard, $scope.origModel)
+
+    if restrictedCCTypes = MnoeOrganizations.selected.organization.payment_restriction
+      $scope.config.validCCTypes = _.intersection($scope.config.validCCTypes, restrictedCCTypes)
+
     $scope.isLoading = false
 
   # Save the current state of the credit card
@@ -60,11 +65,17 @@ DashboardOrganizationCreditCardCtrl = ($scope, $window, MnoeOrganizations, Misce
     f = $scope.forms
     $scope.isChanged() && f.billingAddress.$valid && f.creditCard.$valid
 
+  # Is the Credit Card accepted?
+  $scope.isAcceptedCardType = ->
+    ccType = $scope.getType()
+    ccType == "" || ccType in $scope.config.validCCTypes
+
   # Enable/Disable the credit card icons
   $scope.classForIconType = (ccType) ->
     self = $scope
-    cType = self.getType()
-    if ccType == self.getType() || cType == ""
+    currentCcType = self.getType()
+    # Do not disable logo if the CardType is not accepted
+    if ccType == currentCcType || currentCcType == "" || !$scope.isAcceptedCardType()
       return "enabled"
     else
       return "disabled"
