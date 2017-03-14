@@ -56,5 +56,7 @@ angular.module 'mnoEnterpriseAngular'
 
     $translateProvider.fallbackLanguage(LOCALES.fallbackLanguage)
     $translateProvider.useSanitizeValueStrategy('sanitizeParameters')
-    $translateProvider.useMissingTranslationHandlerLog()
+
+    # TODO: Activate in "developer mode" only (spams the console and makes the application lag)
+    # $translateProvider.useMissingTranslationHandlerLog()
   )
