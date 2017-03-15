@@ -51,29 +51,30 @@ angular.module 'mnoEnterpriseAngular'
               $window.location.href = "#{URI.login}"
           )
 
-    $stateProvider
-      .state 'home.marketplace',
-        data:
-          pageTitle:'Marketplace'
-        url: '/marketplace'
-        templateUrl: 'app/views/marketplace/marketplace.html'
-        controller: 'DashboardMarketplaceCtrl'
-        controllerAs: 'vm'
-      .state 'home.marketplace.app',
-        data:
-          pageTitle:'Marketplace-App'
-        url: '^/marketplace/:appId'
-        views: '@home':
-          templateUrl: 'app/views/marketplace/marketplace-app.html'
-          controller: 'DashboardMarketplaceAppCtrl'
+    if MARKETPLACE_CONFIG.enabled
+      $stateProvider
+        .state 'home.marketplace',
+          data:
+            pageTitle:'Marketplace'
+          url: '/marketplace'
+          templateUrl: 'app/views/marketplace/marketplace.html'
+          controller: 'DashboardMarketplaceCtrl'
           controllerAs: 'vm'
-      .state 'home.marketplace.compare',
-        data:
-          pageTitle:'Compare apps'
-        url: '^/marketplace/apps/compare'
-        views: '@home':
-          templateUrl: 'app/views/marketplace/marketplace-compare.html'
-          controller: 'DashboardMarketplaceCompareCtrl'
-          controllerAs: 'vm'
+        .state 'home.marketplace.app',
+          data:
+            pageTitle:'Marketplace-App'
+          url: '^/marketplace/:appId'
+          views: '@home':
+            templateUrl: 'app/views/marketplace/marketplace-app.html'
+            controller: 'DashboardMarketplaceAppCtrl'
+            controllerAs: 'vm'
+        .state 'home.marketplace.compare',
+          data:
+            pageTitle:'Compare apps'
+          url: '^/marketplace/apps/compare'
+          views: '@home':
+            templateUrl: 'app/views/marketplace/marketplace-compare.html'
+            controller: 'DashboardMarketplaceCompareCtrl'
+            controllerAs: 'vm'
 
     $urlRouterProvider.otherwise '/impac'
