@@ -1,6 +1,6 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('DashboardAppsListCtrl',
-    ($scope, $interval, $q, $stateParams, $window, $uibModal, MnoConfirm, MnoeOrganizations, MnoeAppInstances) ->
+    ($scope, $interval, $q, $stateParams, $window, $uibModal, MnoConfirm, MnoeOrganizations, MnoeAppInstances, MARKETPLACE_CONFIG) ->
 
       #====================================
       # Pre-Initialization
@@ -12,6 +12,8 @@ angular.module 'mnoEnterpriseAngular'
       $scope.apps = []
       $scope.isLoading = true
       $scope.displayOptions = {}
+
+      $scope.isMarketplaceEnabled = MARKETPLACE_CONFIG.enabled
 
       #====================================
       # Scope Management
