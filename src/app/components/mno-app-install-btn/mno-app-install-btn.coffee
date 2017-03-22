@@ -1,18 +1,16 @@
 angular.module 'mnoEnterpriseAngular'
   .component('mnoAppInstallBtn', {
     bindings: {
-      app: '=',
-      appInstance: '=',
-      conflictingApp: '='
+      app: '='
     },
     templateUrl: 'app/components/mno-app-install-btn/mno-app-install-btn.html',
-    controller: ($state, $window, $uibModal, toastr, MnoeAppInstances, MnoErrorsHandler, MnoeCurrentUser, MnoeOrganizations) ->
+    controller: ($q, $state, $window, $uibModal, toastr, MnoeMarketplace, MnoeCurrentUser, MnoeOrganizations, MnoeAppInstances) ->
       vm = this
 
       # Return the different status of the app regarding its installation
-      # - INSTALLABLE:  The app may be installed
+      # - INSTALLABLE:                        The app may be installed
       # - INSTALLED_CONNECT/INSTALLED_LAUNCH: The app is already installed, and cannot be multi instantiated
-      # - CONFLICT:     Another app, with a common subcategory that is not multi-instantiable has already been installed
+      # - CONFLICT:                           Another app, with a common subcategory that is not multi-instantiable has already been installed
       vm.appInstallationStatus = ->
         if vm.appInstance
           if vm.app.multi_instantiable
@@ -32,7 +30,7 @@ angular.module 'mnoEnterpriseAngular'
 
       vm.provisionApp = () ->
         return if !vm.canProvisionApp
-        vm.isLoading = true
+        vm.isLoadingButton = true
         MnoeAppInstances.clearCache()
 
         # Get the authorization status for the current organization
@@ -53,9 +51,6 @@ angular.module 'mnoEnterpriseAngular'
                   displayLaunchToastr(vm.app)
                 else
                   displayConnectToastr(vm.app)
-          (error) ->
-            toastr.error(vm.app.name + " has not been added, please try again.")
-            MnoErrorsHandler.processServerError(error)
         ).finally(-> vm.isLoadingButton = false)
 
       displayLaunchToastr = (app) ->
@@ -114,12 +109,43 @@ angular.module 'mnoEnterpriseAngular'
       # Initialize
       #====================================
       vm.init = ->
-        MnoeCurrentUser.get().then(
-          (response) ->  # Get number of organizations with at least an admin role
-            vm.authorizedOrganizations = _.filter(response.organizations, (org) ->
+        # Retrieve the apps and the app instances in order to retrieve the current app, and its conflicting status
+        # with the current installed app instances
+        $q.all(
+          marketplace: MnoeMarketplace.getApps(),
+          appInstances: MnoeAppInstances.getAppInstances(),
+          currentUser: MnoeCurrentUser.get()
+        ).then(
+          (response) ->
+            apps = response.marketplace.apps
+            appInstances = response.appInstances
+            currentUser = response.currentUser
+
+            # Get number of organizations with at least an admin role
+            authorizedOrganizations = _.filter(currentUser.organizations, (org) ->
               MnoeOrganizations.role.atLeastAdmin(org.current_user_role)
             )
-            vm.canProvisionApp = !_.isEmpty(vm.authorizedOrganizations)
+            vm.canProvisionApp = !_.isEmpty(authorizedOrganizations)
+
+            # Find if the user already have an instance of it
+            vm.appInstance = _.find(appInstances, {app_nid: vm.app.nid})
+
+            # Get the list of installed apps from the list of instances
+            nids = _.compact(_.map(appInstances, (a) -> a.app_nid))
+            installedApps = _.filter(apps, (a) -> a.nid in nids)
+
+            # Find a conflicting app with the current app based on the subcategories
+            # If there is already an installed app, with a common subcategory with the app that is not multi_instantiable
+            # We keep that app, as a conflictingApp, to explain why the app cannot be installed.
+            if vm.app.subcategories
+              # retrieve the subcategories names
+              names = _.map(vm.app.subcategories, 'name')
+
+              vm.conflictingApp = _.find(installedApps, (app) ->
+                _.find(app.subcategories, (subCategory) ->
+                  not subCategory.multi_instantiable and subCategory.name in names
+                )
+              )
         )
 
       vm.init()
