@@ -17,5 +17,6 @@ angular.module 'mnoEnterpriseAngular', [
   'xeditable',
   'pascalprecht.translate',
   'maestrano.impac',
-  'ngPageTitle'
+  'ngPageTitle',
+  'angularMoment'
 ]
