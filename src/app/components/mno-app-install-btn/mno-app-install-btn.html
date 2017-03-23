@@ -4,9 +4,9 @@
     {{ 'mno_enterprise.templates.components.app_install_btn.conflicting_app' | translate }}
     <a ui-sref="home.marketplace.app({appId: $ctrl.conflictingApp.id})" ng-disabled="!$ctrl.canProvisionApp">{{$ctrl.conflictingApp.name}}</a>
   </div>
-  <a href="" ng-switch-when="INSTALLABLE" ng-click="!$ctrl.canProvisionApp || $ctrl.provisionApp()" ng-disabled="$ctrl.isLoading || !$ctrl.canProvisionApp" class="btn btn-warning btn-promo btn-lg"
+  <a href="" ng-switch-when="INSTALLABLE" ng-click="!$ctrl.canProvisionApp || $ctrl.provisionApp()" ng-disabled="$ctrl.isLoadingButton || !$ctrl.canProvisionApp" class="btn btn-warning btn-promo btn-lg"
     uib-tooltip="{{$ctrl.canProvisionApp? '' : 'mno_enterprise.templates.components.insufficient_privilege' | translate}}">
-    <span ng-show="$ctrl.isLoading"><i class="fa fa-spinner fa-pulse"></i></span>
+    <span ng-show="$ctrl.isLoadingButton"><i class="fa fa-spinner fa-pulse"></i></span>
     {{ 'mno_enterprise.templates.components.app_install_btn.start_app' | translate }}
   </a>
   <a href="" ng-switch-when="INSTALLED_LAUNCH" ng-click="!$ctrl.canProvisionApp || $ctrl.launchAppInstance()" ng-disabled="!$ctrl.canProvisionApp" class="btn btn-warning btn-promo btn-lg"
