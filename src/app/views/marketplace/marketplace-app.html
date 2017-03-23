@@ -40,12 +40,8 @@
       <div class="col-md-4">
         <div class="well text-center well-details">
           <div class="row">
-            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2">
-              <mno-app-install-btn
-                app="vm.app"
-                app-instance= "vm.appInstance"
-                conflicting-app="vm.conflictingApp">
-              </mno-app-install-btn>
+            <div class="col-xs-12 col-sm-4 col-sm-offset-4 col-md-8 col-md-offset-2">
+              <mno-app-install-btn app="vm.app"></mno-app-install-btn>
             </div>
           </div>
 
@@ -69,7 +65,7 @@
           </div>
 
           <div class="row">
-            <div class="col-xs-12">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-12 col-md-offset-0">
               <ul class="key-benefits">
                 <li ng-repeat="benefit in vm.app.key_benefits track by $index">
                   <i class="fa fa-check"></i>

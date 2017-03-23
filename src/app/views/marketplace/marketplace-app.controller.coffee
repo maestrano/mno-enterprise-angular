@@ -31,7 +31,7 @@ angular.module 'mnoEnterpriseAngular'
       #====================================
       # Scope Management
       #====================================
-      vm.initialize = (app, appInstance, conflictingApp) ->
+      vm.initialize = (app) ->
         # Variables initialization
 
         vm.userId = MnoeCurrentUser.user.id
@@ -67,8 +67,6 @@ angular.module 'mnoEnterpriseAngular'
           vm.averageRating = parseFloat(vm.app.average_rating).toFixed(1)
           vm.isRateDisplayed = !!vm.averageRating
 
-        vm.appInstance = appInstance
-        vm.conflictingApp = conflictingApp
         vm.app.description = $sce.trustAsHtml(app.description)
         plans = vm.app.pricing_plans
         currency = (PRICING_CONFIG && PRICING_CONFIG.currency) || 'AUD'
@@ -368,46 +366,20 @@ angular.module 'mnoEnterpriseAngular'
       #====================================
       # Post-Initialization
       #====================================
-
       $scope.$watch MnoeOrganizations.getSelectedId, (val) ->
         if val?
           vm.isLoading = true
-          # Retrieve the apps and the app instances in order to retrieve the current app, and its conflicting status
-          # with the current installed app instances
-          $q.all(
-            marketplace: MnoeMarketplace.getApps(),
-            appInstances: MnoeAppInstances.getAppInstances()
-          ).then(
-            (response)->
-              apps = response.marketplace.apps
-              appInstances = response.appInstances
 
-              # App to be added
+          MnoeMarketplace.getApps().then(
+            (response) ->
+              apps = response.apps
+
+              # App to be displayed
               appId = parseInt($stateParams.appId)
               app = _.findWhere(apps, { nid: $stateParams.appId })
               app ||= _.findWhere(apps, { id:  appId})
 
-              # Find if we already have it
-              appInstance = _.find(appInstances, { app_nid: app.nid})
-
-              # Get the list of installed Apps
-              nids = _.compact(_.map(appInstances, (a) -> a.app_nid))
-              installedApps = _.filter(apps, (a) -> a.nid in nids)
-
-              # Find conflicting app with the current app based on the subcategories
-              # If there is already an installed app, with a common subcategory with the app that is not multi_instantiable
-              # We keep that app, as a conflictingApp, to explain why the app cannot be installed.
-              if app.subcategories
-                # retrieve the subcategories names
-                names = _.map(app.subcategories, 'name')
-
-                conflictingApp = _.find(installedApps, (app) ->
-                  _.find(app.subcategories, (subCategory) ->
-                    not subCategory.multi_instantiable and subCategory.name in names
-                  )
-                )
-
-              vm.initialize(app, appInstance, conflictingApp)
+              vm.initialize(app)
           )
 
       return

@@ -66,13 +66,9 @@
             <tr class="text-center">
               <th></th>
               <td ng-repeat="app in vm.comparedApps | limitTo:4">
-                <mno-app-install-btn
-                app="app"
-                app-instance= "vm.appInstance"
-                conflicting-app="vm.conflictingApp">
-              </mno-app-install-btn></td>
+                <mno-app-install-btn app="app"></mno-app-install-btn>
+              </td>
             </tr>
-
           </table>
         </div>
       </div>
