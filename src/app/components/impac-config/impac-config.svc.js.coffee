@@ -16,20 +16,21 @@ angular.module 'mnoEnterpriseAngular'
           return userOrgs
       )
 
-      currentOrgIdPromise = MnoeOrganizations.get(MnoeOrganizations.selectedId).then(
+      currentOrgPromise = MnoeOrganizations.get(MnoeOrganizations.selectedId).then(
         ->
           currentOrgId = parseInt(MnoeOrganizations.selectedId)
+          currentOrgMembers = MnoeOrganizations.selected.organization.members
 
           if !currentOrgId
             $log.error(err = {msg: "Unable to retrieve current organization"})
             return $q.reject(err)
 
-          return currentOrgId
+          return { currentOrgId: currentOrgId, currentOrgMembers: currentOrgMembers }
       )
 
-      $q.all([userOrgsPromise, currentOrgIdPromise]).then(
+      $q.all([userOrgsPromise, currentOrgPromise]).then(
         (responses) ->
-          return {organizations: responses[0], currentOrgId: responses[1]}
+          return {organizations: responses[0], currentOrgId: responses[1].currentOrgId, currentOrgMembers: responses[1].currentOrgMembers }
       )
 
     return @
