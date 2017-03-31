@@ -127,7 +127,7 @@
       <!-------------------------------------->
       <!--        Audit Log Section         -->
       <!-------------------------------------->
-      <div uib-tab active="vm.tabs.audit_log">
+      <div uib-tab active="vm.tabs.audit_log" ng-if="vm.isAuditLogShown()">
         <div uib-tab-heading>{{ 'mno_enterprise.templates.dashboard.organization.index.audit_log.title' | translate }}</div>
 
         <!-- Directive: DashboardOrganizationAuditLog -->

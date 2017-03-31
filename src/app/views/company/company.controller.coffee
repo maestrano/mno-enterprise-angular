@@ -1,6 +1,6 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('DashboardCompanyCtrl',
-    ($scope, MnoeOrganizations, MnoeTeams, PAYMENT_CONFIG) ->
+    ($scope, MnoeOrganizations, MnoeTeams, MnoeConfig, PAYMENT_CONFIG) ->
       vm = @
 
       #====================================
@@ -34,6 +34,9 @@ angular.module 'mnoEnterpriseAngular'
 
       vm.isSettingsShown = ->
         MnoeOrganizations.role.isSuperAdmin()
+
+      vm.isAuditLogShown = ->
+        MnoeConfig.isAuditLogEnabled() && MnoeOrganizations.role.isSuperAdmin()
 
       #====================================
       # Post-Initialization
