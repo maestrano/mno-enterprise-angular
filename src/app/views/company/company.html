@@ -10,11 +10,10 @@
   <div class="col-md-12 top-buffer-4" ng-if="!vm.isTabSetShown() && !vm.isLoading">
 
     <!-- Directive: DashboardOrganizationMembers -->
-    <div class="well">
+    <div class="well clearfix">
       <div class="col-md-12">
         <div dashboard-organization-members></div>
       </div>
-      <div class="clearfix"></div>
     </div>
 
     <div class="row">
@@ -95,11 +94,10 @@
         <div uib-tab-heading>{{ 'mno_enterprise.templates.dashboard.organization.index.members.title' | translate }}</div>
 
         <!-- Directive: DashboardOrganizationMembers -->
-        <div class="well">
+        <div class="well clearfix">
           <div class="col-md-12">
             <div dashboard-organization-members></div>
           </div>
-          <div class="clearfix"></div>
         </div>
 
         <!-- End: tab members section -->
@@ -121,7 +119,6 @@
           <div class="col-md-12">
             <div dashboard-organization-teams></div>
           </div>
-          <div class="clearfix"></div>
         </div>
 
         <!-- End: tab team management section -->
@@ -134,11 +131,10 @@
         <div uib-tab-heading>{{ 'mno_enterprise.templates.dashboard.organization.index.audit_log.title' | translate }}</div>
 
         <!-- Directive: DashboardOrganizationAuditLog -->
-        <div class="well">
+        <div class="well clearfix">
           <div class="col-md-12">
             <div dashboard-organization-audit-log></div>
           </div>
-          <div class="clearfix"></div>
         </div>
 
         <!-- End: tab audit log section -->
@@ -150,12 +146,11 @@
       <div uib-tab ng-show="vm.isSettingsShown()" active="vm.tabs.settings">
         <div uib-tab-heading>{{ 'mno_enterprise.templates.dashboard.organization.index.settings.title' | translate }}</div>
 
-        <div class="well">
+        <div class="well clearfix">
           <!-- Directive: DashboardOrganizationSettings -->
           <div class="col-md-12">
             <div dashboard-organization-settings></div>
           </div>
-          <div class="clearfix"></div>
         </div>
 
         <!-- End: tab settings section -->
