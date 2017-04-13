@@ -17,6 +17,11 @@ angular.module 'mnoEnterpriseAngular'
         nbItems: 20
         page: 1
         list: []
+        pageChangedCb: (nbItems, page) ->
+          vm.events.nbItems = nbItems
+          vm.events.page = page
+          vm.events.offset = (page  - 1) * nbItems
+          fetchEvents(nbItems, vm.events.offset)
 
       # Widget state
       vm.state = vm.view
