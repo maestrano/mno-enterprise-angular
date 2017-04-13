@@ -25,17 +25,23 @@
 #dashboard {
   .container {
     position: relative;
-  }
+    padding-top: 110px;
 
-  @media (max-width: @screen-xs-max) {
-    padding-top: 40px;
+    .analytics {
+      padding-top: 0;
+    }
   }
 
   /* Fix the container width if the screen is sm+ */
   @media screen and (min-width: @screen-sm-min) {
     margin-left: @menu-left-width;
     .container {
+      padding-top: 70px;
       width: @container-sm - @menu-left-width;
+
+      .analytics {
+        padding-top: 0;
+      }
     }
   }
 
@@ -43,7 +49,12 @@
   @media screen and (min-width: @screen-md-min) {
     margin-left: @menu-left-width;
     .container {
+      padding-top: 40px;
       width: @container-md - @menu-left-width;
+
+      .analytics {
+        padding-top: 10px;
+      }
     }
   }
 
