@@ -30,7 +30,7 @@ angular.module 'mnoEnterpriseAngular'
           MnoeOrganizations.role.isSuperAdmin() || MnoeOrganizations.role.isAdmin())
 
       vm.isBillingShown = ->
-        MnoeOrganizations.role.isSuperAdmin()
+        MnoeConfig.isBillingEnabled() && MnoeOrganizations.role.isSuperAdmin()
 
       vm.isSettingsShown = ->
         MnoeOrganizations.role.isSuperAdmin()
