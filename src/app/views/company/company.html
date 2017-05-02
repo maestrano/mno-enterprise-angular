@@ -34,7 +34,7 @@
       <!-------------------------------------->
       <!--         Billing Section          -->
       <!-------------------------------------->
-      <div uib-tab ng-show="vm.isBillingShown()" active="vm.tabs.billing">
+      <div uib-tab ng-if="vm.isBillingShown()" active="vm.tabs.billing">
         <div uib-tab-heading>{{ 'mno_enterprise.templates.dashboard.organization.index.billing.title' | translate }}</div>
 
         <!-- Directive: DashboardOrganizationArrears -->
