@@ -18,7 +18,7 @@ angular.module 'mnoEnterpriseAngular'
 
       currentOrgIdPromise = MnoeOrganizations.get(MnoeOrganizations.selectedId).then(
         ->
-          currentOrgId = parseInt(MnoeOrganizations.selectedId)
+          currentOrgId = MnoeOrganizations.selectedId
 
           if !currentOrgId
             $log.error(err = {msg: "Unable to retrieve current organization"})

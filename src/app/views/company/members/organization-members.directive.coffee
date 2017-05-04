@@ -55,7 +55,7 @@ DashboardOrganizationMembersCtrl = ($scope, $uibModal, $sce, MnoeOrganizations, 
     $scope.hasManySuperAdmin = _.filter($scope.members, {'role': 'Super Admin'}).length > 1
 
   rolesToDisplay = ->
-    $scope.user_role = _.find(MnoeCurrentUser.user.organizations, {id: parseInt(MnoeOrganizations.selectedId)}).current_user_role if !$scope.user_role
+    $scope.user_role = _.find(MnoeCurrentUser.user.organizations, {id: MnoeOrganizations.selectedId}).current_user_role if !$scope.user_role
     if $scope.user_role == 'Super Admin'
       editionModal.config.roles = ['Member','Power User','Admin','Super Admin']
     else

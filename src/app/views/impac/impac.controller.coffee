@@ -12,12 +12,12 @@ angular.module 'mnoEnterpriseAngular'
     $scope.$watch(MnoeOrganizations.getSelectedId, (newValue, oldValue) ->
       MnoeCurrentUser.get().then(
         (response) ->
-          selectedOrg = _.find(response.organizations, {id: parseInt(newValue)})
+          selectedOrg = _.find(response.organizations, {id: newValue})
           # Needs to be at least admin to display impac! or user is redirected to apps dashboard
           if MnoeOrganizations.role.atLeastAdmin(selectedOrg.current_user_role)
             # Display impac! and force it to reload if necessary
             vm.isImpacShown = true
-            ImpacDashboardsSvc.reload(true) if newValue? && oldValue? && parseInt(newValue) != parseInt(oldValue)
+            ImpacDashboardsSvc.reload(true) if newValue? && oldValue? && newValue != oldValue
           else
             $state.go('home.apps')
       ) if newValue?
