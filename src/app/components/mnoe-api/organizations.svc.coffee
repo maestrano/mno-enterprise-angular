@@ -150,6 +150,8 @@ angular.module 'mnoEnterpriseAngular'
         # Load user's first organization or from cookie
         MnoeCurrentUser.get().then(
           (response) ->
+            return $q.reject() unless response.organizations.length
+
             if (val = $cookies.get("#{MnoeCurrentUser.user.id}_dhb_ref_id"))
               # Load organization id stored in cookie
               _self.get(val)

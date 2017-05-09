@@ -90,5 +90,12 @@ angular.module 'mnoEnterpriseAngular'
 
         # Pre-load the market place
         MnoeMarketplace.getApps()
+    ).catch(
+      ->
+        # Display the layout
+        $rootScope.isLoggedIn = true
+
+        # Display no organisation message
+        $rootScope.hasNoOrganisations = true
     )
   )
