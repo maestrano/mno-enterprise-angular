@@ -23,8 +23,8 @@ angular.module("mnoEnterpriseAngular")
       max: "=?" //optional: default is 5
     },
     link : function(scope) {
-      if (scope.displayRating == undefined) { scope.displayRating = false; }
-      if (scope.max == undefined) { scope.max = 5; }
+      if (scope.displayRating === undefined) { scope.displayRating = false; }
+      if (scope.max === undefined) { scope.max = 5; }
 
       function updateStars() {
         scope.stars = [];

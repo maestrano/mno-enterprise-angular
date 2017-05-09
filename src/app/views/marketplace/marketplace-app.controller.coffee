@@ -31,49 +31,50 @@ angular.module 'mnoEnterpriseAngular'
       #====================================
       # Scope Management
       #====================================
-      vm.initialize = (app) ->
+      vm.initialize = (app, appInstance) ->
         # Variables initialization
-
         vm.userId = MnoeCurrentUser.user.id
         vm.adminRole = MnoeCurrentUser.user.admin_role
 
-        vm.reviews =
-          loading: true
-          nbItems: 5
-          page: 1
-          pageChangedCb: (appId, nbItems, page) ->
-            vm.reviews.nbItems = nbItems
-            vm.reviews.page = page
-            offset = (page  - 1) * nbItems
-            fetchReviews(appId, nbItems, offset, vm.sortReviewsBy)
-
-        vm.questions =
-          laoding: true
-          nbItems: 100
-          page: 1
-          searchWord: ''
-          pageChangedCb: (appId, nbItems, page) ->
-            vm.questions.nbItems = nbItems
-            vm.questions.page = page
-            offset = (page  - 1) * nbItems
-            fetchQuestions(appId, nbItems, offset, searchWord)
-
+        # Init current app and app instance
         angular.copy(app, vm.app)
-
-        # Fetch initials reviews
-        if vm.isReviewingEnabled
-          fetchReviews(app.id, vm.reviews.nbItems, 0)
-          fetchQuestions(app.id, vm.questions.nbItems, 0)
-          vm.averageRating = parseFloat(vm.app.average_rating).toFixed(1)
-          vm.isRateDisplayed = !!vm.averageRating
-
+        vm.appInstance = appInstance
         vm.app.description = $sce.trustAsHtml(app.description)
+
+        # Init pricing plans
         plans = vm.app.pricing_plans
         currency = (PRICING_CONFIG && PRICING_CONFIG.currency) || 'AUD'
         vm.pricing_plans = plans[currency] || plans.AUD || plans.default
 
         # Get the user role in this organization
         MnoeOrganizations.get().then((response) -> vm.user_role = response.current_user.role)
+
+        # Init initials reviews if enabled
+        if vm.isReviewingEnabled
+          vm.reviews =
+            loading: true
+            nbItems: 5
+            page: 1
+            pageChangedCb: (appId, nbItems, page) ->
+              vm.reviews.nbItems = nbItems
+              vm.reviews.page = page
+              offset = (page  - 1) * nbItems
+              fetchReviews(appId, nbItems, offset, vm.sortReviewsBy)
+
+          vm.questions =
+            laoding: true
+            nbItems: 100
+            page: 1
+            searchWord: ''
+            pageChangedCb: (appId, nbItems, page) ->
+              vm.questions.nbItems = nbItems
+              vm.questions.page = page
+              offset = (page  - 1) * nbItems
+              fetchQuestions(appId, nbItems, offset, searchWord)
+
+          fetchReviews(app.id, vm.reviews.nbItems, 0)
+          fetchQuestions(app.id, vm.questions.nbItems, 0)
+          updateAverageRating(vm.app.average_rating)
 
         vm.isLoading = false
 
@@ -83,6 +84,7 @@ angular.module 'mnoEnterpriseAngular'
 
         vm.canUserEditReview = (review) ->
           (review.user_id == vm.userId) && (parseInt(review.edited_by_id) == review.user_id || !review.edited_by_id)
+
         #====================================
         # Cart Management
         #====================================
@@ -119,7 +121,7 @@ angular.module 'mnoEnterpriseAngular'
             # Remove last element if needed
             vm.reviews.list.pop() if vm.reviews.list.length > vm.reviews.nbItems
             # Update average rating
-            vm.averageRating = Math.round(parseFloat(vm.app.average_rating).toFixed(1))
+            updateAverageRating(response.average_rating)
         )
 
       #====================================
@@ -143,7 +145,7 @@ angular.module 'mnoEnterpriseAngular'
             review.rating = response.app_feedback.rating
             review.edited = response.app_feedback.edited
             review.edited_by_id = response.app_feedback.edited_by_id
-            vm.averageRating = Math.round(parseFloat(vm.app.average_rating).toFixed(1))
+            updateAverageRating(response.average_rating)
         )
 
       #====================================
@@ -161,7 +163,7 @@ angular.module 'mnoEnterpriseAngular'
         MnoConfirm.showModal(modalOptions).then(
           (response) ->
             vm.reviews.list.splice(key, 1)
-            vm.averageRating = parseFloat(response.average_rating).toFixed(1)
+            updateAverageRating(response.average_rating)
         )
 
       #====================================
@@ -363,6 +365,11 @@ angular.module 'mnoEnterpriseAngular'
             vm.questions.list = response.data
         ).finally(-> vm.questions.loading = false)
 
+      updateAverageRating = (rating) ->
+        # Update average rating
+        vm.averageRating = if rating? then parseFloat(rating).toFixed(1) else null
+        vm.isRateDisplayed = !!vm.averageRating
+
       #====================================
       # Post-Initialization
       #====================================
@@ -370,16 +377,24 @@ angular.module 'mnoEnterpriseAngular'
         if val?
           vm.isLoading = true
 
-          MnoeMarketplace.getApps().then(
+          # Retrieve the apps and if any the current app instance
+          $q.all(
+            marketplace: MnoeMarketplace.getApps(),
+            appInstances: MnoeAppInstances.getAppInstances()
+          ).then(
             (response) ->
-              apps = response.apps
+              apps = response.marketplace.apps
+              appInstances = response.appInstances
 
               # App to be displayed
               appId = parseInt($stateParams.appId)
               app = _.findWhere(apps, { nid: $stateParams.appId })
               app ||= _.findWhere(apps, { id:  appId})
 
-              vm.initialize(app)
+              # Find if we already have it
+              appInstance = _.find(appInstances, { app_nid: app.nid})
+
+              vm.initialize(app, appInstance)
           )
 
       return

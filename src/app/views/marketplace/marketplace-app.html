@@ -123,7 +123,7 @@
         <!-- Comments & Ratings -->
         <div id="comments">
           <div class="add-review">
-            <span ng-if="vm.appInstance">
+            <span ng-show="vm.appInstance">
               {{ 'mno_enterprise.templates.dashboard.marketplace.show.company_feedback' | translate }}:
               <button type="button" class="btn btn-warning" ng-click="vm.openCreateReviewModal()">
                 {{ 'mno_enterprise.templates.dashboard.marketplace.show.write_review' | translate }}
