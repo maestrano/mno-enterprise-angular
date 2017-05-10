@@ -39,16 +39,22 @@ angular.module 'mnoEnterpriseAngular'
         controllerAs: 'vm'
       .state 'logout',
         url: '/logout'
-        controller: ($window, $http, $translate, AnalyticsSvc) ->
+        controller: ($window, $http, $translate, AnalyticsSvc, URL_CONFIG) ->
           'ngInject'
 
           # Logout and redirect the user
           $http.delete(URI.logout).then( ->
             AnalyticsSvc.logOut()
+
+            logout_url = URL_CONFIG.after_sign_out_url || "#{URI.login}"
+
             if I18N_CONFIG.enabled
-              $window.location.href = "/#{$translate.use()}#{URI.login}"
+              if URL_CONFIG.after_sign_out_url
+                $window.location.href = "#{logout_url}"
+              else
+                $window.location.href = "/#{$translate.use()}#{URI.login}"
             else
-              $window.location.href = "#{URI.login}"
+              $window.location.href = "#{logout_url}"
           )
 
     if MARKETPLACE_CONFIG.enabled
