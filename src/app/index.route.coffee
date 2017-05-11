@@ -46,15 +46,15 @@ angular.module 'mnoEnterpriseAngular'
           $http.delete(URI.logout).then( ->
             AnalyticsSvc.logOut()
 
-            logout_url = URL_CONFIG.after_sign_out_url || "#{URI.login}"
+            logout_url = URL_CONFIG.after_sign_out_url || URI.login
 
             if I18N_CONFIG.enabled
               if URL_CONFIG.after_sign_out_url
-                $window.location.href = "#{logout_url}"
+                $window.location.href = logout_url
               else
                 $window.location.href = "/#{$translate.use()}#{URI.login}"
             else
-              $window.location.href = "#{logout_url}"
+              $window.location.href = logout_url
           )
 
     if MARKETPLACE_CONFIG.enabled
