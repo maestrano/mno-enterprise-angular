@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-10 col-lg-offset-1">
+      <div class="well">
+        <h2 translate translate-values="{name: $ctrl.user.name}">mno_enterprise.templates.components.without_organisation.hello</h2>
+        <span ng-if="!$ctrl.canCreateOrganisation">
+          <p translate>mno_enterprise.templates.components.without_organisation.text</p>
+          <a class="btn btn-link top-buffer-1" ui-sref="logout" role="button" translate>
+            mno_enterprise.templates.components.no_organisation.logout
+          </a>
+        </span>
+        <span ng-if="$ctrl.canCreateOrganisation">
+          <p translate>mno_enterprise.templates.components.without_organisation.text_if_can_create</p>
+          <a class="btn btn-primary top-buffer-1" href ng-click="$ctrl.openCreateOrgaModal()" role="button" translate>
+            mno_enterprise.templates.components.without_organisation.button
+          </a>
+          <a class="btn btn-link top-buffer-1" ui-sref="logout" role="button" translate>
+            mno_enterprise.templates.components.without_organisation.logout
+          </a>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
