@@ -3,7 +3,7 @@
     <h1>{{'mno_enterprise.templates.onboarding.select_your_app.connect_applications' | translate}}</h1>
   </div>
   <mno-loader ng-show="!areAppsReady" class="top-buffer-8"></mno-loader>
-  <div ng-show="areAppsReady" class="apps-container text-center">
+  <div ng-if="areAppsReady && areAppsPurchased" class="apps-container text-center">
     <div class="top-buffer-3" ng-repeat="app in apps | limitTo:4">
       <div class="app-container">
         <h4>{{app.name}}</h4>

@@ -26,9 +26,9 @@
         </div>
       </wz-step>
       <wz-step wz-title="{{'mno_enterprise.templates.onboarding.connect_app' | translate}}">
-        <connect-applications-wizard are-apps-purchased="vm.areAppsConnected"></connect-applications-wizard>
+        <connect-applications-wizard are-apps-ready="vm.areAppsRetrieved" are-apps-purchased="vm.areAppsConnected"></connect-applications-wizard>
         <div class="text-right">
-          <a href="#" wz-next ng-show="vm.areAppsConnected" class="btn btn-default btn-lg style-button-next">{{'mno_enterprise.templates.onboarding.mno_welcome_wizard.next' | translate}}<span class="glyphicon glyphicon-menu-right"></span></a>
+          <a href="#" wz-next ng-show="vm.areAppsConnected && vm.areAppsRetrieved" class="btn btn-default btn-lg style-button-next">{{'mno_enterprise.templates.onboarding.mno_welcome_wizard.next' | translate}}<span class="glyphicon glyphicon-menu-right"></span></a>
         </div>
       </wz-step>
       <wz-step wz-title="{{'mno_enterprise.templates.onboarding.discover_your_account' | translate}}">

@@ -7,6 +7,7 @@ angular.module 'mnoEnterpriseAngular'
     vm.areAppsConnected = false
     vm.goToDashboard = false
     vm.isWizardShown = true
+    vm.areAppsRetrieved = false
     # TODO
     # This is a temporal solution for a conflict on the layout css with the onboarding
     angular.element( document.querySelector( '.myspace' ) ).addClass('onboarding-helper')
