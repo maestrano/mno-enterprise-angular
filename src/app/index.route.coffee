@@ -57,6 +57,42 @@ angular.module 'mnoEnterpriseAngular'
               $window.location.href = logout_url
           )
 
+    $stateProvider
+      .state 'onboarding',
+        abstract: true
+        url: '/onboarding'
+        templateUrl: 'app/views/onboarding/layout.html'
+        controller: 'OnboardingController'
+        controllerAs: 'onboarding'
+      .state 'onboarding.step1',
+        data:
+          pageTitle:'Welcome'
+        url: '/welcome'
+        templateUrl: 'app/views/onboarding/step1.html'
+        controller: 'OnboardingStep1Controller'
+        controllerAs: 'vm'
+      .state 'onboarding.step2',
+        data:
+          pageTitle:'Select your apps'
+        url: '/select-apps'
+        templateUrl: 'app/views/onboarding/step2.html'
+        controller: 'OnboardingStep2Controller'
+        controllerAs: 'vm'
+      .state 'onboarding.step3',
+        data:
+          pageTitle:'Connect your apps'
+        url: '/connect-app'
+        templateUrl: 'app/views/onboarding/step3.html'
+        controller: 'OnboardingStep3Controller'
+        controllerAs: 'vm'
+      .state 'onboarding.step4',
+        data:
+          pageTitle:'Connect your apps'
+        url: '/almost-there'
+        templateUrl: 'app/views/onboarding/step4.html'
+        controller: 'OnboardingStep4Controller'
+        controllerAs: 'vm'
+
     if MARKETPLACE_CONFIG.enabled
       $stateProvider
         .state 'home.marketplace',
@@ -83,4 +119,4 @@ angular.module 'mnoEnterpriseAngular'
             controller: 'DashboardMarketplaceCompareCtrl'
             controllerAs: 'vm'
 
-    $urlRouterProvider.otherwise '/impac'
+    $urlRouterProvider.otherwise '/onboarding/welcome'
