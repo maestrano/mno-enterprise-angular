@@ -29,12 +29,12 @@
   <!-------------------------------------->
   <div class="col-md-12 top-buffer-4" ng-if="vm.isTabSetShown() && !vm.isLoading">
 
-    <div uib-tabset>
+    <div uib-tabset active="vm.activeTab">
 
       <!-------------------------------------->
       <!--         Billing Section          -->
       <!-------------------------------------->
-      <div uib-tab ng-if="vm.isBillingShown()" active="vm.tabs.billing">
+      <div uib-tab index="'billing'" ng-if="vm.isBillingShown()" >
         <div uib-tab-heading>{{ 'mno_enterprise.templates.dashboard.organization.index.billing.title' | translate }}</div>
 
         <!-- Directive: DashboardOrganizationArrears -->
@@ -90,7 +90,7 @@
       <!-------------------------------------->
       <!--        Members Section           -->
       <!-------------------------------------->
-      <div uib-tab active="vm.tabs.members">
+      <div uib-tab index="'members'">
         <div uib-tab-heading>{{ 'mno_enterprise.templates.dashboard.organization.index.members.title' | translate }}</div>
 
         <!-- Directive: DashboardOrganizationMembers -->
@@ -106,7 +106,7 @@
       <!-------------------------------------->
       <!--     Team Management Section      -->
       <!-------------------------------------->
-      <div uib-tab active="tabs.teams">
+      <div uib-tab index="'team'">
         <div uib-tab-heading>{{ 'mno_enterprise.templates.dashboard.organization.index.teams.title' | translate }}</div>
 
         <div class="clearfix">
@@ -127,7 +127,7 @@
       <!-------------------------------------->
       <!--        Audit Log Section         -->
       <!-------------------------------------->
-      <div uib-tab active="vm.tabs.audit_log" ng-if="vm.isAuditLogShown()">
+      <div uib-tab index="'audit'" ng-if="vm.isAuditLogShown()">
         <div uib-tab-heading>{{ 'mno_enterprise.templates.dashboard.organization.index.audit_log.title' | translate }}</div>
 
         <!-- Directive: DashboardOrganizationAuditLog -->
@@ -143,7 +143,7 @@
       <!-------------------------------------->
       <!--    Company Settings Section      -->
       <!-------------------------------------->
-      <div uib-tab ng-show="vm.isSettingsShown()" active="vm.tabs.settings">
+      <div uib-tab index="'settings'" ng-show="vm.isSettingsShown()" >
         <div uib-tab-heading>{{ 'mno_enterprise.templates.dashboard.organization.index.settings.title' | translate }}</div>
 
         <div class="well clearfix">
