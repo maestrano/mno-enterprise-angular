@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .config ($stateProvider, $urlRouterProvider, URI, I18N_CONFIG, MARKETPLACE_CONFIG) ->
+  .config ($stateProvider, $urlRouterProvider, URI, I18N_CONFIG, MARKETPLACE_CONFIG, ONBOARDING_WIZARD_CONFIG) ->
 
     $stateProvider
       .state 'home',
@@ -56,42 +56,42 @@ angular.module 'mnoEnterpriseAngular'
             else
               $window.location.href = logout_url
           )
-
-    $stateProvider
-      .state 'onboarding',
-        abstract: true
-        url: '/onboarding'
-        templateUrl: 'app/views/onboarding/layout.html'
-        controller: 'OnboardingController'
-        controllerAs: 'onboarding'
-      .state 'onboarding.step1',
-        data:
-          pageTitle:'Welcome'
-        url: '/welcome'
-        templateUrl: 'app/views/onboarding/step1.html'
-        controller: 'OnboardingStep1Controller'
-        controllerAs: 'vm'
-      .state 'onboarding.step2',
-        data:
-          pageTitle:'Select your apps'
-        url: '/select-apps'
-        templateUrl: 'app/views/onboarding/step2.html'
-        controller: 'OnboardingStep2Controller'
-        controllerAs: 'vm'
-      .state 'onboarding.step3',
-        data:
-          pageTitle:'Connect your apps'
-        url: '/connect-app'
-        templateUrl: 'app/views/onboarding/step3.html'
-        controller: 'OnboardingStep3Controller'
-        controllerAs: 'vm'
-      .state 'onboarding.step4',
-        data:
-          pageTitle:'Connect your apps'
-        url: '/almost-there'
-        templateUrl: 'app/views/onboarding/step4.html'
-        controller: 'OnboardingStep4Controller'
-        controllerAs: 'vm'
+    if ONBOARDING_WIZARD_CONFIG.enabled
+      $stateProvider
+        .state 'onboarding',
+          abstract: true
+          url: '/onboarding'
+          templateUrl: 'app/views/onboarding/layout.html'
+          controller: 'OnboardingController'
+          controllerAs: 'onboarding'
+        .state 'onboarding.step1',
+          data:
+            pageTitle:'Welcome'
+          url: '/welcome'
+          templateUrl: 'app/views/onboarding/step1.html'
+          controller: 'OnboardingStep1Controller'
+          controllerAs: 'vm'
+        .state 'onboarding.step2',
+          data:
+            pageTitle:'Select your apps'
+          url: '/select-apps'
+          templateUrl: 'app/views/onboarding/step2.html'
+          controller: 'OnboardingStep2Controller'
+          controllerAs: 'vm'
+        .state 'onboarding.step3',
+          data:
+            pageTitle:'Connect your apps'
+          url: '/connect-app'
+          templateUrl: 'app/views/onboarding/step3.html'
+          controller: 'OnboardingStep3Controller'
+          controllerAs: 'vm'
+        .state 'onboarding.step4',
+          data:
+            pageTitle:'Connect your apps'
+          url: '/almost-there'
+          templateUrl: 'app/views/onboarding/step4.html'
+          controller: 'OnboardingStep4Controller'
+          controllerAs: 'vm'
 
     if MARKETPLACE_CONFIG.enabled
       $stateProvider
@@ -119,4 +119,8 @@ angular.module 'mnoEnterpriseAngular'
             controller: 'DashboardMarketplaceCompareCtrl'
             controllerAs: 'vm'
 
-    $urlRouterProvider.otherwise '/onboarding/welcome'
+    $urlRouterProvider.otherwise ($injector, $location) ->
+      if ONBOARDING_WIZARD_CONFIG.enabled
+        $location.path('/onboarding/welcome')
+      else
+        $location.path('/impac')

@@ -1,3 +1,72 @@
 #step2 {
+  .apps-container {
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    justify-content: flex-start;
 
+    #apps-widget, #data-shared {
+      flex: 1;
+    }
+
+    .app-tile {
+      position: relative;
+      max-width: 120px;
+      margin: 10px;
+      float: left;
+
+      .app-icon {
+        outline: none;
+        position: relative;
+
+        .app-logo {
+          width: 100%;
+        }
+
+        .checked {
+          position: absolute;
+          border-radius: 6px;
+          background-color: rgba(47, 228, 50, 0.3);
+          left: 0;
+          right: 0;
+          top: 0;
+          bottom: 0;
+
+          // Center the tick
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+
+      .app-title {
+        text-align: center;
+        margin-top: 5px;
+        .ellipsis;
+      }
+    }
+
+    #data-shared {
+      .table-data-shared {
+        text-align: left;
+        margin: 5px 5px 0 5px;
+
+        th {
+          text-align: center;
+        }
+
+        .fa-check {
+          color: @onboarding-app-entities-checked;
+        }
+
+        .fa-times {
+          color: @onboarding-app-entities-unchecked;
+        }
+
+        .header-logo {
+          width: 60px;
+        }
+      }
+    }
+  }
 }

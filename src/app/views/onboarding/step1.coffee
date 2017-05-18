@@ -6,7 +6,6 @@ angular.module 'mnoEnterpriseAngular'
 
     MnoeCurrentUser.get().then(
       (response) ->
-        console.log response
         vm.user = response
     )
 
