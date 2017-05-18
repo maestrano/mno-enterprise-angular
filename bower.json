@@ -27,7 +27,8 @@
     "lodash": "~3.10.1",
     "ng-page-title": "^1.1.1",
     "restangular": "~1.5.1",
-    "material-shadows": "^3.0.1"
+    "material-shadows": "^3.0.1",
+    "mno-ui-elements": "maestrano/mno-ui-elements#master"
   },
   "devDependencies": {
     "angular-mocks": "~1.6.0"
@@ -49,5 +50,9 @@
         "./fonts/*"
       ]
     }
+  },
+  "resolutions": {
+    "angular-bootstrap": "^2.5.0",
+    "lodash": "~3.10.1"
   }
 }

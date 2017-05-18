@@ -2,7 +2,75 @@
   <div class="row">
     <div class="col-lg-10 col-lg-offset-1">
       <div class="content-panel">
-        STEP 2!!
+        <h1>1. Select the applications you want to connect</h1>
+        <p></p>
+        <div class="apps-container">
+          <!-- Left column: App icons -->
+          <mno-widget id="apps-widget" is-loading="vm.isLoading">
+            <mno-widget-header>
+              <div class='input-group'>
+                <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
+                <input type="text" ng-model="searchTerm.name" placeholder="{{ 'mno_enterprise.templates.onboarding.select_your_app.search' | translate }}" class="form-control" ng-change="selectedCategory.category = ''">
+              </div>
+              <select class="form-control " ng-model="selectedCategory.category" ng-options="c for c in categories" ng-change="searchTerm.name = ''">
+                <option value=''>{{ 'mno_enterprise.templates.onboarding.select_your_app.categories' | translate }}</option>
+              </select>
+            </mno-widget-header>
+            <mno-widget-body class="no-padding large">
+              <div class="app-tile" ng-repeat="app in vm.marketplace.apps | filter:{name: vm.appSearch}">
+                <a href="" ng-click="vm.openInfoModal(app)"><i class="fa fa-info-circle"></i></a>
+                <div class="app-icon" ng-click="vm.toggleApp(app)">
+                  <div class="checked" ng-show="app.checked">
+                    <i class="fa fa-check fa-5x"></i>
+                  </div>
+                  <img class="app-logo img-thumbnail" ng-src="{{app.logo}}" alt="{{::app.name}} logo" title="{{::app.tiny_description}}">
+                </div>
+                <div class="app-title">
+                  {{::app.name}}
+                </div>
+              </div>
+            </mno-widget-body>
+          </mno-widget>
+
+          <!-- Right column: Connec! entities -->
+          <div id="data-shared">
+            <h4 translate>mno_enterprise.templates.onboarding.data_sync.what_data</h4>
+            <div ng-show="vm.selectedApps.length === 0" translate>
+              mno_enterprise.templates.onboarding.data_sync.start
+            </div>
+            <table ng-show="vm.selectedApps.length > 0" class="table table-data-shared">
+              <thead>
+                <tr>
+                  <th>&nbsp;</th>
+                  <th ng-repeat="app in vm.selectedApps">
+                    <img ng-src="{{app.logo}}" class="header-logo">
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td ng-show="vm.selectedApps.length > 0">Contacts</td>
+                <td ng-repeat="app in vm.selectedApps">
+                  <i class="fa fa-times fa-2x"></i>
+                </td>
+              </tr>
+              <tr>
+                <td ng-show="vm.selectedApps.length > 0">Invoices</td>
+                <td ng-repeat="app in vm.selectedApps">
+                  <i class="fa fa-check fa-2x"></i>
+                </td>
+              </tr>
+              <tr>
+                <td ng-show="vm.selectedApps.length > 0">Journals</td>
+                <td ng-repeat="app in vm.selectedApps">
+                  <i class="fa fa-check fa-2x"></i>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+            <a href="" translate>mno_enterprise.templates.onboarding.data_sync.learn_more</a>
+          </div>
+        </div>
         <div class="text-center">
           <button class="btn btn-link next-button" ui-sref="onboarding.step3" translate>
             mno_enterprise.templates.onboarding.welcome.connect_my_apps
