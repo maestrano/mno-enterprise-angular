@@ -20,6 +20,11 @@ angular.module 'mnoEnterpriseAngular'
       # If the cache is empty return the call promise
       return promise
 
+    @refreshAppInstances = ->
+      _self.clearCache()
+      _self.emptyAppInstances()
+      fetchAppInstances()
+
     # Retrieve app instances from the backend
     fetchAppInstances = ->
       # Workaround as the API is not standard (return a hash map not an array)

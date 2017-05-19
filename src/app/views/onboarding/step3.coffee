@@ -1,13 +1,16 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller 'OnboardingStep3Controller', (MnoeCurrentUser) ->
+  .controller 'OnboardingStep3Controller', (MnoeOrganizations, MnoeAppInstances) ->
     'ngInject'
 
     vm = this
 
-    MnoeCurrentUser.get().then(
+    MnoeOrganizations.get().then(
       (response) ->
-        console.log response
-        vm.user = response
+        vm.organization = response
+        MnoeAppInstances.getAppInstances().then(
+          (response) ->
+            vm.appInstances = response
+        )
     )
 
     return
