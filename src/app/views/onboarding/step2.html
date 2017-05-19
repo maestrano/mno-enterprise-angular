@@ -1,24 +1,25 @@
 <div id="step2">
   <div class="row">
-    <div class="col-lg-10 col-lg-offset-1">
+    <div class="col-xs-12">
       <div class="content-panel">
         <h1>1. Select the applications you want to connect</h1>
-        <p></p>
         <div class="apps-container">
           <!-- Left column: App icons -->
           <mno-widget id="apps-widget" is-loading="vm.isLoading">
             <mno-widget-header>
-              <div class='input-group'>
-                <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
-                <input type="text" ng-model="searchTerm.name" placeholder="{{ 'mno_enterprise.templates.onboarding.select_your_app.search' | translate }}" class="form-control" ng-change="selectedCategory.category = ''">
+              <div id="widget-header-bar">
+                <div id="app-search" class='input-group'>
+                  <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
+                  <input type="text" ng-model="vm.searchTerm" placeholder="{{ 'mno_enterprise.templates.onboarding.select_your_app.search' | translate }}" class="form-control" ng-change="vm.selectedCategory.category = ''">
+                </div>
+                <select id="app-category" class="form-control" ng-model="vm.selectedCategory.category" ng-options="c for c in vm.marketplace.categories" ng-change="vm.searchTerm.name = ''">
+                  <option value='' disabled>{{ 'mno_enterprise.templates.onboarding.select_your_app.categories' | translate }}</option>
+                </select>
               </div>
-              <select class="form-control " ng-model="selectedCategory.category" ng-options="c for c in categories" ng-change="searchTerm.name = ''">
-                <option value=''>{{ 'mno_enterprise.templates.onboarding.select_your_app.categories' | translate }}</option>
-              </select>
             </mno-widget-header>
             <mno-widget-body class="no-padding large">
-              <div class="app-tile" ng-repeat="app in vm.marketplace.apps | filter:{name: vm.appSearch}">
-                <a href="" ng-click="vm.openInfoModal(app)"><i class="fa fa-info-circle"></i></a>
+              <div class="app-tile" ng-repeat="app in vm.marketplace.apps | filter:{name: vm.searchTerm}">
+                <a class="app-info-modal" href="" ng-click="vm.openInfoModal(app)"><i class="fa fa-info-circle"></i></a>
                 <div class="app-icon" ng-click="vm.toggleApp(app)">
                   <div class="checked" ng-show="app.checked">
                     <i class="fa fa-check fa-5x"></i>
@@ -71,8 +72,10 @@
             <a href="" translate>mno_enterprise.templates.onboarding.data_sync.learn_more</a>
           </div>
         </div>
-        <div class="text-center">
-          <button class="btn btn-link next-button" ui-sref="onboarding.step3" translate>
+        <div class="text-center onboarding-footer">
+          <div ng-show="vm.maxAppsSelected">You cannot start with more than 4 app, you will be able to add more at a later stage.</div>
+          <div ng-show="vm.isConnectingApps"><i class="fa fa-refresh fa-spin fa-2x"></i></div>
+          <button class="btn btn-link next-button" ng-click="vm.connectApps()" ng-show="!vm.isConnectingApps" translate>
             mno_enterprise.templates.onboarding.welcome.connect_my_apps
           </button>
         </div>

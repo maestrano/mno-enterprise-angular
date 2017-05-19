@@ -18,8 +18,12 @@
 @onboarding-app-features-checked: @brand-success;
 @onboarding-app-features-unchecked: black;
 
+@onboarding-app-card-title: black;
 @onboarding-app-entities-checked: @brand-success;
 @onboarding-app-entities-unchecked: @brand-danger;
+@onboarding-app-card-info: @text-strong-color;
+
+@onboarding-app-connect-check: @brand-success;
 
 #onboarding {
   header.header {
@@ -91,6 +95,7 @@
     .z-depth(6);
     border-radius: @onboarding-content-panel-border-radius;
     padding: 20px;
+    margin-bottom: 30px;
     background-color: @onboarding-content-panel-bg;
     color: @onboarding-content-panel-color;
 
@@ -100,7 +105,7 @@
   }
 
   .next-button {
-    .top-buffer-2;
+    .top-buffer-1;
     font-size: larger;
   }
 }
