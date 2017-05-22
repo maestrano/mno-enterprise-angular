@@ -12,13 +12,13 @@
                   <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
                   <input type="text" ng-model="vm.searchTerm" placeholder="{{ 'mno_enterprise.templates.onboarding.select_your_app.search' | translate }}" class="form-control" ng-change="vm.selectedCategory.category = ''">
                 </div>
-                <select id="app-category" class="form-control" ng-model="vm.selectedCategory.category" ng-options="c for c in vm.marketplace.categories" ng-change="vm.searchTerm.name = ''">
-                  <option value='' disabled>{{ 'mno_enterprise.templates.onboarding.select_your_app.categories' | translate }}</option>
+                <select id="app-category" class="form-control" ng-model="vm.selectedCategory" ng-options="c for c in vm.marketplace.categories" ng-change="vm.searchTerm.name = ''">
+                  <option value=''>{{ 'mno_enterprise.templates.dashboard.marketplace.index.select_all' | translate }}</option>
                 </select>
               </div>
             </mno-widget-header>
             <mno-widget-body class="no-padding large">
-              <div class="app-tile" ng-repeat="app in vm.marketplace.apps | filter:{name: vm.searchTerm}">
+              <div class="app-tile" ng-repeat="app in vm.marketplace.apps | filter:vm.appsFilter | filter:{name: vm.searchTerm}">
                 <a class="app-info-modal" href="" ng-click="vm.openInfoModal(app)"><i class="fa fa-info-circle"></i></a>
                 <div class="app-icon" ng-click="vm.toggleApp(app)">
                   <div class="checked" ng-show="app.checked">

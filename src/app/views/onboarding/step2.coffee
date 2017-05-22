@@ -11,6 +11,12 @@ angular.module 'mnoEnterpriseAngular'
 
     vm.selectedApps = []
 
+    vm.appsFilter = (app) ->
+      if (vm.searchTerm? && vm.searchTerm.length > 0) || !vm.selectedCategory
+        return true
+      else
+        return _.contains(app.categories, vm.selectedCategory)
+
     # Select or deselect an app
     vm.toggleApp = (app) ->
       # User cannot add more apps
