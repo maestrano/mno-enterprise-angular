@@ -7,12 +7,6 @@ angular.module 'mnoEnterpriseAngular'
       # Pre-Initialization
       #====================================
       vm.isLoading = true
-      vm.tabs = {
-        billing: false,
-        members: false,
-        teams: false,
-        settings: false
-      }
       vm.payment_enabled = not PAYMENT_CONFIG.disabled
 
       #====================================
@@ -21,9 +15,9 @@ angular.module 'mnoEnterpriseAngular'
       vm.initialize = ->
         vm.isLoading = false
         if vm.isBillingShown()
-          vm.tabs.billing = true
+          vm.activeTab = 'billing'
         else
-          vm.tabs.members = true
+          vm.activeTab = 'members'
 
       vm.isTabSetShown = ->
         !vm.isLoading && (
