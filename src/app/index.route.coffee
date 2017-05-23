@@ -119,8 +119,4 @@ angular.module 'mnoEnterpriseAngular'
             controller: 'DashboardMarketplaceCompareCtrl'
             controllerAs: 'vm'
 
-    $urlRouterProvider.otherwise ($injector, $location) ->
-      if ONBOARDING_WIZARD_CONFIG.enabled
-        $location.path('/onboarding/welcome')
-      else
-        $location.path('/impac')
+    $urlRouterProvider.otherwise '/impac'

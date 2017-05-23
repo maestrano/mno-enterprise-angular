@@ -30,13 +30,18 @@ angular.module 'mnoEnterpriseAngular'
       # Workaround as the API is not standard (return a hash map not an array)
       # (Prefix operation by '/' to avoid data extraction)
       # TODO: Standard API
-      MnoeApiSvc.one('organizations', MnoeOrganizations.selectedId).one('/app_instances').get().then(
-        (response) ->
-          # Save the response in the local storage
-          MnoLocalStorage.setObject(MnoeCurrentUser.user.id + "_" + LOCALSTORAGE.appInstancesKey, response.app_instances)
-          # Process the response
-          processAppInstances(response.app_instances)
+      defer = $q.defer()
+      MnoeOrganizations.get().then(
+        ->
+          MnoeApiSvc.one('organizations', MnoeOrganizations.selectedId).one('/app_instances').get().then(
+            (response) ->
+              # Save the response in the local storage
+              MnoLocalStorage.setObject(MnoeCurrentUser.user.id + "_" + LOCALSTORAGE.appInstancesKey, response.app_instances)
+              # Process the response
+              defer.resolve(processAppInstances(response.app_instances))
+          )
       )
+      return defer.promise
 
     # Process app instances to append them to the public variable
     processAppInstances = (appInstances) ->
@@ -48,9 +53,16 @@ angular.module 'mnoEnterpriseAngular'
       Array.prototype.push.apply(_self.appInstances, response)
       return _self.appInstances
 
+    # Path to connect this app instance and redirect to the current page
+    @oAuthConnectPath = (instance, extra_params = '') ->
+      _self.clearCache()
+      _self.emptyAppInstances()
+      redirect = window.encodeURIComponent("#{location.pathname}#{location.hash}")
+      "/mnoe/webhook/oauth/#{instance.uid}/authorize?redirect_path=#{redirect}&#{extra_params}"
+
     @terminate = (id) ->
       MnoeApiSvc.one('app_instances', id).remove().then(
-        (response) ->
+        ->
           # Remove the corresponding app from the list
           _.remove(_self.appInstances, {id: id})
 

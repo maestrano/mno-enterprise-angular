@@ -34,12 +34,18 @@ angular.module 'mnoEnterpriseAngular'
 
       # Get the selected organization
       organizationPromise = MnoeApiSvc.one('/organizations', _self.selectedId).get().then(
-        (response) ->
+        (responseOrga) ->
           # Save the organization
-          _self.selected = response.plain()
+          _self.selected = responseOrga.plain()
+
           # Use user id to avoid another user to load with an unknown organisation
-          $cookies.put("#{MnoeCurrentUser.user.id}_dhb_ref_id", _self.selectedId)
-          response
+          MnoeCurrentUser.get().then(
+            (response) ->
+              $cookies.put("#{response.id}_dhb_ref_id", responseOrga.organization.id)
+              response
+          )
+
+          responseOrga
       )
 
     @create = (organization) ->
@@ -140,29 +146,30 @@ angular.module 'mnoEnterpriseAngular'
 
     # Load the current organization if defined (url, cookie or first)
     @getCurrentId = (dhbRefId = null) ->
+      defer = $q.defer()
+
       # Attempt to load organization from param
       if dhbRefId
-        _self.selectedId = dhbRefId
-        $cookies.put("#{MnoeCurrentUser.user.id}_dhb_ref_id", _self.selectedId)
-        $log.debug "MnoeOrganizations.getCurrentId: dhbRefId", _self.selectedId
-        return $q.resolve(_self.selectedId)
+        $log.debug "MnoeOrganizations.getCurrentId: dhbRefId", dhbRefId
+        defer.resolve(_self.get(dhbRefId))
       else
         # Load user's first organization or from cookie
         MnoeCurrentUser.get().then(
           (response) ->
-            return $q.reject() unless response.organizations.length
+            defer.reject() if (response.organizations.length == 0)
 
-            if (val = $cookies.get("#{MnoeCurrentUser.user.id}_dhb_ref_id"))
+            val = $cookies.get("#{response.id}_dhb_ref_id")
+            if val?
               # Load organization id stored in cookie
-              _self.get(val)
-              $log.debug "MnoeOrganizations.getCurrentId: cookie", _self.selectedId
-              return _self.selectedId
+              $log.debug "MnoeOrganizations.getCurrentId: cookie", val
+              defer.resolve(_self.get(val))
             else
               # Load user's first organization id
-              _self.get(response.organizations[0].id)
-              $log.debug "MnoeOrganizations.getCurrentId: first", _self.selectedId
-              return _self.selectedId
+              $log.debug "MnoeOrganizations.getCurrentId: first", response.organizations[0].id
+              defer.resolve(_self.get(response.organizations[0].id))
         )
+
+      return defer.promise
 
     #======================================
     # User Role

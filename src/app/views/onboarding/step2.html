@@ -2,7 +2,9 @@
   <div class="row">
     <div class="col-xs-12">
       <div class="content-panel">
-        <h1 translate>mno_enterprise.templates.onboarding.select_your_app.title</h1>
+        <div class="text-center">
+          <h1 translate>mno_enterprise.templates.onboarding.select_your_app.title</h1>
+        </div>
         <div class="apps-container">
           <!-- Left column: App icons -->
           <mno-widget id="apps-widget" is-loading="vm.isLoading">
@@ -77,7 +79,7 @@
         <div class="text-center onboarding-footer">
           <div ng-show="vm.maxAppsSelected">You cannot start with more than 4 app, you will be able to add more at a later stage.</div>
           <div ng-show="vm.isConnectingApps"><i class="fa fa-refresh fa-spin fa-2x"></i></div>
-          <button class="btn btn-link next-button" ng-click="vm.connectApps()" ng-show="!vm.isConnectingApps" translate>
+          <button class="btn btn-primary next-button" ng-click="vm.connectApps()" ng-show="!vm.isConnectingApps" ng-disabled="vm.selectedApps.length === 0" translate>
             mno_enterprise.templates.onboarding.welcome.connect_my_apps
           </button>
         </div>

@@ -1,12 +1,20 @@
 #step3 {
-  .app-container {
-    float: left;
-    text-align: center;
-    margin: 10px;
+  .apps-wrapper {
+    .top-buffer-2;
+    display: flex;
+    justify-content: space-around;
 
-    mno-app-install-btn {
-      display: block;
-      margin-top: 15px;
+    .app-card {
+      text-align: center;
+      background-color: @onboarding-app-card-bg-color;
+      color: @onboarding-app-card-text-color;
+      padding: @onboarding-app-card-padding;
+      .z-depth(3);
+
+      mno-app-install-btn {
+        display: block;
+        margin-top: 15px;
+      }
     }
   }
 
