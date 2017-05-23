@@ -17,14 +17,14 @@
 
   <div class="row">
     <div class="col-sm-12">
-      <p ng-if="deletionModal.hasName()" class="align-center"
-         translate="mno_enterprise.templates.dashboard.organization.members.removal_modal.body_name"
-         translate-value-name="{{ deletionModal.member.name }}"
-         translate-value-surname="{{ deletionModal.member.surname }}">
+      <p ng-if="deletionModal.hasName()" class="align-center">
+        {{ 'mno_enterprise.templates.dashboard.organization.members.removal_modal.body_name' | translate }}
+        {{ deletionModal.member.name }}
+        {{ deletionModal.member.surname }}{{ 'mno_enterprise.templates.dashboard.organization.members.removal_modal.question_mark' | translate }}
       </p>
-      <p ng-if="!deletionModal.hasName()" class="align-center"
-         translate="mno_enterprise.templates.dashboard.organization.members.removal_modal.body_email"
-         translate-value-email="{{ deletionModal.member.email }}">
+      <p ng-if="!deletionModal.hasName()" class="align-center">
+        {{ 'mno_enterprise.templates.dashboard.organization.members.removal_modal.body_email' | translate }}
+        {{ deletionModal.member.email }}{{ 'mno_enterprise.templates.dashboard.organization.members.removal_modal.question_mark' | translate }}
       </p>
     </div>
   </div>

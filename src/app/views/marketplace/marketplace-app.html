@@ -146,8 +146,8 @@
             <span ng-show="vm.reviews.loading"><i class="fa fa-refresh fa-spin fa-3x fa-fw"></i></span>
           </div>
           <div ng-if="vm.reviews.list.length == 0 && !vm.reviews.loading">
-            <span class='pages-selector no-review-container' translate translate-value-name="{{vm.app.name}}">
-              mno_enterprise.templates.dashboard.marketplace.show.no_review
+            <span class='pages-selector no-review-container'>
+              {{ 'mno_enterprise.templates.dashboard.marketplace.show.no_review' | translate }} {{vm.app.name}}
             </span>
           </div>
           <div ng-hide='vm.reviews.loading'>
@@ -242,8 +242,8 @@
           </div>
           <div class="row">
             <div ng-if="vm.questions.list.length == 0">
-              <span class="no-question-container" translate translate-value-name="{{vm.app.name}}">
-                mno_enterprise.templates.dashboard.marketplace.show.question.no_question
+              <span class="no-question-container">
+                {{ 'mno_enterprise.templates.dashboard.marketplace.show.question.no_question' | translate }} {{vm.app.name}}
               </span>
             </div>
 

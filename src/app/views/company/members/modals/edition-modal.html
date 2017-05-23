@@ -1,13 +1,13 @@
 <!--Modal Header -->
 <div class="modal-header">
   <div class="close" ng-click="editionModal.close()" type="button">×</div>
-  <h4 ng-show="editionModal.member.name && editionModal.member.surname"
-      translate="mno_enterprise.templates.dashboard.organization.members.invite_modal.title_name"
-      translate-value-name="{{ editionModal.member.name }}"
-      translate-value-surname="{{ editionModal.member.surname }}"></h4>
-  <h4 ng-show="!editionModal.member.name && !editionModal.member.surname"
-      translate="mno_enterprise.templates.dashboard.organization.members.invite_modal.title_email"
-      translate-value-email="{{ editionModal.member.email }}"></h4>
+  <h4 ng-show="editionModal.member.name && editionModal.member.surname">
+    {{ 'mno_enterprise.templates.dashboard.organization.members.invite_modal.title_name' | translate }} 
+    {{ editionModal.member.name }} 
+    {{ editionModal.member.surname }}</h4>
+  <h4 ng-show="!editionModal.member.name && !editionModal.member.surname">
+    {{ 'mno_enterprise.templates.dashboard.organization.members.invite_modal.title_email' | translate }}
+    {{ editionModal.member.email }}</h4>
 </div>
 
 <!--Modal Body -->
