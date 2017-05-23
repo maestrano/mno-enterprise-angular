@@ -36,19 +36,13 @@ angular.module 'mnoEnterpriseAngular'
       # - INSTALLED_CONNECT/INSTALLED_LAUNCH: The app is already installed, and cannot be multi instantiated
       # - CONFLICT:                           Another app, with a common subcategory that is not multi-instantiable has already been installed
       appInstallationStatus = ->
-        if vm.appInstance
-          if vm.app.multi_instantiable
-            "INSTALLABLE"
-          else
-            if vm.appInstance.app_nid != 'office-365' && vm.appInstance.stack == 'connector' && !vm.appInstance.oauth_keys_valid
-              "INSTALLED_CONNECT"
-            else
-              "INSTALLED_LAUNCH"
+        if vm.conflictingApp
+          "CONFLICT"
         else
-          if vm.conflictingApp
-            "CONFLICT"
+          if vm.appInstance.app_nid != 'office-365' && vm.appInstance.stack == 'connector' && !vm.appInstance.oauth_keys_valid
+            "INSTALLED_CONNECT"
           else
-            "INSTALLABLE"
+            "INSTALLED_LAUNCH"
 
       #====================================
       # Initialize

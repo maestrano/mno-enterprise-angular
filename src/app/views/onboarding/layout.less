@@ -39,6 +39,9 @@
     .breadcrumb-item {
       text-decoration: none;
 
+      // Deactivate the link
+      pointer-events: none;
+
       .badge {
         color: @onboarding-breadcrumb-badge-color;
         background-color: @onboarding-breadcrumb-badge-bg;
@@ -79,7 +82,7 @@
   }
 
   .next-button {
-    .top-buffer-1;
+    .top-buffer-2;
     font-size: larger;
   }
 }

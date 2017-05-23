@@ -1,8 +1,8 @@
 angular.module 'mnoEnterpriseAngular'
-.controller('DashboardAppConnectMyobModalCtrl', ($scope, $window, $httpParamSerializer, $uibModalInstance, app) ->
+.controller('DashboardAppConnectMyobModalCtrl', ($scope, $window, $httpParamSerializer, $uibModalInstance, MnoeAppInstances, app) ->
 
   $scope.app = app
-  $scope.path = "/mnoe/webhook/oauth/" + app.uid + "/authorize?"
+  $scope.path = MnoeAppInstances.oAuthConnectPath(app)
   $scope.form = {
     perform: true
     version: "essentials"

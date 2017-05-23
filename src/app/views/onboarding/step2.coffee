@@ -27,14 +27,21 @@ angular.module 'mnoEnterpriseAngular'
       else
         _.remove(vm.selectedApps, app)
       vm.maxAppsSelected = (vm.selectedApps.length == MAX_APPS_ONBOARDING)
+      return
 
+    # ====================================
+    # Connect the apps & go to next screen
+    # ====================================
     vm.connectApps = () ->
       vm.isConnectingApps = true
-      # List of checked apps
-      apps = _.filter(vm.marketplace.apps, {checked: true})
-      promises = _.map(apps, (app) ->
-        MnoeOrganizations.purchaseApp(app)
-      )
+      # List of app instances to add and delete
+      appsToAdd = _.filter(vm.marketplace.apps, (app) -> app.checked == true && not _.contains(vm.originalAppNids, app.nid))
+      appsToDelete = _.filter(vm.marketplace.apps, (app) -> app.checked == false && _.contains(vm.originalAppNids, app.nid))
+      # Purchase new apps
+      promises = _.map(appsToAdd, (app) -> MnoeOrganizations.purchaseApp(app))
+      # Terminate old apps
+      promises = _(promises).concat(_.map(appsToDelete, (app) -> MnoeAppInstances.terminate(app.id))).value()
+      # Refresh app instances and go to next screen
       $q.all(promises).finally(
         ->
           MnoeAppInstances.refreshAppInstances().then(
@@ -45,7 +52,7 @@ angular.module 'mnoEnterpriseAngular'
       )
 
     # ====================================
-    # Info modal
+    # App Info modal
     # ====================================
     vm.openInfoModal = (app) ->
       $uibModal.open(
@@ -57,9 +64,19 @@ angular.module 'mnoEnterpriseAngular'
           app: app
       )
 
-    MnoeMarketplace.getApps().then(
+    $q.all({
+      appInstances: MnoeAppInstances.getAppInstances()
+      marketplace: MnoeMarketplace.getApps()
+    }).then(
       (response) ->
-        vm.marketplace = response.plain()
+        vm.appInstances = response.appInstances
+        vm.marketplace = response.marketplace.plain()
+
+        # Fetch the already selected apps
+        vm.originalAppNids = _.map(vm.appInstances, 'app_nid')
+
+        # Toggle the already selected apps
+        _.each(_.filter(vm.marketplace.apps, (app) -> _.contains(vm.originalAppNids, app.nid)), (a) -> vm.toggleApp(a))
     ).finally(-> vm.isLoading = false)
 
     return

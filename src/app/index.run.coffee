@@ -72,7 +72,9 @@ angular.module 'mnoEnterpriseAngular'
   )
 
   # App initialization: Retrieve current user and current organization, then preload marketplace
-  .run(($rootScope, $q, $stateParams, MnoeCurrentUser, MnoeOrganizations, MnoeMarketplace) ->
+  .run(($rootScope, $q, $location, $stateParams, MnoeCurrentUser, MnoeOrganizations, MnoeMarketplace, MnoeAppInstances, ONBOARDING_WIZARD_CONFIG) ->
+
+    _self = this
 
     # Hide the layout with a loader
     $rootScope.isLoggedIn = false
@@ -83,8 +85,15 @@ angular.module 'mnoEnterpriseAngular'
     # Load the current organization if defined (url param, cookie or first)
     organizationPromise = MnoeOrganizations.getCurrentId($stateParams.dhbRefId)
 
-    $q.all([userPromise, organizationPromise]).then(
-      ->
+    instancesPromise = if ONBOARDING_WIZARD_CONFIG.enabled then MnoeAppInstances.getAppInstances() else $q.resolve()
+
+    $q.all([userPromise, organizationPromise, instancesPromise]).then(
+      (response) ->
+        appInstances = response[2]
+
+        if ONBOARDING_WIZARD_CONFIG.enabled && appInstances.length == 0
+          $location.path('/onboarding/welcome')
+
         # Display the layout
         $rootScope.isLoggedIn = true
 

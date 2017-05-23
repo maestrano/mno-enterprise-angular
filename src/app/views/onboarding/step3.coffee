@@ -4,13 +4,9 @@ angular.module 'mnoEnterpriseAngular'
 
     vm = this
 
-    MnoeOrganizations.get().then(
+    MnoeAppInstances.getAppInstances().then(
       (response) ->
-        vm.organization = response
-        MnoeAppInstances.getAppInstances().then(
-          (response) ->
-            vm.appInstances = response
-        )
+        vm.appInstances = response
     )
 
     return

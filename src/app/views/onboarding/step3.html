@@ -2,18 +2,20 @@
   <div class="row">
     <div class="col-lg-10 col-lg-offset-1">
       <div class="content-panel clearfix">
-        <h1 translate>mno_enterprise.templates.onboarding.connect_apps.connect_applications</h1>
+        <div class="text-center">
+          <h1 translate>mno_enterprise.templates.onboarding.connect_apps.connect_applications</h1>
+        </div>
 
-        <div class="top-buffer-2" ng-repeat="appInstance in vm.appInstances">
-          <div class="app-container">
-            <h4>{{appInstance.name}}</h4>
+        <div class="apps-wrapper">
+          <div class="app-card" ng-repeat="appInstance in vm.appInstances">
             <img ng-src="{{appInstance.logo}}" alt="{{appInstance.name}}">
+            <h4>{{appInstance.name}}</h4>
             <mno-app-onboarding-btn app-instance="appInstance" class="top-buffer-1"></mno-app-onboarding-btn>
           </div>
         </div>
 
         <div class="text-center next-button-wrapper">
-          <button class="btn btn-link next-button" ui-sref="onboarding.step4" translate>
+          <button class="btn btn-primary next-button" ui-sref="onboarding.step4" translate>
             mno_enterprise.templates.onboarding.welcome.almost_there
           </button>
         </div>
