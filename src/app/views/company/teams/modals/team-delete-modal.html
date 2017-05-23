@@ -17,9 +17,10 @@
 
   <div class="row">
     <div class="col-sm-12">
-      <p class="align-center"
-        translate="mno_enterprise.templates.dashboard.teams.team_delete_modal.confirmation"
-        translate-value-teamname="{{teamDeletionModal.team.name}}">
+      <p class="align-center">
+        {{ 'mno_enterprise.templates.dashboard.teams.team_delete_modal.confirmation' | translate }}
+        {{teamDeletionModal.team.name}}{{ 'mno_enterprise.templates.dashboard.teams.team_delete_modal.confirmation.question_mark' | translate }} 
+      </p>
     </div>
   </div>
 </div>
