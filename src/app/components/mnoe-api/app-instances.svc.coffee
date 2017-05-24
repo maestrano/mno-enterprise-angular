@@ -23,15 +23,18 @@ angular.module 'mnoEnterpriseAngular'
     @refreshAppInstances = ->
       _self.clearCache()
       _self.emptyAppInstances()
-      fetchAppInstances()
+      fetchAppInstances(true)
 
     # Retrieve app instances from the backend
-    fetchAppInstances = ->
+    appInstancesPromise = null
+    fetchAppInstances = (force = false) ->
+      return appInstancesPromise if appInstancesPromise? && !force
+
       # Workaround as the API is not standard (return a hash map not an array)
       # (Prefix operation by '/' to avoid data extraction)
       # TODO: Standard API
-      defer = $q.defer()
-      MnoeOrganizations.get().then(
+      appInstancesPromise = defer = $q.defer()
+      MnoeOrganizations.get(MnoeOrganizations.selectedId).then(
         ->
           MnoeApiSvc.one('organizations', MnoeOrganizations.selectedId).one('/app_instances').get().then(
             (response) ->
