@@ -6,8 +6,12 @@
           <h1 translate>mno_enterprise.templates.onboarding.connect_apps.connect_applications</h1>
         </div>
 
+        <div ng-show="vm.isFetchingAppInstances" class="text-center top-buffer-3">
+          <i class="fa fa-refresh fa-spin fa-3x apps-loader"></i>
+        </div>
+
         <div class="apps-wrapper">
-          <div class="app-card" ng-repeat="appInstance in vm.appInstances">
+          <div class="app-card" ng-repeat="appInstance in vm.appInstances track by $id">
             <img ng-src="{{appInstance.logo}}" alt="{{appInstance.name}}">
             <h4>{{appInstance.name}}</h4>
             <mno-app-onboarding-btn app-instance="appInstance" class="top-buffer-1"></mno-app-onboarding-btn>
