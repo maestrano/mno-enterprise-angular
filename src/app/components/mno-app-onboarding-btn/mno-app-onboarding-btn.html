@@ -1,11 +1,15 @@
-<div class="btn-fluid-wrapper" ng-if="!vm.isLoading" ng-switch on="$ctrl.appInstance.status">
+<div ng-show="$ctrl.isLoadingAppInstances">
+  <i class="fa fa-refresh fa-spin fa-2x button-loader"></i>
+</div>
+
+<div ng-show="!$ctrl.isLoadingAppInstances" ng-switch on="$ctrl.appInstance.status">
   <div ng-switch-when="CONFLICT" class="message">
     <i class="fa fa-exclamation-triangle"></i>
     {{ 'mno_enterprise.templates.components.app_install_btn.conflicting_app' | translate }}
     <span>{{$ctrl.conflictingApp.name}}</span>
   </div>
   <div ng-switch-when="INSTALLED_LAUNCH">
-    <i class="fa fa-check fa-2x"></i><br>
+    <i class="fa fa-check fa-2x button-check"></i><br>
     <span class="text-muted">(connected)</span>
   </div>
   <a href="" ng-switch-when="INSTALLED_CONNECT" ng-click="$ctrl.connectAppInstance()" class="btn btn-warning">
