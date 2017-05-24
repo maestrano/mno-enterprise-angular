@@ -85,17 +85,18 @@ angular.module 'mnoEnterpriseAngular'
     # Load the current organization if defined (url param, cookie or first)
     _self.appInstancesDefer = $q.defer()
     organizationPromise = MnoeOrganizations.getCurrentId($stateParams.dhbRefId).then(
-      ->
+      (response) ->
         # App instances needs to be run after fetching the organization
         # (At least the first call)
         _self.appInstancesDefer.resolve(MnoeAppInstances.getAppInstances())
+        response
     )
 
     $q.all([userPromise, organizationPromise, _self.appInstancesDefer.promise]).then(
       (response) ->
         appInstances = response[2]
 
-        if ONBOARDING_WIZARD_CONFIG.enabled && _.isEmpty(appInstances)
+        if ONBOARDING_WIZARD_CONFIG.enabled && _.isEmpty(appInstances.app_instances)
           $location.path('/onboarding/welcome')
 
         # Display the layout
