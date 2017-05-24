@@ -8,7 +8,7 @@ angular.module 'mnoEnterpriseAngular'
 
     MnoeAppInstances.getAppInstances().then(
       (response) ->
-        vm.appInstances = response
+        vm.appInstances = response.app_instances
         vm.isFetchingAppInstances = false
     )
 
