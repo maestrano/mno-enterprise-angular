@@ -52,7 +52,6 @@ DashboardCompanySelectboxCtrl = ($scope, $state, $stateParams, $uibModal, MnoeCu
       (organization) ->
         selectBox.changeTo(organization)
         if ONBOARDING_WIZARD_CONFIG.enabled
-          console.log("### DEBUG CreateCompanyModalCtrl onboarding.step1")
           $state.go('onboarding.step1')
         else
           $state.go('home.impac')
