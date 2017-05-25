@@ -27,7 +27,25 @@ angular.module 'mnoEnterpriseAngular'
       else
         _.remove(vm.selectedApps, app)
       vm.maxAppsSelected = (vm.selectedApps.length == MAX_APPS_ONBOARDING)
+      compareSharedEntities(vm.selectedApps)
       return
+
+    compareSharedEntities = (apps) ->
+      appEntities = []
+      listEntities = []
+      # List of entities per app
+      _.each(apps, (a) ->
+        entities = _.map(a.shared_entities, 'shared_entity_name')
+        listEntities = _(listEntities).concat(entities).value()
+        appEntities.push({nid: a.nid, logo: a.logo, entities: entities})
+      )
+      # Build the full list of entities
+      listEntities = _.uniq(listEntities)
+      vm.appEntities = appEntities
+      vm.listEntities = listEntities
+
+    vm.containsEntity = (entities, entity) ->
+      return _.contains(entities, entity)
 
     # ====================================
     # Connect the apps & go to next screen

@@ -10,6 +10,13 @@ angular.module 'mnoEnterpriseAngular'
       ctrl.isLoadingAppInstances = true
 
       #====================================
+      # App Launch
+      #====================================
+      ctrl.launchAppInstance = ->
+        $window.location.href = MnoeAppInstances.oAuthConnectPath(ctrl.appInstance)
+        return true
+
+      #====================================
       # App Connect modal
       #====================================
       ctrl.connectAppInstance = ->
