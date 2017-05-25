@@ -13,9 +13,13 @@
     <h4 translate translate-value-name="{{vm.app.name}}">mno_enterprise.templates.onboarding.app_infos_modal.what_is</h4>
     <div class="well top-buffer-1" ng-bind-html="vm.app.description"></div>
     <h4 translate translate-value-name="{{vm.app.name}}">mno_enterprise.templates.onboarding.app_infos_modal.how_is_app_integrated.title</h4>
-    <div class="well top-buffer-1" translate="mno_enterprise.templates.onboarding.app_infos_modal.how_is_app_integrated.{{vm.app.stack}}" translate-value-name="{{vm.app.name}}">'' + </div>
+    <div class="well top-buffer-1" translate="mno_enterprise.templates.onboarding.app_infos_modal.how_is_app_integrated.{{vm.app.stack}}" translate-value-name="{{vm.app.name}}"></div>
     <h4 translate translate-value-name="{{vm.app.name}}">mno_enterprise.templates.onboarding.app_infos_modal.what_is_shared</h4>
-    <div class="well top-buffer-1" ng-bind-html="vm.app.description"></div>
+    <div class="well top-buffer-1">
+      <ul>
+        <li ng-repeat="k in vm.app.key_workflows" ng-bind-html="k"></li>
+      </ul>
+    </div>
 
     <div class="col-lg-4">
       <div ng-show="!!vm.app.free_trial_duration" translate translate-value-duration="{{vm.app.free_trial_duration}}">
