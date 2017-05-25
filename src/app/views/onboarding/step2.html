@@ -45,28 +45,16 @@
               <thead>
                 <tr>
                   <th>&nbsp;</th>
-                  <th ng-repeat="app in vm.selectedApps">
+                  <th ng-repeat="app in vm.appEntities">
                     <img ng-src="{{app.logo}}" class="header-logo">
                   </th>
                 </tr>
               </thead>
               <tbody>
-              <tr>
-                <td ng-show="vm.selectedApps.length > 0">Contacts</td>
-                <td ng-repeat="app in vm.selectedApps">
-                  <i class="fa fa-times fa-2x"></i>
-                </td>
-              </tr>
-              <tr>
-                <td ng-show="vm.selectedApps.length > 0">Invoices</td>
-                <td ng-repeat="app in vm.selectedApps">
-                  <i class="fa fa-check fa-2x"></i>
-                </td>
-              </tr>
-              <tr>
-                <td ng-show="vm.selectedApps.length > 0">Journals</td>
-                <td ng-repeat="app in vm.selectedApps">
-                  <i class="fa fa-check fa-2x"></i>
+              <tr ng-repeat="entity in vm.listEntities">
+                <td>{{entity}}</td>
+                <td ng-repeat="app in vm.appEntities">
+                  <i class="fa fa-2x" ng-class="vm.containsEntity(app.entities, entity) ? 'fa-check' : 'fa-times'"></i>
                 </td>
               </tr>
               </tbody>
