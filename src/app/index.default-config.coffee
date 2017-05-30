@@ -4,6 +4,7 @@
 #   Uncaught Error: [$injector:unpr] Unknown provider: INTERCOM_IDProvider <- INTERCOM_ID <- AnalyticsSvc
 angular.module('mnoEnterprise.defaultConfiguration', [])
   .constant('IMPAC_CONFIG', {})
+  .constant('TRANSAC_CONFIG', {enabled: true})
   .constant('I18N_CONFIG', {})
   .constant('PRICING_CONFIG', {enabled: true})
   .constant('PAYMENT_CONFIG', {disabled: false})

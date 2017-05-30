@@ -1,21 +1,21 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller 'ReconcileController', ($scope, DOCK_CONFIG, MnoeOrganizations, MnoeCurrentUser, TransacTxsDispatcher, TransacUserService) ->
+  .controller 'ReconcileController', ($scope, $state, MnoeOrganizations, TransacTxsDispatcher, TransacUserService, MnoeAppInstances) ->
     'ngInject'
 
     vm = this
-    vm.isDockEnabled = DOCK_CONFIG.enabled
 
     #====================================
     # Post-Initialization
     #====================================
-    $scope.$watch(MnoeOrganizations.getSelectedId, (newValue, oldValue) ->
-      MnoeCurrentUser.get().then(
-        (response) ->
-          selectedOrg = _.find(response.organizations, {id: parseInt(newValue)})
+    $scope.$watch(MnoeOrganizations.getSelectedId, (newId, oldId) ->
+      # Validate access
+      MnoeAppInstances.transactionEnabled().then((enabled)->
+        if $state.is('home.reconcile') && !enabled
+          $state.go('home.impac')
+        else
           # Reload Transac!
-          TransacUserService.fetch().then(-> TransacTxsDispatcher.reloadTxs()) if newValue? && oldValue? && parseInt(newValue) != parseInt(oldValue)
-
-      ) if newValue?
+          TransacUserService.fetch().then(-> TransacTxsDispatcher.reloadTxs()) if newId? && oldId? && parseInt(newId) != parseInt(oldId)
+      )
     )
 
     return

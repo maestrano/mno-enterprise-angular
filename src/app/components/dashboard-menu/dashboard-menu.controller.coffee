@@ -8,18 +8,24 @@ angular.module 'mnoEnterpriseAngular'
       restrict: 'EA'
       templateUrl: 'app/components/dashboard-menu/dashboard-menu.html',
 
-      controller: ($scope, MnoeCurrentUser, MnoeOrganizations, DOCK_CONFIG, ORGANIZATION_MANAGEMENT, MARKETPLACE_CONFIG) ->
+      controller: ($scope, MnoeCurrentUser, MnoeOrganizations, MnoeAppInstances, DOCK_CONFIG, ORGANIZATION_MANAGEMENT, MARKETPLACE_CONFIG) ->
         $scope.isDockEnabled = DOCK_CONFIG.enabled
         $scope.isOrganizationManagementEnabled = ORGANIZATION_MANAGEMENT.enabled
         $scope.isMarketplaceEnabled = MARKETPLACE_CONFIG.enabled
 
         $scope.$watch(MnoeOrganizations.getSelectedId, (newValue) ->
-          # Impac! is displayed only to admin and super admin
-          MnoeCurrentUser.get().then(
-            (response) ->
-              selectedOrg = _.find(response.organizations, {id: parseInt(newValue)})
-              $scope.isAdmin = MnoeOrganizations.role.atLeastAdmin(selectedOrg.current_user_role)
-          ) if newValue?
+          if newValue
+            # Impac! is displayed only to admin and super admin
+            MnoeCurrentUser.get().then(
+              (response) ->
+                selectedOrg = _.find(response.organizations, {id: parseInt(newValue)})
+                $scope.isAdmin = MnoeOrganizations.role.atLeastAdmin(selectedOrg.current_user_role)
+            )
+            # Transac! Reconcile page can only be accessed when appInstances are transaction
+            # management enabled.
+            MnoeAppInstances.transactionEnabled().then((enabled)->
+              $scope.isTxManagementEnabled = enabled
+            )
         )
 
         return

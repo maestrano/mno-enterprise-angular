@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .service 'MnoeAppInstances', ($q, MnoeApiSvc, MnoeOrganizations, MnoLocalStorage, MnoeCurrentUser, LOCALSTORAGE) ->
+  .service 'MnoeAppInstances', ($q, MnoeApiSvc, MnoeOrganizations, MnoLocalStorage, MnoeCurrentUser, LOCALSTORAGE, TRANSAC_CONFIG) ->
     _self = @
 
     # Store selected organization app instances
@@ -58,5 +58,10 @@ angular.module 'mnoEnterpriseAngular'
 
     @clearCache = () ->
       MnoLocalStorage.removeItem(MnoeCurrentUser.user.id + "_" + LOCALSTORAGE.appInstancesKey)
+
+    @transactionEnabled = ->
+      _self.getAppInstances().then((apps)->
+        TRANSAC_CONFIG.enabled && _.some(apps, (app)-> app.transaction_management)
+      )
 
     return @
