@@ -94,7 +94,6 @@ gulp.task('styles', function () {
     addRootSlash: false
   };
 
-
   return gulp.src([
     path.join(conf.paths.src, '/app/index.less')
   ])
