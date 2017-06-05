@@ -231,7 +231,7 @@ angular.module 'mnoEnterpriseAngular'
     }
 
     _self.can.connect = {
-      appInstance: (obj = null) -> _self.role.atLeastAdmin()
+      appInstance: -> _self.role.atLeastAdmin()
     }
 
     return @
