@@ -230,4 +230,8 @@ angular.module 'mnoEnterpriseAngular'
       organizationSettings: (obj = null) -> _self.can.create.organizationSettings(obj) # call similar permission
     }
 
+    _self.can.connect = {
+      appInstance: (obj = null) -> _self.role.atLeastAdmin()
+    }
+
     return @
