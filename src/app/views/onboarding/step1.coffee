@@ -4,9 +4,11 @@ angular.module 'mnoEnterpriseAngular'
 
     vm = this
 
+    vm.isLoading = true
+
     MnoeCurrentUser.get().then(
       (response) ->
         vm.user = response
-    )
+    ).finally(-> vm.isLoading = false)
 
     return
