@@ -6,9 +6,6 @@ angular.module 'mnoEnterpriseAngular'
     @appInstances = []
 
     @getAppInstances = ->
-      # Fetch up to date app instances
-      promise = fetchAppInstances()
-
       # If app instances are stored return it
       cache = MnoLocalStorage.getObject(MnoeCurrentUser.user.id + "_" + LOCALSTORAGE.appInstancesKey)
       if cache?
@@ -17,8 +14,8 @@ angular.module 'mnoEnterpriseAngular'
         # Return the promised cache
         return $q.resolve(cache)
 
-      # If the cache is empty return the call promise
-      return promise
+      # If the cache is empty return the promise call
+      return fetchAppInstances()
 
     @refreshAppInstances = ->
       _self.clearCache()
@@ -26,7 +23,7 @@ angular.module 'mnoEnterpriseAngular'
       fetchAppInstances()
 
     # Retrieve app instances from the backend
-    fetchAppInstances = () ->
+    fetchAppInstances = ->
       # Workaround as the API is not standard (return a hash map not an array)
       # (Prefix operation by '/' to avoid data extraction)
       # TODO: Standard API
@@ -42,7 +39,7 @@ angular.module 'mnoEnterpriseAngular'
               processAppInstances(response)
               # Process the response
               defer.resolve(response)
-          ).catch((error) -> console.log(error))
+          )
       )
       return defer.promise
 
