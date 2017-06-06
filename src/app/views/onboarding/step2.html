@@ -12,9 +12,9 @@
               <div id="widget-header-bar">
                 <div id="app-search" class='input-group'>
                   <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
-                  <input type="text" ng-model="vm.searchTerm" placeholder="{{ 'mno_enterprise.templates.onboarding.select_your_app.search' | translate }}" class="form-control" ng-change="vm.selectedCategory.category = ''">
+                  <input type="text" ng-model="vm.searchTerm" placeholder="{{ 'mno_enterprise.templates.onboarding.select_your_app.search' | translate }}" class="form-control" ng-change="vm.selectedCategory = ''">
                 </div>
-                <select id="app-category" class="form-control" ng-model="vm.selectedCategory" ng-options="c for c in vm.marketplace.categories" ng-change="vm.searchTerm.name = ''">
+                <select id="app-category" class="form-control" ng-model="vm.selectedCategory" ng-options="c for c in vm.marketplace.categories" ng-change="vm.searchTerm = ''">
                   <option value=''>{{ 'mno_enterprise.templates.dashboard.marketplace.index.select_all' | translate }}</option>
                 </select>
               </div>
