@@ -26,6 +26,9 @@ angular.module 'mnoEnterpriseAngular'
       $scope.helper.displayCogwheel = ->
         MnoeOrganizations.can.update.appInstance()
 
+      $scope.helper.canConnectApp = ->
+        MnoeOrganizations.can.connect.appInstance()
+
       $scope.helper.canRenameApp = ->
         MnoeOrganizations.can.update.appInstance()
 
