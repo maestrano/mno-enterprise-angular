@@ -51,6 +51,11 @@
                 </tr>
               </thead>
               <tbody>
+              <tr ng-show="vm.listEntities.length === 0">
+                <td colspan="{{vm.selectedApps.length + 1}}">
+                  <span class="text-muted" translate>mno_enterprise.templates.onboarding.data_sync.no_entity_shared</span>
+                </td>
+              </tr>
               <tr ng-repeat="entity in vm.listEntities">
                 <td>{{entity}}</td>
                 <td ng-repeat="app in vm.appEntities">
