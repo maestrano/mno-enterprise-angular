@@ -7,8 +7,6 @@ angular.module 'mnoEnterpriseAngular'
     controller: ($q, $state, $window, $uibModal, toastr, MnoeMarketplace, MnoeCurrentUser, MnoeOrganizations, MnoeAppInstances) ->
       ctrl = this
 
-      ctrl.isLoadingAppInstances = true
-
       #====================================
       # App Launch
       #====================================
@@ -46,10 +44,7 @@ angular.module 'mnoEnterpriseAngular'
         if ctrl.conflictingApp
           "CONFLICT"
         else
-          if ctrl.appInstance.app_nid != 'office-365' && ctrl.appInstance.stack == 'connector' && !ctrl.appInstance.oauth_keys_valid
-            "INSTALLED_CONNECT"
-          else
-            "INSTALLED_LAUNCH"
+          MnoeAppInstances.installStatus(ctrl.appInstance)
 
       #====================================
       # Initialize
@@ -57,11 +52,18 @@ angular.module 'mnoEnterpriseAngular'
       ctrl.init = ->
         ctrl.isLoadingAppInstances = true
 
+        appInstancesPromise = MnoeAppInstances.getAppInstances().then(
+          (response)->
+            ctrl.appInstance.status = appInstallationStatus()
+            ctrl.isLoadingAppInstances = false
+            response
+        )
+
         # Retrieve the apps and the app instances in order to retrieve the current app, and its conflicting status
         # with the current installed app instances
         $q.all(
           marketplace: MnoeMarketplace.getApps(),
-          appInstances: MnoeAppInstances.getAppInstances()
+          appInstances: appInstancesPromise
         ).then(
           (response) ->
             apps = response.marketplace.apps
@@ -86,11 +88,7 @@ angular.module 'mnoEnterpriseAngular'
                   not subCategory.multi_instantiable and subCategory.name in names
                 )
               )
-
-            ctrl.appInstance.status = appInstallationStatus()
-
-            ctrl.isLoadingAppInstances = false
-        )
+        ).finally(-> ctrl.isLoadingAppInstances = false)
 
       ctrl.init()
 

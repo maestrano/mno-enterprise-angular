@@ -76,4 +76,10 @@ angular.module 'mnoEnterpriseAngular'
     @clearCache = () ->
       MnoLocalStorage.removeItem(MnoeCurrentUser.user.id + "_" + LOCALSTORAGE.appInstancesKey)
 
+    @installStatus = (appInstance) ->
+      if appInstance.app_nid != 'office-365' && appInstance.stack == 'connector' && !appInstance.oauth_keys_valid
+        "INSTALLED_CONNECT"
+      else
+        "INSTALLED_LAUNCH"
+
     return @
