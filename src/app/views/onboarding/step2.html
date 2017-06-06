@@ -46,7 +46,10 @@
                 <tr>
                   <th>&nbsp;</th>
                   <th ng-repeat="app in vm.appEntities">
-                    <img ng-src="{{app.logo}}" class="header-logo">
+                    <div class="th-app">
+                      <img ng-src="{{app.logo}}" class="header-logo">
+                      <div class="app-title" title="{{app.name}}">{{app.name}}</div>
+                    </div>
                   </th>
                 </tr>
               </thead>

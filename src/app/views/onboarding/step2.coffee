@@ -35,7 +35,7 @@ angular.module 'mnoEnterpriseAngular'
       _.each(apps, (a) ->
         entities = _.map(a.shared_entities, 'shared_entity_name')
         listEntities = _(listEntities).concat(entities).value()
-        appEntities.push({nid: a.nid, logo: a.logo, entities: entities})
+        appEntities.push({nid: a.nid, logo: a.logo, name: a.name, entities: entities})
       )
       # Build the full list of entities
       listEntities = _.uniq(listEntities)

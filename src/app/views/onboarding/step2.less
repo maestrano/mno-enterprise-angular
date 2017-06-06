@@ -73,17 +73,16 @@
     }
 
     #data-shared {
+      max-width: 50%;
+
       @media (max-width: @screen-sm-max) {
         display: none;
       }
 
       .table-data-shared {
-        text-align: left;
+        table-layout: fixed;
+        text-align: center;
         margin: 5px 5px 0 10px;
-
-        th, td {
-          text-align: center;
-        }
 
         .fa-check {
           color: @onboarding-app-entities-checked;
@@ -93,8 +92,17 @@
           color: @onboarding-app-entities-unchecked;
         }
 
-        .header-logo {
-          width: 60px;
+        .th-app {
+          text-align: center;
+
+          .header-logo {
+            width: 60px;
+          }
+
+          .app-title {
+            margin-top: 5px;
+            .ellipsis;
+          }
         }
       }
     }
