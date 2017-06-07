@@ -16,10 +16,7 @@ angular.module 'mnoEnterpriseAngular'
           if vm.app.multi_instantiable
             "INSTALLABLE"
           else
-            if vm.app.app_nid != 'office-365' && vm.app.stack == 'connector' && !vm.app.oauth_keys_valid
-              "INSTALLED_CONNECT"
-            else
-              "INSTALLED_LAUNCH"
+            MnoeAppInstances.installStatus(ctrl.appInstance)
         else
           if vm.conflictingApp
             "CONFLICT"

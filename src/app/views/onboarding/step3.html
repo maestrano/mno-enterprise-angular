@@ -1,0 +1,38 @@
+<div id="step3">
+  <div class="row">
+    <div class="col-lg-10 col-lg-offset-1">
+      <div class="content-panel clearfix">
+        <div class="text-center">
+          <h1 translate>mno_enterprise.templates.onboarding.connect_apps.connect_applications</h1>
+        </div>
+
+        <div ng-show="vm.isFetchingAppInstances" class="text-center top-buffer-3">
+          <i class="fa fa-refresh fa-spin fa-3x apps-loader"></i>
+        </div>
+
+        <div class="apps-wrapper">
+          <div class="app-card" ng-repeat="appInstance in vm.appInstances track by appInstance.id">
+            <img ng-src="{{appInstance.logo}}" alt="{{appInstance.name}}">
+            <h4>{{appInstance.name}}</h4>
+            <mno-app-onboarding-btn app-instance="appInstance" class="top-buffer-1"></mno-app-onboarding-btn>
+          </div>
+        </div>
+
+        <div class="text-center next-button-wrapper">
+          <div class="top-buffer-2" ng-show="vm.nbAppsToConnect > 0" translate translate-value-nb="{{vm.nbAppsToConnect}}">
+            mno_enterprise.templates.onboarding.connect_apps.apps_to_connect
+          </div>
+          <div class="top-buffer-2" ng-show="vm.nbAppsToConnect === 0" translate translate-value-nb="{{vm.nbApps}}">
+            mno_enterprise.templates.onboarding.connect_apps.all_apps_connected
+          </div>
+          <button ng-show="vm.nbAppsToConnect > 0" class="btn btn-primary next-button" ui-sref="onboarding.step4">
+            <span translate>mno_enterprise.templates.onboarding.connect_apps.skip</span>
+          </button>
+          <button ng-show="vm.nbAppsToConnect === 0" class="btn btn-primary next-button" ui-sref="onboarding.step4" translate>
+            <span translate>mno_enterprise.templates.onboarding.connect_apps.almost_there</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
