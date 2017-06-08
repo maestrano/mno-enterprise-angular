@@ -250,7 +250,7 @@ DashboardOrganizationTeamsCtrl = ($scope, $window, $uibModal, $q, MnoeOrganizati
       # Get the new teams for this organization
       $q.all([MnoeTeams.getTeams(), MnoeAppInstances.getAppInstances()]).then(
         (responses) ->
-          $scope.initialize(responses[0], responses[1])
+          $scope.initialize(responses[0], responses[1].app_instances)
       )
   )
 
