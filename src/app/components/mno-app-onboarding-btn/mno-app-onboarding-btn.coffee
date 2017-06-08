@@ -10,6 +10,9 @@ angular.module 'mnoEnterpriseAngular'
       #====================================
       # App Launch
       #====================================
+      ctrl.launchAddOn = ->
+        $window.open("/mnoe/launch/#{ctrl.appInstance.uid}", '_blank')
+
       ctrl.launchAppInstance = ->
         $window.location.href = MnoeAppInstances.oAuthConnectPath(ctrl.appInstance)
         return true
@@ -43,6 +46,8 @@ angular.module 'mnoEnterpriseAngular'
       appInstallationStatus = ->
         if ctrl.conflictingApp
           "CONFLICT"
+        else if ctrl.appInstance.add_on
+          "ADD_ON"
         else
           MnoeAppInstances.installStatus(ctrl.appInstance)
 
