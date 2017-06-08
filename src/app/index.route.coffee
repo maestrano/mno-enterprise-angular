@@ -85,13 +85,6 @@ angular.module 'mnoEnterpriseAngular'
           templateUrl: 'app/views/onboarding/step3.html'
           controller: 'OnboardingStep3Controller'
           controllerAs: 'vm'
-        .state 'onboarding.step4',
-          data:
-            pageTitle:'Connect your apps'
-          url: '/almost-there'
-          templateUrl: 'app/views/onboarding/step4.html'
-          controller: 'OnboardingStep4Controller'
-          controllerAs: 'vm'
 
     if MARKETPLACE_CONFIG.enabled
       $stateProvider
@@ -119,4 +112,16 @@ angular.module 'mnoEnterpriseAngular'
             controller: 'DashboardMarketplaceCompareCtrl'
             controllerAs: 'vm'
 
-    $urlRouterProvider.otherwise '/impac'
+    $urlRouterProvider.otherwise ($injector) ->
+      $state = $injector.get('$state')
+
+      $state.go('home.impac') unless ONBOARDING_WIZARD_CONFIG.enabled
+
+      MnoeAppInstances = $injector.get('MnoeAppInstances')
+      MnoeAppInstances.getAppInstances().then(
+        (response) ->
+          if _.isEmpty(response.app_instances)
+            $state.go('onboarding.step1')
+          else
+            $state.go('home.impac')
+      )

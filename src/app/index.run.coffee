@@ -82,9 +82,12 @@ angular.module 'mnoEnterpriseAngular'
     # Load the current user
     userPromise = MnoeCurrentUser.get()
 
+    dhbRefId = $location.search().dhbRefId
+    $location.search('dhbRefId', null)
+
     # Load the current organization if defined (url param, cookie or first)
     _self.appInstancesDefer = $q.defer()
-    organizationPromise = MnoeOrganizations.getCurrentId($stateParams.dhbRefId).then(
+    organizationPromise = MnoeOrganizations.getCurrentId(dhbRefId).then(
       (response) ->
         # App instances needs to be run after fetching the organization
         # (At least the first call)
