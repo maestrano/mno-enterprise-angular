@@ -10,8 +10,12 @@ angular.module 'mnoEnterpriseAngular'
       #====================================
       # App Launch
       #====================================
-      ctrl.launchAppInstance = ->
+      ctrl.launchAddOn = ->
         $window.open("/mnoe/launch/#{ctrl.appInstance.uid}", '_blank')
+
+      ctrl.launchAppInstance = ->
+        $window.location.href = MnoeAppInstances.oAuthConnectPath(ctrl.appInstance)
+        return true
 
       #====================================
       # App Connect modal
