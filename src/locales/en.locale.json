@@ -377,6 +377,7 @@
   "mno_enterprise.templates.components.app_install_btn.start_app": "Start Now!",
   "mno_enterprise.templates.components.app_install_btn.launch_app": "Launch App",
   "mno_enterprise.templates.components.app_install_btn.connect_app": "Connect App",
+  "mno_enterprise.templates.components.app_install_btn.access_addon": "Access Add-on",
   "mno_enterprise.templates.components.app_install_btn.insufficient_privilege": "You do not have the sufficient privileges. Contact your administrator.",
   "mno_enterprise.templates.components.app_install_btn.success_notification_title": "{name} has been added to your account",
   "mno_enterprise.templates.components.app_install_btn.success_launch_notification_body": "To start using {name}, click on the {name} icon then click on \"Launch\".",
