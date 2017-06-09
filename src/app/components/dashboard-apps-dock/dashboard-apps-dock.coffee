@@ -105,9 +105,11 @@ DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, MnoeOrganizations
   #====================================
   $scope.$watch MnoeOrganizations.getSelectedId, (val) ->
     if val?
+      $scope.isLoading = true
       MnoeAppInstances.getAppInstances().then(
-        ->
-          $scope.apps = MnoeAppInstances.appInstances
+        (response) ->
+          $scope.isLoading = false
+          $scope.apps = response
       )
 
   # Hide the dock if marketplace is disabled and there is not app linked

@@ -9,12 +9,12 @@ angular.module 'mnoEnterpriseAngular'
       # If app instances are stored return it
       cache = MnoLocalStorage.getObject(MnoeCurrentUser.user.id + "_" + LOCALSTORAGE.appInstancesKey)
       if cache?
-        # Process the cached response
-        processAppInstances(cache)
+        # Append response array to service array
+        _self.appInstances = cache
         # Return the promised cache
         return $q.resolve(cache)
 
-      # If the cache is empty return the promise call
+      # If the cache is empty return the call promise
       return fetchAppInstances()
 
     @refreshAppInstances = ->
@@ -33,12 +33,11 @@ angular.module 'mnoEnterpriseAngular'
           _self.appInstancesPromise = MnoeApiSvc.one('organizations', MnoeOrganizations.selectedId).one('/app_instances').get().then(
             (response) ->
               response = response.plain()
-              # Save the response in the local storage
-              MnoLocalStorage.setObject(MnoeCurrentUser.user.id + "_" + LOCALSTORAGE.appInstancesKey, response)
-              # Process the cached response
-              processAppInstances(response)
+              # Save the app instances in the local storage
+              appInstances = processAppInstances(response)
+              MnoLocalStorage.setObject(MnoeCurrentUser.user.id + "_" + LOCALSTORAGE.appInstancesKey, appInstances)
               # Process the response
-              defer.resolve(response)
+              defer.resolve(appInstances)
           )
       )
       return defer.promise

@@ -87,7 +87,7 @@ angular.module 'mnoEnterpriseAngular'
       marketplace: MnoeMarketplace.getApps()
     }).then(
       (response) ->
-        vm.appInstances = angular.copy(response.appInstances.app_instances)
+        vm.appInstances = angular.copy(response.appInstances)
         vm.marketplace = angular.copy(response.marketplace.plain())
 
         # Fetch the already selected apps
