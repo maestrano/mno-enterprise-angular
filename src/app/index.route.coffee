@@ -120,7 +120,7 @@ angular.module 'mnoEnterpriseAngular'
       MnoeAppInstances = $injector.get('MnoeAppInstances')
       MnoeAppInstances.getAppInstances().then(
         (response) ->
-          if _.isEmpty(response.app_instances)
+          if _.isEmpty(response)
             $state.go('onboarding.step1')
           else
             $state.go('home.impac')

@@ -8,7 +8,7 @@ angular.module 'mnoEnterpriseAngular'
 
     MnoeAppInstances.getAppInstances().then(
       (response) ->
-        vm.appInstances = angular.copy(response.app_instances)
+        vm.appInstances = angular.copy(response)
         vm.nbApps = _.size(vm.appInstances)
         vm.nbAppsToConnect = _.size(_.filter(vm.appInstances, (ai) -> MnoeAppInstances.installStatus(ai) == "INSTALLED_CONNECT"))
     ).finally(-> vm.isFetchingAppInstances = false)

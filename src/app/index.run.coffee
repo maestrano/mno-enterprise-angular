@@ -99,7 +99,7 @@ angular.module 'mnoEnterpriseAngular'
       (response) ->
         appInstances = response[2]
 
-        if ONBOARDING_WIZARD_CONFIG.enabled && _.isEmpty(appInstances.app_instances)
+        if ONBOARDING_WIZARD_CONFIG.enabled && _.isEmpty(appInstances)
           $location.path('/onboarding/welcome')
 
         # Display the layout

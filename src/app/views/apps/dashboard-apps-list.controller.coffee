@@ -104,7 +104,7 @@ angular.module 'mnoEnterpriseAngular'
         if val?
           $scope.isLoading = true
           MnoeAppInstances.getAppInstances().then(
-            (response) ->
+            ->
               $scope.isLoading = false
               $scope.apps = MnoeAppInstances.appInstances
           )

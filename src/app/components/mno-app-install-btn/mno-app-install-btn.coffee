@@ -16,7 +16,7 @@ angular.module 'mnoEnterpriseAngular'
           if vm.app.multi_instantiable
             "INSTALLABLE"
           else
-            MnoeAppInstances.installStatus(ctrl.appInstance)
+            MnoeAppInstances.installStatus(vm.appInstance)
         else
           if vm.conflictingApp
             "CONFLICT"
