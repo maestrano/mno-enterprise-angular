@@ -5,7 +5,7 @@ angular.module 'mnoEnterpriseAngular'
     logout: '/mnoe/auth/users/sign_out'
   })
   .constant('LOCALSTORAGE', {
-    appInstancesKey: 'appInstances'
+    appInstancesKey: 'appInstancesV2'
   })
   .constant('LOCALES', {
     'locales': [
