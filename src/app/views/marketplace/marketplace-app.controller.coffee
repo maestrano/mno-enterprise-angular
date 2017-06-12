@@ -23,6 +23,8 @@ angular.module 'mnoEnterpriseAngular'
       vm.isPriceShown = PRICING_CONFIG && PRICING_CONFIG.enabled
       # Enabling reviews
       vm.isReviewingEnabled = REVIEWS_CONFIG && REVIEWS_CONFIG.enabled
+      # Enabling questions
+      vm.areQuestionsEnabled = REVIEWS_CONFIG && REVIEWS_CONFIG.questions.enabled
 
       vm.averageRating = 5
 
