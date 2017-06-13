@@ -5,19 +5,27 @@ angular.module 'mnoEnterpriseAngular'
     # Store selected organization app instances
     @appInstances = []
 
+    appInstancesPromise = null
     @getAppInstances = ->
+      return appInstancesPromise if appInstancesPromise?
+
+      deferred = $q.defer()
+
       # If app instances are stored return it
       cache = MnoLocalStorage.getObject(MnoeCurrentUser.user.id + "_" + LOCALSTORAGE.appInstancesKey)
       if cache?
         # Append response array to service array
         _self.appInstances = cache
         # Return the promised cache
-        return $q.resolve(cache)
+        deferred.resolve(cache)
+      else
+        # If the cache is empty return the call promise
+        fetchAppInstances().then((response) -> deferred.resolve(response))
 
-      # If the cache is empty return the call promise
-      return fetchAppInstances()
+      return appInstancesPromise = deferred.promise
 
     @refreshAppInstances = ->
+      appInstancesPromise = null
       _self.clearCache()
       _self.emptyAppInstances()
       fetchAppInstances()
@@ -28,7 +36,7 @@ angular.module 'mnoEnterpriseAngular'
       # (Prefix operation by '/' to avoid data extraction)
       # TODO: Standard API
       defer = $q.defer()
-      MnoeOrganizations.get(MnoeOrganizations.selectedId).then(
+      MnoeOrganizations.get().then(
         ->
           _self.appInstancesPromise = MnoeApiSvc.one('organizations', MnoeOrganizations.selectedId).one('/app_instances').get().then(
             (response) ->
