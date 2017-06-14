@@ -78,6 +78,7 @@ angular.module 'mnoEnterpriseAngular'
       )
 
     @emptyAppInstances = () ->
+      appInstancesPromise = null
       @appInstances.length = 0
 
     @clearCache = () ->
