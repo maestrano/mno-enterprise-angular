@@ -4,7 +4,7 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('DashboardMarketplaceAppCtrl',($q, $scope, $stateParams, $state, $sce, $window, $uibModal, toastr,
     MnoeMarketplace, MnoeOrganizations, MnoeCurrentUser, MnoeAppInstances, MnoConfirm, MnoErrorsHandler,
-    PRICING_CONFIG, REVIEWS_CONFIG) ->
+    PRICING_CONFIG, REVIEWS_CONFIG, QUESTIONS_CONFIG) ->
 
       vm = this
 
@@ -23,6 +23,8 @@ angular.module 'mnoEnterpriseAngular'
       vm.isPriceShown = PRICING_CONFIG && PRICING_CONFIG.enabled
       # Enabling reviews
       vm.isReviewingEnabled = REVIEWS_CONFIG && REVIEWS_CONFIG.enabled
+      # Enabling questions
+      vm.areQuestionsEnabled = QUESTIONS_CONFIG && QUESTIONS_CONFIG.enabled
 
       vm.averageRating = 5
 
@@ -61,8 +63,13 @@ angular.module 'mnoEnterpriseAngular'
               offset = (page  - 1) * nbItems
               fetchReviews(appId, nbItems, offset, vm.sortReviewsBy)
 
+          fetchReviews(app.id, vm.reviews.nbItems, 0)
+          updateAverageRating(vm.app.average_rating)
+
+        # Init initial questions if enabled
+        if vm.areQuestionsEnabled
           vm.questions =
-            laoding: true
+            loading: true
             nbItems: 100
             page: 1
             searchWord: ''
@@ -72,9 +79,7 @@ angular.module 'mnoEnterpriseAngular'
               offset = (page  - 1) * nbItems
               fetchQuestions(appId, nbItems, offset, searchWord)
 
-          fetchReviews(app.id, vm.reviews.nbItems, 0)
           fetchQuestions(app.id, vm.questions.nbItems, 0)
-          updateAverageRating(vm.app.average_rating)
 
         vm.isLoading = false
 

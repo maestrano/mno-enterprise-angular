@@ -118,8 +118,8 @@
       </div>
     </div>
 
-    <uib-tabset ng-if="vm.isReviewingEnabled" class="bottom-buffer-10">
-      <uib-tab index="0" heading="Feedback">
+    <uib-tabset class="bottom-buffer-10">
+      <uib-tab ng-if="vm.isReviewingEnabled" index="0" heading="Feedback">
         <!-- Comments & Ratings -->
         <div id="comments">
           <div class="add-review">
@@ -226,7 +226,7 @@
           </div>
         </div>
       </uib-tab>
-      <uib-tab index="1" heading="Questions">
+      <uib-tab ng-if="vm.areQuestionsEnabled" index="1" heading="Questions">
         <div class="questions">
           <div class="clearfix">
             <div class="questions-panel pull-right">
