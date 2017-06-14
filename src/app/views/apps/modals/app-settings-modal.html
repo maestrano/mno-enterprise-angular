@@ -26,13 +26,22 @@
           </div>
         </div>
       </div>
-
       <!-- Add on settings -->
       <div ng-show="helper.isAddOnSettingShown(app)">
         <hr>
         <button ng-click="helper.addOnSettingLauch(app)" class="btn btn-warning">{{ 'mno_enterprise.templates.impac.dock.settings.access_add-on_settings' | translate }}</button>
       </div>
-
+      <!-- Billing Details -->
+      <div ng-show="helper.canDisplayBilling()">
+        <hr>
+        <div ng-show="!!app.free_trial_end_at">
+            {{ 'mno_enterprise.templates.impac.dock.settings.free_trial' | translate }}: {{ app.free_trial_end_at_humanized }}
+        </div>
+        <div ng-show="!app.free_trial_end_at && app.per_user_licence">
+          <p translate="mno_enterprise.templates.impac.dock.settings.nb_of_users" translate-values="{ num_users: app.licences_count }" translate-interpolation="messageformat"></p>
+        </div>
+        <div ng-show="!app.app.free_trial_end_at  && !app.per_user_licence">{{ 'mno_enterprise.templates.impac.dock.settings.pricing_details' | translate }}</div>
+      </div>
       <!-- Data Sharing -->
       <div ng-show="helper.isDataSyncShown(app) || helper.isDataDisconnectShown(app)">
         <hr>
@@ -41,7 +50,6 @@
             <span class="title">{{ 'mno_enterprise.templates.impac.dock.settings.manual_data_sharing' | translate }}</span>
           </div>
           <div class="col-md-8">
-
             <!-- Connected company name -->
             <div ng-show="helper.companyName(app)">
               {{ 'mno_enterprise.templates.impac.dock.settings.linked_to' | translate }}: {{ helper.companyName(app) | truncate:45 }}
@@ -55,7 +63,6 @@
               <a class="btn btn-info" ng-href="{{helper.dataSyncPath(app)}}" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.apps_list.manual_data_sync_tooltip' | translate:{ appname: app.app_name } }}">{{ 'mno_enterprise.templates.impac.dock.settings.manual_data_sync' | translate }}</a>
             </div>
           </div>
-
           <!-- Data Disconnect Button -->
           <div ng-show="helper.isDataDisconnectShown(app)">
             <a class="btn btn-danger" ng-click="helper.dataDisconnectClick(app)" href="" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.apps_list.disconnect_link_tooltip' | translate:{ appname: app.app_name } }}">
@@ -64,7 +71,6 @@
           </div>
         </div>
       </div>
-
       <!-- Deletion -->
       <hr>
       <div ng-show="helper.canDeleteApp()" class="app-deletion">
@@ -86,13 +92,12 @@
           </div>
           <div class="buttons">
             <button class="btn btn-default" ng-click="app.showDelete=false" >{{ 'mno_enterprise.templates.impac.dock.settings.cancel' | translate}}</button>
-            <button class="btn btn-danger" ng-click="deleteApp()" ng-disabled="sentence != sentenceCheck || modal.loading">
-              <span ng-show="modal.loading"><i class="fa fa-spinner fa-pulse"></i>&nbsp;</span>
+            <button class="btn btn-danger" ng-click="deleteApp()" ng-disabled="sentence != sentenceCheck">
+              <span ng-show="modal.loading"><i class="fa fa-spinner fa-spin"></i>&nbsp;</span>
               {{ 'mno_enterprise.templates.impac.dock.settings.delete' | translate }} </button>
           </div>
         </div>
       </div>
-
       <!-- Developer details -->
       <div ng-show="helper.canDeleteApp()">
         <hr>

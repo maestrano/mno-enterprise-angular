@@ -53,7 +53,7 @@ angular.module 'mnoEnterpriseAngular'
       prefix: 'locales/',
       suffix: '.locale.json'
     })
-
+    $translateProvider.addInterpolation('$translateMessageFormatInterpolation')
     $translateProvider.fallbackLanguage(LOCALES.fallbackLanguage)
     $translateProvider.useSanitizeValueStrategy('sanitizeParameters')
     $translateProvider.useMessageFormatInterpolation()

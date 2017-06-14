@@ -26,7 +26,8 @@
     "less": "~2.5.3",
     "lodash": "~3.10.1",
     "ng-page-title": "^1.1.1",
-    "restangular": "~1.5.1"
+    "restangular": "~1.5.1",
+    "angular-translate-interpolation-messageformat": "^2.13.1"
   },
   "devDependencies": {
     "angular-mocks": "~1.6.0"
@@ -47,6 +48,17 @@
         "less/font-awesome.less",
         "./fonts/*"
       ]
+    },
+    "moment": {
+      "main": [
+        "moment.js",
+        "locale/id.js",
+        "locale/zh-cn.js"
+      ]
     }
+  },
+  "resolutions": {
+    "angular": ">=1.2.0 <1.7.0",
+    "angular-translate": "~2.15.1"
   }
 }

@@ -4,16 +4,9 @@ angular.module 'mnoEnterpriseAngular'
 
     $scope.modal ||= {}
     $scope.app = app
+    $scope.app.free_trial_end_at_humanized = moment(app.free_trial_end_at).format('dddd, MMMM Do YYYY')
     $scope.sentence = "Please proceed to the deletion of my app and all data it contains"
     $scope.organization_uid = ImpacMainSvc.config.currentOrganization.uid
-
-    # ----------------------------------------------------------
-    # Permissions helper
-    # ----------------------------------------------------------
-
-    $scope.helper = {}
-    $scope.helper.canDeleteApp = ->
-      MnoeOrganizations.can.destroy.appInstance()
 
     $scope.modal.close = ->
       $uibModalInstance.close()
@@ -30,6 +23,16 @@ angular.module 'mnoEnterpriseAngular'
         (error) ->
           $scope.modal.errors = Utilities.processRailsError(error)
       ).finally(-> $scope.modal.loading = false)
+
+    # ----------------------------------------------------------
+    # Permissions helper
+    # ----------------------------------------------------------
+    $scope.helper = {}
+    $scope.helper.canDeleteApp = ->
+      MnoeOrganizations.can.destroy.appInstance()
+
+    $scope.helper.canDisplayBilling = ->
+      MnoeOrganizations.can.read.billing()
 
     $scope.helper.isDataSyncShown = (app) ->
       app.stack == 'connector' && app.oauth_keys_valid

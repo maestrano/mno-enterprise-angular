@@ -35,6 +35,7 @@ angular.module 'mnoEnterpriseAngular'
             ->
               # Success
               $translate.use($scope.selectedLangKey)
+              moment.locale($scope.selectedLangKey)
               $window.location.href = "/#{$scope.selectedLangKey}#{URI.dashboard}"
             ->
               # Error

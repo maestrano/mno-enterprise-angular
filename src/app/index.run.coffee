@@ -35,6 +35,7 @@ angular.module 'mnoEnterpriseAngular'
       locale = LOCALES.preferredLocale
 
     $translate.use(locale)
+    moment.locale(locale)
   )
 
   # Override the default toastr template to use angular-translate
