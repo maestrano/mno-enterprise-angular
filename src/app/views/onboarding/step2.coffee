@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller 'OnboardingStep2Controller', ($q, $state, $uibModal, MnoeMarketplace, MnoeOrganizations, MnoeAppInstances) ->
+  .controller 'OnboardingStep2Controller', ($q, $state, $uibModal, MnoeMarketplace, MnoeOrganizations, MnoeAppInstances, URI) ->
     'ngInject'
 
     vm = this
@@ -8,6 +8,8 @@ angular.module 'mnoEnterpriseAngular'
 
     vm.searchTerm = ''
     vm.isLoading = true
+
+    vm.connecDocUri = URI.connecDoc
 
     vm.selectedApps = []
 

@@ -28,7 +28,6 @@ angular.module 'mnoEnterpriseAngular'
       vm.provisionApp = () ->
         return if !vm.canProvisionApp
         vm.isLoadingButton = true
-        MnoeAppInstances.clearCache()
 
         # Get the authorization status for the current organization
         if MnoeOrganizations.role.atLeastAdmin(vm.user_role)
@@ -48,6 +47,9 @@ angular.module 'mnoEnterpriseAngular'
                   displayLaunchToastr(vm.app)
                 else
                   displayConnectToastr(vm.app)
+        ).then(
+          ->
+            MnoeAppInstances.refreshAppInstances()
         ).finally(-> vm.isLoadingButton = false)
 
       displayLaunchToastr = (app) ->

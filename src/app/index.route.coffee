@@ -56,6 +56,7 @@ angular.module 'mnoEnterpriseAngular'
             else
               $window.location.href = logout_url
           )
+
     if ONBOARDING_WIZARD_CONFIG.enabled
       $stateProvider
         .state 'onboarding',
