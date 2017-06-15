@@ -175,6 +175,7 @@ angular.module 'mnoEnterpriseAngular'
           (response) ->
             vm.reviews.list.splice(key, 1)
             updateAverageRating(response.average_rating)
+            vm.reviews.pageChangedCb(vm.app.id, vm.reviews.nbItems, vm.reviews.page = 1)
             updateAnyReviews()
         )
 
