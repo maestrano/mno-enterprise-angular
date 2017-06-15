@@ -10,10 +10,10 @@ angular.module 'mnoEnterpriseAngular'
       #====================================
       # App Launch
       #====================================
-      ctrl.launchAddOn = ->
+      ctrl.launchAppInstance = ->
         $window.open("/mnoe/launch/#{ctrl.appInstance.uid}", '_blank')
 
-      ctrl.launchAppInstance = ->
+      ctrl.launchOAuthConnectPath = ->
         $window.location.href = MnoeAppInstances.oAuthConnectPath(ctrl.appInstance)
         return true
 
@@ -30,7 +30,7 @@ angular.module 'mnoEnterpriseAngular'
             template: "app/views/apps/modals/app-connect-modal-myob.html",
             controller: 'DashboardAppConnectMyobModalCtrl'
           }
-          else ctrl.launchAppInstance()
+          else ctrl.launchOAuthConnectPath()
 
         $uibModal.open(
           templateUrl: modalInfo.template
