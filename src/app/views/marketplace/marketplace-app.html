@@ -137,7 +137,7 @@
             <span ng-if="!vm.appInstance" class="add-review">
               {{ 'mno_enterprise.templates.dashboard.marketplace.show.no_app_no_review' | translate }}
             </span>
-            <span class="pull-right" ng-if="vm.reviews.list.length != 0">
+            <span class="pull-right" ng-if="vm.reviews.totalItems != 0">
               <label>{{ 'mno_enterprise.templates.dashboard.marketplace.show.filter' | translate }}</label>
               <select class="filter-reviews form-control" ng-model="vm.sortReviewsBy" ng-change="vm.orderFeedbacks()">
                 <option value="rating.asc">{{ 'mno_enterprise.templates.dashboard.marketplace.show.filter_rating_ask' | translate }}</option>
@@ -150,7 +150,7 @@
           <div class='loading-icon'>
             <span ng-show="vm.reviews.loading"><i class="fa fa-refresh fa-spin fa-3x fa-fw"></i></span>
           </div>
-          <div ng-if="vm.reviews.list.length == 0 && !vm.reviews.loading">
+          <div ng-if="vm.reviews.totalItems == 0 && !vm.reviews.loading">
             <span class='pages-selector no-review-container' translate translate-value-name="{{vm.app.name}}">
               mno_enterprise.templates.dashboard.marketplace.show.no_review
             </span>
@@ -221,9 +221,8 @@
                 </div>
               </div>
             </div>
-
             <mno-pagination
-              ng-if="vm.reviews.list.length != 0 "
+              ng-if="vm.reviews.totalItems != 0 "
               page="vm.reviews.page"
               nb-items="vm.reviews.nbItems"
               total-items="vm.reviews.totalItems"

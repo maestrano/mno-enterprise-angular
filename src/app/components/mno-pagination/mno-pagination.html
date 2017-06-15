@@ -9,7 +9,7 @@
 </div>
 
 <ul uib-pagination ng-model="page" 
-  ng-show="totalItems > nbItems" 
+  ng-show="totalItems > 0" 
   total-items="totalItems"
   items-per-page="nbItems"
   ng-change="onPageChange()"
