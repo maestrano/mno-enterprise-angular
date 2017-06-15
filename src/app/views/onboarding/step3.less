@@ -5,20 +5,27 @@
   }
 
   .apps-wrapper {
-    .top-buffer-2;
+    .top-buffer-1;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-around;
 
     .app-card {
+      .top-buffer-1;
       text-align: center;
       background-color: @onboarding-app-card-bg-color;
       color: @onboarding-app-card-text-color;
       padding: @onboarding-app-card-padding;
       .z-depth(3);
+      width: 220px;
+
+      h4 {
+        margin-top: 5px;
+      }
 
       mno-app-install-btn {
         display: block;
-        margin-top: 15px;
+        .top-buffer-1;
       }
     }
   }
