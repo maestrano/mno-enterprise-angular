@@ -7,16 +7,21 @@
         <i class="fa fa-chevron-left"></i> {{ 'mno_enterprise.templates.dashboard.marketplace.show.back' | translate }}
       </a>
       <div class="media" ng-show="!vm.isLoading">
-        <div class="app-rating pull-right">
-          <div ng-show="vm.isRateDisplayed">
-            <average-star-rating ng-model="vm.averageRating" display-rating="true" max="5"></average-star-rating>
-          </div>
-        </div>
         <div class="pull-left">
           <img class="media-object" ng-src="{{vm.app.logo}}" ng-alt="{{vm.app.name}}">
         </div>
         <div class="media-body">
           <h2 class="media-heading">{{vm.app.name}}</h2>
+        </div>
+        <div class="app-rating pull-left">
+          <div ng-show="vm.isRateDisplayed">
+            <average-star-rating ng-model="vm.averageRating" display-rating="true" max="5"></average-star-rating>
+          </div>
+        </div>
+        <div class="pull-left links">
+          <a ng-show="vm.anyReviews" ng-click="vm.scrollToReviews()" href="">{{vm.reviews.list.length}} {{'mno_enterprise.templates.dashboard.marketplace.show.reviews' | translate}}</a>
+          <span ng-if="vm.anyReviews && vm.anyQuestions">  |  </span>
+          <a ng-show="vm.anyQuestions" ng-click="vm.scrollToQuestions()" href="">{{vm.questions.list.length}} {{'mno_enterprise.templates.dashboard.marketplace.show.questions' | translate}}</a>
         </div>
       </div>
     </div>
@@ -118,7 +123,7 @@
       </div>
     </div>
 
-    <uib-tabset class="bottom-buffer-10">
+    <uib-tabset id="review-tabs" active="active" class="bottom-buffer-10">
       <uib-tab ng-if="vm.isReviewingEnabled" index="0" heading="Feedback">
         <!-- Comments & Ratings -->
         <div id="comments">
@@ -150,12 +155,13 @@
               mno_enterprise.templates.dashboard.marketplace.show.no_review
             </span>
           </div>
-          <div ng-hide='vm.reviews.loading'>
-            <div class="well" ng-repeat="(key, review) in vm.reviews.list">
+          <div class="well" ng-hide='vm.reviews.loading'>
+            <div ng-repeat="(key, review) in vm.reviews.list">
               <!-- Review -->
               <div class="row">
                 <div class="col-md-8">
                   <blockquote>
+                  <average-star-rating ng-model="review.rating" readonly="true"></average-star-rating>
                     <span>{{review.description}}</span>
                     <footer class="top-buffer-1">
                       <span>{{review.user_name}} {{ 'mno_enterprise.templates.dashboard.marketplace.show.from' | translate }} </span>
@@ -170,19 +176,20 @@
                           {{ 'mno_enterprise.templates.dashboard.marketplace.show.edited_by_admin' | translate }}
                         </span>
                       </span>
+                      <a class="comments-show" ng-hide="review.showComments || review.comments.length == 0" ng-click="review.showComments = true" href="">{{'mno_enterprise.templates.dashboard.marketplace.show.comments' | translate}} ({{ review.comments.length }})</a>
+                      <a class="comments-show" ng-show="review.showComments" ng-click="review.showComments = false" href="">{{'mno_enterprise.templates.dashboard.marketplace.show.comment.hide' | translate}}</a>
                     </footer>
                   </blockquote>
                 </div>
                 <div class="col-md-4 text-right">
-                  <average-star-rating ng-model="review.rating" readonly="true"></average-star-rating>
                   <a class="btn btn-link btn-link-warning" href="" ng-if="vm.canUserEditReview(review)" ng-click="vm.openEditReviewModal(review, key)"><i class="fa fa-edit"></i> {{'mno_enterprise.templates.dashboard.marketplace.show.edit' | translate}}</a>
                   <a class="btn btn-link btn-link-danger" href="" ng-if="vm.canUserEditReview(review)" ng-click="vm.openDeleteReviewModal(review, key)"><i class="fa fa-trash"></i> {{'mno_enterprise.templates.dashboard.marketplace.show.delete' | translate}}</a>
-                  <a class="btn btn-link btn-link-primary" href="" ng-click="vm.openCreateCommentModal(review, key)"><i class="fa fa-plus"></i> Comment</a>
+                  <a class="btn btn-link btn-link-primary" href="" ng-click="vm.openCreateCommentModal(review, key)"><i class="fa fa-plus"></i> {{'mno_enterprise.templates.dashboard.marketplace.show.comment' | translate}}</a>
                 </div>
               </div>
 
               <!-- Comments -->
-              <div class="clearfix" ng-repeat="(i, comment) in review.comments">
+              <div class="clearfix" ng-show="review.showComments" ng-repeat="(i, comment) in review.comments">
                 <div class="comment">
                   <span class="pull-right top-buffer-1">
                     <a class="btn btn-link btn-link-warning" ng-if="vm.canUserEditReview(comment)" ng-click="vm.openEditCommentModal(comment, i, key)"><i class="fa fa-edit"></i> {{'mno_enterprise.templates.dashboard.marketplace.show.edit' | translate}}</a>
