@@ -215,17 +215,17 @@ angular.module 'mnoEnterpriseAngular'
     @can = {}
 
     _self.can.read = {
-      appInstance: (obj = null) -> _self.role.atLeastMember()
-      billing: (obj = null) -> _self.role.atLeastSuperAdmin()
-      member: (obj = null) -> _self.role.atLeastMember()
-      organizationSettings: (obj = null) -> _self.role.atLeastSuperAdmin()
+      appInstance: -> _self.role.atLeastMember()
+      billing: -> _self.role.atLeastSuperAdmin()
+      member: -> _self.role.atLeastMember()
+      organizationSettings: -> _self.role.atLeastSuperAdmin()
     }
 
     _self.can.create = {
-      appInstance: (obj = null) -> _self.role.atLeastAdmin()
-      billing: (obj = null) -> _self.role.atLeastSuperAdmin()
+      appInstance: -> _self.role.atLeastAdmin()
+      billing: -> _self.role.atLeastSuperAdmin()
       member: (obj = null) -> _self.role.atLeastAdmin() && (obj == null || obj.role != 'Super Admin' || _self.role.isSuperAdmin())
-      organizationSettings: (obj = null) -> _self.role.atLeastSuperAdmin()
+      organizationSettings: -> _self.role.atLeastSuperAdmin()
     }
 
     _self.can.update = {
