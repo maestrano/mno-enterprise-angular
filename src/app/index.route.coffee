@@ -113,9 +113,7 @@ angular.module 'mnoEnterpriseAngular'
             controller: 'DashboardMarketplaceCompareCtrl'
             controllerAs: 'vm'
 
-    $urlRouterProvider.otherwise ($injector) ->
-      $state = $injector.get('$state')
-
+    $urlRouterProvider.otherwise ($injector, $location) ->
       $state.go('home.impac') unless ONBOARDING_WIZARD_CONFIG.enabled
 
       MnoeOrganizations = $injector.get('MnoeOrganizations')
@@ -126,8 +124,8 @@ angular.module 'mnoEnterpriseAngular'
           MnoeAppInstances.getAppInstances().then(
             (response) ->
               if _.isEmpty(response)
-                $state.go('onboarding.step1')
+                $location.url('/onboarding/welcome')
               else
-                $state.go('home.impac')
+                $location.url('/impac')
           )
       )
