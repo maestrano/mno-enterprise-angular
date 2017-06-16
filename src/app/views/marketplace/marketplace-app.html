@@ -137,7 +137,7 @@
             <span ng-if="!vm.appInstance" class="add-review">
               {{ 'mno_enterprise.templates.dashboard.marketplace.show.no_app_no_review' | translate }}
             </span>
-            <span class="pull-right" ng-if="vm.reviews.list.length != 0">
+            <span class="pull-right" ng-if="vm.reviews.totalItems != 0 && !vm.reviews.loading">
               <label>{{ 'mno_enterprise.templates.dashboard.marketplace.show.filter' | translate }}</label>
               <select class="filter-reviews form-control" ng-model="vm.sortReviewsBy" ng-change="vm.orderFeedbacks()">
                 <option value="rating.asc">{{ 'mno_enterprise.templates.dashboard.marketplace.show.filter_rating_ask' | translate }}</option>
@@ -150,7 +150,7 @@
           <div class='loading-icon'>
             <span ng-show="vm.reviews.loading"><i class="fa fa-refresh fa-spin fa-3x fa-fw"></i></span>
           </div>
-          <div ng-if="vm.reviews.list.length == 0 && !vm.reviews.loading">
+          <div ng-if="vm.reviews.totalItems == 0 && !vm.reviews.loading">
             <span class='pages-selector no-review-container' translate translate-value-name="{{vm.app.name}}">
               mno_enterprise.templates.dashboard.marketplace.show.no_review
             </span>
@@ -221,9 +221,8 @@
                 </div>
               </div>
             </div>
-
             <mno-pagination
-              ng-if="vm.reviews.list.length != 0 "
+              ng-show="vm.reviews.totalItems && (vm.reviews.totalItems > vm.reviews.nbItems) && !vm.reviews.loading"
               page="vm.reviews.page"
               nb-items="vm.reviews.nbItems"
               total-items="vm.reviews.totalItems"
@@ -237,7 +236,7 @@
         <div class="questions">
           <div class="clearfix">
             <div class="questions-panel pull-right">
-              <form>
+              <form ng-show='vm.questions.totalItems != 0'>
                 <input class="form-control" type="text" name="name" value="" placeholder="{{'mno_enterprise.templates.dashboard.marketplace.show.question_search' | translate}}" ng-model="vm.searchWord">
                 <button class="fa fa-search" type="button" name="button" ng-click="vm.searchQuestion()"></button>
               </form>
@@ -248,13 +247,12 @@
             <span ng-show="vm.questions.loading"><i class="fa fa-refresh fa-spin fa-3x fa-fw"></i></span>
           </div>
           <div class="row">
-            <div ng-if="vm.questions.list.length == 0">
+            <div ng-if="vm.questions.totalItems == 0 && !vm.questions.loading">
               <span class="no-question-container" translate translate-value-name="{{vm.app.name}}">
                 mno_enterprise.templates.dashboard.marketplace.show.question.no_question
               </span>
             </div>
-
-            <div class="col-md-12" ng-repeat="(key, question) in vm.questions.list | filterQuestions:vm.searchWord">
+            <div ng-show="!vm.questions.loading" class="col-md-12" ng-repeat="(key, question) in vm.questions.list | filterQuestions:vm.searchWord">
               <div class="ribbon-question">
                 <div class="row">
                   <div class="row question-body">
@@ -295,6 +293,14 @@
             </div>
           </div>
         </div>
+        <mno-pagination
+          ng-show="vm.questions.totalItems && (vm.questions.totalItems > vm.questions.nbItems) && !vm.questions.loading"
+          page="vm.questions.page"
+          nb-items="vm.questions.nbItems"
+          total-items="vm.questions.totalItems"
+          on-change-cb="vm.questions.pageChangedCb(vm.app.id, nbItems, page)"
+          is-loading="vm.questions.loading">
+        </mno-pagination>
       </uib-tab>
     </uib-tabset>
   </div>
