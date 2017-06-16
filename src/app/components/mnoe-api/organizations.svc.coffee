@@ -151,7 +151,7 @@ angular.module 'mnoEnterpriseAngular'
       # Attempt to load organization from param
       if dhbRefId
         $log.debug "MnoeOrganizations.getCurrentId: dhbRefId", dhbRefId
-        defer.resolve(_self.get(dhbRefId))
+        _self.get(dhbRefId).then((response) -> defer.resolve(response))
       else
         # Load user's first organization or from cookie
         MnoeCurrentUser.get().then(
@@ -162,11 +162,11 @@ angular.module 'mnoEnterpriseAngular'
             if val?
               # Load organization id stored in cookie
               $log.debug "MnoeOrganizations.getCurrentId: cookie", val
-              defer.resolve(_self.get(val))
+              _self.get(val).then((response) -> defer.resolve(response))
             else
               # Load user's first organization id
               $log.debug "MnoeOrganizations.getCurrentId: first", response.organizations[0].id
-              defer.resolve(_self.get(response.organizations[0].id))
+              _self.get(response.organizations[0].id).then((response) -> defer.resolve(response))
         )
 
       return defer.promise
