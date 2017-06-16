@@ -118,11 +118,16 @@ angular.module 'mnoEnterpriseAngular'
 
       $state.go('home.impac') unless ONBOARDING_WIZARD_CONFIG.enabled
 
+      MnoeOrganizations = $injector.get('MnoeOrganizations')
       MnoeAppInstances = $injector.get('MnoeAppInstances')
-      MnoeAppInstances.getAppInstances().then(
-        (response) ->
-          if _.isEmpty(response)
-            $state.go('onboarding.step1')
-          else
-            $state.go('home.impac')
+
+      MnoeOrganizations.getCurrentOrganisation().then(
+        ->
+          MnoeAppInstances.getAppInstances().then(
+            (response) ->
+              if _.isEmpty(response)
+                $state.go('onboarding.step1')
+              else
+                $state.go('home.impac')
+          )
       )

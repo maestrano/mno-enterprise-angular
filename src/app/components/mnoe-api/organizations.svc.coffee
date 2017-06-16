@@ -1,6 +1,6 @@
 # Service for managing the users.
 angular.module 'mnoEnterpriseAngular'
-  .service 'MnoeOrganizations', ($state, $cookies, $log, $q, MnoeApiSvc, MnoeCurrentUser) ->
+  .service 'MnoeOrganizations', ($location, $state, $cookies, $log, $q, MnoeApiSvc, MnoeCurrentUser) ->
     _self = @
 
     organizationsApi = MnoeApiSvc.all('organizations')
@@ -145,13 +145,18 @@ angular.module 'mnoEnterpriseAngular'
       )
 
     # Load the current organization if defined (url, cookie or first)
-    @getCurrentId = (dhbRefId = null) ->
+    @getCurrentOrganisation = () ->
+      return organizationPromise if organizationPromise?
+
       defer = $q.defer()
+
+      dhbRefId = $location.search().dhbRefId
+      $location.search('dhbRefId', null)
 
       # Attempt to load organization from param
       if dhbRefId
-        $log.debug "MnoeOrganizations.getCurrentId: dhbRefId", dhbRefId
-        _self.get(dhbRefId).then((response) -> defer.resolve(response))
+        $log.debug "MnoeOrganizations.getCurrentOrganisation: dhbRefId", dhbRefId
+        organizationPromise = _self.get(dhbRefId).then((response) -> defer.resolve(response))
       else
         # Load user's first organization or from cookie
         MnoeCurrentUser.get().then(
@@ -161,12 +166,12 @@ angular.module 'mnoEnterpriseAngular'
             val = $cookies.get("#{response.id}_dhb_ref_id")
             if val?
               # Load organization id stored in cookie
-              $log.debug "MnoeOrganizations.getCurrentId: cookie", val
-              _self.get(val).then((response) -> defer.resolve(response))
+              $log.debug "MnoeOrganizations.getCurrentOrganisation: cookie", val
+              organizationPromise = _self.get(val).then((response) -> defer.resolve(response))
             else
               # Load user's first organization id
-              $log.debug "MnoeOrganizations.getCurrentId: first", response.organizations[0].id
-              _self.get(response.organizations[0].id).then((response) -> defer.resolve(response))
+              $log.debug "MnoeOrganizations.getCurrentOrganisation: first", response.organizations[0].id
+              organizationPromise = _self.get(response.organizations[0].id).then((response) -> defer.resolve(response))
         )
 
       return defer.promise
