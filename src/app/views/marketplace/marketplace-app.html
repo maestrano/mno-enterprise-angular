@@ -222,7 +222,7 @@
               </div>
             </div>
             <mno-pagination
-              ng-show="vm.reviews.totalItems && (vm.reviews.totalItems > vm.reviews.nbItems) && !vm.reviews.loading"
+              ng-show="vm.isReviewsPaginationShown()"
               page="vm.reviews.page"
               nb-items="vm.reviews.nbItems"
               total-items="vm.reviews.totalItems"
@@ -294,7 +294,7 @@
           </div>
         </div>
         <mno-pagination
-          ng-show="vm.questions.totalItems && (vm.questions.totalItems > vm.questions.nbItems) && !vm.questions.loading"
+          ng-show="vm.isQuestionsPaginationShown()"
           page="vm.questions.page"
           nb-items="vm.questions.nbItems"
           total-items="vm.questions.totalItems"

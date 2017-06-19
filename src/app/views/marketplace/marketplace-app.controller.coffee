@@ -77,7 +77,7 @@ angular.module 'mnoEnterpriseAngular'
               vm.questions.nbItems = nbItems
               vm.questions.page = page
               offset = (page  - 1) * nbItems
-              fetchQuestions(appId, nbItems, offset, searchWord = '')
+              fetchQuestions(appId, nbItems, offset, vm.questions.searchWord)
 
           fetchQuestions(app.id, vm.questions.nbItems, 0)
 
@@ -89,7 +89,12 @@ angular.module 'mnoEnterpriseAngular'
 
         vm.canUserEditReview = (review) ->
           (review.user_id == vm.userId) && (parseInt(review.edited_by_id) == review.user_id || !review.edited_by_id)
+        
+        vm.isQuestionsPaginationShown = () ->
+          vm.questions.totalItems && (vm.questions.totalItems > vm.questions.nbItems) && !vm.questions.loading
 
+        vm.isReviewsPaginationShown = () ->
+          vm.reviews.totalItems && (vm.reviews.totalItems > vm.reviews.nbItems) && !vm.reviews.loading
         #====================================
         # Cart Management
         #====================================
@@ -122,7 +127,7 @@ angular.module 'mnoEnterpriseAngular'
             # Increment # of items
             vm.reviews.totalItems++
             
-            vm.reviews.pageChangedCb(vm.app.id, vm.reviews.nbItems, page = 1)
+            vm.reviews.pageChangedCb(vm.app.id, vm.reviews.nbItems, vm.reviews.page)
 
             # Update average rating
             updateAverageRating(response.average_rating)
@@ -172,7 +177,7 @@ angular.module 'mnoEnterpriseAngular'
 
         MnoConfirm.showModal(modalOptions).then(
           (response) ->
-            vm.reviews.pageChangedCb(vm.app.id, vm.reviews.nbItems, page = 1)
+            vm.reviews.pageChangedCb(vm.app.id, vm.reviews.nbItems, vm.reviews.page)
             updateAverageRating(response.average_rating)
             updateAnyReviews()
         )
@@ -258,7 +263,7 @@ angular.module 'mnoEnterpriseAngular'
         modalInstance.result.then(
           (response) ->
             vm.questions.list.unshift(response.app_question)
-            vm.questions.pageChangedCb(vm.app.id, vm.questions.nbItems, page = 1)
+            vm.questions.pageChangedCb(vm.app.id, vm.questions.nbItems, vm.questions.page)
             updateAnyQuestions()
         )
 
@@ -296,7 +301,7 @@ angular.module 'mnoEnterpriseAngular'
         MnoConfirm.showModal(modalOptions).then(
           ->
             vm.questions.list.splice(key, 1)
-            vm.questions.pageChangedCb(vm.app.id, vm.questions.nbItems, page = 1)
+            vm.questions.pageChangedCb(vm.app.id, vm.questions.nbItems, vm.questions.page)
             updateAnyQuestions()
         )
 
