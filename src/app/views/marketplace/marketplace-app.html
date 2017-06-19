@@ -20,7 +20,7 @@
         </div>
         <div class="pull-left links">
           <a ng-show="vm.anyReviews" ng-click="vm.scrollToReviews()" href="">{{vm.reviews.list.length}} {{'mno_enterprise.templates.dashboard.marketplace.show.reviews' | translate}}</a>
-          <span ng-if="vm.anyReviews && vm.anyQuestions">  |  </span>
+          <span ng-if="vm.anyReviews && vm.anyQuestions">&nbsp;|&nbsp;</span>
           <a ng-show="vm.anyQuestions" ng-click="vm.scrollToQuestions()" href="">{{vm.questions.list.length}} {{'mno_enterprise.templates.dashboard.marketplace.show.questions' | translate}}</a>
         </div>
       </div>
