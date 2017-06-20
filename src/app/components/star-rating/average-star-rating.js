@@ -41,4 +41,3 @@ angular.module("mnoEnterpriseAngular")
     }
   };
 });
-

@@ -11,7 +11,7 @@
 const path = require('path');
 const gutil = require('gulp-util');
 
-exports.ngModule = 'frontendAdmin';
+exports.ngModule = 'mnoEnterpriseAngular';
 
 /**
  *  The main paths of your project handle these with care

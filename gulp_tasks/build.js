@@ -31,7 +31,7 @@ function build() {
   const jsFilter = filter(conf.path.tmp('**/*.js'), {restore: true});
   const cssFilter = filter(conf.path.tmp('**/*.css'), {restore: true});
 
-  return gulp.src(conf.path.tmp('/index.html'))
+  return gulp.src(conf.path.tmp('/*.html'))
     .pipe(inject(partialsInjectFile, partialsInjectOptions))
     .pipe(useref({}, lazypipe().pipe(sourcemaps.init, {loadMaps: true})))
     .pipe(jsFilter)
