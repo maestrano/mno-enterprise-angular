@@ -114,7 +114,9 @@ angular.module 'mnoEnterpriseAngular'
             controllerAs: 'vm'
 
     $urlRouterProvider.otherwise ($injector, $location) ->
-      $state.go('home.impac') unless ONBOARDING_WIZARD_CONFIG.enabled
+      unless ONBOARDING_WIZARD_CONFIG.enabled
+        $location.url('/impac')
+        return
 
       MnoeOrganizations = $injector.get('MnoeOrganizations')
       MnoeAppInstances = $injector.get('MnoeAppInstances')
