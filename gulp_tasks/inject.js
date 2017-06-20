@@ -13,7 +13,7 @@ function inject() {
     conf.path.tmp('app/**/*.module.js'),
     conf.path.tmp('app/**/*.js'),
     `!${conf.path.tmp('**/*.spec.js')}`
-  ])//.pipe(angularFilesort()).on('error', conf.errorHandler('AngularFilesort'));
+  ]);//.pipe(angularFilesort()).on('error', conf.errorHandler('AngularFilesort'));
 
   const injectOptions = {
     ignorePath: [conf.paths.src, conf.paths.tmp],
