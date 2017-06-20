@@ -4,8 +4,11 @@ angular.module 'mnoEnterpriseAngular'
     dashboard: '/dashboard/',
     logout: '/mnoe/auth/users/sign_out'
   })
+  .constant('DOC_LINKS', {
+    connecDoc: 'https://maestrano.atlassian.net/wiki/x/BIHLAQ'
+  })
   .constant('LOCALSTORAGE', {
-    appInstancesKey: 'appInstances'
+    appInstancesKey: 'appInstancesV2'
   })
   .constant('LOCALES', {
     'locales': [

@@ -23,7 +23,6 @@ angular.module 'mnoEnterpriseAngular'
         # Triggered when the locale change, locale can be reverted using $scope.previousLocale
         $scope.changeLanguage = () ->
           locale = _.findWhere(LOCALES.locales, { id: $scope.selectedLangKey })
-          console.log locale
 
           modalOptions =
             closeButtonText: 'Cancel'

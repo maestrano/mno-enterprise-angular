@@ -1,0 +1,21 @@
+<div id="step1">
+  <div class="row">
+    <div class="col-lg-10 col-lg-offset-1">
+      <div class="content-panel">
+        <div class="text-center">
+          <h1 translate translate-value-name="{{vm.user.name}}">
+            mno_enterprise.templates.onboarding.welcome.title
+          </h1>
+        </div>
+        <p class="top-buffer-2" translate>mno_enterprise.templates.onboarding.welcome.intro</p>
+        <p class="top-buffer-1" translate>mno_enterprise.templates.onboarding.welcome.setup</p>
+        <div class="text-center">
+          <button class="btn btn-primary next-button" ui-sref="onboarding.step2" ng-disabled="vm.isLoading">
+            <span ng-show="vm.isLoading"><i class="fa fa-refresh fa-spin"></i>&nbsp;</span>
+            <span translate>mno_enterprise.templates.onboarding.welcome.choose_my_apps</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

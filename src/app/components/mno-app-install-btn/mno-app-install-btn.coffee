@@ -16,10 +16,7 @@ angular.module 'mnoEnterpriseAngular'
           if vm.app.multi_instantiable
             "INSTALLABLE"
           else
-            if vm.app.app_nid != 'office-365' && vm.app.stack == 'connector' && !vm.app.oauth_keys_valid
-              "INSTALLED_CONNECT"
-            else
-              "INSTALLED_LAUNCH"
+            MnoeAppInstances.installStatus(vm.appInstance)
         else
           if vm.conflictingApp
             "CONFLICT"
@@ -31,7 +28,6 @@ angular.module 'mnoEnterpriseAngular'
       vm.provisionApp = () ->
         return if !vm.canProvisionApp
         vm.isLoadingButton = true
-        MnoeAppInstances.clearCache()
 
         # Get the authorization status for the current organization
         if MnoeOrganizations.role.atLeastAdmin(vm.user_role)
@@ -51,6 +47,9 @@ angular.module 'mnoEnterpriseAngular'
                   displayLaunchToastr(vm.app)
                 else
                   displayConnectToastr(vm.app)
+        ).then(
+          ->
+            MnoeAppInstances.refreshAppInstances()
         ).finally(-> vm.isLoadingButton = false)
 
       displayLaunchToastr = (app) ->

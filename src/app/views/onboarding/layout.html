@@ -1,0 +1,29 @@
+<div id="onboarding">
+  <header class="header">
+    <img class="logo" src="images/main-logo.png">
+    <span>
+      <span class="name">{{onboarding.user.name}} {{onboarding.user.surname}}</span>
+      <img class="avatar" ng-src="{{onboarding.user.avatar_url}}">
+    </span>
+  </header>
+  <div class="sub-header">
+    <a class="breadcrumb-item" ui-sref="onboarding.step1" ui-sref-active="active">
+      <span class="badge">1</span>
+      <span class="title" translate>mno_enterprise.templates.onboarding.breadcrumb.step1</span>
+    </a>
+    <a class="breadcrumb-item" ui-sref="onboarding.step2" ui-sref-active="active">
+      <span class="badge">2</span>
+      <span class="title" translate>mno_enterprise.templates.onboarding.breadcrumb.step2</span>
+    </a>
+    <a class="breadcrumb-item" ui-sref="onboarding.step3" ui-sref-active="active">
+      <span class="badge">3</span>
+      <span class="title" translate>mno_enterprise.templates.onboarding.breadcrumb.step3</span>
+    </a>
+    <a class="breadcrumb-item" ui-sref="onboarding.step4" ui-sref-active="active">
+      <span class="badge">4</span>
+      <span class="title" translate>mno_enterprise.templates.onboarding.breadcrumb.step4</span>
+    </a>
+  </div>
+
+  <div class="container" ui-view></div>
+</div>

@@ -1,0 +1,26 @@
+<div ng-show="$ctrl.isLoadingAppInstances">
+  <i class="fa fa-refresh fa-spin fa-2x button-loader"></i>
+</div>
+
+<div ng-show="!$ctrl.isLoadingAppInstances" ng-switch on="$ctrl.appInstance.status">
+  <div ng-switch-when="CONFLICT" class="message">
+    <i class="fa fa-exclamation-triangle"></i>
+    {{ 'mno_enterprise.templates.components.app_install_btn.conflicting_app' | translate }}
+    <span>{{$ctrl.conflictingApp.name}}</span>
+  </div>
+  <div ng-switch-when="INSTALLED_LAUNCH">
+    <i class="fa fa-check fa-2x button-check"></i><br>
+    <span class="text-muted">(connected)</span>
+  </div>
+  <div ng-switch-when="INSTALLED_CONNECT">
+    <a href="" uib-tooltip="{{'mno_enterprise.templates.components.app_install_btn.create_account_tooltip' | translate}}" tooltip-placement="top" type="button" ng-click="$ctrl.launchAppInstance()" class="btn btn-warning btn-block">
+      {{ 'mno_enterprise.templates.components.app_install_btn.create_account' | translate }}
+    </a>
+    <a href="" ng-click="$ctrl.connectAppInstance()" class="btn btn-warning btn-block">
+      {{ 'mno_enterprise.templates.components.app_install_btn.connect_app' | translate }}
+    </a>
+  </div>
+  <a href="" ng-switch-when="ADD_ON" ng-click="$ctrl.launchAppInstance()" class="btn btn-warning btn-block">
+    {{ 'mno_enterprise.templates.components.app_install_btn.access_addon' | translate }}
+  </a>
+</div>

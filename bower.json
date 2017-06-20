@@ -15,18 +15,20 @@
     "angular-translate-loader-static-files": "~2.14.0",
     "angular-translate-interpolation-messageformat": "~2.14.0",
     "angular-translate-handler-log": "~2.14.0",
-    "angular-ui-router": "~0.3.0",
+    "angular-ui-router": "~0.4.0",
     "angular-inflector": "~0.2.0",
     "angular-xeditable": "~0.5.0",
     "animate.css": "~3.5.2",
     "bootstrap": "~3.3.5",
     "font-awesome": "~4.7.0",
-    "impac-angular": "~1.5.0-rc1",
+    "impac-angular": "~1.5.0",
     "jquery": "~3.1.0",
     "less": "~2.5.3",
     "lodash": "~3.10.1",
     "ng-page-title": "^1.1.1",
-    "restangular": "~1.5.1"
+    "restangular": "~1.5.1",
+    "material-shadows": "^3.0.1",
+    "mno-ui-elements": "maestrano/mno-ui-elements#master"
   },
   "devDependencies": {
     "angular-mocks": "~1.6.0"
@@ -48,5 +50,9 @@
         "./fonts/*"
       ]
     }
+  },
+  "resolutions": {
+    "angular-bootstrap": "^2.5.0",
+    "lodash": "~3.10.1"
   }
 }
