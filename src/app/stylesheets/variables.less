@@ -51,60 +51,6 @@
 @login-box-oauth-bg-color-linkedin:   #0074C4;
 @login-box-oauth-bg-color-intuit:     #fff;
 
-
-/*-----------------------------------------------------------------------*/
-/*                           Onboarding                                  */
-/*-----------------------------------------------------------------------*/
-// Layout
-//--------------------------------------
-@onboarding-header-height: 60px;
-@onboarding-header-background-color: @bg-inverse-color;
-@onboarding-header-font-color: @text-inverse-color;
-@onboarding-subheader-height: 50px;
-@onboarding-subheader-background-color: @decorator-main-color;
-@onboarding-subheader-font-color: @text-strong-color;
-@onboarding-breadcrumb-badge-color: @text-inverse-strong-color;
-@onboarding-breadcrumb-badge-color-active: @text-inverse-strong-color;
-@onboarding-breadcrumb-badge-bg: @bg-inverse-color;
-@onboarding-breadcrumb-badge-bg-active: @decorator-touch-color;
-@onboarding-breadcrumb-link-color: @text-strong-color;
-@onboarding-content-panel-bg: @bg-inverse-color;
-@onboarding-content-panel-color: @bg-on-bg-inverse-color;
-@onboarding-content-panel-border-radius: 4px;
-
-// App features
-//--------------------------------------
-@onboarding-app-features-border: 1px solid @text-strong-color;
-@onboarding-app-features-color: @text-strong-color;
-@onboarding-app-features-checked: @brand-success;
-@onboarding-app-features-unchecked: @text-strong-color;
-
-// App selector
-//--------------------------------------
-@onboarding-app-selector-title: @text-strong-color;
-@onboarding-app-selector-info: @text-strong-color;
-@onboarding-app-selector-check-color: rgba(red(@brand-success), green(@brand-success), blue(@brand-success), 0.3);
-
-// App cards
-//--------------------------------------
-@onboarding-app-card-bg-color: white;
-@onboarding-app-card-text-color: @text-strong-color;
-@onboarding-app-card-padding: 10px;
-
-// App cards fetching loader
-//--------------------------------------
-@onboarding-fetching-apps-loader-color: white;
-
-// Connec! entities
-//--------------------------------------
-@onboarding-app-entities-checked: @brand-success;
-@onboarding-app-entities-unchecked: @brand-danger;
-
-// App connect
-//--------------------------------------
-@onboarding-app-connect-check: @brand-success;
-@onboarding-app-connect-loader: @decorator-main-color;
-
 /*-----------------------------------------------------------------------*/
 /*                           Dashboard Layout                            */
 /*-----------------------------------------------------------------------*/
@@ -113,6 +59,11 @@
 @dashboard-section-title-color:                 @text-strong-color;
 @dashboard-section-title-alignment:             center;
 @dashboard-section-title-display-subline:       true;
+
+// Loaders
+//--------------------------------------
+@dashboard-loader-color:                        @text-strong-color;
+@dashboard-loader-icon:                         { .icon-fa(refresh); .fa-2x; .fa-spin; }; //pass a ruleset
 
 // User without organisation
 //--------------------------------------
@@ -172,10 +123,58 @@
 @dashboard-cpy-select-link-hover-color:         @text-strong-color;
 @dashboard-cpy-select-link-hover-bg-color:      @text-inverse-strong-color;
 
-// Loaders
+/*-----------------------------------------------------------------------*/
+/*                           Onboarding                                  */
+/*-----------------------------------------------------------------------*/
+// Layout
 //--------------------------------------
-@dashboard-loader-color:                        @text-strong-color;
-@dashboard-loader-icon:                         { .icon-fa(refresh); .fa-2x; .fa-spin; }; //pass a ruleset
+@onboarding-header-height: 60px;
+@onboarding-header-background-color: @bg-inverse-color;
+@onboarding-header-font-color: @text-inverse-color;
+@onboarding-subheader-height: 50px;
+@onboarding-subheader-background-color: @decorator-main-color;
+@onboarding-subheader-font-color: @text-strong-color;
+@onboarding-breadcrumb-badge-color: @text-inverse-strong-color;
+@onboarding-breadcrumb-badge-color-active: @text-inverse-strong-color;
+@onboarding-breadcrumb-badge-bg: @bg-inverse-color;
+@onboarding-breadcrumb-badge-bg-active: @decorator-touch-color;
+@onboarding-breadcrumb-link-color: @text-strong-color;
+@onboarding-content-panel-bg: @bg-inverse-color;
+@onboarding-content-panel-color: @bg-on-bg-inverse-color;
+@onboarding-content-panel-border-radius: 4px;
+
+// App features
+//--------------------------------------
+@onboarding-app-features-border: 1px solid @text-strong-color;
+@onboarding-app-features-color: @text-strong-color;
+@onboarding-app-features-checked: @brand-success;
+@onboarding-app-features-unchecked: @text-strong-color;
+
+// App selector
+//--------------------------------------
+@onboarding-app-selector-title: @text-strong-color;
+@onboarding-app-selector-info: @text-strong-color;
+@onboarding-app-selector-check-color: rgba(red(@brand-success), green(@brand-success), blue(@brand-success), 0.3);
+
+// App cards
+//--------------------------------------
+@onboarding-app-card-bg-color: white;
+@onboarding-app-card-text-color: @text-strong-color;
+@onboarding-app-card-padding: 10px;
+
+// App cards fetching loader
+//--------------------------------------
+@onboarding-fetching-apps-loader-color: white;
+
+// Connec! entities
+//--------------------------------------
+@onboarding-app-entities-checked: @brand-success;
+@onboarding-app-entities-unchecked: @brand-danger;
+
+// App connect
+//--------------------------------------
+@onboarding-app-connect-check: @brand-success;
+@onboarding-app-connect-loader: @decorator-main-color;
 
 /*-----------------------------------------------------------------------*/
 /*                        Dashboard > Apps Section                       */
@@ -347,7 +346,7 @@
 @impac-widget-accounts-comparison-lines-container-max-height: 250px;
 
 /*-----------------------------------------------------------------------*/
-/*                 Mno Enterprise > Marketplace Section                  */
+/*                       Marketplace Section                             */
 /*-----------------------------------------------------------------------*/
 @dashboard-marketplace-search-text-color:             @text-strong-color;
 @dashboard-marketplace-search-border-color:           @text-strong-color;
@@ -367,6 +366,22 @@
 @dashboard-marketplace-show-sections-text-color:      @text-strong-color;
 
 @dashboard-marketplace-app-card:                      { display: block; padding: 10px; height: 120px; margin-bottom: 10px; font-weight: 300; };
+
+/*-----------------------------------------------------------------------*/
+/*                          Reviews and comments                         */
+/*-----------------------------------------------------------------------*/
+@no-review-bg-panel-color:       darken(@bg-on-bg-inverse-color, 5%);
+
+@comment-bg:                     @bg-main-color;
+@comment-text-color:             @text-strong-color;
+@comment-attributes-color:       @bg-inverse-color;
+
+@no-question-bg-panel-color:     darken(@bg-on-bg-inverse-color, 5%);
+@question-search-btn-bg:         @bg-inverse-color;
+@question-search-btn-color:      @text-inverse-color;
+@question-search-border:         1px solid @bg-inverse-color;
+@question-bg:                    @bg-on-bg-inverse-color;
+@question-ribbon-bg:             @bg-on-bg-inverse-color;
 
 /*-----------------------------------------------------------------------*/
 /*                     Responsive Table (cell table)                     */
@@ -414,19 +429,3 @@
 /*                                 Buttons                               */
 /*-----------------------------------------------------------------------*/
 @btn-danger-background:          @brand-danger;
-
-/*-----------------------------------------------------------------------*/
-/*                          Reviews and comments                         */
-/*-----------------------------------------------------------------------*/
-@no-review-bg-panel-color:       darken(@bg-on-bg-inverse-color, 5%);
-
-@comment-bg:                     @bg-main-color;
-@comment-text-color:             @text-strong-color;
-@comment-attributes-color:       @bg-inverse-color;
-
-@no-question-bg-panel-color:     darken(@bg-on-bg-inverse-color, 5%);
-@question-search-btn-bg:         @bg-inverse-color;
-@question-search-btn-color:      @text-inverse-color;
-@question-search-border:         1px solid @bg-inverse-color;
-@question-bg:                    @bg-on-bg-inverse-color;
-@question-ribbon-bg:             @bg-on-bg-inverse-color;

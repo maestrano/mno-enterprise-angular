@@ -6,48 +6,42 @@ ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
   #============================================
   default_theme = {
     # Main colors
-    '@bg-main-color':        "#aeb5bf"
-    '@decorator-main-color': "#758192"
-    '@decorator-alt-color':  "#977bf0"
-    '@text-strong-color':    "#17262d"
+    '@bg-main-color':                  "#aeb5bf"
+    '@decorator-main-color':           "#758192"
+    '@text-strong-color':              "#977bf0"
+    '@text-inverse-strong-color':      "#17262d"
 
     # Inverse colors
     '@bg-inverse-color':               "#ffffff"
     '@bg-on-bg-inverse-color':         "#cacfd6"
-    '@bg-inverse-intense-color':       "#17262d"
     '@decorator-inverse-color':        "#977bf0"
     '@text-inverse-color':             "#17262d"
 
     # Color used in small/isolated elements
-    '@elem-positive-color':            "#d1e55c"
-    '@elem-positive-flash-color':      "#47ff00"
-    '@elem-cozy-color':                "#977bf0"
+    '@decorator-touch-color':          "#d1e55c"
   }
 
   $scope.theme = theme = angular.copy(default_theme)
 
   $scope.labels = {
     # Main colors
-    '@bg-main-color':          "Dashboard background color"
-    '@decorator-main-color':   "Elements placed on top of bg-main-color"
-    '@decorator-alt-color':    "Elements placed on top of bg-main-color (secondary)"
-    '@text-strong-color':      "Used for text used in the context of bg-main-color"
+    '@bg-main-color':                   "Dashboard background color"
+    '@decorator-main-color':            "Elements placed on top of bg-main-color"
+    '@text-strong-color':               "Used for text used in the context of bg-main-color"
+    '@text-inverse-strong-color':       "Used for text used in the context of inverse bg-main-color"
+
     # Inverse colors
-    '@bg-inverse-color':       "Background color used for dashboard side menu. top banners, inverse modals"
-    '@bg-on-bg-inverse-color': "Background color for elements displayed on top of inverse elements"
-    '@bg-inverse-intense-color':       "Background color used for elements on top of bg-inverse-color"
-    '@decorator-inverse-color':        "Design elements (lines, borders) on top of bg-inverse-color"
-    '@text-inverse-color':             "Text used on top of bg-inverse-color such as inverse modals"
+    '@bg-inverse-color':                "Background color used for dashboard side menu. top banners, inverse modals"
+    '@bg-on-bg-inverse-color':          "Background color for elements displayed on top of inverse elements"
+    '@decorator-inverse-color':         "Design elements (lines, borders) on top of bg-inverse-color"
+    '@text-inverse-color':              "Text used on top of bg-inverse-color such as inverse modals"
 
     # Color used in small/isolated elements
-    '@elem-positive-color':            "used to reflect a positive action or point (e.g: tick icon)"
-    '@elem-positive-flash-color':      "stronger version of elem-positive-color (barely used)"
-    '@elem-cozy-color':                "used for regular design element - fits well with both main and inverse backgrounds"
+    '@decorator-touch-color':           "Color used as a decoration on small icons or specific text"
   }
 
   # Length of longest key (for padding purpose)
   key_length = _.max(_.keys(default_theme), (k) -> k.length).length + 2
-
 
   default_variables = {
     'Fonts & Text': {
@@ -58,39 +52,44 @@ ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
     },
 
     'General Colors': {
-      '@brand-success':                  '@elem-positive-color'
-      '@brand-warning':                  '@decorator-alt-color'
-      '@brand-info':                     '@text-inverse-color'
-      '@brand-danger':                   '@text-inverse-color'
-      '@brand-primary':                  '@text-inverse-color'
+      '@brand-success':                  '#33d375'
+      '@brand-warning':                  '#F2B469'
+      '@brand-info':                     '#8CBEB2'
+      '@brand-danger':                   '#EE6163'
+      '@brand-primary':                  '#8CBEB2'
     },
-
-    'Forms': {
-      '@input-bg': '@elem-cozy-color'
-      '@input-color': '@text-inverse-color'
-      '@input-color-placeholder': '@input-color'
-
-      '@input-label-color': '@text-inverse-color'
-    }
 
     'Public Page Header': {
       '@public-page-header-bg-color':        '@bg-inverse-color'
       '@public-page-header-padding':         '10px'
-      '@public-page-header-logo':            '{ min-height: 61px; max-width: 160px; max-height: 130px; margin: 17px auto 5px auto; }'
+
+      '@public-page-header-logo-img':        'mno_enterprise/main-logo.png'
+      '@public-page-header-logo:':           '{ min-height: 61px; max-width: 160px; max-height: 130px; margin: 17px auto 5px auto; }'
     },
 
-
     'Login Page': {
+      '@login-bg-img':                       'mno_enterprise/login-background.jpg'
       '@login-bg-color':                     '@bg-main-color'
-      '@login-box-bg-color':                 '@bg-inverse-color'
-      '@login-box-padding':                  '20px'
-      '@login-box-brand-logo':               '{ min-height: 61px; max-width: 160px; max-height: 130px; margin: 17px auto 5px auto; }'
-      '@login-box-btn-login':                '{ width: 100%; }'
       '@login-box-grid-position':            '{ margin-top: 80px; .make-sm-column(4); .make-sm-column-offset(4); }'
 
-      '@login-box-title-color':              '@decorator-main-color'
+      '@login-box-corners':                  '0'
+      '@login-box-title-color':              '@text-inverse-color'
       '@login-box-title':                    '{ text-transform: uppercase; }'
       '@login-box-title-display-box-arrow':  'false'
+
+      '@login-box-bg-color':                 '@bg-inverse-color'
+      '@login-box-padding':                  '20px'
+      '@login-box-brand-logo-img':           'mno_enterprise/main-logo.png'
+      '@login-box-brand-logo':               '{ min-height: 61px; max-width: 160px; max-height: 130px; margin: 17px auto 5px auto; }'
+      '@login-box-btn-login':                '{ width: 100%; }'
+
+
+      '@login-box-sso-intuit-logo':           'mno_enterprise/logo-intuit.png'
+      '@login-box-oauth-text-color':          '#fff'
+      '@login-box-oauth-bg-color-facebook':   '#3b5998'
+      '@login-box-oauth-bg-color-google':     '#dd4b39'
+      '@login-box-oauth-bg-color-linkedin':   '#0074C4'
+      '@login-box-oauth-bg-color-intuit':     '#fff'
     },
 
     'Dashboard Layout': {
@@ -101,43 +100,91 @@ ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
       '@dashboard-section-title-display-subline':       'false'
     },
 
+    'Dashboard Loader': {
+      '@dashboard-loader-color':                        '@text-strong-color'
+      '@dashboard-loader-icon':                         '{ .icon-fa(refresh); .fa-2x; .fa-spin; }'
+    },
+
+    'User Without Organisation Screen': {
+      '@without-organisation-well-bg':                  '@bg-inverse-color'
+      '@without-organisation-text-color':               '@text-inverse-color'
+    },
+
     'Dashboard Side Menu': {
-      '@dashboard-side-menu-padding': '30px 0px 0px 14px'
-      '@dashboard-side-menu-bg-color': '@bg-inverse-color'
-      '@dashboard-side-menu-brand-logo': '{ background-size: 204px; width: 51px; margin-left: 5px; }'
-      '@dashboard-side-menu-brand-logo-expanded': '{ width: 201px; background-size: 100%; }'
+      '@dashboard-side-menu-padding':                  '30px 0px 0px 14px'
+      '@dashboard-side-menu-bg-color':                 '@bg-inverse-color'
+
+      '@dashboard-side-menu-brand-logo-img':           '../images/main-logo.png'
+      '@dashboard-side-menu-brand-logo':               '{ background-size: 204px; width: 51px; margin-left: 5px; }'
+      '@dashboard-side-menu-brand-logo-expanded':      '{ width: 201px; background-size: 100%; }'
 
       '@dashboard-side-menu-link-color':               '@text-inverse-color'
       '@dashboard-side-menu-link-bg-color':            '@dashboard-side-menu-bg-color'
+
       '@dashboard-side-menu-link-hover-color':         '@dashboard-side-menu-bg-color'
       '@dashboard-side-menu-link-hover-bg-color':      'lighten(@bg-main-color,15%)'
+
       '@dashboard-side-menu-link-active-color':        '@dashboard-side-menu-bg-color'
       '@dashboard-side-menu-link-active-bg-color':     '@bg-main-color'
     },
 
     'Dashboard Company Select Box': {
+      '@dashboard-cpy-select-width':                    '280px'
+      '@dashboard-cpy-select-pic-width':                '50px'
       '@dashboard-cpy-select-bg-color':                 '@bg-inverse-color'
-      '@dashboard-cpy-select-border-radius':            '0px'
+      '@dashboard-cpy-select-border-radius':            '0 0 0 6px'
       '@dashboard-cpy-select-padding':                  '15px 25px'
+      '@dashboard-cpy-select-border-color':             '@text-inverse-color'
+      '@dashboard-cpy-select-list-border-color':        'lighten(@bg-inverse-color, 10%)'
 
-      '@dashboard-cpy-select-header-text-color':        '@text-inverse-color'
+      '@dashboard-cpy-select-header-title-color':       '@text-inverse-color'
+      '@dashboard-cpy-select-header-company-color':     '@decorator-inverse-color'
       '@dashboard-cpy-select-header-text-size':         '13px'
 
-      '@dashboard-cpy-select-link-color':               '@dashboard-cpy-select-header-text-color'
+      '@dashboard-cpy-select-link-text-color':          '@link-color'
+      '@dashboard-cpy-select-link-icon-color':          '@decorator-touch-color'
 
-      '@dashboard-cpy-select-link-hover-color':         '@dashboard-cpy-select-link-color'
-      '@dashboard-cpy-select-link-hover-bg-color':      'lighten(@dashboard-cpy-select-bg-color,10%)'
-
-      '@dashboard-cpy-select-link-create-color':        '@decorator-alt-color'
-      '@dashboard-cpy-select-link-admin-color':         '@elem-positive-color'
-
-      '@dashboard-cpy-select-switch-btn-color':         '@dashboard-cpy-select-header-text-color'
-      '@dashboard-cpy-select-switch-btn-bg-color':      '@dashboard-cpy-select-bg-color'
+      '@dashboard-cpy-select-link-color':               '@text-inverse-strong-color'
+      '@dashboard-cpy-select-link-hover-color':         '@text-strong-color'
+      '@dashboard-cpy-select-link-hover-bg-color':      '@text-inverse-strong-color'
     },
 
-    'Dashboard Loader': {
-      '@dashboard-loader-color':                        '@bg-inverse-color'
-      '@dashboard-loader-icon':                         '{ .icon-fa(refresh); .fa-2x; .fa-spin; }'
+    'Onboarding': {
+      '@onboarding-header-height':                 '60px'
+      '@onboarding-header-background-color':       '@bg-inverse-color'
+      '@onboarding-header-font-color':             '@text-inverse-color'
+      '@onboarding-subheader-height':              '50px'
+      '@onboarding-subheader-background-color':    '@decorator-main-color'
+      '@onboarding-subheader-font-color':          '@text-strong-color'
+      '@onboarding-breadcrumb-badge-color':        '@text-inverse-strong-color'
+      '@onboarding-breadcrumb-badge-color-active': '@text-inverse-strong-color'
+      '@onboarding-breadcrumb-badge-bg':           '@bg-inverse-color'
+      '@onboarding-breadcrumb-badge-bg-active':    '@decorator-touch-color'
+      '@onboarding-breadcrumb-link-color':         '@text-strong-color'
+      '@onboarding-content-panel-bg':              '@bg-inverse-color'
+      '@onboarding-content-panel-color':           '@bg-on-bg-inverse-color'
+      '@onboarding-content-panel-border-radius':   '4px'
+
+      '@onboarding-app-features-border':           '1px solid @text-strong-color'
+      '@onboarding-app-features-color':            '@text-strong-color'
+      '@onboarding-app-features-checked':          '@brand-success'
+      '@onboarding-app-features-unchecked':        '@text-strong-color'
+
+      '@onboarding-app-selector-title':            '@text-strong-color'
+      '@onboarding-app-selector-info':             '@text-strong-color'
+      '@onboarding-app-selector-check-color':      'rgba(red(@brand-success), green(@brand-success), blue(@brand-success), 0.3)'
+
+      '@onboarding-app-card-bg-color':             'white'
+      '@onboarding-app-card-text-color':           '@text-strong-color'
+      '@onboarding-app-card-padding':              '10px'
+
+      '@onboarding-fetching-apps-loader-color':    'white'
+
+      '@onboarding-app-entities-checked':          '@brand-success'
+      '@onboarding-app-entities-unchecked':        '@brand-danger'
+
+      '@onboarding-app-connect-check':             '@brand-success'
+      '@onboarding-app-connect-loader':            '@decorator-main-color'
     },
 
     'Apps Section': {
@@ -150,33 +197,48 @@ ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
       '@dashboard-apps-tile-settings-color':            '@dashboard-apps-tile-text-color'
       '@dashboard-apps-tile-settings-bg-color':         '@dashboard-apps-tile-bg-color'
 
-      '@dashboard-apps-tile-settings-hover-color':      '@dashboard-apps-tile-bg-color'
-      '@dashboard-apps-tile-settings-hover-bg-color':   '@dashboard-apps-tile-text-color'
+      '@dashboard-apps-tile-settings-hover-color':      '@dashboard-apps-tile-text-color'
+      '@dashboard-apps-tile-settings-hover-bg-color':   '@dashboard-apps-tile-bg-color'
 
-      '@dashboard-apps-tile-add-color':                 '@dashboard-apps-tile-bg-color'
+      '@dashboard-apps-tile-add-color':                 '@dashboard-apps-tile-text-color'
       '@dashboard-apps-tile-add-bg-color':              '@dashboard-apps-tile-bg-color'
     },
 
+    'My account Section': {
+      '@dashboard-account-tabs-bg-color':                    '@bg-on-bg-inverse-color'
+      '@dashboard-account-tabs-text-color':                  '@text-inverse-color'
+      '@dashboard-account-panel-header-bg-color':            '@bg-inverse-color'
+      '@dashboard-account-panel-header-text-color':          '@text-inverse-color'
+      '@dashboard-account-panel-body-bg-color':              '@bg-on-bg-inverse-color'
+      '@dashboard-account-panel-text-color':                 '@text-strong-color'
+      '@dashboard-account-inline-text-color-checked':        '@brand-success'
+      '@dashboard-account-inline-text-color-unchecked':      '@decorator-inverse-color'
+    },
+
     'Company Section': {
-      '@dashboard-cpy-tabs-bg-color':                    '@bg-inverse-color'
-      '@dashboard-cpy-tabs-text-color':                  '@text-inverse-color'
+      '@dashboard-cpy-tabs-bg-color':                    '@decorator-main-color'
+      '@dashboard-cpy-tabs-text-color':                  '@text-strong-color'
       '@dashboard-cpy-tabs-border-radius':               '2px'
 
       '@dashboard-cpy-tabs-subline-size':                '0px'
       '@dashboard-cpy-tabs-subline-color':               'transparent'
 
-      '@dashboard-cpy-tabs-active-text-color':           '@elem-positive-color'
+      '@dashboard-cpy-tabs-active-text-color':           '@decorator-main-color'
       '@dashboard-cpy-tabs-active-bg-color':             '@bg-inverse-color'
 
-      '@dashboard-cpy-tabs-hover-text-color':            '@elem-positive-color'
+      '@dashboard-cpy-tabs-hover-text-color':            '@decorator-main-color'
       '@dashboard-cpy-tabs-hover-bg-color':              '@bg-inverse-color'
 
-      '@dashboard-cpy-tabcontent-bg-color':              '@dashboard-cpy-tabs-bg-color'
-    },
+      '@dashboard-cpy-tabcontent-header-bg-color':         '@bg-inverse-color'
+      '@dashboard-cpy-tabcontent-body-bg-color':           '@bg-on-bg-inverse-color'
+      '@dashboard-cpy-tabcontent-bg-color':                '@bg-inverse-color'
+      '@dashboard-cpy-tabcontent-text-color':              '@text-inverse-strong-color'
 
-    'Company Team Section': {
-      '@dashboard-cpy-teams-matrix-bg-color':            '@bg-inverse-color'
-      '@dashboard-cpy-teams-matrix-border-color':        'lighten(@bg-main-color,30%)'
+      '@dashboard-cpy-teams-matrix-bg-color':              '@bg-inverse-color'
+      '@dashboard-cpy-teams-matrix-border-color':          '@bg-inverse-color'
+      '@dashboard-cpy-teams-matrix-text-color':            '@text-inverse-color'
+      '@dashboard-cpy-teams-matrix-text-hover-color':      '@text-inverse-color'
+      '@dashboard-cpy-teams-matrix-text-edit-color':       '@text-strong-color'
     },
 
     'Impac Dashboard': {
@@ -184,7 +246,7 @@ ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
       '@impac-dashboard-margin-left':                   '0px'
 
       '@impac-dashboard-title-label-color':             '@text-strong-color'
-      '@impac-dashboard-title-color':                   '@elem-cozy-color'
+      '@impac-dashboard-title-color':                   '@decorator-inverse-color'
       '@impac-dashboard-source-color':                  '@impac-dashboard-title-label-color'
       '@impac-dashboard-buttons-border-radius':         '4px'
 
@@ -195,11 +257,12 @@ ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
 
     'Impac Widgets': {
       # Global
-      '@impac-widget-background-color':                 '@bg-inverse-color'
-      '@impac-widget-text-color':                       '@text-inverse-color'
-      '@impac-widget-text-color-light':                 'lighten(@impac-widget-text-color,70%)'
-      '@impac-widget-borders-color':                    'lighten(@impac-widget-text-color-light,10%)'
+      '@impac-widget-background-color':                 '@bg-on-bg-inverse-color'
+      '@impac-widget-text-color':                       'black'
+      '@impac-widget-text-color-light':                 '@text-strong-color'
+      '@impac-widget-borders-color':                    'lighten(@impac-widget-text-color, 80%)'
       '@impac-widget-link-color':                       '@decorator-inverse-color'
+      '@impac-widget-top-buttons-color':                'lighten(@impac-widget-text-color, 70%)'
 
       # Title
       '@impac-widget-title-text-color':                 'darken(@impac-widget-text-color,5%)'
@@ -220,8 +283,8 @@ ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
 
       # Price
       '@impac-widget-price-color':                      '@impac-widget-text-color'
-      '@impac-widget-price-positive-color':             '@elem-positive-color'
-      '@impac-widget-price-negative-color':             '@elem-cozy-color'
+      '@impac-widget-price-positive-color':             '@brand-success'
+      '@impac-widget-price-negative-color':             '@brand-danger'
       '@impac-widget-currency-color':                   '@impac-widget-text-color-light'
       '@impac-widget-legend-color':                     'lighten(@impac-widget-text-color,30%)'
 
@@ -240,22 +303,47 @@ ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
     },
 
     'Marketplace Section': {
-      '@dashboard-marketplace-search-text-color':             '@bg-inverse-color'
-      '@dashboard-marketplace-search-border-color':           '@bg-inverse-intense-color'
+      '@dashboard-marketplace-search-text-color':             '@text-strong-color'
+      '@dashboard-marketplace-search-border-color':           '@text-strong-color'
 
-      '@dashboard-marketplace-tile-bg-color':                 '@bg-inverse-color'
-      '@dashboard-marketplace-tile-text-color':               '@text-inverse-color'
-      '@dashboard-marketplace-tile-img-border-color':         '@dashboard-marketplace-tile-bg-color'
+      '@dashboard-marketplace-tile-bg-color':                 '@bg-on-bg-inverse-color'
+      '@dashboard-marketplace-tile-text-color':               '@text-strong-color'
+      '@dashboard-marketplace-tile-name-color':               '@bg-inverse-color'
+      '@dashboard-marketplace-tile-img-border-color':         '@decorator-main-color'
 
       '@dashboard-marketplace-tile-hover-bg-color':           '@decorator-main-color'
       '@dashboard-marketplace-tile-hover-text-color':         '@dashboard-marketplace-tile-text-color'
       '@dashboard-marketplace-tile-hover-img-border-color':   'darken(@decorator-main-color,10%)'
       '@dashboard-marketplace-tile-hover-arrow-color':        '@text-strong-color'
 
-      '@dashboard-marketplace-show-header-text-color':        '@bg-inverse-color'
+      '@dashboard-marketplace-show-header-text-color':        '@text-strong-color'
+      '@dashboard-marketplace-show-sections-bg-color':        '@bg-on-bg-inverse-color'
+      '@dashboard-marketplace-show-sections-text-color':      '@text-strong-color'
 
       '@dashboard-marketplace-app-card':                      '{ display: block; padding: 10px; height: 120px; margin-bottom: 10px; font-weight: 300; }'
     },
+
+    'Reviews & Comments Section': {
+      '@no-review-bg-panel-color':       'darken(@bg-on-bg-inverse-color, 5%)'
+
+      '@comment-bg':                     '@bg-main-color'
+      '@comment-text-color':             '@text-strong-color'
+      '@comment-attributes-color':       '@bg-inverse-color'
+
+      '@no-question-bg-panel-color':     'darken(@bg-on-bg-inverse-color, 5%)'
+      '@question-search-btn-bg':         '@bg-inverse-color'
+      '@question-search-btn-color':      '@text-inverse-color'
+      '@question-search-border':          '1px solid @bg-inverse-color'
+      '@question-bg':                    '@bg-on-bg-inverse-color'
+      '@question-ribbon-bg':             '@bg-on-bg-inverse-color'
+    },
+
+    'Forms': {
+      '@input-bg':                '@elem-cozy-color'
+      '@input-color':             '@text-inverse-color'
+      '@input-color-placeholder': '@input-color'
+      '@input-label-color':       '@text-inverse-color'
+    }
   }
   $scope.variables = variables = angular.copy(default_variables)
 
