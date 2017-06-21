@@ -60,7 +60,7 @@
               </div>
 
               <!-- OAuth Connect Button -->
-              <div ng-show="helper.isOauthConnectBtnShown(app)">
+              <div ng-show="helper.isOauthConnectBtnShown(app) && helper.canConnectApp()">
                 <a class="btn btn-warning" href="" ng-click="helper.oAuthConnectPath(app)">
                   {{ 'mno_enterprise.templates.dashboard.apps_list.connect' | translate }}
                 </a>

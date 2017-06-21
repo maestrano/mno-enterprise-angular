@@ -1,0 +1,37 @@
+#step3 {
+
+  .apps-loader {
+    color: @onboarding-fetching-apps-loader-color;
+  }
+
+  .apps-wrapper {
+    .top-buffer-1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+    .app-card {
+      .top-buffer-1;
+      text-align: center;
+      background-color: @onboarding-app-card-bg-color;
+      color: @onboarding-app-card-text-color;
+      padding: @onboarding-app-card-padding;
+      .z-depth(3);
+      width: 220px;
+
+      h4 {
+        margin-top: 5px;
+      }
+
+      mno-app-install-btn {
+        display: block;
+        .top-buffer-1;
+      }
+    }
+  }
+
+  .next-button-wrapper {
+    width: 100%;
+    float: left;
+  }
+}

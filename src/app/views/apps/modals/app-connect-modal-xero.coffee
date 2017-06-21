@@ -1,8 +1,8 @@
 angular.module 'mnoEnterpriseAngular'
-.controller('DashboardAppConnectXeroModalCtrl', ($scope, $window, $httpParamSerializer, $uibModalInstance, app) ->
+.controller('DashboardAppConnectXeroModalCtrl', ($scope, $window, $httpParamSerializer, $uibModalInstance, MnoeAppInstances, app) ->
 
   $scope.app = app
-  $scope.path = "/mnoe/webhook/oauth/" + app.uid + "/authorize?"
+  $scope.path = MnoeAppInstances.oAuthConnectPath(app)
   $scope.form = {
     perform: true
     xero_country: "AU"

@@ -1,13 +1,12 @@
-<div id="layout-loading" ng-show="!isLoggedIn" class="text-center">
-  <mno-loader></mno-loader>
-  <span class="layout-loading-text">Your dashboard is loading...</span>
-</div>
-
 <div class="container-fluid">
   <mno-impersonation-bar></mno-impersonation-bar>
 </div>
 
-<div id="dashboard">
+<div ng-if="isLoggedIn && hasNoOrganisations" class="layout-loading">
+  <mno-without-organisation></mno-without-organisation>
+</div>
+
+<div id="dashboard" ng-if="isLoggedIn && !hasNoOrganisations">
   <dashboard-company-selectbox></dashboard-company-selectbox>
   <dashboard-menu></dashboard-menu>
   <div class="container">

@@ -83,7 +83,9 @@ angular.module 'mnoEnterpriseAngular'
   )
 
   # App initialization: Retrieve current user and current organization, then preload marketplace
-  .run(($rootScope, $q, $stateParams, MnoeCurrentUser, MnoeOrganizations, MnoeMarketplace) ->
+  .run(($rootScope, $q, $location, $stateParams, MnoeCurrentUser, MnoeOrganizations, MnoeMarketplace, MnoeAppInstances) ->
+
+    _self = this
 
     # Hide the layout with a loader
     $rootScope.isLoggedIn = false
@@ -92,14 +94,31 @@ angular.module 'mnoEnterpriseAngular'
     userPromise = MnoeCurrentUser.get()
 
     # Load the current organization if defined (url param, cookie or first)
-    organizationPromise = MnoeOrganizations.getCurrentId($stateParams.dhbRefId)
+    _self.appInstancesDeferred = $q.defer()
+    orgPromise = MnoeOrganizations.getCurrentOrganisation().then(
+      (response) ->
+        # App instances needs to be run after fetching the organization (At least the first call)
+        MnoeAppInstances.getAppInstances().then(
+          (appInstances) ->
+            _self.appInstancesDeferred.resolve(appInstances)
+        )
 
-    $q.all([userPromise, organizationPromise]).then(
+        response
+    )
+
+    $q.all([userPromise, orgPromise, _self.appInstancesDeferred.promise]).then(
       ->
         # Display the layout
         $rootScope.isLoggedIn = true
 
         # Pre-load the market place
         MnoeMarketplace.getApps()
+    ).catch(
+      ->
+        # Display the layout
+        $rootScope.isLoggedIn = true
+
+        # Display no organisation message
+        $rootScope.hasNoOrganisations = true
     )
   )

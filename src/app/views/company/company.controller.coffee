@@ -1,18 +1,12 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('DashboardCompanyCtrl',
-    ($scope, MnoeOrganizations, MnoeTeams, PAYMENT_CONFIG) ->
+    ($scope, MnoeOrganizations, MnoeTeams, MnoeConfig, PAYMENT_CONFIG) ->
       vm = @
 
       #====================================
       # Pre-Initialization
       #====================================
       vm.isLoading = true
-      vm.tabs = {
-        billing: false,
-        members: false,
-        teams: false,
-        settings: false
-      }
       vm.payment_enabled = not PAYMENT_CONFIG.disabled
 
       #====================================
@@ -21,19 +15,22 @@ angular.module 'mnoEnterpriseAngular'
       vm.initialize = ->
         vm.isLoading = false
         if vm.isBillingShown()
-          vm.tabs.billing = true
+          vm.activeTab = 'billing'
         else
-          vm.tabs.members = true
+          vm.activeTab = 'members'
 
       vm.isTabSetShown = ->
         !vm.isLoading && (
           MnoeOrganizations.role.isSuperAdmin() || MnoeOrganizations.role.isAdmin())
 
       vm.isBillingShown = ->
-        MnoeOrganizations.role.isSuperAdmin()
+        MnoeConfig.isBillingEnabled() && MnoeOrganizations.role.isSuperAdmin()
 
       vm.isSettingsShown = ->
         MnoeOrganizations.role.isSuperAdmin()
+
+      vm.isAuditLogShown = ->
+        MnoeConfig.isAuditLogEnabled() && MnoeOrganizations.role.isSuperAdmin()
 
       #====================================
       # Post-Initialization

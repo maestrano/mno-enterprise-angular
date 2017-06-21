@@ -26,6 +26,9 @@ angular.module 'mnoEnterpriseAngular'
       $scope.helper.displayCogwheel = ->
         MnoeOrganizations.can.update.appInstance()
 
+      $scope.helper.canConnectApp = ->
+        MnoeOrganizations.can.connect.appInstance()
+
       $scope.helper.canRenameApp = ->
         MnoeOrganizations.can.update.appInstance()
 
@@ -104,7 +107,7 @@ angular.module 'mnoEnterpriseAngular'
         if val?
           $scope.isLoading = true
           MnoeAppInstances.getAppInstances().then(
-            (response) ->
+            ->
               $scope.isLoading = false
               $scope.apps = MnoeAppInstances.appInstances
           )

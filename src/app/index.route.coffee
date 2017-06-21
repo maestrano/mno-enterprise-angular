@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .config ($stateProvider, $urlRouterProvider, URI, I18N_CONFIG, MARKETPLACE_CONFIG) ->
+  .config ($stateProvider, $urlRouterProvider, URI, I18N_CONFIG, MARKETPLACE_CONFIG, ONBOARDING_WIZARD_CONFIG) ->
 
     $stateProvider
       .state 'home',
@@ -46,17 +46,53 @@ angular.module 'mnoEnterpriseAngular'
         controllerAs: 'vm'
       .state 'logout',
         url: '/logout'
-        controller: ($window, $http, $translate, AnalyticsSvc) ->
+        controller: ($window, $http, $translate, AnalyticsSvc, URL_CONFIG) ->
           'ngInject'
 
           # Logout and redirect the user
           $http.delete(URI.logout).then( ->
             AnalyticsSvc.logOut()
+
+            logout_url = URL_CONFIG.after_sign_out_url || URI.login
+
             if I18N_CONFIG.enabled
-              $window.location.href = "/#{$translate.use()}#{URI.login}"
+              if URL_CONFIG.after_sign_out_url
+                $window.location.href = logout_url
+              else
+                $window.location.href = "/#{$translate.use()}#{URI.login}"
             else
-              $window.location.href = "#{URI.login}"
+              $window.location.href = logout_url
           )
+
+    if ONBOARDING_WIZARD_CONFIG.enabled
+      $stateProvider
+        .state 'onboarding',
+          abstract: true
+          url: '/onboarding'
+          templateUrl: 'app/views/onboarding/layout.html'
+          controller: 'OnboardingController'
+          controllerAs: 'onboarding'
+        .state 'onboarding.step1',
+          data:
+            pageTitle:'Welcome'
+          url: '/welcome'
+          templateUrl: 'app/views/onboarding/step1.html'
+          controller: 'OnboardingStep1Controller'
+          controllerAs: 'vm'
+        .state 'onboarding.step2',
+          data:
+            pageTitle:'Select your apps'
+          url: '/select-apps'
+          templateUrl: 'app/views/onboarding/step2.html'
+          controller: 'OnboardingStep2Controller'
+          controllerAs: 'vm'
+        .state 'onboarding.step3',
+          data:
+            pageTitle:'Connect your apps'
+          url: '/connect-app'
+          templateUrl: 'app/views/onboarding/step3.html'
+          controller: 'OnboardingStep3Controller'
+          controllerAs: 'vm'
 
     if MARKETPLACE_CONFIG.enabled
       $stateProvider
@@ -84,4 +120,21 @@ angular.module 'mnoEnterpriseAngular'
             controller: 'DashboardMarketplaceCompareCtrl'
             controllerAs: 'vm'
 
-    $urlRouterProvider.otherwise '/reconcile'
+    $urlRouterProvider.otherwise ($injector, $location) ->
+      unless ONBOARDING_WIZARD_CONFIG.enabled
+        $location.url('/impac')
+        return
+
+      MnoeOrganizations = $injector.get('MnoeOrganizations')
+      MnoeAppInstances = $injector.get('MnoeAppInstances')
+
+      MnoeOrganizations.getCurrentOrganisation().then(
+        ->
+          MnoeAppInstances.getAppInstances().then(
+            (response) ->
+              if _.isEmpty(response)
+                $location.url('/onboarding/welcome')
+              else
+                $location.url('/impac')
+          )
+      )

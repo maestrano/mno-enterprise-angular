@@ -51,6 +51,60 @@
 @login-box-oauth-bg-color-linkedin:   #0074C4;
 @login-box-oauth-bg-color-intuit:     #fff;
 
+
+/*-----------------------------------------------------------------------*/
+/*                           Onboarding                                  */
+/*-----------------------------------------------------------------------*/
+// Layout
+//--------------------------------------
+@onboarding-header-height: 60px;
+@onboarding-header-background-color: @bg-inverse-color;
+@onboarding-header-font-color: @text-inverse-color;
+@onboarding-subheader-height: 50px;
+@onboarding-subheader-background-color: @decorator-main-color;
+@onboarding-subheader-font-color: @text-strong-color;
+@onboarding-breadcrumb-badge-color: @text-inverse-strong-color;
+@onboarding-breadcrumb-badge-color-active: @text-inverse-strong-color;
+@onboarding-breadcrumb-badge-bg: @bg-inverse-color;
+@onboarding-breadcrumb-badge-bg-active: @decorator-touch-color;
+@onboarding-breadcrumb-link-color: @text-strong-color;
+@onboarding-content-panel-bg: @bg-inverse-color;
+@onboarding-content-panel-color: @bg-on-bg-inverse-color;
+@onboarding-content-panel-border-radius: 4px;
+
+// App features
+//--------------------------------------
+@onboarding-app-features-border: 1px solid @text-strong-color;
+@onboarding-app-features-color: @text-strong-color;
+@onboarding-app-features-checked: @brand-success;
+@onboarding-app-features-unchecked: @text-strong-color;
+
+// App selector
+//--------------------------------------
+@onboarding-app-selector-title: @text-strong-color;
+@onboarding-app-selector-info: @text-strong-color;
+@onboarding-app-selector-check-color: rgba(red(@brand-success), green(@brand-success), blue(@brand-success), 0.3);
+
+// App cards
+//--------------------------------------
+@onboarding-app-card-bg-color: white;
+@onboarding-app-card-text-color: @text-strong-color;
+@onboarding-app-card-padding: 10px;
+
+// App cards fetching loader
+//--------------------------------------
+@onboarding-fetching-apps-loader-color: white;
+
+// Connec! entities
+//--------------------------------------
+@onboarding-app-entities-checked: @brand-success;
+@onboarding-app-entities-unchecked: @brand-danger;
+
+// App connect
+//--------------------------------------
+@onboarding-app-connect-check: @brand-success;
+@onboarding-app-connect-loader: @decorator-main-color;
+
 /*-----------------------------------------------------------------------*/
 /*                           Dashboard Layout                            */
 /*-----------------------------------------------------------------------*/
@@ -59,6 +113,11 @@
 @dashboard-section-title-color:                 @text-strong-color;
 @dashboard-section-title-alignment:             center;
 @dashboard-section-title-display-subline:       true;
+
+// User without organisation
+//--------------------------------------
+@without-organisation-well-bg:                  @bg-inverse-color;
+@without-organisation-text-color:               @text-inverse-color;
 
 // Side navbar menu
 //--------------------------------------
@@ -101,10 +160,12 @@
 @dashboard-cpy-select-border-radius:            0 0 0 6px;
 @dashboard-cpy-select-border-color:             @text-inverse-color;
 @dashboard-cpy-select-list-border-color:        lighten(@bg-inverse-color, 10%);
-@dashboard-cpy-select-header-text-bold-color:   @text-inverse-color;
-@dashboard-cpy-select-header-text-color:        @text-inverse-color;
+
+@dashboard-cpy-select-header-title-color:       @text-inverse-color;
+@dashboard-cpy-select-header-company-color:     @decorator-inverse-color;
 @dashboard-cpy-select-header-text-size:         13px;
 
+@dashboard-cpy-select-link-text-color:          @link-color;
 @dashboard-cpy-select-link-icon-color:          @decorator-touch-color;
 
 @dashboard-cpy-select-link-color:               @text-inverse-strong-color;
@@ -183,12 +244,12 @@
 /*                              Dock                                     */
 /*-----------------------------------------------------------------------*/
 @mno-dock-bg-color:                             @decorator-inverse-color;
-
 @mno-dock-add-app-border-color:                 white;
 @mno-dock-add-app-text-color:                   white;
 @mno-dock-expand-arrow-color:                   white;
 @mno-dock-expand-arrow-color-hover:             darken(@mno-dock-expand-arrow-color, 5%);
 @mno-dock-expand-left-border-color:             white;
+@mno-dock-app-loader-color:                     @mno-dock-expand-arrow-color;
 @mno-dock-app-title-color:                      white;
 @mno-dock-app-logo-square-width:                70px;
 @mno-dock-app-logo-minimized-square-width:      50px;
@@ -258,7 +319,7 @@
 
 // Content
 @impac-widget-content-border-radius:            0px 0px 5px 5px;
-@impac-widget-lines-container-max-height: 			210px;
+@impac-widget-lines-container-max-height:       210px;
 
 // Hist Mode Choser
 @impac-widget-hist-text-transform:              uppercase;

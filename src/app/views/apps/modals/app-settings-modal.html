@@ -13,26 +13,11 @@
           <span class="label" ng-class="app.status">{{app.status}}</span>
         </div>
       </div>
-      <hr>
-      <div class="row">
-        <div class="col-md-3">
-          <span class="title">{{ 'mno_enterprise.templates.impac.dock.settings.app_name' | translate }}</span>
-        </div>
-        <div class="col-md-8">
-          <div editable-text="app.name" onaftersave="updateAppName(app)" class="app-name">{{app.name}}
-            <a>
-              <div class="fa fa-pencil"></div>
-            </a>
-          </div>
-        </div>
-      </div>
-
       <!-- Add on settings -->
       <div ng-show="helper.isAddOnSettingShown(app)">
         <hr>
         <button ng-click="helper.addOnSettingLauch(app)" class="btn btn-warning">{{ 'mno_enterprise.templates.impac.dock.settings.access_add-on_settings' | translate }}</button>
       </div>
-
       <!-- Data Sharing -->
       <div ng-show="helper.isDataSyncShown(app) || helper.isDataDisconnectShown(app)">
         <hr>
@@ -41,7 +26,6 @@
             <span class="title">{{ 'mno_enterprise.templates.impac.dock.settings.manual_data_sharing' | translate }}</span>
           </div>
           <div class="col-md-8">
-
             <!-- Connected company name -->
             <div ng-show="helper.companyName(app)">
               {{ 'mno_enterprise.templates.impac.dock.settings.linked_to' | translate }}: {{ helper.companyName(app) | truncate:45 }}
@@ -55,7 +39,6 @@
               <a class="btn btn-info" ng-href="{{helper.dataSyncPath(app)}}" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.apps_list.manual_data_sync_tooltip' | translate:{ appname: app.app_name } }}">{{ 'mno_enterprise.templates.impac.dock.settings.manual_data_sync' | translate }}</a>
             </div>
           </div>
-
           <!-- Data Disconnect Button -->
           <div ng-show="helper.isDataDisconnectShown(app)">
             <a class="btn btn-danger" ng-click="helper.dataDisconnectClick(app)" href="" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.apps_list.disconnect_link_tooltip' | translate:{ appname: app.app_name } }}">
@@ -64,7 +47,6 @@
           </div>
         </div>
       </div>
-
       <!-- Deletion -->
       <hr>
       <div ng-show="helper.canDeleteApp()" class="app-deletion">
@@ -92,7 +74,6 @@
           </div>
         </div>
       </div>
-
       <!-- Developer details -->
       <div ng-show="helper.canDeleteApp()">
         <hr>

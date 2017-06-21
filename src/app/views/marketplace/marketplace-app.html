@@ -41,7 +41,7 @@
         <div class="well text-center well-details">
           <div class="row">
             <div class="col-xs-12 col-sm-4 col-sm-offset-4 col-md-8 col-md-offset-2">
-              <mno-app-install-btn app="vm.app"></mno-app-install-btn>
+              <mno-app-install-btn ng-if="vm.app" app="vm.app"></mno-app-install-btn>
             </div>
           </div>
 
@@ -118,12 +118,12 @@
       </div>
     </div>
 
-    <uib-tabset ng-if="vm.isReviewingEnabled" class="bottom-buffer-10">
-      <uib-tab index="0" heading="Feedback">
+    <uib-tabset class="bottom-buffer-10">
+      <uib-tab ng-if="vm.isReviewingEnabled" index="0" heading="Feedback">
         <!-- Comments & Ratings -->
         <div id="comments">
           <div class="add-review">
-            <span ng-if="vm.appInstance">
+            <span ng-show="vm.appInstance">
               {{ 'mno_enterprise.templates.dashboard.marketplace.show.company_feedback' | translate }}:
               <button type="button" class="btn btn-warning" ng-click="vm.openCreateReviewModal()">
                 {{ 'mno_enterprise.templates.dashboard.marketplace.show.write_review' | translate }}
@@ -226,7 +226,7 @@
           </div>
         </div>
       </uib-tab>
-      <uib-tab index="1" heading="Questions">
+      <uib-tab ng-if="vm.areQuestionsEnabled" index="1" heading="Questions">
         <div class="questions">
           <div class="clearfix">
             <div class="questions-panel pull-right">

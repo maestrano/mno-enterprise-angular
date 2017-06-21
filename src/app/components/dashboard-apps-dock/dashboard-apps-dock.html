@@ -1,6 +1,7 @@
 <div id="app-dock-container" class="hidden-xs hidden-sm hidden-print">
   <div ng-if="displayDock()" id="app-dock">
     <ul class="dock list-unstyled" ng-class="{minimized: appDock.isMinimized, animated: appDock.isAnimated()}">
+      <li ng-show="isLoading"><i class="fa fa-spin fa-refresh loader-icon"></i></li>
       <li ng-repeat="app in apps" ng-class="{active: isActiveApp(app.id)}" class="dock-icon">
         <div class="title" tooltip="{{app.name.length > 14 ? app.name : null}}" tooltip-placement="bottom">{{app.name | truncate:14:"...":true}}</div>
         <img class="app-logo" ng-src="{{app.logo}}" ng-click="setActiveApp($event, app.id)">
@@ -9,7 +10,6 @@
           <div class="inner-dock-menu">
             <!-- EO Connectors Buttons -->
             <div class="menu-item ng-hide" ng-hide="helper.isLaunchHidden(app)">
-
               <a ng-click="launchAction(app,$event);"><i class="fa fa-play-circle"></i>{{ 'mno_enterprise.templates.impac.dock.launch' | translate }}</a>
             </div>
             <div class="menu-item ng-hide" ng-show="helper.isOauthConnectBtnShown(app)">
@@ -17,7 +17,6 @@
                 </i> {{ 'mno_enterprise.templates.impac.dock.connect' | translate }}</a>
             </div>
             <div class="menu-item ng-hide" ng-show="helper.displaySettings()">
-
               <a ng-click="showSettingsModal(app)"><i class="fa fa-cog"></i> {{ 'mno_enterprise.templates.impac.dock.settings.settings' | translate }} </a>
             </div>
           </div>
@@ -48,7 +47,7 @@
     </i>{{ 'mno_enterprise.templates.impac.dock.launch' | translate }}</a>
     <i class="fa fa-chevron-down pull-right" ng-hide="launchApp.isClosed"></i>
   </div>
-  <div id="mobile-dock" collapse="launchApp.isClosed">
+  <div id="mobile-dock" uib-collapse="launchApp.isClosed">
     <ul class="list-unstyled">
       <li ng-repeat="app in apps" ng-class="{active: isActiveApp(app.id)}" ng-switch on="isActiveApp(app.id)">
         <div class="app-line" ng-switch-when="true">
@@ -61,7 +60,6 @@
             <a class="btn btn-warning" ng-click="showSettingsModal(app)"><span class="fa fa-cog"></span> {{ "mno_enterprise.templates.dashboard.organization.index.settings.title" | translate }}</a>
           </div>
         </div>
-
         <div class="app-line" ng-switch-default>
           <button ng-click="showSettingsModal(app)" class="btn btn-primary">
             <i class="fa fa-cog"></i>
@@ -78,7 +76,6 @@
           </div>
         </div>
       </li>
-
       <a ng-if="isMarketplaceEnabled" ui-sref="home.marketplace" class="btn btn-link add-app">
         <i class="fa fa-plus"></i><span> {{ 'mno_enterprise.templates.impac.dock.add_more_apps' | translate }}</span>
       </a>

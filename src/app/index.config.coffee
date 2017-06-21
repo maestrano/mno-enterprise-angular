@@ -50,13 +50,22 @@ angular.module 'mnoEnterpriseAngular'
   .config(($translateProvider, LOCALES) ->
     # Path to translations files
     $translateProvider.useStaticFilesLoader({
-      prefix: 'locales/',
-      suffix: '.locale.json'
+      files: [
+        {
+          prefix: 'locales/',
+          suffix: '.locale.json'
+        },
+        {
+          prefix: 'locales/impac/',
+          suffix: '.json'
+        }
+      ]
     })
 
     $translateProvider.fallbackLanguage(LOCALES.fallbackLanguage)
     $translateProvider.useSanitizeValueStrategy('sanitizeParameters')
+    $translateProvider.useMessageFormatInterpolation()
 
     # TODO: Activate in "developer mode" only (spams the console and makes the application lag)
-    # $translateProvider.useMissingTranslationHandlerLog()
+    #$translateProvider.useMissingTranslationHandlerLog()
   )

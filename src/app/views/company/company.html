@@ -10,11 +10,10 @@
   <div class="col-md-12 top-buffer-4" ng-if="!vm.isTabSetShown() && !vm.isLoading">
 
     <!-- Directive: DashboardOrganizationMembers -->
-    <div class="well">
+    <div class="well clearfix">
       <div class="col-md-12">
         <div dashboard-organization-members></div>
       </div>
-      <div class="clearfix"></div>
     </div>
 
     <div class="row">
@@ -30,12 +29,12 @@
   <!-------------------------------------->
   <div class="col-md-12 top-buffer-4" ng-if="vm.isTabSetShown() && !vm.isLoading">
 
-    <div uib-tabset>
+    <div uib-tabset active="vm.activeTab">
 
       <!-------------------------------------->
       <!--         Billing Section          -->
       <!-------------------------------------->
-      <div uib-tab ng-show="vm.isBillingShown()" active="vm.tabs.billing">
+      <div uib-tab index="'billing'" ng-if="vm.isBillingShown()" >
         <div uib-tab-heading>{{ 'mno_enterprise.templates.dashboard.organization.index.billing.title' | translate }}</div>
 
         <!-- Directive: DashboardOrganizationArrears -->
@@ -91,15 +90,14 @@
       <!-------------------------------------->
       <!--        Members Section           -->
       <!-------------------------------------->
-      <div uib-tab active="vm.tabs.members">
+      <div uib-tab index="'members'">
         <div uib-tab-heading>{{ 'mno_enterprise.templates.dashboard.organization.index.members.title' | translate }}</div>
 
         <!-- Directive: DashboardOrganizationMembers -->
-        <div class="well">
+        <div class="well clearfix">
           <div class="col-md-12">
             <div dashboard-organization-members></div>
           </div>
-          <div class="clearfix"></div>
         </div>
 
         <!-- End: tab members section -->
@@ -108,10 +106,10 @@
       <!-------------------------------------->
       <!--     Team Management Section      -->
       <!-------------------------------------->
-      <div uib-tab active="tabs.teams">
+      <div uib-tab index="'team'">
         <div uib-tab-heading>{{ 'mno_enterprise.templates.dashboard.organization.index.teams.title' | translate }}</div>
 
-        <div>
+        <div class="clearfix">
           <h4>
             {{ 'mno_enterprise.templates.dashboard.organization.index.teams.subtitle' | translate }}
             <span class="text-muted"><small><em>&nbsp;{{ 'mno_enterprise.templates.dashboard.organization.index.teams.control_access' | translate }}</em></small></span>
@@ -121,24 +119,38 @@
           <div class="col-md-12">
             <div dashboard-organization-teams></div>
           </div>
-          <div class="clearfix"></div>
         </div>
 
         <!-- End: tab team management section -->
       </div>
 
       <!-------------------------------------->
+      <!--        Audit Log Section         -->
+      <!-------------------------------------->
+      <div uib-tab index="'audit'" ng-if="vm.isAuditLogShown()">
+        <div uib-tab-heading>{{ 'mno_enterprise.templates.dashboard.organization.index.audit_log.title' | translate }}</div>
+
+        <!-- Directive: DashboardOrganizationAuditLog -->
+        <div class="well clearfix">
+          <div class="col-md-12">
+            <div dashboard-organization-audit-log></div>
+          </div>
+        </div>
+
+        <!-- End: tab audit log section -->
+      </div>
+
+      <!-------------------------------------->
       <!--    Company Settings Section      -->
       <!-------------------------------------->
-      <div uib-tab ng-show="vm.isSettingsShown()" active="vm.tabs.settings">
+      <div uib-tab index="'settings'" ng-show="vm.isSettingsShown()" >
         <div uib-tab-heading>{{ 'mno_enterprise.templates.dashboard.organization.index.settings.title' | translate }}</div>
 
-        <div class="well">
+        <div class="well clearfix">
           <!-- Directive: DashboardOrganizationSettings -->
           <div class="col-md-12">
             <div dashboard-organization-settings></div>
           </div>
-          <div class="clearfix"></div>
         </div>
 
         <!-- End: tab settings section -->

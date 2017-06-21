@@ -7,7 +7,6 @@ dashboard-company-selectbox {
     right: 0;
     width: @dashboard-cpy-select-width;
     background-color: @dashboard-cpy-select-bg-color;
-    color: @dashboard-cpy-select-header-text-color;
     font-size: @dashboard-cpy-select-header-text-size;
     border-radius: @dashboard-cpy-select-border-radius;
     border-left: 1px solid @dashboard-cpy-select-border-color;
@@ -39,16 +38,18 @@ dashboard-company-selectbox {
         width: ~'calc(100% -' (2 * @dashboard-cpy-select-pic-width) ~')';
         text-align: left;
 
+        .name {
+          font-weight: bold;
+          color: @dashboard-cpy-select-header-title-color;
+        }
+
         .company {
           width: 100%;
           display: block;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
-        }
-        .name {
-          font-weight: bold;
-          color: @dashboard-cpy-select-header-text-bold-color;
+          color: @dashboard-cpy-select-header-company-color;
         }
       }
       .expand-menu {
@@ -82,6 +83,7 @@ dashboard-company-selectbox {
             text-decoration: none;
             padding: 4px;
             display: flex;
+            color: @dashboard-cpy-select-link-text-color;
 
             &:hover {
               background-color: @dashboard-cpy-select-link-hover-bg-color;

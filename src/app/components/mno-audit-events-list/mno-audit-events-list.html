@@ -1,0 +1,38 @@
+    <div>
+      <!--<table class="class" st-pipe="$ctrl.callServer" st-table="$ctrl.displayed">-->
+      <table st-pipe="$ctrl.callServer" st-table="$ctrl.events.list" class="table table-striped">
+        <thead>
+          <tr>
+            <th st-sort="created_at" class="col-lg-2" translate>mno_enterprise.templates.components.audit_events_list.table.date</th>
+            <th class="col-lg-2" translate>mno_enterprise.templates.components.audit_events_list.table.user</th>
+            <th st-sort="key" class="col-lg-2" translate>mno_enterprise.templates.components.audit_events_list.table.action</th>
+            <th st-sort="description" class="col-lg-2" translate>mno_enterprise.templates.components.audit_events_list.table.description</th>
+          </tr>
+        </thead>
+        <tbody ng-show="$ctrl.events.loading">
+          <tr>
+            <td colspan="6" class="text-center" translate>mno_enterprise.templates.components.audit_events_list.loading_events</td>
+          </tr>
+        </tbody>
+        <tbody ng-show="!$ctrl.events.loading">
+          <tr ng-repeat="event in $ctrl.events.list">
+            <td title="{{ event.created_at | amDateFormat: 'DD/MM/YYYY, h:mm:ss a' }}">
+              {{event.created_at | amCalendar }}
+            </td>
+            <td title="{{event.user.email}}">
+              {{event.user.name}} {{event.user.surname}}
+            </td>
+            <td>{{event.description}}</td>
+            <td>{{event.details || '-'}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <mno-pagination
+      page="$ctrl.events.page"
+      nb-items="$ctrl.events.nbItems"
+      total-items="$ctrl.events.totalItems"
+      on-change-cb="$ctrl.events.pageChangedCb(nbItems, page)"
+      is-loading="$ctrl.events.loading">
+    </mno-pagination>
