@@ -418,7 +418,7 @@
   "mno_enterprise.templates.onboarding.app_infos_modal.free_trial": "{duration} days free trial",
   "mno_enterprise.templates.onboarding.connect_apps.connect_applications": "Connect your applications",
   "mno_enterprise.templates.onboarding.connect_apps.apps_to_connect_now": "Connect your application now to start sharing data immediately.",
-  "mno_enterprise.templates.onboarding.connect_apps.apps_to_connect_later": "(You can connect at any time from your dashboard)",
+  "mno_enterprise.templates.onboarding.connect_apps.apps_to_connect_later": "You can connect at any time from your dashboard",
   "mno_enterprise.templates.onboarding.connect_apps.go_to_dashboard": "Go to my dashboard!",
   "mno_enterprise.templates.onboarding.connect_apps.skip": "Go to my account!",
   "mno_enterprise.templates.app_feature.single_sign_on":"Single Sign-on",
