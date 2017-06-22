@@ -9,8 +9,8 @@
     <span>{{$ctrl.conflictingApp.name}}</span>
   </div>
   <div ng-switch-when="INSTALLED_LAUNCH">
-    <i class="fa fa-check fa-2x button-check"></i><br>
-    <span class="text-muted">(connected)</span>
+    <span>No set-up required</span><br>
+    <span class="text-muted">This app connects when launched.</span>
   </div>
   <div ng-switch-when="INSTALLED_CONNECT">
     <a href="" uib-tooltip="{{'mno_enterprise.templates.components.app_install_btn.create_account_tooltip' | translate}}" tooltip-placement="top" type="button" ng-click="$ctrl.launchAppInstance()" class="btn btn-warning btn-block">
