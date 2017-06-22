@@ -419,7 +419,7 @@
   "mno_enterprise.templates.onboarding.connect_apps.connect_applications": "Connect your applications",
   "mno_enterprise.templates.onboarding.connect_apps.apps_to_connect": "Click on <b>Connect an existing account</b> button on each application to connect them now, you can skip this step if you want to connect your {nb, plural, one{application} other{applications}} later.",
   "mno_enterprise.templates.onboarding.connect_apps.go_to_dashboard": "Go to my dashboard!",
-  "mno_enterprise.templates.onboarding.connect_apps.skip": "Skip & Go to my dashboard!",
+  "mno_enterprise.templates.onboarding.connect_apps.skip": "Go to my account!",
   "mno_enterprise.templates.app_feature.single_sign_on":"Single Sign-on",
   "mno_enterprise.templates.app_feature.single_billing":"Single billing",
   "mno_enterprise.templates.app_feature.data_sharing":"Data-sharing",
