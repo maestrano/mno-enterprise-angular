@@ -418,7 +418,6 @@
   "mno_enterprise.templates.onboarding.app_infos_modal.free_trial": "{duration} days free trial",
   "mno_enterprise.templates.onboarding.connect_apps.connect_applications": "Connect your applications",
   "mno_enterprise.templates.onboarding.connect_apps.apps_to_connect": "Click on <b>Connect an existing account</b> button on each application to connect them now, you can skip this step if you want to connect your {nb, plural, one{application} other{applications}} later.",
-  "mno_enterprise.templates.onboarding.connect_apps.all_apps_connected": "{nb, plural, one{Your application is connected} other{Your applications are all connected}}! Click on the button below to go to the last step.",
   "mno_enterprise.templates.onboarding.connect_apps.go_to_dashboard": "Go to my dashboard!",
   "mno_enterprise.templates.onboarding.connect_apps.skip": "Skip & Go to my dashboard!",
   "mno_enterprise.templates.app_feature.single_sign_on":"Single Sign-on",
