@@ -176,8 +176,8 @@
                           {{ 'mno_enterprise.templates.dashboard.marketplace.show.edited_by_admin' | translate }}
                         </span>
                       </span>
-                      <a class="comments-show" ng-hide="review.showComments || review.comments.length == 0" ng-click="review.showComments = true" href="">{{'mno_enterprise.templates.dashboard.marketplace.show.comments' | translate}} ({{ review.comments.length }})</a>
-                      <a class="comments-show" ng-show="review.showComments" ng-click="review.showComments = false" href="">{{'mno_enterprise.templates.dashboard.marketplace.show.comment.hide' | translate}}</a>
+                      <a class="comments-show" ng-hide="review.showComments || review.comments.length == 0" ng-click="review.showComments = true" href="">{{'mno_enterprise.templates.dashboard.marketplace.show.comment' | translate:{COUNT: review.comments.length} }}</a>
+                      <a class="comments-show" ng-show="review.showComments" ng-click="review.showComments = false" href="">{{'mno_enterprise.templates.dashboard.marketplace.show.comment.hide_comments' | translate}}</a>
                     </footer>
                   </blockquote>
                 </div>
