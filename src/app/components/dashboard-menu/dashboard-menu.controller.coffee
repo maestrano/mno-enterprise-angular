@@ -17,7 +17,7 @@ angular.module 'mnoEnterpriseAngular'
           # Impac! is displayed only to admin and super admin
           MnoeCurrentUser.get().then(
             (response) ->
-              selectedOrg = _.find(response.organizations, {id: parseInt(newValue)})
+              selectedOrg = _.find(response.organizations, {id: newValue})
               $scope.isAdmin = MnoeOrganizations.role.atLeastAdmin(selectedOrg.current_user_role)
           ) if newValue?
         )

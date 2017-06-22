@@ -392,7 +392,7 @@ angular.module 'mnoEnterpriseAngular'
               appInstances = response.appInstances
 
               # App to be displayed
-              appId = parseInt($stateParams.appId)
+              appId = $stateParams.appId
               app = _.findWhere(apps, { nid: $stateParams.appId })
               app ||= _.findWhere(apps, { id:  appId})
 

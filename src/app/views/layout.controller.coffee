@@ -8,7 +8,7 @@ angular.module 'mnoEnterpriseAngular'
         (response) ->
           # We only check the role for those states
           if $state.is('home.impac') || $state.is('home.apps')
-            selectedOrg = _.find(response.organizations, {id: parseInt(newValue)})
+            selectedOrg = _.find(response.organizations, {id: newValue})
             if MnoeOrganizations.role.atLeastAdmin(selectedOrg.current_user_role)
               $state.go('home.impac')
             else

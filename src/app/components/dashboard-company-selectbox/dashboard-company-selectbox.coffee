@@ -19,7 +19,7 @@ DashboardCompanySelectboxCtrl = ($scope, $state, $stateParams, $uibModal, MnoeCu
   # Switch to another company
   selectBox.changeTo = (organization) ->
     # Do nothing if click on the already selected company
-    return if organization.id == parseInt(MnoeOrganizations.selectedId)
+    return if organization.id == MnoeOrganizations.selectedId
     # Switch to selected company
     MnoeAppInstances.emptyAppInstances()
     MnoeAppInstances.clearCache()
@@ -27,7 +27,7 @@ DashboardCompanySelectboxCtrl = ($scope, $state, $stateParams, $uibModal, MnoeCu
     selectBox.close()
 
   selectOrganization = ->
-    selectBox.organization = _.find(MnoeCurrentUser.user.organizations, { id: parseInt(MnoeOrganizations.selectedId) })
+    selectBox.organization = _.find(MnoeCurrentUser.user.organizations, { id: MnoeOrganizations.selectedId })
 
   # Toggle the select box
   selectBox.toggle = ->
