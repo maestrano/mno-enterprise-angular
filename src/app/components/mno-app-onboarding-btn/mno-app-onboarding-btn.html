@@ -20,7 +20,7 @@
       {{ 'mno_enterprise.templates.components.app_install_btn.connect_app' | translate }}
     </a>
   </div>
-  <a href="" ng-switch-when="ADD_ON" ng-click="$ctrl.launchAppInstance()" class="btn btn-warning btn-block">
+  <a href="" ng-switch-when="ADD_ON" uib-tooltip="{{'mno_enterprise.templates.components.app_install_btn.access_addon_tooltip' | translate}}" tooltip-placement="top" ng-click="$ctrl.launchAppInstance()" class="btn btn-warning btn-block">
     {{ 'mno_enterprise.templates.components.app_install_btn.access_addon' | translate }}
   </a>
 </div>

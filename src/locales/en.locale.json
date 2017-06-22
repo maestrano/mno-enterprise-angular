@@ -380,6 +380,7 @@
   "mno_enterprise.templates.components.app_install_btn.create_account_tooltip": "A new tab will open for you to create an account. Afterwards, return here to connect it.",
   "mno_enterprise.templates.components.app_install_btn.connect_app": "Connect an existing account",
   "mno_enterprise.templates.components.app_install_btn.access_addon": "Access Add-on",
+  "mno_enterprise.templates.components.app_install_btn.access_addon_tooltip": "This application requires you to set-up the connection in a separate screen.",
   "mno_enterprise.templates.components.app_install_btn.insufficient_privilege": "You do not have the sufficient privileges. Contact your administrator.",
   "mno_enterprise.templates.components.app_install_btn.success_notification_title": "{name} has been added to your account",
   "mno_enterprise.templates.components.app_install_btn.success_launch_notification_body": "To start using {name}, click on the {name} icon then click on \"Launch\".",
