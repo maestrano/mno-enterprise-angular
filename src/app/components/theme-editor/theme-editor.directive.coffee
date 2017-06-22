@@ -64,7 +64,7 @@ ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
       '@public-page-header-padding':         '10px'
 
       '@public-page-header-logo-img':        'mno_enterprise/main-logo.png'
-      '@public-page-header-logo:':           '{ min-height: 61px; max-width: 160px; max-height: 130px; margin: 17px auto 5px auto; }'
+      '@public-page-header-logo':            '{ min-height: 61px; max-width: 160px; max-height: 130px; margin: 17px auto 5px auto; }'
     },
 
     'Login Page': {
