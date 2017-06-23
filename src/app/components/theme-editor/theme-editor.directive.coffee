@@ -454,9 +454,7 @@ ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
   # Build a JS object than can be passed to lessjs
   mergeLessVars = ->
     lessVars = angular.extend({}, theme)
-    console.log(variables)
     _.forEach(variables, (vars, key) ->
-      console.log(lessVars)
       angular.extend(lessVars, vars)
     )
     return lessVars
@@ -473,7 +471,6 @@ ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
 
   loadThemeData = (lessVars) ->
     data = flattenObject(lessVars)
-    console.log(data)
 
     _.forEach(theme, (value, key) ->
       if data[key]
@@ -504,7 +501,6 @@ ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
 
   # Init
   loadLastSavedTheme()
-  toastr.info("Scroll down to start editing the dashboard style",null,{timeOut: 6000})
 
 angular.module 'mnoEnterpriseAngular'
   .directive('themeEditor', ->
