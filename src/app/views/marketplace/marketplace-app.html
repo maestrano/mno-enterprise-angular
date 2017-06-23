@@ -176,7 +176,7 @@
                           {{ 'mno_enterprise.templates.dashboard.marketplace.show.edited_by_admin' | translate }}
                         </span>
                       </span>
-                      <a class="comments-show" ng-hide="review.showComments || review.comments.length == 0" ng-click="review.showComments = true" href="">{{'mno_enterprise.templates.dashboard.marketplace.show.comment' | translate:{COUNT: review.comments.length} }}</a>
+                      <a class="comments-show" ng-hide="review.showComments || review.comments.length == 0" ng-click="review.showComments = true" href="">{{'mno_enterprise.templates.dashboard.marketplace.show.comment.feedback_list_links' | translate:{COUNT: review.comments.length} }}</a>
                       <a class="comments-show" ng-show="review.showComments" ng-click="review.showComments = false" href="">{{'mno_enterprise.templates.dashboard.marketplace.show.comment.hide_comments' | translate}}</a>
                     </footer>
                   </blockquote>
@@ -184,7 +184,7 @@
                 <div class="col-md-4 text-right">
                   <a class="btn btn-link btn-link-warning" href="" ng-if="vm.canUserEditReview(review)" ng-click="vm.openEditReviewModal(review, key)"><i class="fa fa-edit"></i> {{'mno_enterprise.templates.dashboard.marketplace.show.edit' | translate}}</a>
                   <a class="btn btn-link btn-link-danger" href="" ng-if="vm.canUserEditReview(review)" ng-click="vm.openDeleteReviewModal(review, key)"><i class="fa fa-trash"></i> {{'mno_enterprise.templates.dashboard.marketplace.show.delete' | translate}}</a>
-                  <a class="btn btn-link btn-link-primary" href="" ng-click="vm.openCreateCommentModal(review, key)"><i class="fa fa-plus"></i> {{'mno_enterprise.templates.dashboard.marketplace.show.comment' | translate}}</a>
+                  <a class="btn btn-link btn-link-primary" href="" ng-click="vm.openCreateCommentModal(review, key)"><i class="fa fa-plus"></i> {{'mno_enterprise.templates.dashboard.marketplace.show.comment.feedback_list_links' | translate}}</a>
                 </div>
               </div>
 
