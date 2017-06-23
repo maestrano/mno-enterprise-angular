@@ -1,6 +1,6 @@
 {
   "name": "mno-enterprise-angular",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "dependencies": {
     "jquery": "^3.2.1",
     "angular": "~1.6.0",
