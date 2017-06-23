@@ -7,34 +7,49 @@
         </div>
         <div class="apps-container">
           <!-- Left column: App icons -->
-          <mno-widget id="apps-widget" is-loading="vm.isLoading">
-            <mno-widget-header>
-              <div id="widget-header-bar">
-                <div id="app-search" class='input-group'>
-                  <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
-                  <input type="text" ng-model="vm.searchTerm" placeholder="{{ 'mno_enterprise.templates.onboarding.select_your_app.search' | translate }}" class="form-control" ng-change="vm.selectedCategory = ''">
-                </div>
-                <select id="app-category" class="form-control" ng-model="vm.selectedCategory" ng-options="c for c in vm.marketplace.categories" ng-change="vm.searchTerm = ''">
-                  <option value=''>{{ 'mno_enterprise.templates.dashboard.marketplace.index.select_all' | translate }}</option>
-                </select>
-              </div>
-            </mno-widget-header>
-            <mno-widget-body class="no-padding large">
-              <div class="app-tile" ng-repeat="app in vm.marketplace.apps | filter:vm.appsFilter | filter:{name: vm.searchTerm}">
-                <a class="app-info-modal" href="" ng-click="vm.openInfoModal(app)"><i class="fa fa-info-circle"></i></a>
-                <div class="app-icon" ng-click="vm.toggleApp(app)">
-                  <div class="checked" ng-show="app.checked">
-                    <i class="fa fa-check fa-5x"></i>
+          <div id="apps">
+            <section>
+              <mno-widget id="apps-widget" is-loading="vm.isLoading">
+                <mno-widget-header>
+                  <div id="widget-header-bar">
+                    <div id="app-search" class='input-group'>
+                      <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
+                      <input type="text" ng-model="vm.searchTerm" placeholder="{{ 'mno_enterprise.templates.onboarding.select_your_app.search' | translate }}" class="form-control" ng-change="vm.selectedCategory = ''">
+                    </div>
+                    <select id="app-category" class="form-control" ng-model="vm.selectedCategory" ng-options="c for c in vm.marketplace.categories" ng-change="vm.searchTerm = ''">
+                      <option value=''>{{ 'mno_enterprise.templates.dashboard.marketplace.index.select_all' | translate }}</option>
+                    </select>
                   </div>
-                  <img class="app-logo img-thumbnail" ng-src="{{app.logo}}" alt="{{::app.name}} logo" title="{{::app.tiny_description}}">
-                </div>
-                <div class="app-title">
-                  {{::app.name}}
-                </div>
-              </div>
-            </mno-widget-body>
-          </mno-widget>
-
+                </mno-widget-header>
+                <mno-widget-body class="no-padding large">
+                  <div  class="app-tile" ng-repeat="app in vm.marketplace.apps | filter:vm.appsFilter | filter:{name: vm.searchTerm}">
+                    <a class="app-info-modal" href="" ng-click="vm.openInfoModal(app)"><i class="fa fa-info-circle"></i></a>
+                    <span uib-tooltip="{{ 'mno_enterprise.templates.onboarding.select_your_app.max_apps_selected_tooltip' | translate }}" tooltip-enable="vm.appSelectDisabled(app)" tooltip-placement="auto">
+                      <div class="app-icon" ng-click="vm.toggleApp(app)" ng-disabled="vm.appSelectDisabled(app)">
+                      </span>
+                      <div class="checked" ng-show="app.checked">
+                        <i class="fa fa-check fa-5x"></i>
+                      </div>
+                      <img class="app-logo img-thumbnail" ng-src="{{app.logo}}" alt="{{::app.name}} logo" title="{{::app.tiny_description}}">
+                    </div>
+                    <div class="app-title">
+                      {{::app.name}}
+                    </div>
+                  </div>
+                </mno-widget-body>
+                <button class="btn btn-primary next-button" ng-click="vm.connectApps()" ng-show="!vm.isConnectingApps" ng-disabled="vm.selectedApps.length === 0" translate>
+                  mno_enterprise.templates.onboarding.welcome.connect_my_apps
+                </button>
+              </mno-widget>
+            </section>
+            <section class="text-center onboarding-footer">
+              <div ng-show="vm.maxAppsSelected" translate>mno_enterprise.templates.onboarding.select_your_app.max_apps_selected</div>
+              <div ng-show="vm.isConnectingApps"><i class="fa fa-refresh fa-spin fa-2x"></i></div>
+              <button class="btn btn-primary next-button" ng-click="vm.connectApps()" ng-show="!vm.isConnectingApps" ng-disabled="vm.selectedApps.length === 0" translate>
+                mno_enterprise.templates.onboarding.welcome.connect_my_apps
+              </button>
+            </section>
+          </div>
           <!-- Right column: Connec! entities -->
           <div id="data-shared">
             <h4 translate>mno_enterprise.templates.onboarding.data_sync.what_data</h4>
@@ -71,13 +86,6 @@
               <a ng-href="{{vm.connecDocUri}}" target="_blank" translate>mno_enterprise.templates.onboarding.data_sync.learn_more</a>
             </div>
           </div>
-        </div>
-        <div class="text-center onboarding-footer">
-          <div ng-show="vm.maxAppsSelected" translate>mno_enterprise.templates.onboarding.select_your_app.max_apps_selected</div>
-          <div ng-show="vm.isConnectingApps"><i class="fa fa-refresh fa-spin fa-2x"></i></div>
-          <button id="ob2-btn" class="btn btn-primary next-button" ng-click="vm.connectApps()" ng-show="!vm.isConnectingApps" ng-disabled="vm.selectedApps.length === 0" translate>
-            mno_enterprise.templates.onboarding.welcome.connect_my_apps
-          </button>
         </div>
       </div>
     </div>

@@ -27,8 +27,12 @@ angular.module 'mnoEnterpriseAngular'
       else
         _.remove(vm.selectedApps, app)
       vm.maxAppsSelected = (vm.selectedApps.length == MAX_APPS_ONBOARDING)
+      # vm.appSelectDisabled = (vm.maxAppsSelected && !app.checked)
       compareSharedEntities(vm.selectedApps)
       return
+
+    vm.appSelectDisabled = (app) ->
+      vm.maxAppsSelected && !app.checked
 
     compareSharedEntities = (apps) ->
       appEntities = []
