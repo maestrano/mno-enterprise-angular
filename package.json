@@ -2,6 +2,7 @@
   "name": "mno-enterprise-angular",
   "version": "1.0.0",
   "scripts": {
+    "postinstall": "bower install --quiet --config.interactive=false",
     "build": "gulp",
     "serve": "gulp serve",
     "serve:dist": "gulp serve:dist",
