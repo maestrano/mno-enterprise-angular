@@ -558,7 +558,7 @@
   "mno_enterprise.templates.dashboard.marketplace.show.comment.delete_modal_cancel": "Cancel",
   "mno_enterprise.templates.dashboard.marketplace.show.comment.delete_modal_delete": "Delete",
   "mno_enterprise.templates.dashboard.marketplace.show.comment.hide_comments": "Hide Comments",
-  "mno_enterprise.templates.dashboard.marketplace.show.comment": "Comment{COUNT, select, undefined{} other{{COUNT, plural, one{ (#)} other{s (#)}}}}",
+  "mno_enterprise.templates.dashboard.marketplace.show.comment.feedback_list_links": "Comment{COUNT, select, undefined{} other{{COUNT, plural, one{ (#)} other{s (#)}}}}",
   "mno_enterprise.templates.dashboard.marketplace.show.answer.delete_modal_header": "Delete an answer",
   "mno_enterprise.templates.dashboard.marketplace.show.answer.delete_modal_body": "Do you really want to delete your answer?",
   "mno_enterprise.templates.dashboard.marketplace.show.answer.delete_modal_cancel": "Cancel",
