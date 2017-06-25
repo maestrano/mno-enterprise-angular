@@ -1,16 +1,16 @@
 angular.module 'mnoEnterpriseAngular'
-  .factory 'MnoeConfig', ($log, AUDIT_LOG, ORGANIZATION_MANAGEMENT) ->
+  .factory 'MnoeConfig', ($log, DASHBOARD_CONFIG) ->
     _self = @
 
     @isAuditLogEnabled = () ->
-      if AUDIT_LOG
-        AUDIT_LOG.enabled
+      if DASHBOARD_CONFIG.audit_log?.enabled?
+        DASHBOARD_CONFIG.audit_log.enabled
       else
         false
 
     @isBillingEnabled = () ->
-      if ORGANIZATION_MANAGEMENT? && ORGANIZATION_MANAGEMENT.billing?
-        ORGANIZATION_MANAGEMENT.billing.enabled
+      if DASHBOARD_CONFIG.organization_management?.billing?.enabled?
+        DASHBOARD_CONFIG.organization_management.billing.enabled
       else
         true
 

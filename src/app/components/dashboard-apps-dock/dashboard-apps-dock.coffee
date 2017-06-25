@@ -1,5 +1,5 @@
 
-DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, MnoeOrganizations, MnoeAppInstances, MARKETPLACE_CONFIG) ->
+DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, MnoeOrganizations, MnoeAppInstances, DASHBOARD_CONFIG) ->
   'ngInject'
 
   $scope.appDock = {}
@@ -7,7 +7,7 @@ DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, MnoeOrganizations
   $scope.activeApp = null
   $scope.launchApp = {isClosed: true}
 
-  $scope.isMarketplaceEnabled = MARKETPLACE_CONFIG.enabled
+  $scope.isMarketplaceEnabled = DASHBOARD_CONFIG.marketplace?.enabled
 
   # 'Lock' the dock when a menu is expanded.
   # Ie: we disable all effects and animation

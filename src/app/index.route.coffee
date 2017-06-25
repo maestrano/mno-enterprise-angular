@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .config ($stateProvider, $urlRouterProvider, URI, I18N_CONFIG, MARKETPLACE_CONFIG, ONBOARDING_WIZARD_CONFIG) ->
+  .config ($stateProvider, $urlRouterProvider, URI, I18N_CONFIG, DASHBOARD_CONFIG) ->
 
     $stateProvider
       .state 'home',
@@ -57,7 +57,7 @@ angular.module 'mnoEnterpriseAngular'
               $window.location.href = logout_url
           )
 
-    if ONBOARDING_WIZARD_CONFIG.enabled
+    if DASHBOARD_CONFIG.onboarding_wizard?.enabled
       $stateProvider
         .state 'onboarding',
           abstract: true
@@ -87,7 +87,7 @@ angular.module 'mnoEnterpriseAngular'
           controller: 'OnboardingStep3Controller'
           controllerAs: 'vm'
 
-    if MARKETPLACE_CONFIG.enabled
+    if DASHBOARD_CONFIG.marketplace?.enabled
       $stateProvider
         .state 'home.marketplace',
           data:
@@ -114,7 +114,7 @@ angular.module 'mnoEnterpriseAngular'
             controllerAs: 'vm'
 
     $urlRouterProvider.otherwise ($injector, $location) ->
-      unless ONBOARDING_WIZARD_CONFIG.enabled
+      unless DASHBOARD_CONFIG.onboarding_wizard?.enabled
         $location.url('/impac')
         return
 
