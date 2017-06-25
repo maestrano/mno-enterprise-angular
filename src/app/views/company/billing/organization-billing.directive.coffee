@@ -1,4 +1,4 @@
-DashboardOrganizationBillingCtrl = ($scope, $window, MnoeOrganizations, DASHBOARD_CONFIG) ->
+DashboardOrganizationBillingCtrl = ($scope, $window, MnoeOrganizations, MnoeConfig) ->
   'ngInject'
 
   #====================================
@@ -9,7 +9,7 @@ DashboardOrganizationBillingCtrl = ($scope, $window, MnoeOrganizations, DASHBOAR
     b &&
     b.credit &&
     b.credit.value > 0
-  $scope.payment_enabled = DASHBOARD_CONFIG.payment?.enabled
+  $scope.payment_enabled = MnoeConfig.isPaymentEnabled()
 
   #====================================
   # Post-Initialization

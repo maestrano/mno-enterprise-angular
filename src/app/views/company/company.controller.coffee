@@ -1,13 +1,13 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('DashboardCompanyCtrl',
-    ($scope, MnoeOrganizations, MnoeTeams, MnoeConfig, DASHBOARD_CONFIG) ->
+    ($scope, MnoeOrganizations, MnoeTeams, MnoeConfig) ->
       vm = @
 
       #====================================
       # Pre-Initialization
       #====================================
       vm.isLoading = true
-      vm.payment_enabled = DASHBOARD_CONFIG.payment?.enabled
+      vm.payment_enabled = MnoeConfig.isPaymentEnabled()
 
       #====================================
       # Scope Management

@@ -1,6 +1,6 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('DashboardMarketplaceCtrl', (toastr,
-    MnoeMarketplace, DASHBOARD_CONFIG) ->
+    MnoeMarketplace, MnoeConfig) ->
 
       vm = this
 
@@ -10,7 +10,7 @@ angular.module 'mnoEnterpriseAngular'
       vm.isLoading = true
       vm.selectedCategory = ''
       vm.searchTerm = ''
-      vm.isMarketplaceCompare = DASHBOARD_CONFIG.marketplace?.comparison?.enabled
+      vm.isMarketplaceCompare = MnoeConfig.isMarketplaceComparisonEnabled()
       vm.showCompare = false
       vm.nbAppsToCompare = 0
 

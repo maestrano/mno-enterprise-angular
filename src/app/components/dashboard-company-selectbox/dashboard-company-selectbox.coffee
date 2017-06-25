@@ -2,7 +2,7 @@
 #============================================
 #
 #============================================
-DashboardCompanySelectboxCtrl = ($scope, $state, $stateParams, $uibModal, MnoeCurrentUser, MnoeOrganizations, MnoeAppInstances, DASHBOARD_CONFIG) ->
+DashboardCompanySelectboxCtrl = ($scope, $state, $stateParams, $uibModal, MnoeCurrentUser, MnoeOrganizations, MnoeAppInstances, MnoeConfig) ->
   'ngInject'
 
   #====================================
@@ -13,7 +13,7 @@ DashboardCompanySelectboxCtrl = ($scope, $state, $stateParams, $uibModal, MnoeCu
     isShown: false
     user: MnoeCurrentUser.user
     organization: ''
-    isOrganizationManagementEnabled: DASHBOARD_CONFIG.organization_management?.enabled
+    isOrganizationManagementEnabled: MnoeConfig.isOrganizationManagementEnabled()
   }
 
   # Switch to another company
@@ -51,7 +51,7 @@ DashboardCompanySelectboxCtrl = ($scope, $state, $stateParams, $uibModal, MnoeCu
     modalInstance.result.then(
       (organization) ->
         selectBox.changeTo(organization)
-        if DASHBOARD_CONFIG.onboarding_wizard?.enabled
+        if MnoeConfig.isOnboardingWizardEnabled()
           $state.go('onboarding.step1')
         else
           $state.go('home.impac')

@@ -1,19 +1,19 @@
 angular.module('mnoEnterpriseAngular')
-  .controller('DashboardMarketplaceCompareCtrl', ($scope, $stateParams, $state, MnoeMarketplace, DASHBOARD_CONFIG) ->
+  .controller('DashboardMarketplaceCompareCtrl', ($scope, $stateParams, $state, MnoeMarketplace, MnoeConfig) ->
 
     vm = this
 
     # Enabling pricing
-    vm.isPriceShown = DASHBOARD_CONFIG.marketplace?.pricing?.enabled
+    vm.isPriceShown = MnoeConfig.isMarketplacePricingEnabled()
     # Enabling reviews
-    vm.isReviewingEnabled = DASHBOARD_CONFIG.marketplace?.reviews?.enabled
+    vm.isReviewingEnabled = MnoeConfig.areMarketplaceReviewsEnabled()
 
     #====================================
     # Initialization
     #====================================
     vm.isLoading = true
 
-    currency = (DASHBOARD_CONFIG.marketplace?.pricing?.currency) || 'AUD'
+    currency = MnoeConfig.marketplaceCurrency()
     vm.pricing_plans = [currency] || 'AUD' || 'default'
 
     #====================================

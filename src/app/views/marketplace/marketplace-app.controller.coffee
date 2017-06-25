@@ -4,7 +4,7 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('DashboardMarketplaceAppCtrl',($q, $scope, $stateParams, $state, $sce, $window, $uibModal, $anchorScroll,
     $location, toastr, MnoeMarketplace, MnoeOrganizations, MnoeCurrentUser, MnoeAppInstances, MnoConfirm,
-    MnoErrorsHandler, DASHBOARD_CONFIG) ->
+    MnoErrorsHandler, MnoeConfig) ->
 
       vm = this
 
@@ -20,11 +20,11 @@ angular.module 'mnoEnterpriseAngular'
       # that is not multi instantiable, if any
       vm.conflictingApp = null
       # Enabling pricing
-      vm.isPriceShown = DASHBOARD_CONFIG.marketplace?.pricing?.enabled
+      vm.isPriceShown = MnoeConfig.isMarketplacePricingEnabled()
       # Enabling reviews
-      vm.isReviewingEnabled = DASHBOARD_CONFIG.marketplace?.reviews?.enabled
+      vm.isReviewingEnabled = MnoeConfig.areMarketplaceReviewsEnabled()
       # Enabling questions
-      vm.areQuestionsEnabled = DASHBOARD_CONFIG.marketplace?.questions?.enabled
+      vm.areQuestionsEnabled = MnoeConfig.areMarketplaceQuestionsEnabled()
 
       vm.averageRating = 5
 
@@ -45,7 +45,7 @@ angular.module 'mnoEnterpriseAngular'
 
         # Init pricing plans
         plans = vm.app.pricing_plans
-        currency = DASHBOARD_CONFIG.marketplace?.pricing?.currency || 'AUD'
+        currency = MnoeConfig.marketplaceCurrency()
         vm.pricing_plans = plans[currency] || plans.AUD || plans.default
 
         # Get the user role in this organization
