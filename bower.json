@@ -2,6 +2,7 @@
   "name": "mno-enterprise-angular",
   "version": "1.1.0",
   "dependencies": {
+    "jquery": "^3.2.1",
     "angular": "~1.6.0",
     "angular-aria": "~1.6.0",
     "angular-animate": "~1.6.0",
@@ -22,13 +23,11 @@
     "bootstrap": "~3.3.5",
     "font-awesome": "~4.7.0",
     "impac-angular": "~1.5.0",
-    "jquery": "~3.1.0",
     "less": "~2.5.3",
     "lodash": "~3.10.1",
     "ng-page-title": "^1.1.1",
     "restangular": "~1.5.1",
-    "material-shadows": "^3.0.1",
-    "mno-ui-elements": "maestrano/mno-ui-elements#master"
+    "material-shadows": "^3.0.1"
   },
   "devDependencies": {
     "angular-mocks": "~1.6.0"
@@ -52,7 +51,8 @@
     }
   },
   "resolutions": {
-    "angular-bootstrap": "^2.5.0",
+    "jquery": "~3.1.0",
+    "angular-bootstrap": "~2.3.0",
     "lodash": "~3.10.1"
   }
 }

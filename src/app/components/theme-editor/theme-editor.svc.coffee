@@ -13,8 +13,6 @@ angular.module 'mnoEnterpriseAngular'
     $http.post(uploadUrl, angular.toJson(body), {
       transformRequest: angular.identity,
     })
-    .success(-> $log.debug('success'))
-    .error(-> $log.debug('error'))
 
   @saveLogo = (file) ->
     uploadUrl = '/mnoe/jpi/v1/admin/theme/logo'
