@@ -9,8 +9,20 @@
     <span>{{$ctrl.conflictingApp.name}}</span>
   </div>
   <div ng-switch-when="INSTALLED_LAUNCH">
-    <i class="fa fa-check fa-2x button-check"></i><br>
-    <span class="text-muted">(connected)</span>
+    <span ng-hide="$ctrl.appInstance.stack == 'connector'">
+      <div>
+        {{ 'mno_enterprise.templates.components.app_install.app_requires_no_set_up' | translate }}
+      </div>
+      <div class="text-muted">
+        {{ 'mno_enterprise.templates.components.app_install.app_connects_on_launch' | translate }}
+      </div>
+    </span>
+    <span ng-show="$ctrl.appInstance.stack == 'connector'">
+      <i class="fa fa-check fa-2x button-check"></i>
+      <div class="text-muted">
+        {{ 'mno_enterprise.templates.components.app_install.app_connected' | translate }}
+      </div>
+    </span>
   </div>
   <div ng-switch-when="INSTALLED_CONNECT">
     <a href="" uib-tooltip="{{'mno_enterprise.templates.components.app_install_btn.create_account_tooltip' | translate}}" tooltip-placement="top" type="button" ng-click="$ctrl.launchAppInstance()" class="btn btn-warning btn-block">
@@ -20,7 +32,7 @@
       {{ 'mno_enterprise.templates.components.app_install_btn.connect_app' | translate }}
     </a>
   </div>
-  <a href="" ng-switch-when="ADD_ON" ng-click="$ctrl.launchAppInstance()" class="btn btn-warning btn-block">
+  <a href="" ng-switch-when="ADD_ON" uib-tooltip="{{'mno_enterprise.templates.components.app_install_btn.access_addon_tooltip' | translate}}" tooltip-placement="top" ng-click="$ctrl.launchAppInstance()" class="btn btn-warning btn-block">
     {{ 'mno_enterprise.templates.components.app_install_btn.access_addon' | translate }}
   </a>
 </div>
