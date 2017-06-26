@@ -13,14 +13,14 @@ gulp.task('browsersync', browserSyncServe);
 gulp.task('browsersync:dist', browserSyncDist);
 
 // Rewrite /dashboard/xxx => /xxx after the proxy
-var adminRewriteMiddleware = function (req, res, next) {
+var dashboardRewriteMiddleware = function (req, res, next) {
   req.url = req.url.replace(/^\/dashboard\//, "/");
   next();
 };
 
 const middleware = [
   proxyMiddleware('!/(dashboard|bower_components)/**', {target: 'http://localhost:7000'}),
-  adminRewriteMiddleware
+  dashboardRewriteMiddleware
 ];
 
 function browserSyncServe(done) {
