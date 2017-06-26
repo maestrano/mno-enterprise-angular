@@ -12,7 +12,7 @@ browserSync.use(spa());
 gulp.task('browsersync', browserSyncServe);
 gulp.task('browsersync:dist', browserSyncDist);
 
-// Rewrite /admin/xxx => /xxx after the proxy
+// Rewrite /dashboard/xxx => /xxx after the proxy
 var adminRewriteMiddleware = function (req, res, next) {
   req.url = req.url.replace(/^\/dashboard\//, "/");
   next();
