@@ -8,10 +8,10 @@ angular.module 'mnoEnterpriseAngular'
       restrict: 'EA'
       templateUrl: 'app/components/dashboard-menu/dashboard-menu.html',
 
-      controller: ($scope, MnoeCurrentUser, MnoeOrganizations, DOCK_CONFIG, ORGANIZATION_MANAGEMENT, MARKETPLACE_CONFIG) ->
-        $scope.isDockEnabled = DOCK_CONFIG.enabled
-        $scope.isOrganizationManagementEnabled = ORGANIZATION_MANAGEMENT.enabled
-        $scope.isMarketplaceEnabled = MARKETPLACE_CONFIG.enabled
+      controller: ($scope, MnoeCurrentUser, MnoeOrganizations, MnoeConfig) ->
+        $scope.isDockEnabled = MnoeConfig.isDockEnabled()
+        $scope.isOrganizationManagementEnabled = MnoeConfig.isOrganizationManagementEnabled()
+        $scope.isMarketplaceEnabled = MnoeConfig.isMarketplaceEnabled()
 
         $scope.$watch(MnoeOrganizations.getSelectedId, (newValue) ->
           # Impac! is displayed only to admin and super admin

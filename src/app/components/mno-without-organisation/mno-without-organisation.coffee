@@ -1,10 +1,10 @@
 angular.module 'mnoEnterpriseAngular'
   .component('mnoWithoutOrganisation', {
     templateUrl: 'app/components/mno-without-organisation/mno-without-organisation.html',
-    controller: ($rootScope, $state, $q, $uibModal, MnoeCurrentUser, MnoeOrganizations, ORGANIZATION_MANAGEMENT) ->
+    controller: ($rootScope, $state, $q, $uibModal, MnoeCurrentUser, MnoeOrganizations, MnoeConfig) ->
       ctrl = this
 
-      ctrl.canCreateOrganisation = ORGANIZATION_MANAGEMENT.enabled
+      ctrl.canCreateOrganisation = MnoeConfig.isOrganizationManagementEnabled()
 
       #====================================
       # Create Company Modal

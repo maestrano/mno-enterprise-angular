@@ -1,10 +1,10 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller 'ImpacController', ($scope, $state, ImpacDashboardsSvc, MnoeCurrentUser, MnoeOrganizations, DOCK_CONFIG) ->
+  .controller 'ImpacController', ($scope, $state, ImpacDashboardsSvc, MnoeCurrentUser, MnoeOrganizations, MnoeConfig) ->
     'ngInject'
 
     vm = this
     vm.isImpacShown = false
-    vm.isDockEnabled = DOCK_CONFIG.enabled
+    vm.isDockEnabled = MnoeConfig.isDockEnabled()
 
     #====================================
     # Post-Initialization
