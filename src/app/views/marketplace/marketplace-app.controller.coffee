@@ -2,9 +2,9 @@
 #
 #============================================
 angular.module 'mnoEnterpriseAngular'
-  .controller('DashboardMarketplaceAppCtrl',($q, $scope, $stateParams, $state, $sce, $window, $uibModal, toastr,
-    MnoeMarketplace, MnoeOrganizations, MnoeCurrentUser, MnoeAppInstances, MnoConfirm, MnoErrorsHandler,
-    PRICING_CONFIG, REVIEWS_CONFIG, QUESTIONS_CONFIG) ->
+  .controller('DashboardMarketplaceAppCtrl',($q, $scope, $stateParams, $state, $sce, $window, $uibModal, $anchorScroll,
+    $location, toastr, MnoeMarketplace, MnoeOrganizations, MnoeCurrentUser, MnoeAppInstances, MnoConfirm,
+    MnoErrorsHandler, PRICING_CONFIG, REVIEWS_CONFIG, QUESTIONS_CONFIG) ->
 
       vm = this
 
@@ -129,6 +129,11 @@ angular.module 'mnoEnterpriseAngular'
             updateAverageRating(response.average_rating)
         )
 
+      vm.scrollToReviews = ->
+        $scope.active = 0
+        $location.hash('review-tabs')
+        $anchorScroll()
+
       #====================================
       # Edit review
       #====================================
@@ -228,6 +233,14 @@ angular.module 'mnoEnterpriseAngular'
           ->
             vm.reviews.list[reviewKey].comments.splice(key, 1)
         )
+
+      #====================================
+      # Questions
+      #====================================
+      vm.scrollToQuestions = ->
+        $scope.active = 1
+        $location.hash('review-tabs')
+        $anchorScroll()
 
       #====================================
       # Ask question
@@ -361,6 +374,7 @@ angular.module 'mnoEnterpriseAngular'
           (response) ->
             vm.reviews.totalItems = response.headers('x-total-count')
             vm.reviews.list = response.data
+            vm.anyReviews = vm.reviews.list.length != 0 ? true : false
         ).finally(-> vm.reviews.loading = false)
 
       fetchQuestions = (appId, limit, offset, search = '') ->
@@ -368,6 +382,7 @@ angular.module 'mnoEnterpriseAngular'
         MnoeMarketplace.getQuestions(appId, limit, offset, search).then(
           (response) ->
             vm.questions.list = response.data
+            vm.anyQuestions = vm.questions.list.length != 0 ? true : false
         ).finally(-> vm.questions.loading = false)
 
       updateAverageRating = (rating) ->
