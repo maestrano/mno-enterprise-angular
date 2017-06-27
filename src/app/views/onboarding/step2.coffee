@@ -53,7 +53,7 @@ angular.module 'mnoEnterpriseAngular'
     # User cannot select disabled apps
     vm.appSelectDisabled = (app) ->
       (vm.maxAppsSelected && !app.checked) || vm.selectedAppConflict(app) && !app.checked
-    # Why app select is disabled tooltip
+    # User cannot select disabled apps tooltips
     vm.appSelectDisabledTooltipText = (app) ->
       if vm.maxAppsSelected
         'mno_enterprise.templates.onboarding.select_your_app.max_apps_selected_tooltip'
