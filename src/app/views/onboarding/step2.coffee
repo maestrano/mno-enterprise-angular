@@ -18,18 +18,7 @@ angular.module 'mnoEnterpriseAngular'
 
     # Select or deselect an app
     vm.toggleApp = (app) ->
-      # User cannot add disabled apps (over 4 or conflicting)
-      # names = []
-      # _.each vm.selectedApps, (selectedApp) ->
-      #   _.each selectedApp.subcategories, (subCategory) ->
-      #     names.push(subCategory.name)
-      #     vm.appInstances.
-      # app.conflictingApp = _.each(vm.appInstances, (appInstance) ->
-      #   _.find(app.subcategories, (subCategory) ->
-      #     not subCategory.multi_instantiable and subCategory.name in names
-      #     )
-      # )
-
+      # Add conflictingApp attribute to marketplace apps
       app.subcategoryNames = []
       _.each(app.subcategories, (appSubcategory) ->
         app.subcategoryNames.push(appSubcategory.name)
@@ -38,23 +27,14 @@ angular.module 'mnoEnterpriseAngular'
         marketplaceApp != app
       )
       _.each(app.marketplaceApps, (marketplaceApp) ->
-        # marketplaceApp.conflictingApp = {}
         _.each(marketplaceApp.subcategories, (marketplaceAppSubCategory) ->
-          _.find(app.subcategoryNames, (subcategoryName) ->
-            if marketplaceApp != app && !marketplaceAppSubCategory.multi_instantiable && (marketplaceAppSubCategory.name == subcategoryName)
+          _.each(app.subcategoryNames, (subcategoryName) ->
+            if !marketplaceAppSubCategory.multi_instantiable && (marketplaceAppSubCategory.name == subcategoryName)
               marketplaceApp.conflictingApp = app
           )
         )
-        console.log(marketplaceApp) if marketplaceApp != app
       )
-      # vm.marketplaceConflicts = _.each(vm.marketplace.apps, (marketplaceApp) ->
-        # console.log(marketplaceApp.conflictingApp)
-      # )
-
-
-      # console.log(subcategoryNames)
-      console.log(vm.selectedAppConflict(app))
-
+      # User cannot add disabled apps (over 4 or conflicting)
       return if vm.appSelectDisabled(app)
 
       app.checked = !app.checked
@@ -65,17 +45,17 @@ angular.module 'mnoEnterpriseAngular'
       vm.maxAppsSelected = (vm.selectedApps.length == MAX_APPS_ONBOARDING)
       compareSharedEntities(vm.selectedApps)
       return
-
+    # Find conflicts between already selected apps
     vm.selectedAppConflict = (app) ->
       _.find(vm.selectedApps, (selectedApp) ->
         app.conflictingApp == selectedApp
       )
-
+    # User cannot select disabled apps
     vm.appSelectDisabled = (app) ->
-      (vm.maxAppsSelected && !app.checked) || vm.selectedAppConflict(app) && !app.checked #(app != app.conflictingApp)
-
+      (vm.maxAppsSelected && !app.checked) || vm.selectedAppConflict(app) && !app.checked
+    # Why app select is disabled tooltip
     vm.appSelectDisabledTooltipText = (app) ->
-      if vm.maxAppsSelected && !app.checked
+      if vm.maxAppsSelected
         'mno_enterprise.templates.onboarding.select_your_app.max_apps_selected_tooltip'
       else if vm.selectedAppConflict(app)
         'mno_enterprise.templates.onboarding.select_your_app.conflicting_app_selected_tooltip'
@@ -96,7 +76,6 @@ angular.module 'mnoEnterpriseAngular'
 
     vm.containsEntity = (entities, entity) ->
       return _.includes(entities, entity)
-
     # ====================================
     # Connect the apps & go to next screen
     # ====================================
@@ -120,7 +99,6 @@ angular.module 'mnoEnterpriseAngular'
               $state.go('onboarding.step3')
           )
       )
-
     # ====================================
     # App Info modal
     # ====================================
@@ -141,10 +119,8 @@ angular.module 'mnoEnterpriseAngular'
       (response) ->
         vm.appInstances = angular.copy(response.appInstances)
         vm.marketplace = angular.copy(response.marketplace.plain())
-
         # Fetch the already selected apps
         vm.originalAppNids = _.map(vm.appInstances, 'app_nid')
-
         # Toggle the already selected apps
         _.each(_.filter(vm.marketplace.apps, (app) -> _.includes(vm.originalAppNids, app.nid)), (a) -> vm.toggleApp(a))
     ).finally(-> vm.isLoading = false)
