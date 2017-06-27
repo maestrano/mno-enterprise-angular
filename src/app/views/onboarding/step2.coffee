@@ -18,8 +18,44 @@ angular.module 'mnoEnterpriseAngular'
 
     # Select or deselect an app
     vm.toggleApp = (app) ->
-      # User cannot add more apps
-      return if vm.maxAppsSelected && !app.checked
+      # User cannot add disabled apps (over 4 or conflicting)
+      # names = []
+      # _.each vm.selectedApps, (selectedApp) ->
+      #   _.each selectedApp.subcategories, (subCategory) ->
+      #     names.push(subCategory.name)
+      #     vm.appInstances.
+      # app.conflictingApp = _.each(vm.appInstances, (appInstance) ->
+      #   _.find(app.subcategories, (subCategory) ->
+      #     not subCategory.multi_instantiable and subCategory.name in names
+      #     )
+      # )
+
+      app.subcategoryNames = []
+      _.each(app.subcategories, (appSubcategory) ->
+        app.subcategoryNames.push(appSubcategory.name)
+      )
+      app.marketplaceApps = _.filter(vm.marketplace.apps, (marketplaceApp) ->
+        marketplaceApp != app
+      )
+      _.each(app.marketplaceApps, (marketplaceApp) ->
+        # marketplaceApp.conflictingApp = {}
+        _.each(marketplaceApp.subcategories, (marketplaceAppSubCategory) ->
+          _.find(app.subcategoryNames, (subcategoryName) ->
+            if marketplaceApp != app && !marketplaceAppSubCategory.multi_instantiable && (marketplaceAppSubCategory.name == subcategoryName)
+              marketplaceApp.conflictingApp = app
+          )
+        )
+        console.log(marketplaceApp) if marketplaceApp != app
+      )
+      # vm.marketplaceConflicts = _.each(vm.marketplace.apps, (marketplaceApp) ->
+        # console.log(marketplaceApp.conflictingApp)
+      # )
+
+
+      # console.log(subcategoryNames)
+      console.log(vm.selectedAppConflict(app))
+
+      return if vm.appSelectDisabled(app)
 
       app.checked = !app.checked
       if app.checked
@@ -27,12 +63,22 @@ angular.module 'mnoEnterpriseAngular'
       else
         _.remove(vm.selectedApps, app)
       vm.maxAppsSelected = (vm.selectedApps.length == MAX_APPS_ONBOARDING)
-      # vm.appSelectDisabled = (vm.maxAppsSelected && !app.checked)
       compareSharedEntities(vm.selectedApps)
       return
 
+    vm.selectedAppConflict = (app) ->
+      _.find(vm.selectedApps, (selectedApp) ->
+        app.conflictingApp == selectedApp
+      )
+
     vm.appSelectDisabled = (app) ->
-      vm.maxAppsSelected && !app.checked
+      (vm.maxAppsSelected && !app.checked) || vm.selectedAppConflict(app) && !app.checked #(app != app.conflictingApp)
+
+    vm.appSelectDisabledTooltipText = (app) ->
+      if vm.maxAppsSelected && !app.checked
+        'mno_enterprise.templates.onboarding.select_your_app.max_apps_selected_tooltip'
+      else if vm.selectedAppConflict(app)
+        'mno_enterprise.templates.onboarding.select_your_app.conflicting_app_selected_tooltip'
 
     compareSharedEntities = (apps) ->
       appEntities = []
