@@ -1,3 +1,76 @@
 <div id="provisioning-subscriptions">
-  provisioning-subscriptions
+  <h1>Manage your subscription</h1>
+  <div class="well pricing-plans">
+
+    <div class="table-cell" ng-show="!isLoading">
+      <div class="row th-row hidden-xs">
+        <div class="cell col-sm-1">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.product' | translate }}</div>
+        <div class="cell col-sm-2">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.subscription' | translate }}</div>
+        <div class="cell col-sm-1">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.description' | translate }}</div>
+        <div class="cell col-sm-1">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.amount' | translate }}</div>
+        <div class="cell col-sm-2">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.start_date' | translate }}</div>
+        <div class="cell col-sm-2">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.end_date' | translate }}</div>
+        <div class="cell col-sm-1">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.status' | translate }}</div>
+        <div class="cell col-sm-2">&nbsp;</div>
+      </div>
+
+      <div class="row td-row" ng-repeat="subscription in vm.subscriptions">
+        <div class="cell col-sm-1">
+          <span class="cell-label visible-xs-inline">
+            {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.product' | translate }}:
+          </span>
+          {{ subscription.product}}
+        </div>
+
+        <div class="cell col-sm-2">
+          <span class="cell-label visible-xs-inline">
+            {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.subscription' | translate }}:
+          </span>
+          {{ subscription.subscription}}
+        </div>
+
+        <div class="cell col-sm-1">
+          <span class="cell-label visible-xs-inline">
+            {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.description' | translate }}:
+          </span>
+          {{ subscription.description }}
+        </div>
+
+        <div class="cell col-sm-1">
+          <span class="cell-label visible-xs-inline">
+            {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.amount' | translate }}:
+          </span>
+          {{ subscription.amount }}
+        </div>
+
+        <div class="cell col-sm-2">
+          <span class="cell-label visible-xs-inline">
+            {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.start_date' | translate }}:
+          </span>
+          {{ subscription.start_date}}
+        </div>
+
+        <div class="cell col-sm-2">
+          <span class="cell-label visible-xs-inline">
+            {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.end_date' | translate }}:
+          </span>
+          {{ subscription.end_date }}
+        </div>
+
+        <div class="cell col-sm-1">
+          <span class="cell-label visible-xs-inline">
+            {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.status' | translate }}:
+          </span>
+          {{ subscription.status}}
+        </div>
+
+        <div class="cell col-sm-2">
+          <div class="btn">
+            <input type="button" name="dtlbutton" value="{{'mno_enterprise.templates.dashboard.provisioning.subscriptions.viewdetails' | translate}}">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
