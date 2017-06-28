@@ -1,3 +1,40 @@
 <div id="provisioning-confirm">
-  provisioning-confirm
+  <h1 translate>mno_enterprise.templates.dashboard.provisioning.confirm.title</h1>
+  <div class="well">
+    <div class="table-cell">
+      <div class="row th-row hidden-xs">
+        <div class="cell col-sm-4">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.name' | translate }}</div>
+        <div class="cell col-sm-4">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.description' | translate }}</div>
+        <div class="cell col-sm-4">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.price' | translate }}</div>
+      </div>
+
+      <div class="row td-row">
+        <div class="cell col-sm-4">
+          <span class="cell-label visible-xs-inline">
+            {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.name' | translate }}:
+          </span>
+          {{ vm.selectedPricingPlan.name }}
+        </div>
+
+        <div class="cell col-sm-4">
+          <span class="cell-label visible-xs-inline">
+            {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.description' | translate }}:
+          </span>
+          {{ vm.selectedPricingPlan.description }}
+        </div>
+
+        <div class="cell col-sm-4">
+          <span class="cell-label visible-xs-inline">
+            {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.price' | translate }}:
+          </span>
+          {{ vm.selectedPricingPlan.currency }} {{ vm.selectedPricingPlan.price.value }} {{ vm.selectedPricingPlan.factor }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <span class="pull-right">
+    <button class="btn btn-primary" ui-sref="home.provisioning.order({nid: 'xero'})" translate>mno_enterprise.templates.dashboard.provisioning.confirm.edit_order</button>
+    <button class="btn btn-primary" ui-sref="home.provisioning.order_summary" translate>mno_enterprise.templates.dashboard.provisioning.confirm.validate</button>
+  </span>
 </div>

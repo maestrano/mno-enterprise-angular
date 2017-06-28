@@ -1,5 +1,40 @@
 <div id="provisioning-summary">
-  provisioning-summary
+  <h1 translate>mno_enterprise.templates.dashboard.provisioning.summary.title</h1>
+  <p translate>mno_enterprise.templates.dashboard.provisioning.summary.order_being_processed</p>
+  <p translate>mno_enterprise.templates.dashboard.provisioning.summary.manage_subscriptions</p>
+  <div class="well">
+    <h2 translate>mno_enterprise.templates.dashboard.provisioning.summary.subscriptions</h2>
+    <div class="table-cell">
+      <div class="row th-row hidden-xs">
+        <div class="cell col-sm-4">{{ 'mno_enterprise.templates.dashboard.provisioning.summary.name' | translate }}</div>
+        <div class="cell col-sm-4">{{ 'mno_enterprise.templates.dashboard.provisioning.summary.description' | translate }}</div>
+        <div class="cell col-sm-4">{{ 'mno_enterprise.templates.dashboard.provisioning.summary.price' | translate }}</div>
+      </div>
 
-  <a ui-sref="home.provisioning.subscriptions">manage your subscriptions</a>
+      <div class="row td-row">
+        <div class="cell col-sm-4">
+        <span class="cell-label visible-xs-inline">
+          {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.name' | translate }}:
+        </span>
+          {{ vm.selectedPricingPlan.name }}
+        </div>
+
+        <div class="cell col-sm-4">
+        <span class="cell-label visible-xs-inline">
+          {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.description' | translate }}:
+        </span>
+          {{ vm.selectedPricingPlan.description }}
+        </div>
+
+        <div class="cell col-sm-4">
+        <span class="cell-label visible-xs-inline">
+          {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.price' | translate }}:
+        </span>
+          {{ vm.selectedPricingPlan.currency }} {{ vm.selectedPricingPlan.price.value }} {{ vm.selectedPricingPlan.factor }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn btn-primary pull-right" ui-sref="home.impac" translate>mno_enterprise.templates.dashboard.provisioning.summary.go_to_my_app</button>
 </div>

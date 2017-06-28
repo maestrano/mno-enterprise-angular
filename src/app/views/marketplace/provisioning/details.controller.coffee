@@ -4,5 +4,6 @@ angular.module 'mnoEnterpriseAngular'
     vm = this
 
 
+
     return
   )
