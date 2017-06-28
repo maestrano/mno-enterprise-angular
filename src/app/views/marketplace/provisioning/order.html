@@ -1,3 +1,43 @@
 <div id="provisioning-order">
-  provisioning-order
+  <h1>Choose your subscription</h1>
+  <div class="well pricing-plans">
+
+    <div class="table-cell" ng-show="!isLoading">
+      <div class="row th-row hidden-xs">
+        <div class="cell col-sm-2">&nbsp;</div>
+        <div class="cell col-sm-2">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.name' | translate }}</div>
+        <div class="cell col-sm-2">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.description' | translate }}</div>
+        <div class="cell col-sm-4">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.price' | translate }}</div>
+      </div>
+
+      <div class="row td-row" ng-repeat="pricingPlan in vm.app.pricing_plans['AUD']">
+        <div class="cell col-sm-2">
+          <div class="radio">
+            <label><input type="radio" name="optradio"></label>
+          </div>
+        </div>
+
+        <div class="cell col-sm-2">
+          <span class="cell-label visible-xs-inline">
+            {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.name' | translate }}:
+          </span>
+          {{ pricingPlan.name }}
+        </div>
+
+        <div class="cell col-sm-2">
+          <span class="cell-label visible-xs-inline">
+            {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.description' | translate }}:
+          </span>
+          {{ pricingPlan.description }}
+        </div>
+
+        <div class="cell col-sm-4">
+          <span class="cell-label visible-xs-inline">
+            {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.price' | translate }}:
+          </span>
+          {{ pricingPlan.price }}
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
