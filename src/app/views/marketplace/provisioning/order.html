@@ -4,40 +4,42 @@
 
     <div class="table-cell" ng-show="!isLoading">
       <div class="row th-row hidden-xs">
-        <div class="cell col-sm-2">&nbsp;</div>
-        <div class="cell col-sm-2">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.name' | translate }}</div>
-        <div class="cell col-sm-2">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.description' | translate }}</div>
-        <div class="cell col-sm-4">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.price' | translate }}</div>
+        <div class="col-xs-10 col-xs-offset-2">
+          <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.name' | translate }}</div>
+          <div class="cell col-sm-5">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.description' | translate }}</div>
+          <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.price' | translate }}</div>
+        </div>
       </div>
 
       <div class="row td-row" ng-repeat="pricingPlan in vm.app.pricing_plans['AUD']">
-        <div class="cell col-sm-2">
-          <div class="radio">
-            <label><input type="radio" name="optradio"></label>
-          </div>
+        <div class="cell radio-selector col-xs-2">
+          <input type="radio" name="optradio">
         </div>
 
-        <div class="cell col-sm-2">
+        <div class="col-xs-10">
+          <div class="cell col-sm-3">
           <span class="cell-label visible-xs-inline">
             {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.name' | translate }}:
           </span>
-          {{ pricingPlan.name }}
-        </div>
+            {{ pricingPlan.name }}
+          </div>
 
-        <div class="cell col-sm-2">
+          <div class="cell col-sm-5">
           <span class="cell-label visible-xs-inline">
             {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.description' | translate }}:
           </span>
-          {{ pricingPlan.description }}
-        </div>
+            {{ pricingPlan.description }}
+          </div>
 
-        <div class="cell col-sm-4">
+          <div class="cell col-sm-3">
           <span class="cell-label visible-xs-inline">
             {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.price' | translate }}:
           </span>
-          {{ pricingPlan.price }}
+            {{ pricingPlan.currency }} {{ pricingPlan.price.value }} {{ pricingPlan.factor }}
+          </div>
         </div>
       </div>
     </div>
   </div>
+  <button class="btn btn-primary pull-right" ui-sref="home.provisioning.additional_details">Next</button>
 </div>
