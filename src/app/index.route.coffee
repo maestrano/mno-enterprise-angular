@@ -98,11 +98,55 @@ angular.module 'mnoEnterpriseAngular'
           controllerAs: 'vm'
         .state 'home.marketplace.app',
           data:
-            pageTitle:'Marketplace-App'
+            pageTitle:'Marketplace'
           url: '^/marketplace/:appId'
           views: '@home':
             templateUrl: 'app/views/marketplace/marketplace-app.html'
             controller: 'DashboardMarketplaceAppCtrl'
+            controllerAs: 'vm'
+        .state 'home.provisioning',
+          abstract: true
+          templateUrl: 'app/views/marketplace/provisioning/layout.html'
+          url: '/provisioning'
+        .state 'home.provisioning.order',
+          data:
+            pageTitle:'Purchase - Order'
+          url: '/order/:nid'
+          views: '@home.provisioning':
+            templateUrl: 'app/views/marketplace/provisioning/order.html'
+            controller: 'ProvisioningOrderCtrl'
+            controllerAs: 'vm'
+        .state 'home.provisioning.additional_details',
+          data:
+            pageTitle:'Purchase - Additional details'
+          url: '/details/'
+          views: '@home.provisioning':
+            templateUrl: 'app/views/marketplace/provisioning/details.html'
+            controller: 'ProvisioningDetailsCtrl'
+            controllerAs: 'vm'
+        .state 'home.provisioning.confirm',
+          data:
+            pageTitle:'Purchase - Confirm'
+          url: '/confirm/'
+          views: '@home.provisioning':
+            templateUrl: 'app/views/marketplace/provisioning/confirm.html'
+            controller: 'ProvisioningConfirmCtrl'
+            controllerAs: 'vm'
+        .state 'home.provisioning.order_summary',
+          data:
+            pageTitle:'Purchase - Order summary'
+          url: '/summary/'
+          views: '@home.provisioning':
+            templateUrl: 'app/views/marketplace/provisioning/summary.html'
+            controller: 'ProvisioningSummaryCtrl'
+            controllerAs: 'vm'
+        .state 'home.provisioning.subscriptions',
+          data:
+            pageTitle:'Subscriptions summary'
+          url: '/subscriptions/'
+          views: '@home.provisioning':
+            templateUrl: 'app/views/marketplace/provisioning/subscriptions.html'
+            controller: 'ProvisioningSubscriptionsCtrl'
             controllerAs: 'vm'
         .state 'home.marketplace.compare',
           data:
