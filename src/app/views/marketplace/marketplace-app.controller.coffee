@@ -408,11 +408,13 @@ angular.module 'mnoEnterpriseAngular'
 
               # App to be displayed
               appId = $stateParams.appId
-              app = _.findWhere(apps, { nid: $stateParams.appId })
-              app ||= _.findWhere(apps, { id:  appId})
+              app = _.findWhere(apps, { nid: appId })
+              app ||= _.findWhere(apps, { id:  appId })
+
+              $state.go('home.marketplace') unless app?
 
               # Find if we already have it
-              appInstance = _.find(appInstances, { app_nid: app.nid})
+              appInstance = _.find(appInstances, { app_nid: app.nid })
 
               vm.initialize(app, appInstance)
           )
