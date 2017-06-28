@@ -33,7 +33,7 @@ angular.module 'mnoEnterpriseAngular'
       _self.selectedId = id if id?
 
       # Get the selected organization
-      organizationPromise = MnoeApiSvc.one('/organizations', _self.selectedId).get().then(
+      MnoeApiSvc.one('/organizations', id).get().then(
         (responseOrga) ->
           # Save the organization
           _self.selected = responseOrga.plain()
@@ -45,7 +45,7 @@ angular.module 'mnoEnterpriseAngular'
               response
           )
 
-          responseOrga
+          return organizationPromise = $q.resolve(responseOrga.plain())
       )
 
     @create = (organization) ->
