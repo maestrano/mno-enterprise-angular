@@ -69,3 +69,10 @@ angular.module 'mnoEnterpriseAngular'
     # TODO: Activate in "developer mode" only (spams the console and makes the application lag)
     #$translateProvider.useMissingTranslationHandlerLog()
   )
+
+  .config((schemaFormProvider) ->
+    schemaFormProvider.postProcess((form) ->
+      console.log("### DEBUG schemaFormProvider form", form)
+      return form
+    )
+  )

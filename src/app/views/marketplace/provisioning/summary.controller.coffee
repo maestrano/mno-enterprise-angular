@@ -5,7 +5,6 @@ angular.module 'mnoEnterpriseAngular'
 
     vm.selectedPricingPlan = {
       name: "Standard Plan",
-      price: Object,
       currency: "AUD",
       factor: "/Full Moon/Camels",
       description: "As standard as your opinions",

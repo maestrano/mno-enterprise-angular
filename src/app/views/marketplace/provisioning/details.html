@@ -1,14 +1,9 @@
 <div id="provisioning-details">
   <h1 translate>mno_enterprise.templates.dashboard.provisioning.details.title</h1>
-  <div class="well">
-    <h3>Administrator</h3>
-    <input type="text" class="form-control" placeholder="Firstname">
-    <input type="text" class="form-control top-buffer-1" placeholder="Lastname">
-    <input type="text" class="form-control top-buffer-1" placeholder="Email">
-    <h3>Company</h3>
-    <input type="text" class="form-control" placeholder="Address">
-    <input type="text" class="form-control top-buffer-1" placeholder="Phone number">
-    <input type="text" class="form-control top-buffer-1" placeholder="Company domain">
-  </div>
-  <button class="btn btn-primary pull-right" ui-sref="home.provisioning.confirm">Next</button>
+  <form name="form" ng-submit="vm.submit(form)">
+    <div class="well">
+      <div sf-schema="vm.schema" sf-form="vm.form" sf-model="vm.model"></div>
+    </div>
+    <button type="submit" class="btn btn-primary pull-right bottom-buffer-1">Next</button>
+  </form>
 </div>

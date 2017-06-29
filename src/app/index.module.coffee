@@ -18,5 +18,6 @@ angular.module 'mnoEnterpriseAngular', [
   'pascalprecht.translate',
   'maestrano.impac',
   'ngPageTitle',
-  'angularMoment'
+  'angularMoment',
+  'schemaForm'
 ]
