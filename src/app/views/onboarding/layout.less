@@ -13,6 +13,41 @@
         display: none;
       }
     }
+    
+    .onboarding-menu {
+      padding-right: 10px;
+
+      .default-link {
+        color: @onboarding-header-menu-text;
+        background: @onboarding-header-bg-menu;
+        padding: 10px 20px;
+
+        i {
+          width: 20px;
+        }
+
+        &:hover {
+          text-decoration: none;
+          color: @onboarding-header-menu-text-hover;
+          background-color: @onboarding-header-bg-menu-hover;
+        }
+      }
+      
+      .box-content {
+        padding-top: 5px;
+        position: absolute;
+        margin-right: 10px;
+        width: 100%;
+        overflow: hidden;
+        border-bottom-left-radius: 1em;
+
+        a {
+          display: block;
+        }  
+      }
+    }
+
+
 
     .logo {
       height: 40px;

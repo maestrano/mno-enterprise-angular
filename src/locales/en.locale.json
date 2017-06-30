@@ -390,6 +390,7 @@
   "mno_enterprise.templates.components.audit_events_list.table.description": "Description",
   "mno_enterprise.templates.components.audit_events_list.loading_events": "Loading Events",
   "mno_enterprise.templates.components.mno_pagination.items_per_page": "Items per page: ",
+  "mno_enterprise.templates.onboarding.menu.logout": "Logout",
   "mno_enterprise.templates.onboarding.breadcrumb.step1": "Welcome",
   "mno_enterprise.templates.onboarding.breadcrumb.step2": "Select your application(s)",
   "mno_enterprise.templates.onboarding.breadcrumb.step3": "Connect your application(s)",
