@@ -3,7 +3,7 @@
 #============================================
 angular.module 'mnoEnterpriseAngular'
   .controller('DashboardMarketplaceAppCtrl',($q, $scope, $stateParams, $state, $sce, $window, $uibModal, $anchorScroll,
-    $location, toastr, MnoeMarketplace, MnoeOrganizations, MnoeCurrentUser, MnoeAppInstances, MnoConfirm,
+    $location, toastr, MnoeMarketplace, MnoeOrganizations, MnoeCurrentUser, MnoeAppInstances, MnoeProvisioning, MnoConfirm,
     MnoErrorsHandler, MnoeConfig) ->
 
       vm = this
@@ -33,7 +33,7 @@ angular.module 'mnoEnterpriseAngular'
       #====================================
       # Scope Management
       #====================================
-      vm.initialize = (app, appInstance) ->
+      vm.initialize = (app, appInstance, product) ->
         # Variables initialization
         vm.userId = MnoeCurrentUser.user.id
         vm.adminRole = MnoeCurrentUser.user.admin_role
@@ -42,6 +42,9 @@ angular.module 'mnoEnterpriseAngular'
         angular.copy(app, vm.app)
         vm.appInstance = appInstance
         vm.app.description = $sce.trustAsHtml(app.description)
+
+        # Is the product externally provisioned
+        vm.isExternallyProvisioned = product? && product.externally_provisioned
 
         # Init pricing plans
         plans = vm.app.pricing_plans
@@ -400,11 +403,13 @@ angular.module 'mnoEnterpriseAngular'
           # Retrieve the apps and if any the current app instance
           $q.all(
             marketplace: MnoeMarketplace.getApps(),
-            appInstances: MnoeAppInstances.getAppInstances()
+            appInstances: MnoeAppInstances.getAppInstances(),
+            products: MnoeProvisioning.getProducts()
           ).then(
             (response) ->
               apps = response.marketplace.apps
               appInstances = response.appInstances
+              products = response.products.products
 
               # App to be displayed
               appId = $stateParams.appId
@@ -415,8 +420,9 @@ angular.module 'mnoEnterpriseAngular'
 
               # Find if we already have it
               appInstance = _.find(appInstances, { app_nid: app.nid })
+              product = _.find(products, { nid: app.nid })
 
-              vm.initialize(app, appInstance)
+              vm.initialize(app, appInstance, product)
           )
 
       return

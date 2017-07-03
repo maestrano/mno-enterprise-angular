@@ -1,6 +1,6 @@
 <div id="provisioning-confirm">
   <h1 translate>mno_enterprise.templates.dashboard.provisioning.confirm.title</h1>
-  <div class="well">
+  <div class="well clearfix">
     <div class="table-cell">
       <div class="row th-row hidden-xs">
         <div class="cell col-sm-4">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.name' | translate }}</div>
@@ -27,14 +27,17 @@
           <span class="cell-label visible-xs-inline">
             {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.price' | translate }}:
           </span>
-          {{ vm.selectedPricingPlan.currency }} {{ vm.selectedPricingPlan.price.value }} {{ vm.selectedPricingPlan.factor }}
+          <span ng-repeat="price in vm.selectedPricingPlan.prices | filterBy: ['currency']: vm.orgCurrency">{{price.currency}} {{price.price_cents / 100}}</span>
         </div>
       </div>
     </div>
-  </div>
 
-  <span class="pull-right">
-    <button class="btn btn-primary" ui-sref="home.provisioning.order({nid: 'xero'})" translate>mno_enterprise.templates.dashboard.provisioning.confirm.edit_order</button>
-    <button class="btn btn-primary" ui-sref="home.provisioning.order_summary" translate>mno_enterprise.templates.dashboard.provisioning.confirm.validate</button>
-  </span>
+    <span class="pull-right top-buffer-1">
+      <button class="btn btn-primary" ui-sref="home.provisioning.order({nid: vm.product.nid})" translate>mno_enterprise.templates.dashboard.provisioning.confirm.edit_order</button>
+      <button class="btn btn-primary" ng-click="vm.validate()" ng-disabled="vm.isLoading">
+        <span ng-show="vm.isLoading"><i class="fa fa-spinner fa-pulse fa-fw"></i></span>
+        <span translate>mno_enterprise.templates.dashboard.provisioning.confirm.validate</span>
+      </button>
+    </span>
+  </div>
 </div>

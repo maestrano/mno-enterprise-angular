@@ -19,5 +19,6 @@ angular.module 'mnoEnterpriseAngular', [
   'maestrano.impac',
   'ngPageTitle',
   'angularMoment',
-  'schemaForm'
+  'schemaForm',
+  'angular.filter'
 ]
