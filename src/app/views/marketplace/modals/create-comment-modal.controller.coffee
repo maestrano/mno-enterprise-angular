@@ -14,7 +14,7 @@ angular.module 'mnoEnterpriseAngular'
     app_comment = {
       description: vm.modal.model.description,
       organization_id: MnoeOrganizations.getSelectedId(),
-      feedback_id: feedback.id
+      parent_id: feedback.id
     }
     MnoeMarketplace.addAppReviewComment($stateParams.appId, app_comment).then(
       (response) ->
