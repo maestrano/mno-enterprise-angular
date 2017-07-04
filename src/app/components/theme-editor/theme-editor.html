@@ -5,11 +5,13 @@
   <div class="content">
     <form>
       <div class="row text-center">
-        <div  ng-hide="editor.busy">
+        <div ng-hide="editor.busy">
           <button ng-click="editor.reset()" class="btn btn-default">Reset to last save</button>
           <button ng-click="editor.save()" class="btn btn-danger">Save</button>
           <button ng-click="editor.reset({published:true})" class="btn btn-default">Reset to published style</button>
           <button ng-click="editor.save({publish:true})" class="btn btn-danger">Publish</button>
+          <div class="text-center top-buffer-1">Click on <b>Save</b> to save the current style without publishing it to the users.</div>
+          <div class="text-center">Click on <b>Publish</b> to publish the current style to the users.</div>
         </div>
         <div ng-show="editor.busy"><i class="fa fa-spinner fa-pulse fa-2x"></i></div>
       </div>
@@ -45,7 +47,10 @@
             <label>New Logo</label>
             <input type="file" id="theme-main-logo"/>
           </div>
-          <button class='btn btn-warning' ng-click="editor.updateLogo()">Update Logo</button>
+          <button class='btn btn-warning' ng-click="editor.updateLogo()" ng-disabled="editor.isUpdatingLogo">
+            <span ng-show="editor.isUpdatingLogo"><i class="fa fa-spinner fa-pulse fa-fw"></i></span>
+            Update Logo
+          </button>
         </uib-tab>
         <uib-tab heading="Import/Export">
           <div class="text-center top-buffer-1">
