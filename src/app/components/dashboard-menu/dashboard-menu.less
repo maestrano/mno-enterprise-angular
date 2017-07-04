@@ -171,6 +171,14 @@ dashboard-menu {
       @dashboard-side-menu-btn-company-active();
     }
 
+    .dashboard-button i.dhb-icon-subscriptions {
+      @dashboard-side-menu-btn-subscriptions();
+    }
+    .dashboard-button:hover i.dhb-icon-subscriptions,
+    .dashboard-button.active i.dhb-icon-subscriptions {
+      @dashboard-side-menu-btn-subscriptions-active();
+    }
+
     .dashboard-button i.dhb-icon-marketplace {
       @dashboard-side-menu-btn-marketplace();
     }

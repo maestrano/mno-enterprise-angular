@@ -483,6 +483,7 @@
   "mno_enterprise.templates.dashboard.menu.impac": "Impac!",
   "mno_enterprise.templates.dashboard.menu.my_account": "My Account",
   "mno_enterprise.templates.dashboard.menu.company": "Company",
+  "mno_enterprise.templates.dashboard.menu.subscriptions": "Subscriptions",
   "mno_enterprise.templates.dashboard.menu.marketplace": "Marketplace",
   "mno_enterprise.templates.dashboard.menu.logout": "Logout",
   "mno_enterprise.templates.dashboard.menu.new_company": "Add a New Company",
