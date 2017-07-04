@@ -362,12 +362,14 @@ ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
       editor.busy = false
       $scope.$apply()
 
-  editor.reset = (opts = {published:false}) ->
+  editor.reset = (opts = {published: false}) ->
     editor.busy = true
     if opts.published
+      editor.busy = true
       themeEditorSvc.resetToPublishedTheme()
         .then(-> loadLastSavedTheme())
         .then(-> editor.update())
+        .finally(-> editor.busy = false)
     else
       $scope.theme = theme = angular.copy(default_theme)
       $scope.variables = variables = angular.copy(default_variables)
@@ -418,10 +420,11 @@ ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
       toastr.info('Theme has been imported')
 
   editor.updateLogo = () ->
+    editor.isUpdatingLogo = true
     logo = angular.element($('#theme-main-logo'))[0].files[0]
     themeEditorSvc.saveLogo(logo).then(->
       toastr.info('Logo updated, please refresh the page')
-    )
+    ).finally(-> editor.isUpdatingLogo = false)
 
   #============================================
   # Private method
