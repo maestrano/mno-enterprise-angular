@@ -9,9 +9,11 @@ angular.module 'mnoEnterpriseAngular'
     productsPromise = null
     productsResponse = null
 
-    currentProduct = null
-    pricingPlan = null
-    customData = {}
+    subscription = {
+      product: null
+      product_pricings: null
+      custom_data: {}
+    }
 
     @getProducts = () ->
       return productsPromise if productsPromise?
@@ -21,40 +23,74 @@ angular.module 'mnoEnterpriseAngular'
           response
       )
 
-    @findProduct = (nid) ->
-      _.find(productsResponse.products, (a) -> a.nid == nid)
-
-    @setCurrentProduct = (p) ->
-      currentProduct = p
-
-    @getCurrentProduct = () ->
-      currentProduct
-
-    @setPricingPlan = (p) ->
-      pricingPlan = p
-
-    @getPricingPlan = ->
-      pricingPlan
-
-    @setCustomData = (data) ->
-      customData = data
-
-    @getCustomData = () ->
-      customData
-
-    @createSubscription = () ->
-      subscriptionsApi().post({subscription: {pricing_id: pricingPlan.id, custom_data: customData}}).then(
-        (response) ->
-          console.log("### DEBUG post response", response)
-          response
+    @findProduct = ({id = null, nid = null}) ->
+      _self.getProducts().then(
+        ->
+          if id?
+            _.find(productsResponse.products, (a) -> a.id == id)
+          else
+            _.find(productsResponse.products, (a) -> a.nid == nid)
       )
+
+    @setSubscription = (s) ->
+      subscription = s
+
+    @getSubscription = () ->
+      subscription
+
+    @initSubscription = ({productNid = null, subscriptionId = null}) ->
+      deferred = $q.defer()
+      if productNid?
+        # Create a new subscription to a product
+        deferred.resolve(subscription)
+      else if subscriptionId?
+        # Edit a subscription
+        _self.fetchSubscription(subscriptionId).then(
+          (response) -> deferred.resolve(response)
+        )
+      return deferred.promise
+
+    @createSubscription = (s) ->
+      deferred = $q.defer()
+      MnoeOrganizations.get().then(
+        (response) ->
+          subscriptionsApi(response.organization.id).post({subscription: {product_pricing_id: s.product_pricing.id, custom_data: s.custom_data}}).then(
+            (response) ->
+              console.log("### DEBUG post response", response)
+              deferred.resolve(response)
+          )
+      )
+      return deferred.promise
+
+    @updateSubscription = (s) ->
+      deferred = $q.defer()
+      MnoeOrganizations.get().then(
+        (response) ->
+          subscription.patch({subscription: {product_pricing_id: s.product_pricing.id, custom_data: s.custom_data}}).then(
+            (response) ->
+              console.log("### DEBUG put response", response)
+              deferred.resolve(response)
+          )
+      )
+      return deferred.promise
 
     @saveSubscription = (subscription) ->
-      subscriptions.put({subscription: {pricing_id: pricingPlan.id, custom_data: customData}}).then(
+      unless subscription.id
+        _self.createSubscription(subscription)
+      else
+        _self.updateSubscription(subscription)
+
+    @fetchSubscription = (id) ->
+      deferred = $q.defer()
+      MnoeOrganizations.get().then(
         (response) ->
-          console.log("### DEBUG put response", response)
-          response
+          MnoeApiSvc.one('/organizations', response.organization.id).one('subscriptions', id).get().then(
+            (response) ->
+              console.log("### DEBUG get response", response)
+              deferred.resolve(response)
+          )
       )
+      return deferred.promise
 
     @getSubscriptions = () ->
       deferred = $q.defer()

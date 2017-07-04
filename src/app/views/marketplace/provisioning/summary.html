@@ -13,24 +13,24 @@
 
       <div class="row td-row">
         <div class="cell col-sm-4">
-        <span class="cell-label visible-xs-inline">
-          {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.name' | translate }}:
-        </span>
-          {{ vm.selectedPricingPlan.name }}
+          <span class="cell-label visible-xs-inline">
+            {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.name' | translate }}:
+          </span>
+          {{ vm.subscription.product_pricing.name }}
         </div>
 
         <div class="cell col-sm-4">
-        <span class="cell-label visible-xs-inline">
-          {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.description' | translate }}:
-        </span>
-          {{ vm.selectedPricingPlan.description }}
+          <span class="cell-label visible-xs-inline">
+            {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.description' | translate }}:
+          </span>
+          {{ vm.subscription.product_pricing.description }}
         </div>
 
         <div class="cell col-sm-4">
-        <span class="cell-label visible-xs-inline">
-          {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.price' | translate }}:
-        </span>
-          {{ vm.selectedPricingPlan.currency }} {{ vm.selectedPricingPlan.price.value }} {{ vm.selectedPricingPlan.factor }}
+          <span class="cell-label visible-xs-inline">
+            {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.price' | translate }}:
+          </span>
+          <span ng-repeat="price in vm.subscription.product_pricing.prices | filterBy: ['currency']: vm.orgCurrency">{{price.currency}} {{price.price_cents / 100}}</span>
         </div>
       </div>
     </div>

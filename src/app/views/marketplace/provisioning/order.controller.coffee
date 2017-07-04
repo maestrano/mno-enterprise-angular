@@ -3,26 +3,33 @@ angular.module 'mnoEnterpriseAngular'
 
     vm = this
     vm.isLoading = true
+    vm.product = null
 
     orgPromise = MnoeOrganizations.get()
     prodsPromise = MnoeProvisioning.getProducts()
+    initPromise = MnoeProvisioning.initSubscription({productNid: $stateParams.nid, subscriptionId: $stateParams.id})
 
-    $q.all({organization: orgPromise, products: prodsPromise}).then(
+    $q.all({organization: orgPromise, products: prodsPromise, subscription: initPromise}).then(
       (response) ->
         vm.orgCurrency = response.organization.billing?.current?.options?.iso_code || 'USD'
-        vm.product = MnoeProvisioning.findProduct($stateParams.nid)
+        vm.subscription = response.subscription
 
-        MnoeProvisioning.setCurrentProduct(vm.product)
+        MnoeProvisioning.findProduct({id: vm.subscription.product?.id, nid: $stateParams.nid}).then(
+          (response) ->
+            vm.subscription.product = response
 
-        # Filters the pricing plans not containing current currency
-        vm.product.product_pricings = _.filter(vm.product.product_pricings,
-          (pp) -> _.some(pp.prices, (p) -> p.currency == vm.orgCurrency)
+            # Filters the pricing plans not containing current currency
+            vm.subscription.product.product_pricings = _.filter(vm.subscription.product.product_pricings,
+              (pp) -> _.some(pp.prices, (p) -> p.currency == vm.orgCurrency)
+            )
+
+            MnoeProvisioning.setSubscription(vm.subscription)
         )
     ).finally(-> vm.isLoading = false)
 
-    vm.next = (pricingPlan) ->
-      MnoeProvisioning.setPricingPlan(pricingPlan)
-      if vm.product.custom_schema?
+    vm.next = (subscription) ->
+      MnoeProvisioning.setSubscription(subscription)
+      if vm.subscription.product.custom_schema?
         $state.go('home.provisioning.additional_details')
       else
         $state.go('home.provisioning.confirm')

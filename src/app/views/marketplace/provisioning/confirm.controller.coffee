@@ -4,14 +4,14 @@ angular.module 'mnoEnterpriseAngular'
     vm = this
 
     vm.isLoading = false
-    vm.product = MnoeProvisioning.getCurrentProduct()
-    vm.selectedPricingPlan = MnoeProvisioning.getPricingPlan()
+    vm.subscription = MnoeProvisioning.getSubscription()
 
     vm.validate = () ->
       vm.isLoading = true
-      MnoeProvisioning.createSubscription().then(
+      MnoeProvisioning.saveSubscription(vm.subscription).then(
         (response) ->
-          $state.go('home.provisioning.confirm')
+          MnoeProvisioning.setSubscription(response)
+          $state.go('home.provisioning.order_summary')
       ).finally(-> vm.isLoading = false)
 
     MnoeOrganizations.get().then(

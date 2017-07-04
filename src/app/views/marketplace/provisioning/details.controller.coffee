@@ -5,20 +5,18 @@ angular.module 'mnoEnterpriseAngular'
 
     vm.form = [ "*" ]
 
-    vm.model = MnoeProvisioning.getCustomData()
+    vm.subscription = MnoeProvisioning.getSubscription()
+    vm.isEditMode = !_.isEmpty(vm.subscription.custom_data)
 
     # The schema is contained in field vm.product.custom_schema
-    vm.product = MnoeProvisioning.getCurrentProduct()
-    vm.isEditMode = !_.isEmpty(vm.model)
-    console.log("### DEBUG custom_schema", vm.product.custom_schema)
-    vm.schema = JSON.parse(vm.product.custom_schema)
-    console.log("### DEBUG vm.schema", vm.schema)
+    MnoeProvisioning.findProduct(id: vm.subscription.product.id).then(
+      (response) ->
+        vm.schema = JSON.parse(response.custom_schema)
+    )
 
-    vm.submit = (form, model) ->
+    vm.submit = (form) ->
       return if form.$invalid
-      console.log("### DEBUG model", model)
-      console.log("### DEBUG form", form)
-      MnoeProvisioning.setCustomData(model)
+      MnoeProvisioning.setSubscription(vm.subscription)
       $state.go('home.provisioning.confirm')
 
     return

@@ -1,17 +1,14 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningSummaryCtrl', () ->
+  .controller('ProvisioningSummaryCtrl', (MnoeOrganizations, MnoeProvisioning) ->
 
     vm = this
 
-    vm.selectedPricingPlan = {
-      name: "Standard Plan",
-      currency: "AUD",
-      factor: "/Full Moon/Camels",
-      description: "As standard as your opinions",
-      price: {
-        value: 300
-      }
-    }
+    vm.subscription = MnoeProvisioning.getSubscription()
+
+    MnoeOrganizations.get().then(
+      (response) ->
+        vm.orgCurrency = response.billing?.current?.options?.iso_code || 'USD'
+    )
 
     return
   )

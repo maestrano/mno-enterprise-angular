@@ -111,7 +111,7 @@ angular.module 'mnoEnterpriseAngular'
         .state 'home.provisioning.order',
           data:
             pageTitle:'Purchase - Order'
-          url: '/order/:nid'
+          url: '/order/?nid&id'
           views: '@home.provisioning':
             templateUrl: 'app/views/marketplace/provisioning/order.html'
             controller: 'ProvisioningOrderCtrl'
@@ -140,14 +140,13 @@ angular.module 'mnoEnterpriseAngular'
             templateUrl: 'app/views/marketplace/provisioning/summary.html'
             controller: 'ProvisioningSummaryCtrl'
             controllerAs: 'vm'
-        .state 'home.provisioning.subscriptions',
+        .state 'home.subscriptions',
           data:
             pageTitle:'Subscriptions summary'
-          url: '/subscriptions/'
-          views: '@home.provisioning':
-            templateUrl: 'app/views/marketplace/provisioning/subscriptions.html'
-            controller: 'ProvisioningSubscriptionsCtrl'
-            controllerAs: 'vm'
+          url: '/subscriptions'
+          templateUrl: 'app/views/marketplace/provisioning/subscriptions.html'
+          controller: 'ProvisioningSubscriptionsCtrl'
+          controllerAs: 'vm'
         .state 'home.marketplace.compare',
           data:
             pageTitle:'Compare apps'

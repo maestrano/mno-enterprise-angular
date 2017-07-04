@@ -15,9 +15,9 @@
         </div>
       </div>
 
-      <div class="row td-row" ng-repeat="pricingPlan in vm.product.product_pricings">
+      <div class="row td-row" ng-repeat="pricingPlan in vm.subscription.product.product_pricings">
         <div class="cell radio-selector col-xs-2">
-          <input type="radio" name="optradio" ng-model="vm.selectedPlan" ng-value="pricingPlan">
+          <input type="radio" name="optradio" ng-model="vm.subscription.product_pricing" ng-value="pricingPlan">
         </div>
 
         <div class="col-xs-10">
@@ -45,7 +45,7 @@
       </div>
     </div>
 
-    <button class="btn btn-primary top-buffer-1 pull-right" ng-click="vm.next(vm.selectedPlan)" ng-hide="vm.isLoading" ng-disabled="!vm.selectedPlan" translate>
+    <button class="btn btn-primary top-buffer-1 pull-right" ng-click="vm.next(vm.subscription)" ng-hide="vm.isLoading" ng-disabled="!vm.subscription.product_pricing" translate>
       mno_enterprise.templates.dashboard.provisioning.order.next
     </button>
   </div>

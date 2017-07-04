@@ -1,7 +1,12 @@
-<div id="provisioning-subscriptions">
-  <h1>Manage your subscription</h1>
-  <div class="well pricing-plans">
+<h2 class="section-title">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.title' | translate }}</h2>
 
+<span class="fa-stack fa-lg">
+  <i class="fa fa-dollar fa-stack-1x"></i>
+  <i class="fa fa-refresh fa-stack-2x"></i>
+</span>
+
+<div id="provisioning-subscriptions" class="row top-buffer-2">
+  <div class="well pricing-plans">
     <div ng-show="vm.isLoading" class="text-center">
       <i class="fa fa-refresh fa-spin fa-4x"></i>
     </div>
@@ -29,28 +34,28 @@
           <span class="cell-label visible-xs-inline">
             {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.product' | translate }}:
           </span>
-          {{ subscription.product}}
+          {{ subscription.product.name}}
         </div>
 
         <div class="cell col-sm-2">
           <span class="cell-label visible-xs-inline">
             {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.subscription' | translate }}:
           </span>
-          {{ subscription.subscription}}
+          {{ subscription.product_pricing.name}}
         </div>
 
         <div class="cell col-sm-1">
           <span class="cell-label visible-xs-inline">
             {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.description' | translate }}:
           </span>
-          {{ subscription.description }}
+          {{ subscription.product_pricing.description }}
         </div>
 
         <div class="cell col-sm-1">
           <span class="cell-label visible-xs-inline">
             {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.amount' | translate }}:
           </span>
-          {{ subscription.amount }}
+          <span ng-repeat="price in subscription.product_pricing.prices | filterBy: ['currency']: vm.orgCurrency">{{price.currency}} {{price.price_cents / 100}}</span>
         </div>
 
         <div class="cell col-sm-2">
@@ -75,9 +80,7 @@
         </div>
 
         <div class="cell col-sm-2">
-          <div class="btn">
-            <input type="button" name="dtlbutton" value="{{'mno_enterprise.templates.dashboard.provisioning.subscriptions.viewdetails' | translate}}">
-          </div>
+          <button type="button" class="btn btn-warning" ui-sref="home.provisioning.order({id: subscription.id})" translate>mno_enterprise.templates.dashboard.provisioning.subscriptions.modify</button>
         </div>
       </div>
     </div>
