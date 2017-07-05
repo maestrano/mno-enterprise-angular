@@ -46,7 +46,9 @@
         <div class="well text-center well-details">
           <div class="row">
             <div class="col-xs-12 col-sm-4 col-sm-offset-4 col-md-8 col-md-offset-2">
-              <a class="btn btn-warning btn-lg" ng-show="vm.isExternallyProvisioned" ui-sref="home.provisioning.order({nid: vm.app.nid})">Purchase</a>
+              <a class="btn btn-warning btn-lg" ng-show="vm.isExternallyProvisioned" ui-sref="home.provisioning.order({nid: vm.app.nid})" translate>
+                mno_enterprise.templates.dashboard.marketplace.show.provision
+              </a>
               <mno-app-install-btn ng-if="vm.app && !vm.isExternallyProvisioned" app="vm.app"></mno-app-install-btn>
             </div>
           </div>

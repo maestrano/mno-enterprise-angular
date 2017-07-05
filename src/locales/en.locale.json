@@ -498,6 +498,7 @@
   "mno_enterprise.templates.dashboard.marketplace.index.compare_apps": "Compare",
   "mno_enterprise.templates.dashboard.marketplace.show.back": "Back",
   "mno_enterprise.templates.dashboard.marketplace.show.no_review": "There are no reviews of {name}.",
+  "mno_enterprise.templates.dashboard.marketplace.show.provision": "Provision",
   "mno_enterprise.templates.dashboard.marketplace.show.tag_responsive": "Responsive",
   "mno_enterprise.templates.dashboard.marketplace.show.tag_star": "Star!™ Tutorials",
   "mno_enterprise.templates.dashboard.marketplace.show.tag_connec": "Connec!™ Ready",

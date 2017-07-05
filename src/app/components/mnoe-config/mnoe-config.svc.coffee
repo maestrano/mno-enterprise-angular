@@ -98,7 +98,7 @@ angular.module 'mnoEnterpriseAngular'
         DASHBOARD_CONFIG.provisioning.enabled
       else
         $log.debug("DASHBOARD_CONFIG.provisioning.enabled missing")
-        true
+        false
 
     @isUserManagementEnabled = () ->
       if DASHBOARD_CONFIG.user_management?.enabled?

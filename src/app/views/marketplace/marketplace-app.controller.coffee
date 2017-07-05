@@ -21,6 +21,8 @@ angular.module 'mnoEnterpriseAngular'
       vm.conflictingApp = null
       # Enabling pricing
       vm.isPriceShown = MnoeConfig.isMarketplacePricingEnabled()
+      # Enabling provisioning
+      vm.isProvisioningEnabled = MnoeConfig.isProvisioningEnabled()
       # Enabling reviews
       vm.isReviewingEnabled = MnoeConfig.areMarketplaceReviewsEnabled()
       # Enabling questions
@@ -44,7 +46,7 @@ angular.module 'mnoEnterpriseAngular'
         vm.app.description = $sce.trustAsHtml(app.description)
 
         # Is the product externally provisioned
-        vm.isExternallyProvisioned = product? && product.externally_provisioned
+        vm.isExternallyProvisioned = (vm.isProvisioningEnabled && product? && product.externally_provisioned)
 
         # Init pricing plans
         plans = vm.app.pricing_plans
