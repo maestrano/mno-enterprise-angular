@@ -1,12 +1,12 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningSubscriptionsCtrl', ($stateParams, MnoeOrganizations, MnoeProvisioning) ->
+  .controller('ProvisioningSubscriptionsCtrl', ($stateParams, MnoeOrganizations, MnoeProvisioning, MnoeConfig) ->
 
     vm = this
     vm.isLoading = true
 
     MnoeOrganizations.get().then(
       (response) ->
-        vm.orgCurrency = response.billing?.current?.options?.iso_code || 'USD'
+        vm.orgCurrency = response.billing?.current?.options?.iso_code || MnoeConfig.marketplaceCurrency()
     )
 
     MnoeProvisioning.getSubscriptions().then(

@@ -46,7 +46,7 @@ angular.module 'mnoEnterpriseAngular'
         vm.app.description = $sce.trustAsHtml(app.description)
 
         # Is the product externally provisioned
-        vm.isExternallyProvisioned = (vm.isProvisioningEnabled && product? && product.externally_provisioned)
+        vm.isExternallyProvisioned = (vm.isProvisioningEnabled && product?.externally_provisioned)
 
         # Init pricing plans
         plans = vm.app.pricing_plans

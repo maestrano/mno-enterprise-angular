@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningOrderCtrl', ($q, $state, $stateParams, MnoeOrganizations, MnoeProvisioning) ->
+  .controller('ProvisioningOrderCtrl', ($q, $state, $stateParams, MnoeOrganizations, MnoeProvisioning, MnoeConfig) ->
 
     vm = this
     vm.isLoading = true
@@ -11,7 +11,7 @@ angular.module 'mnoEnterpriseAngular'
 
     $q.all({organization: orgPromise, products: prodsPromise, subscription: initPromise}).then(
       (response) ->
-        vm.orgCurrency = response.organization.billing?.current?.options?.iso_code || 'USD'
+        vm.orgCurrency = response.organization.billing?.current?.options?.iso_code || MnoeConfig.marketplaceCurrency()
         vm.subscription = response.subscription
 
         MnoeProvisioning.findProduct({id: vm.subscription.product?.id, nid: $stateParams.nid}).then(

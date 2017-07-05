@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningConfirmCtrl', ($state, MnoeOrganizations, MnoeProvisioning) ->
+  .controller('ProvisioningConfirmCtrl', ($state, MnoeOrganizations, MnoeProvisioning, MnoeConfig) ->
 
     vm = this
 
@@ -16,7 +16,7 @@ angular.module 'mnoEnterpriseAngular'
 
     MnoeOrganizations.get().then(
       (response) ->
-        vm.orgCurrency = response.billing?.current?.options?.iso_code || 'USD'
+        vm.orgCurrency = response.billing?.current?.options?.iso_code || MnoeConfig.marketplaceCurrency()
     )
 
     return
