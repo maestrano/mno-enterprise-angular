@@ -26,10 +26,7 @@ angular.module 'mnoEnterpriseAngular'
     @findProduct = ({id = null, nid = null}) ->
       _self.getProducts().then(
         ->
-          if id?
-            _.find(productsResponse.products, (a) -> a.id == id)
-          else
-            _.find(productsResponse.products, (a) -> a.nid == nid)
+          _.find(productsResponse.products, (a) -> a.id == id || a.nid == nid)
       )
 
     @setSubscription = (s) ->

@@ -9,8 +9,8 @@
     <div ng-hide="vm.isLoading" class="table-cell" ng-show="!isLoading">
       <div class="row th-row hidden-xs">
         <div class="cell col-sm-1">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.product' | translate }}</div>
-        <div class="cell col-sm-2">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.subscription' | translate }}</div>
-        <div class="cell col-sm-1">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.description' | translate }}</div>
+        <div class="cell col-sm-1">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.subscription' | translate }}</div>
+        <div class="cell col-sm-2">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.description' | translate }}</div>
         <div class="cell col-sm-1">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.amount' | translate }}</div>
         <div class="cell col-sm-2">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.start_date' | translate }}</div>
         <div class="cell col-sm-2">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.end_date' | translate }}</div>
@@ -29,21 +29,21 @@
           <span class="cell-label visible-xs-inline">
             {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.product' | translate }}:
           </span>
-          {{ subscription.product.name}}
-        </div>
-
-        <div class="cell col-sm-2">
-          <span class="cell-label visible-xs-inline">
-            {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.subscription' | translate }}:
-          </span>
-          {{ subscription.product_pricing.name}}
+          <span title="{{ subscription.name }}">{{ subscription.product.name }}</span>
         </div>
 
         <div class="cell col-sm-1">
           <span class="cell-label visible-xs-inline">
+            {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.subscription' | translate }}:
+          </span>
+          <span title="{{ subscription.product_pricing.name }}">{{ subscription.product_pricing.name }}</span>
+        </div>
+
+        <div class="cell col-sm-2">
+          <span class="cell-label visible-xs-inline">
             {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.description' | translate }}:
           </span>
-          {{ subscription.product_pricing.description }}
+          <span title="{{ subscription.product_pricing.description }}">{{ subscription.product_pricing.description }}</span>
         </div>
 
         <div class="cell col-sm-1">
@@ -57,21 +57,21 @@
           <span class="cell-label visible-xs-inline">
             {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.start_date' | translate }}:
           </span>
-          {{ subscription.start_date}}
+          {{ subscription.start_date | amCalendar }}
         </div>
 
         <div class="cell col-sm-2">
           <span class="cell-label visible-xs-inline">
             {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.end_date' | translate }}:
           </span>
-          {{ subscription.end_date }}
+          {{ subscription.end_date | amCalendar }}
         </div>
 
         <div class="cell col-sm-1">
           <span class="cell-label visible-xs-inline">
             {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.status' | translate }}:
           </span>
-          {{ subscription.status}}
+          <span title="{{ subscription.status}}">{{ subscription.status}}</span>
         </div>
 
         <div class="cell col-sm-2">
