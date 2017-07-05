@@ -70,9 +70,3 @@ angular.module 'mnoEnterpriseAngular'
     #$translateProvider.useMissingTranslationHandlerLog()
   )
 
-  .config((schemaFormProvider) ->
-    schemaFormProvider.postProcess((form) ->
-      console.log("### DEBUG schemaFormProvider form", form)
-      return form
-    )
-  )
