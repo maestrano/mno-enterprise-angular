@@ -1,0 +1,84 @@
+<h2 class="section-title">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.title' | translate }}</h2>
+
+<div id="provisioning-subscriptions" class="row top-buffer-2">
+  <div class="well pricing-plans">
+    <div ng-show="vm.isLoading" class="text-center">
+      <i class="fa fa-refresh fa-spin fa-4x"></i>
+    </div>
+
+    <div ng-hide="vm.isLoading" class="table-cell" ng-show="!isLoading">
+      <div class="row th-row hidden-xs">
+        <div class="cell col-sm-1">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.product' | translate }}</div>
+        <div class="cell col-sm-1">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.subscription' | translate }}</div>
+        <div class="cell col-sm-2">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.description' | translate }}</div>
+        <div class="cell col-sm-1">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.amount' | translate }}</div>
+        <div class="cell col-sm-2">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.start_date' | translate }}</div>
+        <div class="cell col-sm-2">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.end_date' | translate }}</div>
+        <div class="cell col-sm-1">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.status' | translate }}</div>
+        <div class="cell col-sm-2">&nbsp;</div>
+      </div>
+
+      <div class="row td-row" ng-if="vm.subscriptions.length === 0">
+        <div class="cell col-sm-12 text-center" translate>
+          mno_enterprise.templates.dashboard.provisioning.subscriptions.empty_list
+        </div>
+      </div>
+
+      <div class="row td-row" ng-repeat="subscription in vm.subscriptions">
+        <div class="cell col-sm-1">
+          <span class="cell-label visible-xs-inline">
+            {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.product' | translate }}:
+          </span>
+          <span title="{{ subscription.name }}">{{ subscription.product.name }}</span>
+        </div>
+
+        <div class="cell col-sm-1">
+          <span class="cell-label visible-xs-inline">
+            {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.subscription' | translate }}:
+          </span>
+          <span title="{{ subscription.product_pricing.name }}">{{ subscription.product_pricing.name }}</span>
+        </div>
+
+        <div class="cell col-sm-2">
+          <span class="cell-label visible-xs-inline">
+            {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.description' | translate }}:
+          </span>
+          <span title="{{ subscription.product_pricing.description }}">{{ subscription.product_pricing.description }}</span>
+        </div>
+
+        <div class="cell col-sm-1">
+          <span class="cell-label visible-xs-inline">
+            {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.amount' | translate }}:
+          </span>
+          <span ng-repeat="price in subscription.product_pricing.prices | filterBy: ['currency']: vm.orgCurrency">{{price.currency}} {{price.price_cents / 100}}</span>
+        </div>
+
+        <div class="cell col-sm-2">
+          <span class="cell-label visible-xs-inline">
+            {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.start_date' | translate }}:
+          </span>
+          {{ subscription.start_date | amCalendar }}
+        </div>
+
+        <div class="cell col-sm-2">
+          <span class="cell-label visible-xs-inline">
+            {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.end_date' | translate }}:
+          </span>
+          {{ subscription.end_date | amCalendar }}
+        </div>
+
+        <div class="cell col-sm-1">
+          <span class="cell-label visible-xs-inline">
+            {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.status' | translate }}:
+          </span>
+          <span title="{{ subscription.status}}">{{ subscription.status}}</span>
+        </div>
+
+        <div class="cell col-sm-2">
+          <button type="button" class="btn btn-warning" ui-sref="home.provisioning.order({id: subscription.id})" translate>mno_enterprise.templates.dashboard.provisioning.subscriptions.modify</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

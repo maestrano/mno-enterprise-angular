@@ -69,3 +69,4 @@ angular.module 'mnoEnterpriseAngular'
     # TODO: Activate in "developer mode" only (spams the console and makes the application lag)
     #$translateProvider.useMissingTranslationHandlerLog()
   )
+

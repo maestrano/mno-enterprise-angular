@@ -16,7 +16,7 @@ angular.module 'mnoEnterpriseAngular'
           else if (operation == 'getList')
             extractedData = data[what]
           # Extract and restangularize the object
-          else if (operation == 'get' || operation == 'post' || operation == 'put')
+          else if (operation == 'get' || operation == 'post' || operation == 'put' || operation == 'patch')
             what = inflector.singularize(what)
             extractedData = data[what]
           else

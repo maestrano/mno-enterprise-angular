@@ -12,6 +12,7 @@ angular.module 'mnoEnterpriseAngular'
         $scope.isDockEnabled = MnoeConfig.isDockEnabled()
         $scope.isOrganizationManagementEnabled = MnoeConfig.isOrganizationManagementEnabled()
         $scope.isMarketplaceEnabled = MnoeConfig.isMarketplaceEnabled()
+        $scope.isProvisioningEnabled = MnoeConfig.isProvisioningEnabled()
 
         $scope.$watch(MnoeOrganizations.getSelectedId, (newValue) ->
           # Impac! is displayed only to admin and super admin

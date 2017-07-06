@@ -13,10 +13,18 @@ angular.module 'mnoEnterpriseAngular'
     # as the /marketplace payload isn't encapsulated in "{ marketplace: categories {...}, apps {...} }"
     marketplaceApi = MnoeApiSvc.oneUrl('/marketplace')
     marketplacePromise = null
+    marketplaceResponse = null
 
     @getApps = () ->
       return marketplacePromise if marketplacePromise?
-      marketplacePromise = marketplaceApi.get()
+      marketplacePromise = marketplaceApi.get().then(
+        (response) ->
+          marketplaceResponse = response
+          response
+      )
+
+    @findApp = (nid) ->
+      _.find(marketplaceResponse.apps, (a) -> a.nid == nid)
 
     @getReview = (appId, reviewId) ->
       MnoeApiSvc.one('marketplace', parseInt(appId)).one('app_reviews', parseInt(reviewId)).get()

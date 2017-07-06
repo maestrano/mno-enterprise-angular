@@ -40,6 +40,10 @@
         <a ui-sref="home.company" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.company' | translate }}</a>
       </li>
 
+      <li>
+        <a ui-sref="home.subscriptions" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.subscriptions' | translate }}</a>
+      </li>
+
       <li ng-if="isMarketplaceEnabled">
         <a ui-sref="home.marketplace" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.marketplace' | translate }}</a>
       </li>
@@ -84,6 +88,11 @@
     <a ng-if="isOrganizationManagementEnabled" ui-sref="home.company" class="dashboard-button top-buffer-1" ui-sref-active="active">
       <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.company' | translate }}</div>
       <i class="dhb-icon-company"></i>
+    </a>
+
+    <a ng-if="isProvisioningEnabled" ui-sref="home.subscriptions" class="dashboard-button top-buffer-1" ui-sref-active="active">
+      <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.subscriptions' | translate }}</div>
+      <i class="dhb-icon-subscriptions"></i>
     </a>
 
     <a ng-if="isMarketplaceEnabled" ui-sref="home.marketplace" class="dashboard-button top-buffer-1" ui-sref-active="active">

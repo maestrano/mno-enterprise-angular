@@ -93,6 +93,13 @@ angular.module 'mnoEnterpriseAngular'
         $log.debug("DASHBOARD_CONFIG.payment.enabled missing")
         true
 
+    @isProvisioningEnabled = () ->
+      if DASHBOARD_CONFIG.provisioning?.enabled?
+        DASHBOARD_CONFIG.provisioning.enabled
+      else
+        $log.debug("DASHBOARD_CONFIG.provisioning.enabled missing")
+        false
+
     @isUserManagementEnabled = () ->
       if DASHBOARD_CONFIG.user_management?.enabled?
         DASHBOARD_CONFIG.user_management.enabled
