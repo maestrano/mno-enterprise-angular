@@ -6,6 +6,7 @@
     <form>
       <div class="row text-center">
         <div ng-hide="editor.busy">
+          <a href="/admin/" class="btn btn-primary">Back to Admin Panel</a>
           <button ng-click="editor.reset()" class="btn btn-default">Reset to last save</button>
           <button ng-click="editor.save()" class="btn btn-danger">Save</button>
           <button ng-click="editor.reset({published:true})" class="btn btn-default">Reset to published style</button>
@@ -28,7 +29,21 @@
             </div>
           </div>
         </uib-tab>
+        <uib-tab heading="Logo">
+          <div class='form-group top-buffer-1'>
+            <label>New Logo</label>
+            <input type="file" id="theme-main-logo"/>
+          </div>
+          <button class='btn btn-warning' ng-click="editor.updateLogo()" ng-disabled="editor.isUpdatingLogo">
+            <span ng-show="editor.isUpdatingLogo"><i class="fa fa-spinner fa-pulse fa-fw"></i></span>
+            Update Logo
+          </button>
+        </uib-tab>
         <uib-tab heading="Advanced">
+          <div class="alert alert-warning top-buffer-1">
+            <span><i class="fa fa-warning"></i></span>
+            This section is to be managed by technical staff.
+          </div>
           <div class="panel panel-default top-buffer-1" ng-repeat="(section, vars) in variables">
             <div class="panel-heading">{{section}}</div>
             <div class="panel-body">
@@ -41,16 +56,6 @@
               </div>
             </div>
           </div>
-        </uib-tab>
-        <uib-tab heading="Logo">
-          <div class='form-group top-buffer-1'>
-            <label>New Logo</label>
-            <input type="file" id="theme-main-logo"/>
-          </div>
-          <button class='btn btn-warning' ng-click="editor.updateLogo()" ng-disabled="editor.isUpdatingLogo">
-            <span ng-show="editor.isUpdatingLogo"><i class="fa fa-spinner fa-pulse fa-fw"></i></span>
-            Update Logo
-          </button>
         </uib-tab>
         <uib-tab heading="Import/Export">
           <div class="text-center top-buffer-1">
