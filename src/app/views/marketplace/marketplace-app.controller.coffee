@@ -402,16 +402,18 @@ angular.module 'mnoEnterpriseAngular'
         if val?
           vm.isLoading = true
 
+          productPromise = if MnoeConfig.isProvisioningEnabled() then MnoeProvisioning.getProducts() else $q.resolve()
+
           # Retrieve the apps and if any the current app instance
           $q.all(
             marketplace: MnoeMarketplace.getApps(),
             appInstances: MnoeAppInstances.getAppInstances(),
-            products: MnoeProvisioning.getProducts()
+            products: productPromise
           ).then(
             (response) ->
               apps = response.marketplace.apps
               appInstances = response.appInstances
-              products = response.products.products
+              products = response.products?.products
 
               # App to be displayed
               appId = $stateParams.appId
