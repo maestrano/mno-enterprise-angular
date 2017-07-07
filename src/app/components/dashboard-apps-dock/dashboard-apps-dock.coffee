@@ -3,14 +3,14 @@ DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, MnoeOrganizations
   'ngInject'
 
   $scope.appDock = {}
-  $scope.apps = {}
+  $scope.apps = []
   $scope.appDock.isMinimized = true
   $scope.activeApp = null
   $scope.launchApp = {isClosed: true}
   $scope.templateUrl = 'app/components/dashboard-apps-dock/no-apps-notification.html'
   $scope.isMarketplaceEnabled = MARKETPLACE_CONFIG.enabled
   $scope.isOnboargindEnabled = ONBOARDING_WIZARD_CONFIG.enabled
-  $scope.isPopoverShown = $scope.isOnboargindEnabled && !$scope.apps.length && $scope.isMarketplaceEnabled
+  $scope.isPopoverShown = $scope.isOnboargindEnabled && $scope.isMarketplaceEnabled && $scope.apps.length
   # Hide the dock if marketplace is disabled
   $scope.displayDock = $scope.isMarketplaceEnabled
 
@@ -115,6 +115,8 @@ DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, MnoeOrganizations
         (response) ->
           $scope.isLoading = false
           $scope.apps = response
+          $scope.isPopoverShown = $scope.isOnboargindEnabled && $scope.isMarketplaceEnabled && !$scope.apps.length
+
       )
 
 #====================================
