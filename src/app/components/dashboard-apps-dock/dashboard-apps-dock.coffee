@@ -1,13 +1,18 @@
 
-DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, MnoeOrganizations, MnoeAppInstances, MARKETPLACE_CONFIG) ->
+DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, MnoeOrganizations, MnoeAppInstances, MARKETPLACE_CONFIG, ONBOARDING_WIZARD_CONFIG) ->
   'ngInject'
 
   $scope.appDock = {}
+  $scope.apps = {}
   $scope.appDock.isMinimized = true
   $scope.activeApp = null
   $scope.launchApp = {isClosed: true}
-
+  $scope.templateUrl = 'app/components/dashboard-apps-dock/no-apps-notification.html'
   $scope.isMarketplaceEnabled = MARKETPLACE_CONFIG.enabled
+  $scope.isOnboargindEnabled = ONBOARDING_WIZARD_CONFIG.enabled
+  $scope.isPopoverShown = $scope.isOnboargindEnabled && !$scope.apps.length && $scope.isMarketplaceEnabled
+  # Hide the dock if marketplace is disabled
+  $scope.displayDock = $scope.isMarketplaceEnabled
 
   # 'Lock' the dock when a menu is expanded.
   # Ie: we disable all effects and animation
@@ -112,19 +117,13 @@ DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, MnoeOrganizations
           $scope.apps = response
       )
 
-  # Hide the dock if marketplace is disabled and there is not app linked
-  $scope.displayDock = ->
-    $scope.isMarketplaceEnabled || ($scope.apps? && $scope.apps.length > 0)
-
 #====================================
 # Modals Controllers
 #====================================
 angular.module 'mnoEnterpriseAngular'
   .directive('dashboardAppsDock', ($window) ->
     return {
-      scope: {
-        visibleIfEmpty: '=?'
-      },
+
       link: (scope, element) ->
         # Mobile dock: max-height need to be an absolute value for the scrolling to work
         pageHeight = angular.element(window).height()
@@ -157,5 +156,20 @@ angular.module 'mnoEnterpriseAngular'
       restrict: 'EA'
       controller: DashboardAppsDockCtrl
       templateUrl: 'app/components/dashboard-apps-dock/dashboard-apps-dock.html',
-     }
+    }
+)
+
+#===================================
+# Manage the popover closing button
+#===================================
+angular.module 'mnoEnterpriseAngular'
+  .directive('popoverToggle', () ->
+    return {
+      scope: true,
+      link: (scope, element) ->
+        scope.toggle = ->
+          scope.isPopoverShown = false
+
+        return element.on('click', scope.toggle)
+    }
 )
