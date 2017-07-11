@@ -240,7 +240,6 @@ DashboardOrganizationTeamsCtrl = ($scope, $window, $uibModal, $q, MnoeOrganizati
     idx = $scope.originalTeams.indexOf(team)
     $scope.originalTeams.splice(idx,1) if idx >= 0
 
-
   #====================================
   # Post-Initialization
   #====================================
@@ -253,7 +252,6 @@ DashboardOrganizationTeamsCtrl = ($scope, $window, $uibModal, $q, MnoeOrganizati
           $scope.initialize(responses[0], responses[1])
       )
   )
-
 
 angular.module 'mnoEnterpriseAngular'
   .directive('dashboardOrganizationTeams', ->
