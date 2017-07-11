@@ -63,11 +63,22 @@ angular.module 'mnoEnterpriseAngular'
       $location.search('flash', null) # remove the flash from url
   )
 
-  .run(($rootScope, $timeout, AnalyticsSvc) ->
+  .run(($rootScope, $timeout, $state, AnalyticsSvc, MnoeAppInstances, MnoeOrganizations) ->
     $timeout ( -> AnalyticsSvc.init() )
 
     $rootScope.$on('$stateChangeSuccess', ->
       AnalyticsSvc.update()
+    )
+
+    $rootScope.$on('$stateChangeStart', (event, next)->
+      # Transac! Reconcile page can only be accessed when appInstances are transaction
+      # management enabled
+      MnoeOrganizations.get().then(->
+        return $state.go('home.impac') if next.name == 'home.reconcile' && !MnoeOrganizations.getSelectedId()?
+        MnoeAppInstances.transactionEnabled().then((enabled)->
+          $state.go('home.impac') if next.name == 'home.reconcile' && !enabled
+        )
+      )
     )
   )
 

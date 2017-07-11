@@ -16,7 +16,8 @@ gulp.task('watch', ['inject'], function () {
 
   gulp.watch([
     path.join(conf.paths.src, '/app/**/*.css'),
-    path.join(conf.paths.src, '/app/**/*.less')
+    path.join(conf.paths.src, '/app/**/*.less'),
+    'bower_components/transac/dist/*.less'
   ], function(event) {
     if(isOnlyChange(event)) {
       gulp.start('styles');

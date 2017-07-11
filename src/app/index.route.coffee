@@ -23,6 +23,13 @@ angular.module 'mnoEnterpriseAngular'
         templateUrl: 'app/views/impac/impac.html'
         controller: 'ImpacController'
         controllerAs: 'vm'
+      .state 'home.reconcile',
+        data:
+          pageTitle: 'Reconcile'
+        url: '/reconcile'
+        templateUrl: 'app/views/reconcile/reconcile.html'
+        controller: 'ReconcileController'
+        controllerAs: 'vm'
       .state 'home.account',
         data:
           pageTitle:'Account'
