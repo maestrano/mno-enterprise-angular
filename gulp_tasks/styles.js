@@ -30,6 +30,7 @@ function styles() {
   var injectFiles = gulp.src([
     conf.path.src('/app/stylesheets/theme.less'),
     conf.path.src('/app/stylesheets/*.less'),
+    conf.path.src('/app/stylesheets/variables-default.less'),
     conf.path.src('/app/stylesheets/variables.less'),
     conf.path.src('/app/**/*.less'),
     conf.path.src('/fonts/**/*.less'),
@@ -75,8 +76,8 @@ function sprites() {
 function lessConcat() {
   var injectFiles = gulp.src([
     conf.path.src('/app/stylesheets/theme.less'),
-    conf.path.src('/app/stylesheets/variables.less'),
     conf.path.src('/app/stylesheets/*.less'),
+    conf.path.src('/app/stylesheets/variables.less'),
     conf.path.src('/app/**/*.less'),
     conf.path.src('/fonts/**/*.less'),
     conf.path.src('/images/**/*.less'),

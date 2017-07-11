@@ -2,16 +2,33 @@
   nav {
     display: flex;
     justify-content: space-around;
-    margin-top: 50px;
+    .top-buffer-5;
 
     .breadcrumb-item {
+      // Deactivate the link
+      pointer-events: none;
+      color: @provisioning-breadcrumb-item-color;
+
+      .badge {
+        background-color: @provisioning-breadcrumb-item-badge-bg;
+      }
+
       &.active {
         color: @provisioning-breadcrumb-item-active-color;
+
+        .badge {
+          background-color: @provisioning-breadcrumb-item-active-badge-bg;
+        }
       }
     }
   }
 
+  h1 {
+    .top-buffer-3;
+  }
+
   .well {
+    .top-buffer-1;
     background-color: @provisioning-well-bg-color;
   }
 }
