@@ -32,7 +32,7 @@
         <uib-tab heading="Logo">
           <div class='form-group top-buffer-1'>
             <label>New Logo</label>
-            <input type="file" id="theme-main-logo"/>
+            <input type="file" id="theme-main-logo" accept=".png, image/png"/>
           </div>
           <button class='btn btn-warning' ng-click="editor.updateLogo()" ng-disabled="editor.isUpdatingLogo">
             <span ng-show="editor.isUpdatingLogo"><i class="fa fa-spinner fa-pulse fa-fw"></i></span>
