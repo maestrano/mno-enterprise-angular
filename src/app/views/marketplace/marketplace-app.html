@@ -113,6 +113,7 @@
               <span ng-hide="plan.price.value">{{plan.currency}} {{plan.price}} {{plan.factor}}</span>
             </li>
           </ul>
+          <div ng-bind-html="vm.app.pricing_text"></div>
           <span ng-if="!vm.app.single_billing" class="text-muted">Note: Credits cannot be used on this app as billing is managed by the third party provider</span>
         </div>
       </div>
