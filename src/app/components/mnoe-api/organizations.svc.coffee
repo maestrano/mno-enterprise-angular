@@ -30,23 +30,28 @@ angular.module 'mnoEnterpriseAngular'
       # return the cached promise if not a new call
       return organizationPromise if ((!id? || id == _self.selectedId) && organizationPromise?)
 
-      _self.selectedId = id if id?
+      deferred = $q.defer()
 
-      # Get the selected organization
-      organizationPromise = MnoeApiSvc.one('/organizations', _self.selectedId).get().then(
-        (responseOrga) ->
-          # Save the organization
-          _self.selected = responseOrga.plain()
+      # Fetch user
+      MnoeCurrentUser.get().then(
+        (response) ->
+          # Fetch current organization
+          _self.selectedId = if id? then id else $cookies.get("#{response.id}_dhb_ref_id")
 
-          # Use user id to avoid another user to load with an unknown organisation
-          MnoeCurrentUser.get().then(
-            (response) ->
+          # Get the selected organization
+          MnoeApiSvc.one('/organizations', _self.selectedId).get().then(
+            (responseOrga) ->
+              # Save the organization in the service
+              _self.selected = responseOrga.plain()
+
+              # Use user id to avoid another user to load with an unknown organisation
               $cookies.put("#{response.id}_dhb_ref_id", responseOrga.organization.id)
-              response
-          )
 
-          responseOrga
+              deferred.resolve(responseOrga.plain())
+          )
       )
+
+      return organizationPromise = deferred.promise
 
     @create = (organization) ->
       MnoeApiSvc.all('/organizations').post(organization).then(
