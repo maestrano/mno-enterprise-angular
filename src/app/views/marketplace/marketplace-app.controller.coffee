@@ -75,7 +75,7 @@ angular.module 'mnoEnterpriseAngular'
         if vm.areQuestionsEnabled
           vm.questions =
             loading: true
-            nbItems: 100
+            nbItems: 50
             page: 1
             searchWord: ''
             pageChangedCb: (appId, nbItems, page) ->
@@ -93,7 +93,7 @@ angular.module 'mnoEnterpriseAngular'
           testimonial.text? && testimonial.text.length > 0
 
         vm.canUserEditReview = (review) ->
-          (review.user_id == vm.userId) && (parseInt(review.edited_by_id) == review.user_id || !review.edited_by_id)
+          (review.user_id == vm.userId) && (review.edited_by_id == review.user_id || !review.edited_by_id)
 
         #====================================
         # Cart Management
@@ -127,7 +127,7 @@ angular.module 'mnoEnterpriseAngular'
             # Increment # of items
             vm.reviews.totalItems++
             # Add new element at the beginning
-            vm.reviews.list.unshift(response.app_review)
+            vm.reviews.list.unshift(response.app_feedback)
             # Remove last element if needed
             vm.reviews.list.pop() if vm.reviews.list.length > vm.reviews.nbItems
             # Update average rating

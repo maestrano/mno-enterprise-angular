@@ -14,7 +14,7 @@ angular.module 'mnoEnterpriseAngular'
     app_question = {
       description: vm.modal.model.description,
       organization_id: MnoeOrganizations.getSelectedId(),
-      question_id: question.id
+      parent_id: question.id
     }
     MnoeMarketplace.addAppQuestionAnswer($stateParams.appId, app_question).then(
       (response) ->
