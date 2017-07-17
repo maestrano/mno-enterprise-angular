@@ -1,5 +1,5 @@
 <div id="app-dock-container" class="hidden-xs hidden-sm hidden-print">
-  <div ng-if="displayDock()" id="app-dock">
+  <div ng-if="displayDock" id="app-dock">
     <ul class="dock list-unstyled" ng-class="{minimized: appDock.isMinimized, animated: appDock.isAnimated()}">
       <li ng-show="isLoading"><i class="fa fa-spin fa-refresh loader-icon"></i></li>
       <li ng-repeat="app in apps" ng-class="{active: isActiveApp(app.id)}" class="dock-icon">
@@ -40,6 +40,7 @@
       </li>
     </ul>
   </div>
+  <div popover-is-open="isPopoverShown()" popover-placement="bottom" uib-popover-template="popoverTemplateUrl" popover-trigger="'outsideClick'" popover-toggle></div>
 </div>
 
 <div id="app-dock-mobile-container" class="visible-xs visible-sm hidden-print">
