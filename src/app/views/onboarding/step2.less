@@ -1,123 +1,117 @@
 #step2 {
   .apps-container {
     display: flex;
-    padding: 1em;
-    text-align: center;
     flex-wrap: wrap;
+    text-align: center;
     justify-content: flex-start;
-
-  }
-
-  #apps {
-    width: 50%;
-    padding: 0.5em;
-    flex: 1;
-  }
-
-  #data-shared {
-    width: 50%;
     padding: 1em;
-    flex: 1;
-  }
 
-  #apps-widget {
-    #widget-header-bar {
-      position: relative;
-      display: flex;
-      justify-content: space-around;
-
-      #app-search, #app-category {
-        width: 45%;
-        flex: 1;
-      }
-
-      #app-category {
-        margin-left: 5%;
-      }
+    #data-shared {
+      margin-left: 0.5em;
+      flex: 1;
+      padding: 0.5em;
     }
 
-    .app-tile {
-      position: relative;
-      max-width: 108px;
-      margin: 10px;
-      float: left;
+    #apps-widget {
+      flex: 1;
+      padding: 0.5em;
+    }
 
-      .app-info-modal {
-        position: absolute;
-        top: 0;
-        right: 3px;
-        z-index: 10;
-        width: 14px;
-        color: @onboarding-app-selector-info;
-      }
-
-      .app-icon {
-        outline: none;
+    #apps-widget {
+      #widget-header-bar {
         position: relative;
+        display: flex;
+        justify-content: space-around;
 
-        .app-logo {
-          width: 100%;
+        #app-search, #app-category {
+          width: 45%;
+          flex: 1;
         }
 
-        .checked {
+        #app-category {
+          margin-left: 5%;
+        }
+      }
+
+      .app-tile {
+        position: relative;
+        max-width: 108px;
+        margin: 10px;
+        float: left;
+
+        .app-info-modal {
           position: absolute;
-          border-radius: 6px;
-          background-color: @onboarding-app-selector-check-color;
-          left: 0;
-          right: 0;
           top: 0;
-          bottom: 0;
-
-          // Center the tick
-          display: flex;
-          align-items: center;
-          justify-content: center;
+          right: 3px;
+          z-index: 10;
+          width: 14px;
+          color: @onboarding-app-selector-info;
         }
-      }
 
-      .app-icon[disabled] {
-        cursor: not-allowed;
-      }
+        .app-icon {
+          outline: none;
+          position: relative;
 
-      .app-title {
-        color: @onboarding-app-selector-title;
-        text-align: center;
-        margin-top: 5px;
-        .ellipsis;
-      }
-    }
-  }
+          .app-logo {
+            width: 100%;
+          }
 
-  #data-shared {
-    max-width: 50%;
+          .checked {
+            position: absolute;
+            border-radius: 6px;
+            background-color: @onboarding-app-selector-check-color;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
 
-    @media (max-width: @screen-sm-max) {
-      display: none;
-    }
-
-    .table-data-shared {
-      table-layout: fixed;
-      text-align: center;
-      margin: 5px 5px 0 10px;
-
-      .fa-check {
-        color: @onboarding-app-entities-checked;
-      }
-
-      .fa-times {
-        color: @onboarding-app-entities-unchecked;
-      }
-
-      .th-app {
-        text-align: center;
-
-        .header-logo {
-          width: 60px;
+            // Center the tick
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
         }
 
         .app-title {
+          color: @onboarding-app-selector-title;
+          text-align: center;
           margin-top: 5px;
           .ellipsis;
+        }
+      }
+    }
+
+    #data-shared {
+      max-width: 50%;
+
+      @media (max-width: @screen-sm-max) {
+        display: none;
+      }
+
+      .table-data-shared {
+        table-layout: fixed;
+        text-align: center;
+        margin: 5px 5px 0 10px;
+
+        .fa-check {
+          color: @onboarding-app-entities-checked;
+        }
+
+        .fa-times {
+          color: @onboarding-app-entities-unchecked;
+        }
+
+        .th-app {
+          text-align: center;
+
+          .header-logo {
+            width: 60px;
+          }
+
+          .app-title {
+            margin-top: 5px;
+            .ellipsis;
+          }
         }
       }
     }
