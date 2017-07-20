@@ -11,10 +11,10 @@
   <div ng-switch-when="INSTALLED_LAUNCH">
     <span ng-hide="$ctrl.appInstance.stack == 'connector'">
       <div>
-        {{ 'mno_enterprise.templates.components.app_install_btn.app_requires_no_set_up' | translate }}
+        {{ 'mno_enterprise.templates.components.connect_apps.app_requires_no_set_up' | translate }}
       </div>
       <div class="text-muted">
-        {{ 'mno_enterprise.templates.components.app_install_btn.app_connects_on_launch' | translate }}
+        {{ 'mno_enterprise.templates.components.connect_apps.app_connects_on_launch' | translate }}
       </div>
     </span>
     <span ng-show="$ctrl.appInstance.stack == 'connector'">

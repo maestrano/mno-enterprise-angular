@@ -1,117 +1,123 @@
 #step2 {
   .apps-container {
     display: flex;
-    flex-wrap: wrap;
-    text-align: center;
-    justify-content: flex-start;
     padding: 1em;
+    text-align: center;
+    flex-wrap: wrap;
+    justify-content: flex-start;
 
-    #data-shared {
-      margin-left: 0.5em;
-      flex: 1;
-      padding: 0.5em;
+  }
+
+  #apps {
+    width: 50%;
+    padding: 0.5em;
+    flex: 1;
+  }
+
+  #data-shared {
+    width: 50%;
+    padding: 1em;
+    flex: 1;
+  }
+
+  #apps-widget {
+    #widget-header-bar {
+      position: relative;
+      display: flex;
+      justify-content: space-around;
+
+      #app-search, #app-category {
+        width: 45%;
+        flex: 1;
+      }
+
+      #app-category {
+        margin-left: 5%;
+      }
     }
 
-    #apps-widget {
-      flex: 1;
-      padding: 0.5em;
-    }
+    .app-tile {
+      position: relative;
+      max-width: 108px;
+      margin: 10px;
+      float: left;
 
-    #apps-widget {
-      #widget-header-bar {
+      .app-info-modal {
+        position: absolute;
+        top: 0;
+        right: 3px;
+        z-index: 10;
+        width: 14px;
+        color: @onboarding-app-selector-info;
+      }
+
+      .app-icon {
+        outline: none;
         position: relative;
-        display: flex;
-        justify-content: space-around;
 
-        #app-search, #app-category {
-          width: 45%;
-          flex: 1;
+        .app-logo {
+          width: 100%;
         }
 
-        #app-category {
-          margin-left: 5%;
+        .checked {
+          position: absolute;
+          border-radius: 6px;
+          background-color: @onboarding-app-selector-check-color;
+          left: 0;
+          right: 0;
+          top: 0;
+          bottom: 0;
+
+          // Center the tick
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
       }
 
-      .app-tile {
-        position: relative;
-        max-width: 108px;
-        margin: 10px;
-        float: left;
+      .app-icon[disabled] {
+        cursor: not-allowed;
+      }
 
-        .app-info-modal {
-          position: absolute;
-          top: 0;
-          right: 3px;
-          z-index: 10;
-          width: 14px;
-          color: @onboarding-app-selector-info;
-        }
+      .app-title {
+        color: @onboarding-app-selector-title;
+        text-align: center;
+        margin-top: 5px;
+        .ellipsis;
+      }
+    }
+  }
 
-        .app-icon {
-          outline: none;
-          position: relative;
+  #data-shared {
+    max-width: 50%;
 
-          .app-logo {
-            width: 100%;
-          }
+    @media (max-width: @screen-sm-max) {
+      display: none;
+    }
 
-          .checked {
-            position: absolute;
-            border-radius: 6px;
-            background-color: @onboarding-app-selector-check-color;
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: 0;
+    .table-data-shared {
+      table-layout: fixed;
+      text-align: center;
+      margin: 5px 5px 0 10px;
 
-            // Center the tick
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          }
+      .fa-check {
+        color: @onboarding-app-entities-checked;
+      }
+
+      .fa-times {
+        color: @onboarding-app-entities-unchecked;
+      }
+
+      .th-app {
+        text-align: center;
+
+        .header-logo {
+          width: 60px;
         }
 
         .app-title {
-          color: @onboarding-app-selector-title;
-          text-align: center;
           margin-top: 5px;
           .ellipsis;
-        }
-      }
-    }
-
-    #data-shared {
-      max-width: 50%;
-
-      @media (max-width: @screen-sm-max) {
-        display: none;
-      }
-
-      .table-data-shared {
-        table-layout: fixed;
-        text-align: center;
-        margin: 5px 5px 0 10px;
-
-        .fa-check {
-          color: @onboarding-app-entities-checked;
-        }
-
-        .fa-times {
-          color: @onboarding-app-entities-unchecked;
-        }
-
-        .th-app {
-          text-align: center;
-
-          .header-logo {
-            width: 60px;
-          }
-
-          .app-title {
-            margin-top: 5px;
-            .ellipsis;
-          }
         }
       }
     }
