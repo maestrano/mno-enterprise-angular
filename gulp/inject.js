@@ -12,8 +12,7 @@ var $ = require('gulp-load-plugins')();
 var wiredep = require('wiredep').stream;
 var _ = require('lodash');
 
-// Scripts to run impac.version in the console (need to refresh first)
-// Needs to be called AFTER scripts due to permissions errors
+// Scripts to run window.mnoe.version in the console
 gulp.task('version', ['scripts'], function () {
   var func = '(function () {console.info("' + bowerInfo.description + ' - v' + bowerInfo.version + '"); window["mnoe"] = {"version": "' + bowerInfo.version + '"};}).call();';
 
