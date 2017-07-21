@@ -1,15 +1,25 @@
 'use strict';
 
+var fs = require('fs');
 var path = require('path');
 var gulp = require('gulp');
 var conf = require('./conf');
+
+var bowerInfo = require('../bower.json');
 
 var $ = require('gulp-load-plugins')();
 
 var wiredep = require('wiredep').stream;
 var _ = require('lodash');
 
-gulp.task('inject', ['scripts', 'styles'], function () {
+// Scripts to run window.mnoe.version in the console
+gulp.task('version', ['scripts'], function () {
+  var func = '(function () {console.info("' + bowerInfo.description + ' - v' + bowerInfo.version + '"); window["mnoe"] = {"version": "' + bowerInfo.version + '"};}).call();';
+
+  return fs.writeFileSync(path.join(conf.paths.tmp, '/serve', '/app', '/version.js'), func);
+});
+
+gulp.task('inject', ['scripts', 'styles', 'version'], function () {
   var injectStyles = gulp.src([
     path.join(conf.paths.tmp, '/serve/app/**/*.css'),
     path.join('!' + conf.paths.tmp, '/serve/app/vendor.css')
