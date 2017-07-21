@@ -110,7 +110,7 @@
     <div ng-if="vm.isPriceShown" class="row top-buffer-1">
       <div class="col-md-12">
         <div class="well" ng-switch="vm.app.pricing_plans">
-          <h2>Price</h2>
+          <h2>{{ 'mno_enterprise.templates.dashboard.marketplace.show.price' | translate }}</h2>
           <ul>
             <li ng-repeat="plan in vm.pricing_plans">
               <b>{{plan.name}}</b>: {{plan.description}}<br>
