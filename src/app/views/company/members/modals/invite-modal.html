@@ -1,7 +1,8 @@
 <!-- Modal Header -->
 <div class="modal-header">
   <div class="close" type="button" ng-click="inviteModal.close()">×</div>
-  <h3 ng-bind-html="inviteModal.title()"></h3>
+  <h3 ng-show="inviteModal.step === 'enterEmails'" translate>mno_enterprise.templates.dashboard.organization.members.invite_modal.title_enter_emails</h3>
+  <h3 ng-show="inviteModal.step !== 'enterEmails'" translate>mno_enterprise.templates.dashboard.organization.members.invite_modal.title_select_roles</h3>
 </div>
 
 <!-- Modal Body -->
