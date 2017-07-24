@@ -10,11 +10,11 @@ const hub = new HubRegistry([conf.path.tasks('*.js')]);
 // Tell gulp to use the tasks just loaded
 gulp.registry(hub);
 
-gulp.task('inject', gulp.series(gulp.parallel('styles', 'scripts'), 'inject'));
+gulp.task('inject', gulp.series(gulp.parallel('styles', 'scripts'), 'version', 'inject'));
 gulp.task('build', gulp.series(function (done) {conf.exitOnError = true; done();}, 'partials', gulp.parallel('inject', 'fonts', 'images', 'other'), 'build'));
 gulp.task('test', gulp.series('scripts', 'karma:single-run'));
 gulp.task('test:auto', gulp.series('watch', 'karma:auto-run'));
-gulp.task('serve', gulp.series('inject', 'watch', 'browsersync'));
+gulp.task('serve', gulp.series('inject', 'watch', 'locales', 'browsersync'));
 gulp.task('serve:dist', gulp.series('default', 'browsersync:dist'));
 gulp.task('theme-previewer', gulp.series('less-concat'));
 gulp.task('default', gulp.series('clean', 'build'));
