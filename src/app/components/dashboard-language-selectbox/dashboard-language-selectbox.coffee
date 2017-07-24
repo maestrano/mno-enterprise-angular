@@ -5,7 +5,7 @@ angular.module 'mnoEnterpriseAngular'
       restrict: 'EA'
       template: '''
         <span class="selector-line form-inline form-group form-group-sm">
-          <label class="control-label" for="language-select">Language</label>
+          <label class="control-label" for="language-select">{{'mno_enterprise.templates.components.language_selectbox.language' | translate}}</label>
           <select id="language-select" class="form-control" ng-model="selectedLangKey" ng-change="changeLanguage()" ng-options="locale.id as locale.name for locale in locales">
           </select>
         </span>

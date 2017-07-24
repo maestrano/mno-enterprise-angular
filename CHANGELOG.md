@@ -1,5 +1,30 @@
 # Change Log
 
+## [v1.1.1](https://github.com/maestrano/mno-enterprise-angular/tree/v1.1.1) (2017-07-24)
+[Full Changelog](https://github.com/maestrano/mno-enterprise-angular/compare/v1.1.0...v1.1.1)
+
+**Implemented enhancements:**
+
+- \[MNOE-279\] Export frontend version [\#257](https://github.com/maestrano/mno-enterprise-angular/pull/257) ([alexnoox](https://github.com/alexnoox))
+- \[MNOE-499\] Add logout button in onboarding [\#247](https://github.com/maestrano/mno-enterprise-angular/pull/247) ([hedudelgado](https://github.com/hedudelgado))
+- \[MNOE-501\] minor-UI-change-on-boarding [\#229](https://github.com/maestrano/mno-enterprise-angular/pull/229) ([rheasunshine](https://github.com/rheasunshine))
+- \[MNOE-474\] Update review frontend [\#219](https://github.com/maestrano/mno-enterprise-angular/pull/219) ([adamaziz15](https://github.com/adamaziz15))
+
+**Fixed bugs:**
+
+- Fix Account \> Language locale [\#259](https://github.com/maestrano/mno-enterprise-angular/pull/259) ([alexnoox](https://github.com/alexnoox))
+- Fix missing locales [\#258](https://github.com/maestrano/mno-enterprise-angular/pull/258) ([alexnoox](https://github.com/alexnoox))
+- \[DEVPL-158\] Pricing sync [\#254](https://github.com/maestrano/mno-enterprise-angular/pull/254) ([adamaziz15](https://github.com/adamaziz15))
+- \[MNOE-544\] Onboarding: fixes [\#253](https://github.com/maestrano/mno-enterprise-angular/pull/253) ([alexnoox](https://github.com/alexnoox))
+- Add gulp task to ensure locales in development [\#250](https://github.com/maestrano/mno-enterprise-angular/pull/250) ([MarcoCode](https://github.com/MarcoCode))
+- \[MNOE-495\] Fix adding members in team not working as expected [\#248](https://github.com/maestrano/mno-enterprise-angular/pull/248) ([ouranos](https://github.com/ouranos))
+- Fix intercom loading process [\#238](https://github.com/maestrano/mno-enterprise-angular/pull/238) ([hedudelgado](https://github.com/hedudelgado))
+
+**Merged pull requests:**
+
+- Revert "\[MNOE-501\] UI improvement on-boarding" [\#255](https://github.com/maestrano/mno-enterprise-angular/pull/255) ([alexnoox](https://github.com/alexnoox))
+- \[MNOE-501\] UI improvement on-boarding [\#233](https://github.com/maestrano/mno-enterprise-angular/pull/233) ([rheasunshine](https://github.com/rheasunshine))
+
 ## [v1.1.0](https://github.com/maestrano/mno-enterprise-angular/tree/v1.1.0) (2017-06-20)
 [Full Changelog](https://github.com/maestrano/mno-enterprise-angular/compare/v1.0.0...v1.1.0)
 

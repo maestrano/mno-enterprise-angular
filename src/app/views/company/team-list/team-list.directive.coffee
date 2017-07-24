@@ -167,7 +167,6 @@ DashboardOrganizationTeamListCtrl = ($scope, $window, $uibModal, $q, MnoeCurrent
         $scope.initialize(MnoeTeams.teams)
   )
 
-
 angular.module 'mnoEnterpriseAngular'
   .directive('dashboardOrganizationTeamList', () ->
     return {

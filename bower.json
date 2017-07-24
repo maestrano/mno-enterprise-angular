@@ -1,6 +1,11 @@
 {
   "name": "mno-enterprise-angular",
-  "version": "2.0",
+  "description": "MnoEnterprise AngularJS Frontend",
+  "version": "2.0.0-dev",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:maestrano/mno-enterprise-angular.git"
+  },
   "dependencies": {
     "jquery": "^3.2.1",
     "angular": "~1.6.0",
@@ -30,7 +35,8 @@
     "material-shadows": "^3.0.1",
     "angular-schema-form": "^0.8.13",
     "angular-schema-form-bootstrap": "^0.2.0",
-    "angular-filter": "^0.5.16"
+    "angular-filter": "^0.5.16",
+    "mno-ui-elements": "maestrano/mno-ui-elements#master"
   },
   "devDependencies": {
     "angular-mocks": "~1.6.0"
@@ -55,7 +61,7 @@
   },
   "resolutions": {
     "jquery": "~3.1.0",
-    "angular-bootstrap": "~2.3.0",
+    "angular-bootstrap": "^2.5.0",
     "lodash": "~3.10.1"
   }
 }

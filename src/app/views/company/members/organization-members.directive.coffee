@@ -201,13 +201,6 @@ DashboardOrganizationMembersCtrl = ($scope, $uibModal, $sce, MnoeOrganizations, 
   inviteModal.isTeamListShown = ->
     inviteModal.teamList.length > 0
 
-  inviteModal.title = ->
-    self = inviteModal
-    if self.step == 'enterEmails'
-      return $sce.trustAsHtml("Enter email addresses")
-    else
-      return $sce.trustAsHtml("Select role for each new member")
-
   inviteModal.labelForAction = ->
     if inviteModal.step == 'enterEmails'
       return "Next"

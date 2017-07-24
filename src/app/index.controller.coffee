@@ -16,6 +16,8 @@ angular.module 'mnoEnterpriseAngular'
         <\/script>
     """)if GOOGLE_TAG_CONTAINER_ID?
 
+    # The original intercom script has been slightly modified to invoke l() regardless the state of the
+    # window, since the window onload event would not work well with Angularjs.
     $scope.intercom = $sce.trustAsHtml("""
         <script id="IntercomSettingsScriptTag">
           window.intercomSettings = {"widget": {"activator": "#IntercomDefaultWidget"}}
@@ -25,7 +27,7 @@ angular.module 'mnoEnterpriseAngular'
           i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');
           s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/#{INTERCOM_ID}';
           var x=d.getElementsByTagName('script')[0];
-          x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()
+          x.parentNode.insertBefore(s,x);}l()}})()
         </script>
     """)if INTERCOM_ID?
 
