@@ -8,6 +8,7 @@
         <div class="apps-container">
           <!-- Left column: App icons -->
           <div id="apps">
+            <section>
             <mno-widget id="apps-widget" is-loading="vm.isLoading">
               <mno-widget-header>
                 <div id="widget-header-bar">
@@ -36,10 +37,8 @@
                   </div>
                 </div>
               </mno-widget-body>
-              <button class="btn btn-primary next-button" ng-click="vm.connectApps()" ng-show="!vm.isConnectingApps" ng-disabled="vm.selectedApps.length === 0" translate>
-                mno_enterprise.templates.onboarding.welcome.connect_my_apps
-              </button>
             </mno-widget>
+          </section>
             <section class="text-center onboarding-footer">
               <div ng-show="vm.maxAppsSelected" translate>mno_enterprise.templates.onboarding.select_your_app.max_apps_selected</div>
               <div ng-show="vm.isConnectingApps"><i class="fa fa-refresh fa-spin fa-2x"></i></div>
