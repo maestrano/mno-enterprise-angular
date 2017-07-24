@@ -20,7 +20,7 @@ angular.module 'mnoEnterpriseAngular'
     vm.toggleApp = (app) ->
       # Add conflictingApp attribute to marketplace apps
       names = _.map(app.subcategories, 'name')
-      marketplaceApps = _.filter(vm.marketplace.apps, (a) -> a != app)
+      marketplaceApps = _.filter(vm.marketplace.apps, (marketApp) -> marketApp != app)
       _.map(marketplaceApps, (marketApp) ->
         if _.find(marketApp.subcategories, (subCategory) ->
           not subCategory.multi_instantiable and subCategory.name in names
