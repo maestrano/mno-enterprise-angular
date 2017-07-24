@@ -9,7 +9,7 @@ DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, $timeout, MnoeOrg
   $scope.launchApp = {isClosed: true}
   $scope.popoverTemplateUrl = 'app/components/dashboard-apps-dock/no-apps-notification.html'
   $scope.isMarketplaceEnabled = MARKETPLACE_CONFIG.enabled
-  $scope.isOnboargindEnabled = ONBOARDING_WIZARD_CONFIG.enabled
+  $scope.isOnboardingEnabled = ONBOARDING_WIZARD_CONFIG.enabled
   # Hide the dock if marketplace is disabled
   $scope.displayDock = $scope.isMarketplaceEnabled
 
@@ -70,7 +70,7 @@ DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, $timeout, MnoeOrg
     $scope.appDock.isMinimized = !$scope.appDock.isMinimized
 
   $scope.isPopoverShown = ->
-    $scope.isOnboargindEnabled && $scope.isMarketplaceEnabled && !$scope.isLoading && _.isEmpty($scope.apps)
+    $scope.isOnboardingEnabled && $scope.isMarketplaceEnabled && !$scope.isLoading && _.isEmpty($scope.apps)
 
   #====================================
   # App Settings modal
