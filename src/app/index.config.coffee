@@ -47,26 +47,35 @@ angular.module 'mnoEnterpriseAngular'
     ])
   )
 
-  .config(($translateProvider, LOCALES) ->
+  .config(($translateProvider, I18N_CONFIG) ->
     # Path to translations files
-    $translateProvider.useStaticFilesLoader({
+    localesFileConfig = {
       files: [
         {
           prefix: 'locales/',
           suffix: '.locale.json'
-        },
-        {
-          prefix: 'locales/impac/',
-          suffix: '.json'
         }
       ]
-    })
+    }
 
-    $translateProvider.fallbackLanguage(LOCALES.fallbackLanguage)
-    $translateProvider.useSanitizeValueStrategy('sanitizeParameters')
-    $translateProvider.useMessageFormatInterpolation()
+    availableLocales = _.map(I18N_CONFIG.available_locales, 'id')
+
+    $translateProvider
+      .useStaticFilesLoader(localesFileConfig)
+      .preferredLanguage(I18N_CONFIG.preferred_locale)
+
+    $translateProvider
+      .registerAvailableLanguageKeys(availableLocales)
+      # Try to find preferred language from the browser
+      .uniformLanguageTag('bcp47')
+      .determinePreferredLanguage()
+      .fallbackLanguage('en')
+
+    # Interpolation configuration
+    $translateProvider
+      .useSanitizeValueStrategy('sanitizeParameters')
+      .useMessageFormatInterpolation()
 
     # TODO: Activate in "developer mode" only (spams the console and makes the application lag)
-    #$translateProvider.useMissingTranslationHandlerLog()
+    # $translateProvider.useMissingTranslationHandlerLog()
   )
-

@@ -10,6 +10,22 @@
   <dashboard-company-selectbox></dashboard-company-selectbox>
   <dashboard-menu></dashboard-menu>
   <div class="container">
+    <pre class="top-buffer-3">
+      $translate.versionInfo: {{ translate.versionInfo() }}
+      $translate.$preferredLanguage: {{ translate.preferredLanguage() }}
+      $translate.$use: {{ translate.use() }}
+      $translate.fallbackLanguage(): {{ translate.fallbackLanguage() }}
+      $translate.getAvailableLanguageKeys(): {{ translate.getAvailableLanguageKeys() }}
+
+      $translate("language"): {{ language }}
+      language | translate: {{ language | translate }}
+
+      MNOE Key: {{ "mno_enterprise.templates.dashboard.account.developer" | translate }}
+      Impac Key: {{ "workspace.title" | translate }}
+    </pre>
+    <input type="text" ng-model="locale">
+    <button class="btn" ng-click="changeLocale(locale)">Save</button>
+    <hr>
     <div ui-view></div>
   </div>
 </div>
