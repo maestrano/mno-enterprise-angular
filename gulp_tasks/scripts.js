@@ -8,11 +8,14 @@ const conf = require('../conf/gulp.conf');
 gulp.task('scripts', scripts);
 
 function scripts() {
+  gulp.src(conf.path.src('**/*.js'))
+    .pipe(ngAnnotate())
+    .pipe(gulp.dest(conf.path.tmp()));
+
   return gulp.src(conf.path.src('**/*.coffee'))
     .pipe(coffeelint())
     .pipe(coffeelint.reporter())
     .pipe(coffee())
     .pipe(ngAnnotate())
-
     .pipe(gulp.dest(conf.path.tmp()));
 }
