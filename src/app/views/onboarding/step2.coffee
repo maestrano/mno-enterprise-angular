@@ -19,20 +19,13 @@ angular.module 'mnoEnterpriseAngular'
     # Select or deselect an app
     vm.toggleApp = (app) ->
       # Add conflictingApp attribute to marketplace apps
-      app.subcategoryNames = []
-      _.each(app.subcategories, (appSubcategory) ->
-        app.subcategoryNames.push(appSubcategory.name)
-      )
-      app.marketplaceApps = _.filter(vm.marketplace.apps, (marketplaceApp) ->
-        marketplaceApp != app
-      )
-      _.each(app.marketplaceApps, (marketplaceApp) ->
-        _.each(marketplaceApp.subcategories, (marketplaceAppSubCategory) ->
-          _.each(app.subcategoryNames, (subcategoryName) ->
-            if !marketplaceAppSubCategory.multi_instantiable && (marketplaceAppSubCategory.name == subcategoryName)
-              marketplaceApp.conflictingApp = app
-          )
+      names = _.map(app.subcategories, 'name')
+      marketplaceApps = _.filter(vm.marketplace.apps, (a) -> a != app)
+      _.map(marketplaceApps, (marketApp) ->
+        if _.find(marketApp.subcategories, (subCategory) ->
+          not subCategory.multi_instantiable and subCategory.name in names
         )
+          marketApp.conflictingApp = app
       )
       # User cannot add disabled apps (over 4 or conflicting)
       return if vm.appSelectDisabled(app)
