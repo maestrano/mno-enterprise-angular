@@ -132,7 +132,7 @@ angular.module 'mnoEnterpriseAngular'
             vm.reviews.list.pop() if vm.reviews.list.length > vm.reviews.nbItems
             # Update average rating
             updateAverageRating(response.average_rating)
-            refreshUI()
+            updateAnyReviews()
         )
 
       vm.scrollToReviews = ->
@@ -180,7 +180,7 @@ angular.module 'mnoEnterpriseAngular'
           (response) ->
             vm.reviews.list.splice(key, 1)
             updateAverageRating(response.average_rating)
-            refreshUI()
+            updateAnyReviews()
         )
 
       #====================================
@@ -264,7 +264,7 @@ angular.module 'mnoEnterpriseAngular'
         modalInstance.result.then(
           (response) ->
             vm.questions.list.unshift(response.app_question)
-            refreshUI()
+            updateAnyQuestions()
         )
 
       #====================================
@@ -301,7 +301,7 @@ angular.module 'mnoEnterpriseAngular'
         MnoConfirm.showModal(modalOptions).then(
           ->
             vm.questions.list.splice(key, 1)
-            refreshUI()
+            updateAnyQuestions()
         )
 
       #====================================
@@ -383,7 +383,7 @@ angular.module 'mnoEnterpriseAngular'
           (response) ->
             vm.reviews.totalItems = response.headers('x-total-count')
             vm.reviews.list = response.data
-            refreshUI()
+            updateAnyReviews()
         ).finally(-> vm.reviews.loading = false)
 
       fetchQuestions = (appId, limit, offset, search = '') ->
@@ -391,13 +391,14 @@ angular.module 'mnoEnterpriseAngular'
         MnoeMarketplace.getQuestions(appId, limit, offset, search).then(
           (response) ->
             vm.questions.list = response.data
-            refreshUI()
+            updateAnyQuestions()
         ).finally(-> vm.questions.loading = false)
 
-      # Refresh UI elements when a question/review is added/removed
-      refreshUI = ->
-        vm.anyQuestions = (vm.questions.list.length != 0) if vm.areQuestionsEnabled
-        vm.anyReviews = (vm.reviews.list.length != 0) if vm.isReviewingEnabled
+      updateAnyQuestions = ->
+        vm.anyQuestions = (vm.questions.list.length != 0)
+
+      updateAnyReviews = ->
+        vm.anyReviews = (vm.reviews.list.length != 0)
 
       updateAverageRating = (rating) ->
         # Update average rating
