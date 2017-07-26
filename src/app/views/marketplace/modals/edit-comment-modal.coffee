@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-.controller('EditCommentModalCtrl', ($log, $stateParams, $uibModalInstance, toastr, Utilities, MnoeMarketplace, object) ->
+.controller('EditCommentModalCtrl', ($log, $uibModalInstance, toastr, Utilities, MnoeMarketplace, object, app) ->
   vm = this
 
   vm.modal = {model: {}}
@@ -18,7 +18,7 @@ angular.module 'mnoEnterpriseAngular'
       description: vm.modal.model.description
     }
 
-    MnoeMarketplace.editComment($stateParams.appId, object.id, app_payload).then(
+    MnoeMarketplace.editComment(app.id, object.id, app_payload).then(
       (response) ->
         toastr.success('mno_enterprise.templates.dashboard.marketplace.show.success_toastr_2')
         $uibModalInstance.close(response)
