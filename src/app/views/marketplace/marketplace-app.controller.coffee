@@ -127,6 +127,7 @@ angular.module 'mnoEnterpriseAngular'
             vm.reviews.list.pop() if vm.reviews.list.length > vm.reviews.nbItems
             # Update average rating
             updateAverageRating(response.average_rating)
+            refreshUI()
         )
 
       vm.scrollToReviews = ->
@@ -174,6 +175,7 @@ angular.module 'mnoEnterpriseAngular'
           (response) ->
             vm.reviews.list.splice(key, 1)
             updateAverageRating(response.average_rating)
+            refreshUI()
         )
 
       #====================================
@@ -257,6 +259,7 @@ angular.module 'mnoEnterpriseAngular'
         modalInstance.result.then(
           (response) ->
             vm.questions.list.unshift(response.app_question)
+            refreshUI()
         )
 
       #====================================
@@ -293,6 +296,7 @@ angular.module 'mnoEnterpriseAngular'
         MnoConfirm.showModal(modalOptions).then(
           ->
             vm.questions.list.splice(key, 1)
+            refreshUI()
         )
 
       #====================================
@@ -374,7 +378,7 @@ angular.module 'mnoEnterpriseAngular'
           (response) ->
             vm.reviews.totalItems = response.headers('x-total-count')
             vm.reviews.list = response.data
-            vm.anyReviews = vm.reviews.list.length != 0 ? true : false
+            refreshUI()
         ).finally(-> vm.reviews.loading = false)
 
       fetchQuestions = (appId, limit, offset, search = '') ->
@@ -382,8 +386,13 @@ angular.module 'mnoEnterpriseAngular'
         MnoeMarketplace.getQuestions(appId, limit, offset, search).then(
           (response) ->
             vm.questions.list = response.data
-            vm.anyQuestions = vm.questions.list.length != 0 ? true : false
+            refreshUI()
         ).finally(-> vm.questions.loading = false)
+
+      # Refresh UI elements when a question/review is added/removed
+      refreshUI = ->
+        vm.anyQuestions = vm.questions.list.length != 0 ? true : false
+        vm.anyReviews = vm.reviews.list.length != 0 ? true : false
 
       updateAverageRating = (rating) ->
         # Update average rating
