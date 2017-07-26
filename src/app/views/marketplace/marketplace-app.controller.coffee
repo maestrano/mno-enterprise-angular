@@ -396,8 +396,8 @@ angular.module 'mnoEnterpriseAngular'
 
       # Refresh UI elements when a question/review is added/removed
       refreshUI = ->
-        vm.anyQuestions = vm.questions.list.length != 0 ? true : false
-        vm.anyReviews = vm.reviews.list.length != 0 ? true : false
+        vm.anyQuestions = (vm.questions.list.length != 0) if vm.areQuestionsEnabled
+        vm.anyReviews = (vm.reviews.list.length != 0) if vm.isReviewingEnabled
 
       updateAverageRating = (rating) ->
         # Update average rating
