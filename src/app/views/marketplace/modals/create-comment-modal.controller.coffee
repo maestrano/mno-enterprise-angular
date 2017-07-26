@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-.controller('CreateCommentModalCtrl', ($log, $stateParams, $uibModalInstance, toastr, Utilities, MnoeMarketplace, MnoeOrganizations, feedback) ->
+.controller('CreateCommentModalCtrl', ($log, $uibModalInstance, toastr, Utilities, MnoeMarketplace, MnoeOrganizations, feedback, app) ->
   vm = this
 
   vm.modal = {model: {}}
@@ -16,7 +16,7 @@ angular.module 'mnoEnterpriseAngular'
       organization_id: MnoeOrganizations.getSelectedId(),
       parent_id: feedback.id
     }
-    MnoeMarketplace.addAppReviewComment($stateParams.appId, app_comment).then(
+    MnoeMarketplace.addAppReviewComment(app.id, app_comment).then(
       (response) ->
         toastr.success('mno_enterprise.templates.dashboard.marketplace.show.success_toastr_2')
         $uibModalInstance.close(response)

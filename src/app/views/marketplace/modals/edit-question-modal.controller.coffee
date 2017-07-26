@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-.controller('EditQuestionModalCtrl', ($log, $stateParams, $uibModalInstance, toastr, Utilities, MnoeMarketplace, question) ->
+.controller('EditQuestionModalCtrl', ($log, $uibModalInstance, toastr, Utilities, MnoeMarketplace, question, app) ->
   vm = this
 
   vm.modal = {model: {}}
@@ -20,7 +20,7 @@ angular.module 'mnoEnterpriseAngular'
       description: vm.modal.model.description
     }
 
-    MnoeMarketplace.editQuestion($stateParams.appId, question.id, app_question).then(
+    MnoeMarketplace.editQuestion(app.id, question.id, app_question).then(
       (response) ->
         toastr.success('mno_enterprise.templates.dashboard.marketplace.show.success_toastr_2')
         $uibModalInstance.close(response)

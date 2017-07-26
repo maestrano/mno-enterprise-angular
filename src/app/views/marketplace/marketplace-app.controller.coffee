@@ -121,6 +121,8 @@ angular.module 'mnoEnterpriseAngular'
           size: 'lg'
           windowClass: 'inverse'
           backdrop: 'static'
+          resolve:
+            app: vm.app
         )
         modalInstance.result.then(
           (response) ->
@@ -153,6 +155,7 @@ angular.module 'mnoEnterpriseAngular'
           backdrop: 'static'
           resolve:
             review: review
+            app: vm.app
         )
         modalInstance.result.then(
           (response) ->
@@ -173,7 +176,7 @@ angular.module 'mnoEnterpriseAngular'
           bodyText: "mno_enterprise.templates.dashboard.marketplace.show.review.delete_modal_body"
           closeButtonText: 'mno_enterprise.templates.dashboard.marketplace.show.review.delete_modal_cancel'
           actionButtonText: 'mno_enterprise.templates.dashboard.marketplace.show.review.delete_modal_delete'
-          actionCb: -> MnoeMarketplace.deleteReview($stateParams.appId, review.id)
+          actionCb: -> MnoeMarketplace.deleteReview(vm.app.id, review.id)
           type: 'danger'
 
         MnoConfirm.showModal(modalOptions).then(
@@ -196,6 +199,7 @@ angular.module 'mnoEnterpriseAngular'
           backdrop: 'static'
           resolve:
             feedback: feedback
+            app: vm.app
         )
         modalInstance.result.then(
           (response) ->
@@ -215,6 +219,7 @@ angular.module 'mnoEnterpriseAngular'
           backdrop: 'static'
           resolve:
             object: comment
+            app: vm.app
         )
         modalInstance.result.then(
           (response) ->
@@ -233,7 +238,7 @@ angular.module 'mnoEnterpriseAngular'
           bodyText: "mno_enterprise.templates.dashboard.marketplace.show.comment.delete_modal_body"
           closeButtonText: 'mno_enterprise.templates.dashboard.marketplace.show.comment.delete_modal_cancel'
           actionButtonText: 'mno_enterprise.templates.dashboard.marketplace.show.comment.delete_modal_delete'
-          actionCb: -> MnoeMarketplace.deleteComment($stateParams.appId, comment.id)
+          actionCb: -> MnoeMarketplace.deleteComment(vm.app.id, comment.id)
           type: 'danger'
 
         MnoConfirm.showModal(modalOptions).then(
@@ -260,6 +265,8 @@ angular.module 'mnoEnterpriseAngular'
           size: 'lg'
           windowClass: 'inverse'
           backdrop: 'static'
+          resolve:
+            app: vm.app
         )
         modalInstance.result.then(
           (response) ->
@@ -280,6 +287,7 @@ angular.module 'mnoEnterpriseAngular'
           backdrop: 'static'
           resolve:
             question: question
+            app: vm.app
         )
         modalInstance.result.then(
           (response) ->
@@ -295,7 +303,7 @@ angular.module 'mnoEnterpriseAngular'
           bodyText: "mno_enterprise.templates.dashboard.marketplace.show.question.delete_modal_body"
           closeButtonText: 'mno_enterprise.templates.dashboard.marketplace.show.question.delete_modal_cancel'
           actionButtonText: 'mno_enterprise.templates.dashboard.marketplace.show.question.delete_modal_delete'
-          actionCb: -> MnoeMarketplace.deleteQuestion($stateParams.appId, question.id)
+          actionCb: -> MnoeMarketplace.deleteQuestion(vm.app.id, question.id)
           type: 'danger'
 
         MnoConfirm.showModal(modalOptions).then(
@@ -317,6 +325,7 @@ angular.module 'mnoEnterpriseAngular'
           backdrop: 'static'
           resolve:
             question: question
+            app: vm.app
         )
         modalInstance.result.then(
           (response) ->
@@ -336,6 +345,7 @@ angular.module 'mnoEnterpriseAngular'
           backdrop: 'static'
           resolve:
             object: answer
+            app: vm.app
         )
         modalInstance.result.then(
           (response) ->
@@ -351,7 +361,7 @@ angular.module 'mnoEnterpriseAngular'
           bodyText: "mno_enterprise.templates.dashboard.marketplace.show.answer.delete_modal_body"
           closeButtonText: 'mno_enterprise.templates.dashboard.marketplace.show.answer.delete_modal_cancel'
           actionButtonText: 'mno_enterprise.templates.dashboard.marketplace.show.answer.delete_modal_delete'
-          actionCb: -> MnoeMarketplace.deleteAnswer($stateParams.appId, answer.id)
+          actionCb: -> MnoeMarketplace.deleteAnswer(vm.app.id, answer.id)
           type: 'danger'
 
         MnoConfirm.showModal(modalOptions).then(
