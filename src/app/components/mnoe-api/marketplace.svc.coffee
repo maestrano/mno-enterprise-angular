@@ -27,19 +27,19 @@ angular.module 'mnoEnterpriseAngular'
       _.find(marketplaceResponse.apps, (a) -> a.nid == nid)
 
     @getReview = (appId, reviewId) ->
-      MnoeApiSvc.one('marketplace', parseInt(appId)).one('app_reviews', parseInt(reviewId)).get()
+      MnoeApiSvc.one('marketplace', appId).one('app_reviews', parseInt(reviewId)).get()
 
     @getReviews = (appId, limit, offset, sort) ->
       params = ({order_by: sort, limit: limit, offset: offset})
-      MnoeFullApiSvc.one('marketplace', parseInt(appId)).all('app_feedbacks').getList(params)
+      MnoeFullApiSvc.one('marketplace', appId).all('app_feedbacks').getList(params)
 
     @getQuestions = (appId, limit, offset, search) ->
       params = ({limit: limit, offset: offset, search: search})
-      MnoeFullApiSvc.one('marketplace', parseInt(appId)).all('app_questions').getList(params)
+      MnoeFullApiSvc.one('marketplace', appId).all('app_questions').getList(params)
 
     @addAppReview = (appId, data) ->
       payload = {app_feedback: data}
-      MnoeFullApiSvc.one('marketplace', parseInt(appId)).post('/app_feedbacks', payload).then(
+      MnoeFullApiSvc.one('marketplace', appId).post('/app_feedbacks', payload).then(
         (response) ->
           app_review = response.data.plain()
           app_review
@@ -47,14 +47,14 @@ angular.module 'mnoEnterpriseAngular'
 
     @editReview = (appId, feedback_id, feedback) ->
       payload = feedback
-      MnoeFullApiSvc.one('marketplace', parseInt(appId)).one('/app_feedbacks', feedback_id).patch(payload).then(
+      MnoeFullApiSvc.one('marketplace', appId).one('/app_feedbacks', feedback_id).patch(payload).then(
         (response) ->
           app_review = response.data.plain()
           app_review
       )
 
     @deleteReview = (appId, feedback_id) ->
-      MnoeFullApiSvc.one('marketplace', parseInt(appId)).one('/app_feedbacks', feedback_id).remove().then(
+      MnoeFullApiSvc.one('marketplace', appId).one('/app_feedbacks', feedback_id).remove().then(
         (response) ->
           app_review = response.data.plain()
           app_review
@@ -62,7 +62,7 @@ angular.module 'mnoEnterpriseAngular'
 
     @addAppReviewComment = (appId, data) ->
       payload = {app_comment: data}
-      MnoeFullApiSvc.one('marketplace', parseInt(appId)).post('/app_comments', payload).then(
+      MnoeFullApiSvc.one('marketplace', appId).post('/app_comments', payload).then(
         (response) ->
           app_comment = response.data.plain()
           app_comment
@@ -70,14 +70,14 @@ angular.module 'mnoEnterpriseAngular'
 
     @editComment = (appId, comment_id, comment) ->
       payload = {app_comment: comment}
-      MnoeFullApiSvc.one('marketplace', parseInt(appId)).one('/app_comments', comment_id).patch(payload).then(
+      MnoeFullApiSvc.one('marketplace', appId).one('/app_comments', comment_id).patch(payload).then(
         (response) ->
           app_comment = response.data.plain()
           app_comment
       )
 
     @deleteComment = (appId, comment_id) ->
-      MnoeFullApiSvc.one('marketplace', parseInt(appId)).one('/app_comments', comment_id).remove().then(
+      MnoeFullApiSvc.one('marketplace', appId).one('/app_comments', comment_id).remove().then(
         (response) ->
           app_comment = response.data.plain()
           app_comment
@@ -85,7 +85,7 @@ angular.module 'mnoEnterpriseAngular'
 
     @addAppQuestion = (appId, data) ->
       payload = {app_question: data}
-      MnoeFullApiSvc.one('marketplace', parseInt(appId)).post('/app_questions', payload).then(
+      MnoeFullApiSvc.one('marketplace', appId).post('/app_questions', payload).then(
         (response) ->
           app_question = response.data.plain()
           app_question
@@ -93,14 +93,14 @@ angular.module 'mnoEnterpriseAngular'
 
     @editQuestion = (appId, question_id, question) ->
       payload = question
-      MnoeFullApiSvc.one('marketplace', parseInt(appId)).one('/app_questions', question_id).patch(payload).then(
+      MnoeFullApiSvc.one('marketplace', appId).one('/app_questions', question_id).patch(payload).then(
         (response) ->
           app_question = response.data.plain()
           app_question
       )
 
     @deleteQuestion = (appId, question_id) ->
-      MnoeFullApiSvc.one('marketplace', parseInt(appId)).one('/app_questions', question_id).remove().then(
+      MnoeFullApiSvc.one('marketplace', appId).one('/app_questions', question_id).remove().then(
         (response) ->
           app_question = response.data.plain()
           app_question
@@ -108,7 +108,7 @@ angular.module 'mnoEnterpriseAngular'
 
     @addAppQuestionAnswer = (appId, data) ->
       payload = {app_answer: data}
-      MnoeFullApiSvc.one('marketplace', parseInt(appId)).post('/app_answers', payload).then(
+      MnoeFullApiSvc.one('marketplace', appId).post('/app_answers', payload).then(
         (response) ->
           app_answer = response.data.plain()
           app_answer
@@ -116,14 +116,14 @@ angular.module 'mnoEnterpriseAngular'
 
     @editAnswer = (appId, answer_id, answer) ->
       payload = answer
-      MnoeFullApiSvc.one('marketplace', parseInt(appId)).one('/app_answers', answer_id).patch(payload).then(
+      MnoeFullApiSvc.one('marketplace', appId).one('/app_answers', answer_id).patch(payload).then(
         (response) ->
           app_answer = response.data.plain()
           app_answer
       )
 
     @deleteAnswer = (appId, answer_id) ->
-      MnoeFullApiSvc.one('marketplace', parseInt(appId)).one('/app_answers', answer_id).remove().then(
+      MnoeFullApiSvc.one('marketplace', appId).one('/app_answers', answer_id).remove().then(
         (response) ->
           app_answer = response.data.plain()
           app_answer
