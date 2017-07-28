@@ -30,6 +30,13 @@ angular.module 'mnoEnterpriseAngular'
         templateUrl: 'app/views/account/account.html'
         controller: 'DashboardAccountCtrl'
         controllerAs: 'vm'
+      .state 'home.messages',
+        data:
+          pageTitle:'Messages'
+        url: '/messages'
+        templateUrl: 'app/views/messages/messages.html'
+        controller: 'MessagesController'
+        controllerAs: 'vm'
       .state 'home.company',
         data:
           pageTitle:'Company'

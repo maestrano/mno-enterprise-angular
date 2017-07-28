@@ -211,6 +211,7 @@
   "mno_enterprise.templates.dashboard.menu.logout": "Logout",
   "mno_enterprise.templates.dashboard.menu.new_company": "New Company",
   "mno_enterprise.templates.dashboard.menu.access_admin_panel": "Access Admin Panel",
+  "mno_enterprise.templates.dashboard.menu.messages": "Messages",
   "mno_enterprise.templates.dashboard.account.my_account": "My Account",
   "mno_enterprise.templates.dashboard.account.personal_information": "Personal Information",
   "mno_enterprise.templates.dashboard.account.user_form_name": "Name",
