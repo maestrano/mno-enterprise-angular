@@ -36,6 +36,10 @@
         <a ui-sref="home.account" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.my_account' | translate }}</a>
       </li>
 
+      <li>
+        <a ui-sref="home.messages" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.messages' | translate }}</a>
+      </li>
+
       <li ng-if="isOrganizationManagementEnabled">
         <a ui-sref="home.company" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.company' | translate }}</a>
       </li>
@@ -79,6 +83,11 @@
     <a ui-sref="home.account" class="dashboard-button top-buffer-1" ui-sref-active="active">
       <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.my_account' | translate }}</div>
       <i class="dhb-icon-account"></i>
+    </a>
+
+    <a ui-sref="home.messages" class="dashboard-button top-buffer-1" ui-sref-active="active">
+      <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.messages' | translate }}</div>
+      <i class="fa fa-tasks fa-2x" aria-hidden="true" style="padding: 5px 2px;"></i>
     </a>
 
     <a ng-if="isOrganizationManagementEnabled" ui-sref="home.company" class="dashboard-button top-buffer-1" ui-sref-active="active">
