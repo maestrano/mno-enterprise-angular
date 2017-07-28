@@ -1,0 +1,108 @@
+mnoe-tasks {
+  display: flex;
+
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+
+    .compose {
+      background-color: @dashboard-messages-compose-bg-color;
+      color: @dashboard-messages-compose-text-color;
+      justify-content: center;
+      font-weight: bold;
+      &:hover {
+        color: @dashboard-messages-menu-btn-hover-text-color;
+        background-color: @dashboard-messages-menu-btn-hover-bg-color;
+      }
+    }
+
+    .menu-item {
+      background-color: @dashboard-messages-menu-btn-bg-color;
+      color: black;
+      margin-top: 2px;
+      margin-bottom: 2px;
+      color: @dashboard-messages-menu-btn-text-color;
+      &:hover {
+        color: @dashboard-messages-menu-btn-hover-text-color;
+        background-color: @dashboard-messages-menu-btn-hover-bg-color;
+      }
+    }
+  }
+
+  .tasks {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 2;
+    background-color: white;
+    margin-top: 15px;
+    border-radius: 3px;
+  }
+
+
+  // Button style classes
+  // --
+  .tasks-icon {
+    position: relative;
+    outline: 0;
+    border: none;
+    max-width: 60px;
+    background-color: inherit;
+    border-radius: 2px;
+    margin: 6px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .tasks-icon.tasks-icon-raised {
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.26);
+  }
+  .tasks-icon.tasks-icon-fab {
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.26);
+    border-radius: 50px;
+    &.tasks-flat {
+      box-shadow: none;
+    }
+  }
+  .tasks-icon,
+  .tasks-icon.tasks-icon-raised,
+  .tasks-icon.tasks-icon-fab {
+    &:focus {
+      box-shadow: 0 1px 14px 0 rgba(0, 0, 0, 0.36);
+    }
+    &:active {
+      box-shadow: none;
+    }
+  }
+
+  .tasks-btn {
+    position: relative;
+    outline: 0;
+    border: none;
+    background-color: inherit;
+    border-radius: 2px;
+    min-height: 35px;
+    display: flex;
+    align-items: center;
+    margin: 16px 8px;
+    padding: 0 6px;
+    i {
+      font-size: 17px;
+      padding: 0 5px;
+    }
+  }
+  .tasks-btn.tasks-btn-raised {
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.26);
+  }
+  .tasks-btn,
+  .tasks-btn-raised {
+    &:focus {
+      box-shadow: 0 1px 14px 0 rgba(0, 0, 0, 0.36);
+    }
+    &:active {
+      box-shadow: none;
+    }
+  }
+}
