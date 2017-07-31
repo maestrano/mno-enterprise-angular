@@ -23,8 +23,17 @@
 
   <mno-sortable-table fields="$ctrl.mnoSortableTableFields" dataset="$ctrl.tasks"></mno-sortable-table>
 
-</div>
+  <div class="tasks-pagination">
+    <mno-pagination
+      page="1"
+      nb-items="100"
+      total-items="500">
+      <!-- on-change-cb="$ctrl.events.pageChangedCb(nbItems, page)"
+      is-loading="$ctrl.events.loading"> -->
+    </mno-pagination>
+  </div>
 
+</div>
 
 
 
