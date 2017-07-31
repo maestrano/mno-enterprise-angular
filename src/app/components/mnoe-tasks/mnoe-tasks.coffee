@@ -2,7 +2,7 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
   bindings: {
   },
   templateUrl: 'app/components/mnoe-tasks/mnoe-tasks.html',
-  controller: ($filter)->
+  controller: ($filter, $uibModal)->
     ctrl = this
 
     ctrl.$onInit = ->
@@ -24,6 +24,18 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
         <input type="checkbox" class="toggle-task-done" ng-if="data.due_date" ng-model="data.markedDone" ng-change="markDone(data)">
         <span ng-if="!data.due_date">-</span>
       """
+
+    ctrl.openCreateTaskModal = ->
+      createTaskModal = {}
+      createTaskModal.instance = $uibModal.open({
+        component: 'createTaskModal'
+      })
+      createTaskModal.instance.result.then(({isDraft, newTask})->
+        if isDraft
+          console.log('save task as draft: ', newTask)
+        else
+          console.log('send task: ', newTask)
+      )
 
     getTasks = ->
       [
