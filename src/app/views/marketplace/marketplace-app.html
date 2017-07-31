@@ -209,10 +209,10 @@
                       <span ng-if="comment.created_at"> {{comment.created_at | date: "dd/MM/yyyy" }}</span>
                       <span ng-if="!comment.created_at"> {{ 'mno_enterprise.templates.dashboard.marketplace.show.just_now' | translate }}</span>
                       <span ng-if="comment.edited"> -
-                        <span ng-if="comment.edited_by_id == comment.user_id" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.marketplace.show.edited_by_user_tooltip' | translate }}" ng-click="vm.showHistory(comment)">
+                        <span ng-if="comment.edited_by_id == comment.user_id && comment.user_admin_role != 'admin'" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.marketplace.show.edited_by_user_tooltip' | translate }}" ng-click="vm.showHistory(comment)">
                           {{ 'mno_enterprise.templates.dashboard.marketplace.show.edited_by_user' | translate }}
                         </span>
-                        <span ng-if="comment.edited_by_id != comment.user_id">
+                        <span ng-if="comment.edited_by_id != comment.user_id || comment.user_admin_role == 'admin'">
                           {{ 'mno_enterprise.templates.dashboard.marketplace.show.edited_by_admin' | translate }}
                         </span>
                        </span>
@@ -264,7 +264,8 @@
                       </div>
                       <div class="col-md-10">
                         <p class="question-text">{{ question.description }}</p>
-                        <p class="question-attribute">Posted by: {{ question.user_name }} in {{ question.organization_name }} on {{ question.created_at | date: "dd/MM/yyyy" }}</p>
+                        <p ng-hide="question.user_admin_role == 'admin'" class="question-attribute">Posted by: {{ question.user_name }} in {{ question.organization_name }} on {{ question.created_at | date: "dd/MM/yyyy" }}</p>
+                        <p ng-show="question.user_admin_role == 'admin'" class="question-attribute">Posted by: {{ question.user_name }}, {{ 'mno_enterprise.templates.dashboard.marketplace.show.platform_admin' | translate }} on {{ question.created_at | date: "dd/MM/yyyy" }}</p>
                       </div>
                     </div>
                     <div class="col-sm-3 question-actions">
@@ -281,7 +282,8 @@
                       <div class="col-md-10" >
                         <div class="question-answer" ng-repeat="(i, answer) in filteredAnswers = (question.answers | filter:{ status: 'approved' })">
                           <p class="question-text">{{ answer.description }} </p>
-                          <p class="question-attribute">Posted by {{ answer.user_name }} in {{ answer.organization_name }} on {{ answer.created_at | date: "dd/MM/yyyy" }}</p>
+                          <p ng-hide="answer.user_admin_role == 'admin'" class="question-attribute">Posted by {{ answer.user_name }} in {{ answer.organization_name }} on {{ answer.created_at | date: "dd/MM/yyyy" }}</p>
+                          <p ng-show="answer.user_admin_role == 'admin'" class="question-attribute">Posted by {{ answer.user_name }}, {{ 'mno_enterprise.templates.dashboard.marketplace.show.platform_admin' | translate }} on {{ answer.created_at | date: "dd/MM/yyyy" }}</p>
                           <button class="btn btn-xs btn-warning" type="button" name="button" ng-if="answer.user_id == vm.userId" ng-click="vm.openEditAnswerModal(answer, i, key)">{{'mno_enterprise.templates.dashboard.marketplace.show.edit' | translate}}</button>
                           <button class="btn btn-xs btn-danger" type="button" name="button" ng-if="answer.user_id == vm.userId" ng-click="vm.openDeleteAnswerModal(answer, i, key)">{{'mno_enterprise.templates.dashboard.marketplace.show.delete' | translate}}</button>
                         </div>
