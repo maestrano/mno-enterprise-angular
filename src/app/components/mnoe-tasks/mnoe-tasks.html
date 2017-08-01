@@ -21,9 +21,9 @@
 
 <div class="tasks">
 
-  <mno-sortable-table fields="$ctrl.mnoSortableTableFields" dataset="$ctrl.tasks" row-on-click="$ctrl.openShowTaskModal($event)"></mno-sortable-table>
+  <mno-sortable-table row-collection="$ctrl.tasks" fields="$ctrl.mnoSortableTableFields" row-on-click="$ctrl.openShowTaskModal($event)"></mno-sortable-table>
 
-  <div class="tasks-pagination">
+  <div class="pagination">
     <mno-pagination
       page="1"
       nb-items="100"
