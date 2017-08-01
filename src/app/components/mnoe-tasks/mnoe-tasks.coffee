@@ -26,11 +26,12 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
       """
 
     ctrl.openCreateTaskModal = ->
-      createTaskModal = {}
-      createTaskModal.instance = $uibModal.open({
-        component: 'createTaskModal'
+      modalInstance = $uibModal.open({
+        component: 'mnoCreateTaskModal'
+        resolve:
+          recipients: -> getRecipients()
       })
-      createTaskModal.instance.result.then(({isDraft, newTask})->
+      modalInstance.result.then(({isDraft, newTask})->
         if isDraft
           console.log('save task as draft: ', newTask)
         else
@@ -87,6 +88,16 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
             "created_at": "2017-07-27T08:25:41.000Z",
             "updated_at": "2017-07-27T08:26:05.000Z"
         }
+      ]
+
+    getRecipients = ->
+      [
+        { user: { name: 'Eduardo' }, organization: { name: 'Maestrano' } }
+        { user: { name: 'Manu' }, organization: { name: 'Maestrano' } }
+        { user: { name: 'Xaun' }, organization: { name: 'Maestrano' } }
+        { user: { name: 'Marco' }, organization: { name: 'Maestrano' } }
+        { user: { name: 'Xavier' }, organization: { name: 'Maestrano' } }
+        { user: { name: 'Arnaud' }, organization: { name: 'Maestrano' } }
       ]
 
     ctrl
