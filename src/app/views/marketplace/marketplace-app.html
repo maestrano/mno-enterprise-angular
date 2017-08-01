@@ -264,8 +264,8 @@
                       </div>
                       <div class="col-md-10">
                         <p class="question-text">{{ question.description }}</p>
-                        <p ng-hide="question.user_admin_role == 'admin'" class="question-attribute">Posted by: {{ question.user_name }} in {{ question.organization_name }} on {{ question.created_at | date: "dd/MM/yyyy" }}</p>
-                        <p ng-show="question.user_admin_role == 'admin'" class="question-attribute">Posted by: {{ question.user_name }}, {{ 'mno_enterprise.templates.dashboard.marketplace.show.platform_admin' | translate }} on {{ question.created_at | date: "dd/MM/yyyy" }}</p>
+                        <p ng-if="question.user_admin_role != 'admin'" class="question-attribute">Posted by: {{ question.user_name }} in {{ question.organization_name }} on {{ question.created_at | date: "dd/MM/yyyy" }}</p>
+                        <p ng-if="question.user_admin_role == 'admin'" class="question-attribute">Posted by: {{ question.user_name }}, {{ 'mno_enterprise.templates.dashboard.marketplace.show.platform_admin' | translate }} on {{ question.created_at | date: "dd/MM/yyyy" }}</p>
                       </div>
                     </div>
                     <div class="col-sm-3 question-actions">
@@ -282,8 +282,8 @@
                       <div class="col-md-10" >
                         <div class="question-answer" ng-repeat="(i, answer) in filteredAnswers = (question.answers | filter:{ status: 'approved' })">
                           <p class="question-text">{{ answer.description }} </p>
-                          <p ng-hide="answer.user_admin_role == 'admin'" class="question-attribute">Posted by {{ answer.user_name }} in {{ answer.organization_name }} on {{ answer.created_at | date: "dd/MM/yyyy" }}</p>
-                          <p ng-show="answer.user_admin_role == 'admin'" class="question-attribute">Posted by {{ answer.user_name }}, {{ 'mno_enterprise.templates.dashboard.marketplace.show.platform_admin' | translate }} on {{ answer.created_at | date: "dd/MM/yyyy" }}</p>
+                          <p ng-if="answer.user_admin_role != 'admin'" class="question-attribute">Posted by {{ answer.user_name }} in {{ answer.organization_name }} on {{ answer.created_at | date: "dd/MM/yyyy" }}</p>
+                          <p ng-if="answer.user_admin_role == 'admin'" class="question-attribute">Posted by {{ answer.user_name }}, {{ 'mno_enterprise.templates.dashboard.marketplace.show.platform_admin' | translate }} on {{ answer.created_at | date: "dd/MM/yyyy" }}</p>
                           <button class="btn btn-xs btn-warning" type="button" name="button" ng-if="answer.user_id == vm.userId" ng-click="vm.openEditAnswerModal(answer, i, key)">{{'mno_enterprise.templates.dashboard.marketplace.show.edit' | translate}}</button>
                           <button class="btn btn-xs btn-danger" type="button" name="button" ng-if="answer.user_id == vm.userId" ng-click="vm.openDeleteAnswerModal(answer, i, key)">{{'mno_enterprise.templates.dashboard.marketplace.show.delete' | translate}}</button>
                         </div>
