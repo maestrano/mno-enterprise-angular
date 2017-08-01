@@ -10,7 +10,7 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
       ctrl.mnoSortableTableFields = [
         { header: 'From', attr: 'recipient.name' }
         { header: 'Title', attr: 'title' }
-        { header: 'Message', attr: 'message' }
+        { header: 'Message', attr: 'message', class: 'ellipsis' }
         { header: 'Received', attr: 'send_at', filter: { run: $filter('date'), opts: ['medium'] } }
         { header: 'Due date', attr: 'due_date', filter: { run: $filter('date'), opts: ['medium'] } }
         { header: 'Done', attr: 'markedDone', render: taskDoneCustomField, stopPropagation: true }
@@ -92,7 +92,7 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
               "name": "Albert"
             },
             "title": "A really cool dude",
-            "message": "Hi Manu, do cool stuff.",
+            "message": "Hi Manu, do cool stuff, really cool stuff, do cool stuff, really cool stuff, do cool stuff, really cool stuff, do cool stuff, really cool stuff, do cool stuff, really cool stuff, do cool stuff, really cool stuff, do cool stuff, really cool stuff, do cool stuff, really cool stuff.",
             "send_at": "2017-07-18T11:47:44.000Z",
             "status": "sent",
             "due_date": null,
