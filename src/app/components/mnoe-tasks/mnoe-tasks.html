@@ -1,40 +1,36 @@
-<div class="sidebar">
+<div class="topbar">
   <div class="compose-wrapper">
     <div class="compose tasks-btn tasks-btn-raised" ng-click="$ctrl.openCreateTaskModal()">
       <span>Compose</span>
       <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
     </div>
   </div>
+</div>
+<div class="main">
+  <div class="sidebar">
+    <div class="menu">
+      <div class="menu-item tasks-btn" ng-click="">
+        <span>Inbox</span>
+      </div>
+      <div class="menu-item tasks-btn" ng-click="">
+        <span>Sent</span>
+      </div>
+      <div class="menu-item tasks-btn" ng-click="">
+        <span>Draft</span>
+      </div>
+    </div>
+  </div>
+  <div class="tasks">
+    <mno-sortable-table row-collection="$ctrl.tasks" fields="$ctrl.mnoSortableTableFields" row-on-click="$ctrl.openShowTaskModal($event)"></mno-sortable-table>
 
-  <div class="menu">
-    <div class="menu-item tasks-btn" ng-click="">
-      <span>Inbox</span>
-    </div>
-    <div class="menu-item tasks-btn" ng-click="">
-      <span>Sent</span>
-    </div>
-    <div class="menu-item tasks-btn" ng-click="">
-      <span>Draft</span>
+    <div class="pagination">
+      <mno-pagination
+        page="1"
+        nb-items="100"
+        total-items="500">
+        <!-- on-change-cb="$ctrl.events.pageChangedCb(nbItems, page)"
+        is-loading="$ctrl.events.loading"> -->
+      </mno-pagination>
     </div>
   </div>
 </div>
-
-<div class="tasks">
-
-  <mno-sortable-table row-collection="$ctrl.tasks" fields="$ctrl.mnoSortableTableFields" row-on-click="$ctrl.openShowTaskModal($event)"></mno-sortable-table>
-
-  <div class="pagination">
-    <mno-pagination
-      page="1"
-      nb-items="100"
-      total-items="500">
-      <!-- on-change-cb="$ctrl.events.pageChangedCb(nbItems, page)"
-      is-loading="$ctrl.events.loading"> -->
-    </mno-pagination>
-  </div>
-
-</div>
-
-
-
-

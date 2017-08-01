@@ -1,28 +1,15 @@
 mnoe-tasks {
-  display: flex;
 
-  .sidebar {
+  & > .topbar {
     display: flex;
-    flex-direction: column;
-    flex-grow: 1;
 
     .compose {
       background-color: @dashboard-messages-compose-bg-color;
       color: @dashboard-messages-compose-text-color;
       justify-content: center;
       font-weight: bold;
-      &:hover {
-        color: @dashboard-messages-menu-btn-hover-text-color;
-        background-color: @dashboard-messages-menu-btn-hover-bg-color;
-      }
-    }
-
-    .menu-item {
-      background-color: @dashboard-messages-menu-btn-bg-color;
-      color: black;
-      margin-top: 2px;
-      margin-bottom: 2px;
-      color: @dashboard-messages-menu-btn-text-color;
+      min-width: 130px;
+      max-width: 130px;
       &:hover {
         color: @dashboard-messages-menu-btn-hover-text-color;
         background-color: @dashboard-messages-menu-btn-hover-bg-color;
@@ -30,26 +17,53 @@ mnoe-tasks {
     }
   }
 
-  .tasks {
+  & > .main {
     display: flex;
-    flex-direction: column;
-    flex-grow: 2;
-    background-color: white;
-    margin-top: 15px;
-    border-radius: 3px;
 
-    mno-sortable-table {
-      .st-sort-ascent:after,
-      .st-sort-descent:after {
-        color: @dashboard-messages-tasks-column-sort-icon-active-color;
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 0;
+
+      .menu-item {
+        background-color: @dashboard-messages-menu-btn-bg-color;
+        color: black;
+        margin-top: 2px;
+        margin-bottom: 2px;
+        min-width: 130px;
+        max-width: 130px;
+        color: @dashboard-messages-menu-btn-text-color;
+        &:hover {
+          color: @dashboard-messages-menu-btn-hover-text-color;
+          background-color: @dashboard-messages-menu-btn-hover-bg-color;
+        }
       }
     }
 
-    .pagination {
-      padding: 10px;
+    .tasks {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 2;
+      background-color: white;
+      border-radius: 3px;
+      overflow: auto;
 
-      mno-pagination {
-        line-height: initial;
+      mno-sortable-table {
+        .st-sort-ascent:after,
+        .st-sort-descent:after {
+          color: @dashboard-messages-tasks-column-sort-icon-active-color;
+        }
+
+        td.ellipsis {
+          max-width: 200px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+
+      .pagination {
+        padding: 0 10px;
       }
     }
   }
