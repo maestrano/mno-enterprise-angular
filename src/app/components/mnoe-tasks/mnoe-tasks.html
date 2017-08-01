@@ -1,23 +1,32 @@
 <div class="topbar">
-  <div class="compose-wrapper">
-    <div class="compose tasks-btn tasks-btn-raised" ng-click="$ctrl.openCreateTaskModal()">
-      <span>Compose</span>
-      <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-    </div>
+  <button class="btn compose" ng-click="$ctrl.openCreateTaskModal()">
+    <span>Compose</span>
+    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+  </button>
+  <div class="tasks-menu hidden-sm hidden-md hidden-lg">
+    <button class="btn menu-item" ng-click="">
+      <span>Inbox</span>
+    </button>
+    <button class="btn menu-item" ng-click="">
+      <span>Sent</span>
+    </button>
+    <button class="btn menu-item" ng-click="">
+      <span>Draft</span>
+    </button>
   </div>
 </div>
 <div class="main">
-  <div class="sidebar">
-    <div class="menu">
-      <div class="menu-item tasks-btn" ng-click="">
+  <div class="sidebar hidden-xs">
+    <div class="tasks-menu">
+      <button class="btn menu-item" ng-click="">
         <span>Inbox</span>
-      </div>
-      <div class="menu-item tasks-btn" ng-click="">
+      </button>
+      <button class="btn menu-item" ng-click="">
         <span>Sent</span>
-      </div>
-      <div class="menu-item tasks-btn" ng-click="">
+      </button>
+      <button class="btn menu-item" ng-click="">
         <span>Draft</span>
-      </div>
+      </button>
     </div>
   </div>
   <div class="tasks">
