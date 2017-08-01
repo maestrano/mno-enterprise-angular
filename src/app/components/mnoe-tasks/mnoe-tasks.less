@@ -38,17 +38,19 @@ mnoe-tasks {
     margin-top: 15px;
     border-radius: 3px;
 
-    .mno-sort-asc .fa-sort-desc,
-    .mno-sort-desc .fa-sort-asc {
-      color: @dashboard-messages-tasks-column-sort-icon-active-color;
+    mno-sortable-table {
+      .st-sort-ascent:after,
+      .st-sort-descent:after {
+        color: @dashboard-messages-tasks-column-sort-icon-active-color;
+      }
     }
-  }
 
-  .tasks-pagination {
-    padding: 10px;
+    .pagination {
+      padding: 10px;
 
-    mno-pagination {
-      line-height: initial;
+      mno-pagination {
+        line-height: initial;
+      }
     }
   }
 

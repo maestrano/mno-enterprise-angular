@@ -13,7 +13,7 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
         { header: 'Message', attr: 'message' }
         { header: 'Received', attr: 'send_at', filter: { run: $filter('date'), opts: ['medium'] } }
         { header: 'Due date', attr: 'due_date', filter: { run: $filter('date'), opts: ['medium'] } }
-        { header: 'Done', attr: 'markedDone', render: -> taskDoneCustomField() }
+        { header: 'Done', attr: 'markedDone', render: taskDoneCustomField, stopPropagation: true }
       ]
 
     taskDoneCustomField = ->
@@ -89,7 +89,7 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
             "id": 55,
             "owner_id": 99,
             "recipient": {
-              "name": "Manu"
+              "name": "Albert"
             },
             "title": "A really cool dude",
             "message": "Hi Manu, do cool stuff.",
