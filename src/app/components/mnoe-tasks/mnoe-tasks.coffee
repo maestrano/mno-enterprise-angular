@@ -38,6 +38,19 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
           console.log('send task: ', newTask)
       )
 
+    ctrl.openShowTaskModal = ({data})->
+      modalInstance = $uibModal.open({
+        component: 'mnoShowTaskModal'
+        resolve:
+          task: -> data
+      })
+      modalInstance.result.then(({reply})->
+        ctrl.sendReply(reply, data) if reply
+      )
+
+    ctrl.sendReply = (reply, task) ->
+      console.log('Sending reply.. ', reply, task)
+
     getTasks = ->
       [
         {
