@@ -6,31 +6,13 @@
     </button>
     <mno-dropdown-filter-selector filters="$ctrl.tasksFilters" selected="$ctrl.selectedTasksFilter" on-select="$ctrl.onSelectFilter($event)"></mno-dropdown-filter-selector>
   </div>
-  <div class="tasks-menu hidden-sm hidden-md hidden-lg">
-    <button class="btn menu-item" ng-click="">
-      <span>Inbox</span>
-    </button>
-    <button class="btn menu-item" ng-click="">
-      <span>Sent</span>
-    </button>
-    <button class="btn menu-item" ng-click="">
-      <span>Draft</span>
-    </button>
+  <div class="hidden-sm hidden-md hidden-lg">
+    <mno-tasks-menu on-select="$ctrl.onSelectMenu($event)"></mno-tasks-menu>
   </div>
 </div>
 <div class="main">
   <div class="sidebar hidden-xs">
-    <div class="tasks-menu">
-      <button class="btn menu-item" ng-click="">
-        <span>Inbox</span>
-      </button>
-      <button class="btn menu-item" ng-click="">
-        <span>Sent</span>
-      </button>
-      <button class="btn menu-item" ng-click="">
-        <span>Draft</span>
-      </button>
-    </div>
+    <mno-tasks-menu on-select="$ctrl.onSelectMenu($event)"></mno-tasks-menu>
   </div>
   <div class="tasks">
     <mno-sortable-table row-collection="$ctrl.tasks" fields="$ctrl.mnoSortableTableFields" row-on-click="$ctrl.openShowTaskModal($event)"></mno-sortable-table>

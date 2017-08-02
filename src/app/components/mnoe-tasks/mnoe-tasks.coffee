@@ -55,6 +55,8 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
       console.log('Selected filter! ', filter)
       ctrl.selectedTasksFilter = filter
 
+    ctrl.onSelectMenu = ({menu})->
+      console.log('menu selected! ', menu)
 
     # Private
 
