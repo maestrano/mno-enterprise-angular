@@ -5,34 +5,23 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
   controller: ($filter, $uibModal)->
     ctrl = this
 
-    ctrl.tasksFilters = [
-      { name: 'All messages' }
-      { name: 'All tasks' }
-      { name: 'Due tasks' }
-      { name: 'Completed tasks' }
-    ]
-
-    ctrl.mnoSortableTableFields = [
-      { header: 'From', attr: 'recipient.name' }
-      { header: 'Title', attr: 'title' }
-      { header: 'Message', attr: 'message', class: 'ellipsis' }
-      { header: 'Received', attr: 'send_at', filter: { run: $filter('date'), opts: ['medium'] } }
-      { header: 'Due date', attr: 'due_date', filter: { run: $filter('date'), opts: ['medium'] } }
-      { header: 'Done', attr: 'markedDone', render: taskDoneCustomField, stopPropagation: true }
-    ]
-
     ctrl.$onInit = ->
-      ctrl.selectedFilter = ctrl.tasksFilters[0]
+      ctrl.tasksFilters = [
+        { name: 'All messages' }
+        { name: 'All tasks' }
+        { name: 'Due tasks' }
+        { name: 'Completed tasks' }
+      ]
+      ctrl.mnoSortableTableFields = [
+        { header: 'From', attr: 'recipient.name' }
+        { header: 'Title', attr: 'title' }
+        { header: 'Message', attr: 'message', class: 'ellipsis' }
+        { header: 'Received', attr: 'send_at', filter: { run: $filter('date'), opts: ['medium'] } }
+        { header: 'Due date', attr: 'due_date', filter: { run: $filter('date'), opts: ['medium'] } }
+        { header: 'Done', attr: 'markedDone', render: taskDoneCustomField, stopPropagation: true }
+      ]
+      ctrl.selectedTasksFilter = ctrl.tasksFilters[0]
       ctrl.tasks = getTasks()
-
-    taskDoneCustomField = ->
-      scope:
-        markDone: (task)->
-          console.log 'mark done! ', task
-      template: """
-        <input type="checkbox" class="toggle-task-done" ng-if="data.due_date" ng-model="data.markedDone" ng-change="markDone(data)">
-        <span ng-if="!data.due_date">-</span>
-      """
 
     ctrl.openCreateTaskModal = ->
       modalInstance = $uibModal.open({
@@ -47,14 +36,16 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
           console.log('send task: ', newTask)
       )
 
-    ctrl.openShowTaskModal = ({data})->
+    ctrl.openShowTaskModal = ({rowItem})->
+      task = rowItem
       modalInstance = $uibModal.open({
         component: 'mnoShowTaskModal'
         resolve:
-          task: -> data
+          task: -> task
       })
-      modalInstance.result.then(({reply})->
-        ctrl.sendReply(reply, data) if reply
+      modalInstance.result.then(({reply, done})->
+        task.markedDone = done if done?
+        ctrl.sendReply(reply, task) if reply?
       )
 
     ctrl.sendReply = (reply, task) ->
@@ -62,7 +53,19 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
 
     ctrl.onSelectFilter = ({filter})->
       console.log('Selected filter! ', filter)
-      ctrl.selectedFilter = filter
+      ctrl.selectedTasksFilter = filter
+
+
+    # Private
+
+    taskDoneCustomField = ->
+      scope:
+        markDone: (task)->
+          console.log 'mark done! ', task
+      template: """
+        <input type="checkbox" class="toggle-task-done" ng-if="rowItem.due_date" ng-model="rowItem.markedDone" ng-change="markDone(rowItem)">
+        <span ng-if="!rowItem.due_date">-</span>
+      """
 
     getTasks = ->
       [
