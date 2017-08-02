@@ -11,7 +11,7 @@ mnoe-tasks {
       max-width: 130px;
     }
 
-    .tasks-menu .menu-item {
+    mno-tasks-menu .tasks-menu .menu-item {
       flex-grow: 1;
     }
   }
@@ -24,7 +24,7 @@ mnoe-tasks {
       flex-direction: column;
       flex-grow: 0;
 
-      .tasks-menu {
+      mno-tasks-menu .tasks-menu {
         flex-direction: column;
 
         .menu-item {
@@ -45,7 +45,7 @@ mnoe-tasks {
       mno-sortable-table {
         .st-sort-ascent:after,
         .st-sort-descent:after {
-          color: @dashboard-messages-tasks-column-sort-icon-active-color;
+          color: @mno-tasks-column-sort-icon-active-color;
         }
 
         td.ellipsis {
@@ -62,17 +62,4 @@ mnoe-tasks {
     }
   }
 
-  .tasks-menu {
-    display: flex;
-
-    .menu-item {
-      background-color: @dashboard-messages-menu-btn-bg-color;
-      margin: 1px 7px;
-      color: @dashboard-messages-menu-btn-text-color;
-      &:hover {
-        color: @dashboard-messages-menu-btn-hover-text-color;
-        background-color: @dashboard-messages-menu-btn-hover-bg-color;
-      }
-    }
-  }
 }
