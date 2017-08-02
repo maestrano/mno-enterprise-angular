@@ -5,16 +5,25 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
   controller: ($filter, $uibModal)->
     ctrl = this
 
+    ctrl.tasksFilters = [
+      { name: 'All messages' }
+      { name: 'All tasks' }
+      { name: 'Due tasks' }
+      { name: 'Completed tasks' }
+    ]
+
+    ctrl.mnoSortableTableFields = [
+      { header: 'From', attr: 'recipient.name' }
+      { header: 'Title', attr: 'title' }
+      { header: 'Message', attr: 'message', class: 'ellipsis' }
+      { header: 'Received', attr: 'send_at', filter: { run: $filter('date'), opts: ['medium'] } }
+      { header: 'Due date', attr: 'due_date', filter: { run: $filter('date'), opts: ['medium'] } }
+      { header: 'Done', attr: 'markedDone', render: taskDoneCustomField, stopPropagation: true }
+    ]
+
     ctrl.$onInit = ->
+      ctrl.selectedFilter = ctrl.tasksFilters[0]
       ctrl.tasks = getTasks()
-      ctrl.mnoSortableTableFields = [
-        { header: 'From', attr: 'recipient.name' }
-        { header: 'Title', attr: 'title' }
-        { header: 'Message', attr: 'message', class: 'ellipsis' }
-        { header: 'Received', attr: 'send_at', filter: { run: $filter('date'), opts: ['medium'] } }
-        { header: 'Due date', attr: 'due_date', filter: { run: $filter('date'), opts: ['medium'] } }
-        { header: 'Done', attr: 'markedDone', render: taskDoneCustomField, stopPropagation: true }
-      ]
 
     taskDoneCustomField = ->
       scope:
@@ -50,6 +59,10 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
 
     ctrl.sendReply = (reply, task) ->
       console.log('Sending reply.. ', reply, task)
+
+    ctrl.onSelectFilter = ({filter})->
+      console.log('Selected filter! ', filter)
+      ctrl.selectedFilter = filter
 
     getTasks = ->
       [
