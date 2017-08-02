@@ -4,6 +4,7 @@
       <span>Compose</span>
       <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
     </button>
+    <mno-dropdown-filter-selector filters="$ctrl.tasksFilters" selected="$ctrl.selectedFilter" on-select="$ctrl.onSelectFilter($event)"></mno-dropdown-filter-selector>
   </div>
   <div class="tasks-menu hidden-sm hidden-md hidden-lg">
     <button class="btn menu-item" ng-click="">
