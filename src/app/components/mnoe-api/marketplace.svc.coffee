@@ -43,7 +43,7 @@ angular.module 'mnoEnterpriseAngular'
         (response) ->
           app_review = response.data.plain()
           app_review
-      )
+      ).finally(-> marketplacePromise = null)
 
     @editReview = (appId, feedback_id, feedback) ->
       payload = feedback
@@ -58,7 +58,7 @@ angular.module 'mnoEnterpriseAngular'
         (response) ->
           app_review = response.data.plain()
           app_review
-      )
+      ).finally(-> marketplacePromise = null)
 
     @addAppReviewComment = (appId, data) ->
       payload = {app_comment: data}

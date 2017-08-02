@@ -412,8 +412,8 @@ angular.module 'mnoEnterpriseAngular'
 
       updateAverageRating = (rating) ->
         # Update average rating
-        vm.averageRating = if rating? then parseFloat(rating).toFixed(1) else null
-        vm.isRateDisplayed = !!vm.averageRating
+        vm.averageRating = if rating? then parseFloat(rating).toFixed(1) else -1
+        vm.isRateDisplayed = vm.averageRating >= 0
 
       #====================================
       # Post-Initialization

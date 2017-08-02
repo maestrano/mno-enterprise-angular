@@ -10,8 +10,6 @@ DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, MnoeOrganizations
   $scope.popoverTemplateUrl = 'app/components/dashboard-apps-dock/no-apps-notification.html'
   $scope.isMarketplaceEnabled = MnoeConfig.isMarketplaceEnabled()
   $scope.isOnboardingEnabled = MnoeConfig.isOnboardingWizardEnabled()
-  # Hide the dock if marketplace is disabled
-  $scope.displayDock = $scope.isMarketplaceEnabled
 
   # 'Lock' the dock when a menu is expanded.
   # Ie: we disable all effects and animation
@@ -117,6 +115,10 @@ DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, MnoeOrganizations
         (response) ->
           $scope.apps = response
       ).finally(-> $scope.isLoading = false)
+
+  # Hide the dock if marketplace is disabled and there are no apps
+  $scope.displayDock = ->
+    $scope.isMarketplaceEnabled || ($scope.apps? && $scope.apps.length > 0)
 
 #====================================
 # Modals Controllers
