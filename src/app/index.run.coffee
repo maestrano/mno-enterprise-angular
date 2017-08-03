@@ -24,7 +24,7 @@ angular.module 'mnoEnterpriseAngular'
     path = $window.location.pathname
 
     # Extract the language code if present
-    re = /^\/([A-Za-z]{2})\/dashboard\//i
+    re = /^\/([A-Za-z]{2}(-[A-Z]{2})?)\/dashboard\//i
     found = path.match(re)
 
     if found?
