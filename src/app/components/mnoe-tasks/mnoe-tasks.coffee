@@ -6,7 +6,18 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
     ctrl = this
 
     ctrl.$onInit = ->
-      ctrl.tasks = []
+      ctrl.tasks = {
+        list: []
+        nbItems: 10
+        offset: 0
+        page: 1
+        loading: false
+        pageChangedCb: (nbItems, page) ->
+          ctrl.tasks.nbItems = nbItems
+          ctrl.tasks.page = page
+          ctrl.tasks.offset = (page  - 1) * nbItems
+          fetchTasks(limit: nbItems, offset: ctrl.tasks.offset)
+      }
       ctrl.menus = [
         { label: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.menus.inbox'), name: 'inbox', selected: true }
         { label: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.menus.sent'), name: 'sent', query: { outbox: true } }
@@ -21,18 +32,18 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
       ]
       ctrl.selectedTasksFilter = ctrl.tasksFilters[0]
       ctrl.selectedMenu = _.find(ctrl.menus, (m)-> m.selected)
-      loadTasks()
+      fetchTasks()
 
     ctrl.onSelectFilter = ({filter})->
       return if filter == ctrl.selectedTasksFilter
       ctrl.selectedTasksFilter = filter
-      loadTasks()
+      fetchTasks()
 
     # Note: this gets called on mno-tasks-menu cmp init
     ctrl.onSelectMenu = ({menu})->
       return if menu == ctrl.selectedMenu
       ctrl.selectedMenu = menu
-      loadTasks()
+      fetchTasks()
 
     ctrl.openCreateTaskModal = ->
       modalInstance = $uibModal.open({
@@ -64,14 +75,16 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
 
     # Private
 
-    loadTasks = (params = {})->
+    fetchTasks = (params)->
+      params ||= { limit: ctrl.tasks.nbItems, offset: ctrl.tasks.offset }
       # TODO: add loading for mnoSortingTable to remove the need to clear the tasks to improve UI glitchyness.
       ctrl.tasks.length = 0
       updateTasksTable()
       angular.merge(params, ctrl.selectedMenu.query, ctrl.selectedTasksFilter.query)
       MnoeTasks.get(params).then(
-        (tasks)->
-          ctrl.tasks = tasks
+        (response)->
+          ctrl.tasks.list = response.data.plain()
+          ctrl.tasks.totalItems = response.headers('x-total-count')
         (errors)->
           $log.error(errors)
           toastr.error('mno_enterprise.templates.components.mnoe-tasks.toastr_error.update')

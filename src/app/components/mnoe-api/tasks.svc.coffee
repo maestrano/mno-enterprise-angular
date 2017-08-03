@@ -1,26 +1,23 @@
 # Service for managing the users.
 angular.module 'mnoEnterpriseAngular'
-  .service 'MnoeTasks', ($log, $q, toastr, MnoeApiSvc, MnoeOrganizations) ->
+  .service 'MnoeTasks', ($log, $q, toastr, MnoeFullApiSvc, MnoeOrganizations) ->
     _self = @
 
     @get = (params = {})->
       MnoeOrganizations.get().then(->
-        MnoeApiSvc
+        MnoeFullApiSvc
           .one('organizations', MnoeOrganizations.getSelectedId())
           .getList('tasks', params)
-          .then(
-            (response)-> response.plain()
-        )
       )
 
     @update = (id, params = {})->
       MnoeOrganizations.get().then(->
-        MnoeApiSvc
+        MnoeFullApiSvc
           .one('organizations', MnoeOrganizations.getSelectedId())
           .one('tasks', id)
           .patch(params)
           .then(
-            (response)-> response.plain().task
+            (response)-> response.data.plain().task
         )
       )
 
