@@ -2,26 +2,37 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
   bindings: {
   },
   templateUrl: 'app/components/mnoe-tasks/mnoe-tasks.html',
-  controller: ($filter, $uibModal)->
+  controller: ($filter, $uibModal, $log, $translate, toastr, MnoeTasks)->
     ctrl = this
 
     ctrl.$onInit = ->
-      ctrl.tasksFilters = [
-        { name: 'All messages' }
-        { name: 'All tasks' }
-        { name: 'Due tasks' }
-        { name: 'Completed tasks' }
+      ctrl.tasks = []
+      ctrl.menus = [
+        { label: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.menus.inbox'), name: 'inbox', selected: true }
+        { label: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.menus.sent'), name: 'sent', query: { outbox: true } }
+        { label: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.menus.draft'), name: 'draft', query: { 'where[status][]': 'draft', outbox: true } }
       ]
-      ctrl.mnoSortableTableFields = [
-        { header: 'From', attr: 'recipient.name' }
-        { header: 'Title', attr: 'title' }
-        { header: 'Message', attr: 'message', class: 'ellipsis' }
-        { header: 'Received', attr: 'send_at', filter: { run: $filter('date'), opts: ['medium'] } }
-        { header: 'Due date', attr: 'due_date', filter: { run: $filter('date'), opts: ['medium'] } }
-        { header: 'Done', attr: 'markedDone', render: taskDoneCustomField, stopPropagation: true }
+      ctrl.tasksFilters = [
+        { name: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks_filters.all_tasks_and_msgs') }
+        { name: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks_filters.all_tasks'), query: { 'where[due_date.ne]': '' } }
+        { name: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks_filters.all_messages'), query: { 'where[due_date.eq]': '' } }
+        { name: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks_filters.due_tasks'), query: { 'where[due_date.lt]': moment().toISOString() } }
+        { name: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks_filters.completed_tasks'), query: { 'where[completed_at.ne]': '' } }
       ]
       ctrl.selectedTasksFilter = ctrl.tasksFilters[0]
-      ctrl.tasks = getTasks()
+      ctrl.selectedMenu = _.find(ctrl.menus, (m)-> m.selected)
+      loadTasks()
+
+    ctrl.onSelectFilter = ({filter})->
+      return if filter == ctrl.selectedTasksFilter
+      ctrl.selectedTasksFilter = filter
+      loadTasks()
+
+    # Note: this gets called on mno-tasks-menu cmp init
+    ctrl.onSelectMenu = ({menu})->
+      return if menu == ctrl.selectedMenu
+      ctrl.selectedMenu = menu
+      loadTasks()
 
     ctrl.openCreateTaskModal = ->
       modalInstance = $uibModal.open({
@@ -51,75 +62,55 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
     ctrl.sendReply = (reply, task) ->
       console.log('Sending reply.. ', reply, task)
 
-    ctrl.onSelectFilter = ({filter})->
-      console.log('Selected filter! ', filter)
-      ctrl.selectedTasksFilter = filter
-
-    ctrl.onSelectMenu = ({menu})->
-      console.log('menu selected! ', menu)
-
     # Private
 
-    taskDoneCustomField = ->
-      scope:
-        markDone: (task)->
-          console.log 'mark done! ', task
-      template: """
-        <input type="checkbox" class="toggle-task-done" ng-if="rowItem.due_date" ng-model="rowItem.markedDone" ng-change="markDone(rowItem)">
-        <span ng-if="!rowItem.due_date">-</span>
-      """
+    loadTasks = (params = {})->
+      # TODO: add loading for mnoSortingTable to remove the need to clear the tasks to improve UI glitchyness.
+      ctrl.tasks.length = 0
+      updateTasksTable()
+      angular.merge(params, ctrl.selectedMenu.query, ctrl.selectedTasksFilter.query)
+      MnoeTasks.get(params).then(
+        (tasks)->
+          ctrl.tasks = tasks
+        (errors)->
+          $log.error(errors)
+          toastr.error('mno_enterprise.templates.components.mnoe-tasks.toastr_error.update')
+      )
 
-    getTasks = ->
-      [
-        {
-            "id": 49,
-            "owner_id": 99,
-            "recipient": {
-              "name": "Eduardo"
-            },
-            "title": "A Payment due",
-            "message": "Hi Eduardo, please pay me mate.",
-            "send_at": "2017-07-18T11:47:44.000Z",
-            "status": "draft",
-            "due_date": "2017-07-18T11:47:44.000Z",
-            "completed_at": "2017-07-18T11:47:44.000Z",
-            "completed_notified_at": "2017-07-18T11:47:44.000Z",
-            "created_at": "2017-07-26T17:47:10.000Z",
-            "updated_at": "2017-07-26T17:47:31.000Z"
-        },
-        {
-            "id": 53,
-            "owner_id": 99,
-            "recipient": {
-              "name": "Marco"
-            },
-            "title": "B Group entities",
-            "message": "Hi Marco, group the entities asap.",
-            "send_at": "2017-07-18T11:47:44.000Z",
-            "status": "sent",
-            "due_date": "2017-07-18T11:47:44.000Z",
-            "completed_at": "2017-07-18T11:47:44.000Z",
-            "completed_notified_at": "2017-07-18T11:47:44.000Z",
-            "created_at": "2017-07-27T08:25:41.000Z",
-            "updated_at": "2017-07-27T08:26:05.000Z"
-        },
-        {
-            "id": 55,
-            "owner_id": 99,
-            "recipient": {
-              "name": "Albert"
-            },
-            "title": "A really cool dude",
-            "message": "Hi Manu, do cool stuff, really cool stuff, do cool stuff, really cool stuff, do cool stuff, really cool stuff, do cool stuff, really cool stuff, do cool stuff, really cool stuff, do cool stuff, really cool stuff, do cool stuff, really cool stuff, do cool stuff, really cool stuff.",
-            "send_at": "2017-07-18T11:47:44.000Z",
-            "status": "sent",
-            "due_date": null,
-            "completed_at": "2017-07-18T11:47:44.000Z",
-            "completed_notified_at": "2017-07-18T11:47:44.000Z",
-            "created_at": "2017-07-27T08:25:41.000Z",
-            "updated_at": "2017-07-27T08:26:05.000Z"
-        }
+    updateTasksTable = ->
+      firstColumn = if ctrl.selectedMenu.name == 'sent'
+        { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.to'), attr: 'task_recipients[0].user.name' }
+      else
+        { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.from'), attr: 'owner.user.name' }
+      ctrl.mnoSortableTableFields = [
+        firstColumn
+        { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.title'), attr: 'title' }
+        { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.message'), attr: 'message', class: 'ellipsis' }
+        { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.received'), attr: 'send_at', filter: { run: $filter('date'), opts: ['medium'] } }
+        { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.due_date'), attr: 'due_date', filter: { run: $filter('date'), opts: ['medium'] } }
+        { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.done'), attr: 'markedDone', render: taskDoneCustomField, stopPropagation: true }
       ]
+
+    # Callback for building a custom "done" checkbox field in the mnoSortableTable component.
+    taskDoneCustomField = (rowItem)->
+      # If a :completed_at timestamp exist, initialise frontend switch model for checkbox.
+      rowItem.markedDone = rowItem.completed_at?
+      {
+        scope:
+          markDone: (task)->
+            status = if task.markedDone then 'sent' else 'done'
+            MnoeTasks.update(task.id, status: status).then(
+              (updatedTask)->
+                angular.extend(task, updatedTask)
+              (errors)->
+                $log.error(errors)
+                toastr.error('mno_enterprise.templates.components.mnoe-tasks.toastr_error.update')
+            )
+        template: """
+          <input type="checkbox" class="toggle-task-done" ng-if="rowItem.due_date" ng-model="rowItem.markedDone" ng-change="markDone(rowItem)">
+          <span ng-if="!rowItem.due_date">-</span>
+        """
+      }
 
     getRecipients = ->
       [
