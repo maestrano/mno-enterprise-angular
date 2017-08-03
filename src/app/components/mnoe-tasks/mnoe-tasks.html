@@ -15,15 +15,15 @@
     <mno-tasks-menu menus="$ctrl.menus" on-select="$ctrl.onSelectMenu($event)"></mno-tasks-menu>
   </div>
   <div class="tasks">
-    <mno-sortable-table row-collection="$ctrl.tasks" fields="$ctrl.mnoSortableTableFields" row-on-click="$ctrl.openShowTaskModal($event)"></mno-sortable-table>
+    <mno-sortable-table row-collection="$ctrl.tasks.list" fields="$ctrl.mnoSortableTableFields" row-on-click="$ctrl.openShowTaskModal($event)"></mno-sortable-table>
 
     <div class="pagination">
       <mno-pagination
-        page="1"
-        nb-items="100"
-        total-items="500">
-        <!-- on-change-cb="$ctrl.events.pageChangedCb(nbItems, page)"
-        is-loading="$ctrl.events.loading"> -->
+        page="$ctrl.tasks.page"
+        nb-items="$ctrl.tasks.nbItems"
+        total-items="$ctrl.tasks.totalItems"
+        on-change-cb="$ctrl.tasks.pageChangedCb(nbItems, page)"
+        is-loading="$ctrl.tasks.loading">
       </mno-pagination>
     </div>
   </div>
