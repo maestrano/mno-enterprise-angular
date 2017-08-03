@@ -1,18 +1,18 @@
 <div class="topbar">
   <div>
     <button class="btn btn-primary compose" ng-click="$ctrl.openCreateTaskModal()">
-      <span>Compose</span>
+      <span translate>mno_enterprise.templates.components.mnoe-tasks.compose_button_text</span>
       <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
     </button>
     <mno-dropdown-filter-selector filters="$ctrl.tasksFilters" selected="$ctrl.selectedTasksFilter" on-select="$ctrl.onSelectFilter($event)"></mno-dropdown-filter-selector>
   </div>
   <div class="hidden-sm hidden-md hidden-lg">
-    <mno-tasks-menu on-select="$ctrl.onSelectMenu($event)"></mno-tasks-menu>
+    <mno-tasks-menu menus="$ctrl.menus" on-select="$ctrl.onSelectMenu($event)"></mno-tasks-menu>
   </div>
 </div>
 <div class="main">
   <div class="sidebar hidden-xs">
-    <mno-tasks-menu on-select="$ctrl.onSelectMenu($event)"></mno-tasks-menu>
+    <mno-tasks-menu menus="$ctrl.menus" on-select="$ctrl.onSelectMenu($event)"></mno-tasks-menu>
   </div>
   <div class="tasks">
     <mno-sortable-table row-collection="$ctrl.tasks" fields="$ctrl.mnoSortableTableFields" row-on-click="$ctrl.openShowTaskModal($event)"></mno-sortable-table>
