@@ -54,6 +54,11 @@ mnoe-tasks {
           text-overflow: ellipsis;
           white-space: nowrap;
         }
+
+        // allow room for the sorting arrow css content, due to small size of checkbox.
+        td:last-child {
+          min-width: 70px;
+        }
       }
 
       .pagination {
