@@ -2,7 +2,7 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
   bindings: {
   },
   templateUrl: 'app/components/mnoe-tasks/mnoe-tasks.html',
-  controller: ($filter, $uibModal, $log, $translate, toastr, MnoeTasks)->
+  controller: ($filter, $uibModal, $log, $translate, $timeout, toastr, MnoeTasks)->
     ctrl = this
 
     ctrl.$onInit = ->
@@ -87,7 +87,10 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
           $log.error(errors)
           toastr.error('mno_enterprise.templates.components.mnoe-tasks.toastr_error.get_tasks')
       ).finally(->
-        ctrl.tasks.loading = false
+        # Add delay to improve UI the rendering appearance while new data is bound.
+        $timeout(->
+          ctrl.tasks.loading = false
+        , 250)
       )
 
     createTask = (task)->
