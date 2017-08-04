@@ -61,6 +61,7 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
         component: 'mnoShowTaskModal'
         resolve:
           task: -> task
+          dateFormat: -> 'MMM M, yyyy, h:mma'
       })
       modalInstance.result.then(({reply, done})->
         (task.markedDone = done) & updateTask(task) if done?
