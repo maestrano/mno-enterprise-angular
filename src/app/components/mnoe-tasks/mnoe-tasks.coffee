@@ -4,10 +4,10 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
   templateUrl: 'app/components/mnoe-tasks/mnoe-tasks.html',
   controller: ($filter, $uibModal, $log, $translate, $timeout, toastr, MnoeTasks)->
     ctrl = this
-
     ctrl.$onInit = ->
       ctrl.tasks = {
         list: []
+        sort: 'send_at.desc'
         nbItems: 10
         offset: 0
         page: 1
@@ -72,11 +72,27 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
       angular.merge(reply, { title: "RE: #{task.title}", orga_relation_id: task.owner_id, status: 'sent' })
       createTask(reply)
 
+    # Manage sorting for mnoSortableTable with angular-smart-table st-pipe.
+    ctrl.sortableTableServerPipe = (tableState)->
+      ctrl.tasks.sort = updateSort(tableState.sort)
+      fetchTasks(limit: ctrl.tasks.nbItems, offset: ctrl.tasks.offset, order_by: ctrl.tasks.sort)
+
+    # Update angular-smart-table sorting parameters
+    updateSort = (sortState = {}) ->
+      sort = ctrl.tasks.sort
+      if sortState.predicate
+        sort = sortState.predicate
+        if sortState.reverse
+          sort += ".desc"
+        else
+          sort += ".asc"
+      return sort
+
     # Private
 
     fetchTasks = (params)->
       ctrl.tasks.loading = true
-      params ||= { limit: ctrl.tasks.nbItems, offset: ctrl.tasks.offset }
+      params ||= { limit: ctrl.tasks.nbItems, offset: ctrl.tasks.offset, order_by: ctrl.tasks.sort }
       angular.merge(params, ctrl.selectedMenu.query, ctrl.selectedTasksFilter.query)
       updateTasksTable()
       MnoeTasks.get(params).then(
@@ -123,7 +139,7 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
         { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.message'), attr: 'message', class: 'ellipsis' }
         { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.received'), attr: 'send_at', filter: { run: $filter('date'), opts: ['MMM d, yyyy, h:mma'] } }
         { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.due_date'), attr: 'due_date', filter: { run: $filter('date'), opts: ['MMM d, yyyy, h:mma'] } }
-        { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.done'), attr: 'markedDone', render: taskDoneCustomField, stopPropagation: true }
+        { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.done'), attr: 'completed_at', render: taskDoneCustomField, stopPropagation: true }
       ]
 
     # Callback for building a custom "done" checkbox field in the mnoSortableTable component.
