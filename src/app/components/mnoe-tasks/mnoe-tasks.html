@@ -15,7 +15,7 @@
     <mno-tasks-menu menus="$ctrl.menus" on-select="$ctrl.onSelectMenu($event)"></mno-tasks-menu>
   </div>
   <div class="tasks">
-    <mno-sortable-table row-collection="$ctrl.tasks.list" fields="$ctrl.mnoSortableTableFields" row-on-click="$ctrl.openShowTaskModal($event)" is-loading="$ctrl.tasks.loading"></mno-sortable-table>
+    <mno-sortable-table row-collection="$ctrl.tasks.list" pipe="$ctrl.sortableTableServerPipe" fields="$ctrl.mnoSortableTableFields" row-on-click="$ctrl.openShowTaskModal($event)" is-loading="$ctrl.tasks.loading"></mno-sortable-table>
 
     <div class="pagination">
       <mno-pagination
