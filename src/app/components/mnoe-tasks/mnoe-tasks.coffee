@@ -49,13 +49,19 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
       modalInstance = $uibModal.open({
         component: 'mnoCreateTaskModal'
         resolve:
-          recipients: -> getRecipients()
+          recipients: MnoeTasks.getRecipients()
       })
       modalInstance.result.then(({isDraft, newTask})->
         if isDraft
-          console.log('save task as draft: ', newTask)
+          newTask.status = 'draft'
+          MnoeTasks.create(newTask).then(->
+            fetchTasks()
+          )
         else
-          console.log('send task: ', newTask)
+          newTask.status = 'sent'
+          MnoeTasks.create(newTask).then(->
+            fetchTasks()
+          )
       )
 
     ctrl.openShowTaskModal = ({rowItem})->
@@ -125,16 +131,6 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
           <span ng-if="!rowItem.due_date">-</span>
         """
       }
-
-    getRecipients = ->
-      [
-        { user: { name: 'Eduardo' }, organization: { name: 'Maestrano' } }
-        { user: { name: 'Manu' }, organization: { name: 'Maestrano' } }
-        { user: { name: 'Xaun' }, organization: { name: 'Maestrano' } }
-        { user: { name: 'Marco' }, organization: { name: 'Maestrano' } }
-        { user: { name: 'Xavier' }, organization: { name: 'Maestrano' } }
-        { user: { name: 'Arnaud' }, organization: { name: 'Maestrano' } }
-      ]
 
     ctrl
 })
