@@ -39,7 +39,6 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
       ctrl.selectedTasksFilter = filter
       fetchTasks()
 
-    # Note: this gets called on mno-tasks-menu cmp init
     ctrl.onSelectMenu = ({menu})->
       return if menu == ctrl.selectedMenu
       ctrl.selectedMenu = menu
@@ -52,16 +51,8 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
           recipients: MnoeTasks.getRecipients()
       })
       modalInstance.result.then(({isDraft, newTask})->
-        if isDraft
-          newTask.status = 'draft'
-          MnoeTasks.create(newTask).then(->
-            fetchTasks()
-          )
-        else
-          newTask.status = 'sent'
-          MnoeTasks.create(newTask).then(->
-            fetchTasks()
-          )
+        newTask.status = if isDraft then 'draft' else 'sent'
+        createTask(newTask)
       )
 
     ctrl.openShowTaskModal = ({rowItem})->
@@ -72,12 +63,13 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
           task: -> task
       })
       modalInstance.result.then(({reply, done})->
-        task.markedDone = done if done?
+        (task.markedDone = done) & updateTask(task) if done?
         ctrl.sendReply(reply, task) if reply?
       )
 
     ctrl.sendReply = (reply, task) ->
-      console.log('Sending reply.. ', reply, task)
+      angular.merge(reply, { title: "RE: #{task.title}", orga_relation_id: task.owner_id, status: 'sent' })
+      createTask(reply)
 
     # Private
 
@@ -92,9 +84,28 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
           ctrl.tasks.totalItems = response.headers('x-total-count')
         (errors)->
           $log.error(errors)
-          toastr.error('mno_enterprise.templates.components.mnoe-tasks.toastr_error.update')
+          toastr.error('mno_enterprise.templates.components.mnoe-tasks.toastr_error.get_tasks')
       ).finally(->
         ctrl.tasks.loading = false
+      )
+
+    createTask = (task)->
+      MnoeTasks.create(task).then(
+        ->
+          fetchTasks()
+        (errors)->
+          $log.error(errors)
+          toastr.error('mno_enterprise.templates.components.mnoe-tasks.toastr_error.create_task')
+      )
+
+    updateTask = (task, params = {})->
+      params.status = if task.markedDone then 'done' else 'sent'
+      MnoeTasks.update(task.id, params).then(
+        (updatedTask)->
+          angular.extend(task, updatedTask)
+        (errors)->
+          $log.error(errors)
+          toastr.error('mno_enterprise.templates.components.mnoe-tasks.toastr_error.update_task')
       )
 
     updateTasksTable = ->
@@ -117,15 +128,7 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
       rowItem.markedDone = rowItem.completed_at?
       {
         scope:
-          markDone: (task)->
-            status = if task.markedDone then 'sent' else 'done'
-            MnoeTasks.update(task.id, status: status).then(
-              (updatedTask)->
-                angular.extend(task, updatedTask)
-              (errors)->
-                $log.error(errors)
-                toastr.error('mno_enterprise.templates.components.mnoe-tasks.toastr_error.update')
-            )
+          markDone: (task)-> updateTask(task)
         template: """
           <input type="checkbox" class="toggle-task-done" ng-if="rowItem.due_date" ng-model="rowItem.markedDone" ng-change="markDone(rowItem)">
           <span ng-if="!rowItem.due_date">-</span>
