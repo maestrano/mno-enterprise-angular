@@ -61,7 +61,7 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
         component: 'mnoShowTaskModal'
         resolve:
           task: -> task
-          dateFormat: -> 'MMM M, yyyy, h:mma'
+          dateFormat: -> 'MMM d, yyyy, h:mma'
       })
       modalInstance.result.then(({reply, done})->
         (task.markedDone = done) & updateTask(task) if done?
@@ -121,8 +121,8 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
         firstColumn
         { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.title'), attr: 'title', class: 'ellipsis' }
         { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.message'), attr: 'message', class: 'ellipsis' }
-        { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.received'), attr: 'send_at', filter: { run: $filter('date'), opts: ['MMM M, yyyy, h:mma'] } }
-        { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.due_date'), attr: 'due_date', filter: { run: $filter('date'), opts: ['MMM M, yyyy, h:mma'] } }
+        { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.received'), attr: 'send_at', filter: { run: $filter('date'), opts: ['MMM d, yyyy, h:mma'] } }
+        { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.due_date'), attr: 'due_date', filter: { run: $filter('date'), opts: ['MMM d, yyyy, h:mma'] } }
         { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.done'), attr: 'markedDone', render: taskDoneCustomField, stopPropagation: true }
       ]
 
