@@ -76,11 +76,10 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
     # Private
 
     fetchTasks = (params)->
+      ctrl.tasks.loading = true
       params ||= { limit: ctrl.tasks.nbItems, offset: ctrl.tasks.offset }
-      # TODO: add loading for mnoSortingTable to remove the need to clear the tasks to improve UI glitchyness.
-      ctrl.tasks.length = 0
-      updateTasksTable()
       angular.merge(params, ctrl.selectedMenu.query, ctrl.selectedTasksFilter.query)
+      updateTasksTable()
       MnoeTasks.get(params).then(
         (response)->
           ctrl.tasks.list = response.data.plain()
@@ -88,6 +87,8 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
         (errors)->
           $log.error(errors)
           toastr.error('mno_enterprise.templates.components.mnoe-tasks.toastr_error.update')
+      ).finally(->
+        ctrl.tasks.loading = false
       )
 
     updateTasksTable = ->
