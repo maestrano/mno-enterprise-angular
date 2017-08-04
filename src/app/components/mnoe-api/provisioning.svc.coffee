@@ -1,6 +1,6 @@
 # Service for managing the users.
 angular.module 'mnoEnterpriseAngular'
-  .service 'MnoeProvisioning', ($q, $log, MnoeApiSvc, MnoeOrganizations) ->
+  .service 'MnoeProvisioning', ($q, $log, MnoeApiSvc, MnoeOrganizations, MnoErrorsHandler) ->
     _self = @
 
     subscriptionsApi = (id) -> MnoeApiSvc.one('/organizations', id).all('subscriptions')
@@ -109,6 +109,20 @@ angular.module 'mnoEnterpriseAngular'
           subscriptionsApi(response.organization.id).getList().then(
             (response) ->
               deferred.resolve(response)
+          )
+      )
+      return deferred.promise
+
+    @cancelSubscription = (s) ->
+      deferred = $q.defer()
+      MnoeOrganizations.get().then(
+        (response) ->
+          MnoeApiSvc.one('/organizations', response.organization.id).one('subscriptions', s.id).post('cancel').then(
+            (response) ->
+              deferred.resolve(response)
+            (error) ->
+              MnoErrorsHandler.processServerError(error)
+              deferred.reject(response)
           )
       )
       return deferred.promise
