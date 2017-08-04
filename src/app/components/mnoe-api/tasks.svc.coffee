@@ -10,6 +10,14 @@ angular.module 'mnoEnterpriseAngular'
           .getList('tasks', params)
       )
 
+    @getRecipients = ->
+      MnoeFullApiSvc
+        .all('orga_relations')
+        .getList()
+        .then(
+          (response)-> response.data.plain()
+      )
+
     @update = (id, params = {})->
       MnoeOrganizations.get().then(->
         MnoeFullApiSvc
@@ -18,6 +26,17 @@ angular.module 'mnoEnterpriseAngular'
           .patch(params)
           .then(
             (response)-> response.data.plain().task
+        )
+      )
+
+    @create = (params = {})->
+      MnoeOrganizations.get().then(->
+        MnoeFullApiSvc
+          .one('organizations', MnoeOrganizations.getSelectedId())
+          .all('tasks')
+          .post(params)
+          .then(
+            (response)-> response.data.plain()
         )
       )
 
