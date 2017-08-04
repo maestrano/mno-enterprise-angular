@@ -75,7 +75,12 @@
         </div>
 
         <div class="cell col-sm-2">
-          <button type="button" class="btn btn-warning" ui-sref="home.provisioning.order({id: subscription.id})" translate>mno_enterprise.templates.dashboard.provisioning.subscriptions.modify</button>
+          <a ui-sref="home.provisioning.order({id: subscription.id})" class="btn btn-link btn-link-warning" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.modify' | translate }}" tooltip-append-to-body="true">
+            <i class="fa fa-pencil-square-o"></i>
+          </a>
+          <a ng-click="vm.cancelSubscription(subscription, $index)" class="btn btn-link btn-link-danger" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.cancel' | translate }}" tooltip-append-to-body="true">
+            <i class="fa fa-remove"></i>
+          </a>
         </div>
       </div>
     </div>
