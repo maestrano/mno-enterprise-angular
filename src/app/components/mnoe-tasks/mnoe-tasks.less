@@ -4,12 +4,29 @@ mnoe-tasks {
     display: flex;
     flex-direction: column;
 
-    .compose {
-      margin: 5px 7px;
-      font-weight: bold;
-      min-width: 130px;
-      max-width: 130px;
+    & > .flex-row {
+      display: flex;
+      align-items: center;
+
+      & > .compose {
+        margin: 5px 7px;
+        font-weight: bold;
+        min-width: 130px;
+        max-width: 130px;
+      }
+
+      & > .refresh-tasks {
+        display: inline-block;
+        padding: 3px;
+        margin: 2px 2px 2px 7px;
+        color: @mno-tasks-column-sort-icon-active-color;
+        &:hover {
+          color: darken(@mno-tasks-column-sort-icon-active-color, 15%);
+        }
+      }
     }
+
+
 
     mno-tasks-menu .tasks-menu .menu-item {
       flex-grow: 1;

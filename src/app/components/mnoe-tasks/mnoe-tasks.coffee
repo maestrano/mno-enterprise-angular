@@ -44,6 +44,9 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
       ctrl.selectedMenu = menu
       fetchTasks()
 
+    ctrl.onRefreshTasks = ->
+      fetchTasks()
+
     ctrl.openCreateTaskModal = ->
       modalInstance = $uibModal.open({
         component: 'mnoCreateTaskModal'
