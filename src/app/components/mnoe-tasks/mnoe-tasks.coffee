@@ -68,6 +68,8 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
           currentUser: MnoeCurrentUser.get()
           setReminderCb: ->
             (reminderDate)-> updateTask(task, reminder_date: reminderDate)
+          onReadTaskCb: ->
+            (hasBeenRead)-> updateTask(task, read_at: moment().toDate()) unless hasBeenRead
       })
       modalInstance.result.then(({reply, done})->
         (task.markedDone = done) & updateTask(task) if done?
