@@ -92,9 +92,9 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
 
     fetchTasks = (params)->
       ctrl.tasks.loading = true
+      ctrl.mnoSortableTableFields = buildMnoSortableTable()
       params ||= { limit: ctrl.tasks.nbItems, offset: ctrl.tasks.offset, order_by: ctrl.tasks.sort }
       angular.merge(params, ctrl.selectedMenu.query, ctrl.selectedTasksFilter.query)
-      updateTasksTable()
       MnoeTasks.get(params).then(
         (response)->
           ctrl.tasks.list = response.data.plain()
@@ -128,31 +128,40 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
           toastr.error('mno_enterprise.templates.components.mnoe-tasks.toastr_error.update_task')
       )
 
-    updateTasksTable = ->
-      firstColumn = if ctrl.selectedMenu.name == 'sent'
-        { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.to'), attr: 'task_recipients[0].user.name' }
-      else
-        { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.from'), attr: 'owner.user.name' }
-      ctrl.mnoSortableTableFields = [
-        firstColumn
-        { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.title'), attr: 'title', class: 'ellipsis' }
-        { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.message'), attr: 'message', class: 'ellipsis' }
-        { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.received'), attr: 'send_at', filter: { run: $filter('date'), opts: ['MMM d, yyyy, h:mma'] } }
-        { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.due_date'), attr: 'due_date', filter: { run: $filter('date'), opts: ['MMM d, yyyy, h:mma'] } }
-        { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.done'), attr: 'completed_at', render: taskDoneCustomField, stopPropagation: true }
-      ]
+    buildMnoSortableTable = ->
+      toColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.to'), attr: 'task_recipients[0].user.name' }
+      fromColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.from'), attr: 'owner.user.name' }
+      titleColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.title'), attr: 'title', class: 'ellipsis' }
+      messageColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.message'), attr: 'message', class: 'ellipsis' }
+      receivedAtColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.received'), attr: 'send_at', filter: { run: $filter('date'), opts: ['MMM d, yyyy, h:mma'] } }
+      updatedAtColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.updated_at'), attr: 'updated_at', filter: { run: $filter('date'), opts: ['MMM d, yyyy, h:mma'] } }
+      dueDateAtColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.due_date'), attr: 'due_date', filter: { run: $filter('date'), opts: ['MMM d, yyyy, h:mma'] } }
+      doneColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.done'), attr: 'status', render: taskDoneCustomField, stopPropagation: true }
+      switch ctrl.selectedMenu.name
+        when 'inbox'
+          [fromColumn, titleColumn, messageColumn, receivedAtColumn, dueDateAtColumn, doneColumn]
+        when 'sent'
+          [toColumn, titleColumn, messageColumn, receivedAtColumn, dueDateAtColumn, doneColumn]
+        when 'draft'
+          [toColumn, titleColumn, messageColumn, updatedAtColumn, dueDateAtColumn]
 
     # Callback for building a custom "done" checkbox field in the mnoSortableTable component.
     taskDoneCustomField = (rowItem)->
       # If a :completed_at timestamp exist, initialise frontend switch model for checkbox.
       rowItem.markedDone = rowItem.completed_at?
+      switch ctrl.selectedMenu.name
+        when 'inbox'
+          htmlTemplate = """
+            <input type="checkbox" class="toggle-task-done" ng-if="rowItem.due_date" ng-model="rowItem.markedDone" ng-change="markDone(rowItem)">
+            <span ng-if="!rowItem.due_date">-</span>
+          """
+        when 'sent'
+          label = if rowItem.markedDone then 'completed' else 'open'
+          htmlTemplate = "<span>#{label}</span>"
       {
         scope:
           markDone: (task)-> updateTask(task)
-        template: """
-          <input type="checkbox" class="toggle-task-done" ng-if="rowItem.due_date" ng-model="rowItem.markedDone" ng-change="markDone(rowItem)">
-          <span ng-if="!rowItem.due_date">-</span>
-        """
+        template: htmlTemplate
       }
 
     ctrl
