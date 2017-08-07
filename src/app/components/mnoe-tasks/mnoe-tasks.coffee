@@ -2,7 +2,7 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
   bindings: {
   },
   templateUrl: 'app/components/mnoe-tasks/mnoe-tasks.html',
-  controller: ($filter, $uibModal, $log, $translate, $timeout, toastr, MnoeTasks)->
+  controller: ($filter, $uibModal, $log, $translate, $timeout, toastr, MnoeTasks, MnoeCurrentUser)->
     ctrl = this
     ctrl.$onInit = ->
       ctrl.tasks = {
@@ -65,6 +65,9 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
         resolve:
           task: -> task
           dueDateFormat: -> 'MMMM d'
+          currentUser: MnoeCurrentUser.get()
+          setReminderCb: ->
+            (reminderDate)-> updateTask(task, reminder_date: reminderDate)
       })
       modalInstance.result.then(({reply, done})->
         (task.markedDone = done) & updateTask(task) if done?
