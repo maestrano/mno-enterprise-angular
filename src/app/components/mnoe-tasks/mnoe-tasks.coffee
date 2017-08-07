@@ -61,7 +61,7 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
         component: 'mnoShowTaskModal'
         resolve:
           task: -> task
-          dateFormat: -> 'MMM d, yyyy, h:mma'
+          dueDateFormat: -> 'MMMM d'
       })
       modalInstance.result.then(({reply, done})->
         (task.markedDone = done) & updateTask(task) if done?
@@ -74,11 +74,13 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
 
     # Manage sorting for mnoSortableTable with angular-smart-table st-pipe.
     ctrl.sortableTableServerPipe = (tableState)->
-      ctrl.tasks.sort = updateSort(tableState.sort)
+      ctrl.tasks.sort = updateTableSort(tableState.sort)
       fetchTasks(limit: ctrl.tasks.nbItems, offset: ctrl.tasks.offset, order_by: ctrl.tasks.sort)
 
+    # Private
+
     # Update angular-smart-table sorting parameters
-    updateSort = (sortState = {}) ->
+    updateTableSort = (sortState = {}) ->
       sort = ctrl.tasks.sort
       if sortState.predicate
         sort = sortState.predicate
@@ -87,8 +89,6 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
         else
           sort += ".asc"
       return sort
-
-    # Private
 
     fetchTasks = (params)->
       ctrl.tasks.loading = true
@@ -128,14 +128,15 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
           toastr.error('mno_enterprise.templates.components.mnoe-tasks.toastr_error.update_task')
       )
 
+    # Creates mnoSortableTable cmp config API, building the tasks table columns
     buildMnoSortableTable = ->
       toColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.to'), attr: 'task_recipients[0].user.name' }
       fromColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.from'), attr: 'owner.user.name' }
       titleColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.title'), attr: 'title', class: 'ellipsis' }
       messageColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.message'), attr: 'message', class: 'ellipsis' }
-      receivedAtColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.received'), attr: 'send_at', filter: { run: $filter('date'), opts: ['MMM d, yyyy, h:mma'] } }
-      updatedAtColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.updated_at'), attr: 'updated_at', filter: { run: $filter('date'), opts: ['MMM d, yyyy, h:mma'] } }
-      dueDateAtColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.due_date'), attr: 'due_date', filter: { run: $filter('date'), opts: ['MMM d, yyyy, h:mma'] } }
+      receivedAtColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.received'), attr: 'send_at', filter: expandingDateFormat }
+      updatedAtColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.updated_at'), attr: 'updated_at', filter: expandingDateFormat }
+      dueDateAtColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.due_date'), attr: 'due_date', filter: simpleDateFormat }
       doneColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.done'), attr: 'status', render: taskDoneCustomField, stopPropagation: true }
       switch ctrl.selectedMenu.name
         when 'inbox'
@@ -144,6 +145,15 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
           [toColumn, titleColumn, messageColumn, receivedAtColumn, dueDateAtColumn, doneColumn]
         when 'draft'
           [toColumn, titleColumn, messageColumn, updatedAtColumn, dueDateAtColumn]
+
+    # Formats dates yesterday & beyond differently from today
+    expandingDateFormat = (value)->
+      dateFormat = if moment(value) < moment().startOf('day') then 'MMMM d' else 'h:mma'
+      $filter('date')(value, dateFormat)
+
+    # A format used across multiple tasks columns
+    simpleDateFormat = (value)->
+      $filter('date')(value, 'MMMM d')
 
     # Callback for building a custom "done" checkbox field in the mnoSortableTable component.
     taskDoneCustomField = (rowItem)->
