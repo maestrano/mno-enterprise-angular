@@ -37,7 +37,7 @@
       </li>
 
       <li>
-        <a ui-sref="home.messages" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.messages' | translate }}</a>
+        <a ng-if="isTasksEnabled" ui-sref="home.messages" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.messages' | translate }}</a>
       </li>
 
       <li ng-if="isOrganizationManagementEnabled">
@@ -85,7 +85,7 @@
       <i class="dhb-icon-account"></i>
     </a>
 
-    <a ui-sref="home.messages" class="dashboard-button top-buffer-1" ui-sref-active="active">
+    <a ng-if="isTasksEnabled" ui-sref="home.messages" class="dashboard-button top-buffer-1" ui-sref-active="active">
       <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.messages' | translate }}</div>
       <i class="fa fa-tasks fa-2x" aria-hidden="true" style="padding: 5px 2px;"></i>
     </a>
