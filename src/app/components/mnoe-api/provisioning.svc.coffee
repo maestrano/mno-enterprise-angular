@@ -114,17 +114,13 @@ angular.module 'mnoEnterpriseAngular'
       return deferred.promise
 
     @cancelSubscription = (s) ->
-      deferred = $q.defer()
       MnoeOrganizations.get().then(
         (response) ->
-          MnoeApiSvc.one('/organizations', response.organization.id).one('subscriptions', s.id).post('cancel').then(
-            (response) ->
-              deferred.resolve(response)
+          MnoeApiSvc.one('organizations', response.organization.id).one('subscriptions', s.id).post('/cancel').catch(
             (error) ->
               MnoErrorsHandler.processServerError(error)
-              deferred.reject(response)
+              $q.reject(error)
           )
       )
-      return deferred.promise
 
     return

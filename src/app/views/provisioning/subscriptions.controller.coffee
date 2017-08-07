@@ -4,15 +4,15 @@ angular.module 'mnoEnterpriseAngular'
     vm = this
     vm.isLoading = true
 
-    vm.cancelSubscription = (subscription, key) ->
+    vm.cancelSubscription = (subscription, i) ->
       modalOptions =
         headerText: 'mno_enterprise.templates.dashboard.provisioning.subscriptions.cancel_modal.title'
         bodyText: 'mno_enterprise.templates.dashboard.provisioning.subscriptions.cancel_modal.body'
         closeButtonText: 'mno_enterprise.templates.dashboard.provisioning.subscriptions.cancel_modal.no'
         actionButtonText: 'mno_enterprise.templates.dashboard.provisioning.subscriptions.cancel_modal.yes'
         actionCb: -> MnoeProvisioning.cancelSubscription(subscription).then(
-          ->
-            vm.subscriptions.splice(key, 1)
+          (response) ->
+            angular.copy(response.subscription, vm.subscriptions[i])
           ->
             toastr.error('mno_enterprise.templates.dashboard.provisioning.subscriptions.cancel_error')
         )
