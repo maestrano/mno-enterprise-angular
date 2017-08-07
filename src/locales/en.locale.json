@@ -559,6 +559,8 @@
   "mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.title": "Title",
   "mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.message": "Message",
   "mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.received": "Received",
+  "mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.sent": "Sent",
+  "mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.read": "Read",
   "mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.updated_at": "Updated At",
   "mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.due_date": "Due date",
   "mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.done": "Done",
