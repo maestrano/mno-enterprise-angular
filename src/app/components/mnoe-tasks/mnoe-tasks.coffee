@@ -2,7 +2,7 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
   bindings: {
   },
   templateUrl: 'app/components/mnoe-tasks/mnoe-tasks.html',
-  controller: ($filter, $uibModal, $log, $translate, $timeout, toastr, MnoeTasks, MnoeCurrentUser)->
+  controller: ($filter, $uibModal, $log, $translate, $timeout, $q, toastr, MnoeTasks, MnoeCurrentUser)->
     ctrl = this
     ctrl.$onInit = ->
       ctrl.tasks = {
@@ -108,6 +108,7 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
         (errors)->
           $log.error(errors)
           toastr.error('mno_enterprise.templates.components.mnoe-tasks.toastr_error.get_tasks')
+          $q.reject()
       ).finally(->
         # Add delay to improve UI the rendering appearance while new data is bound.
         $timeout(->
@@ -122,6 +123,7 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
         (errors)->
           $log.error(errors)
           toastr.error('mno_enterprise.templates.components.mnoe-tasks.toastr_error.create_task')
+          $q.reject()
       )
 
     updateTask = (task, params = {})->
@@ -132,6 +134,7 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
         (errors)->
           $log.error(errors)
           toastr.error('mno_enterprise.templates.components.mnoe-tasks.toastr_error.update_task')
+          $q.reject()
       )
 
     # Creates mnoSortableTable cmp config API, building the tasks table columns
