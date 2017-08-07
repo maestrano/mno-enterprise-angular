@@ -144,6 +144,8 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
       titleColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.title'), attr: 'title', class: 'ellipsis' }
       messageColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.message'), attr: 'message', class: 'ellipsis' }
       receivedAtColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.received'), attr: 'send_at', filter: expandingDateFormat }
+      sentAtColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.sent'), attr: 'send_at', filter: expandingDateFormat }
+      readAtColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.read'), attr: 'task_recipients[0].read_at', filter: expandingDateFormat }
       updatedAtColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.updated_at'), attr: 'updated_at', filter: expandingDateFormat }
       dueDateAtColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.due_date'), attr: 'due_date', filter: simpleDateFormat }
       doneColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.done'), attr: 'status', render: taskDoneCustomField, stopPropagation: true }
@@ -151,7 +153,7 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
         when 'inbox'
           [fromColumn, titleColumn, messageColumn, receivedAtColumn, dueDateAtColumn, doneColumn]
         when 'sent'
-          [toColumn, titleColumn, messageColumn, receivedAtColumn, dueDateAtColumn, doneColumn]
+          [toColumn, titleColumn, messageColumn, sentAtColumn, readAtColumn, dueDateAtColumn, doneColumn]
         when 'draft'
           [toColumn, titleColumn, messageColumn, updatedAtColumn, dueDateAtColumn]
 
