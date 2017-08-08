@@ -42,7 +42,8 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
     ctrl.onSelectMenu = ({menu})->
       return if menu == ctrl.selectedMenu
       ctrl.selectedMenu = menu
-      fetchTasks()
+      params = { order_by: 'updated_at.desc' } if menu.name == 'draft'
+      fetchTasks(params)
 
     ctrl.onRefreshTasks = ->
       fetchTasks()
@@ -102,11 +103,11 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
           sort += ".asc"
       return sort
 
-    fetchTasks = (params)->
+    fetchTasks = (params = {})->
       ctrl.tasks.loading = true
       ctrl.mnoSortableTableFields = buildMnoSortableTable()
-      params ||= { limit: ctrl.tasks.nbItems, offset: ctrl.tasks.offset, order_by: ctrl.tasks.sort }
-      angular.merge(params, ctrl.selectedMenu.query, ctrl.selectedTasksFilter.query)
+      baseParams = { limit: ctrl.tasks.nbItems, offset: ctrl.tasks.offset, order_by: ctrl.tasks.sort }
+      params = angular.merge({}, baseParams, params, ctrl.selectedMenu.query, ctrl.selectedTasksFilter.query)
       MnoeTasks.get(params).then(
         (response)->
           ctrl.tasks.list = response.data.plain()
