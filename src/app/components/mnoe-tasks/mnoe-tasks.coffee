@@ -71,7 +71,9 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
               updateTask(task, reminder_date: reminderDate)
           onReadTaskCb: ->
             (hasBeenRead)->
-              updateTask(task, read_at: moment().toDate()) unless hasBeenRead
+              # Only mark inbox items that have no already been read as read.
+              return $q.resolve() if hasBeenRead || ctrl.selectedMenu.name != 'inbox'
+              updateTask(task, read_at: moment().toDate())
           markAsDoneCb: ->
             (isDone)->
               task.markedDone = isDone
