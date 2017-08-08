@@ -48,33 +48,37 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
       fetchTasks()
 
     ctrl.openCreateTaskModal = ->
-      modalInstance = $uibModal.open({
+      $uibModal.open({
         component: 'mnoCreateTaskModal'
         resolve:
           recipients: MnoeTasks.getRecipients()
+          createTaskCb: ->
+            (newTask) ->
+              createTask(newTask)
       })
-      modalInstance.result.then(({isDraft, newTask})->
-        newTask.status = if isDraft then 'draft' else 'sent'
-        createTask(newTask)
-      )
 
     ctrl.openShowTaskModal = ({rowItem})->
       task = rowItem
-      modalInstance = $uibModal.open({
+      $uibModal.open({
         component: 'mnoShowTaskModal'
         resolve:
-          task: -> task
+          task: -> angular.copy(task)
           dueDateFormat: -> 'MMMM d'
           currentUser: MnoeCurrentUser.get()
           setReminderCb: ->
-            (reminderDate)-> updateTask(task, reminder_date: reminderDate)
+            (reminderDate)->
+              updateTask(task, reminder_date: reminderDate)
           onReadTaskCb: ->
-            (hasBeenRead)-> updateTask(task, read_at: moment().toDate()) unless hasBeenRead
+            (hasBeenRead)->
+              updateTask(task, read_at: moment().toDate()) unless hasBeenRead
+          markAsDoneCb: ->
+            (isDone)->
+              task.markedDone = isDone
+              updateTaskStatus(task)
+          sendReplyCb: ->
+            (reply)->
+              ctrl.sendReply(reply, task)
       })
-      modalInstance.result.then(({reply, done})->
-        (task.markedDone = done) & updateTask(task) if done?
-        ctrl.sendReply(reply, task) if reply?
-      )
 
     ctrl.sendReply = (reply, task) ->
       angular.merge(reply, { title: "RE: #{task.title}", orga_relation_id: task.owner_id, status: 'sent' })
@@ -107,10 +111,11 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
         (response)->
           ctrl.tasks.list = response.data.plain()
           ctrl.tasks.totalItems = response.headers('x-total-count')
+          ctrl.tasks.list
         (errors)->
           $log.error(errors)
           toastr.error('mno_enterprise.templates.components.mnoe-tasks.toastr_error.get_tasks')
-          $q.reject()
+          return
       ).finally(->
         # Add delay to improve UI the rendering appearance while new data is bound.
         $timeout(->
@@ -125,19 +130,23 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
         (errors)->
           $log.error(errors)
           toastr.error('mno_enterprise.templates.components.mnoe-tasks.toastr_error.create_task')
-          $q.reject()
+          return
       )
 
     updateTask = (task, params = {})->
-      params.status = if task.markedDone then 'done' else 'sent'
       MnoeTasks.update(task.id, params).then(
         (updatedTask)->
           angular.extend(task, updatedTask)
         (errors)->
           $log.error(errors)
           toastr.error('mno_enterprise.templates.components.mnoe-tasks.toastr_error.update_task')
-          $q.reject()
+          return
       )
+
+    # Determine Task status from markedDone attribute (linked to checkbox ngModel)
+    updateTaskStatus = (task)->
+      status = if task.markedDone then 'done' else 'sent'
+      updateTask(task, status: status)
 
     # Creates mnoSortableTable cmp config API, building the tasks table columns
     buildMnoSortableTable = ->
@@ -183,7 +192,7 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
           htmlTemplate = "<span>#{label}</span>"
       {
         scope:
-          markDone: (task)-> updateTask(task)
+          markDone: updateTaskStatus
         template: htmlTemplate
       }
 
