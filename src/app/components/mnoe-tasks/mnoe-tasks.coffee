@@ -48,18 +48,28 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
     ctrl.onRefreshTasks = ->
       fetchTasks()
 
-    ctrl.openCreateTaskModal = ->
+    ctrl.sortableTableRowOnClick = ({rowItem})->
+      if ctrl.selectedMenu.name == 'draft' then ctrl.openCreateTaskModal(rowItem) else ctrl.openShowTaskModal(rowItem)
+
+    ctrl.openCreateTaskModal = (task)->
       $uibModal.open({
         component: 'mnoCreateTaskModal'
         resolve:
+          draftTask: ->
+            angular.copy(task) if task
           recipients: MnoeTasks.getRecipients()
           createTaskCb: ->
             (newTask) ->
               createTask(newTask)
+          updateDraftCb: ->
+            (draftTask)->
+              updateTask(draftTask, draftTask).then(
+                ->
+                  fetchTasks()
+              )
       })
 
-    ctrl.openShowTaskModal = ({rowItem})->
-      task = rowItem
+    ctrl.openShowTaskModal = (task)->
       $uibModal.open({
         component: 'mnoShowTaskModal'
         resolve:
