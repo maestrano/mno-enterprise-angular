@@ -447,7 +447,6 @@
   "mno_enterprise.templates.dashboard.organization.members.edition_modal.cancel": "Cancel",
   "mno_enterprise.templates.dashboard.organization.members.edition_modal.change": "Change",
   "mno_enterprise.templates.dashboard.organization.members.edition_modal.roles.member": "A member can see other members and access the company apps",
-  "mno_enterprise.templates.dashboard.organization.members.edition_modal.roles.power_user": "A Power User can see other members and start idle company apps (on per hour plan)",
   "mno_enterprise.templates.dashboard.organization.members.edition_modal.roles.admin": "An Admin can manage other members (except Super Admin users) and manage the company apps",
   "mno_enterprise.templates.dashboard.organization.members.edition_modal.roles.super_admin": "A Super Admin has all power within the company including access to billing management",
   "mno_enterprise.templates.dashboard.organization.members.removal_modal.title": "Confirm action",
