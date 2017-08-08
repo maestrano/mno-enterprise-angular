@@ -75,6 +75,7 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
         resolve:
           task: -> angular.copy(task)
           dueDateFormat: -> 'MMMM d'
+          # $uibModal resolve internally unwraps the promise, applying the result to currentUser.
           currentUser: MnoeCurrentUser.get()
           setReminderCb: ->
             (reminderDate)->
@@ -86,11 +87,14 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
               updateTask(task, read_at: moment().toDate())
           markAsDoneCb: ->
             (isDone)->
-              task.markedDone = isDone
-              updateTaskStatus(task)
+              updateTaskStatus(task, isDone)
           sendReplyCb: ->
-            (reply)->
-              ctrl.sendReply(reply, task)
+            (reply, markAsDone)->
+              promise = if markAsDone then updateTaskStatus(task, markAsDone) else $q.resolve()
+              promise.then(
+                ->
+                  ctrl.sendReply(reply, task)
+              )
       })
 
     ctrl.sendReply = (reply, task) ->
@@ -156,10 +160,20 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
           return
       )
 
-    # Determine Task status from markedDone attribute (linked to checkbox ngModel)
-    updateTaskStatus = (task)->
-      status = if task.markedDone then 'done' else 'sent'
-      updateTask(task, status: status)
+    # Update Task status attribute & linked 'done' checkbox ngModel
+    updateTaskStatus = (task, isDone)->
+      task.markedDone = isDone
+      status = if isDone then 'done' else 'sent'
+      MnoeTasks.update(task.id, status: status).then(
+        (response)->
+          angular.extend(task, response)
+        (errors)->
+          $log.error(errors)
+          toastr.error('mno_enterprise.templates.components.mnoe-tasks.toastr_error.update_task')
+          # Revert to previous state, as unchecked or checked on update fail
+          task.markedDone = !task.markedDone
+          return
+      )
 
     # Creates mnoSortableTable cmp config API, building the tasks table columns
     buildMnoSortableTable = ->
@@ -205,7 +219,8 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
           htmlTemplate = "<span>#{label}</span>"
       {
         scope:
-          markDone: updateTaskStatus
+          markDone: (task) ->
+            updateTaskStatus(task, task.markedDone)
         template: htmlTemplate
       }
 
