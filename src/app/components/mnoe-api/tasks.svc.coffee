@@ -1,6 +1,6 @@
 # Service for managing the users.
 angular.module 'mnoEnterpriseAngular'
-  .service 'MnoeTasks', ($log, $q, toastr, MnoeFullApiSvc, MnoeOrganizations) ->
+  .service 'MnoeTasks', (MnoeFullApiSvc, MnoeOrganizations) ->
     _self = @
 
     @get = (params = {})->
@@ -15,7 +15,8 @@ angular.module 'mnoEnterpriseAngular'
         .all('orga_relations')
         .getList()
         .then(
-          (response)-> response.data.plain()
+          # TODO: XDE -> XLO: Hack to be able to show user first nam and last name. Please correct mno-ui-element to accept a recipient renderer or just accept an hash {id, name}
+          (response)-> _.map(response.data.plain(), (orgaRel) -> {id: orgaRel.id, user: {name: orgaRel.user.name + " " + orgaRel.user.surname}})
       )
 
     @update = (id, params = {})->
