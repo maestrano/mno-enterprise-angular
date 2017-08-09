@@ -1,8 +1,25 @@
 angular.module 'mnoEnterpriseAngular'
-  .service('MnoLocaleConfigSvc', ($window, $translate, I18N_CONFIG, LOCALES) ->
+  .service('MnoLocaleConfigSvc', (
+    $window, $translate,
+    MnoeCurrentUser,
+    I18N_CONFIG, LOCALES
+  ) ->
 
-    @setLocale = ->
-      locale = localeFromUrl()
+    @configure = ->
+      if l = localeFromUrl()
+        console.log("Using locale from URL")
+        return setLocale(l)
+
+      # TODO: do we want to edit the URL
+      # when getting the language from the user?
+      MnoeCurrentUser.get().then(
+        ->
+          if l = localeFromUser()
+            console.log("Using locale from User")
+            setLocale(l)
+      )
+
+    setLocale = (locale) ->
       setFallbackStack(locale)
       $translate.use(locale)
 
@@ -18,14 +35,18 @@ angular.module 'mnoEnterpriseAngular'
       # Ex found: ["/en/dashboard/", "en", index: 0, input: "/en/dashboard/"]
       return found[1] if found?
 
+    # Find the locale from the User#settings
+    localeFromUser = ->
+      MnoeCurrentUser.user.settings?.locale
+
     # Build our fallback stack manually to be ['language', preferredLanguage, LOCALES.fallbackLanguage]
     # eg: If the detected locale is 'fr-FR' and the preferred language 'en-GB', the fallback stack is
     # ['fr', 'en-GB', 'en']
     # This is similar to the angular-translate implementation except they push th preferredLanguage at the end
     setFallbackStack = (locale)->
       fallbackStack = []
-      if found[1].length == 5
-        language = found[1].slice(0,2)
+      if locale?.length == 5
+        language = locale.slice(0,2)
 
         # Start with the language code
         fallbackStack.push(language)

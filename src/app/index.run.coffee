@@ -21,7 +21,7 @@ angular.module 'mnoEnterpriseAngular'
   # Configure angular translate depending on the locale used in the path
   #
   .run((MnoLocaleConfigSvc) ->
-    MnoLocaleConfigSvc.setLocale()
+    MnoLocaleConfigSvc.configure()
   )
 
   # Override the default toastr template to use angular-translate
