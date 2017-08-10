@@ -9,20 +9,31 @@ describe('Service: MnoeOrganizations', ->
     MnoeOrganizations = _MnoeOrganizations_
     $httpBackend = _$httpBackend_
 
+    # Global stubs
+    $httpBackend.when('GET', '/mnoe/jpi/v1/current_user').respond(200,
+      {
+        "current_user": {
+          "id": 1,
+          "logged_in": true,
+          "organizations": [
+            { "id": 9, "uid": "usr-fbbw", "name": "Marvel", "current_user_role": "Super Admin" }
+          ]
+        }
+      })
+    $httpBackend.when('GET', '/mnoe/jpi/v1/organizations/9/app_instances').respond(200,
+      {
+        "app_instances": {
+          "811": {"id": "811", "uid": "cld-9ou5", "stack": "connector", "name": "Xero", "status": "running"}
+        }
+      }
+    )
+
     # @list backend interceptor
     $httpBackend.when('GET', '/mnoe/jpi/v1/organizations').respond(200,
       {
         "organizations": [
           { "id": 9, "uid": "usr-fbbw", "name": "Marvel" },
           { "id": 10, "uid": "usr-fbb7", "name": "DC Comics" }
-        ]
-      })
-
-    # @inArrears backend interceptor
-    $httpBackend.when('GET', '/mnoe/jpi/v1/organizations/in_arrears').respond(200,
-      {
-        "organization": [
-          { "id": 9, "uid": "usr-fbbw", "name": "Marvel" }
         ]
       })
 
@@ -52,14 +63,6 @@ describe('Service: MnoeOrganizations', ->
     it('GETs /mnoe/jpi/v1/organizations', ->
       $httpBackend.expectGET('/mnoe/jpi/v1/organizations')
       MnoeOrganizations.list()
-      $httpBackend.flush()
-    )
-  )
-
-  describe('@inArrears', ->
-    it('GETs /mnoe/jpi/v1/in_arrears', ->
-      $httpBackend.expectGET('/mnoe/jpi/v1/organizations/in_arrears')
-      MnoeOrganizations.inArrears()
       $httpBackend.flush()
     )
   )
