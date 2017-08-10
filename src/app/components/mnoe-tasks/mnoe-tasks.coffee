@@ -55,6 +55,7 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
       $uibModal.open({
         component: 'mnoCreateTaskModal'
         resolve:
+          recipientFormater: () -> recipientFormater
           draftTask: ->
             angular.copy(task) if task
           recipients: MnoeTasks.getRecipients()
@@ -73,6 +74,7 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
       $uibModal.open({
         component: 'mnoShowTaskModal'
         resolve:
+          recipientFormater: () -> recipientFormater
           task: -> angular.copy(task)
           dueDateFormat: -> 'MMMM d'
           # $uibModal resolve internally unwraps the promise, applying the result to currentUser.
@@ -107,6 +109,10 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
       fetchTasks(limit: ctrl.tasks.nbItems, offset: ctrl.tasks.offset, order_by: ctrl.tasks.sort)
 
     # Private
+
+    recipientFormater = (orgaRel) ->
+      orgaRel.user.name + " " + orgaRel.user.surname
+
 
     # Update angular-smart-table sorting parameters
     updateTableSort = (sortState = {}) ->
@@ -177,8 +183,10 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
 
     # Creates mnoSortableTable cmp config API, building the tasks table columns
     buildMnoSortableTable = ->
-      toColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.to'), attr: 'task_recipients[0].user.name' }
-      fromColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.from'), attr: 'owner.user.name' }
+      toUserNameColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.user.name'), attr: 'task_recipients[0].user.name'}
+      toUserSurnameColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.user.surname'), attr: 'task_recipients[0].user.surname'}
+      fromUserNameColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.user.name'), attr: 'owner.user.name'}
+      fromUserSurnameColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.user.surname'), attr: 'owner.user.surname'}
       titleColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.title'), attr: 'title', class: 'ellipsis' }
       messageColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.message'), attr: 'message', class: 'ellipsis' }
       receivedAtColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.received'), attr: 'send_at', filter: expandingDateFormat }
@@ -189,11 +197,11 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
       doneColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.done'), attr: 'status', render: taskDoneCustomField, stopPropagation: true }
       switch ctrl.selectedMenu.name
         when 'inbox'
-          [fromColumn, titleColumn, messageColumn, receivedAtColumn, dueDateAtColumn, doneColumn]
+          [fromUserNameColumn, fromUserSurnameColumn, titleColumn, messageColumn, receivedAtColumn, dueDateAtColumn, doneColumn]
         when 'sent'
-          [toColumn, titleColumn, messageColumn, sentAtColumn, readAtColumn, dueDateAtColumn, doneColumn]
+          [toUserNameColumn, toUserSurnameColumn, titleColumn, messageColumn, sentAtColumn, readAtColumn, dueDateAtColumn, doneColumn]
         when 'draft'
-          [toColumn, titleColumn, messageColumn, updatedAtColumn, dueDateAtColumn]
+          [toUserNameColumn, toUserSurnameColumn, titleColumn, messageColumn, updatedAtColumn, dueDateAtColumn]
 
     # Formats dates yesterday & beyond differently from today
     expandingDateFormat = (value)->
