@@ -33,7 +33,7 @@
     "ng-page-title": "^1.1.1",
     "restangular": "~1.5.1",
     "material-shadows": "^3.0.1",
-    "mno-ui-elements": "maestrano/mno-ui-elements#master"
+    "mno-ui-elements": "maestrano/mno-ui-elements#feature/tasks"
   },
   "devDependencies": {
     "angular-mocks": "~1.6.0"
