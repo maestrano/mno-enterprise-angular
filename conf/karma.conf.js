@@ -13,6 +13,7 @@ module.exports = function (config) {
     browsers: [
       'PhantomJS'
     ],
+    reporters: ['spec'],
     frameworks: [
       'phantomjs-shim',
       'jasmine',
@@ -36,6 +37,7 @@ module.exports = function (config) {
     plugins: [
       require('karma-jasmine'),
       require('karma-junit-reporter'),
+      require('karma-spec-reporter'),
       require('karma-coverage'),
       require('karma-phantomjs-launcher'),
       require('karma-phantomjs-shim'),
