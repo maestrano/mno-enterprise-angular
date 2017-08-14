@@ -60,11 +60,17 @@ angular.module 'mnoEnterpriseAngular'
       MnoeApiSvc.all('/current_user').doPUT({user: passwordData}, 'update_password')
 
     @skipIfLoggedIn = ->
-      if _self.user.logged_in
-        $state.go('home.impac')
+      _self.get().then(
+        (response) ->
+          if response.logged_in
+            $state.go('home.impac')
+      )
 
     @loginRequired = ->
-      unless _self.user.logged_in
-        $state.go('landing')
+      _self.get().then(
+        (response) ->
+          unless response.logged_in
+            $state.go('landing')
+      )
 
     return @

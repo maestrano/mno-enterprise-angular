@@ -168,10 +168,12 @@ angular.module 'mnoEnterpriseAngular'
               # Load organization id stored in cookie
               $log.debug "MnoeOrganizations.getCurrentOrganisation: cookie", val
               _self.get(val).then((response) -> defer.resolve(response))
-            else
+            else if response.organizations.length > 0
               # Load user's first organization id
               $log.debug "MnoeOrganizations.getCurrentOrganisation: first", response.organizations[0].id
               _self.get(response.organizations[0].id).then((response) -> defer.resolve(response))
+            else
+              defer.resolve(response)
         )
 
       return defer.promise
