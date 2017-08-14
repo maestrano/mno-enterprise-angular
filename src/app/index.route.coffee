@@ -4,7 +4,7 @@ angular.module 'mnoEnterpriseAngular'
     $stateProvider
       .state 'landing',
         url: '/landing'
-        templateUrl: 'app/views/public/landing.html'
+        templateUrl: 'app/views/public/landing/landing.html'
         controller: 'LandingCtrl'
         controllerAs: 'vm'
         public: true
