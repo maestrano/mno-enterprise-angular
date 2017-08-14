@@ -2,6 +2,17 @@ angular.module 'mnoEnterpriseAngular'
   .config ($stateProvider, $urlRouterProvider, URI, I18N_CONFIG, MnoeConfigProvider) ->
 
     $stateProvider
+      .state 'landing',
+        url: '/landing'
+        templateUrl: 'app/views/public/landing.html'
+        controller: 'LandingCtrl'
+        controllerAs: 'vm'
+        public: true
+        resolve:
+          skipIfLoggedIn: (MnoeCurrentUser) ->
+            MnoeCurrentUser.skipIfLoggedIn()
+        onExit: ($rootScope) ->
+          $rootScope.publicPage = false
       .state 'home',
         data:
           pageTitle:'Home'
@@ -10,6 +21,9 @@ angular.module 'mnoEnterpriseAngular'
         templateUrl: 'app/views/layout.html'
         controller: 'LayoutController'
         controllerAs: 'layout'
+        resolve:
+          loginRequired: (MnoeCurrentUser) ->
+            MnoeCurrentUser.loginRequired()
       .state 'home.apps',
         data:
           pageTitle:'Apps'
@@ -65,6 +79,9 @@ angular.module 'mnoEnterpriseAngular'
           templateUrl: 'app/views/onboarding/layout.html'
           controller: 'OnboardingController'
           controllerAs: 'onboarding'
+          resolve:
+            loginRequired: (MnoeCurrentUser) ->
+              MnoeCurrentUser.loginRequired()
         .state 'onboarding.step1',
           data:
             pageTitle:'Welcome'
@@ -160,6 +177,12 @@ angular.module 'mnoEnterpriseAngular'
           controllerAs: 'vm'
 
     $urlRouterProvider.otherwise ($injector, $location) ->
+      # placeholder: landingEnabled will be set via settings in the admin panel
+      landingEnabled = true
+      MnoeCurrentUser = $injector.get('MnoeCurrentUser')
+      if !MnoeCurrentUser.get() && landingEnabled
+        $location.url('/landing')
+
       unless $injector.get('MnoeConfig').isOnboardingWizardEnabled()
         $location.url('/impac')
         return

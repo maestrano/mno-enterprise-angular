@@ -31,7 +31,7 @@ angular.module 'mnoEnterpriseAngular'
           response = response.plain()
 
           if !response.logged_in
-            $window.location.href = URI.login
+            $state.go('landing')
 
           angular.copy(response, _self.user)
           response
@@ -58,5 +58,13 @@ angular.module 'mnoEnterpriseAngular'
     # Update user password
     @updatePassword = (passwordData) ->
       MnoeApiSvc.all('/current_user').doPUT({user: passwordData}, 'update_password')
+
+    @skipIfLoggedIn = ->
+      if _self.user.logged_in
+        $state.go('home.impac')
+
+    @loginRequired = ->
+      unless _self.user.logged_in
+        $state.go('landing')
 
     return @

@@ -3,7 +3,7 @@ angular.module 'mnoEnterpriseAngular'
 
     # Will push user data to intercom and boot it
     @init = (userData) ->
-      if $window.Intercom
+      if $window.Intercom && not $state.current.public
         MnoeCurrentUser.get().then(
           (response)->
             userData = {
