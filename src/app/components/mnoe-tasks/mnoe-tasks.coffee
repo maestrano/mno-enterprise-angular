@@ -27,7 +27,7 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
         { name: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks_filters.all_tasks_and_msgs') }
         { name: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks_filters.all_tasks'), query: { 'where[due_date.ne]': '' } }
         { name: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks_filters.all_messages'), query: { 'where[due_date.eq]': '' } }
-        { name: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks_filters.due_tasks'), query: { 'where[due_date.lt]': moment().toISOString() } }
+        { name: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks_filters.due_tasks'), query: { 'where[due_date.lt]': moment.utc().toISOString() } }
         { name: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks_filters.completed_tasks'), query: { 'where[completed_at.ne]': '' } }
       ]
       ctrl.selectedTasksFilter = ctrl.tasksFilters[0]
@@ -86,7 +86,7 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
             (hasBeenRead)->
               # Only mark inbox items that have no already been read as read.
               return $q.resolve() if hasBeenRead || ctrl.selectedMenu.name != 'inbox'
-              updateTask(task, read_at: moment().toDate())
+              updateTask(task, read_at: moment.utc().toISOString())
           markAsDoneCb: ->
             (isDone)->
               updateTaskStatus(task, isDone)
@@ -205,7 +205,7 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
 
     # Formats dates yesterday & beyond differently from today
     expandingDateFormat = (value)->
-      dateFormat = if moment(value) < moment().startOf('day') then 'MMMM d' else 'h:mma'
+      dateFormat = if moment.utc(value) < moment().startOf('day') then 'MMMM d' else 'h:mma'
       $filter('date')(value, dateFormat)
 
     # A format used across multiple tasks columns
