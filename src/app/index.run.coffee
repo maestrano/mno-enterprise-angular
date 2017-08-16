@@ -70,11 +70,10 @@ angular.module 'mnoEnterpriseAngular'
       AnalyticsSvc.update()
     )
   )
-
-  .run(($rootScope, $timeout, Notifications) ->
-    $timeout ( -> Notifications.init() )
+  .run(($timeout, MnoeConfig, Notifications) ->
+    if MnoeConfig.isNotificationsEnabled()
+      $timeout ( -> Notifications.init() )
   )
-
   # App initialization: Retrieve current user and current organization, then preload marketplace
   .run(($rootScope, $q, $location, $stateParams, MnoeCurrentUser, MnoeOrganizations, MnoeMarketplace, MnoeAppInstances) ->
 

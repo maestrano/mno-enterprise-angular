@@ -1,7 +1,6 @@
 # Service for managing the users.
 angular.module 'mnoEnterpriseAngular'
   .service 'MnoeNotifications', (MnoeFullApiSvc, MnoeOrganizations) ->
-    _self = @
 
     @get = (params = {})->
       MnoeOrganizations.get().then(->
