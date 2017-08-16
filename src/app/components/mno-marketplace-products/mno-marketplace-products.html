@@ -1,0 +1,25 @@
+<div class="row dashboard-marketplace">
+  <mno-loader ng-show="$ctrl.isLoading" class="top-buffer-4"></mno-loader>
+  <div class="top-buffer-4" ng-show="!$ctrl.isLoading">
+    <div class="row">
+      <div class="marketplace-list">
+        <div class="col-sm-6 col-md-4" ng-repeat="product in $ctrl.products">
+          <a class="marketplace-app-card" ui-sref="home.marketplace.product({productId: product.id})">
+            <div class="media">
+              <div class="pull-left">
+                <img class="media-object" ng-src="{{::product.logo}}" ng-alt="{{::product.name}}">
+              </div>
+              <div class="media-body">
+                <h4 class="media-heading">{{::product.name}}</h4>
+                {{::product.tiny_description}}
+              </div>
+              <div class="arrow">
+                <i class="fa fa-caret-right fa-2x"></i>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
