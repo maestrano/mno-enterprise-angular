@@ -13,6 +13,17 @@ angular.module 'mnoEnterpriseAngular'
             MnoeCurrentUser.skipIfLoggedIn()
         onExit: ($rootScope) ->
           $rootScope.publicPage = false
+      .state 'product',
+        url: '/product/:productId'
+        templateUrl: 'app/views/public/product/product.html'
+        controller: 'LandingProductCtrl'
+        controllerAs: 'vm'
+        public: true
+        resolve:
+          skipIfLoggedIn: (MnoeCurrentUser) ->
+            MnoeCurrentUser.skipIfLoggedIn()
+        onExit: ($rootScope) ->
+          $rootScope.publicPage = false
       .state 'home',
         data:
           pageTitle:'Home'
