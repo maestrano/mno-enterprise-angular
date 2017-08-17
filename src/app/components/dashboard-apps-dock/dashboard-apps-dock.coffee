@@ -1,5 +1,5 @@
 
-DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, MnoeOrganizations, MnoeAppInstances, MnoeProductInstances, MnoeConfig) ->
+DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, $q, MnoeOrganizations, MnoeAppInstances, MnoeProductInstances, MnoeConfig) ->
   'ngInject'
 
   $scope.appDock = {}
@@ -111,14 +111,13 @@ DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, MnoeOrganizations
   $scope.$watch MnoeOrganizations.getSelectedId, (val) ->
     if val?
       $scope.isLoading = true
-      MnoeAppInstances.getAppInstances().then(
-        (response) ->
-          $scope.apps = response
-      ).finally(-> $scope.isLoading = false)
-      
-      MnoeProductInstances.getProductInstances().then(
-        (response) ->
-          $scope.products = response.product_instances
+      $q.all({
+        appInstances: MnoeAppInstances.getAppInstances()
+        productInstances: MnoeProductInstances.getProductInstances()
+        }).then(
+          (response) ->
+            $scope.apps = response.appInstances
+            $scope.products = response.productInstances
       ).finally(-> $scope.isLoading = false)
 
   # Hide the dock if marketplace is disabled and there are no apps
