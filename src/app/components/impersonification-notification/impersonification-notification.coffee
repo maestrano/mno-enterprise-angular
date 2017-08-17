@@ -1,49 +1,50 @@
-ImpersonificationNotificationCtrl = ($scope, $log, toastr, MnoeUserAccessRequests) ->
+ImpersonificationNotificationCtrl = (toastr, MnoErrorsHandler, MnoeConfig, MnoeUserAccessRequests) ->
   'ngInject'
+  vm = this
+  vm.isEnabled = MnoeConfig.isImpersonationConsentRequired()
+  vm.isLoading = true
 
-  $scope.isLoading = true
+  vm.initialize = (result) ->
+    vm.requests = result
+    vm.isLoading = false
 
-  $scope.initialize = (requests) ->
-    $scope.requests = requests
-    $scope.isLoading = false
-
-  $scope.requesterName = (request) ->
+  vm.requesterName = (request) ->
     request.requester.name + ' ' + request.requester.surname
 
-  $scope.denyAccess = (index, request) ->
-    $scope.isLoading = true
+  vm.denyAccess = (request, index) ->
+    vm.isLoading = true
     MnoeUserAccessRequests.deny(request.id).then(
       () ->
-        $scope.requests.splice(index, 1)
-        toastr.success('mno_enterprise.templates.impac.impersonification_notification.deny.success_toastr', {extraData: {name: $scope.requesterName(request)}})
+        vm.requests.splice(index, 1)
+        toastr.success('mno_enterprise.templates.impac.impersonification_notification.deny.success_toastr', {extraData: {name: vm.requesterName(request)}})
       (errors) ->
-        $log.error(errors)
-        toastr.error('mno_enterprise.templates.impac.impersonification_notification.deny.error_toastr', {extraData: {name: $scope.requesterName(request)}})
-    ).finally(-> $scope.isLoading = false)
+        MnoErrorsHandler.processServerError(errors)
+        toastr.error('mno_enterprise.templates.impac.impersonification_notification.deny.error_toastr', {extraData: {name: vm.requesterName(request)}})
+    ).finally(-> vm.isLoading = false)
 
-  $scope.approveAccess = (index, request) ->
-    $scope.isLoading = true
+  vm.approveAccess = (request, index) ->
+    vm.isLoading = true
     MnoeUserAccessRequests.approve(request.id).then(
       () ->
-        $scope.requests.splice(index, 1)
-        toastr.success('mno_enterprise.templates.impac.impersonification_notification.approve.success_toastr', {extraData: {name: $scope.requesterName(request)}})
+        vm.requests.splice(index, 1)
+        toastr.success('mno_enterprise.templates.impac.impersonification_notification.approve.success_toastr', {extraData: {name: vm.requesterName(request)}})
       (errors) ->
-        $log.error(errors)
-        toastr.error('mno_enterprise.templates.impac.impersonification_notification.approve.error_toastr', {extraData: {name: $scope.requesterName(request)}})
-    ).finally(-> $scope.isLoading = false)
+        MnoErrorsHandler.processServerError(errors)
+        toastr.error('mno_enterprise.templates.impac.impersonification_notification.approve.error_toastr', {extraData: {name: vm.requesterName(request)}})
+    ).finally(-> vm.isLoading = false)
 
   MnoeUserAccessRequests.list().then(
     (requests) ->
-      $scope.initialize(requests)
+      vm.initialize(requests)
     (errors) ->
-      $log.error(errors)
+      MnoErrorsHandler.processServerError(errors)
   )
 
+  return vm
+
 angular.module 'mnoEnterpriseAngular'
-  .directive('impersonificationNotification', ->
-    return {
-      restrict: 'EA'
-      controller: ImpersonificationNotificationCtrl
-      templateUrl: 'app/components/impersonification-notification/impersonification-notification.html',
-    }
-  )
+  .component('impersonificationNotification', {
+    controller: ImpersonificationNotificationCtrl,
+    controllerAs: 'vm'
+    templateUrl: 'app/components/impersonification-notification/impersonification-notification.html',
+  })

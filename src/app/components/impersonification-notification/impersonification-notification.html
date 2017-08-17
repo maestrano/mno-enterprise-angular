@@ -1,20 +1,19 @@
-<div class="container" ng-show="requests.length > 0">
+<div class="notifications" ng-if="vm.isEnabled && vm.requests.length > 0">
   <div class="row">
     <div class="col-lg-10 col-lg-offset-1">
       <div class="well">
-        <mno-loader ng-show="isLoading" class="top-buffer-3"></mno-loader>
-        <div ng-repeat="request in requests  track by $index" ng-show="!isLoading">
-          <div ng-show="request.status == 'requested'">
-            <p translate translate-value-name="{{requesterName(request)}}">
-              mno_enterprise.templates.impac.impersonification_notification.message</p>
-            <p translate>mno_enterprise.templates.impac.impersonification_notification.accept</p>
-            <button ng-click="denyAccess($index, request)" class="btn btn-primary">
-              <span translate>mno_enterprise.templates.impac.impersonification_notification.no</span>
-            </button>
-            <button ng-click="approveAccess($index, request)" class="btn btn-primary">
-              <span translate>mno_enterprise.templates.impac.impersonification_notification.yes</span>
-            </button>
-          </div>
+        <mno-loader ng-show="vm.isLoading" class="top-buffer-3"></mno-loader>
+        <h3 translate>mno_enterprise.templates.impac.impersonification_notification.title</h3>
+        <div ng-repeat="request in vm.requests track by $index" ng-show="!vm.isLoading">
+          <p translate translate-value-name="{{vm.requesterName(request)}}">
+            mno_enterprise.templates.impac.impersonification_notification.message</p>
+          <p translate>mno_enterprise.templates.impac.impersonification_notification.accept</p>
+          <button ng-click="vm.denyAccess(request, $index)" class="btn btn-primary">
+            <span translate>mno_enterprise.templates.impac.impersonification_notification.no</span>
+          </button>
+          <button ng-click="vm.approveAccess(request, $index)" class="btn btn-primary">
+            <span translate>mno_enterprise.templates.impac.impersonification_notification.yes</span>
+          </button>
         </div>
       </div>
     </div>

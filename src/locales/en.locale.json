@@ -440,6 +440,7 @@
   "mno_enterprise.templates.impac.widgets.invoices_summary.data_being_retrieved": "Your data is being retrieved...",
   "mno_enterprise.templates.impac.widgets.common.data_not_found.data_not_found": "Data not found",
   "mno_enterprise.templates.impac.widgets.common.data_not_found.are_you_missing_an_app": "Are you missing an app ?",
+  "mno_enterprise.templates.impac.impersonification_notification.title": "Access Requests",
   "mno_enterprise.templates.impac.impersonification_notification.message": "{name} has requested access to your account for 24 hours.",
   "mno_enterprise.templates.impac.impersonification_notification.accept": "Do you want to accept this request",
   "mno_enterprise.templates.impac.impersonification_notification.yes": "Yes",
