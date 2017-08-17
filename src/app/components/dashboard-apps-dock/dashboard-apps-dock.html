@@ -22,6 +22,10 @@
           </div>
         </div>
       </li>
+      <li ng-repeat="(key, value) in products" ng-class="{active: isActiveproduct(product.id)}" class="dock-icon">
+        <div class="title" tooltip="{{product.name.length > 14 ? product.name : null}}" tooltip-placement="bottom">{{ value.product_name | truncate:14:"...":true}}</div>
+        <img class="app-logo" ng-src="http://localhost:3000/assets/fallback/default_app_logo-f08ad534dcbbefd196d1556356b2513f175a0af89100ea39ecdae842a364c5b2.jpg">
+      </li>
       <li>
         <div ng-if="isMarketplaceEnabled" class="add-app">
           <a ui-sref="home.marketplace">

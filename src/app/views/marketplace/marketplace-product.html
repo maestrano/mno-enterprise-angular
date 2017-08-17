@@ -1,31 +1,39 @@
-<mno-loader ng-show="vm.isLoading" class="top-buffer-4"></mno-loader>
-<!-- Header -->
-<div class="row show-header top-buffer-4">
-  <div class="col-md-12">
-    <a ui-sref="home.marketplace" class="text-muted">
-      <i class="fa fa-chevron-left"></i> {{ 'mno_enterprise.templates.dashboard.marketplace.show.back' | translate }}
-    </a>
-    <div class="media">
-      <div class="pull-left">
-        <img class="media-object" ng-src="{{vm.product.logo}}" ng-alt="{{vm.product.name}}">
-      </div>
-      <div class="media-body">
-        <h2 class="media-heading">{{vm.product.name}}</h2>
+<div id='product'>
+  <mno-loader ng-show="vm.isLoading" class="top-buffer-4"></mno-loader>
+  <div class="row show-header top-buffer-4">
+    <div class="col-md-12">
+      <a ui-sref="home.marketplace" class="text-muted">
+        <i class="fa fa-chevron-left"></i> {{ 'mno_enterprise.templates.dashboard.marketplace.show.back' | translate }}
+      </a>
+      <div class="media">
+        <div class="pull-left">
+          <img class="media-object" ng-src="{{vm.product.logo}}" ng-alt="{{vm.product.name}}">
+        </div>
+        <div class="media-body">
+          <h2 class="media-heading product-name">{{vm.product.name}}</h2>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<div class="row top-buffer-4">
-  <div ng-repeat="pricing in vm.product.product_pricings">
-    <h4 class="text-center"><b>{{pricing.name}}</b></h4> 
-    <div class="card">
-      <div class="container">
-        <div class="text-center">
-          <p>{{pricing.description}}</p> 
-        </div>
-        <div ng-repeat="price in pricing.prices">
-          <div class="col-md-4">
-            <p>{{price.price_cents}}{{price.currency}}</p>
+  <div class="row top-buffer-4">
+    <div ng-repeat="pricing in vm.product.product_pricings">
+      <h4 class="text-center price-title"><h3><b>{{pricing.name}}</b></h3>
+      <div class="card">
+        <div class="container" ng-mouseover="vm.showButton()" ng-mouseleave="vm.hideButton()">
+          <div class="col-md-2 currencies pull-left">
+            <div ng-repeat="price in pricing.prices">
+              <p>{{price.price_cents}}{{price.currency}}</h4></p>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="text-center price-text">
+              <p><h3>{{pricing.description}}</h3></p> 
+            </div>
+          </div>
+          <div class="col-md-2 pull-right" ng-show="vm.isButtonShown">
+            <div class="pull-right">
+              <i class="fa fa-plus-circle fa-5x" aria-hidden="true" ng-click="vm.getProduct()"></i>
+            </div>
           </div>
         </div>
       </div>
