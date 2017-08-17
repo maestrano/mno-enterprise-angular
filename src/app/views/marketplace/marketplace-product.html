@@ -17,17 +17,22 @@
   </div>
   <div class="row top-buffer-4">
     <div ng-repeat="pricing in vm.product.product_pricings">
-      <h4 class="text-center price-title"><h3><b>{{pricing.name}}</b></h3>
-      <div class="card">
-        <div class="container" ng-mouseover="vm.showButton()" ng-mouseleave="vm.hideButton()">
+      <h3 class="text-center price-title"><b>{{pricing.name}}</b><h3>
+      <div class="card" ng-mouseover="vm.showButton()" ng-mouseleave="vm.hideButton()">
+        <div class="container">
           <div class="col-md-2 currencies pull-left">
             <div ng-repeat="price in pricing.prices">
-              <p>{{price.price_cents}}{{price.currency}}</h4></p>
+              <div ng-show="price.price_cents">
+                <p><h4>{{price.price_cents}}{{price.currency}}</h4></p>
+              </div>
+              <div ng-show="!price.price_cents">
+                <p><h4>FREE!</h4></p>
+              </div>
             </div>
           </div>
           <div class="col-md-8">
             <div class="text-center price-text">
-              <p><h3>{{pricing.description}}</h3></p> 
+              <p><h4>{{pricing.description}}</h4></p> 
             </div>
           </div>
           <div class="col-md-2 pull-right" ng-show="vm.isButtonShown">
