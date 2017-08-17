@@ -14,14 +14,17 @@
     </div>
   </nav>
   <div class="container">
-    <div class="row">
-      <div class="col-md-12" style="height: 300px; margin-top: 100px;">
-        <div uib-carousel active="0" interval="3000">
-          <div uib-slide index="0">
-          <img src="images/main-logo.png">
-          </div>
-          <div uib-slide index="1">
-          <img src="images/main-logo.png">
+    <div class="row highlight-products" style="padding: 0px 50px;">
+      <div class="col-md-12" style="margin-top: 100px;">
+        <div class="well carousel" style="min-height: 400px;">
+          <div uib-carousel active="0" interval="3000">
+            <div uib-slide ng-repeat="app in vm.apps" index="$index">
+              <!-- <img style="height: 400px;" ng-src="{{app.pictures[0]}}"> -->
+              <div class="carousel-image-container">
+                <div ng-style="vm.carouselImage(app)" class="carousel-image"></div>
+                <img class="carousel-logo" ng-src="{{::app.logo}}" ng-alt="{{::app.name}}">
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -54,13 +57,6 @@
 
             <!-- App Cards-->
             <div class="col-sm-6 col-md-4" ng-repeat="app in vm.apps | filter:vm.appsFilter | filter:vm.searchTerm">
-              <div class="marketplace-app-card-checkbox" ng-show="vm.showCompare">
-                <label>
-                  <input type="checkbox"
-                         ng-click="vm.toggleAppToCompare(app)"
-                         ng-model="app.toCompare">
-                </label>
-              </div>
               <a class="marketplace-app-card" ui-sref="home.marketplace.app({appId: app.nid})">
                 <div class="media">
                   <div class="pull-left">

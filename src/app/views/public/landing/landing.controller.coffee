@@ -10,6 +10,11 @@ angular.module 'mnoEnterpriseAngular'
         else
           return _.contains(app.categories, vm.selectedCategory)
 
+      vm.carouselImage = (app) ->
+        {
+          "background-image": "url(#{app.pictures[0]})"
+        }
+
       MnoeMarketplace.getApps().then(
         (response) ->
           vm.apps = response.apps
