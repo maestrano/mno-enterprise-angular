@@ -13,8 +13,8 @@ angular.module 'mnoEnterpriseAngular'
       MnoeOrganizations.get().then(->
         MnoeFullApiSvc
           .one('organizations', MnoeOrganizations.getSelectedId())
-          .one('notifications')
-          .post('/notified', params)
+          .all('notifications')
+          .doPOST(params, '/notified')
       )
 
     return @
