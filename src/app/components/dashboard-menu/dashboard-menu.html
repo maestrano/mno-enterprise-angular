@@ -36,8 +36,8 @@
         <a ui-sref="home.account" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.my_account' | translate }}</a>
       </li>
 
-      <li>
-        <a ng-if="isTasksEnabled" ui-sref="home.messages" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.messages' | translate }}</a>
+      <li ng-if="isTasksEnabled">
+        <a ui-sref="home.messages" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.messages' | translate }}</a>
       </li>
 
       <li ng-if="isOrganizationManagementEnabled">

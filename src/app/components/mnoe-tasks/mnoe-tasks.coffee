@@ -2,7 +2,7 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
   bindings: {
   },
   templateUrl: 'app/components/mnoe-tasks/mnoe-tasks.html',
-  controller: ($filter, $uibModal, $log, $translate, $timeout, $q, toastr, MnoeTasks, MnoeCurrentUser)->
+  controller: ($filter, $uibModal, $translate, $timeout, $q, toastr, MnoErrorsHandler, MnoeTasks, MnoeCurrentUser)->
     ctrl = this
     ctrl.$onInit = ->
       ctrl.tasks = {
@@ -136,7 +136,7 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
           ctrl.tasks.totalItems = response.headers('x-total-count')
           ctrl.tasks.list
         (errors)->
-          $log.error(errors)
+          MnoErrorsHandler.processServerError(errors)
           toastr.error('mno_enterprise.templates.components.mnoe-tasks.toastr_error.get_tasks')
           return
       ).finally(->
@@ -151,7 +151,7 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
         ->
           fetchTasks()
         (errors)->
-          $log.error(errors)
+          MnoErrorsHandler.processServerError(errors)
           toastr.error('mno_enterprise.templates.components.mnoe-tasks.toastr_error.create_task')
           return
       )
@@ -161,7 +161,7 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
         (updatedTask)->
           angular.extend(task, updatedTask)
         (errors)->
-          $log.error(errors)
+          MnoErrorsHandler.processServerError(errors)
           toastr.error('mno_enterprise.templates.components.mnoe-tasks.toastr_error.update_task')
           return
       )
@@ -174,7 +174,7 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
         (response)->
           angular.extend(task, response)
         (errors)->
-          $log.error(errors)
+          MnoErrorsHandler.processServerError(errors)
           toastr.error('mno_enterprise.templates.components.mnoe-tasks.toastr_error.update_task')
           # Revert to previous state, as unchecked or checked on update fail
           task.markedDone = !task.markedDone
