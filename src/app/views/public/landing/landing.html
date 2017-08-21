@@ -19,11 +19,12 @@
         <div class="well carousel" style="min-height: 400px;">
           <div uib-carousel active="0" interval="3000">
             <div uib-slide ng-repeat="app in vm.apps" index="$index">
-              <!-- <img style="height: 400px;" ng-src="{{app.pictures[0]}}"> -->
-              <div class="carousel-image-container">
-                <div ng-style="vm.carouselImage(app)" class="carousel-image"></div>
-                <img class="carousel-logo" ng-src="{{::app.logo}}" ng-alt="{{::app.name}}">
-              </div>
+              <a ui-sref="product({productId: app.nid})">
+                <div class="carousel-image-container">
+                  <div ng-style="vm.carouselImage(app)" class="carousel-image"></div>
+                  <img class="carousel-logo" ng-src="{{::app.logo}}" ng-alt="{{::app.name}}">
+                </div>
+              </a>
             </div>
           </div>
         </div>
