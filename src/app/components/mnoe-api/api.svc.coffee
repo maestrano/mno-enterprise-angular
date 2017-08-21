@@ -1,7 +1,7 @@
 angular.module 'mnoEnterpriseAngular'
-  .factory 'MnoeApiSvc', (Restangular, inflector) ->
+  .factory 'MnoeApiSvc', (Restangular, inflector, URI) ->
     return Restangular.withConfig((RestangularProvider) ->
-      RestangularProvider.setBaseUrl('/mnoe/jpi/v1')
+      RestangularProvider.setBaseUrl(URI.api_root)
       RestangularProvider.setDefaultHeaders({Accept: "application/json"})
       # Unwrap api response
       RestangularProvider.addResponseInterceptor(

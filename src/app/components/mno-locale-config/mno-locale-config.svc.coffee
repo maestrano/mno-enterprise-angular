@@ -2,8 +2,8 @@ angular.module 'mnoEnterpriseAngular'
   # This service is used to manage the configuration of $translate
   .service('MnoLocaleConfigSvc', (
     $q, $window, $translate,
-    MnoeCurrentUser,
-    I18N_CONFIG, LOCALES
+    MnoeApiSvc, MnoeFullApiSvc, MnoeCurrentUser,
+    I18N_CONFIG, LOCALES, URI
   ) ->
 
     # TODO: do we want to edit the URL when getting the language from the user?
@@ -19,6 +19,10 @@ angular.module 'mnoEnterpriseAngular'
     setLocale = (locale) ->
       setFallbackStack(locale)
       $translate.use(locale)
+
+      api_root = "/#{locale}#{URI.api_root}"
+      MnoeApiSvc.setBaseUrl(api_root)
+      MnoeFullApiSvc.setBaseUrl(api_root)
 
     # Try to determine the locale from the URL
     localeFromUrl = ->
