@@ -1,22 +1,19 @@
 angular.module 'mnoEnterpriseAngular'
+  # This service is used to manage the configuration of $translate
   .service('MnoLocaleConfigSvc', (
-    $window, $translate,
+    $q, $window, $translate,
     MnoeCurrentUser,
     I18N_CONFIG, LOCALES
   ) ->
 
+    # TODO: do we want to edit the URL when getting the language from the user?
     @configure = ->
-      if l = localeFromUrl()
-        console.log("Using locale from URL")
-        return setLocale(l)
-
-      # TODO: do we want to edit the URL
-      # when getting the language from the user?
-      MnoeCurrentUser.get().then(
-        ->
-          if l = localeFromUser()
-            console.log("Using locale from User")
+      $q.all(url: localeFromUrl(), user: localeFromUser()).then(
+        (response) ->
+          if l = response.url || response.use
             setLocale(l)
+          else
+            setFallbackStack($translate.use())
       )
 
     setLocale = (locale) ->
@@ -33,11 +30,17 @@ angular.module 'mnoEnterpriseAngular'
       found = path.match(re)
 
       # Ex found: ["/en/dashboard/", "en", index: 0, input: "/en/dashboard/"]
-      return found[1] if found?
+      locale = found[1] if found?
+
+      $q.resolve(locale)
+
 
     # Find the locale from the User#settings
     localeFromUser = ->
-      MnoeCurrentUser.user.settings?.locale
+      MnoeCurrentUser.get().then(
+        (response) ->
+          response.settings?.locale
+      )
 
     # Build our fallback stack manually to be ['language', preferredLanguage, LOCALES.fallbackLanguage]
     # eg: If the detected locale is 'fr-FR' and the preferred language 'en-GB', the fallback stack is
