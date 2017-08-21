@@ -1,0 +1,120 @@
+#public {
+  .navbar {
+    padding-left: 10px;
+    max-height: 75px;
+    min-width: 405px;
+    background-color: @landing-nav-bg-color;
+  }
+
+  .carousel-image-container {
+    height: 360px;
+    text-align: center;
+    position: relative;
+
+    .carousel-image {
+      background-size: cover;
+      height: 100%;
+      width: 100%;
+      filter: blur(5px);
+    }
+
+    .carousel-logo {
+      border-radius: 50%;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      margin: auto;
+    }
+  }
+
+  .nav-logo {
+    background-image: url('images/main-logo.png');
+    background-size: cover;
+    @landing-nav-logo();
+  }
+
+  .navbar-brand {
+    @landing-nav-title();
+    color: @landing-nav-title-text-color;
+  }
+
+  .links {
+    overflow: hidden;
+    height: 55px;
+    padding-top: 20px;
+    padding-right: 20px;
+
+    a {
+      margin-left: 15px;
+      .z-depth(3);
+    }
+  }
+
+  .product-content {
+    padding: 50px 50px 0 50px;
+  }
+
+  .marketplace-nav {
+    input.form-control {
+      color: @landing-marketplace-search-text-color;
+      border: 1px solid @landing-marketplace-search-border-color;
+    }
+  }
+
+  .marketplace-app-card {
+    @landing-marketplace-app-card();
+    background-color: @landing-marketplace-tile-bg-color;
+
+    &:hover {
+      background-color: @landing-marketplace-tile-hover-bg-color;
+    }
+
+    .media {
+      .media-body {
+        color: @landing-marketplace-tile-text-color;
+
+        &:hover {
+          color: @landing-marketplace-tile-hover-text-color;
+        }
+      }
+      .media-heading {
+        color: @landing-marketplace-tile-name-color;
+
+        &:hover {
+          color: @landing-marketplace-tile-hover-name-color;
+        }
+      }
+
+      .arrow {
+        color: @landing-marketplace-tile-hover-arrow-color;
+      }
+
+      img.media-object {
+        border: 1px solid @landing-marketplace-tile-img-border-color;
+
+        &:hover {
+          border: 1px solid @landing-marketplace-tile-hover-img-border-color;
+        }
+      }
+    }
+  }
+
+  .product-content {
+    .media {
+      .media-body {
+        h2.media-heading {
+          color: @public-marketplace-show-header-text-color;
+        }
+      }
+    }
+
+    .show-content {
+      .well {
+        background-color: @public-marketplace-show-sections-bg-color;
+        color: @public-marketplace-show-sections-text-color;
+      }
+    }
+  }
+}
