@@ -34,8 +34,7 @@ ImpersonificationNotificationCtrl = (toastr, MnoErrorsHandler, MnoeConfig, MnoeU
     ).finally(-> vm.isLoading = false)
 
   MnoeUserAccessRequests.list().then(
-    (requests) ->
-      vm.initialize(requests)
+    vm.initialize
     (errors) ->
       MnoErrorsHandler.processServerError(errors)
   )
