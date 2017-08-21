@@ -12,11 +12,5 @@ angular.module 'mnoEnterpriseAngular'
     appInstancesKey: 'appInstancesV2'
   })
   .constant('LOCALES', {
-    'locales': [
-      { id: 'en', name: 'English', flag: '' },
-      { id: 'id', name: 'Indonesian', flag: '' },
-      { id: 'zh', name: 'Chinese (Singapore)', flag: '' }
-    ],
-    'preferredLocale': 'en',
     'fallbackLanguage': 'en'
   })
