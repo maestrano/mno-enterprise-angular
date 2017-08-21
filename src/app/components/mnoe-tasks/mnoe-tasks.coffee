@@ -20,7 +20,7 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
       }
       ctrl.menus = [
         { label: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.menus.inbox'), name: 'inbox', selected: true }
-        { label: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.menus.sent'), name: 'sent', query: { 'where[status][]': 'sent', outbox: true } }
+        { label: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.menus.sent'), name: 'sent', query: { 'where[status.ne][]': 'draft', outbox: true } }
         { label: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.menus.draft'), name: 'draft', query: { 'where[status][]': 'draft', outbox: true } }
       ]
       ctrl.tasksFilters = [
