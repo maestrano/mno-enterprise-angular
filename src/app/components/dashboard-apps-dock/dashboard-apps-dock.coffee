@@ -1,5 +1,5 @@
 
-DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, $q, MnoeOrganizations, MnoeAppInstances, MnoeProductInstances, MnoeConfig) ->
+DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, $q, MnoeOrganizations, MnoeAppInstances, MnoeProducts, MnoeConfig) ->
   'ngInject'
 
   $scope.appDock = {}
@@ -113,7 +113,7 @@ DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, $q, MnoeOrganizat
       $scope.isLoading = true
       $q.all({
         appInstances: MnoeAppInstances.getAppInstances()
-        productInstances: MnoeProductInstances.getProductInstances()
+        productInstances: MnoeProducts.getProductInstances()
         }).then(
           (response) ->
             $scope.apps = response.appInstances

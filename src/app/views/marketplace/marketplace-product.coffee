@@ -2,7 +2,7 @@
 #     Marketplace product
 #============================================
 angular.module 'mnoEnterpriseAngular'
-  .controller('MarketplaceProductCtrl',($stateParams, $state, MnoeMarketplace, MnoeProductInstances) ->
+  .controller('MarketplaceProductCtrl',($stateParams, $state, MnoeMarketplace) ->
 
     vm = this
 
@@ -16,10 +16,7 @@ angular.module 'mnoEnterpriseAngular'
     vm.hideButton = () ->
       vm.isButtonShown = false
 
-    vm.getProduct = () ->
-      MnoeProductInstances.addProductInstance(vm.product.id).then(
-        (response) ->
-      ).finally(-> $state.go('home.impac'))
+    vm.subscribeToProduct = () ->
 
     MnoeMarketplace.getProduct($stateParams.productId).then(
       (response) ->

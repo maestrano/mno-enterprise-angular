@@ -9,7 +9,7 @@ angular.module 'mnoEnterpriseAngular'
       view: '@'
     }
 
-    controller: (MnoeMarketplace) ->
+    controller: (MnoeProvisioning) ->
 
       vm = this
       vm.isLoading = true
@@ -17,7 +17,7 @@ angular.module 'mnoEnterpriseAngular'
       #====================================
       # Initialization
       #====================================
-      MnoeMarketplace.getProducts().then(
+      MnoeProvisioning.getProducts().then(
         (response) ->
           response = response.plain()
           vm.products = response.products
