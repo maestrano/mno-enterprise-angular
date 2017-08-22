@@ -100,6 +100,33 @@ angular.module 'mnoEnterpriseAngular'
         $log.debug("DASHBOARD_CONFIG.provisioning.enabled missing")
         false
 
+    @arePublicPagesEnabled = () ->
+      if DASHBOARD_CONFIG.public_pages?.enabled?
+        DASHBOARD_CONFIG.public_pages.enabled
+      else
+        $log.debug("DASHBOARD_CONFIG.public_pages.enabled missing")
+        false
+
+    @isPublicPricingEnabled = () ->
+      if DASHBOARD_CONFIG.public_pages?.display_pricing?
+        DASHBOARD_CONFIG.public_pages.display_pricing
+      else
+        $log.debug("DASHBOARD_CONFIG.public_pricing.display_pricing missing")
+
+    @publicApplications = () ->
+      if DASHBOARD_CONFIG.public_pages?.applications?
+        DASHBOARD_CONFIG.public_pages.applications
+      else
+        $log.debug("DASHBOARD_CONFIG.public_pages.applications missing")
+        []
+
+    @publicHighlightedApplications = () ->
+      if DASHBOARD_CONFIG.public_pages?.highlighted_applications?
+        DASHBOARD_CONFIG.public_pages.highlighted_applications
+      else
+        $log.debug("DASHBOARD_CONFIG.public_pages.highlighted_applications missing")
+        []
+
     @isUserManagementEnabled = () ->
       if DASHBOARD_CONFIG.user_management?.enabled?
         DASHBOARD_CONFIG.user_management.enabled

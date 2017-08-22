@@ -1,6 +1,9 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('LandingCtrl',
-    ($scope, $rootScope, $state, $stateParams, MnoeMarketplace) ->
+    ($scope, $rootScope, $state, $stateParams, $window, MnoeConfig, MnoeMarketplace, URI) ->
+      unless MnoeConfig.arePublicPagesEnabled()
+        $window.location = URI.login
+
       vm = @
       $rootScope.publicPage = true
 
@@ -17,7 +20,8 @@ angular.module 'mnoEnterpriseAngular'
 
       MnoeMarketplace.getApps().then(
         (response) ->
-          vm.apps = response.apps
+          vm.apps = _.filter(response.apps, (app) -> _.includes(MnoeConfig.publicApplications(), app.name))
+          vm.highlightedApps = _.filter(response.apps, (app) -> _.includes(MnoeConfig.publicHighlightedApplications(), app.name))
           vm.categories = response.categories
       )
 

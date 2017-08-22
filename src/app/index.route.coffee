@@ -188,13 +188,13 @@ angular.module 'mnoEnterpriseAngular'
           controllerAs: 'vm'
 
     $urlRouterProvider.otherwise ($injector, $location) ->
-      # placeholder: landingEnabled will be set via settings in the admin panel
-      landingEnabled = true
+      MnoeConfig = $injector.get('MnoeConfig')
       MnoeCurrentUser = $injector.get('MnoeCurrentUser')
-      if !MnoeCurrentUser.get() && landingEnabled
+
+      if !MnoeCurrentUser.get() && MnoeConfig.arePublicPagesEnabled()
         $location.url('/landing')
 
-      unless $injector.get('MnoeConfig').isOnboardingWizardEnabled()
+      unless MnoeConfig.isOnboardingWizardEnabled()
         $location.url('/impac')
         return
 

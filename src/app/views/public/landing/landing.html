@@ -18,7 +18,7 @@
       <div class="col-md-12 carousel-container">
         <div class="well carousel">
           <div uib-carousel active="0" interval="3000">
-            <div uib-slide ng-repeat="app in vm.apps" index="$index">
+            <div uib-slide ng-repeat="app in vm.highlightedApps" index="$index">
               <a ui-sref="product({productId: app.nid})">
                 <div class="carousel-image-container">
                   <div ng-style="vm.carouselImage(app)" class="carousel-image"></div>

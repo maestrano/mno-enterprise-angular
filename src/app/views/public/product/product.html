@@ -28,7 +28,7 @@
             <h2 class="media-heading">{{vm.app.name}}</h2>
           </div>
           <div class="app-rating pull-left">
-            <div >
+            <div ng-show="vm.isRateDisplayed">
               <average-star-rating ng-model="vm.averageRating" display-rating="true" max="5"></average-star-rating>
             </div>
           </div>
