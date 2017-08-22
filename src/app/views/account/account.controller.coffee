@@ -1,6 +1,6 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('DashboardAccountCtrl',
-    ($log, $timeout, toastr, MnoeCurrentUser, MnoErrorsHandler, Miscellaneous, Utilities, I18N_CONFIG, MnoeConfig) ->
+    ($log, $timeout, toastr, MnoeCurrentUser, MnoeUserAccessRequests, MnoErrorsHandler, Miscellaneous, Utilities, I18N_CONFIG, MnoeConfig) ->
 
       vm = @
       # Scope init
@@ -103,6 +103,46 @@ angular.module 'mnoEnterpriseAngular'
       vm.isSecretKeyRevealed = false
       vm.user.switchSecretKey = ->
         vm.isSecretKeyRevealed = !vm.isSecretKeyRevealed
+
+      # ----------------------------------------------------
+      #  Authorize Admin Access Section
+      # ----------------------------------------------------
+      vm.isAuthorizeAdminAccessVisible = MnoeConfig.isImpersonationConsentRequired()
+      vm.isAuthorizeAdminAccessOpen = false
+      vm.access_duration = '24_HOURS'
+      if vm.isAuthorizeAdminAccessVisible
+        MnoeUserAccessRequests.last_access_request().then(
+          (last_access_request) ->
+            vm.user.last_access_request = last_access_request
+        )
+
+      vm.user.authorizationActive = ->
+        vm.user.last_access_request && vm.user.last_access_request.current_status == 'approved'
+
+      vm.user.authorizeAccess = ->
+        vm.user.loading = true
+        MnoeUserAccessRequests.create({access_duration: vm.access_duration}).then(
+          (last_access_request) ->
+            vm.user.last_access_request = last_access_request
+            # Success message
+            toastr.success('mno_enterprise.templates.dashboard.account.authorize.success_toastr')
+            (error) ->
+              toastr.error('mno_enterprise.templates.dashboard.account.authorize.error_toastr')
+              MnoErrorsHandler.processServerError(error)
+        ).finally( -> vm.user.loading = false )
+
+      vm.user.revokeAccess = ->
+        vm.user.loading = true
+        MnoeUserAccessRequests.revoke(vm.user.last_access_request.id).then(
+          (last_access_request) ->
+            vm.user.last_access_request = last_access_request
+            # Success message
+            toastr.success('mno_enterprise.templates.dashboard.account.revoke.success_toastr')
+            (error) ->
+              toastr.error('mno_enterprise.templates.dashboard.account.revoke.error_toastr')
+              MnoErrorsHandler.processServerError(error)
+          ).finally( -> vm.user.loading = false )
+
 
       # ----------------------------------------------------
       # Account Deletion
