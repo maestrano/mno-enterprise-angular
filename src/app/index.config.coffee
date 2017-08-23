@@ -53,7 +53,7 @@ angular.module 'mnoEnterpriseAngular'
       files: [
         {
           prefix: 'locales/',
-          suffix: '.locale.json'
+          suffix: '.json'
         }
       ]
     }
