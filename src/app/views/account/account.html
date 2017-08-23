@@ -161,7 +161,7 @@
         <p ng-if="vm.user.last_access_request.expiration_date">{{'mno_enterprise.templates.dashboard.account.access_granted_until_expired' | translate}} <span>{{vm.user.last_access_request.expiration_date | date : format : timezone}}</span>
         </p>
         <p ng-if="!vm.user.last_access_request.expiration_date" translate>mno_enterprise.templates.dashboard.account.access_granted_until_revoked</p>
-        <button class='btn btn-warning' ng-click="vm.user.revokeAccess()" translate>mno_enterprise.templates.dashboard.account.revoke</button>
+        <button class='btn btn-warning' ng-click="vm.user.revokeAccess()" translate>mno_enterprise.templates.dashboard.account.revoke.action</button>
       </div>
 
       <form ng-if="!vm.user.authorizationActive()">
@@ -172,7 +172,7 @@
         <label><input type="radio" ng-model="vm.access_duration" value="UNTIL_REVOKED">
           {{'mno_enterprise.templates.dashboard.account.until_revoke' | translate}}
         </label><br/>
-        <button class='btn btn-warning' ng-click="vm.user.authorizeAccess()" translate>mno_enterprise.templates.dashboard.account.authorize</button>
+        <button class='btn btn-warning' ng-click="vm.user.authorizeAccess()" translate>mno_enterprise.templates.dashboard.account.authorize.action</button>
       </form>
     </div>
 
