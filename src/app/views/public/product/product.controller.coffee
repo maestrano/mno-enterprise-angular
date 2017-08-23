@@ -1,10 +1,9 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('LandingProductCtrl',
     ($scope, $rootScope, $state, $stateParams, $window, MnoeConfig, MnoeMarketplace) ->
-      unless MnoeConfig.arePublicPagesEnabled()
-        $window.location = URI.login
 
       vm = @
+      vm.isLoading = true
       vm.averageRating = 5
       vm.isPriceShown = MnoeConfig.isPublicPricingEnabled()
       $rootScope.publicPage = true
@@ -17,8 +16,8 @@ angular.module 'mnoEnterpriseAngular'
         (response) ->
           vm.app = MnoeMarketplace.findApp($stateParams.productId)
           vm.averageRating = vm.app.average_rating
-          vm.isRateDisplayed = vm.averageRating >= 0
-      )
+          vm.isRateDisplayed = vm.averageRating ? vm.averageRating >= 0 : false
+      ).finally(-> vm.isLoading = false)
 
       return
   )

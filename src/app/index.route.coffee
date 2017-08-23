@@ -2,28 +2,29 @@ angular.module 'mnoEnterpriseAngular'
   .config ($stateProvider, $urlRouterProvider, URI, I18N_CONFIG, MnoeConfigProvider) ->
 
     $stateProvider
-      .state 'landing',
+      .state 'public',
+        data:
+          pageTitle:'Public'
+        abstract: true
+        url: '?dhbRefId'
+        templateUrl: 'app/views/public/public.html'
+        controller: 'PublicController'
+        controllerAs: 'layout'
+        public: true
+        onExit: ($rootScope) ->
+          $rootScope.publicPage = false
+      .state 'public.landing',
         url: '/landing'
         templateUrl: 'app/views/public/landing/landing.html'
         controller: 'LandingCtrl'
         controllerAs: 'vm'
         public: true
-        resolve:
-          skipIfLoggedIn: (MnoeCurrentUser) ->
-            MnoeCurrentUser.skipIfLoggedIn()
-        onExit: ($rootScope) ->
-          $rootScope.publicPage = false
-      .state 'product',
+      .state 'public.product',
         url: '/product/:productId'
         templateUrl: 'app/views/public/product/product.html'
         controller: 'LandingProductCtrl'
         controllerAs: 'vm'
         public: true
-        resolve:
-          skipIfLoggedIn: (MnoeCurrentUser) ->
-            MnoeCurrentUser.skipIfLoggedIn()
-        onExit: ($rootScope) ->
-          $rootScope.publicPage = false
       .state 'home',
         data:
           pageTitle:'Home'
