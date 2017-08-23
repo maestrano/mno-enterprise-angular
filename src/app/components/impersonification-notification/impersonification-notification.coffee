@@ -4,10 +4,6 @@ ImpersonificationNotificationCtrl = (toastr, MnoErrorsHandler, MnoeConfig, MnoeU
   vm.isEnabled = MnoeConfig.isImpersonationConsentRequired()
   vm.isLoading = true
 
-  vm.initialize = (result) ->
-    vm.requests = result
-    vm.isLoading = false
-
   vm.requesterName = (request) ->
     request.requester.name + ' ' + request.requester.surname
 
@@ -34,7 +30,9 @@ ImpersonificationNotificationCtrl = (toastr, MnoErrorsHandler, MnoeConfig, MnoeU
     ).finally(-> vm.isLoading = false)
 
   MnoeUserAccessRequests.list().then(
-    vm.initialize
+    (result) ->
+      vm.requests = result
+      vm.isLoading = false
     (errors) ->
       MnoErrorsHandler.processServerError(errors)
   )
