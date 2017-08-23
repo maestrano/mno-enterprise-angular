@@ -1,10 +1,6 @@
 angular.module 'mnoEnterpriseAngular'
   # This service is used to manage the configuration of $translate
-  .service('MnoLocaleConfigSvc', (
-    $q, $window, $translate,
-    MnoeApiSvc, MnoeFullApiSvc, MnoeCurrentUser,
-    I18N_CONFIG, LOCALES, URI
-  ) ->
+  .service('MnoLocaleConfigSvc', ($q, $window, $translate, MnoeApiSvc, MnoeFullApiSvc, MnoeCurrentUser, I18N_CONFIG, LOCALES, URI) ->
 
     # TODO: do we want to edit the URL when getting the language from the user?
     @configure = ->
@@ -37,7 +33,6 @@ angular.module 'mnoEnterpriseAngular'
       locale = found[1] if found?
 
       $q.resolve(locale)
-
 
     # Find the locale from the User#settings
     localeFromUser = ->

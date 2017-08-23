@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller 'LayoutController', ($scope, $stateParams, $state, $q, MnoeCurrentUser, MnoeOrganizations, $translate, $rootScope) ->
+  .controller 'LayoutController', ($scope, $stateParams, $state, $q, MnoeCurrentUser, MnoeOrganizations) ->
     'ngInject'
 
     # Impac! is displayed only to admin and super admin
@@ -15,26 +15,5 @@ angular.module 'mnoEnterpriseAngular'
               $state.go('home.apps')
       ) if newValue?
     )
-
-    translateUI = () ->
-      $translate('language').then(
-        (translation) ->
-          $scope.language = translation
-        (translationId) ->
-          $scope.language = translationId
-      )
-
-    $rootScope.$on('$translateChangeSuccess', () ->
-      console.log("Locale changed")
-      translateUI()
-    )
-    translateUI()
-
-    $scope.translate = $translate
-    $scope.locale = $translate.use()
-
-    $scope.changeLocale = (locale) ->
-      console.log("changing locale to:", locale)
-      $translate.use(locale)
 
     return
