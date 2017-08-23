@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .factory 'MnoeConfig', ($log, DASHBOARD_CONFIG) ->
+  .factory 'MnoeConfig', ($log, DASHBOARD_CONFIG, ADMIN_PANEL_CONFIG) ->
     _self = @
 
     @isAuditLogEnabled = () ->
@@ -106,5 +106,11 @@ angular.module 'mnoEnterpriseAngular'
       else
         $log.debug("DASHBOARD_CONFIG.user_management.enabled missing")
         true
+
+    @isImpersonationConsentRequired = () ->
+      if ADMIN_PANEL_CONFIG.impersonation?.consent_required?
+        ADMIN_PANEL_CONFIG.impersonation.consent_required
+      else
+        false
 
     return @

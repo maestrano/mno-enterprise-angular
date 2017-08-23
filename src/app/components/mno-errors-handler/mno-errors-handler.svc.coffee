@@ -4,8 +4,9 @@ angular.module 'mnoEnterpriseAngular'
     mnoErrorHandler = {}
 
     errorCache = null
-
     mnoErrorHandler.processServerError = (serverError, form) ->
+      $log.error('An error occurred:', serverError)
+      return unless form
       return if _.startsWith(serverError.data, '<!DOCTYPE html>')
       if 400 <= serverError.status <= 499 # Error in the request
         # Save the errors object in the scope

@@ -150,6 +150,33 @@
     </div>
 
     <!--
+      Authorize Admin Access Section
+    -->
+    <div uib-accordion-group ng-if="vm.isAuthorizeAdminAccessVisible" is-open="vm.isAuthorizeAdminAccessOpen">
+      <div uib-accordion-heading translate>
+        {{ 'mno_enterprise.templates.dashboard.account.admin_access_to_your_account' | translate }}
+        <span class="fa pull-right" ng-class="{'fa-caret-down': !vm.isAuthorizeAdminAccessOpen, 'fa-caret-up': vm.isAuthorizeAdminAccessOpen}"></span>
+      </div>
+      <div ng-if="vm.user.authorizationActive()">
+        <p ng-if="vm.user.last_access_request.expiration_date">{{'mno_enterprise.templates.dashboard.account.access_granted_until_expired' | translate}} <span>{{vm.user.last_access_request.expiration_date | date : format : timezone}}</span>
+        </p>
+        <p ng-if="!vm.user.last_access_request.expiration_date" translate>mno_enterprise.templates.dashboard.account.access_granted_until_revoked</p>
+        <button class='btn btn-warning' ng-click="vm.user.revokeAccess()" translate>mno_enterprise.templates.dashboard.account.revoke</button>
+      </div>
+
+      <form ng-if="!vm.user.authorizationActive()">
+        <p translate>mno_enterprise.templates.dashboard.account.authorize_admin_access</p>
+        <label><input type="radio" ng-model="vm.access_duration" value="24_HOURS">
+          {{'mno_enterprise.templates.dashboard.account.twenty_four_hours' | translate}}
+        </label><br/>
+        <label><input type="radio" ng-model="vm.access_duration" value="UNTIL_REVOKED">
+          {{'mno_enterprise.templates.dashboard.account.until_revoke' | translate}}
+        </label><br/>
+        <button class='btn btn-warning' ng-click="vm.user.authorizeAccess()" translate>mno_enterprise.templates.dashboard.account.authorize</button>
+      </form>
+    </div>
+
+    <!--
       Account Deletion Section
       (Removed: cf. git log)
       -->
