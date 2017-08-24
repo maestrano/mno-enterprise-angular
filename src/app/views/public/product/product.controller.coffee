@@ -6,7 +6,6 @@ angular.module 'mnoEnterpriseAngular'
       vm.isLoading = true
       vm.averageRating = 5
       vm.isPriceShown = MnoeConfig.isPublicPricingEnabled()
-      $rootScope.publicPage = true
 
       # Check that the testimonial is not empty
       vm.isTestimonialShown = (testimonial) ->

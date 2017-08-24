@@ -3,23 +3,26 @@ angular.module 'mnoEnterpriseAngular'
 
     $stateProvider
       .state 'public',
-        data:
-          pageTitle:'Public'
         abstract: true
-        url: '?dhbRefId'
         templateUrl: 'app/views/public/public.html'
         controller: 'PublicController'
         controllerAs: 'layout'
         public: true
+        onEnter: ($rootScope) ->
+          $rootScope.publicPage = true
         onExit: ($rootScope) ->
           $rootScope.publicPage = false
       .state 'public.landing',
+        data:
+          pageTitle: "Webstore Preview"
         url: '/landing'
         templateUrl: 'app/views/public/landing/landing.html'
         controller: 'LandingCtrl'
         controllerAs: 'vm'
         public: true
       .state 'public.product',
+        data:
+          pageTitle: "Product Preview"
         url: '/product/:productId'
         templateUrl: 'app/views/public/product/product.html'
         controller: 'LandingProductCtrl'

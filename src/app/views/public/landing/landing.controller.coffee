@@ -4,7 +4,6 @@ angular.module 'mnoEnterpriseAngular'
 
       vm = @
       vm.isLoading = true
-      $rootScope.publicPage = true
 
       vm.appsFilter = (app) ->
         if (vm.searchTerm? && vm.searchTerm.length > 0) || !vm.selectedCategory
@@ -12,7 +11,7 @@ angular.module 'mnoEnterpriseAngular'
         else
           return _.contains(app.categories, vm.selectedCategory)
 
-      vm.carouselImage = (app) ->
+      vm.carouselImageStyle = (app) ->
         {
           "background-image": "url(#{app.pictures[0]})"
         }
