@@ -12,10 +12,17 @@
 @icon-font-path: '../../bower_components/bootstrap/fonts/';
 @fa-font-path: '../../bower_components/font-awesome/fonts';
 
-html, body {
+html {
   height: 100%;
 }
 
+body {
+  height: 100%;
+
+  &.translate-cloak {
+    opacity: 0;
+  }
+}
 .browsehappy {
   margin: 0.2em 0;
   background: #ccc;
