@@ -33,7 +33,7 @@
     "ng-page-title": "^1.1.1",
     "restangular": "~1.5.1",
     "material-shadows": "^3.0.1",
-    "angular-schema-form": "^0.8.13",
+    "angular-schema-form": "^1.0.0-alpha.4",
     "angular-schema-form-bootstrap": "^0.2.0",
     "angular-filter": "^0.5.16",
     "mno-ui-elements": "maestrano/mno-ui-elements#master"
