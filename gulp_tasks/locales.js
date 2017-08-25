@@ -1,5 +1,5 @@
 const gulp = require('gulp');
-const fs = require('fs');
+const glob = require('glob');
 const path = require('path');
 const merge = require('merge-stream');
 const merge_json = require('gulp-merge-json');
@@ -9,19 +9,16 @@ const localesPath = 'bower_components/impac-angular/dist/locales/';
 
 // Return a list of locales file from a folder
 function getLocales(dir) {
-  return fs.readdirSync(dir)
-    .filter(function(file) {
-      return file.substr(-5) === '.json';
-    });
+  return glob.sync("*.json", {cwd: dir});
 }
 
-// Append their locale to our locale
-function mergeLocales(our, their) {
+// Append remote locale to main locale
+function mergeLocales(main, remote) {
   return gulp.src([
-    conf.path.src('locales/', our),
-    path.join(localesPath, their)
+    conf.path.src('locales/', main),
+    path.join(localesPath, remote)
   ], {allowEmpty: true})
-    .pipe(merge_json({fileName: our}))
+    .pipe(merge_json({fileName: main}))
     .pipe(gulp.dest(conf.path.tmp('locales')))
 }
 
@@ -31,7 +28,8 @@ function locales() {
   var locales = getLocales(localesPath);
 
   // Executes the function once per file and returns the async stream
-  // This will append 'en-AU.json' to 'en-AU.json'
+  // This will append 'impac/dist/locacles/en-AU.json' to 'src/locales/en-AU.json'
+  // and save it to 'tmp/locales/en-AU.json'
   var tasks = locales.map(function(file) {
     return mergeLocales(file, file)
   });
