@@ -195,7 +195,7 @@ angular.module 'mnoEnterpriseAngular'
       MnoeConfig = $injector.get('MnoeConfig')
       MnoeCurrentUser = $injector.get('MnoeCurrentUser')
 
-      if !MnoeCurrentUser.get() && MnoeConfig.arePublicPagesEnabled()
+      if !MnoeCurrentUser.get() && MnoeConfig.arePublicApplicationsEnabled()
         $location.url('/landing')
 
       unless MnoeConfig.isOnboardingWizardEnabled()

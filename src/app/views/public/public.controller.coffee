@@ -5,7 +5,7 @@ angular.module 'mnoEnterpriseAngular'
     layout = @
     layout.links = URI
 
-    $window.location = URI.login unless MnoeConfig.arePublicPagesEnabled()
+    $window.location = URI.login unless MnoeConfig.arePublicApplicationsEnabled()
 
     MnoeCurrentUser.get().then(
       (response) ->

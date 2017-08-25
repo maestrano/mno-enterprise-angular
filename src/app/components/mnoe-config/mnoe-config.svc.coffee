@@ -100,7 +100,7 @@ angular.module 'mnoEnterpriseAngular'
         $log.debug("DASHBOARD_CONFIG.provisioning.enabled missing")
         false
 
-    @arePublicPagesEnabled = () ->
+    @arePublicApplicationsEnabled = () ->
       if DASHBOARD_CONFIG.public_pages?.enabled?
         DASHBOARD_CONFIG.public_pages.enabled
       else
