@@ -27,7 +27,7 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
         { name: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks_filters.all_tasks_and_msgs') }
         { name: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks_filters.all_tasks'), query: { 'where[due_date.ne]': '' } }
         { name: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks_filters.all_messages'), query: { 'where[due_date.eq]': '' } }
-        { name: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks_filters.due_tasks'), query: { 'where[due_date.lt]': moment.utc().toISOString() } }
+        { name: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks_filters.due_tasks'), query: { 'where[due_date.lt]': moment.utc().toISOString(), 'where[status.ne]': 'done' } }
         { name: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks_filters.completed_tasks'), query: { 'where[completed_at.ne]': '' } }
       ]
       ctrl.selectedTasksFilter = ctrl.tasksFilters[0]
