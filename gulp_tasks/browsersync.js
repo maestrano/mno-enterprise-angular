@@ -12,14 +12,21 @@ browserSync.use(spa());
 gulp.task('browsersync', browserSyncServe);
 gulp.task('browsersync:dist', browserSyncDist);
 
-// Rewrite /dashboard/xxx => /xxx after the proxy
+// Rewrite url after the proxy
 var dashboardRewriteMiddleware = function (req, res, next) {
+  // Remove the optional locale (en, en-GB) part
+  req.url = req.url.replace(/^\/[A-Za-z]{2}(-[A-Z]{2})?\//, "/");
+
+  // Rewrite /dashboard/xxx => /xxx
   req.url = req.url.replace(/^\/dashboard\//, "/");
   next();
 };
 
 const middleware = [
-  proxyMiddleware('!/(dashboard|bower_components)/**', {target: 'http://localhost:7000'}),
+  proxyMiddleware(
+    '!/?([A-Za-z][A-Za-z]?(-[A-Za-z][A-Za-z])/)(dashboard|bower_components)/**',
+    {target: 'http://localhost:7000'}
+  ),
   dashboardRewriteMiddleware
 ];
 

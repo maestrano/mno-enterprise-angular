@@ -40,6 +40,7 @@ function watch(done) {
     conf.path.src('**/*.js'),
     conf.path.src('**/*.coffee')
   ], gulp.series('inject'));
+  gulp.watch(conf.path.src('locales/*.json'), gulp.series('locales', reloadBrowserSync));
 
   // Watch 'mno-ui-elements'
   //gulp.watch('bower_components/mno-ui-elements/dist/mno-ui-elements.js', gulp.series('inject'));

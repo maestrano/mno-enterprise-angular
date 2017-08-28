@@ -1,4 +1,5 @@
 {
+  "language": "English",
   "date.formats.default": "%Y-%m-%d",
   "date.formats.short": "%b %d",
   "date.formats.long": "%B %d, %Y",
