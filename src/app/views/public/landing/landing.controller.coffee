@@ -18,8 +18,8 @@ angular.module 'mnoEnterpriseAngular'
 
       MnoeMarketplace.getApps().then(
         (response) ->
-          vm.apps = _.filter(response.apps, (app) -> _.includes(MnoeConfig.publicApplications(), app.name))
-          vm.highlightedApps = _.filter(response.apps, (app) -> _.includes(MnoeConfig.publicHighlightedApplications(), app.name))
+          vm.apps = _.filter(response.apps, (app) -> _.includes(MnoeConfig.publicApplications(), app.nid))
+          vm.highlightedApps = _.filter(response.apps, (app) -> _.includes(MnoeConfig.publicHighlightedApplications(), app.nid))
           vm.categories = response.categories
       ).finally(-> vm.isLoading = false)
 
