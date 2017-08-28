@@ -1,0 +1,116 @@
+<div class="dashboard-marketplace-app">
+  <div class="product-content">
+    <!-- Header -->
+    <div class="row show-header top-buffer-4">
+      <div class="col-md-12">
+        <a ui-sref="public.landing()" class="text-muted">
+          <i class="fa fa-chevron-left"></i> {{ 'mno_enterprise.templates.dashboard.marketplace.show.back' | translate }}
+        </a>
+        <div class="media" ng-show="!vm.isLoading">
+          <div class="pull-left">
+            <img class="media-object" ng-src="{{vm.app.logo}}" ng-alt="{{vm.app.name}}">
+          </div>
+          <div class="media-body">
+            <h2 class="media-heading">{{vm.app.name}}</h2>
+          </div>
+          <div class="app-rating pull-left">
+            <div ng-show="vm.isRateDisplayed">
+              <average-star-rating ng-model="vm.averageRating" display-rating="true" max="5"></average-star-rating>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="show-content top-buffer-1" ng-show="!vm.isLoading">
+
+      <!-- Pics/details row -->
+      <div class="row">
+        <div class="col-md-8">
+          <div class="well carousel">
+            <div uib-carousel interval="3000" active="0">
+              <div uib-slide ng-repeat="picture in vm.app.pictures" class="screenshot" index="$index">
+                <img ng-src={{picture}} alt="screenshot">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="well text-center well-details">
+            <div class="row">
+              <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
+                <ul class="app-features">
+                  <li ng-show="vm.app.is_responsive">
+                    <img src="images/icons/mobile-responsive-logo.png" alt="responsive icon">
+                    {{ 'mno_enterprise.templates.dashboard.marketplace.show.tag_responsive' | translate }}
+                  </li>
+                  <li ng-show="vm.app.is_star_ready" uib-tooltip="Your live tutorials directly inside your app">
+                    <img src="images/icons/star-enabled-logo.png" alt="Star icon">
+                    {{ 'mno_enterprise.templates.dashboard.marketplace.show.tag_star' | translate }}
+                  </li>
+                  <li ng-show="vm.app.is_connec_ready" uib-tooltip="Your Data automatically shared between your applications">
+                    <img ng-src="images/icons/connec-enabled-logo.png" alt="Connec icon">
+                    {{ 'mno_enterprise.templates.dashboard.marketplace.show.tag_connec' | translate }}
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-12 col-md-offset-0">
+                <ul class="key-benefits">
+                  <li ng-repeat="benefit in vm.app.key_benefits track by $index">
+                    <i class="fa fa-check"></i>
+                    {{benefit}}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- End pics/details row -->
+
+      <!-- Testimonials row -->
+      <div class="row">
+        <div class="col-md-6" ng-repeat="testimonial in vm.app.testimonials | limitTo:2" ng-show="vm.isTestimonialShown(testimonial)">
+          <div class="ribbon-testimonial">
+            <div class="body">
+              {{testimonial.text}}
+              <div class="arrow"></div>
+            </div>
+            <div class="from">
+              <div class="name">{{testimonial.author}}</div>
+              <div class="company">{{testimonial.company}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Description row -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="well top-buffer-1" ng-bind-html="vm.app.description"></div>
+        </div>
+      </div>
+
+      <!-- Pricing -->
+      <div ng-if="vm.isPriceShown" class="row top-buffer-1">
+        <div class="col-md-12">
+          <div class="well" ng-switch="vm.app.pricing_plans">
+            <h2>{{ 'mno_enterprise.templates.dashboard.marketplace.show.price' | translate }}</h2>
+            <ul>
+              <li ng-repeat="plan in vm.pricing_plans">
+                <b>{{plan.name}}</b>: {{plan.description}}<br>
+                <span ng-show="plan.price.value">{{plan.currency}} {{plan.price.value}} {{plan.factor}}</span>
+                <span ng-hide="plan.price.value">{{plan.currency}} {{plan.price}} {{plan.factor}}</span>
+              </li>
+            </ul>
+            <div ng-bind-html="vm.app.pricing_text"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

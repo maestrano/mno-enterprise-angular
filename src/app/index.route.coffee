@@ -2,6 +2,32 @@ angular.module 'mnoEnterpriseAngular'
   .config ($stateProvider, $urlRouterProvider, URI, I18N_CONFIG, MnoeConfigProvider) ->
 
     $stateProvider
+      .state 'public',
+        abstract: true
+        templateUrl: 'app/views/public/public.html'
+        controller: 'PublicController'
+        controllerAs: 'layout'
+        public: true
+        onEnter: ($rootScope) ->
+          $rootScope.publicPage = true
+        onExit: ($rootScope) ->
+          $rootScope.publicPage = false
+      .state 'public.landing',
+        data:
+          pageTitle: "Webstore Preview"
+        url: '/landing'
+        templateUrl: 'app/views/public/landing/landing.html'
+        controller: 'LandingCtrl'
+        controllerAs: 'vm'
+        public: true
+      .state 'public.product',
+        data:
+          pageTitle: "Product Preview"
+        url: '/product/:productId'
+        templateUrl: 'app/views/public/product/product.html'
+        controller: 'LandingProductCtrl'
+        controllerAs: 'vm'
+        public: true
       .state 'home',
         data:
           pageTitle:'Home'
@@ -10,6 +36,9 @@ angular.module 'mnoEnterpriseAngular'
         templateUrl: 'app/views/layout.html'
         controller: 'LayoutController'
         controllerAs: 'layout'
+        resolve:
+          loginRequired: (MnoeCurrentUser) ->
+            MnoeCurrentUser.loginRequired()
       .state 'home.apps',
         data:
           pageTitle:'Apps'
@@ -65,6 +94,9 @@ angular.module 'mnoEnterpriseAngular'
           templateUrl: 'app/views/onboarding/layout.html'
           controller: 'OnboardingController'
           controllerAs: 'onboarding'
+          resolve:
+            loginRequired: (MnoeCurrentUser) ->
+              MnoeCurrentUser.loginRequired()
         .state 'onboarding.step1',
           data:
             pageTitle:'Welcome'
@@ -160,7 +192,13 @@ angular.module 'mnoEnterpriseAngular'
           controllerAs: 'vm'
 
     $urlRouterProvider.otherwise ($injector, $location) ->
-      unless $injector.get('MnoeConfig').isOnboardingWizardEnabled()
+      MnoeConfig = $injector.get('MnoeConfig')
+      MnoeCurrentUser = $injector.get('MnoeCurrentUser')
+
+      if !MnoeCurrentUser.get() && MnoeConfig.arePublicApplicationsEnabled()
+        $location.url('/landing')
+
+      unless MnoeConfig.isOnboardingWizardEnabled()
         $location.url('/impac')
         return
 

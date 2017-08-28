@@ -13,7 +13,7 @@
 # => PUT /mnoe/jpi/v1/current_user/update_password
 
 angular.module 'mnoEnterpriseAngular'
-  .service 'MnoeCurrentUser', (MnoeApiSvc, $window, $state, URI) ->
+  .service 'MnoeCurrentUser', (MnoeApiSvc, $window, $state, $rootScope, URI) ->
     _self = @
 
     # Store the current_user promise
@@ -30,8 +30,7 @@ angular.module 'mnoEnterpriseAngular'
         (response) ->
           response = response.plain()
 
-          if !response.logged_in
-            $window.location.href = URI.login
+          return null if $rootScope.publicPage && !response.logged_in
 
           angular.copy(response, _self.user)
           response
@@ -58,5 +57,13 @@ angular.module 'mnoEnterpriseAngular'
     # Update user password
     @updatePassword = (passwordData) ->
       MnoeApiSvc.all('/current_user').doPUT({user: passwordData}, 'update_password')
+
+    # Ensure user is logged in
+    @loginRequired = ->
+      _self.get().then(
+        (response) ->
+          unless response.logged_in
+            $state.go('public.landing')
+      )
 
     return @
