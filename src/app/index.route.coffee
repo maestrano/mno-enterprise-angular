@@ -145,6 +145,17 @@ angular.module 'mnoEnterpriseAngular'
             controller: 'DashboardMarketplaceCompareCtrl'
             controllerAs: 'vm'
 
+    if MnoeConfigProvider.$get().isProductsEnabled()
+      $stateProvider
+        .state 'home.marketplace.product',
+          data:
+            pageTitle:'Marketplace'
+          url: '^/product/:productId'
+          views: '@home':
+            templateUrl: 'app/views/marketplace/marketplace-product.html'
+            controller: 'MarketplaceProductCtrl'
+            controllerAs: 'vm'
+
     if MnoeConfigProvider.$get().isProvisioningEnabled()
       $stateProvider
         .state 'home.provisioning',
