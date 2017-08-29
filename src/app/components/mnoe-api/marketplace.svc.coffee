@@ -23,6 +23,16 @@ angular.module 'mnoEnterpriseAngular'
           response
       )
 
+    @getProducts = () ->
+      return marketplaceProductsPromise if marketplaceProductsPromise?
+      marketplaceProductsPromise = MnoeApiSvc.oneUrl('/products').get().then(
+        (response) ->
+          response
+      )
+
+    @getProduct = (productId) ->
+      MnoeApiSvc.one('/products', productId).get()
+
     @findApp = (nid) ->
       _.find(marketplaceResponse.apps, (a) -> a.nid == nid)
 
