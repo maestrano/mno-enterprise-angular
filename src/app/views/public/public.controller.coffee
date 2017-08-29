@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller 'PublicController', ($scope, $rootScope, $stateParams, $state, $q, URI, MnoeCurrentUser, MnoeOrganizations, MnoeConfig) ->
+  .controller 'PublicController', ($scope, $rootScope, $stateParams, $state, $q, $window, URI, MnoeCurrentUser, MnoeOrganizations, MnoeConfig) ->
     'ngInject'
 
     layout = @
