@@ -5,12 +5,13 @@ angular.module 'mnoEnterpriseAngular'
     layout = @
     layout.links = URI
 
+    layout.isRegistrationEnabled = MnoeConfig.isRegistrationEnabled()
+
     $window.location = URI.login unless MnoeConfig.arePublicApplicationsEnabled()
 
     MnoeCurrentUser.get().then(
       (response) ->
-        if response.logged_in
-          $state.go('home.impac')
+        $state.go('home.impac') if response.logged_in
     )
 
     return

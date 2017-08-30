@@ -127,6 +127,12 @@ angular.module 'mnoEnterpriseAngular'
         $log.debug("DASHBOARD_CONFIG.public_pages.highlighted_applications missing")
         []
 
+    @isRegistrationEnabled = () ->
+      if DASHBOARD_CONFIG.registration?.enabled?
+        DASHBOARD_CONFIG.registration.enabled
+      else
+        true
+
     @isUserManagementEnabled = () ->
       if DASHBOARD_CONFIG.user_management?.enabled?
         DASHBOARD_CONFIG.user_management.enabled
