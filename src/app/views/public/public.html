@@ -9,7 +9,7 @@
         </div>
       </div>
       <div class="links pull-right">
-        <a href="{{layout.links.signup}}" class="btn btn-default pull-right">Sign-up</a>
+        <a ng-if="layout.isRegistrationEnabled" href="{{layout.links.signup}}" class="btn btn-default pull-right">Sign-up</a>
         <a href="{{layout.links.login}}" class="btn btn-default pull-right">Login</a>
       </div>
     </div>
