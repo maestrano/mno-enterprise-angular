@@ -18,21 +18,32 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
           ctrl.tasks.offset = (page  - 1) * nbItems
           fetchTasks(limit: nbItems, offset: ctrl.tasks.offset)
       }
-      ctrl.menus = [
-        { label: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.menus.inbox'), name: 'inbox', selected: true }
-        { label: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.menus.sent'), name: 'sent', query: { 'where[status.ne][]': 'draft', outbox: true } }
-        { label: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.menus.draft'), name: 'draft', query: { 'where[status][]': 'draft', outbox: true } }
-      ]
-      ctrl.tasksFilters = [
-        { name: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks_filters.all_tasks_and_msgs') }
-        { name: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks_filters.all_tasks'), query: { 'where[due_date.ne]': '' } }
-        { name: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks_filters.all_messages'), query: { 'where[due_date.eq]': '' } }
-        { name: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks_filters.due_tasks'), query: { 'where[due_date.lt]': moment.utc().toISOString(), 'where[status.ne]': 'done' } }
-        { name: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks_filters.completed_tasks'), query: { 'where[completed_at.ne]': '' } }
-      ]
-      ctrl.selectedTasksFilter = ctrl.tasksFilters[0]
-      ctrl.selectedMenu = _.find(ctrl.menus, (m)-> m.selected)
-      fetchTasks()
+      $translate([
+        'mno_enterprise.templates.components.mnoe-tasks.menus.inbox',
+        'mno_enterprise.templates.components.mnoe-tasks.menus.sent',
+        'mno_enterprise.templates.components.mnoe-tasks.menus.draft',
+        'mno_enterprise.templates.components.mnoe-tasks.tasks_filters.all_tasks_and_msgs',
+        'mno_enterprise.templates.components.mnoe-tasks.tasks_filters.all_tasks',
+        'mno_enterprise.templates.components.mnoe-tasks.tasks_filters.all_messages',
+        'mno_enterprise.templates.components.mnoe-tasks.tasks_filters.due_tasks',
+        'mno_enterprise.templates.components.mnoe-tasks.tasks_filters.completed_tasks'
+      ]).then((tls)->
+        ctrl.menus = [
+          { label: tls['mno_enterprise.templates.components.mnoe-tasks.menus.inbox'], name: 'inbox', selected: true }
+          { label: tls['mno_enterprise.templates.components.mnoe-tasks.menus.sent'], name: 'sent', query: { 'where[status.ne][]': 'draft', outbox: true } }
+          { label: tls['mno_enterprise.templates.components.mnoe-tasks.menus.draft'], name: 'draft', query: { 'where[status][]': 'draft', outbox: true } }
+        ]
+        ctrl.tasksFilters = [
+          { name: tls['mno_enterprise.templates.components.mnoe-tasks.tasks_filters.all_tasks_and_msgs'] }
+          { name: tls['mno_enterprise.templates.components.mnoe-tasks.tasks_filters.all_tasks'], query: { 'where[due_date.ne]': '' } }
+          { name: tls['mno_enterprise.templates.components.mnoe-tasks.tasks_filters.all_messages'], query: { 'where[due_date.eq]': '' } }
+          { name: tls['mno_enterprise.templates.components.mnoe-tasks.tasks_filters.due_tasks'], query: { 'where[due_date.lt]': moment.utc().toISOString(), 'where[status.ne]': 'done' } }
+          { name: tls['mno_enterprise.templates.components.mnoe-tasks.tasks_filters.completed_tasks'], query: { 'where[completed_at.ne]': '' } }
+        ]
+        ctrl.selectedTasksFilter = ctrl.tasksFilters[0]
+        ctrl.selectedMenu = _.find(ctrl.menus, (m)-> m.selected)
+        fetchTasks()
+      )
 
     ctrl.onSelectFilter = ({filter})->
       return if filter == ctrl.selectedTasksFilter
@@ -127,7 +138,7 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
 
     fetchTasks = (params = {})->
       ctrl.tasks.loading = true
-      ctrl.mnoSortableTableFields = buildMnoSortableTable()
+      buildMnoSortableTable()
       baseParams = { limit: ctrl.tasks.nbItems, offset: ctrl.tasks.offset, order_by: ctrl.tasks.sort }
       params = angular.merge({}, baseParams, params, ctrl.selectedMenu.query, ctrl.selectedTasksFilter.query)
       MnoeTasks.get(params).then(
@@ -183,25 +194,39 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
 
     # Creates mnoSortableTable cmp config API, building the tasks table columns
     buildMnoSortableTable = ->
-      toUserNameColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.user.name'), attr: 'task_recipients[0].user.name'}
-      toUserSurnameColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.user.surname'), attr: 'task_recipients[0].user.surname'}
-      fromUserNameColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.user.name'), attr: 'owner.user.name'}
-      fromUserSurnameColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.user.surname'), attr: 'owner.user.surname'}
-      titleColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.title'), attr: 'title', class: 'ellipsis' }
-      messageColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.message'), attr: 'message', class: 'ellipsis' }
-      receivedAtColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.received'), attr: 'send_at', filter: expandingDateFormat }
-      sentAtColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.sent'), attr: 'send_at', filter: expandingDateFormat }
-      readAtColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.read'), attr: 'task_recipients[0].read_at', filter: expandingDateFormat }
-      updatedAtColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.updated_at'), attr: 'updated_at', filter: expandingDateFormat }
-      dueDateAtColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.due_date'), attr: 'due_date', filter: simpleDateFormat }
-      doneColumn = { header: $translate.instant('mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.done'), attr: 'status', render: taskDoneCustomField, stopPropagation: true }
-      switch ctrl.selectedMenu.name
-        when 'inbox'
-          [fromUserNameColumn, fromUserSurnameColumn, titleColumn, messageColumn, receivedAtColumn, dueDateAtColumn, doneColumn]
-        when 'sent'
-          [toUserNameColumn, toUserSurnameColumn, titleColumn, messageColumn, sentAtColumn, readAtColumn, dueDateAtColumn, doneColumn]
-        when 'draft'
-          [toUserNameColumn, toUserSurnameColumn, titleColumn, messageColumn, updatedAtColumn, dueDateAtColumn]
+      $translate([
+        'mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.user.name',
+        'mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.user.surname',
+        'mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.title',
+        'mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.message',
+        'mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.received',
+        'mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.sent',
+        'mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.read',
+        'mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.updated_at',
+        'mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.due_date',
+        'mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.done'
+      ]).then((tls)->
+        toUserNameColumn = { header: tls['mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.user.name'], attr: 'task_recipients[0].user.name'}
+        toUserSurnameColumn = { header: tls['mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.user.surname'], attr: 'task_recipients[0].user.surname'}
+        fromUserNameColumn = { header: tls['mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.user.name'], attr: 'owner.user.name'}
+        fromUserSurnameColumn = { header: tls['mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.user.surname'], attr: 'owner.user.surname'}
+        titleColumn = { header: tls['mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.title'], attr: 'title', class: 'ellipsis' }
+        messageColumn = { header: tls['mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.message'], attr: 'message', class: 'ellipsis' }
+        receivedAtColumn = { header: tls['mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.received'], attr: 'send_at', filter: expandingDateFormat }
+        sentAtColumn = { header: tls['mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.sent'], attr: 'send_at', filter: expandingDateFormat }
+        readAtColumn = { header: tls['mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.read'], attr: 'task_recipients[0].read_at', filter: expandingDateFormat }
+        updatedAtColumn = { header: tls['mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.updated_at'], attr: 'updated_at', filter: expandingDateFormat }
+        dueDateAtColumn = { header: tls['mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.due_date'], attr: 'due_date', filter: simpleDateFormat }
+        doneColumn = { header: tls['mno_enterprise.templates.components.mnoe-tasks.tasks.column_label.done'], attr: 'status', render: taskDoneCustomField, stopPropagation: true }
+
+        ctrl.mnoSortableTableFields =  switch ctrl.selectedMenu.name
+          when 'inbox'
+            [fromUserNameColumn, fromUserSurnameColumn, titleColumn, messageColumn, receivedAtColumn, dueDateAtColumn, doneColumn]
+          when 'sent'
+            [toUserNameColumn, toUserSurnameColumn, titleColumn, messageColumn, sentAtColumn, readAtColumn, dueDateAtColumn, doneColumn]
+          when 'draft'
+            [toUserNameColumn, toUserSurnameColumn, titleColumn, messageColumn, updatedAtColumn, dueDateAtColumn]
+      )
 
     # Formats dates yesterday & beyond differently from today
     expandingDateFormat = (value)->
