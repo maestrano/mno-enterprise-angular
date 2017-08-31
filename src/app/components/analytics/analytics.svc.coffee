@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .service 'AnalyticsSvc', (MnoeCurrentUser, INTERCOM_ID, $window, $state) ->
+  .service 'AnalyticsSvc', ($window, $state, MnoeCurrentUser, INTERCOM_ID) ->
 
     # Will push user data to intercom and boot it
     @init = (userData) ->
