@@ -47,6 +47,7 @@ angular.module 'mnoEnterpriseAngular'
 .config((ImpacAssetsProvider) ->
   options =
     defaultImagesPath: '/dashboard/images'
+    dataNotFound: '/dashboard/images/data_not_found'
 
   ImpacAssetsProvider.configure(options)
 )

@@ -11,9 +11,11 @@ angular.module 'mnoEnterpriseAngular'
 
       deferred = $q.defer()
 
-      # If app instances are stored return it
+      # If app instances are stored return it and refresh the cache asynchronously
       cache = MnoLocalStorage.getObject(MnoeCurrentUser.user.id + "_" + LOCALSTORAGE.appInstancesKey)
       if cache?
+        # Refresh the cache content asynchronously
+        fetchAppInstances()
         # Append response array to service array
         _self.appInstances = cache
         # Return the promised cache
