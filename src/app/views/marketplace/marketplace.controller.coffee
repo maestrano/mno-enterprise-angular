@@ -1,9 +1,8 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('DashboardMarketplaceCtrl', (MnoeConfig) ->
+    vm = this
 
-      vm = this
+    vm.areLocalProductsEnabled = MnoeConfig.areLocalProductsEnabled()
 
-      vm.areLocalProductsEnabled = MnoeConfig.areLocalProductsEnabled()
-
-      return
+    return
   )
