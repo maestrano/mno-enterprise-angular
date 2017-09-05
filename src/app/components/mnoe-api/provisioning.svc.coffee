@@ -18,22 +18,6 @@ angular.module 'mnoEnterpriseAngular'
       custom_data: {}
     }
 
-    # Return the list of product
-    @getProducts = () ->
-      return productsPromise if productsPromise?
-      productsPromise = productsApi.get().then(
-        (response) ->
-          productsResponse = response.plain()
-          response
-      )
-
-    # Find a product using its id or nid
-    @findProduct = ({id = null, nid = null}) ->
-      _self.getProducts().then(
-        ->
-          _.find(productsResponse.products, (a) -> a.id == id || a.nid == nid)
-      )
-
     @setSubscription = (s) ->
       subscription = s
 

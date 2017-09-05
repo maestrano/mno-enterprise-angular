@@ -1,12 +1,12 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningOrderCtrl', ($q, $state, $stateParams, MnoeOrganizations, MnoeProvisioning, MnoeConfig) ->
+  .controller('ProvisioningOrderCtrl', ($q, $state, $stateParams, MnoeOrganizations, MnoeMarketplace, MnoeConfig) ->
 
     vm = this
     vm.isLoading = true
     vm.product = null
 
     orgPromise = MnoeOrganizations.get()
-    prodsPromise = MnoeProvisioning.getProducts()
+    prodsPromise = MnoeMarketplace.getProducts()
     initPromise = MnoeProvisioning.initSubscription({productNid: $stateParams.nid, subscriptionId: $stateParams.id})
 
     $q.all({organization: orgPromise, products: prodsPromise, subscription: initPromise}).then(
@@ -14,7 +14,7 @@ angular.module 'mnoEnterpriseAngular'
         vm.orgCurrency = response.organization.billing?.current?.options?.iso_code || MnoeConfig.marketplaceCurrency()
         vm.subscription = response.subscription
 
-        MnoeProvisioning.findProduct({id: vm.subscription.product?.id, nid: $stateParams.nid}).then(
+        MnoeMarketplace.findProduct({id: vm.subscription.product?.id, nid: $stateParams.nid}).then(
           (response) ->
             vm.subscription.product = response
 
