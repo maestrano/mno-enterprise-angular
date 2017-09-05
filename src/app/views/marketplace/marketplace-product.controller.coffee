@@ -7,6 +7,7 @@ angular.module 'mnoEnterpriseAngular'
     vm = this
 
     vm.isPriceShown = MnoeConfig.isMarketplacePricingEnabled()
+    vm.isProvisioningEnabled = MnoeConfig.isProvisioningEnabled()
     vm.isLoading = true
 
     # Retrieve the products

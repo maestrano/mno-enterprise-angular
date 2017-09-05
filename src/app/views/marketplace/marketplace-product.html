@@ -34,8 +34,12 @@
         <!-- Key benefits -->
         <div class="col-md-4">
           <div class="well text-center well-details">
+            <a class="btn btn-warning btn-lg top-buffer-1" ng-if="::vm.isProvisioningEnabled" ui-sref="home.provisioning.order({nid: vm.product.nid})" translate>
+              mno_enterprise.templates.dashboard.marketplace.show.provision
+            </a>
+
             <div class="row">
-              <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-12">
+              <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-12 top-buffer-1">
                 <ul class="key-benefits">
                   <li ng-repeat="benefit in vm.product.key_benefits track by $index">
                     <i class="fa fa-check"></i>
