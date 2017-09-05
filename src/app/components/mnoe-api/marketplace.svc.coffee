@@ -12,19 +12,41 @@ angular.module 'mnoEnterpriseAngular'
     # Using this syntax will not trigger the data extraction in MnoeApiSvc
     # as the /marketplace payload isn't encapsulated in "{ marketplace: categories {...}, apps {...} }"
     marketplaceApi = MnoeApiSvc.oneUrl('/marketplace')
-    marketplacePromise = null
-    marketplaceResponse = null
+    marketplacePromises = []
 
-    @getApps = () ->
-      return marketplacePromise if marketplacePromise?
-      marketplacePromise = marketplaceApi.get().then(
+    @getApps = (params = null) ->
+      paramsKey = JSON.stringify(params)
+      return marketplacePromises[paramsKey] if marketplacePromises[paramsKey]?
+      marketplacePromises[paramsKey] = marketplaceApi.get(params)
+
+    productsPromise = null
+    @getProducts = () ->
+      return productsPromise if productsPromise?
+      productsPromise = MnoeApiSvc.oneUrl('/products').get()
+
+    localProductsPromise = null
+    @getLocalProducts = (limit, offset, sort, params = {}) ->
+      params['where[local]'] = 'true'
+      return localProductsPromise if localProductsPromise?
+      localProductsPromise = MnoeApiSvc.all('products').getList(params).then(
         (response) ->
-          marketplaceResponse = response
-          response
+          _.map(response.plain(), (product) ->
+            # Transforms the values_attributes ([name: 'Some string', data: 'Its value'])
+            # to attributes (vm.product.some_string)
+            _.each(product.values_attributes, (v) ->
+              try
+                product[_.snakeCase(v.name)] = JSON.parse(v.data)
+              catch
+                product[_.snakeCase(v.name)] = v.data
+            )
+            product.screenshots = _.map(product.assets_attributes, (a) -> a.url)
+
+            product
+          )
       )
 
-    @findApp = (nid) ->
-      _.find(marketplaceResponse.apps, (a) -> a.nid == nid)
+    @getProduct = (productId) ->
+      MnoeApiSvc.one('/products', productId).get()
 
     @getReview = (appId, reviewId) ->
       MnoeApiSvc.one('marketplace', appId).one('app_reviews', parseInt(reviewId)).get()

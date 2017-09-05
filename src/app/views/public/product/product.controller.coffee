@@ -13,7 +13,12 @@ angular.module 'mnoEnterpriseAngular'
 
       MnoeMarketplace.getApps().then(
         (response) ->
-          vm.app = MnoeMarketplace.findApp($stateParams.productId)
+
+          # App to be displayed
+          appId = $stateParams.productId
+          vm.app = _.findWhere(response.apps, { nid: appId })
+          vm.app ||= _.findWhere(response.apps, { id:  appId })
+
           vm.averageRating = vm.app.average_rating
           vm.isRateDisplayed = vm.averageRating ? vm.averageRating >= 0 : false
       ).finally(-> vm.isLoading = false)

@@ -44,6 +44,20 @@ angular.module 'mnoEnterpriseAngular'
         $log.debug("DASHBOARD_CONFIG.marketplace.enabled missing")
         false
 
+    @isProvisioningEnabled = () ->
+      if DASHBOARD_CONFIG.marketplace?.provisioning?
+        DASHBOARD_CONFIG.marketplace.provisioning
+      else
+        $log.debug("DASHBOARD_CONFIG.marketplace.provisioning")
+        false
+
+    @areLocalProductsEnabled = () ->
+      if DASHBOARD_CONFIG.marketplace?.local_products?
+        DASHBOARD_CONFIG.marketplace.local_products
+      else
+        $log.debug("DASHBOARD_CONFIG.marketplace.local_products")
+        false
+
     @isMarketplaceComparisonEnabled = () ->
       if DASHBOARD_CONFIG.marketplace?.comparison?.enabled?
         DASHBOARD_CONFIG.marketplace.comparison.enabled
@@ -92,13 +106,6 @@ angular.module 'mnoEnterpriseAngular'
       else
         $log.debug("DASHBOARD_CONFIG.payment.enabled missing")
         true
-
-    @isProvisioningEnabled = () ->
-      if DASHBOARD_CONFIG.provisioning?.enabled?
-        DASHBOARD_CONFIG.provisioning.enabled
-      else
-        $log.debug("DASHBOARD_CONFIG.provisioning.enabled missing")
-        false
 
     @arePublicApplicationsEnabled = () ->
       if DASHBOARD_CONFIG.public_pages?.enabled?

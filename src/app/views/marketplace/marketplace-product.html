@@ -1,0 +1,78 @@
+<div class="dashboard-marketplace-product">
+  <div class="product-content">
+    <!-- Header -->
+    <div class="row show-header top-buffer-4">
+      <div class="col-md-12">
+        <a ui-sref="home.marketplace" class="text-muted">
+          <i class="fa fa-chevron-left"></i> {{ 'mno_enterprise.templates.dashboard.marketplace.show.back' | translate }}
+        </a>
+        <div class="media" ng-show="!vm.isLoading">
+          <div class="pull-left">
+            <img class="media-object" ng-src="{{vm.product.logo}}" ng-alt="{{vm.product.name}}">
+          </div>
+          <div class="media-body">
+            <h2 class="media-heading">{{vm.product.name}}</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product content -->
+    <div class="show-content top-buffer-1" ng-show="!vm.isLoading">
+      <div class="row">
+        <!-- Screenshots -->
+        <div class="col-md-8">
+          <div class="well carousel">
+            <div uib-carousel interval="3000" active="0">
+              <div uib-slide ng-repeat="screenshot in vm.product.screenshots" class="screenshot" index="$index">
+                <img ng-src={{screenshot}} alt="screenshot">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Key benefits -->
+        <div class="col-md-4">
+          <div class="well text-center well-details">
+            <a class="btn btn-warning btn-lg top-buffer-1" ng-if="::vm.isProvisioningEnabled" ui-sref="home.provisioning.order({nid: vm.product.nid})" translate>
+              mno_enterprise.templates.dashboard.marketplace.show.provision
+            </a>
+
+            <div class="row">
+              <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-12 top-buffer-1">
+                <ul class="key-benefits">
+                  <li ng-repeat="benefit in vm.product.key_benefits track by $index">
+                    <i class="fa fa-check"></i>
+                    {{benefit}}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Description row -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="well top-buffer-1" ng-bind-html="vm.product.getting_started"></div>
+        </div>
+      </div>
+
+      <!-- Pricing -->
+      <div ng-if="vm.isPriceShown" class="row top-buffer-1">
+        <div class="col-md-12">
+          <div class="well" ng-switch="vm.product.product_pricings">
+            <h3>{{ 'mno_enterprise.templates.dashboard.marketplace.show.price' | translate }}</h3>
+            <ul>
+              <li ng-repeat="plan in vm.product.product_pricings">
+                <b>{{plan.name}}</b>: {{plan.description}}<br>
+                <span ng-repeat="price in plan.prices | filterBy: ['currency']: vm.orgCurrency">{{price.currency}} {{price.price_cents / 100}}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

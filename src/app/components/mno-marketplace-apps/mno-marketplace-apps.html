@@ -1,0 +1,66 @@
+<div class="row dashboard-marketplace">
+  <!-- Loader -->
+  <mno-loader ng-show="$ctrl.isLoading" class="top-buffer-4"></mno-loader>
+
+  <!-------------------------------------->
+  <!--        Marketplace Content       -->
+  <!-------------------------------------->
+  <div class="top-buffer-4" ng-show="!$ctrl.isLoading">
+    <!-- Marketplace nav -->
+    <div class="row">
+      <div class="marketplace-nav">
+        <div class="col-sm-4">
+          <select class="form-control" ng-model="$ctrl.selectedCategory" ng-options="c for c in $ctrl.categories" ng-change="$ctrl.searchTerm = ''">
+            <option value=''>{{ 'mno_enterprise.templates.dashboard.marketplace.index.select_all' | translate }}</option>
+          </select>
+        </div>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" placeholder="{{ 'mno_enterprise.templates.dashboard.marketplace.index.search' | translate }}" ng-model="$ctrl.searchTerm" ng-change="$ctrl.selectedCategory = ''"/>
+        </div>
+        <div ng-show="$ctrl.isMarketplaceCompare" class="col-sm-4 text-center">
+          <button ng-click="$ctrl.enableComparison()" ng-hide="$ctrl.showCompare" class="btn btn-primary">
+            <span>{{ 'mno_enterprise.templates.dashboard.marketplace.index.compare' | translate }}</span>
+          </button>
+          <div ng-show="$ctrl.showCompare" class="marketplace-compare-action">
+            <div>{{'mno_enterprise.templates.dashboard.marketplace.index.select_apps' | translate }}</div>
+            <button class="btn btn-primary" ui-sref="home.marketplace.compare" ng-disabled="!$ctrl.canBeCompared()">
+              {{'mno_enterprise.templates.dashboard.marketplace.index.compare_apps' | translate}} ({{$ctrl.nbAppsToCompare}})
+            </button>
+            <button class="btn btn-primary" ng-click="$ctrl.cancelComparison()">{{ 'mno_enterprise.templates.dashboard.marketplace.index.cancel' | translate }}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Marketplace list -->
+    <div class="row">
+      <div class="marketplace-list">
+
+        <!-- App Cards-->
+        <div class="col-sm-6 col-md-4" ng-repeat="app in $ctrl.apps | filter:$ctrl.appsFilter | filter:$ctrl.searchTerm">
+          <div class="marketplace-app-card-checkbox" ng-show="$ctrl.showCompare">
+            <label>
+              <input type="checkbox"
+                     ng-click="$ctrl.toggleAppToCompare(app)"
+                     ng-model="app.toCompare">
+            </label>
+          </div>
+          <a class="marketplace-app-card" ui-sref="home.marketplace.app({appId: app.nid})">
+            <div class="media">
+              <div class="pull-left">
+                <img class="media-object" ng-src="{{::app.logo}}" ng-alt="{{::app.name}}">
+              </div>
+              <div class="media-body">
+                <h4 class="media-heading">{{::app.name}}</h4>
+                {{::app.tiny_description}}
+              </div>
+              <div class="arrow">
+                <i class="fa fa-caret-right fa-2x"></i>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div><!-- End: marketplace-list -->
+    </div><!-- End: row -->
+  </div>
+</div>
