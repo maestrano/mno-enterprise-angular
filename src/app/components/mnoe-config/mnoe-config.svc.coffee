@@ -94,10 +94,10 @@ angular.module 'mnoEnterpriseAngular'
         true
 
     @isProvisioningEnabled = () ->
-      if DASHBOARD_CONFIG.provisioning?.enabled?
-        DASHBOARD_CONFIG.provisioning.enabled
+      if DASHBOARD_CONFIG.marketplace?.provisioning?
+        DASHBOARD_CONFIG.marketplace.provisioning
       else
-        $log.debug("DASHBOARD_CONFIG.provisioning.enabled missing")
+        $log.debug("DASHBOARD_CONFIG.marketplace.provisioning")
         false
 
     @arePublicApplicationsEnabled = () ->
