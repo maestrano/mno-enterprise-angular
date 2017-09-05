@@ -90,7 +90,7 @@ angular.module 'mnoEnterpriseAngular'
         $rootScope.isLoggedIn = true
 
         # Pre-load the market place
-        MnoeMarketplace.getApps({organization_id: organization.id})
+        MnoeMarketplace.getApps()
     ).catch(
       ->
         # Display the layout

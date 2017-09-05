@@ -6,23 +6,34 @@
 # Return the list off apps and categories
 #   {categories: [], apps: []}
 angular.module 'mnoEnterpriseAngular'
-  .service 'MnoeMarketplace', ($log, MnoeApiSvc, MnoeFullApiSvc) ->
+  .service 'MnoeMarketplace', ($log, MnoeApiSvc, MnoeOrganizations, MnoeFullApiSvc) ->
     _self = @
 
     # Using this syntax will not trigger the data extraction in MnoeApiSvc
     # as the /marketplace payload isn't encapsulated in "{ marketplace: categories {...}, apps {...} }"
-    marketplaceApi = MnoeApiSvc.oneUrl('/marketplace')
     marketplacePromises = []
-
-    @getApps = (params = null) ->
+    @getApps = ->
+      params = {organization_id: MnoeOrganizations.selectedId}
       paramsKey = JSON.stringify(params)
       return marketplacePromises[paramsKey] if marketplacePromises[paramsKey]?
-      marketplacePromises[paramsKey] = marketplaceApi.get(params)
+      marketplacePromises[paramsKey] = MnoeApiSvc.oneUrl('/marketplace').get(params)
 
-    productsPromise = null
-    @getProducts = () ->
-      return productsPromise if productsPromise?
-      productsPromise = MnoeApiSvc.oneUrl('/products').get()
+    productsPromise = []
+    @getProducts = ->
+      params = {organization_id: MnoeOrganizations.selectedId}
+      paramsKey = JSON.stringify(params)
+      return productsPromise[paramsKey] if productsPromise[paramsKey]?
+      productsPromise = MnoeApiSvc.oneUrl('/products').get(params).then(
+        (response) ->
+          response.plain()
+      )
+
+    # Find a product using its id or nid
+    @findProduct = ({id = null, nid = null}) ->
+      _self.getProducts().then(
+        (response) ->
+          _.find(response.products, (a) -> a.id == id || a.nid == nid)
+      )
 
     localProductsPromise = null
     @getLocalProducts = (limit, offset, sort, params = {}) ->

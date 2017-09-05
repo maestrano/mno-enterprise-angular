@@ -15,7 +15,7 @@ angular.module 'mnoEnterpriseAngular'
     # reasonable number of passes (2 below + 1 in the sf-schema directive)
     # to resolve cyclic references
     #
-    MnoeProvisioning.findProduct(id: vm.subscription.product.id)
+    MnoeMarketplace.findProduct(id: vm.subscription.product.id)
       .then((response) -> JSON.parse(response.custom_schema))
       .then((schema) -> schemaForm.jsonref(schema))
       .then((schema) -> schemaForm.jsonref(schema))

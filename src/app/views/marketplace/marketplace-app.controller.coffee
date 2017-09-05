@@ -422,7 +422,7 @@ angular.module 'mnoEnterpriseAngular'
         if val?
           vm.isLoading = true
 
-          productPromise = if MnoeConfig.isProvisioningEnabled() then MnoeProvisioning.getProducts() else $q.resolve()
+          productPromise = if MnoeConfig.isProvisioningEnabled() then MnoeMarketplace.getProducts() else $q.resolve()
 
           # Retrieve the apps and if any the current app instance
           $q.all(

@@ -60,7 +60,7 @@ angular.module 'mnoEnterpriseAngular'
       $scope.$watch MnoeOrganizations.getSelectedId, (val) ->
         if val?
           vm.isLoading = true
-          MnoeMarketplace.getApps({organization_id: val}).then(
+          MnoeMarketplace.getApps().then(
             (response) ->
               # Remove restangular decoration
               response = response.plain()
