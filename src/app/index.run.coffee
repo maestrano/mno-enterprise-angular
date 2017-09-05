@@ -83,12 +83,14 @@ angular.module 'mnoEnterpriseAngular'
     )
 
     $q.all([userPromise, orgPromise, _self.appInstancesDeferred.promise]).then(
-      ->
+      (response) ->
+        organization = response[1].organization
+
         # Display the layout
         $rootScope.isLoggedIn = true
 
         # Pre-load the market place
-        MnoeMarketplace.getApps()
+        MnoeMarketplace.getApps({organization_id: organization.id})
     ).catch(
       ->
         # Display the layout

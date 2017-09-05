@@ -12,16 +12,12 @@ angular.module 'mnoEnterpriseAngular'
     # Using this syntax will not trigger the data extraction in MnoeApiSvc
     # as the /marketplace payload isn't encapsulated in "{ marketplace: categories {...}, apps {...} }"
     marketplaceApi = MnoeApiSvc.oneUrl('/marketplace')
-    marketplacePromise = null
-    marketplaceResponse = null
+    marketplacePromises = []
 
-    @getApps = () ->
-      return marketplacePromise if marketplacePromise?
-      marketplacePromise = marketplaceApi.get().then(
-        (response) ->
-          marketplaceResponse = response
-          response
-      )
+    @getApps = (params = null) ->
+      paramsKey = JSON.stringify(params)
+      return marketplacePromises[paramsKey] if marketplacePromises[paramsKey]?
+      marketplacePromises[paramsKey] = marketplaceApi.get(params)
 
     productsPromise = null
     @getProducts = () ->
@@ -51,9 +47,6 @@ angular.module 'mnoEnterpriseAngular'
 
     @getProduct = (productId) ->
       MnoeApiSvc.one('/products', productId).get()
-
-    @findApp = (nid) ->
-      _.find(marketplaceResponse.apps, (a) -> a.nid == nid)
 
     @getReview = (appId, reviewId) ->
       MnoeApiSvc.one('marketplace', appId).one('app_reviews', parseInt(reviewId)).get()

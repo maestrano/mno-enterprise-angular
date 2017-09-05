@@ -5,7 +5,7 @@
 angular.module 'mnoEnterpriseAngular'
   .component('mnoMarketplaceApps', {
     templateUrl: 'app/components/mno-marketplace-apps/mno-marketplace-apps.html',
-    controller: (toastr, MnoeMarketplace, MnoeConfig) ->
+    controller: ($scope, toastr, MnoeOrganizations, MnoeMarketplace, MnoeConfig) ->
       vm = this
 
       #====================================
@@ -57,15 +57,17 @@ angular.module 'mnoEnterpriseAngular'
       vm.canBeCompared = ->
         return vm.nbAppsToCompare <= 4 && vm.nbAppsToCompare >=2
 
-      MnoeMarketplace.getApps().then(
-        (response) ->
-          # Remove restangular decoration
-          response = response.plain()
+      $scope.$watch MnoeOrganizations.getSelectedId, (val) ->
+        if val?
+          vm.isLoading = true
+          MnoeMarketplace.getApps({organization_id: val}).then(
+            (response) ->
+              # Remove restangular decoration
+              response = response.plain()
 
-          vm.categories = response.categories
-          vm.apps = response.apps
+              vm.categories = response.categories
+              vm.apps = response.apps
+          ).finally(-> vm.isLoading = false)
 
-          vm.isLoading = false
-      )
       return
     })
