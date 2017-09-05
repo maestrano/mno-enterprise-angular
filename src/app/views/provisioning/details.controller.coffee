@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningDetailsCtrl', ($state, MnoeProvisioning, schemaForm) ->
+  .controller('ProvisioningDetailsCtrl', ($state, MnoeMarketplace, MnoeProvisioning, schemaForm) ->
 
     vm = this
 
