@@ -23,11 +23,30 @@ angular.module 'mnoEnterpriseAngular'
           response
       )
 
+    productsPromise = null
     @getProducts = () ->
-      return marketplaceProductsPromise if marketplaceProductsPromise?
-      marketplaceProductsPromise = MnoeApiSvc.oneUrl('/products').get().then(
+      return productsPromise if productsPromise?
+      productsPromise = MnoeApiSvc.oneUrl('/products').get()
+
+    localProductsPromise = null
+    @getLocalProducts = (limit, offset, sort, params = {}) ->
+      params['where[local]'] = 'true'
+      return localProductsPromise if localProductsPromise?
+      localProductsPromise = MnoeApiSvc.all('products').getList(params).then(
         (response) ->
-          response
+          _.map(response.plain(), (product) ->
+            # Transforms the values_attributes ([name: 'Some string', data: 'Its value'])
+            # to attributes (vm.product.some_string)
+            _.each(product.values_attributes, (v) ->
+              try
+                product[_.snakeCase(v.name)] = JSON.parse(v.data)
+              catch
+                product[_.snakeCase(v.name)] = v.data
+            )
+            product.screenshots = _.map(product.assets_attributes, (a) -> a.url)
+
+            product
+          )
       )
 
     @getProduct = (productId) ->

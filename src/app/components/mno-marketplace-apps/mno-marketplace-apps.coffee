@@ -5,12 +5,7 @@
 angular.module 'mnoEnterpriseAngular'
   .component('mnoMarketplaceApps', {
     templateUrl: 'app/components/mno-marketplace-apps/mno-marketplace-apps.html',
-    bindings: {
-      view: '@'
-    }
-
     controller: (toastr, MnoeMarketplace, MnoeConfig) ->
-
       vm = this
 
       #====================================
@@ -71,7 +66,6 @@ angular.module 'mnoEnterpriseAngular'
           vm.apps = response.apps
 
           vm.isLoading = false
-
       )
       return
     })

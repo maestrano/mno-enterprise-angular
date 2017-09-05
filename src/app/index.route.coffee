@@ -136,6 +136,14 @@ angular.module 'mnoEnterpriseAngular'
             templateUrl: 'app/views/marketplace/marketplace-app.html'
             controller: 'DashboardMarketplaceAppCtrl'
             controllerAs: 'vm'
+        .state 'home.marketplace.product',
+          data:
+            pageTitle:'Marketplace'
+          url: '^/marketplace/product/:productId'
+          views: '@home':
+            templateUrl: 'app/views/marketplace/marketplace-product.html'
+            controller: 'DashboardMarketplaceProductCtrl'
+            controllerAs: 'vm'
         .state 'home.marketplace.compare',
           data:
             pageTitle:'Compare apps'
