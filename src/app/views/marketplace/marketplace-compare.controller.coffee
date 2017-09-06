@@ -23,10 +23,11 @@ angular.module('mnoEnterpriseAngular')
       (response) ->
         response = response.plain()
         # Filter apps selected
+        debugger
         vm.comparedApps = _.each(
           _.filter(response.apps, (app)-> app.toCompare == true),
             (app) ->  # Round average rating
-              app.average_rating = parseFloat(app.average_rating).toFixed(1)
+              app.average_rating = if app.average_rating? then parseFloat(app.average_rating).toFixed(1)
               true
         )
 
