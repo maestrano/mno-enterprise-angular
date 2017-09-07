@@ -23,7 +23,6 @@ angular.module('mnoEnterpriseAngular')
       (response) ->
         response = response.plain()
         # Filter apps selected
-        debugger
         vm.comparedApps = _.each(
           _.filter(response.apps, (app)-> app.toCompare == true),
             (app) ->  # Round average rating
