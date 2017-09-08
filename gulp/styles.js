@@ -11,7 +11,6 @@ var $ = require('gulp-load-plugins')();
 
 var wiredep = require('wiredep').stream;
 var _ = require('lodash');
-var rename = require("gulp-rename");
 
 
 // generate sprites
@@ -55,7 +54,7 @@ gulp.task('less-concat', function() {
     .pipe(wiredep(_.extend({}, conf.wiredep)))
     .pipe($.replace('../../../bower_components/', '../bower_components/'))
     .pipe($.replace('../../bower_components/', '../bower_components/'))
-    .pipe(rename({ basename: "theme-previewer" }))
+    .pipe($.rename({ basename: "theme-previewer" }))
     .pipe(gulp.dest(path.join(conf.paths.dist, '/styles/')))
 });
 

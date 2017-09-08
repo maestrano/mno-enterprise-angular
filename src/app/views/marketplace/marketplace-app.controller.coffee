@@ -2,9 +2,9 @@
 #
 #============================================
 angular.module 'mnoEnterpriseAngular'
-  .controller('DashboardMarketplaceAppCtrl',($q, $scope, $stateParams, $state, $sce, $window, $uibModal, toastr,
-    MnoeMarketplace, MnoeOrganizations, MnoeCurrentUser, MnoeAppInstances, MnoConfirm, MnoErrorsHandler,
-    PRICING_CONFIG, REVIEWS_CONFIG, QUESTIONS_CONFIG) ->
+  .controller('DashboardMarketplaceAppCtrl',($q, $scope, $stateParams, $state, $sce, $window, $uibModal, $anchorScroll,
+    $location, toastr, MnoeMarketplace, MnoeOrganizations, MnoeCurrentUser, MnoeAppInstances, MnoConfirm,
+    MnoErrorsHandler, PRICING_CONFIG, REVIEWS_CONFIG, QUESTIONS_CONFIG) ->
 
       vm = this
 
@@ -127,7 +127,13 @@ angular.module 'mnoEnterpriseAngular'
             vm.reviews.list.pop() if vm.reviews.list.length > vm.reviews.nbItems
             # Update average rating
             updateAverageRating(response.average_rating)
+            updateAnyReviews()
         )
+
+      vm.scrollToReviews = ->
+        $scope.active = 0
+        $location.hash('review-tabs')
+        $anchorScroll()
 
       #====================================
       # Edit review
@@ -169,6 +175,7 @@ angular.module 'mnoEnterpriseAngular'
           (response) ->
             vm.reviews.list.splice(key, 1)
             updateAverageRating(response.average_rating)
+            updateAnyReviews()
         )
 
       #====================================
@@ -230,6 +237,14 @@ angular.module 'mnoEnterpriseAngular'
         )
 
       #====================================
+      # Questions
+      #====================================
+      vm.scrollToQuestions = ->
+        $scope.active = 1
+        $location.hash('review-tabs')
+        $anchorScroll()
+
+      #====================================
       # Ask question
       #====================================
       vm.openCreateQuestionModal = ->
@@ -244,6 +259,7 @@ angular.module 'mnoEnterpriseAngular'
         modalInstance.result.then(
           (response) ->
             vm.questions.list.unshift(response.app_question)
+            updateAnyQuestions()
         )
 
       #====================================
@@ -280,6 +296,7 @@ angular.module 'mnoEnterpriseAngular'
         MnoConfirm.showModal(modalOptions).then(
           ->
             vm.questions.list.splice(key, 1)
+            updateAnyQuestions()
         )
 
       #====================================
@@ -361,6 +378,7 @@ angular.module 'mnoEnterpriseAngular'
           (response) ->
             vm.reviews.totalItems = response.headers('x-total-count')
             vm.reviews.list = response.data
+            updateAnyReviews()
         ).finally(-> vm.reviews.loading = false)
 
       fetchQuestions = (appId, limit, offset, search = '') ->
@@ -368,12 +386,19 @@ angular.module 'mnoEnterpriseAngular'
         MnoeMarketplace.getQuestions(appId, limit, offset, search).then(
           (response) ->
             vm.questions.list = response.data
+            updateAnyQuestions()
         ).finally(-> vm.questions.loading = false)
+
+      updateAnyQuestions = ->
+        vm.anyQuestions = (vm.questions.list.length != 0)
+
+      updateAnyReviews = ->
+        vm.anyReviews = (vm.reviews.list.length != 0)
 
       updateAverageRating = (rating) ->
         # Update average rating
-        vm.averageRating = if rating? then parseFloat(rating).toFixed(1) else null
-        vm.isRateDisplayed = !!vm.averageRating
+        vm.averageRating = if rating? then parseFloat(rating).toFixed(1) else -1
+        vm.isRateDisplayed = vm.averageRating >= 0
 
       #====================================
       # Post-Initialization

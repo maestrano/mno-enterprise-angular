@@ -20,15 +20,15 @@
 
         <div class="text-center next-button-wrapper">
           <div class="top-buffer-2" ng-show="vm.nbAppsToConnect > 0" translate translate-value-nb="{{vm.nbAppsToConnect}}">
-            mno_enterprise.templates.onboarding.connect_apps.apps_to_connect
+            mno_enterprise.templates.onboarding.connect_apps.apps_to_connect_now
           </div>
-          <div class="top-buffer-2" ng-show="vm.nbAppsToConnect === 0" translate translate-value-nb="{{vm.nbApps}}">
-            mno_enterprise.templates.onboarding.connect_apps.all_apps_connected
+          <div ng-show="vm.nbAppsToConnect > 0" class="text-muted" translate>
+            mno_enterprise.templates.onboarding.connect_apps.apps_to_connect_later
           </div>
-          <button ng-show="vm.nbAppsToConnect > 0" class="btn btn-primary next-button" ui-sref="home.impac">
+          <button id="ob3-btn1" ng-show="vm.nbAppsToConnect > 0" class="btn btn-primary next-button" ui-sref="home.impac">
             <span translate>mno_enterprise.templates.onboarding.connect_apps.skip</span>
           </button>
-          <button ng-show="vm.nbAppsToConnect === 0" class="btn btn-primary next-button" ui-sref="home.impac">
+          <button id="ob3-btn2" ng-show="vm.nbAppsToConnect === 0" class="btn btn-primary next-button" ui-sref="home.impac">
             <span translate>mno_enterprise.templates.onboarding.connect_apps.go_to_dashboard</span>
           </button>
         </div>

@@ -69,19 +69,19 @@
           data="vm.user.password"
           current="true"
           confirm="true"
-          current-text="Current Password"
-          new-text="New Password"
-          confirm-text="Confirm Password">
+          current-text="{{'mno_enterprise.templates.components.mno_password.current_password' | translate}}"
+          new-text="{{'mno_enterprise.templates.components.mno_password.new_password' | translate}}"
+          confirm-text="{{'mno_enterprise.templates.components.mno_password.confirm_password' | translate}}">
         </mno-password>
 
         <div class='row top-buffer-1'>
           <div class='col-md-12'>
             <button ng-click="vm.user.updatePassword(vm.form)" ng-disabled="vm.form.$invalid || vm.user.loading" class='btn btn-warning'>
               <span ng-show="vm.user.loading"><i class="fa fa-spinner fa-pulse fa-fw"></i></span>
-              Save
+              {{'mno_enterprise.templates.components.mno_password.save' | translate}}
             </button>
             <button ng-click="vm.user.cancelPassword()" ng-show="vm.user.cancelPasswordEnabled() && !vm.user.loading" class='btn btn-default'>
-              Cancel
+              {{'mno_enterprise.templates.components.mno_password.cancel' | translate}}
             </button>
           </div>
         </div>
@@ -144,7 +144,7 @@
     -->
     <div uib-accordion-group ng-if="vm.isLocalizationVisible" is-open="vm.isLocalizationOpen">
       <div uib-accordion-heading>
-          {{ 'mno_enterprise.templates.dashboard.account.settings' | translate }} <span class="fa pull-right" ng-class="{'fa-caret-down': !vm.isChangePasswordOpen, 'fa-caret-up': vm.isChangePasswordOpen}"></span>
+          {{ 'mno_enterprise.templates.dashboard.account.settings' | translate }} <span class="fa pull-right" ng-class="{'fa-caret-down': !vm.isLocalizationOpen, 'fa-caret-up': vm.isLocalizationOpen}"></span>
       </div>
       <dashboard-language-selectbox></dashboard-language-selectbox>
     </div>

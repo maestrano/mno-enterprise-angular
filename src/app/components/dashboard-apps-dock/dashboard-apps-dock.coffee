@@ -1,13 +1,15 @@
 
-DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, MnoeOrganizations, MnoeAppInstances, MARKETPLACE_CONFIG) ->
+DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, $timeout, MnoeOrganizations, MnoeAppInstances, MARKETPLACE_CONFIG, ONBOARDING_WIZARD_CONFIG) ->
   'ngInject'
 
   $scope.appDock = {}
+  $scope.apps = []
   $scope.appDock.isMinimized = true
   $scope.activeApp = null
   $scope.launchApp = {isClosed: true}
-
+  $scope.popoverTemplateUrl = 'app/components/dashboard-apps-dock/no-apps-notification.html'
   $scope.isMarketplaceEnabled = MARKETPLACE_CONFIG.enabled
+  $scope.isOnboardingEnabled = ONBOARDING_WIZARD_CONFIG.enabled
 
   # 'Lock' the dock when a menu is expanded.
   # Ie: we disable all effects and animation
@@ -65,6 +67,9 @@ DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, MnoeOrganizations
   $scope.appDock.toggle = ->
     $scope.appDock.isMinimized = !$scope.appDock.isMinimized
 
+  $scope.isPopoverShown = ->
+    $scope.isOnboardingEnabled && $scope.isMarketplaceEnabled && !$scope.isLoading && _.isEmpty($scope.apps)
+
   #====================================
   # App Settings modal
   #====================================
@@ -108,11 +113,10 @@ DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, MnoeOrganizations
       $scope.isLoading = true
       MnoeAppInstances.getAppInstances().then(
         (response) ->
-          $scope.isLoading = false
           $scope.apps = response
-      )
+      ).finally(-> $scope.isLoading = false)
 
-  # Hide the dock if marketplace is disabled and there is not app linked
+  # Hide the dock if marketplace is disabled and there are no apps
   $scope.displayDock = ->
     $scope.isMarketplaceEnabled || ($scope.apps? && $scope.apps.length > 0)
 
@@ -122,9 +126,7 @@ DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, MnoeOrganizations
 angular.module 'mnoEnterpriseAngular'
   .directive('dashboardAppsDock', ($window) ->
     return {
-      scope: {
-        visibleIfEmpty: '=?'
-      },
+
       link: (scope, element) ->
         # Mobile dock: max-height need to be an absolute value for the scrolling to work
         pageHeight = angular.element(window).height()
@@ -157,5 +159,20 @@ angular.module 'mnoEnterpriseAngular'
       restrict: 'EA'
       controller: DashboardAppsDockCtrl
       templateUrl: 'app/components/dashboard-apps-dock/dashboard-apps-dock.html',
-     }
+    }
+)
+
+#===================================
+# Manage the popover closing button
+#===================================
+angular.module 'mnoEnterpriseAngular'
+  .directive('popoverToggle', () ->
+    return {
+      scope: true,
+      link: (scope, element) ->
+        scope.toggle = ->
+          scope.isPopoverShown = false
+
+        return element.on('click', scope.toggle)
+    }
 )

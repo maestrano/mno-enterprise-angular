@@ -7,16 +7,21 @@
         <i class="fa fa-chevron-left"></i> {{ 'mno_enterprise.templates.dashboard.marketplace.show.back' | translate }}
       </a>
       <div class="media" ng-show="!vm.isLoading">
-        <div class="app-rating pull-right">
-          <div ng-show="vm.isRateDisplayed">
-            <average-star-rating ng-model="vm.averageRating" display-rating="true" max="5"></average-star-rating>
-          </div>
-        </div>
         <div class="pull-left">
           <img class="media-object" ng-src="{{vm.app.logo}}" ng-alt="{{vm.app.name}}">
         </div>
         <div class="media-body">
           <h2 class="media-heading">{{vm.app.name}}</h2>
+        </div>
+        <div class="app-rating pull-left">
+          <div ng-show="vm.isRateDisplayed">
+            <average-star-rating ng-model="vm.averageRating" display-rating="true" max="5"></average-star-rating>
+          </div>
+        </div>
+        <div class="pull-left links">
+          <a ng-show="vm.anyReviews" ng-click="vm.scrollToReviews()" href="">{{vm.reviews.list.length}} {{'mno_enterprise.templates.dashboard.marketplace.show.reviews' | translate}}</a>
+          <span ng-if="vm.anyReviews && vm.anyQuestions">&nbsp;|&nbsp;</span>
+          <a ng-show="vm.anyQuestions" ng-click="vm.scrollToQuestions()" href="">{{vm.questions.list.length}} {{'mno_enterprise.templates.dashboard.marketplace.show.questions' | translate}}</a>
         </div>
       </div>
     </div>
@@ -105,7 +110,7 @@
     <div ng-if="vm.isPriceShown" class="row top-buffer-1">
       <div class="col-md-12">
         <div class="well" ng-switch="vm.app.pricing_plans">
-          <h2>Price</h2>
+          <h2>{{ 'mno_enterprise.templates.dashboard.marketplace.show.price' | translate }}</h2>
           <ul>
             <li ng-repeat="plan in vm.pricing_plans">
               <b>{{plan.name}}</b>: {{plan.description}}<br>
@@ -113,12 +118,12 @@
               <span ng-hide="plan.price.value">{{plan.currency}} {{plan.price}} {{plan.factor}}</span>
             </li>
           </ul>
-          <span ng-if="!vm.app.single_billing" class="text-muted">Note: Credits cannot be used on this app as billing is managed by the third party provider</span>
+          <div ng-bind-html="vm.app.pricing_text"></div>
         </div>
       </div>
     </div>
 
-    <uib-tabset class="bottom-buffer-10">
+    <uib-tabset id="review-tabs" active="active" class="bottom-buffer-10">
       <uib-tab ng-if="vm.isReviewingEnabled" index="0" heading="Feedback">
         <!-- Comments & Ratings -->
         <div id="comments">
@@ -150,12 +155,13 @@
               mno_enterprise.templates.dashboard.marketplace.show.no_review
             </span>
           </div>
-          <div ng-hide='vm.reviews.loading'>
-            <div class="well" ng-repeat="(key, review) in vm.reviews.list">
+          <div class="well" ng-hide='vm.reviews.loading'>
+            <div ng-repeat="(key, review) in vm.reviews.list">
               <!-- Review -->
               <div class="row">
                 <div class="col-md-8">
                   <blockquote>
+                  <average-star-rating ng-model="review.rating" readonly="true"></average-star-rating>
                     <span>{{review.description}}</span>
                     <footer class="top-buffer-1">
                       <span>{{review.user_name}} {{ 'mno_enterprise.templates.dashboard.marketplace.show.from' | translate }} </span>
@@ -170,19 +176,20 @@
                           {{ 'mno_enterprise.templates.dashboard.marketplace.show.edited_by_admin' | translate }}
                         </span>
                       </span>
+                      <a class="comments-show" ng-hide="review.showComments || review.comments.length == 0" ng-click="review.showComments = true" href="">{{'mno_enterprise.templates.dashboard.marketplace.show.comment.feedback_list_links' | translate:{COUNT: review.comments.length} }}</a>
+                      <a class="comments-show" ng-show="review.showComments" ng-click="review.showComments = false" href="">{{'mno_enterprise.templates.dashboard.marketplace.show.comment.hide_comments' | translate}}</a>
                     </footer>
                   </blockquote>
                 </div>
                 <div class="col-md-4 text-right">
-                  <average-star-rating ng-model="review.rating" readonly="true"></average-star-rating>
                   <a class="btn btn-link btn-link-warning" href="" ng-if="vm.canUserEditReview(review)" ng-click="vm.openEditReviewModal(review, key)"><i class="fa fa-edit"></i> {{'mno_enterprise.templates.dashboard.marketplace.show.edit' | translate}}</a>
                   <a class="btn btn-link btn-link-danger" href="" ng-if="vm.canUserEditReview(review)" ng-click="vm.openDeleteReviewModal(review, key)"><i class="fa fa-trash"></i> {{'mno_enterprise.templates.dashboard.marketplace.show.delete' | translate}}</a>
-                  <a class="btn btn-link btn-link-primary" href="" ng-click="vm.openCreateCommentModal(review, key)"><i class="fa fa-plus"></i> Comment</a>
+                  <a class="btn btn-link btn-link-primary" href="" ng-click="vm.openCreateCommentModal(review, key)"><i class="fa fa-plus"></i> {{'mno_enterprise.templates.dashboard.marketplace.show.comment.feedback_list_links' | translate}}</a>
                 </div>
               </div>
 
               <!-- Comments -->
-              <div class="clearfix" ng-repeat="(i, comment) in review.comments">
+              <div class="clearfix" ng-show="review.showComments" ng-repeat="(i, comment) in review.comments">
                 <div class="comment">
                   <span class="pull-right top-buffer-1">
                     <a class="btn btn-link btn-link-warning" ng-if="vm.canUserEditReview(comment)" ng-click="vm.openEditCommentModal(comment, i, key)"><i class="fa fa-edit"></i> {{'mno_enterprise.templates.dashboard.marketplace.show.edit' | translate}}</a>
@@ -202,10 +209,10 @@
                       <span ng-if="comment.created_at"> {{comment.created_at | date: "dd/MM/yyyy" }}</span>
                       <span ng-if="!comment.created_at"> {{ 'mno_enterprise.templates.dashboard.marketplace.show.just_now' | translate }}</span>
                       <span ng-if="comment.edited"> -
-                        <span ng-if="comment.edited_by_id == comment.user_id" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.marketplace.show.edited_by_user_tooltip' | translate }}" ng-click="vm.showHistory(comment)">
+                        <span ng-if="comment.edited_by_id == comment.user_id && comment.user_admin_role != 'admin'" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.marketplace.show.edited_by_user_tooltip' | translate }}" ng-click="vm.showHistory(comment)">
                           {{ 'mno_enterprise.templates.dashboard.marketplace.show.edited_by_user' | translate }}
                         </span>
-                        <span ng-if="comment.edited_by_id != comment.user_id">
+                        <span ng-if="comment.edited_by_id != comment.user_id || comment.user_admin_role == 'admin'">
                           {{ 'mno_enterprise.templates.dashboard.marketplace.show.edited_by_admin' | translate }}
                         </span>
                        </span>
@@ -257,7 +264,8 @@
                       </div>
                       <div class="col-md-10">
                         <p class="question-text">{{ question.description }}</p>
-                        <p class="question-attribute">Posted by: {{ question.user_name }} in {{ question.organization_name }} on {{ question.created_at | date: "dd/MM/yyyy" }}</p>
+                        <p ng-if="question.user_admin_role != 'admin'" class="question-attribute">Posted by: {{ question.user_name }} in {{ question.organization_name }} on {{ question.created_at | date: "dd/MM/yyyy" }}</p>
+                        <p ng-if="question.user_admin_role == 'admin'" class="question-attribute">Posted by: {{ question.user_name }}, {{ 'mno_enterprise.templates.dashboard.marketplace.show.platform_admin' | translate }} on {{ question.created_at | date: "dd/MM/yyyy" }}</p>
                       </div>
                     </div>
                     <div class="col-sm-3 question-actions">
@@ -274,7 +282,8 @@
                       <div class="col-md-10" >
                         <div class="question-answer" ng-repeat="(i, answer) in filteredAnswers = (question.answers | filter:{ status: 'approved' })">
                           <p class="question-text">{{ answer.description }} </p>
-                          <p class="question-attribute">Posted by {{ answer.user_name }} in {{ answer.organization_name }} on {{ answer.created_at | date: "dd/MM/yyyy" }}</p>
+                          <p ng-if="answer.user_admin_role != 'admin'" class="question-attribute">Posted by {{ answer.user_name }} in {{ answer.organization_name }} on {{ answer.created_at | date: "dd/MM/yyyy" }}</p>
+                          <p ng-if="answer.user_admin_role == 'admin'" class="question-attribute">Posted by {{ answer.user_name }}, {{ 'mno_enterprise.templates.dashboard.marketplace.show.platform_admin' | translate }} on {{ answer.created_at | date: "dd/MM/yyyy" }}</p>
                           <button class="btn btn-xs btn-warning" type="button" name="button" ng-if="answer.user_id == vm.userId" ng-click="vm.openEditAnswerModal(answer, i, key)">{{'mno_enterprise.templates.dashboard.marketplace.show.edit' | translate}}</button>
                           <button class="btn btn-xs btn-danger" type="button" name="button" ng-if="answer.user_id == vm.userId" ng-click="vm.openDeleteAnswerModal(answer, i, key)">{{'mno_enterprise.templates.dashboard.marketplace.show.delete' | translate}}</button>
                         </div>

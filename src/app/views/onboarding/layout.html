@@ -1,10 +1,17 @@
 <div id="onboarding">
   <header class="header">
     <img class="logo" src="images/main-logo.png">
-    <span>
+    <div class="onboarding-menu" ng-click="onboarding.menu.toggle()">
       <span class="name">{{onboarding.user.name}} {{onboarding.user.surname}}</span>
       <img class="avatar" ng-src="{{onboarding.user.avatar_url}}">
-    </span>
+      <i ng-class="onboarding.menu.isClosed? 'fa fa-chevron-down': 'fa fa-chevron-up'"></i>
+      <div class="box-content scrollbar-hidden" uib-collapse="onboarding.menu.isClosed">
+        <a ui-sref="logout" class="default-link">
+          <i class="fa fa-sign-out"></i>
+          <span translate>mno_enterprise.templates.onboarding.menu.logout</span>
+        </a>
+      </div>
+    </div>
   </header>
   <div class="sub-header">
     <a class="breadcrumb-item" ui-sref="onboarding.step1" ui-sref-active="active">
@@ -24,6 +31,5 @@
       <span class="title" translate>mno_enterprise.templates.onboarding.breadcrumb.step4</span>
     </a>
   </div>
-
   <div class="container" ui-view></div>
 </div>

@@ -1,5 +1,53 @@
 # Change Log
 
+## [v1.1.2](https://github.com/maestrano/mno-enterprise-angular/tree/v1.1.2) (2017-08-29)
+[Full Changelog](https://github.com/maestrano/mno-enterprise-angular/compare/v1.1.1...v1.1.2)
+
+**Implemented enhancements:**
+
+- update "data not found" images [\#279](https://github.com/maestrano/mno-enterprise-angular/pull/279) ([cesar-tonnoir](https://github.com/cesar-tonnoir))
+- \[MNOE-67\] Roles feedback fixes [\#276](https://github.com/maestrano/mno-enterprise-angular/pull/276) ([alexnoox](https://github.com/alexnoox))
+
+**Fixed bugs:**
+
+- \[MNOE-555\] Use translate cloak to fix FOUC error [\#294](https://github.com/maestrano/mno-enterprise-angular/pull/294) ([adamaziz15](https://github.com/adamaziz15))
+- \[MNOE-567\] Refresh AppInstance cache asynchronously [\#284](https://github.com/maestrano/mno-enterprise-angular/pull/284) ([ouranos](https://github.com/ouranos))
+- Fix I18n settings accordion carret [\#272](https://github.com/maestrano/mno-enterprise-angular/pull/272) ([ouranos](https://github.com/ouranos))
+- Reset promise when app ratings are updated \(Rating stars bug fix\) [\#271](https://github.com/maestrano/mno-enterprise-angular/pull/271) ([adamaziz15](https://github.com/adamaziz15))
+- Fix star ratings bug [\#269](https://github.com/maestrano/mno-enterprise-angular/pull/269) ([adamaziz15](https://github.com/adamaziz15))
+- \[MNOE-558\] Update handling of admin\_role for reviews/questions frontend [\#268](https://github.com/maestrano/mno-enterprise-angular/pull/268) ([adamaziz15](https://github.com/adamaziz15))
+- \[MNOE-499\] Fix regression in dock display [\#267](https://github.com/maestrano/mno-enterprise-angular/pull/267) ([ouranos](https://github.com/ouranos))
+- \[MNOE-474\] Review: better guarding & refactor [\#266](https://github.com/maestrano/mno-enterprise-angular/pull/266) ([ouranos](https://github.com/ouranos))
+- \[MNOE-474\] Review UI: Add guarding and simplify code [\#265](https://github.com/maestrano/mno-enterprise-angular/pull/265) ([ouranos](https://github.com/ouranos))
+- \[MNOE-474\] Fix review UI [\#264](https://github.com/maestrano/mno-enterprise-angular/pull/264) ([ouranos](https://github.com/ouranos))
+- Fix organisation get method initialisation [\#261](https://github.com/maestrano/mno-enterprise-angular/pull/261) ([alexnoox](https://github.com/alexnoox))
+- Fix typo in variable name [\#260](https://github.com/maestrano/mno-enterprise-angular/pull/260) ([ouranos](https://github.com/ouranos))
+
+## [v1.1.1](https://github.com/maestrano/mno-enterprise-angular/tree/v1.1.1) (2017-07-24)
+[Full Changelog](https://github.com/maestrano/mno-enterprise-angular/compare/v1.1.0...v1.1.1)
+
+**Implemented enhancements:**
+
+- \[MNOE-279\] Export frontend version [\#257](https://github.com/maestrano/mno-enterprise-angular/pull/257) ([alexnoox](https://github.com/alexnoox))
+- \[MNOE-499\] Add logout button in onboarding [\#247](https://github.com/maestrano/mno-enterprise-angular/pull/247) ([hedudelgado](https://github.com/hedudelgado))
+- \[MNOE-501\] minor-UI-change-on-boarding [\#229](https://github.com/maestrano/mno-enterprise-angular/pull/229) ([rheasunshine](https://github.com/rheasunshine))
+- \[MNOE-474\] Update review frontend [\#219](https://github.com/maestrano/mno-enterprise-angular/pull/219) ([adamaziz15](https://github.com/adamaziz15))
+
+**Fixed bugs:**
+
+- Fix Account \> Language locale [\#259](https://github.com/maestrano/mno-enterprise-angular/pull/259) ([alexnoox](https://github.com/alexnoox))
+- Fix missing locales [\#258](https://github.com/maestrano/mno-enterprise-angular/pull/258) ([alexnoox](https://github.com/alexnoox))
+- \[DEVPL-158\] Pricing sync [\#254](https://github.com/maestrano/mno-enterprise-angular/pull/254) ([adamaziz15](https://github.com/adamaziz15))
+- \[MNOE-544\] Onboarding: fixes [\#253](https://github.com/maestrano/mno-enterprise-angular/pull/253) ([alexnoox](https://github.com/alexnoox))
+- Add gulp task to ensure locales in development [\#250](https://github.com/maestrano/mno-enterprise-angular/pull/250) ([MarcoCode](https://github.com/MarcoCode))
+- \[MNOE-495\] Fix adding members in team not working as expected [\#248](https://github.com/maestrano/mno-enterprise-angular/pull/248) ([ouranos](https://github.com/ouranos))
+- Fix intercom loading process [\#238](https://github.com/maestrano/mno-enterprise-angular/pull/238) ([hedudelgado](https://github.com/hedudelgado))
+
+**Merged pull requests:**
+
+- Revert "\[MNOE-501\] UI improvement on-boarding" [\#255](https://github.com/maestrano/mno-enterprise-angular/pull/255) ([alexnoox](https://github.com/alexnoox))
+- \[MNOE-501\] UI improvement on-boarding [\#233](https://github.com/maestrano/mno-enterprise-angular/pull/233) ([rheasunshine](https://github.com/rheasunshine))
+
 ## [v1.1.0](https://github.com/maestrano/mno-enterprise-angular/tree/v1.1.0) (2017-06-20)
 [Full Changelog](https://github.com/maestrano/mno-enterprise-angular/compare/v1.0.0...v1.1.0)
 

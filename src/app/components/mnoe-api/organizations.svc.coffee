@@ -30,23 +30,24 @@ angular.module 'mnoEnterpriseAngular'
       # return the cached promise if not a new call
       return organizationPromise if ((!id? || id == _self.selectedId) && organizationPromise?)
 
-      _self.selectedId = id if id?
+      # Fetch user
+      organizationPromise = MnoeCurrentUser.get().then(
+        (response) ->
+          # Fetch current organization
+          _self.selectedId = if id? then id else $cookies.get("#{response.id}_dhb_ref_id")
 
-      # Get the selected organization
-      organizationPromise = MnoeApiSvc.one('/organizations', _self.selectedId).get().then(
-        (responseOrga) ->
-          # Save the organization
-          _self.selected = responseOrga.plain()
-
-          # Use user id to avoid another user to load with an unknown organisation
-          MnoeCurrentUser.get().then(
-            (response) ->
+          # Get the selected organization
+          MnoeApiSvc.one('/organizations', _self.selectedId).get().then(
+            (responseOrga) ->
+              # Use user id to avoid another user to load with an unknown organisation
               $cookies.put("#{response.id}_dhb_ref_id", responseOrga.organization.id)
-              response
-          )
 
-          responseOrga
+              # Save the organization in the service
+              _self.selected = responseOrga.plain()
+          )
       )
+
+      return organizationPromise
 
     @create = (organization) ->
       MnoeApiSvc.all('/organizations').post(organization).then(
@@ -146,8 +147,6 @@ angular.module 'mnoEnterpriseAngular'
 
     # Load the current organization if defined (url, cookie or first)
     @getCurrentOrganisation = () ->
-      return organizationPromise if organizationPromise?
-
       defer = $q.defer()
 
       dhbRefId = $location.search().dhbRefId
@@ -156,7 +155,7 @@ angular.module 'mnoEnterpriseAngular'
       # Attempt to load organization from param
       if dhbRefId
         $log.debug "MnoeOrganizations.getCurrentOrganisation: dhbRefId", dhbRefId
-        organizationPromise = _self.get(dhbRefId).then((response) -> defer.resolve(response))
+        _self.get(dhbRefId).then((response) -> defer.resolve(response))
       else
         # Load user's first organization or from cookie
         MnoeCurrentUser.get().then(
@@ -167,11 +166,11 @@ angular.module 'mnoEnterpriseAngular'
             if val?
               # Load organization id stored in cookie
               $log.debug "MnoeOrganizations.getCurrentOrganisation: cookie", val
-              organizationPromise = _self.get(val).then((response) -> defer.resolve(response))
+              _self.get(val).then((response) -> defer.resolve(response))
             else
               # Load user's first organization id
               $log.debug "MnoeOrganizations.getCurrentOrganisation: first", response.organizations[0].id
-              organizationPromise = _self.get(response.organizations[0].id).then((response) -> defer.resolve(response))
+              _self.get(response.organizations[0].id).then((response) -> defer.resolve(response))
         )
 
       return defer.promise
@@ -189,6 +188,7 @@ angular.module 'mnoEnterpriseAngular'
       return role == 'Admin' if role
       _self.selected? && _self.selected.current_user? && _self.selected.current_user.role == 'Admin'
 
+    # TODO: DEPRECATED: To remove once Power User role removed from backend
     _self.role.isPowerUser = (role) ->
       return role == 'Power User' if role
       _self.selected? && _self.selected.current_user? && _self.selected.current_user.role == 'Power User'
