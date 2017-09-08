@@ -371,6 +371,7 @@
   "mno_enterprise.templates.dashboard.marketplace.compare.companies_number": "Number of companies using the application",
   "mno_enterprise.templates.dashboard.marketplace.compare.pricing": "Pricing",
   "mno_enterprise.templates.dashboard.marketplace.compare.pricing_not_available": "pricing information not available",
+  "mno_enterprise.templates.dashboard.marketplace.compare.no_review": "Rating not yet available",
   "mno_enterprise.templates.dashboard.organization.arrears.title": "Sorry we couldn't process this payment",
   "mno_enterprise.templates.dashboard.organization.arrears.explanation": "Your account is currently in arrears as we were unable to charge your designated credit card.",
   "mno_enterprise.templates.dashboard.organization.arrears.recommendation": "Please make sure your credit card details are up to date, then click the button below.",
