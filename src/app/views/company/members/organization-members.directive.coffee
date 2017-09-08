@@ -57,9 +57,9 @@ DashboardOrganizationMembersCtrl = ($scope, $uibModal, $sce, MnoeOrganizations, 
   rolesToDisplay = ->
     $scope.user_role = _.find(MnoeCurrentUser.user.organizations, {id: MnoeOrganizations.selectedId}).current_user_role if !$scope.user_role
     if $scope.user_role == 'Super Admin'
-      editionModal.config.roles = ['Member','Power User','Admin','Super Admin']
+      editionModal.config.roles = ['Member','Admin','Super Admin']
     else
-      editionModal.config.roles = ['Member','Power User','Admin']
+      editionModal.config.roles = ['Member','Admin']
 
   #====================================
   # User Edition Modal
@@ -176,7 +176,7 @@ DashboardOrganizationMembersCtrl = ($scope, $uibModal, $sce, MnoeOrganizations, 
     }
     defaultRole: 'Member'
     roles: ->
-      list = ['Member','Power User','Admin']
+      list = ['Member','Admin']
       list.push('Super Admin') if MnoeOrganizations.role.isSuperAdmin()
       return list
     teams: ->

@@ -1,98 +1,109 @@
-<!-- Modal Header -->
-<div class="modal-header">
-  <div class="close" type="button" ng-click="inviteModal.close()">×</div>
-  <h3 ng-show="inviteModal.step === 'enterEmails'" translate>mno_enterprise.templates.dashboard.organization.members.invite_modal.title_enter_emails</h3>
-  <h3 ng-show="inviteModal.step !== 'enterEmails'" translate>mno_enterprise.templates.dashboard.organization.members.invite_modal.title_select_roles</h3>
-</div>
-
-<!-- Modal Body -->
-<div class="modal-body" ng-switch on="inviteModal.step">
-
-  <!-- Enter Emails step -->
-  <div ng-switch-when="enterEmails" class="text-center">
-
-    <div class="alert alert-error" ng-show="inviteModal.invalidEmails.length > 0">
-      <ng-pluralize count="inviteModal.invalidEmails.length" when="{'one': 'The following email address is invalid: ',
-                       'other': 'The following email addresses are invalid: '}"></ng-pluralize>
-      '{{inviteModal.invalidEmails.join("', '")}}'
-    </div>
-
-    <div class="row">
-      <div class="col-sm-12">
-        <p>{{ 'mno_enterprise.templates.dashboard.organization.members.invite_modal.description' | translate }}</p>
-        <p>
-          {{ 'mno_enterprise.templates.dashboard.organization.members.invite_modal.example' | translate }}
-          <br>
-          user1@company.com<br>
-          user2@company.com
-        </p>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-sm-6 col-sm-offset-3">
-        <textarea class="form-control" rows="3" style="color:black;background-color:white;" ng-model="inviteModal.userEmails" required></textarea>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-sm-12">
-        <p>{{ 'mno_enterprise.templates.dashboard.organization.members.invite_modal.disclaimer' | translate }}</p>
-      </div>
-    </div>
+<div id="invite-members-modal">
+  <!-- Modal Header -->
+  <div class="modal-header">
+    <div class="close" type="button" ng-click="inviteModal.close()">×</div>
+    <h3 ng-show="inviteModal.step === 'enterEmails'" translate>mno_enterprise.templates.dashboard.organization.members.invite_modal.title_enter_emails</h3>
+    <h3 ng-show="inviteModal.step !== 'enterEmails'" translate>mno_enterprise.templates.dashboard.organization.members.invite_modal.title_select_roles</h3>
   </div>
 
-  <!-- Define Roles step -->
-  <div ng-switch-when="defineRoles">
-    <div class="row">
-      <div class="col-sm-12">
+  <!-- Modal Body -->
+  <div class="modal-body" ng-switch on="inviteModal.step">
 
-        <div class="table-cell inverse">
-          <div class="row th-row hidden-xs">
-            <div class="cell col-sm-4">{{ 'mno_enterprise.templates.dashboard.organization.members.email' | translate }}</div>
-            <div class="cell col-sm-4">{{ 'mno_enterprise.templates.dashboard.organization.members.role' | translate }}</div>
-            <div class="cell col-sm-4" ng-show="inviteModal.isTeamListShown()">{{ 'mno_enterprise.templates.dashboard.organization.members.team' | translate }}</div>
-          </div>
+    <!-- Enter Emails step -->
+    <div ng-switch-when="enterEmails" class="text-center">
 
-          <div class="row td-row" ng-repeat="member in inviteModal.members">
-            <div class="cell col-sm-4">
+      <div class="alert alert-error" ng-show="inviteModal.invalidEmails.length > 0">
+        <ng-pluralize count="inviteModal.invalidEmails.length" when="{'one': 'The following email address is invalid: ',
+                       'other': 'The following email addresses are invalid: '}"></ng-pluralize>
+        '{{inviteModal.invalidEmails.join("', '")}}'
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <p>{{ 'mno_enterprise.templates.dashboard.organization.members.invite_modal.description' | translate }}</p>
+          <p>
+            {{ 'mno_enterprise.templates.dashboard.organization.members.invite_modal.example' | translate }}
+            <br>
+            user1@company.com<br>
+            user2@company.com
+          </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+          <textarea class="form-control" rows="3" style="color:black;background-color:white;" ng-model="inviteModal.userEmails" required></textarea>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <p>{{ 'mno_enterprise.templates.dashboard.organization.members.invite_modal.disclaimer' | translate }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Define Roles step -->
+    <div ng-switch-when="defineRoles">
+      <div class="row text-center">
+        <div class="col-sm-12">
+          <ul class="roles-list">
+            <li translate>mno_enterprise.templates.dashboard.organization.members.invite_modal.roles_info.member</li>
+            <li translate>mno_enterprise.templates.dashboard.organization.members.invite_modal.roles_info.admin</li>
+            <li translate>mno_enterprise.templates.dashboard.organization.members.invite_modal.roles_info.super_admin</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+
+          <div class="table-cell inverse">
+            <div class="row th-row hidden-xs">
+              <div class="cell col-sm-4">{{ 'mno_enterprise.templates.dashboard.organization.members.email' | translate }}</div>
+              <div class="cell col-sm-4">{{ 'mno_enterprise.templates.dashboard.organization.members.role' | translate }}</div>
+              <div class="cell col-sm-4" ng-show="inviteModal.isTeamListShown()">{{ 'mno_enterprise.templates.dashboard.organization.members.team' | translate }}</div>
+            </div>
+
+            <div class="row td-row" ng-repeat="member in inviteModal.members">
+              <div class="cell col-sm-4">
                 <span class="cell-label visible-xs-inline">
                   {{ 'mno_enterprise.templates.dashboard.organization.members.email' | translate }}:
                   <br/>
                 </span>
-              {{ member.email }}
-            </div>
+                {{ member.email }}
+              </div>
 
-            <div class="cell col-sm-4">
-              <span class="cell-label visible-xs-inline">{{ 'mno_enterprise.templates.dashboard.organization.members.role' | translate }}:</span>
-              <select ng-model="member.role" ng-options="role for role in inviteModal.roleList" class="form-control"></select>
-            </div>
-            <div class="cell col-sm-4" ng-show="inviteModal.isTeamListShown()">
+              <div class="cell col-sm-4">
+                <span class="cell-label visible-xs-inline">{{ 'mno_enterprise.templates.dashboard.organization.members.role' | translate }}:</span>
+                <select ng-model="member.role" ng-options="role for role in inviteModal.roleList" class="form-control"></select>
+              </div>
+              <div class="cell col-sm-4" ng-show="inviteModal.isTeamListShown()">
                 <span class="cell-label visible-xs-inline">
                   {{ 'mno_enterprise.templates.dashboard.organization.members.team' | translate }}:
                 </span>
-              <select ng-model="member.team_id" ng-options="team.id as team.name for team in inviteModal.teamList" class="form-control">
-                <option value='' selected>
-                  {{ 'mno_enterprise.templates.dashboard.organization.members.team_select' | translate }}
-                </option>
-              </select>
+                <select ng-model="member.team_id" ng-options="team.id as team.name for team in inviteModal.teamList" class="form-control">
+                  <option value='' selected>
+                    {{ 'mno_enterprise.templates.dashboard.organization.members.team_select' | translate }}
+                  </option>
+                </select>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <!-- End: modal-body -->
   </div>
-  <!-- End: modal-body -->
-</div>
 
-<!-- Modal Footer -->
-<div class="modal-footer">
-  <div class="row">
-    <div class="col-md-12">
-      <button class="btn btn-default" ng-click="inviteModal.close()" ng-show="!inviteModal.isLoading">
-        {{ 'mno_enterprise.templates.dashboard.organization.members.invite_modal.cancel' | translate }}
-      </button>
-      <button class="btn btn-warning" ng-disabled="!inviteModal.isNextEnabled() || inviteModal.isLoading" ng-click="inviteModal.next()">
+  <!-- Modal Footer -->
+  <div class="modal-footer">
+    <div class="row">
+      <div class="col-md-12">
+        <button class="btn btn-default" ng-click="inviteModal.close()" ng-show="!inviteModal.isLoading">
+          {{ 'mno_enterprise.templates.dashboard.organization.members.invite_modal.cancel' | translate }}
+        </button>
+        <button class="btn btn-warning" ng-disabled="!inviteModal.isNextEnabled() || inviteModal.isLoading" ng-click="inviteModal.next()">
           <span ng-show="inviteModal.isLoading">
             <i class="fa fa-spinner fa-pulse fa-fw"></i>
           </span>
@@ -102,7 +113,8 @@
           <span ng-show="inviteModal.labelForAction() === 'Invite'">
             {{ 'mno_enterprise.templates.dashboard.organization.members.invite_modal.invite' | translate }}
           </span>
-      </button>
+        </button>
+      </div>
     </div>
   </div>
 </div>

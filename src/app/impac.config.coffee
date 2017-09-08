@@ -22,7 +22,7 @@ angular.module 'mnoEnterpriseAngular'
   options =
     # link to the marketplace
     dataNotFoundConfig:
-      linkUrl: '#!/marketplace'
+      linkUrl: 'marketplace'
       linkTarget: '_self'
     # remove useless messages
     dhbErrorsConfig:
@@ -47,6 +47,7 @@ angular.module 'mnoEnterpriseAngular'
 .config((ImpacAssetsProvider) ->
   options =
     defaultImagesPath: '/dashboard/images'
+    dataNotFound: '/dashboard/images/data_not_found'
 
   ImpacAssetsProvider.configure(options)
 )

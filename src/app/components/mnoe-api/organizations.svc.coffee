@@ -191,6 +191,7 @@ angular.module 'mnoEnterpriseAngular'
       return role == 'Admin' if role
       _self.selected? && _self.selected.current_user? && _self.selected.current_user.role == 'Admin'
 
+    # TODO: DEPRECATED: To remove once Power User role removed from backend
     _self.role.isPowerUser = (role) ->
       return role == 'Power User' if role
       _self.selected? && _self.selected.current_user? && _self.selected.current_user.role == 'Power User'

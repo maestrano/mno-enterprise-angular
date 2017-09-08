@@ -10,15 +10,20 @@
  *  The list of variables are listed here bower_components/bootstrap/less/variables.less
  */
 @icon-font-path: '../../bower_components/bootstrap/fonts/';
-@fa-font-path: "../../bower_components/font-awesome/fonts";
+@fa-font-path: '../../bower_components/font-awesome/fonts';
 @font-path: '/admin/fonts';
 
-html, body {
+html {
   height: 100%;
 }
 
 body {
+  height: 100%;
   overflow-x: hidden;
+
+  &.translate-cloak {
+    opacity: 0;
+  }
 }
 
 .browsehappy {

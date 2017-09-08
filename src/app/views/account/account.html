@@ -144,7 +144,7 @@
     -->
     <div uib-accordion-group ng-if="vm.isLocalizationVisible" is-open="vm.isLocalizationOpen">
       <div uib-accordion-heading>
-          {{ 'mno_enterprise.templates.dashboard.account.settings' | translate }} <span class="fa pull-right" ng-class="{'fa-caret-down': !vm.isChangePasswordOpen, 'fa-caret-up': vm.isChangePasswordOpen}"></span>
+          {{ 'mno_enterprise.templates.dashboard.account.settings' | translate }} <span class="fa pull-right" ng-class="{'fa-caret-down': !vm.isLocalizationOpen, 'fa-caret-up': vm.isLocalizationOpen}"></span>
       </div>
       <dashboard-language-selectbox></dashboard-language-selectbox>
     </div>

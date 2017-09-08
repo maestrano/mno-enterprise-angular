@@ -1,5 +1,28 @@
 # Change Log
 
+## [v1.1.2](https://github.com/maestrano/mno-enterprise-angular/tree/v1.1.2) (2017-08-29)
+[Full Changelog](https://github.com/maestrano/mno-enterprise-angular/compare/v1.1.1...v1.1.2)
+
+**Implemented enhancements:**
+
+- update "data not found" images [\#279](https://github.com/maestrano/mno-enterprise-angular/pull/279) ([cesar-tonnoir](https://github.com/cesar-tonnoir))
+- \[MNOE-67\] Roles feedback fixes [\#276](https://github.com/maestrano/mno-enterprise-angular/pull/276) ([alexnoox](https://github.com/alexnoox))
+
+**Fixed bugs:**
+
+- \[MNOE-555\] Use translate cloak to fix FOUC error [\#294](https://github.com/maestrano/mno-enterprise-angular/pull/294) ([adamaziz15](https://github.com/adamaziz15))
+- \[MNOE-567\] Refresh AppInstance cache asynchronously [\#284](https://github.com/maestrano/mno-enterprise-angular/pull/284) ([ouranos](https://github.com/ouranos))
+- Fix I18n settings accordion carret [\#272](https://github.com/maestrano/mno-enterprise-angular/pull/272) ([ouranos](https://github.com/ouranos))
+- Reset promise when app ratings are updated \(Rating stars bug fix\) [\#271](https://github.com/maestrano/mno-enterprise-angular/pull/271) ([adamaziz15](https://github.com/adamaziz15))
+- Fix star ratings bug [\#269](https://github.com/maestrano/mno-enterprise-angular/pull/269) ([adamaziz15](https://github.com/adamaziz15))
+- \[MNOE-558\] Update handling of admin\_role for reviews/questions frontend [\#268](https://github.com/maestrano/mno-enterprise-angular/pull/268) ([adamaziz15](https://github.com/adamaziz15))
+- \[MNOE-499\] Fix regression in dock display [\#267](https://github.com/maestrano/mno-enterprise-angular/pull/267) ([ouranos](https://github.com/ouranos))
+- \[MNOE-474\] Review: better guarding & refactor [\#266](https://github.com/maestrano/mno-enterprise-angular/pull/266) ([ouranos](https://github.com/ouranos))
+- \[MNOE-474\] Review UI: Add guarding and simplify code [\#265](https://github.com/maestrano/mno-enterprise-angular/pull/265) ([ouranos](https://github.com/ouranos))
+- \[MNOE-474\] Fix review UI [\#264](https://github.com/maestrano/mno-enterprise-angular/pull/264) ([ouranos](https://github.com/ouranos))
+- Fix organisation get method initialisation [\#261](https://github.com/maestrano/mno-enterprise-angular/pull/261) ([alexnoox](https://github.com/alexnoox))
+- Fix typo in variable name [\#260](https://github.com/maestrano/mno-enterprise-angular/pull/260) ([ouranos](https://github.com/ouranos))
+
 ## [v1.1.1](https://github.com/maestrano/mno-enterprise-angular/tree/v1.1.1) (2017-07-24)
 [Full Changelog](https://github.com/maestrano/mno-enterprise-angular/compare/v1.1.0...v1.1.1)
 
