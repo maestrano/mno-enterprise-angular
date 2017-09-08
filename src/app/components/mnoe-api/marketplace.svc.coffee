@@ -35,10 +35,12 @@ angular.module 'mnoEnterpriseAngular'
           _.find(response.products, (a) -> a.id == id || a.nid == nid)
       )
 
-    localProductsPromise = null
+    localProductsPromise = []
     @getLocalProducts = (limit, offset, sort, params = {}) ->
+      params['organization_id'] = MnoeOrganizations.selectedId
       params['where[local]'] = 'true'
-      return localProductsPromise if localProductsPromise?
+      paramsKey = JSON.stringify([limit, offset, sort, params])
+      return localProductsPromise[paramsKey] if localProductsPromise[paramsKey]?
       localProductsPromise = MnoeApiSvc.all('products').getList(params).then(
         (response) ->
           _.map(response.plain(), (product) ->
