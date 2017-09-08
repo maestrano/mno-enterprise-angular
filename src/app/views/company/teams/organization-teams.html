@@ -82,8 +82,8 @@
               <tr class="btn-group-row" ng-show="matrix.isChanged()">
                 <td class="text-center" colspan="2">
                   <div ng-show="matrix.isChanged() && !matrix.isLoading">
-                    <button type="button" class="btn btn-default" ng-click="matrix.cancel()">Cancel</button>
-                    <button type="button" class="btn btn-warning" ng-click="matrix.save()">Save</button>
+                    <button type="button" class="btn btn-default" ng-click="matrix.cancel()">{{ 'mno_enterprise.templates.dashboard.teams.index.cancel' | translate }}</button>
+                    <button type="button" class="btn btn-warning" ng-click="matrix.save()">{{ 'mno_enterprise.templates.dashboard.teams.index.save' | translate }}</button>
                   </div>
                   <!-- Loader -->
                   <mno-loader ng-show="matrix.isLoading"></mno-loader>
