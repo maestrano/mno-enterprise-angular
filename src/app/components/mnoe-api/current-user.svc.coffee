@@ -29,9 +29,6 @@ angular.module 'mnoEnterpriseAngular'
       userPromise = MnoeApiSvc.one('current_user').get().then(
         (response) ->
           response = response.plain()
-
-          return null if $rootScope.publicPage && !response.logged_in
-
           angular.copy(response, _self.user)
           response
       )
