@@ -202,24 +202,30 @@ angular.module 'mnoEnterpriseAngular'
     $urlRouterProvider.otherwise ($injector, $location) ->
       MnoeConfig = $injector.get('MnoeConfig')
       MnoeCurrentUser = $injector.get('MnoeCurrentUser')
-
-      if !MnoeCurrentUser.get() && MnoeConfig.arePublicApplicationsEnabled()
-        $location.url('/landing')
-
-      unless MnoeConfig.isOnboardingWizardEnabled()
-        $location.url('/impac')
-        return
-
       MnoeOrganizations = $injector.get('MnoeOrganizations')
       MnoeAppInstances = $injector.get('MnoeAppInstances')
+      $window = $injector.get('$window')
 
-      MnoeOrganizations.getCurrentOrganisation().then(
-        ->
-          MnoeAppInstances.getAppInstances().then(
-            (response) ->
-              if _.isEmpty(response)
-                $location.url('/onboarding/welcome')
-              else
-                $location.url('/impac')
-          )
+      MnoeCurrentUser.get().then(
+        (response) ->
+          # Same as MnoeCurrentUser.loginRequired
+          unless response.logged_in
+            if MnoeConfig.arePublicApplicationsEnabled()
+              $location.url('/landing')
+            else
+              $window.location = URI.login
+          else
+            if MnoeConfig.isOnboardingWizardEnabled()
+              MnoeOrganizations.getCurrentOrganisation().then(
+                ->
+                  MnoeAppInstances.getAppInstances().then(
+                    (response) ->
+                      if _.isEmpty(response)
+                        $location.url('/onboarding/welcome')
+                      else
+                        $location.url('/impac')
+                  )
+              )
+            else
+              $location.url('/impac')
       )
