@@ -39,6 +39,9 @@ function browserSyncServe(done) {
 }
 
 function browserSyncDist(done) {
-  browserSync.init(browserSyncDistConf());
+  var conf = browserSyncDistConf();
+  conf.server.middleware = middleware;
+
+  browserSync.init(conf);
   done();
 }

@@ -66,7 +66,7 @@ function sprites() {
     style: 'mnoe-sprites.less',
     margin: 0,
     name: 'sprites/mnoe-sprites',
-    prefix: 'mnoe-icon',
+    prefix: 'mnoe-icon'
   })
     .pipe(gulpif('*.png', gulp.dest(conf.path.src('/images/')), gulp.dest(conf.path.src('/images/sprites/'))));
 }
