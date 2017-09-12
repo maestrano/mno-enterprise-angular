@@ -46,7 +46,7 @@
       <span class="cell-label visible-xs-inline">
         {{ 'mno_enterprise.templates.dashboard.organization.members.role' | translate }}:
       </span>
-      {{ memberRoleLabel(member) }}
+      <span translate="{{ memberRoleLabel(member) }}"></span>
     </div>
     <div class="cell col-sm-2">
       <a ng-click="editMember(member)" class="btn btn-link btn-link-warning" ng-show="isEditShown(member)">

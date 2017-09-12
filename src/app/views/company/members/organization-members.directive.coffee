@@ -2,7 +2,7 @@
 #============================================
 #
 #============================================
-DashboardOrganizationMembersCtrl = ($scope, $uibModal, $sce, MnoeOrganizations, MnoeCurrentUser, MnoeTeams, Utilities) ->
+DashboardOrganizationMembersCtrl = ($scope, $uibModal, $sce, $translate,  MnoeOrganizations, MnoeCurrentUser, MnoeTeams, Utilities) ->
   'ngInject'
 
   #====================================
@@ -46,20 +46,21 @@ DashboardOrganizationMembersCtrl = ($scope, $uibModal, $sce, MnoeOrganizations, 
 
 
   $scope.memberRoleLabel = (member) ->
-    if member.entity == 'User'
-      return member.role
-    else
-      return "Invited (#{member.role})"
+    invited = if member.entity == 'User' then "" else "invited."
+    "mno_enterprise.templates.dashboard.organization.members.roles." + invited + member.role.split(" ").join("_").toLowerCase()
 
   updateNbOfSuperAdmin = ->
     $scope.hasManySuperAdmin = _.filter($scope.members, {'role': 'Super Admin'}).length > 1
 
   rolesToDisplay = ->
     $scope.user_role = _.find(MnoeCurrentUser.user.organizations, {id: MnoeOrganizations.selectedId}).current_user_role if !$scope.user_role
-    if $scope.user_role == 'Super Admin'
-      editionModal.config.roles = ['Member','Admin','Super Admin']
-    else
-      editionModal.config.roles = ['Member','Admin']
+    roles = ['Member', 'Admin']
+    roles.push('Super Admin') if $scope.user_role == 'Super Admin'
+    editionModal.config.roles = []
+    _.each(roles, (role) -> $translate("mno_enterprise.templates.dashboard.organization.members.roles." + role.split(" ").join("_").toLowerCase()).then(
+      (result) ->
+        editionModal.config.roles.push(result)
+    ))
 
   #====================================
   # User Edition Modal
@@ -178,7 +179,13 @@ DashboardOrganizationMembersCtrl = ($scope, $uibModal, $sce, MnoeOrganizations, 
     roles: ->
       list = ['Member','Admin']
       list.push('Super Admin') if MnoeOrganizations.role.isSuperAdmin()
-      return list
+      translated_list = []
+      _.each(list, (role) -> $translate("mno_enterprise.templates.dashboard.organization.members.roles." + role.split(" ").join("_").toLowerCase()).then(
+        (result) ->
+          translated_list.push(result)
+        )
+      )
+      return translated_list
     teams: ->
       $scope.teams
   }
