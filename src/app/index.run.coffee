@@ -71,9 +71,11 @@ angular.module 'mnoEnterpriseAngular'
     )
   )
 
-  .run(($timeout, MnoeConfig, Notifications) ->
+  .run((MnoeConfig, MnoeNotifications, Notifications) ->
     if MnoeConfig.isNotificationsEnabled()
-      $timeout(-> Notifications.init())
+      MnoeNotifications.get().then((notifications) ->
+        Notifications.init(notifications, MnoeNotifications.notified)
+      )
   )
   # App initialization: Retrieve current user and current organization, then preload marketplace
   .run(($rootScope, $q, $location, $stateParams, MnoeCurrentUser, MnoeOrganizations, MnoeMarketplace, MnoeAppInstances) ->
