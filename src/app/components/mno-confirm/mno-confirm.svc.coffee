@@ -3,10 +3,17 @@ angular.module 'mnoEnterpriseAngular'
     _self = this
 
     modalOptions =
-      closeButtonText: 'Close'
-      actionButtonText: 'OK'
-      headerText: 'Proceed?'
-      bodyText: 'Perform this action?'
+      closeButtonText: 'mnoe_admin_panel.dashboard.mno_confirm.close'
+      closeButtonTextExtraData: {}
+      actionButtonText: 'mnoe_admin_panel.dashboard.mno_confirm.ok'
+      actionButtonTextExtraData: {}
+      headerText: 'mnoe_admin_panel.dashboard.mno_confirm.proceed'
+      headerTextExtraData: {}
+      bodyText: 'mnoe_admin_panel.dashboard.mno_confirm.perform'
+      bodyTextExtraData: {}
+      inputTextEnabled: false
+      inputTextValue: ''
+      inputTextPlaceholder: ''
       actionCb: $q.resolve
       type: 'primary'
 
