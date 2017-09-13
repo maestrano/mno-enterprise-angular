@@ -1,7 +1,9 @@
 {
   "name": "mno-enterprise-angular",
   "version": "2.0.0-dev",
-  "dependencies": {},
+  "dependencies": {
+    "gulp-header": "^1.8.9"
+  },
   "scripts": {
     "postinstall": "bower install --quiet --config.interactive=false",
     "build": "gulp",
