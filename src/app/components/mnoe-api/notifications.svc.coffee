@@ -42,7 +42,8 @@ angular.module 'mnoEnterpriseAngular'
         {
           user_name: task.owner.user.name
           user_surname: task.owner.user.surname,
-          due_date: formatDate(task.due_date)
+          due_date: formatDate(task.due_date),
+          task_title: task.title
         }
       ).then((tls) ->
         message = [
