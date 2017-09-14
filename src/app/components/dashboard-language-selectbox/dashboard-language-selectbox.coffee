@@ -25,10 +25,12 @@ angular.module 'mnoEnterpriseAngular'
           locale = _.findWhere(I18N_CONFIG.available_locales, { id: $scope.selectedLangKey })
 
           modalOptions =
-            closeButtonText: 'Cancel'
-            actionButtonText: 'Change language'
-            headerText: "Change language to #{locale.name}?"
-            bodyText: "Are you sure you want to change language to #{locale.name}?"
+            closeButtonText: 'mno_enterprise.templates.components.language_selectbox.cancel'
+            actionButtonText: 'mno_enterprise.templates.components.language_selectbox.change_language'
+            headerText: 'mno_enterprise.templates.components.language_selectbox.confirm_header'
+            bodyText: 'mno_enterprise.templates.components.language_selectbox.confirm'
+            headerTextExtraData: { name: locale.name }
+            bodyTextExtraData: { name: locale.name }
             actionCb: -> MnoeCurrentUser.update(settings: {locale: $scope.selectedLangKey})
 
           MnoConfirm.showModal(modalOptions).then(

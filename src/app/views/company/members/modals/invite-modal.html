@@ -76,7 +76,7 @@
 
               <div class="cell col-sm-4">
                 <span class="cell-label visible-xs-inline">{{ 'mno_enterprise.templates.dashboard.organization.members.role' | translate }}:</span>
-                <select ng-model="member.role" ng-options="role for role in inviteModal.roleList" class="form-control"></select>
+                <select ng-model="member.role" ng-options="role | translate for role in inviteModal.roleList" class="form-control"></select>
               </div>
               <div class="cell col-sm-4" ng-show="inviteModal.isTeamListShown()">
                 <span class="cell-label visible-xs-inline">

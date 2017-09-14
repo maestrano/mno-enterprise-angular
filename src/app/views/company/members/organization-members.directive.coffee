@@ -47,7 +47,7 @@ DashboardOrganizationMembersCtrl = ($scope, $uibModal, $sce, $translate,  MnoeOr
 
   $scope.memberRoleLabel = (member) ->
     invited = if member.entity == 'User' then "" else "invited."
-    "mno_enterprise.templates.dashboard.organization.members.roles." + invited + member.role.split(" ").join("_").toLowerCase()
+    "mno_enterprise.templates.dashboard.organization.members.roles." + invited + _.snakeCase(member.role)
 
   updateNbOfSuperAdmin = ->
     $scope.hasManySuperAdmin = _.filter($scope.members, {'role': 'Super Admin'}).length > 1
@@ -179,13 +179,7 @@ DashboardOrganizationMembersCtrl = ($scope, $uibModal, $sce, $translate,  MnoeOr
     roles: ->
       list = ['Member','Admin']
       list.push('Super Admin') if MnoeOrganizations.role.isSuperAdmin()
-      translated_list = []
-      _.each(list, (role) -> $translate("mno_enterprise.templates.dashboard.organization.members.roles." + role.split(" ").join("_").toLowerCase()).then(
-        (result) ->
-          translated_list.push(result)
-        )
-      )
-      return translated_list
+      _.map(list, (role) -> "mno_enterprise.templates.dashboard.organization.members.roles." + _.snakeCase(role))
     teams: ->
       $scope.teams
   }
