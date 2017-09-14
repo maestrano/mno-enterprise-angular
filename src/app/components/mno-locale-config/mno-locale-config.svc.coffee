@@ -63,6 +63,7 @@ angular.module 'mnoEnterpriseAngular'
       if (angular.isString(LOCALES.fallbackLanguage) && LOCALES.fallbackLanguage not in fallbackStack)
         fallbackStack.push(LOCALES.fallbackLanguage)
 
+      amMoment.changeLocale(fallbackStack[0])
       $translate.fallbackLanguage(fallbackStack)
 
     return @
