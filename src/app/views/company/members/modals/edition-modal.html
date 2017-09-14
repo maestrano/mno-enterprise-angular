@@ -21,7 +21,7 @@
 
   <div class="row role-management">
     <div class="col-sm-12">
-      <div ng-switch on="editionModal.selectedRole">
+      <div ng-switch on="editionModal.selectedRole.value">
         <div ng-switch-when="Member">
           <i class="fa fa-cloud fa-4x"></i>
           <br/><br/>
@@ -45,8 +45,8 @@
       </div>
 
       <div class="btn-group">
-        <button class="btn btn-default" ng-class="editionModal.classForRole(role)" ng-click="editionModal.select(role)" ng-repeat="role in editionModal.config.roles" type="button">
-          {{role}}
+        <button class="btn btn-default" ng-class="editionModal.classForRole(role)" ng-click="editionModal.select(role)" ng-repeat="role in editionModal.roleList" type="button">
+          {{role.locale | translate}}
         </button>
       </div>
       <!-- End: col -->

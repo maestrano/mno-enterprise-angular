@@ -56,11 +56,13 @@ DashboardOrganizationMembersCtrl = ($scope, $uibModal, $sce, $translate,  MnoeOr
     $scope.user_role = _.find(MnoeCurrentUser.user.organizations, {id: MnoeOrganizations.selectedId}).current_user_role if !$scope.user_role
     roles = ['Member', 'Admin']
     roles.push('Super Admin') if $scope.user_role == 'Super Admin'
-    editionModal.config.roles = []
-    _.each(roles, (role) -> $translate("mno_enterprise.templates.dashboard.organization.members.roles." + role.split(" ").join("_").toLowerCase()).then(
-      (result) ->
-        editionModal.config.roles.push(result)
-    ))
+    editionModal.config.roles = ->
+      list = [
+        {value: 'Member', locale: 'mno_enterprise.templates.dashboard.organization.members.roles.member'},
+        {value: 'Admin', locale: 'mno_enterprise.templates.dashboard.organization.members.roles.admin'}
+      ]
+      list.push({value: 'Super Admin', locale: 'mno_enterprise.templates.dashboard.organization.members.roles.super_admin'}) if MnoeOrganizations.role.isSuperAdmin()
+      return list
 
   #====================================
   # User Edition Modal
@@ -80,7 +82,8 @@ DashboardOrganizationMembersCtrl = ($scope, $uibModal, $sce, $translate,  MnoeOr
   editionModal.open = (member) ->
     self = editionModal
     self.member = member
-    self.selectedRole = member.role
+    self.roleList = self.config.roles()
+    self.selectedRole = _.find(self.roleList, (r) -> r.value == member.role)
     self.$instance = $uibModal.open(self.config.instance)
     self.isLoading = false
     editionModal.member = member
@@ -102,12 +105,12 @@ DashboardOrganizationMembersCtrl = ($scope, $uibModal, $sce, $translate,  MnoeOr
       return ''
 
   editionModal.isChangeDisabled = ->
-    editionModal.member.role == editionModal.selectedRole
+    editionModal.member.role == editionModal.selectedRole.value
 
   editionModal.change = ->
     self = editionModal
     self.isLoading = true
-    obj = { email: self.member.email, role: self.selectedRole }
+    obj = { email: self.member.email, role: self.selectedRole.value }
     MnoeOrganizations.updateMember(obj).then(
       (members) ->
         self.errors = ''
@@ -177,9 +180,12 @@ DashboardOrganizationMembersCtrl = ($scope, $uibModal, $sce, $translate,  MnoeOr
     }
     defaultRole: 'Member'
     roles: ->
-      list = ['Member','Admin']
-      list.push('Super Admin') if MnoeOrganizations.role.isSuperAdmin()
-      _.map(list, (role) -> "mno_enterprise.templates.dashboard.organization.members.roles." + _.snakeCase(role))
+      list = [
+        {value: 'Member', locale: 'mno_enterprise.templates.dashboard.organization.members.roles.member'},
+        {value: 'Admin', locale: 'mno_enterprise.templates.dashboard.organization.members.roles.admin'}
+      ]
+      list.push({value: 'Super Admin', locale: 'mno_enterprise.templates.dashboard.organization.members.roles.super_admin'}) if MnoeOrganizations.role.isSuperAdmin()
+      return list
     teams: ->
       $scope.teams
   }
