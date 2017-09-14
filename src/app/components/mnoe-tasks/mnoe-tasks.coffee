@@ -62,8 +62,12 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
     ctrl.sortableTableRowOnClick = ({rowItem})->
       if ctrl.selectedMenu.name == 'draft' then ctrl.openCreateTaskModal(rowItem) else ctrl.openShowTaskModal(rowItem)
 
+    ctrl.isModalOpened = false
+
     ctrl.openCreateTaskModal = (task)->
-      $uibModal.open({
+      return if ctrl.isModalOpened
+      ctrl.isModalOpened = true
+      modal = $uibModal.open({
         component: 'mnoCreateTaskModal'
         resolve:
           recipientFormatter: () -> nameFormatter
@@ -80,9 +84,12 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
                   fetchTasks()
               )
       })
+      modal.closed.finally(-> ctrl.isModalOpened = false)
 
     ctrl.openShowTaskModal = (task)->
-      $uibModal.open({
+      return if ctrl.isModalOpened
+      ctrl.isModalOpened = true
+      modal = $uibModal.open({
         component: 'mnoShowTaskModal'
         resolve:
           task: -> angular.copy(task)
@@ -110,6 +117,7 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
                   ctrl.sendReply(reply, task)
               )
       })
+      modal.closed.finally(-> ctrl.isModalOpened = false)
 
     ctrl.sendReply = (reply, task) ->
       angular.merge(reply, { title: "RE: #{task.title}", orga_relation_id: task.owner_id, status: 'sent' })
