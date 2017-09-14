@@ -1,9 +1,6 @@
 {
   "name": "mno-enterprise-angular",
   "version": "2.0.0-dev",
-  "dependencies": {
-    "gulp-header": "^1.8.9"
-  },
   "scripts": {
     "postinstall": "bower install --quiet --config.interactive=false",
     "build": "gulp",
@@ -39,6 +36,7 @@
     "gulp-eslint": "^3.0.1",
     "gulp-filter": "^5.0.0",
     "gulp-flatten": "^0.3.1",
+    "gulp-header": "^1.8.9",
     "gulp-htmlmin": "^3.0.0",
     "gulp-hub": "frankwallis/gulp-hub#registry-init",
     "gulp-if": "^2.0.2",
