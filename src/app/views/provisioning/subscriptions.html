@@ -57,14 +57,14 @@
           <span class="cell-label visible-xs-inline">
             {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.start_date' | translate }}:
           </span>
-          <span title="{{subscription.start_date | amUtc | amDateFormat: 'LL'}}">{{subscription.start_date | amUtc | amDateFormat: 'L'}}</span>
+          <span title="{{subscription.start_date | amDateFormat: 'LL'}}">{{subscription.start_date | amDateFormat: 'L'}}</span>
         </div>
 
         <div class="cell col-sm-2">
           <span class="cell-label visible-xs-inline">
             {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.end_date' | translate }}:
           </span>
-          <span title="{{subscription.end_date | amUtc | amDateFormat: 'LL'}}">{{subscription.end_date | amUtc | amDateFormat: 'L'}}</span>
+          <span title="{{subscription.end_date | amDateFormat: 'LL'}}">{{subscription.end_date | amDateFormat: 'L'}}</span>
         </div>
 
         <div class="cell col-sm-1">
