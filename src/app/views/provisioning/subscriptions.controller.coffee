@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningSubscriptionsCtrl', ($stateParams, toastr, MnoeOrganizations, MnoeProvisioning, MnoeConfig, MnoConfirm) ->
+  .controller('ProvisioningSubscriptionsCtrl', ($q, $stateParams, toastr, MnoeOrganizations, MnoeProvisioning, MnoeConfig, MnoConfirm) ->
 
     vm = this
     vm.isLoading = true
@@ -20,14 +20,20 @@ angular.module 'mnoEnterpriseAngular'
 
       MnoConfirm.showModal(modalOptions)
 
-    MnoeOrganizations.get().then(
-      (response) ->
-        vm.orgCurrency = response.billing?.current?.options?.iso_code || MnoeConfig.marketplaceCurrency()
-    )
+    orgPromise = MnoeOrganizations.get()
+    subPromise = MnoeProvisioning.getSubscriptions()
 
-    MnoeProvisioning.getSubscriptions().then(
+    $q.all({organization: orgPromise, subscriptions: subPromise}).then(
       (response) ->
-        vm.subscriptions = response
+        vm.orgCurrency = response.organization.billing?.current?.options?.iso_code || MnoeConfig.marketplaceCurrency()
+
+        # If a subscription doesn't contains a pricing for the org currency, a warning message is displayed
+        vm.displayCurrencyWarning = not _.every(response.subscriptions, (subscription) ->
+          currencies = _.map(subscription.product_pricing.prices, 'currency')
+          _.includes(currencies, vm.orgCurrency)
+        )
+
+        vm.subscriptions = response.subscriptions
     ).finally(-> vm.isLoading = false)
 
     return

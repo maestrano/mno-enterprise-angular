@@ -669,6 +669,7 @@
   "mno_enterprise.templates.dashboard.provisioning.summary.price": "Price",
   "mno_enterprise.templates.dashboard.provisioning.summary.go_to_my_app": "Go to my app",
   "mno_enterprise.templates.dashboard.provisioning.subscriptions.title": "Manage your subscriptions",
+  "mno_enterprise.templates.dashboard.provisioning.subscriptions.currency_warning": "Some prices are missing for your current currency. Please contact your administrator for more information.",
   "mno_enterprise.templates.dashboard.provisioning.subscriptions.name": "Name",
   "mno_enterprise.templates.dashboard.provisioning.subscriptions.description": "Description",
   "mno_enterprise.templates.dashboard.provisioning.subscriptions.price": "Price",
