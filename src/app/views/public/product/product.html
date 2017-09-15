@@ -101,7 +101,7 @@
           <div class="well" ng-switch="vm.app.pricing_plans">
             <h2>{{ 'mno_enterprise.templates.dashboard.marketplace.show.price' | translate }}</h2>
             <ul>
-              <li ng-repeat="plan in vm.pricing_plans">
+              <li ng-repeat="plan in vm.pricingPlans">
                 <b>{{plan.name}}</b>: {{plan.description}}<br>
                 <span ng-show="plan.price.value">{{plan.currency}} {{plan.price.value}} {{plan.factor}}</span>
                 <span ng-hide="plan.price.value">{{plan.currency}} {{plan.price}} {{plan.factor}}</span>
