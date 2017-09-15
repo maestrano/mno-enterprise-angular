@@ -6,6 +6,11 @@
       <i class="fa fa-refresh fa-spin fa-4x"></i>
     </div>
 
+    <div ng-show="vm.displayCurrencyWarning" class="alert alert-warning" role="alert">
+      <i class="fa fa-exclamation-triangle"></i>
+      <span translate>mno_enterprise.templates.dashboard.provisioning.subscriptions.currency_warning</span>
+    </div>
+
     <div ng-hide="vm.isLoading" class="table-cell" ng-show="!isLoading">
       <div class="row th-row hidden-xs">
         <div class="cell col-sm-1">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.product' | translate }}</div>
