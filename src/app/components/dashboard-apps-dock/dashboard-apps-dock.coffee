@@ -68,6 +68,9 @@ DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, $timeout, MnoeOrg
   $scope.appDock.toggle = ->
     $scope.appDock.isMinimized = !$scope.appDock.isMinimized
 
+  $scope.closePopover = ->
+    $scope.isPopoverShown = false
+
   #====================================
   # App Settings modal
   #====================================
