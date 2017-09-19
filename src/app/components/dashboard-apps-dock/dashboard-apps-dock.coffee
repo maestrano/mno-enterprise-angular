@@ -37,6 +37,9 @@ DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, MnoeOrganizations
     instance.stack == 'connector' &&
     !instance.oauth_keys_valid
 
+  $scope.helper.isCreateAccountShown = (instance) ->
+    instance.stack == 'cloud' && !instance.is_linked
+
   $scope.helper.isNewOfficeApp = (instance) ->
     instance.stack == 'connector' && instance.appNid == 'office-365' && (moment(instance.createdAt) > moment().subtract({minutes:5}))
 
@@ -53,6 +56,11 @@ DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, MnoeOrganizations
     else
       $window.open("/mnoe/launch/#{app.uid}", '_blank')
       return true
+
+  $scope.redirectToExternal = (app, event) ->
+    $scope.setActiveApp(event, app.id)
+    $window.open(app.account_creation_link, '_blank')
+    return true
 
   $scope.setActiveApp = (event, app) ->
     if $scope.isActiveApp(app)

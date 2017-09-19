@@ -9,6 +9,9 @@
           <div class="dock-arrow"><i class="fa fa-chevron-up"></i></div>
           <div class="inner-dock-menu">
             <!-- EO Connectors Buttons -->
+            <div class="menu-item ng-hide" ng-show="helper.isCreateAccountShown(app)">
+              <a ng-click="redirectToExternal(app,$event);"><i class="fa fa-user-plus"></i>{{ 'mno_enterprise.templates.components.app_install_btn.create_account' | translate }}</a>
+            </div>
             <div class="menu-item ng-hide" ng-hide="helper.isLaunchHidden(app)">
               <a ng-click="launchAction(app,$event);"><i class="fa fa-play-circle"></i>{{ 'mno_enterprise.templates.impac.dock.launch' | translate }}</a>
             </div>
