@@ -35,6 +35,7 @@
     "material-shadows": "^3.0.1",
     "angular-schema-form": "^1.0.0-alpha.4",
     "angular-schema-form-bootstrap": "^0.2.0",
+    "angular-schema-form-datepicker": "~1.4.1",
     "angular-filter": "^0.5.16",
     "mno-ui-elements": "maestrano/mno-ui-elements#master"
   },
