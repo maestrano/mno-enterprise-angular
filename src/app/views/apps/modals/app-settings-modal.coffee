@@ -1,11 +1,19 @@
 
 angular.module 'mnoEnterpriseAngular'
-  .controller('DashboardAppSettingsModalCtrl', ($scope, MnoConfirm, MnoeOrganizations, $uibModalInstance, MnoeAppInstances, Utilities, app, $window, ImpacMainSvc)->
+  .controller('DashboardAppSettingsModalCtrl', ($scope, MnoConfirm, MnoeOrganizations, $uibModalInstance, MnoeAppInstances, Utilities, app, $window, ImpacMainSvc, $translate)->
 
     $scope.modal ||= {}
     $scope.app = app
     $scope.sentence = "Please proceed to the deletion of my app and all data it contains"
     $scope.organization_uid = ImpacMainSvc.config.currentOrganization.uid
+
+    # ----------------------------------------------------------
+    # Initialize deletion sentence
+    # ----------------------------------------------------------
+    $translate('mno_enterprise.templates.impac.dock.settings.deletion_sentence').then(
+      (result) ->
+        $scope.sentence = result
+    )
 
     # ----------------------------------------------------------
     # Permissions helper

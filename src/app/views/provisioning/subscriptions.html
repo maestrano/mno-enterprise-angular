@@ -76,7 +76,7 @@
           <span class="cell-label visible-xs-inline">
             {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.status' | translate }}:
           </span>
-          <span title="{{subscription.status}}">{{subscription.status}}</span>
+          <span title="{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.states.' + subscription.status | translate }}">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.states.' + subscription.status | translate }}</span>
         </div>
 
         <div class="cell col-sm-2">

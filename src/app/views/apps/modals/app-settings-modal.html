@@ -10,7 +10,7 @@
           <span class="title">{{ 'mno_enterprise.templates.impac.dock.settings.status' | translate }}</span>
         </div>
         <div class="col-md-8">
-          <span class="label" ng-class="app.status">{{app.status}}</span>
+          <span class="label" ng-class="app.status">{{ 'mno_enterprise.templates.impac.dock.settings.app_states.' + app.status | translate }}</span>
         </div>
       </div>
       <!-- Add on settings -->
@@ -61,7 +61,7 @@
           <p>
             {{ 'mno_enterprise.templates.impac.dock.settings.delete_instructions' | translate }}</span>
             <br/>
-            <span class="text-error deletion-sentence align-center"><strong>{{sentence}}</strong></span>
+            <span class="text-error deletion-sentence align-center"><strong>{{ sentence | translate }}</strong></span>
           </p>
           <div>
             <input type="text" class="sentence-check" ng-model="sentenceCheck" required>
@@ -77,7 +77,7 @@
       <!-- Developer details -->
       <div ng-show="helper.canDeleteApp()">
         <hr>
-        <a class="text-muted" href="" ng-click="app.showDevDetails = !app.showDevDetails"><em> {{ app.showDevDetails && 'Hide' || 'Show'}} {{ 'mno_enterprise.templates.impac.dock.settings.developer_details' | translate }} </em></a>
+        <a class="text-muted" href="" ng-click="app.showDevDetails = !app.showDevDetails"><em> {{ 'mno_enterprise.templates.impac.dock.settings.developer_details.' + (app.showDevDetails ? 'hide' : 'show') | translate }} </em></a>
         <div ng-show="app.showDevDetails">
           <h4>{{ 'mno_enterprise.templates.impac.dock.settings.developer_details' | translate }} </h4>
           <div class="developer-details">
