@@ -31,7 +31,7 @@ angular.module 'mnoEnterpriseAngular'
             bodyText: 'mno_enterprise.templates.components.language_selectbox.confirm'
             headerTextExtraData: { name: locale.name }
             bodyTextExtraData: { name: locale.name }
-            actionCb: -> MnoeCurrentUser.update(settings: {locale: $scope.selectedLangKey})
+            actionCb: -> MnoeCurrentUser.update(settings: Object.assign(MnoeCurrentUser.user.settings, locale: $scope.selectedLangKey))  # WIll destroy the whole previous settings.
 
           MnoConfirm.showModal(modalOptions).then(
             ->
