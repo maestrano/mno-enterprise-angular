@@ -62,6 +62,9 @@ angular.module 'mnoEnterpriseAngular'
       Array.prototype.push.apply(_self.appInstances, arr)
       return _self.appInstances
 
+    @getForm = (instance) ->
+      MnoeApiSvc.one('organizations', MnoeOrganizations.selectedId).one('/app_instances', instance.app.id).one('/setup_form').get()
+
     # Path to connect this app instance and redirect to the current page
     @oAuthConnectPath = (instance, extra_params = '') ->
       _self.clearCache()

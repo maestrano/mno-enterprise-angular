@@ -33,9 +33,10 @@ DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, MnoeOrganizations
     $scope.helper.isNewOfficeApp(app)
 
   $scope.helper.isOauthConnectBtnShown = (instance) ->
-    instance.app_nid != 'office-365' &&
+    (instance.app_nid != 'office-365' &&
     instance.stack == 'connector' &&
-    !instance.oauth_keys_valid
+    !instance.oauth_keys_valid) ||
+    instance.stack == 'cloud'
 
   $scope.helper.isCreateAccountShown = (instance) ->
     instance.stack == 'cloud' && !instance.is_linked
@@ -60,6 +61,7 @@ DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, MnoeOrganizations
   $scope.redirectToExternal = (app, event) ->
     $scope.setActiveApp(event, app.id)
     $window.open(app.account_creation_link, '_blank')
+    $scope.showConnectModal(app)
     return true
 
   $scope.setActiveApp = (event, app) ->
@@ -94,16 +96,22 @@ DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, MnoeOrganizations
   # App Connect modal
   #====================================
   $scope.showConnectModal = (app) ->
-    switch app.app_nid
-      when "xero" then modalInfo = {
-        template: "app/views/apps/modals/app-connect-modal-xero.html",
-        controller: 'DashboardAppConnectXeroModalCtrl'
+    if app.stack == 'cloud'
+      modalInfo = {
+        template: "app/views/apps/modals/app-connect-modal-cloud.html",
+        controller: 'DashboardAppConnectCloudModalCtrl'
       }
-      when "myob" then modalInfo = {
-        template: "app/views/apps/modals/app-connect-modal-myob.html",
-        controller: 'DashboardAppConnectMyobModalCtrl'
-      }
-      else $scope.helper.oAuthConnectPath(app)
+    else
+      switch app.app_nid
+        when "xero" then modalInfo = {
+          template: "app/views/apps/modals/app-connect-modal-xero.html",
+          controller: 'DashboardAppConnectXeroModalCtrl'
+        }
+        when "myob" then modalInfo = {
+          template: "app/views/apps/modals/app-connect-modal-myob.html",
+          controller: 'DashboardAppConnectMyobModalCtrl'
+        }
+        else $scope.helper.oAuthConnectPath(app)
 
     modalInstance = $uibModal.open(
       templateUrl: modalInfo.template
