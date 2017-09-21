@@ -73,6 +73,11 @@ angular.module 'mnoEnterpriseAngular'
     _self.appInstancesDeferred = $q.defer()
     orgPromise = MnoeOrganizations.getCurrentOrganisation().then(
       (response) ->
+        # Pre-load the marketplace, the products and the local products
+        MnoeMarketplace.getApps()
+        MnoeMarketplace.getProducts()
+        MnoeMarketplace.getLocalProducts()
+
         # App instances needs to be run after fetching the organization (At least the first call)
         MnoeAppInstances.getAppInstances().then(
           (appInstances) ->
@@ -83,14 +88,9 @@ angular.module 'mnoEnterpriseAngular'
     )
 
     $q.all([userPromise, orgPromise, _self.appInstancesDeferred.promise]).then(
-      (response) ->
-        organization = response[1].organization
-
+      ->
         # Display the layout
         $rootScope.isLoggedIn = true
-
-        # Pre-load the market place
-        MnoeMarketplace.getApps()
     ).catch(
       ->
         # Display the layout
