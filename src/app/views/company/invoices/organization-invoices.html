@@ -9,7 +9,7 @@
   <div class="row td-row" ng-repeat="invoice in invoices">
     <div class="cell col-sm-3">
       <span class="cell-label visible-xs-inline">{{ 'mno_enterprise.templates.dashboard.organization.invoices.period' | translate }}:<br/></span>
-      {{ invoice.period }}
+      {{ invoice.started_at| amCalendar}} - {{ invoice.ended_at| amCalendar}}
     </div>
 
     <div class="cell col-sm-3">
