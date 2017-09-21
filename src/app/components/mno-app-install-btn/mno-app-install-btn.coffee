@@ -4,7 +4,7 @@ angular.module 'mnoEnterpriseAngular'
       app: '='
     },
     templateUrl: 'app/components/mno-app-install-btn/mno-app-install-btn.html',
-    controller: ($q, $state, $window, $uibModal, toastr, MnoeMarketplace, MnoeCurrentUser, MnoeOrganizations, MnoeAppInstances) ->
+    controller: ($q, $state, $window, $uibModal, toastr, MnoeMarketplace, MnoeCurrentUser, MnoeOrganizations, MnoeAppInstances, MnoeConfig) ->
       vm = this
 
       # Return the different status of the app regarding its installation
@@ -110,15 +110,19 @@ angular.module 'mnoEnterpriseAngular'
       vm.init = ->
         # Retrieve the apps and the app instances in order to retrieve the current app, and its conflicting status
         # with the current installed app instances
+        productPromise = if MnoeConfig.isProvisioningEnabled() then MnoeMarketplace.getProducts() else $q.resolve()
+
         $q.all(
           marketplace: MnoeMarketplace.getApps(),
           appInstances: MnoeAppInstances.getAppInstances(),
-          currentUser: MnoeCurrentUser.get()
+          currentUser: MnoeCurrentUser.get(),
+          products: productPromise
         ).then(
           (response) ->
             apps = response.marketplace.apps
             appInstances = response.appInstances
             currentUser = response.currentUser
+            products = response.products?.products
 
             # Get number of organizations with at least an admin role
             authorizedOrganizations = _.filter(currentUser.organizations, (org) ->
@@ -145,6 +149,11 @@ angular.module 'mnoEnterpriseAngular'
                   not subCategory.multi_instantiable and subCategory.name in names
                 )
               )
+            vm.isProvisioningEnabled = MnoeConfig.isProvisioningEnabled()
+
+            product = _.find(products, { nid: vm.app.nid })
+            # Is the product externally provisioned
+            vm.isExternallyProvisioned = (vm.isProvisioningEnabled && product?.externally_provisioned)
         )
 
       vm.init()
