@@ -23,7 +23,7 @@ angular.module 'mnoEnterpriseAngular'
       params = {organization_id: MnoeOrganizations.selectedId}
       paramsKey = JSON.stringify(params)
       return productsPromise[paramsKey] if productsPromise[paramsKey]?
-      productsPromise = MnoeApiSvc.oneUrl('/products').get(params).then(
+      productsPromise[paramsKey] = MnoeApiSvc.oneUrl('/products').get(params).then(
         (response) ->
           response.plain()
       )
@@ -41,7 +41,7 @@ angular.module 'mnoEnterpriseAngular'
       params['where[local]'] = 'true'
       paramsKey = JSON.stringify([limit, offset, sort, params])
       return localProductsPromise[paramsKey] if localProductsPromise[paramsKey]?
-      localProductsPromise = MnoeApiSvc.all('products').getList(params).then(
+      localProductsPromise[paramsKey] = MnoeApiSvc.all('products').getList(params).then(
         (response) ->
           _.map(response.plain(), (product) ->
             # Transforms the values_attributes ([name: 'Some string', data: 'Its value'])
