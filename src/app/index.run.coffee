@@ -59,7 +59,7 @@ angular.module 'mnoEnterpriseAngular'
   )
 
   # App initialization: Retrieve current user and current organization, then preload marketplace
-  .run(($rootScope, $q, $location, $stateParams, MnoeCurrentUser, MnoeOrganizations, MnoeMarketplace, MnoeAppInstances) ->
+  .run(($rootScope, $q, $location, $stateParams, MnoeCurrentUser, MnoeOrganizations, MnoeMarketplace, MnoeAppInstances, MnoeConfig) ->
 
     _self = this
 
@@ -75,8 +75,8 @@ angular.module 'mnoEnterpriseAngular'
       (response) ->
         # Pre-load the marketplace, the products and the local products
         MnoeMarketplace.getApps()
-        MnoeMarketplace.getProducts()
-        MnoeMarketplace.getLocalProducts()
+        MnoeMarketplace.getProducts() if MnoeConfig.isProvisioningEnabled()
+        MnoeMarketplace.getLocalProducts() if MnoeConfig.areLocalProductsEnabled()
 
         # App instances needs to be run after fetching the organization (At least the first call)
         MnoeAppInstances.getAppInstances().then(
