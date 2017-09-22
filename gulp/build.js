@@ -91,7 +91,7 @@ gulp.task('fonts', function () {
 
 gulp.task('images', function () {
   return gulp.src($.mainBowerFiles())
-    .pipe($.filter('**/*.{png,jpg,jpeg,gif}'))
+    .pipe($.filter('**/*.{png,jpg,jpeg,gif,svg}'))
     .pipe($.flatten())
     .pipe(gulp.dest(path.join(conf.paths.dist, '/images/')));
 });
