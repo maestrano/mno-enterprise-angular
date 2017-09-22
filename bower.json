@@ -26,7 +26,7 @@
     "animate.css": "~3.5.2",
     "bootstrap": "~3.3.5",
     "font-awesome": "~4.7.0",
-    "impac-angular": "~1.5.0",
+    "impac-angular": "~1.6.0",
     "jquery": "~3.1.0",
     "less": "~2.5.3",
     "lodash": "~3.10.1",
@@ -54,6 +54,9 @@
         "less/font-awesome.less",
         "./fonts/*"
       ]
+    },
+    "highcharts": {
+      "main": "highstock.js"
     }
   },
   "resolutions": {
