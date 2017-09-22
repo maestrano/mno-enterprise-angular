@@ -40,9 +40,8 @@ angular.module 'mnoEnterpriseAngular'
         vm.adminRole = MnoeCurrentUser.user.admin_role
 
         # Init current app and app instance
-        angular.copy(app, vm.app)
+        vm.app = app
         vm.appInstance = appInstance
-        vm.app.description = $sce.trustAsHtml(app.description)
 
         # Is the product externally provisioned
         vm.isExternallyProvisioned = (vm.isProvisioningEnabled && product?.externally_provisioned)

@@ -1,7 +1,7 @@
 angular.module 'mnoEnterpriseAngular'
   .component('mnoAppInstallBtn', {
     bindings: {
-      app: '='
+      app: '<'
     },
     templateUrl: 'app/components/mno-app-install-btn/mno-app-install-btn.html',
     controller: ($q, $state, $window, $uibModal, toastr, MnoeMarketplace, MnoeCurrentUser, MnoeOrganizations, MnoeAppInstances, MnoeConfig) ->
@@ -107,7 +107,10 @@ angular.module 'mnoEnterpriseAngular'
       #====================================
       # Initialize
       #====================================
-      vm.init = ->
+      vm.$onChanges = (changes) ->
+
+        return if _.isEmpty(vm.app)
+
         # Retrieve the apps and the app instances in order to retrieve the current app, and its conflicting status
         # with the current installed app instances
         productPromise = if MnoeConfig.isProvisioningEnabled() then MnoeMarketplace.getProducts() else $q.resolve()
@@ -152,11 +155,10 @@ angular.module 'mnoEnterpriseAngular'
             vm.isProvisioningEnabled = MnoeConfig.isProvisioningEnabled()
 
             product = _.find(products, { nid: vm.app.nid })
+
             # Is the product externally provisioned
             vm.isExternallyProvisioned = (vm.isProvisioningEnabled && product?.externally_provisioned)
         )
-
-      vm.init()
 
       return
   }
