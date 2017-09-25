@@ -477,6 +477,7 @@
   "mno_enterprise.templates.impac.dock.settings.cancel": "Cancel",
   "mno_enterprise.templates.impac.dock.settings.developer_details.show": "Show developer details",
   "mno_enterprise.templates.impac.dock.settings.developer_details.hide": "Hide developer details",
+  "mno_enterprise.templates.impac.dock.settings.developer_details.title": "Developer Details",
   "mno_enterprise.templates.impac.dock.settings.linked_to": "Linked to",
   "mno_enterprise.templates.impac.dock.settings.organization_id": "Organization id",
   "mno_enterprise.templates.impac.dock.settings.group_id": "Group id (uid)",
