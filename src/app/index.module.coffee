@@ -20,5 +20,6 @@ angular.module 'mnoEnterpriseAngular', [
   'ngPageTitle',
   'angularMoment',
   'schemaForm',
-  'angular.filter'
+  'angular.filter',
+  'textAngular'
 ]
