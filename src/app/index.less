@@ -21,6 +21,7 @@ body {
 
   &.translate-cloak {
     opacity: 0;
+    display: none !important;
   }
 }
 .browsehappy {
@@ -65,6 +66,13 @@ body {
 .bottom-buffer-9 { margin-bottom: 9*@bottom-buffer-height; }
 .bottom-buffer-10 { margin-bottom: 10*@bottom-buffer-height; }
 
+#toast-container {
+  z-index: 99999;
+}
+
+.content-template-wrapper.ng-hide {
+  display: none !important;
+}
 /**
  *  Do not remove the comments below. It's the markers used by gulp-inject to inject
  *  all your less files automatically
