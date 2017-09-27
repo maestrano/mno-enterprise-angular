@@ -22,14 +22,14 @@ dashboard-menu {
       }
 
       ul.nav.navbar-nav {
-        padding:0px;
-        text-transform:uppercase;
+        padding: 0;
+        text-transform: uppercase;
         a {
-          font-size:@normal;
-          text-align:center;
-          background-color:#111c21;
+          font-size: @normal;
+          text-align: center;
+          background-color: #111c21;
           border-bottom: solid 1px @bg-inverse-color;
-          padding:22px 0px;
+          padding: 22px 0;
 
           &.active {
             color: @dashboard-side-menu-link-active-color;
@@ -37,11 +37,11 @@ dashboard-menu {
         }
 
         ul.dropdown-menu {
-          padding:0px;
+          padding: 0;
           a {
-            background-color:@bg-inverse-color;
+            background-color: @bg-inverse-color;
             border-bottom: solid 1px #111c21;
-            padding:13px 0px;
+            padding: 13px 0;
           }
         }
       }
@@ -52,8 +52,14 @@ dashboard-menu {
   /*                         Dashboard Left Navbar                         */
   /*-----------------------------------------------------------------------*/
   .menu {
+    background-color: @dashboard-side-menu-bg-color;
 
     a:hover { text-decoration: none; }
+
+    .menu-buttons-wrapper {
+      position: absolute;
+      top: 160px;
+    }
 
     // Dashboard Button > Active State
     .dashboard-button.active, .dashboard-button.active:hover {
@@ -82,14 +88,14 @@ dashboard-menu {
 
     // Vertical menu
     &.vertical {
-      z-index:100;
-      position:fixed;
-      left:0px;
-      top:0px;
+      z-index: 100;
+      position: fixed;
+      left: 0;
+      top: 0;
       padding: @dashboard-side-menu-padding;
-      width:80px;
-      min-height:100%;
-      height:99%;
+      width: 80px;
+      min-height: 100%;
+      height: 99%;
 
       // Dashboard Button > Normal State
       .dashboard-button {
@@ -114,24 +120,19 @@ dashboard-menu {
         display: block;
         white-space: nowrap;
         position: absolute;
-        margin: 8px 0px 0px 55px;
+        margin: 8px 0 0 55px;
         font-size: 15px;
       }
 
       // Side menu brand logo
       .brand-logo {
-        height: 90px;
-        background-repeat: no-repeat;
-        background-image: url(@dashboard-side-menu-brand-logo-img);
-        background-size: 100%;
         @dashboard-side-menu-brand-logo();
-      }
-      .brand-logo.expanded {
-        @dashboard-side-menu-brand-logo-expanded();
+
+        &.expanded {
+          @dashboard-side-menu-brand-logo-expanded();
+        }
       }
     }
-
-    background-color: @dashboard-side-menu-bg-color;
 
     hr {
       border-top: 2px dashed darken(@dashboard-side-menu-bg-color, 5%);
