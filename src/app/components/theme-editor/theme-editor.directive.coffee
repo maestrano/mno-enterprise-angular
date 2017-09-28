@@ -67,7 +67,7 @@ ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
     },
 
     'Login Page': {
-      '@login-bg-img':                       'mno_enterprise/login-background.jpg'
+      '@login-bg-img':                       '"mno_enterprise/login-background.jpg"'
       '@login-bg-color':                     '@bg-main-color'
       '@login-box-grid-position':            '{ margin-top: 80px; .make-sm-column(4); .make-sm-column-offset(4); }'
 
@@ -113,7 +113,6 @@ ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
 
       '@dashboard-side-menu-brand-logo':               '{ max-width: 50px; max-height: 50px; margin: 0; transition: max-width .25s ease, max-height .25s ease; }'
       '@dashboard-side-menu-brand-logo-expanded':      '{ max-width: 200px; max-height: 130px; }'
-
       '@dashboard-side-menu-link-color':               '@text-inverse-color'
       '@dashboard-side-menu-link-bg-color':            '@dashboard-side-menu-bg-color'
 
@@ -335,7 +334,6 @@ ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
     },
 
     'Forms': {
-      '@input-bg':                '@elem-cozy-color'
       '@input-color':             '@text-inverse-color'
       '@input-color-placeholder': '@input-color'
       '@input-label-color':       '@text-inverse-color'
