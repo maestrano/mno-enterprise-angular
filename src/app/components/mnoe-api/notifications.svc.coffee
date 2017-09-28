@@ -2,17 +2,15 @@
 angular.module 'mnoEnterpriseAngular'
   .service 'MnoeNotifications', ($q, $translate, MnoeFullApiSvc, MnoeOrganizations) ->
 
-    @get = (params = {})->
+    @get = (organizationId)->
       deferred = $q.defer()
-      MnoeOrganizations.get().then(->
-        MnoeFullApiSvc
-          .one('organizations', MnoeOrganizations.getSelectedId())
-          .getList('notifications', params).then((response) ->
-            promises = _.map(response.data.plain(), (notification)->
-              NotificationFormatter[notification.notification_type](notification)
-            )
-            $q.all(promises).then(deferred.resolve)
-        )
+      MnoeFullApiSvc
+        .one('organizations', organizationId)
+        .getList('notifications').then((response) ->
+          promises = _.map(response.data.plain(), (notification)->
+            NotificationFormatter[notification.notification_type](notification)
+          )
+          $q.all(promises).then(deferred.resolve)
       )
       deferred.promise
 
