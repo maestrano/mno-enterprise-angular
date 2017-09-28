@@ -2,10 +2,6 @@ angular.module 'mnoEnterpriseAngular'
   .controller 'IndexController', ($scope, $sce, GOOGLE_TAG_CONTAINER_ID, INTERCOM_ID, $window) ->
     'ngInject'
 
-    # Patches isInteger function for IE11 as ES6 is not yet supported
-    $window.Number.isInteger = Number.isInteger || (value) ->
-      typeof value == "number" && isFinite(value) && Math.floor(value) == value
-
     $scope.google_tag_scripts = $sce.trustAsHtml("""
         <noscript>
             <iframe src=\"\/\/www.googletagmanager.com/ns.html?id=#{GOOGLE_TAG_CONTAINER_ID}\" height=\"0\" width=\"0\" style=\"display:none;visibility:hidden\"></iframe>
