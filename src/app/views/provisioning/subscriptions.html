@@ -29,7 +29,7 @@
         </div>
       </div>
 
-      <div class="row td-row" ng-repeat="subscription in vm.subscriptions">
+      <div class="row td-row" ng-repeat="subscription in vm.subscriptions" ng-click="vm.goToSubscription(subscription)">
         <div class="cell col-sm-1">
           <span class="cell-label visible-xs-inline">
             {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.product' | translate }}:

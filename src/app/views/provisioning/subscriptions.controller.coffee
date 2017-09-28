@@ -3,6 +3,8 @@ angular.module 'mnoEnterpriseAngular'
 
     vm = this
     vm.isLoading = true
+    
+    vm.goToSubscription = (subscription) ->
 
     vm.cancelSubscription = (subscription, i) ->
       modalOptions =
