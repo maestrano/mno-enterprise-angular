@@ -198,6 +198,14 @@ angular.module 'mnoEnterpriseAngular'
           templateUrl: 'app/views/provisioning/subscriptions.html'
           controller: 'ProvisioningSubscriptionsCtrl'
           controllerAs: 'vm'
+        .state 'home.subscription',
+          data:
+            pageTitle:'Subscription info'
+          url: '/subscriptions/subscription'
+          params:{subscription:null},
+          templateUrl: 'app/views/provisioning/subscription.html'
+          controller: 'ProvisioningSubscriptionCtrl'
+          controllerAs: 'vm'
 
     $urlRouterProvider.otherwise ($injector, $location) ->
       MnoeConfig = $injector.get('MnoeConfig')

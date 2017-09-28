@@ -1,10 +1,11 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningSubscriptionsCtrl', ($q, $stateParams, toastr, MnoeOrganizations, MnoeProvisioning, MnoeConfig, MnoConfirm) ->
+  .controller('ProvisioningSubscriptionsCtrl', ($q, $state, $stateParams, toastr, MnoeOrganizations, MnoeProvisioning, MnoeConfig, MnoConfirm) ->
 
     vm = this
     vm.isLoading = true
     
     vm.goToSubscription = (subscription) ->
+      $state.go('home.subscription', { subscription: subscription })
 
     vm.cancelSubscription = (subscription, i) ->
       modalOptions =
@@ -34,7 +35,6 @@ angular.module 'mnoEnterpriseAngular'
           currencies = _.map(subscription?.product_pricing?.prices, 'currency')
           _.includes(currencies, vm.orgCurrency)
         )
-
         vm.subscriptions = response.subscriptions
     ).finally(-> vm.isLoading = false)
 

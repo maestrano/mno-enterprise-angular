@@ -1,0 +1,66 @@
+<div id="subscription" class="top-buffer-1">
+  <a ui-sref="home.subscriptions" class="text-muted">
+    <i class="fa fa-chevron-left"></i>&nbsp;<span translate>mno_enterprise.templates.dashboard.provisioning.subscription.back</span>
+  </a>
+  <h2 class="text-color" translate>mno_enterprise.templates.dashboard.provisioning.subscription.subscription_info</h2>
+  <mno-loader ng-show="vm.isLoading" class="top-buffer-4"></mno-loader>
+  <div ng-if="!vm.isLoading">
+    <div class="row top-buffer-2">
+      <div class="col-sm-5 box">
+        <h4 class="text-color" translate>mno_enterprise.templates.dashboard.provisioning.subscription.info</h4>
+        <div class="form-group">
+          <label class="control-label text-color" translate>mno_enterprise.templates.dashboard.provisioning.subscription.product</label>
+          <input type="text" class="form-control hide-border" ng-model="vm.subscription.product.name" readonly/>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label text-color" translate>mno_enterprise.templates.dashboard.provisioning.subscription.subscription_info</label>
+          <input type="text" class="form-control hide-border" ng-model="vm.subscription.product_pricing.name" readonly/>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label text-color" translate>mno_enterprise.templates.dashboard.provisioning.subscription.description</label>
+          <input type="text" class="form-control hide-border" ng-model="vm.subscription.product_pricing.description" readonly/>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label text-color" translate>mno_enterprise.templates.dashboard.provisioning.subscription.date</label>
+          <div class="push-right">{{ vm.subscription.start_date | date: 'dd/MM/yyyy' }}</div>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label text-color" translate>mno_enterprise.templates.dashboard.provisioning.subscription.end_date</label>
+          <div class="push-right">{{ vm.subscription.end_date | date: 'dd/MM/yyyy' }}</div>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label text-color" translate>mno_enterprise.templates.dashboard.provisioning.subscription.status</label>
+          <input type="text" class="form-control hide-border" ng-model="vm.subscription.status" readonly/>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label text-color" translate>mno_enterprise.templates.dashboard.provisioning.subscription.amount</label>
+          <div class="push-right" ng-repeat="price in vm.subscription.product_pricing.prices">{{vm.formatPrice(price)}}</div>
+        </div>
+      </div>
+      <div class="col-sm-5 col-md-offset-1 box">
+        <div ng-if="vm.subscription.custom_data">
+          <div class="col-xs-12">
+            <h4 class="text-color" translate>mno_enterprise.templates.dashboard.provisioning.subscription.custom_data</h4>
+            <form name="vm.detailsForm" sf-schema="vm.schema" sf-form="vm.form" sf-model="vm.subscription.custom_data" sf-options="{ formDefaults: { readonly: { true } }}"></form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row top-buffer-1">
+      <div class="col-sm-5 box">
+        <div ng-if="vm.subscription.provisioning_data">
+          <div class="col-xs-12">
+            <h4 class="text-color" translate>mno_enterprise.templates.dashboard.provisioning.subscription.provisioning_data</h4>
+            <json-formatter open="2" json="vm.subscription.provisioning_data"></json-formatter>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
