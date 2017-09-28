@@ -1,6 +1,6 @@
 <div class="form-group">
   <label>{{ 'mno_enterprise.templates.components.currency_select.checkbox' | translate }}</label>
-  <div ng-repeat="currency in currencies">
+  <div ng-repeat="currency in currencySelectCtrl.currencies">
     <label>
       <input type="checkbox" ng-model="currency.selected" style="">
       {{currency.id}}
@@ -12,8 +12,8 @@
   <label class="control-label" for="currency-select">
     {{ 'mno_enterprise.templates.components.currency_select.selectbox' | translate }}
   </label>
-  <select id="currency-select" class="form-control" ng-model="defaultCurrency" ng-change="changeCurrency()" ng-options="currency.id for currency in currencies | filter:{selected:true}">
+  <select id="currency-select" class="form-control" ng-model="currencySelectCtrl.defaultCurrency" ng-change="currencySelectCtrl.changeCurrency()" ng-options="currency.id for currency in currencySelectCtrl.currencies | filter:{selected:true}">
   </select>
 </div>
 
-<button class="btn btn-warning" type="button" ng-disabled="(defaultCurrency == null)" ng-click="changeCurrencyList()">Save</button>
+<button class="btn btn-warning" type="button" ng-disabled="(currencySelectCtrl.defaultCurrency == null)" ng-click="currencySelectCtrl.changeCurrencyList()">Save</button>
