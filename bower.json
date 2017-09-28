@@ -37,7 +37,8 @@
     "angular-schema-form-bootstrap": "^0.2.0",
     "angular-schema-form-datepicker": "~1.4.1",
     "angular-filter": "^0.5.16",
-    "mno-ui-elements": "maestrano/mno-ui-elements#master"
+    "mno-ui-elements": "maestrano/mno-ui-elements#master",
+    "textAngular": "^1.5.16"
   },
   "devDependencies": {
     "angular-mocks": "~1.6.0"
