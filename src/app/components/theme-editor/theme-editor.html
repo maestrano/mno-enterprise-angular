@@ -34,6 +34,10 @@
             <label>New Logo</label>
             <input type="file" id="theme-main-logo" accept=".png, image/png"/>
           </div>
+          <div class="alert alert-info" role="alert">
+            <i class="fa fa-info-circle"></i>&nbsp;No need to hit publish, your logo will automatically be available after the upload has finished.
+          </div>
+          <br>
           <button class='btn btn-warning' ng-click="editor.updateLogo()" ng-disabled="editor.isUpdatingLogo">
             <span ng-show="editor.isUpdatingLogo"><i class="fa fa-spinner fa-pulse fa-fw"></i></span>
             Update Logo
