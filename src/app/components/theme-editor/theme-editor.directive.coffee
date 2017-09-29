@@ -334,6 +334,7 @@ ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
     },
 
     'Forms': {
+      '@input-bg':                '@bg-on-bg-inverse-color'
       '@input-color':             '@text-inverse-color'
       '@input-color-placeholder': '@input-color'
       '@input-label-color':       '@text-inverse-color'
