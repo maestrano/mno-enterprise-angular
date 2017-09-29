@@ -3,9 +3,9 @@ angular.module 'mnoEnterpriseAngular'
 
     vm = this
     vm.isLoading = true
-    
+
     vm.goToSubscription = (subscription) ->
-      $state.go('home.subscription', { subscription: subscription })
+      $state.go('home.subscription', { id: subscription.id })
 
     vm.cancelSubscription = (subscription, i) ->
       modalOptions =

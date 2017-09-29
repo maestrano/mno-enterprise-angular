@@ -200,9 +200,8 @@ angular.module 'mnoEnterpriseAngular'
           controllerAs: 'vm'
         .state 'home.subscription',
           data:
-            pageTitle:'Subscription info'
-          url: '/subscriptions/subscription'
-          params:{subscription:null},
+            pageTitle:'Subscription details'
+          url: '/subscriptions/:id'
           templateUrl: 'app/views/provisioning/subscription.html'
           controller: 'ProvisioningSubscriptionCtrl'
           controllerAs: 'vm'
