@@ -87,11 +87,13 @@ angular.module 'mnoEnterpriseAngular'
         true
 
     @isOnboardingWizardEnabled = () ->
-      if DASHBOARD_CONFIG.onboarding_wizard?.enabled?
-        DASHBOARD_CONFIG.onboarding_wizard.enabled
-      else
-        $log.debug("DASHBOARD_CONFIG.onboarding_wizard.enabled missing")
-        false
+      # commented until products are properly handled
+      # if DASHBOARD_CONFIG.onboarding_wizard?.enabled?
+      #   DASHBOARD_CONFIG.onboarding_wizard.enabled
+      # else
+      #   $log.debug("DASHBOARD_CONFIG.onboarding_wizard.enabled missing")
+      #   false
+      false
 
     @isOrganizationManagementEnabled = () ->
       if DASHBOARD_CONFIG.organization_management?.enabled?
