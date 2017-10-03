@@ -63,12 +63,11 @@ ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
       '@public-page-header-bg-color':        '@bg-inverse-color'
       '@public-page-header-padding':         '10px'
 
-      '@public-page-header-logo-img':        'mno_enterprise/main-logo.png'
       '@public-page-header-logo':            '{ min-height: 61px; max-width: 160px; max-height: 130px; margin: 17px auto 5px auto; }'
     },
 
     'Login Page': {
-      '@login-bg-img':                       'mno_enterprise/login-background.jpg'
+      '@login-bg-img':                       '"mno_enterprise/login-background.jpg"'
       '@login-bg-color':                     '@bg-main-color'
       '@login-box-grid-position':            '{ margin-top: 80px; .make-sm-column(4); .make-sm-column-offset(4); }'
 
@@ -79,10 +78,8 @@ ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
 
       '@login-box-bg-color':                 '@bg-inverse-color'
       '@login-box-padding':                  '20px'
-      '@login-box-brand-logo-img':           'mno_enterprise/main-logo.png'
-      '@login-box-brand-logo':               '{ min-height: 61px; max-width: 160px; max-height: 130px; margin: 17px auto 5px auto; }'
+      '@login-box-brand-logo':               '{ max-width: 300px; max-height: 200px; margin: 16px auto 16px auto; }'
       '@login-box-btn-login':                '{ width: 100%; }'
-
 
       '@login-box-sso-intuit-logo':           'mno_enterprise/logo-intuit.png'
       '@login-box-oauth-text-color':          '#fff'
@@ -114,10 +111,8 @@ ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
       '@dashboard-side-menu-padding':                  '30px 0px 0px 14px'
       '@dashboard-side-menu-bg-color':                 '@bg-inverse-color'
 
-      '@dashboard-side-menu-brand-logo-img':           '../images/main-logo.png'
-      '@dashboard-side-menu-brand-logo':               '{ background-size: 204px; width: 51px; margin-left: 5px; }'
-      '@dashboard-side-menu-brand-logo-expanded':      '{ width: 201px; background-size: 100%; }'
-
+      '@dashboard-side-menu-brand-logo':               '{ max-width: 50px; max-height: 50px; margin: 0; transition: max-width .25s ease, max-height .25s ease; }'
+      '@dashboard-side-menu-brand-logo-expanded':      '{ max-width: 200px; max-height: 130px; }'
       '@dashboard-side-menu-link-color':               '@text-inverse-color'
       '@dashboard-side-menu-link-bg-color':            '@dashboard-side-menu-bg-color'
 
@@ -339,7 +334,7 @@ ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
     },
 
     'Forms': {
-      '@input-bg':                '@elem-cozy-color'
+      '@input-bg':                '@bg-on-bg-inverse-color'
       '@input-color':             '@text-inverse-color'
       '@input-color-placeholder': '@input-color'
       '@input-label-color':       '@text-inverse-color'

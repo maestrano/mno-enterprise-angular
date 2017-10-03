@@ -5,10 +5,6 @@ angular.module 'mnoEnterpriseAngular'
 
     subscriptionsApi = (id) -> MnoeApiSvc.one('/organizations', id).all('subscriptions')
 
-    productsApi = MnoeApiSvc.oneUrl('/products')
-    productsPromise = null
-    productsResponse = null
-
     subscription = {}
 
     defaultSubscription = {

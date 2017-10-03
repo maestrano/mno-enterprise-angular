@@ -62,42 +62,44 @@
   <nav class="menu vertical">
     <!--Home page link-->
     <a href="/">
-      <div class='brand-logo'></div>
+      <img class="brand-logo" src="images/main-logo.png">
     </a>
 
-    <a ng-if="(!isDockEnabled && isAdmin) || !isAdmin" ui-sref="home.apps" class="dashboard-button top-buffer-1" ui-sref-active="active">
-      <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}</div>
-      <i class="dhb-icon-dashboard"></i>
-    </a>
+    <div class="menu-buttons-wrapper">
+      <a ng-if="(!isDockEnabled && isAdmin) || !isAdmin" ui-sref="home.apps" class="dashboard-button top-buffer-1" ui-sref-active="active">
+        <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}</div>
+        <i class="dhb-icon-dashboard"></i>
+      </a>
 
-    <a ng-if="isDockEnabled && isAdmin" ui-sref="home.impac" class="dashboard-button top-buffer-1" ui-sref-active="active">
-      <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}</div>
-      <i class="dhb-icon-impac"></i>
-    </a>
+      <a ng-if="isDockEnabled && isAdmin" ui-sref="home.impac" class="dashboard-button top-buffer-1" ui-sref-active="active">
+        <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}</div>
+        <i class="dhb-icon-impac"></i>
+      </a>
 
-    <a ng-if="!isDockEnabled && isAdmin" ui-sref="home.impac" class="dashboard-button top-buffer-1" ui-sref-active="active">
-      <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.impac' | translate }}</div>
-      <i class="dhb-icon-impac"></i>
-    </a>
+      <a ng-if="!isDockEnabled && isAdmin" ui-sref="home.impac" class="dashboard-button top-buffer-1" ui-sref-active="active">
+        <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.impac' | translate }}</div>
+        <i class="dhb-icon-impac"></i>
+      </a>
 
-    <a ui-sref="home.account" class="dashboard-button top-buffer-1" ui-sref-active="active">
-      <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.my_account' | translate }}</div>
-      <i class="dhb-icon-account"></i>
-    </a>
+      <a ui-sref="home.account" class="dashboard-button top-buffer-1" ui-sref-active="active">
+        <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.my_account' | translate }}</div>
+        <i class="dhb-icon-account"></i>
+      </a>
 
-    <a ng-if="isOrganizationManagementEnabled" ui-sref="home.company" class="dashboard-button top-buffer-1" ui-sref-active="active">
-      <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.company' | translate }}</div>
-      <i class="dhb-icon-company"></i>
-    </a>
+      <a ng-if="isOrganizationManagementEnabled" ui-sref="home.company" class="dashboard-button top-buffer-1" ui-sref-active="active">
+        <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.company' | translate }}</div>
+        <i class="dhb-icon-company"></i>
+      </a>
 
-    <a ng-if="isProvisioningEnabled && isAdmin" ui-sref="home.subscriptions" class="dashboard-button top-buffer-1" ui-sref-active="active">
-      <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.subscriptions' | translate }}</div>
-      <i class="dhb-icon-subscriptions"></i>
-    </a>
+      <a ng-if="isProvisioningEnabled && isAdmin" ui-sref="home.subscriptions" class="dashboard-button top-buffer-1" ui-sref-active="active">
+        <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.subscriptions' | translate }}</div>
+        <i class="dhb-icon-subscriptions"></i>
+      </a>
 
-    <a ng-if="isMarketplaceEnabled" ui-sref="home.marketplace" class="dashboard-button top-buffer-1" ui-sref-active="active">
-      <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.marketplace' | translate }}</div>
-      <i class="dhb-icon-marketplace"></i>
-    </a>
+      <a ng-if="isMarketplaceEnabled" ui-sref="home.marketplace" class="dashboard-button top-buffer-1" ui-sref-active="active">
+        <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.marketplace' | translate }}</div>
+        <i class="dhb-icon-marketplace"></i>
+      </a>
+    </div>
   </nav>
 </div>
