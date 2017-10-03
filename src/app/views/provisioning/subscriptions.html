@@ -12,74 +12,66 @@
     </div>
 
     <div ng-hide="vm.isLoading" class="table-cell" ng-show="!isLoading">
-      <div class="row th-row hidden-xs">
-        <div class="cell col-sm-2">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.product' | translate }}</div>
-        <div class="cell col-sm-2">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.subscription' | translate }}</div>
-        <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.description' | translate }}</div>
-        <div class="cell col-sm-1">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.amount' | translate }}</div>
-        <div class="cell col-sm-1">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.start_date' | translate }}</div>
-        <div class="cell col-sm-1">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.end_date' | translate }}</div>
-        <div class="cell col-sm-1">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.status' | translate }}</div>
-        <div class="cell col-sm-1">&nbsp;</div>
+      <div class="row th-row hidden-sm">
+        <div class="cell col-md-2">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.product' | translate }}</div>
+        <div class="cell col-md-2">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.subscription' | translate }}</div>
+        <div class="cell col-md-2">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.amount' | translate }}</div>
+        <div class="cell col-md-2">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.start_date' | translate }}</div>
+        <div class="cell col-md-2">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.end_date' | translate }}</div>
+        <div class="cell col-md-1">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.status' | translate }}</div>
+        <div class="cell col-md-1">&nbsp;</div>
       </div>
 
       <div class="row td-row" ng-if="vm.subscriptions.length === 0">
-        <div class="cell col-sm-12 text-center" translate>
+        <div class="cell col-md-12 text-center" translate>
           mno_enterprise.templates.dashboard.provisioning.subscriptions.empty_list
         </div>
       </div>
 
       <div class="row td-row" ng-repeat="subscription in vm.subscriptions">
-        <div class="cell col-sm-2">
+        <div class="cell col-md-2" ng-click="vm.goToSubscription(subscription)">
           <span class="cell-label visible-xs-inline">
             {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.product' | translate }}:
           </span>
           <span title="{{ subscription.name }}">{{ subscription.product.name }}</span>
         </div>
 
-        <div class="cell col-sm-2">
+        <div class="cell col-md-2" ng-click="vm.goToSubscription(subscription)">
           <span class="cell-label visible-xs-inline">
             {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.subscription' | translate }}:
           </span>
-          <span title="{{ subscription.product_pricing.name }}">{{ subscription.product_pricing.name }}</span>
+          <span title="{{ subscription.product_pricing.name }}">{{ subscription.product_pricing.name }}</span>&nbsp;<i class="fa fa-info-circle" ng-show="subscription.product_pricing.description" uib-tooltip="{{ subscription.product_pricing.description }}" tooltip-append-to-body="true"></i>
         </div>
 
-        <div class="cell col-sm-3">
-          <span class="cell-label visible-xs-inline">
-            {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.description' | translate }}:
-          </span>
-          <span title="{{ subscription.product_pricing.description }}">{{ subscription.product_pricing.description }}</span>
-        </div>
-
-        <div class="cell col-sm-1">
+        <div class="cell col-md-2" ng-click="vm.goToSubscription(subscription)">
           <span class="cell-label visible-xs-inline">
             {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.amount' | translate }}:
           </span>
           <span ng-repeat="price in subscription.product_pricing.prices | filterBy: ['currency']: vm.orgCurrency">{{price.currency}} {{price.price_cents / 100}}</span>
         </div>
 
-        <div class="cell col-sm-1">
+        <div class="cell col-md-2" ng-click="vm.goToSubscription(subscription)">
           <span class="cell-label visible-xs-inline">
             {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.start_date' | translate }}:
           </span>
           <span title="{{subscription.start_date | amDateFormat: 'LL'}}">{{subscription.start_date | amDateFormat: 'L'}}</span>
         </div>
 
-        <div class="cell col-sm-1">
+        <div class="cell col-md-2" ng-click="vm.goToSubscription(subscription)">
           <span class="cell-label visible-xs-inline">
             {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.end_date' | translate }}:
           </span>
           <span title="{{subscription.end_date | amDateFormat: 'LL'}}">{{subscription.end_date | amDateFormat: 'L'}}</span>
         </div>
 
-        <div class="cell col-sm-1">
+        <div class="cell col-md-1" ng-click="vm.goToSubscription(subscription)">
           <span class="cell-label visible-xs-inline">
             {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.status' | translate }}:
           </span>
           <span title="{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.states.' + subscription.status | translate }}">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.states.' + subscription.status | translate }}</span>
         </div>
 
-        <div class="cell col-sm-1">
+        <div class="cell col-md-1">
           <div class="pull-right">
             <a ui-sref="home.provisioning.order({id: subscription.id})" ng-if="subscription.status !== 'cancelled'" class="btn btn-link btn-link-warning" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.modify' | translate }}" tooltip-append-to-body="true">
               <i class="fa fa-pencil-square-o"></i>
