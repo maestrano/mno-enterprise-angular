@@ -6,18 +6,103 @@
         translate-values="{appname: app.name}"></h3>
   </div>
 
-  <ul class="breadcrumb">
-    <li>{{"mno_enterprise.templates.dashboard.link_account.title" | translate}}</li>
-    <li><a href="#">{{"mno_enterprise.templates.dashboard.link_account.entities" | translate}}</a></li>
-    <li><a href="#">{{"mno_enterprise.templates.dashboard.link_account.synchronize" | translate}}</a></li>
-  </ul>
+  <!-- Link -->
+  <div ng-show="!hasLinked && !hasChosenEntities">
+    <ul class="breadcrumb">
+      <li>{{"mno_enterprise.templates.dashboard.link_account.title" | translate}}</li>
+      <li><a href="#">{{"mno_enterprise.templates.dashboard.link_account.entities" | translate}}</a></li>
+      <li><a href="#">{{"mno_enterprise.templates.dashboard.link_account.synchronize" | translate}}</a></li>
+    </ul>
 
-  <div class="modal-body">
-    <h4 class="text-center">{{"mno_enterprise.templates.dashboard.link_account.link" | translate:{ appname: app.app_name} }}</h4>
-    <div class="top-buffer-1"></div>
+    <div class="modal-body">
+      <h4 class="text-center">{{"mno_enterprise.templates.dashboard.link_account.link" | translate:{ appname: app.app_name} }}</h4>
+      <div class="top-buffer-1"></div>
 
-    <form sf-schema="schema" sf-form="form" sf-model="model"></form>
-    
+      <form sf-schema="schema" sf-form="form" sf-model="model" ng-submit="submit(setupForm)" name="setupForm" ng-if="!isFormLoading"></form>
+      <button type="submit" ng-click="submit(setupForm)" ng-disabled="isSubmitting && !setupForm.$valid" class="btn btn-primary pull-right top-buffer-1" ng-if="!isFormLoading">
+        Submit
+        <i class="fa fa-refresh fa-spin" ng-if="isSubmitting"></i>
+      </button>
+      <mno-loader ng-if="isFormLoading"></mno-loader>
+
+      <div style="clear: both;"></div>
+    </div>
+  </div>
+
+  <!-- Chose Entities -->
+  <div ng-show="hasLinked && !hasChosenEntities">
+    <ul class="breadcrumb">
+      <li><a href="#">{{"mno_enterprise.templates.dashboard.link_account.title" | translate}}</a></li>
+      <li>{{"mno_enterprise.templates.dashboard.link_account.entities" | translate}}</li>
+      <li><a href="#">{{"mno_enterprise.templates.dashboard.link_account.synchronize" | translate}}</a></li>
+    </ul>
+
+    <div class="modal-body">
+      <h4 class="text-center">Chose which entities you want to synchronize</h4>
+
+      <table>
+        <tr>
+          <th>Entity&nbsp</th>
+          <th>From Connec™ to Neto&nbsp</th>
+          <th>From Neto to Connec™&nbsp</th>
+        </tr>
+        <tr ng-repeat="entity in app.organization.displayable_synchronized_entities">
+          <td>{{entity.connec_name}}&nbsp</td>
+          <td align="center"><input type="checkbox" ng-model="entity.can_push_to_external" checked="entity.can_push_to_external"/></td>
+          <td align="center"><input type="checkbox" ng-model="entity.can_push_to_connec" checked="entity.can_push_to_connec"/></td>
+        </tr>
+      </table>
+
+      <button class="btn btn-success" ng-click="update(app.organization.displayable_synchronized_entities)" style="float: right;">Update</button>
+
+      <div style="clear: both;"></div>
+
+    </div>
+  </div>
+
+  <!-- Chose Entities -->
+  <div ng-show="hasLinked && hasChosenEntities">
+    <ul class="breadcrumb">
+      <li><a href="#">{{"mno_enterprise.templates.dashboard.link_account.title" | translate}}</a></li>
+      <li><a href="#">{{"mno_enterprise.templates.dashboard.link_account.entities" | translate}}</a></li>
+      <li>{{"mno_enterprise.templates.dashboard.link_account.synchronize" | translate}}</li>
+    </ul>
+
+    <div class="modal-body">
+      <h4 class="text-center">Chose wether to synchronize historical data</h4>
+
+      <div>
+        <p>
+          <b>All data</b> created prior to the date you linked Neto <b>will be synchronized both ways</b>
+        </p>
+        <p>
+          It means that:
+          <br/>
+          - all data from applications you already have linked to the platform will be sent to your Neto account
+          <br/>
+          - all exisiting data from Neto will be sent to your other applications
+          <br/>
+        </p>
+        <p>
+          If you have been manually copying records in multiple applications, <b>you risk seeing duplicates arising!</b>
+        </p>
+        <p>
+          <b>This action cannot be undone at any time!</b>
+        </p>
+        <b>Synchronize my historical data:&nbsp</b>
+        <input ng-model="historicalData" id="historical-data" name="historical-data" ng-change="historicalDataDisplay();" type="checkbox" display=inline-block></input>
+        <small id="historical-data-display-unchecked" style="display: block">Only data created after {{getDate()}} will be synchronized
+        </small>
+        <small id="historical-data-display-checked" style="display: none">
+        Synchronizing your historical data will share all data in Neto. This action is not reversible. Want to know more? Check <a href="https://maestrano.atlassian.net/wiki/display/UKB/How+Connec%21+manages+Historical+Data+Sharing" target="_blank">here</a>
+        </small>
+      </div>
+
+      <button class="btn btn-success" ng-click="synchronize(historicalData)" style="float: right;">Start synchronizing</button>
+
+      <div style="clear: both;"></div>
+
+    </div>
   </div>
 
   <div class="modal-footer">

@@ -63,7 +63,24 @@ angular.module 'mnoEnterpriseAngular'
       return _self.appInstances
 
     @getForm = (instance) ->
-      MnoeApiSvc.one('organizations', MnoeOrganizations.selectedId).one('/app_instances', instance.app.id).one('/setup_form').get()
+      MnoeApiSvc.one('organizations', MnoeOrganizations.selectedId).one('/app_instances', instance.id).one('/setup_form').get()
+
+    @submitForm = (instance, model) ->
+      body = {}
+      for key of model
+        if model.hasOwnProperty(key)
+          body[key] = model[key]
+      MnoeApiSvc.one('organizations', MnoeOrganizations.selectedId).one('/app_instances', instance.id).post('/create_omniauth', body)
+
+    @getSyncs = (instance) ->
+      MnoeApiSvc.one('organizations', MnoeOrganizations.selectedId).one('/app_instances', instance.id).one('/sync_history').get()
+
+    @disconnect = (instance) ->
+      MnoeApiSvc.one('organizations', MnoeOrganizations.selectedId).one('/app_instances', instance.id).one('/disconnect').post()
+
+    @sync = (instance, fullSync) ->
+      body = {full_sync: fullSync}
+      MnoeApiSvc.one('organizations', MnoeOrganizations.selectedId).one('/app_instances', instance.id).post('/sync', body)
 
     # Path to connect this app instance and redirect to the current page
     @oAuthConnectPath = (instance, extra_params = '') ->
