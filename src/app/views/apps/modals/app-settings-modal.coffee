@@ -1,11 +1,21 @@
 
 angular.module 'mnoEnterpriseAngular'
-  .controller('DashboardAppSettingsModalCtrl', ($scope, MnoConfirm, MnoeOrganizations, $uibModalInstance, MnoeAppInstances, Utilities, app, $window, ImpacMainSvc, $translate)->
+  .controller('DashboardAppSettingsModalCtrl', ($scope, MnoConfirm, MnoeOrganizations, $uibModalInstance, MnoeAppInstances, Utilities, app, $window, ImpacMainSvc, $translate, toastr)->
 
     $scope.modal ||= {}
     $scope.app = app
     $scope.sentence = "Please proceed to the deletion of my app and all data it contains"
     $scope.organization_uid = ImpacMainSvc.config.currentOrganization.uid
+    $scope.isLoadingSyncs = true
+    $scope.isDisconnecting = false
+    $scope.syncs = []
+
+    MnoeAppInstances.getSyncs($scope.app)
+      .then((response) ->
+        for i in [0...response.length]
+          $scope.syncs.push response[i].attributes
+        $scope.isLoadingSyncs = false
+      )
 
     # ----------------------------------------------------------
     # Initialize deletion sentence
@@ -54,14 +64,15 @@ angular.module 'mnoEnterpriseAngular'
       false
 
     $scope.helper.isAddOnSettingShown = (app) ->
-      app.add_on
+      app.add_on &&
+      app.organization &&
+      app.organization.has_account_linked
 
     $scope.helper.addOnSettingLauch = (app) ->
       $window.open("/mnoe/launch/#{app.uid}?settings=true", '_blank')
       return true
 
     $scope.helper.dataDisconnectClick = (app) ->
-
       modalOptions =
         closeButtonText: 'Cancel'
         actionButtonText: 'Disconnect app'
@@ -73,4 +84,38 @@ angular.module 'mnoEnterpriseAngular'
           MnoeAppInstances.clearCache()
           $window.location.href = "/mnoe/webhook/oauth/#{app.uid}/disconnect"
       )
+
+    $scope.loadSyncs = ->
+      $scope.isLoadingSyncs = true
+      $scope.syncs = []
+      MnoeAppInstances.getSyncs($scope.app)
+        .then((response) ->
+          for i in [0...response.length]
+            $scope.syncs.push response[i].attributes
+          $scope.isLoadingSyncs = false
+        )
+
+    $scope.disconnect = ->
+      $scope.isDisconnecting = true
+      MnoeAppInstances.disconnect(app)
+        .then((response) ->
+          app.organization.has_account_linked = false
+          $uibModalInstance.close()
+          toastr.success("Your application has been disconnected")
+          $scope.isDisconnecting = false
+        )
+
+    $scope.switchTab = (indexActive) ->
+      activeTab = "tab" + indexActive
+      document.getElementById("tab" + indexActive).classList.add("active")
+      document.getElementById("head" + indexActive).classList.add("active")
+      for i in [0..1]
+        document.getElementById("tab" + ((indexActive + i) % 3 + 1)).classList.remove("active")
+        document.getElementById("head" + ((indexActive + i) % 3 + 1)).classList.remove("active")
+      switch indexActive
+        when 1 then $scope.loadSyncs()
+        when 2 then $scope.loadSyncs()
+
+    return
+
   )

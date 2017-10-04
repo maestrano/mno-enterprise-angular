@@ -16,7 +16,52 @@
       <!-- Add on settings -->
       <div ng-show="helper.isAddOnSettingShown(app)">
         <hr>
-        <button ng-click="helper.addOnSettingLauch(app)" class="btn btn-warning">{{ 'mno_enterprise.templates.impac.dock.settings.access_add-on_settings' | translate }}</button>
+        <div class="tabs">
+          <ul class="tab-links">
+            <li class="active" id="head1" ng-click="switchTab(1)"><a href="#tab1">History</a></li>
+            <li id="head2" ng-click="switchTab(2)"><a href="#tab2">Data</a></li>
+            <li id="head3" ng-click="switchTab(3)"><a href="#tab3">Shared Entities</a></li>
+          </ul>
+
+          <div class="tab-content">
+            <div id="tab1" class="tab active">
+              <h4 style="margin-bottom: 30px;">List of previous synchronizations:</h4>
+              <mno-loader ng-if="isLoadingSyncs"></mno-loader>
+              <table style="margin-bottom: 0px;" ng-if="!isLoadingSyncs">
+                <tr>
+                  <th>Date</th>
+                  <th>Status</th>
+                  <th>Message</th>
+                </tr>
+                <tr ng-repeat="sync in syncs">
+                  <td class="td-sync">{{sync.updated_at}}&nbsp</td>
+                  <td class="td-sync">{{sync.status}}&nbsp</td>
+                  <td class="td-sync">{{sync.message | truncate:40}}&nbsp</td>
+                </tr>
+              </table>
+            </div>
+
+            <div id="tab2" class="tab">
+            </div>
+
+            <div id="tab3" class="tab">
+              <table>
+                <tr>
+                  <th>Entity&nbsp</th>
+                  <th>From Connec™ to Neto&nbsp</th>
+                  <th>From Neto to Connec™&nbsp</th>
+                </tr>
+                <tr ng-repeat="entity in app.organization.displayable_synchronized_entities">
+                  <td>{{entity.connec_name}}&nbsp</td>
+                  <td align="center"><input type="checkbox" ng-model="entity.can_push_to_external" checked="entity.       can_push_to_external"/></td>
+                  <td align="center"><input type="checkbox" ng-model="entity.can_push_to_connec" checked="entity.       can_push_to_connec"/></td>
+                </tr>
+              </table>
+
+              <button class="btn btn-success" ng-click="update(app.organization.displayable_synchronized_entities)" style="float: right;">Update</button>
+            </div>
+          </div>
+        </div>
       </div>
       <!-- Data Sharing -->
       <div ng-show="helper.isDataSyncShown(app) || helper.isDataDisconnectShown(app)">
@@ -50,6 +95,9 @@
       <!-- Deletion -->
       <hr>
       <div ng-show="helper.canDeleteApp()" class="app-deletion">
+        <button class="btn btn-warning" ng-hide="!helper.isAddOnSettingShown(app)" ng-click="disconnect()">  Disconnect
+          <i class="fa fa-refresh fa-spin" ng-if="isDisconnecting"></i>
+        </button>
         <button class="btn btn-danger" ng-hide="app.showDelete" ng-click="app.showDelete = !app.showDelete">{{ 'mno_enterprise.templates.impac.dock.settings.delete' | translate }}</button>
         <div ng-show="app.showDelete">
           <h4>{{ 'mno_enterprise.templates.impac.dock.settings.confirm_app_deletion' | translate }}</h4>
