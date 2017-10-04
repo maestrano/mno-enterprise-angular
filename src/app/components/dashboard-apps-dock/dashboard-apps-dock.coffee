@@ -33,13 +33,13 @@ DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, MnoeOrganizations
     $scope.helper.isNewOfficeApp(app)
 
   $scope.helper.isOauthConnectBtnShown = (instance) ->
-    (instance.app_nid != 'office-365' &&
-    instance.stack == 'connector' &&
-    !instance.oauth_keys_valid) ||
-    instance.stack == 'cloud'
+    (instance.app_nid != 'office-365' && instance.stack == 'connector' && !instance.oauth_keys_valid) ||
+    (instance.add_on && instance.organization && !instance.organization.has_account_linked)
 
   $scope.helper.isCreateAccountShown = (instance) ->
-    instance.stack == 'cloud' && !instance.is_linked
+    instance.add_on &&
+    instance.organization &&
+    !instance.organization.has_account_linked
 
   $scope.helper.isNewOfficeApp = (instance) ->
     instance.stack == 'connector' && instance.appNid == 'office-365' && (moment(instance.createdAt) > moment().subtract({minutes:5}))
@@ -60,7 +60,7 @@ DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, MnoeOrganizations
 
   $scope.redirectToExternal = (app, event) ->
     $scope.setActiveApp(event, app.id)
-    $window.open(app.account_creation_link, '_blank')
+    $window.open(app.organization.account_creation_link, '_blank')
     $scope.showConnectModal(app)
     return true
 
