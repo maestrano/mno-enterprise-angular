@@ -30,7 +30,16 @@
           <span class="cell-label visible-xs-inline">
             {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.price' | translate }}:
           </span>
-          <span ng-repeat="price in vm.subscription.product_pricing.prices | filterBy: ['currency']: vm.orgCurrency">{{price.currency}} {{price.price_cents / 100}}</span>
+
+          <span ng-hide="vm.subscription.product_pricing.pricing_type == 'payg'" ng-repeat="price in vm.subscription.product_pricing.prices | filterBy: ['currency']: vm.orgCurrency" class="badge">
+            {{ price.currency }} {{ price.price_cents / 100 }}
+          </span>
+          <span ng-show="vm.subscription.product_pricing.pricing_type == 'recurring'">
+            / {{ vm.subscription.product_pricing.per_unit }} / {{ vm.subscription.product_pricing.per_duration }}
+          </span>
+          <span ng-show="vm.subscription.product_pricing.pricing_type == 'payg'">
+            {{ 'mno_enterprise.templates.dashboard.provisioning.order.pricing_type.payg' | translate }}
+          </span>
         </div>
       </div>
     </div>
