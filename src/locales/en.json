@@ -665,6 +665,7 @@
   "mno_enterprise.templates.dashboard.provisioning.order.description": "Description",
   "mno_enterprise.templates.dashboard.provisioning.order.price": "Price",
   "mno_enterprise.templates.dashboard.provisioning.order.next": "Next",
+  "mno_enterprise.templates.dashboard.provisioning.order.pricing_type.payg": "Usage Based",
   "mno_enterprise.templates.dashboard.provisioning.details.title": "Enter details",
   "mno_enterprise.templates.dashboard.provisioning.details.next": "Next",
   "mno_enterprise.templates.dashboard.provisioning.confirm.title": "Subscription",
