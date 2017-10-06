@@ -15,8 +15,5 @@ angular.module 'mnoEnterpriseAngular'
           )
     ).finally(-> vm.isLoading = false)
 
-    vm.formatPrice = (price) ->
-      vm.price = price.currency + (price.price_cents / 100)
-
     return
   )
