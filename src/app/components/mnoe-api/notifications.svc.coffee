@@ -25,6 +25,9 @@ angular.module 'mnoEnterpriseAngular'
     formatDate = (date)->
       moment(date).format('LL')
 
+    isToday = (date)->
+      moment(date).isSame(moment(), 'd')
+
     NotificationFormatter = {}
 
     NotificationFormatter.reminder = (notification) ->
@@ -50,7 +53,6 @@ angular.module 'mnoEnterpriseAngular'
           tls['mno_enterprise.templates.components.notifications.reminder.message.due'],
           tls['mno_enterprise.templates.components.notifications.reminder.message.details']
         ].join('</br>')
-
         deferred.resolve({
           object_id: notification.object_id,
           object_type: notification.object_type,
@@ -67,6 +69,7 @@ angular.module 'mnoEnterpriseAngular'
       deferred = $q.defer()
       $translate([
           'mno_enterprise.templates.components.notifications.due.title',
+          'mno_enterprise.templates.components.notifications.due.title_today',
           'mno_enterprise.templates.components.notifications.due.message.title',
           'mno_enterprise.templates.components.notifications.due.message.from',
           'mno_enterprise.templates.components.notifications.due.message.details'
@@ -83,13 +86,16 @@ angular.module 'mnoEnterpriseAngular'
           tls['mno_enterprise.templates.components.notifications.due.message.from'],
           tls['mno_enterprise.templates.components.notifications.due.message.details']
         ].join('</br>')
-
+        title = if isToday(task.due_date)
+          tls['mno_enterprise.templates.components.notifications.due.title_today']
+        else
+          tls['mno_enterprise.templates.components.notifications.due.title']
         deferred.resolve({
           object_id: notification.object_id,
           object_type: notification.object_type,
           notification_type: notification.notification_type,
           method: 'warning',
-          title: tls['mno_enterprise.templates.components.notifications.due.title'],
+          title: title,
           message: message,
         })
       )
