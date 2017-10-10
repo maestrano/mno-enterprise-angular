@@ -3,11 +3,19 @@ angular.module 'mnoEnterpriseAngular'
     restrict: 'EA'
     templateUrl: 'app/components/dashboard-company-deletion/dashboard-company-deletion.html',
     controllerAs: "DashboardCompanyDeletionCtrl"
-    controller:  ($log, $stateParams, $uibModal, MnoeCurrentUser, MnoeOrganizations, MnoeAppInstances, MnoConfirm) ->
+    controller:  ($uibModal, MnoeCurrentUser, MnoeOrganizations, MnoeAppInstances, MnoConfirm) ->
       vm = this
-      vm.isDeletionOpen = true
-      vm.requestDeletion =  () ->
-        $uibModal.open({component: "dashboardDeletionConfirm"})
+      vm.isDeletionOpen = false
 
+      vm.proceed = (reason, password) ->
+        MnoeOrganizations.freeze(reason, password)
+
+      vm.requestDeletion =  () ->
+        modalInstance = $uibModal.open(
+          component: "dashboardDeletionConfirm",
+          size: "lg",
+          resolve:
+            actionCb: () ->  vm.proceed
+          )
       return
       })
