@@ -32,6 +32,8 @@ angular.module 'mnoEnterpriseAngular'
       vm.isAuditLogShown = ->
         MnoeConfig.isAuditLogEnabled() && MnoeOrganizations.role.isSuperAdmin()
 
+      vm.isCompanyActive = ->
+        MnoeOrganizations.active()
       #====================================
       # Post-Initialization
       #====================================
