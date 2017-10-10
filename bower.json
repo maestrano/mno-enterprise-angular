@@ -57,6 +57,9 @@
     },
     "highcharts": {
       "main": "highstock.js"
+    },
+    "jquery-rss": {
+      "main": "dist/jquery.rss.min.js"
     }
   },
   "resolutions": {
