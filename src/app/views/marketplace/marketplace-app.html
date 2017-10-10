@@ -114,8 +114,15 @@
           <ul>
             <li ng-repeat="plan in vm.pricing_plans">
               <b>{{plan.name}}</b>: {{plan.description}}<br>
-              <span ng-show="plan.price.value">{{plan.currency}} {{plan.price.value}} {{plan.factor}}</span>
-              <span ng-hide="plan.price.value">{{plan.currency}} {{plan.price}} {{plan.factor}}</span>
+              <div ng-show="plan.pricing_type != 'payg'">
+                <span>{{plan.currency}}</span>
+                <span ng-show="plan.price.value">{{plan.price.value}}</span>
+                <span ng-hide="plan.price.value">{{plan.price}}</span>
+                <span ng-show="plan.pricing_type == 'recurring'">{{plan.factor}}</span>
+              </div>
+              <div ng-show="plan.pricing_type == 'payg'">
+                <span>{{ 'mno_enterprise.templates.dashboard.marketplace.show.pricing.payg' | translate }}</span>
+              </div>
             </li>
           </ul>
           <div ng-bind-html="vm.app.pricing_text"></div>
