@@ -814,6 +814,7 @@
   "mno_enterprise.templates.dashboard.marketplace.show.modals.history.title": "Edit History",
   "mno_enterprise.templates.dashboard.marketplace.show.modals.history.close": "Close",
   "mno_enterprise.templates.dashboard.marketplace.show.provision": "Provision",
+  "mno_enterprise.templates.dashboard.marketplace.show.pricing.payg": "Usage Based",
   "mno_enterprise.templates.dashboard.marketplace.app_selection.next": "Next",
   "mno_enterprise.templates.dashboard.marketplace.app_selection.cancel": "Cancel",
   "mno_enterprise.templates.dashboard.marketplace.app_selection.select_orga": "Select an organization",
