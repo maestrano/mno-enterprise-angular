@@ -20,7 +20,7 @@ angular.module 'mnoEnterpriseAngular'
         vm.isLoading = true
 
         # Launch Cb
-        vm.resolve.actionCb("OK LOL").then(
+        vm.resolve.actionCb(vm.delReasons, vm.password).then(
           (response) ->
             toastr.success('HAN CA MARCHE')
             vm.close(response)

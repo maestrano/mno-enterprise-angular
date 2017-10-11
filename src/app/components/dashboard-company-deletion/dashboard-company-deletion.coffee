@@ -7,8 +7,8 @@ angular.module 'mnoEnterpriseAngular'
       vm = this
       vm.isDeletionOpen = true
 
-      vm.proceed = (x) ->
-        MnoeOrganizations.freeze()
+      vm.proceed = (reason, password) ->
+        MnoeOrganizations.freeze(reason)
 
       vm.requestDeletion =  () ->
         modalInstance = $uibModal.open(

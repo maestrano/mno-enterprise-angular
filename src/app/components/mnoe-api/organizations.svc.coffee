@@ -178,8 +178,8 @@ angular.module 'mnoEnterpriseAngular'
 
       return defer.promise
 
-    @freeze = () ->
-      MnoeApiSvc.one('organizations', _self.selectedId).post('halt')
+    @freeze = (reason) ->
+      MnoeApiSvc.one('organizations', _self.selectedId).doPOST({reason: reason}, 'halt')
     #======================================
     # User Role
     #======================================
