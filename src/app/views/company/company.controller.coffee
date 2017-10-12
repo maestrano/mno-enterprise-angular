@@ -14,6 +14,7 @@ angular.module 'mnoEnterpriseAngular'
       #====================================
       vm.initialize = ->
         vm.isLoading = false
+        MnoeOrganizations.getCurrentOrganisation().then((x) -> vm.isCompanyActive = x.organization.active)
         if vm.isBillingShown()
           vm.activeTab = 'billing'
         else
@@ -32,8 +33,6 @@ angular.module 'mnoEnterpriseAngular'
       vm.isAuditLogShown = ->
         MnoeConfig.isAuditLogEnabled() && MnoeOrganizations.role.isSuperAdmin()
 
-      vm.isCompanyActive = ->
-        MnoeOrganizations.active()
       #====================================
       # Post-Initialization
       #====================================
