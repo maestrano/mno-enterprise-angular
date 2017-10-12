@@ -576,6 +576,7 @@
   "mno_enterprise.templates.components.notifications.reminder.message.due": "Due date: {due_date}",
   "mno_enterprise.templates.components.notifications.reminder.message.details": "See your due tasks for more details",
   "mno_enterprise.templates.components.notifications.due.title": "Task due {due_date}",
+  "mno_enterprise.templates.components.notifications.due.title_today": "Task is due today",
   "mno_enterprise.templates.components.notifications.due.message.title": "Title: {task_title}",
   "mno_enterprise.templates.components.notifications.due.message.from": "From: {user_name} {user_surname}",
   "mno_enterprise.templates.components.notifications.due.message.details": "See your due tasks for more details",
