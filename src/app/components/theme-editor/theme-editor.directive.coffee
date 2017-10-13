@@ -347,7 +347,7 @@ ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
   #============================================
   $scope.editor = editor = {busy: false, output: ''}
 
-  editor.update = () ->
+  editor.update = (opts = {publish: false, default: false, save: false}) ->
     return true if editor.updating
     editor.busy = true
     vars = mergeLessVars()
@@ -355,20 +355,30 @@ ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
     # Apply style
     less.modifyVars(vars).then ->
       editor.busy = false
+      theme_action = if opts.published
+        "published style"
+      else if opts.default
+        "default style"
+      else if opts.save
+        "last saved style"
+      toastr.info("Theme reset to #{theme_action}") if theme_action
       $scope.$apply()
 
-  editor.reset = (opts = {published: false}) ->
+  editor.reset = (opts = {published: false, default: false, save: false}) ->
     editor.busy = true
-    if opts.published
-      editor.busy = true
-      themeEditorSvc.resetToPublishedTheme()
-        .then(-> loadLastSavedTheme())
-        .then(-> editor.update())
+    if opts.published || opts.default
+      promise = if opts.publish
+        themeEditorSvc.resetToPublishedTheme()
+      else
+        themeEditorSvc.resetToDefaultTheme()
+
+      promise.then(-> loadLastSavedTheme())
+        .then(-> editor.update(opts))
         .finally(-> editor.busy = false)
     else
       $scope.theme = theme = angular.copy(default_theme)
       $scope.variables = variables = angular.copy(default_variables)
-      editor.update()
+      editor.update(opts)
 
   editor.local_save = ->
     default_theme = angular.copy($scope.theme)

@@ -7,7 +7,8 @@
       <div class="row text-center">
         <div ng-hide="editor.busy">
           <a href="/admin/" class="btn btn-primary">Back to Admin Panel</a>
-          <button ng-click="editor.reset()" class="btn btn-default">Reset to last save</button>
+          <button ng-click="editor.reset({default: true})" class="btn btn-default">Reset to default</button>
+          <button ng-click="editor.reset({save: true})" class="btn btn-default">Reset to last save</button>
           <button ng-click="editor.save()" class="btn btn-danger">Save</button>
           <button ng-click="editor.reset({published:true})" class="btn btn-default">Reset to published style</button>
           <button ng-click="editor.save({publish:true})" class="btn btn-danger">Publish</button>
