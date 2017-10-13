@@ -180,6 +180,7 @@ angular.module 'mnoEnterpriseAngular'
 
     @freeze = (reason, password) ->
       MnoeApiSvc.one('organizations', _self.selectedId).doPOST({reason: reason, password: password}, 'halt')
+
     #======================================
     # User Role
     #======================================

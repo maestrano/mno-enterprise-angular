@@ -22,11 +22,11 @@ angular.module 'mnoEnterpriseAngular'
         # Launch Cb
         vm.resolve.actionCb(vm.delReasons, vm.password).then(
           (response) ->
-            toastr.success('HAN CA MARCHE')
+            toastr.success('Organization successfully frozen')
             vm.close(response)
           (errors) ->
             $log.error(errors)
-            toastr.error('C CASSE LOL')
+            toastr.error(errors.statusText, "Error")
         ).finally(-> vm.isLoading = false)
       return
     })
