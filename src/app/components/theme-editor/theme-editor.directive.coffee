@@ -1,4 +1,4 @@
-ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
+ThemeEditorCtrl = ($scope, $window, $log, $timeout,  toastr, themeEditorSvc) ->
   'ngInject'
 
   #============================================
@@ -385,6 +385,10 @@ ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
     default_variables = angular.copy($scope.variables)
 
   editor.save = (opts = {publish: false}) ->
+    action = if opts.publish then "publish" else "save"
+    answer = confirm("Do you really want to #{action} these changes?")
+    return if (!answer)
+
     #style = themeToLess()
     body = themeToHash()
     editor.busy = true
@@ -509,6 +513,20 @@ ThemeEditorCtrl = ($scope, $log, $timeout,  toastr, themeEditorSvc) ->
 
   # Init
   loadLastSavedTheme()
+
+  # Handle unsaved changes notifications
+  unsavedChanges = () ->
+    !angular.equals($scope.variables, default_variables) || !angular.equals($scope.theme, default_theme)
+
+  $window.onbeforeunload = (e) ->
+    if unsavedChanges()
+      true
+    else
+      undefined
+
+  $scope.$on('$destroy', () ->
+    $window.onbeforeunload = undefined
+  )
 
 angular.module 'mnoEnterpriseAngular'
   .directive('themeEditor', ->
