@@ -1,5 +1,12 @@
 #subscription {
   .well {
+    h3 {
+      margin-top: 0;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px dashed @subscription-txt-color;
+    }
+
     background-color: @subscription-box-color;
   }
 
@@ -26,5 +33,21 @@
 
   .has-success .form-control {
     border-color: transparent;
+  }
+
+  .well.subscription-info {
+    .form-group {
+      display: flex;
+    }
+
+    div, ul {
+      width: 100%;
+      margin-left: 14px;
+    }
+
+    label {
+      width: 180px;
+      padding-top: 6px;
+    }
   }
 }
