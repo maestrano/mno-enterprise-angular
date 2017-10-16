@@ -3,11 +3,13 @@ angular.module 'mnoEnterpriseAngular'
 
     $scope.app = app
     $scope.model = {}
-    $scope.hasLinked = false
+    $scope.hasLinked = app.addon_organization.has_account_linked
     $scope.hasChosenEntities = false
     $scope.historicalData = false
     $scope.isFormLoading = true
     $scope.isSubmitting = false
+    $scope.historicalData = false
+    $scope.date = new Date()
 
     MnoeAppInstances.getForm(app)
       .then((response) ->
@@ -16,18 +18,6 @@ angular.module 'mnoEnterpriseAngular'
         $scope.isFormLoading = false
       )
 
-    $scope.getDate = ->
-      moment.locale('en')
-      moment().format("dddd, MMMM Do YYYY, h:mm:ss a")
-
-    $scope.historicalDataDisplay = ->
-      if document.getElementById('historical-data').checked
-        document.getElementById('historical-data-display-checked').style.display = 'block'
-        document.getElementById('historical-data-display-unchecked').style.display = 'none'
-      else
-        document.getElementById('historical-data-display-unchecked').style.display = 'block'
-        document.getElementById('historical-data-display-checked').style.display = 'none'
-  
     $scope.close = ->
       $uibModalInstance.close()
 
@@ -38,20 +28,41 @@ angular.module 'mnoEnterpriseAngular'
           if response.error
             toastr.error(response.error)
           else
-            $scope.app.organization.has_account_linked = true
+            $scope.app.addon_organization.has_account_linked = true
             $scope.hasLinked = true
           $scope.isSubmitting = false
         )
+
+    $scope.unselectEntities = ->
+      $scope.hasChosenEntities = false
+
+    $scope.forceSelectEntities = ->
+      $scope.hasChosenEntities = true
 
     $scope.update = (entities) ->
       $scope.hasChosenEntities = true
 
     $scope.synchronize = (historicalData) ->
       MnoeAppInstances.sync($scope.app, historicalData)
-        .then((response) ->
-          $uibModalInstance.close()
-          toastr.success("Congratulations, your data is now being synced!")
-        )
-  
+      $scope.app.addon_organization.sync_enabled = true
+      $uibModalInstance.close()
+      toastr.success("Congratulations, your data is now being synced!")
+
+    $scope.titleForButton = ->
+      if !$scope.hasLinked
+        "Submit"
+      else if !$scope.hasChosenEntities
+        "Update"
+      else
+        "Start synchronizing"
+
+    $scope.callToAction = (connectForm, historicalData)->
+      if !$scope.hasLinked
+        $scope.submit(connectForm)
+      else if !$scope.hasChosenEntities
+        $scope.update(app.addon_organization.synchronized_entities)
+      else
+        $scope.synchronize(historicalData)
+
     return
 )

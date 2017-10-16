@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .service 'MnoeAppInstances', ($q, MnoeApiSvc, MnoeOrganizations, MnoLocalStorage, MnoeCurrentUser, LOCALSTORAGE) ->
+  .service 'MnoeAppInstances', ($q, MnoeApiSvc, MnoeFullApiSvc, MnoeOrganizations, MnoLocalStorage, MnoeCurrentUser, LOCALSTORAGE) ->
     _self = @
 
     # Store selected organization app instances
@@ -32,6 +32,12 @@ angular.module 'mnoEnterpriseAngular'
       _self.emptyAppInstances()
       fetchAppInstances()
 
+    # Return true if the app from the app_instance parameter is an add_on,
+    # and we managed to retrieve the organization from the connector
+    @isAddOnWithOrg = (instance) ->
+      instance.add_on &&
+      instance.addon_organization
+
     # Retrieve app instances from the backend
     fetchAppInstances = ->
       # Workaround as the API is not standard (return a hash map not an array)
@@ -63,22 +69,22 @@ angular.module 'mnoEnterpriseAngular'
       return _self.appInstances
 
     @getForm = (instance) ->
-      MnoeApiSvc.one('organizations', MnoeOrganizations.selectedId).one('/app_instances', instance.id).one('/setup_form').get()
+      MnoeApiSvc.one('organizations', MnoeOrganizations.selectedId).one('/app_instances', instance.id).doGET('/setup_form')
 
     @submitForm = (instance, model) ->
-      body = {}
+      data = {}
       for key of model
         if model.hasOwnProperty(key)
-          body[key] = model[key]
-      MnoeApiSvc.one('organizations', MnoeOrganizations.selectedId).one('/app_instances', instance.id).post('/create_omniauth', body)
+          data[key] = model[key]
+      MnoeApiSvc.one('organizations', MnoeOrganizations.selectedId).one('/app_instances', instance.id).post('/create_omniauth', data)
 
-    @getSyncs = (instance) ->
-      MnoeApiSvc.one('organizations', MnoeOrganizations.selectedId).one('/app_instances', instance.id).one('/sync_history').get()
+    @getSyncs = (instance, params) ->
+      MnoeFullApiSvc.one('organizations', MnoeOrganizations.selectedId).one('/app_instances', instance.id).doGET('/sync_history', params)
 
     @disconnect = (instance) ->
-      MnoeApiSvc.one('organizations', MnoeOrganizations.selectedId).one('/app_instances', instance.id).one('/disconnect').post()
+      MnoeApiSvc.one('organizations', MnoeOrganizations.selectedId).one('/app_instances', instance.id).post('/disconnect')
 
-    @sync = (instance, fullSync) ->
+    @sync = (instance, fullSync = false) ->
       body = {full_sync: fullSync}
       MnoeApiSvc.one('organizations', MnoeOrganizations.selectedId).one('/app_instances', instance.id).post('/sync', body)
 
