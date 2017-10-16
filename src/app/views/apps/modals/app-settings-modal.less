@@ -4,6 +4,11 @@
 #app-settings-modal {
 
   .modal-body {
+    .container-fluid {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
     padding: 5px;
 
     div.app-name {
@@ -61,85 +66,12 @@
       }
     }
 
-    /*----- Tabs -----*/
-    .tabs {
-      width:100%;
-      display:inline-block;
+    .nb-items-col {
+      display: none;
     }
 
-    /*----- Tab Links -----*/
-    /* Clearfix */
-    .tab-links:after {
-        display:block;
-        clear:both;
-        content:'';
-    }
-
-    .tab-links li {
-        margin:0px 5px;
-        float:left;
-        list-style:none;
-    }
-
-    .tab-links a {
-      padding:9px 15px;
-      display:inline-block;
-      border-radius:3px 3px 0px 0px;
-      background:#e8e8e8;;
-      font-size:16px;
-      font-weight:600;
-      color:#4c4c4c;
-      transition:all linear 0.15s;
-    }
-
-    .tab-links a:hover {
-      background:#a7cce5;
-      text-decoration:none;
-    }
-
-    li.active a, li.active a:hover {
-      background:#adadad;
-      color:#4c4c4c;
-    }
-
-    /*----- Content of Tabs -----*/
-    .tab-content {
-      padding:15px;
-      border-radius:3px;
-      background:#fff;
-    }
-
-    .tab {
-      display:none;
-    }
-
-    .tab.active {
-      display:block;
-    }
-
-    table {
-      border:none;
-      border-collapse: collapse;
-      margin-bottom: 30px;
-    }
-
-    td, th {
-      padding-top: 3px;
-      padding-left: 5px;
-    }
-
-    td.td-sync {
-      padding-top: 10px;
-      padding-left: 5px;
-      padding-bottom: 10px;
-    }
-
-    th {
-      padding-bottom: 5px;
-    }
-
-    tr:nth-child(even){
-      background-color: #ececec;
+    .pagination {
+      margin: 0 0;
     }
   }
 }
