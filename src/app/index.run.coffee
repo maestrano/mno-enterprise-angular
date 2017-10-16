@@ -100,3 +100,18 @@ angular.module 'mnoEnterpriseAngular'
         $rootScope.hasNoOrganisations = true
     )
   )
+
+# Prevent access to panes other than company and account when the currrent organization isn't active
+# See  https://github.com/angular-ui/ui-router/wiki/Frequently-Asked-Questions#how-to-create-rules-to-prevent-access-to-a-state
+  .run(($rootScope, $state, MnoeOrganizations) ->
+    $rootScope.$on('$stateChangeStart', (e, to) ->
+      MnoeOrganizations.getCurrentOrganisation().then( (org) ->
+        if !org.organization.active
+          return if to.name == "home.company" || to.name == "home.account"
+          e.preventDefault()
+          # // Optionally set option.notify to false if you don't want
+          # // to retrigger another $stateChangeStart event
+          $state.go("home.company")
+      )
+    )
+  )
