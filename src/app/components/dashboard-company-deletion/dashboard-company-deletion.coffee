@@ -5,7 +5,7 @@ angular.module 'mnoEnterpriseAngular'
     controllerAs: "DashboardCompanyDeletionCtrl"
     controller:  ($uibModal, MnoeCurrentUser, MnoeOrganizations, MnoeAppInstances, MnoConfirm) ->
       vm = this
-      vm.isDeletionOpen = true
+      vm.isDeletionOpen = false
 
       vm.proceed = (reason, password) ->
         MnoeOrganizations.freeze(reason, password)
