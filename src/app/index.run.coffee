@@ -107,7 +107,7 @@ angular.module 'mnoEnterpriseAngular'
     $rootScope.$on('$stateChangeStart', (e, to) ->
       MnoeOrganizations.getCurrentOrganisation().then( (org) ->
         if !org.organization.active
-          return if to.name == "home.company" || to.name == "home.account"
+          return if to.name[0..3] != "home" || to.name == "home.company" || to.name == "home.account"
           e.preventDefault()
           # // Optionally set option.notify to false if you don't want
           # // to retrigger another $stateChangeStart event
