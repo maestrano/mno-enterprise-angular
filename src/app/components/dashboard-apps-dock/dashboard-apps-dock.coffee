@@ -36,7 +36,7 @@ DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, MnoeOrganizations
     (instance.app_nid != 'office-365' &&
     instance.stack == 'connector' &&
     !instance.oauth_keys_valid) ||
-    ($scope.helper.isCreateAccountShown &&
+    ($scope.helper.isCreateAccountShown(instance) &&
     !instance.addon_organization.sync_enabled)
 
   $scope.helper.isCreateAccountShown = (instance) ->
