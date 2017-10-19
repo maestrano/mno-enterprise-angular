@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .config ($stateProvider, $urlRouterProvider, URI, I18N_CONFIG, MARKETPLACE_CONFIG, ONBOARDING_WIZARD_CONFIG) ->
+  .config ($stateProvider, $urlRouterProvider, URI, I18N_CONFIG, MARKETPLACE_CONFIG, ONBOARDING_WIZARD_CONFIG, TASKS_CONFIG) ->
 
     $stateProvider
       .state 'home',
@@ -56,6 +56,16 @@ angular.module 'mnoEnterpriseAngular'
             else
               $window.location.href = logout_url
           )
+
+    if TASKS_CONFIG.enabled
+      $stateProvider
+        .state 'home.messages',
+          data:
+            pageTitle:'Messages'
+          url: '/messages'
+          templateUrl: 'app/views/messages/messages.html'
+          controller: 'MessagesController'
+          controllerAs: 'vm'
 
     if ONBOARDING_WIZARD_CONFIG.enabled
       $stateProvider

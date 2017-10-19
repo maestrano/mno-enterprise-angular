@@ -202,6 +202,7 @@
   "mno_enterprise.templates.dashboard.menu.marketplace": "Pasar",
   "mno_enterprise.templates.dashboard.menu.logout": "Keluar",
   "mno_enterprise.templates.dashboard.menu.new_company": "Perusahaan Baru",
+  "mno_enterprise.templates.dashboard.menu.messages": "Pesan",
   "mno_enterprise.templates.dashboard.marketplace.index.title": "Pasar",
   "mno_enterprise.templates.dashboard.marketplace.index.select_all": "Semua",
   "mno_enterprise.templates.dashboard.marketplace.show.back": "Kembali",
