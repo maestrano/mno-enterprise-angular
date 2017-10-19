@@ -10,6 +10,7 @@ DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, $timeout, MnoeOrg
   $scope.popoverTemplateUrl = 'app/components/dashboard-apps-dock/no-apps-notification.html'
   $scope.isMarketplaceEnabled = MARKETPLACE_CONFIG.enabled
   $scope.isOnboardingEnabled = ONBOARDING_WIZARD_CONFIG.enabled
+  $scope.isPopoverActive = $scope.isMarketplaceEnabled && $scope.isOnboardingEnabled
 
   # 'Lock' the dock when a menu is expanded.
   # Ie: we disable all effects and animation
@@ -67,8 +68,14 @@ DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, $timeout, MnoeOrg
   $scope.appDock.toggle = ->
     $scope.appDock.isMinimized = !$scope.appDock.isMinimized
 
+  #====================================
+  # Popover management
+  #====================================
   $scope.isPopoverShown = ->
-    $scope.isOnboardingEnabled && $scope.isMarketplaceEnabled && !$scope.isLoading && _.isEmpty($scope.apps)
+    $scope.isPopoverActive && !$scope.isLoading && _.isEmpty($scope.apps)
+  
+  $scope.closePopover = ->
+    $scope.isPopoverActive = false
 
   #====================================
   # App Settings modal

@@ -70,14 +70,14 @@ angular.module 'mnoEnterpriseAngular'
         if vm.areQuestionsEnabled
           vm.questions =
             loading: true
-            nbItems: 100
+            nbItems: 5
             page: 1
             searchWord: ''
             pageChangedCb: (appId, nbItems, page) ->
               vm.questions.nbItems = nbItems
               vm.questions.page = page
               offset = (page  - 1) * nbItems
-              fetchQuestions(appId, nbItems, offset, searchWord)
+              fetchQuestions(appId, nbItems, offset, vm.questions.searchWord)
 
           fetchQuestions(app.id, vm.questions.nbItems, 0)
 
@@ -89,7 +89,12 @@ angular.module 'mnoEnterpriseAngular'
 
         vm.canUserEditReview = (review) ->
           (review.user_id == vm.userId) && (parseInt(review.edited_by_id) == review.user_id || !review.edited_by_id)
+        
+        vm.isQuestionsPaginationShown = () ->
+          vm.questions.totalItems && (vm.questions.totalItems > vm.questions.nbItems) && !vm.questions.loading
 
+        vm.isReviewsPaginationShown = () ->
+          vm.reviews.totalItems && (vm.reviews.totalItems > vm.reviews.nbItems) && !vm.reviews.loading
         #====================================
         # Cart Management
         #====================================
@@ -121,10 +126,9 @@ angular.module 'mnoEnterpriseAngular'
           (response) ->
             # Increment # of items
             vm.reviews.totalItems++
-            # Add new element at the beginning
-            vm.reviews.list.unshift(response.app_review)
-            # Remove last element if needed
-            vm.reviews.list.pop() if vm.reviews.list.length > vm.reviews.nbItems
+            
+            vm.reviews.pageChangedCb(vm.app.id, vm.reviews.nbItems, vm.reviews.page)
+
             # Update average rating
             updateAverageRating(response.average_rating)
             updateAnyReviews()
@@ -173,7 +177,7 @@ angular.module 'mnoEnterpriseAngular'
 
         MnoConfirm.showModal(modalOptions).then(
           (response) ->
-            vm.reviews.list.splice(key, 1)
+            vm.reviews.pageChangedCb(vm.app.id, vm.reviews.nbItems, vm.reviews.page)
             updateAverageRating(response.average_rating)
             updateAnyReviews()
         )
@@ -259,6 +263,7 @@ angular.module 'mnoEnterpriseAngular'
         modalInstance.result.then(
           (response) ->
             vm.questions.list.unshift(response.app_question)
+            vm.questions.pageChangedCb(vm.app.id, vm.questions.nbItems, vm.questions.page)
             updateAnyQuestions()
         )
 
@@ -296,6 +301,7 @@ angular.module 'mnoEnterpriseAngular'
         MnoConfirm.showModal(modalOptions).then(
           ->
             vm.questions.list.splice(key, 1)
+            vm.questions.pageChangedCb(vm.app.id, vm.questions.nbItems, vm.questions.page)
             updateAnyQuestions()
         )
 
@@ -385,6 +391,7 @@ angular.module 'mnoEnterpriseAngular'
         vm.questions.loading = true
         MnoeMarketplace.getQuestions(appId, limit, offset, search).then(
           (response) ->
+            vm.questions.totalItems = response.headers('x-total-count')
             vm.questions.list = response.data
             updateAnyQuestions()
         ).finally(-> vm.questions.loading = false)
