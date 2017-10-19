@@ -1,25 +1,11 @@
 <div uib-accordion class="accordion">
   <div uib-accordion-group is-open="DashboardCompanyDeletionCtrl.isDeletionOpen">
     <div uib-accordion-heading>
-      Company deletion <span class="fa pull-right" ng-class="{'fa-caret-down': !DashboardCompanyDeletionCtrl.isDeletionOpen, 'fa-caret-up': DashboardCompanyDeletionCtrl.isDeletionOpen}"></span>
+        {{ 'mno_enterprise.templates.dashboard.organization.settings.company_deletion' | translate }}<span class="fa pull-right" ng-class="{'fa-caret-down': !DashboardCompanyDeletionCtrl.isDeletionOpen, 'fa-caret-up': DashboardCompanyDeletionCtrl.isDeletionOpen}"></span>
     </div>
-    <p> Before confirming the deletion of your organization, please ensure you understand the following:
-    </p>
-    <ul>
-      <li>
-        You will no longer have access to any 3rd party applications that you have subscribed to via Maestrano. Your data may be deleted immediately by those application providers.
-      </li>
-      <li>
-        All data stored on Maestrano, your dashboard will be immediately deleted and cannot be recovered
-      </li>
-      <li>
-        Data sharing between your applications will cease to function.
-      </li>
-    </ul>
-    <p>
-    If you need further clarification about this, please get in touch with our support team.</p>
+    <div translate="mno_enterprise.templates.dashboard.organization.settings.deletion_info_html"></div>
     <button ng-click="DashboardCompanyDeletionCtrl.requestDeletion()" class='btn btn-warning'>
-      Request deletion
+        {{ 'mno_enterprise.templates.dashboard.organization.settings.request_deletion' | translate }}
     </button>
   </div>
 </div>

@@ -1,43 +1,24 @@
 <div class="modal-body">
-  <p>After confirming the deletion of this organisation:</p>
-  <ul>
-    <li>
-      All users will lose access to any 3rd party applications that have been subscribed to via the platform.
-    </li>
-    <li>
-      All users, excluding yourself, will no longer have access to this organisation.
-    </li>
-    <li>
-      You will only have access to the “Billing” section of this organisation.
-    </li>
-    <li>
-      A final invoice for your organisation, including 3rd party application charges, will be generated on the 25th of the following month.
-    </li>
-    <li>
-      Upon receiving the final payment, the deletion of the organisation will be finalised.
-    </li>
-  </ul>
-  <p>
-    Please note, individual user accounts will not be deleted. Users will retain the access that they have to any other organisations.
-  </p>
-
+  <div translate="mno_enterprise.templates.dashboard.organization.settings.confirm_deletion_html"></div>
   <div class="form-group">
-    <label for="delCompanyReasons">Please tell us why you are requesting the deletion of your company
+    <label for="delCompanyReasons">
+        {{ 'mno_enterprise.templates.dashboard.organization.settings.deletion_reason' | translate }}
     </label>
       <textarea type="text" class="form-control" ng-model="delConfirmCtrl.delReasons" id="delCompanyReasons"></textarea>
   </div>
 
   <div class="form-group">
-    <label for="delCompanypassword">Your password:
+    <label for="delCompanypassword">
+        {{ 'mno_enterprise.templates.dashboard.organization.settings.confirm_password' | translate }}
     </label>
     <input type="password" class="form-control" id="delCompanypassword" ng-model="delConfirmCtrl.password">
   </div>
 
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-default" ng-click="delConfirmCtrl.cancel()">Cancel</button>
+    <button type="button" class="btn btn-default" ng-click="delConfirmCtrl.cancel()">{{ 'mno_enterprise.templates.dashboard.organization.settings.cancel' | translate }}</button>
   <button type="button" class="btn btn-warning" ng-click="delConfirmCtrl.ok()" ng-disabled="delConfirmCtrl.isLoading || delConfirmCtrl.password === ''">
     <span ng-show="delConfirmCtrl.isLoading"><i class="fa fa-spinner fa-pulse fa-fw"></i></span>
-    Confirm Deletion
+    {{ 'mno_enterprise.templates.dashboard.organization.settings.confirm_deletion' | translate }}
   </button>
 </div>
