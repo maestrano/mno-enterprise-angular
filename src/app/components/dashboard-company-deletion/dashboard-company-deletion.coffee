@@ -15,7 +15,7 @@ angular.module 'mnoEnterpriseAngular'
           component: "dashboardDeletionConfirm",
           size: "lg",
           resolve:
-            actionCb: () ->  vm.proceed
-          )
+            actionCb: () -> vm.proceed
+        )
       return
-      })
+  })

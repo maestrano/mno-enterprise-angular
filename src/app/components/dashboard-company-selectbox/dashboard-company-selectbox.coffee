@@ -23,8 +23,9 @@ DashboardCompanySelectboxCtrl = ($scope, $state, $stateParams, $uibModal, MnoeCu
     # Switch to selected company
     MnoeAppInstances.emptyAppInstances()
     MnoeAppInstances.clearCache()
-    MnoeOrganizations.get(organization.id).then( (org) ->
-      if !org.organization.active then $state.go "home.company")
+    MnoeOrganizations.get(organization.id).then((org) ->
+      $state.go('home.company') unless org.organization.active
+    )
     selectBox.close()
 
   selectOrganization = ->
