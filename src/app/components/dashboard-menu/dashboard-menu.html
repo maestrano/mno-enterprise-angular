@@ -17,8 +17,9 @@
       <!-- ------------------------- -->
       <!-- My account section        -->
       <!-- ------------------------- -->
-      <li>
-        <a ng-if="(!isAdmin && isCompanyActive) || !isImpacEnabled" ui-sref="home.apps" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}</a>
+
+      <li ng-if="(!isAdmin && isCompanyActive) || !isImpacEnabled">
+        <a ng-if="!isAdmin" ui-sref="home.apps" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}</a>
       </li>
       <li ng-if="(!isDockEnabled && isCompanyActive)">
         <a ng-if="isAdmin" ui-sref="home.apps" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}</a>
