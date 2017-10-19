@@ -6,27 +6,26 @@ angular.module 'mnoEnterpriseAngular'
       close: '&'
       dismiss: '&'
     }
-    controllerAs: "delConfirmCtrl"
     controller: ($log, toastr) ->
-      vm = this
-      vm.password = ""
-      vm.delReasons = ""
-      vm.isLoading = false
+      ctrl = this
+      ctrl.password = ""
+      ctrl.delReasons = ""
+      ctrl.isLoading = false
 
-      vm.cancel = () ->
-        vm.dismiss({$value: "cancel"})
+      ctrl.cancel = () ->
+        ctrl.dismiss({$value: "cancel"})
 
-      vm.ok = () ->
-        vm.isLoading = true
+      ctrl.ok = () ->
+        ctrl.isLoading = true
 
         # Launch Cb
-        vm.resolve.actionCb(vm.delReasons, vm.password).then(
+        ctrl.resolve.actionCb(ctrl.delReasons, ctrl.password).then(
           (response) ->
             toastr.success('Organization successfully frozen')
-            vm.close(response)
+            ctrl.close(response)
           (errors) ->
             $log.error(errors)
             toastr.error(errors.statusText, "Error")
-        ).finally(-> vm.isLoading = false)
+        ).finally(-> ctrl.isLoading = false)
       return
     })
