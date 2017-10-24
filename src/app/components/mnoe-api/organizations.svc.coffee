@@ -181,6 +181,11 @@ angular.module 'mnoEnterpriseAngular'
     @freeze = (reason, password) ->
       MnoeApiSvc.one('organizations', _self.selectedId).doPOST({reason: reason, password: password}, 'halt')
 
+    @companyActiveRequired = () ->
+      _self.getCurrentOrganisation().then((org) ->
+        unless org.organization.active
+          $state.go('home.company')
+      )
     #======================================
     # User Role
     #======================================
