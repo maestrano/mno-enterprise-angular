@@ -15,7 +15,7 @@
         </div>
       </div>
 
-      <div class="row td-row" ng-repeat="pricingPlan in vm.subscription.product.product_pricings">
+      <div class="row td-row" ng-repeat="pricingPlan in vm.subscription.product.product_pricings" ng-click="vm.subscription.product_pricing = pricingPlan">
         <div class="cell radio-selector col-xs-2">
           <input type="radio" name="optradio" ng-model="vm.subscription.product_pricing" ng-value="pricingPlan">
         </div>
@@ -48,6 +48,29 @@
             <span ng-show="pricingPlan.pricing_type == 'payg'">
               {{ 'mno_enterprise.templates.dashboard.provisioning.order.pricing_type.payg' | translate }}
             </span>
+          </div>
+        </div>
+      </div>
+
+      <div ng-show="vm.subscription.product_pricing.license_based">
+        <div class="row">
+          <div class="col-xs-10">
+            <label>{{ 'mno_enterprise.templates.dashboard.provisioning.order.licenses' | translate }}:
+              <input type="number" name="input" ng-model="vm.subscription.max_licenses" min="0" ngRequired="vm.subscription.product_pricing.license_based">
+            </label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-10">
+            <label>{{ 'mno_enterprise.templates.dashboard.provisioning.order.total' | translate }}:
+              <span ng-hide="vm.subscription.product_pricing.pricing_type == 'payg'" ng-repeat="price in vm.subscription.product_pricing.prices | filterBy: ['currency']: vm.orgCurrency" class="badge">
+                {{ price.currency }} {{ price.price_cents / 100 * vm.subscription.max_licenses | number:2 }}
+              </span>
+              <span ng-show="vm.subscription.product_pricing.pricing_type == 'recurring'">
+                / {{ vm.subscription.product_pricing.per_unit }} / {{ vm.subscription.product_pricing.per_duration }}
+              </span>
+            </label>
           </div>
         </div>
       </div>
