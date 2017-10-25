@@ -1,0 +1,46 @@
+<div class='registration'>
+  <div class='container'>
+    <div class='row'>
+      <div class='login-box-wrapper'>
+        <div class='login-box-title'>
+          <h2>{{'mno_enterprise.auth.sessions.new.title' | translate}}</h2>
+        </div>
+        <div class='login-box'>
+          <div class='brand-logo'></div>
+
+          <form name="vm.form" class="autofill-detect text-center" id="new_user" ng-submit="vm.login()">
+            <div>
+              <input placeholder="Email" required="required" ng-model="vm.user.email" class="form-control" type="email" name="email" id="user_email"/>
+            </div>
+            <br>
+            <div>
+              <input placeholder="Password" required="required" ng-model="vm.user.password" class="form-control" autocomplete="off" type="password" name="password" id="user_password"/>
+            </div>
+            <br>
+            <div>
+              <button class='btn btn-warning btn-login' ng-click='vm.hasClicked = true' ng-disabled='vm.form.$invalid' ng-hide='vm.hasClicked' type='submit'>
+              {{'mno_enterprise.auth.sessions.new.sign_in' | translate}}
+              </button>
+              <img class='loader' ng-show='vm.hasClicked'>
+            </div>
+            <br>
+            <div class='form-inline checkbox-section'>
+              <input name="remember_me" type="hidden" value="0" /><input type="checkbox" value="1" checked="checked" name="remember_me" id="user_remember_me"/>
+              <label for="user_remember_me">{{'mno_enterprise.auth.sessions.new.remember_me' | translate}}</label>
+            </div>
+          </form>
+
+          <hr>
+          <a ui-sref="signup">{{'mno_enterprise.auth.shared.links.signup' | translate}}</a>
+          <br>
+          <a ui-sref="password_recovery">{{'mno_enterprise.auth.shared.links.recover_password' | translate}}</a>
+          <br>
+          <a ui-sref="confirmation_recovery">{{'mno_enterprise.auth.shared.links.resend_confirmation' | translate}}</a>
+          <br>
+          <a ui-sref="unlock_recovery">{{'mno_enterprise.auth.shared.links.unlock' | translate}}</a>
+          <br>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

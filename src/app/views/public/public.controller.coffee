@@ -1,13 +1,12 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller 'PublicController', ($scope, $rootScope, $stateParams, $state, $q, $window, URI, MnoeCurrentUser, MnoeOrganizations, MnoeConfig) ->
+  .controller 'PublicController', ($scope, $rootScope, $stateParams, $state, $q, URI, MnoeCurrentUser, MnoeOrganizations, MnoeConfig) ->
     'ngInject'
 
     layout = @
-    layout.links = URI
 
     layout.isRegistrationEnabled = MnoeConfig.isRegistrationEnabled()
 
-    $window.location = URI.login unless MnoeConfig.arePublicApplicationsEnabled()
+    $state.go('login') unless MnoeConfig.arePublicApplicationsEnabled()
 
     MnoeCurrentUser.get().then(
       (response) ->

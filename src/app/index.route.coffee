@@ -28,6 +28,92 @@ angular.module 'mnoEnterpriseAngular'
         controller: 'LandingProductCtrl'
         controllerAs: 'vm'
         public: true
+      .state 'login',
+        data:
+          pageTitle: 'Login'
+        url: '/login'
+        templateUrl: 'app/views/auth/login/login.html'
+        controller: 'AuthLoginCtrl'
+        controllerAs: 'vm'
+        resolve:
+          # Redirect the user to the platform if he is already logged in
+          skipIfLoggedIn: (MnoeCurrentUser) ->
+            MnoeCurrentUser.skipIfLoggedIn()
+      .state 'confirmation_lounge',
+        data:
+          pageTitle: 'Lounge'
+        params: {
+          email: null
+        }
+        url: '/confirmation/lounge'
+        templateUrl: 'app/views/auth/confirmation/lounge.html'
+        controller: 'AuthLoungeCtrl'
+        controllerAs: 'vm'
+        resolve:
+          # Redirect the user to the platform if he is already logged in
+          skipIfLoggedIn: (MnoeCurrentUser) ->
+            MnoeCurrentUser.skipIfLoggedIn()
+      .state 'confirmation',
+        data:
+          pageTitle: 'Confirmation'
+        url: '/confirmation?:confirmation_token'
+        templateUrl: 'app/views/auth/confirmation/confirm.html'
+        controller: 'AuthConfirmCtrl'
+        controllerAs: 'vm'
+        public: true
+      .state 'confirmation_recovery',
+        data:
+          pageTitle: 'ConfirmationRecovery'
+        url: '/confirmation/new'
+        templateUrl: 'app/views/auth/confirmation/new.html'
+        controller: 'AuthConfirmRecoveryCtrl'
+        controllerAs: 'vm'
+        public: true
+      .state 'unlock_recovery',
+        data:
+          pageTitle: "UnlockRecovery"
+        url: '/unlock/new',
+        templateUrl: 'app/views/auth/unlock/unlock.html'
+        controller: 'AuthUnlockRecoveryCtrl'
+        controllerAs: 'vm'
+        public: true
+      .state 'password_recovery',
+        data:
+          pageTitle: 'PasswordRecovery'
+        url: '/password/new'
+        templateUrl: 'app/views/auth/password/recovery.html'
+        controller: 'PasswordRecoveryCtrl'
+        controllerAs: 'vm'
+        resolve:
+          skipIfLoggedIn: (MnoeCurrentUser) ->
+            MnoeCurrentUser.skipIfLoggedIn()
+      .state 'password_reset',
+        data:
+          pageTitle: 'PasswordReset'
+        url: '/password/reset'
+        templateUrl: 'app/views/auth/password/reset.html'
+        controller: 'PasswordResetCtrl'
+        controllerAs: 'vm'
+        resolve:
+          skipIfLoggedIn: (MnoeCurrentUser) ->
+            MnoeCurrentUser.skipIfLoggedIn()
+      .state 'signup',
+        data:
+          pageTitle: 'SignUp'
+        url: '/signup'
+        templateUrl: 'app/views/auth/signup/signup.html'
+        controller: 'AuthSignUpCtrl'
+        controllerAs: 'vm'
+        resolve:
+          skipIfLoggedIn: (MnoeCurrentUser) ->
+            MnoeCurrentUser.skipIfLoggedIn()
+      .state 'authorize',
+        data:
+          pageTitle: 'Authorization'
+        url: '/authorize?:redirect_path'
+        templateUrl: 'app/views/apps/authorize.html'
+        controller: 'AppAuthController'
+        controllerAs: 'vm'
       .state 'home',
         data:
           pageTitle:'Home'
@@ -45,6 +131,9 @@ angular.module 'mnoEnterpriseAngular'
         url: '/apps'
         templateUrl: 'app/views/apps/dashboard-apps-list.html'
         controller: 'DashboardAppsListCtrl'
+        resolve:
+          resourcesLoaded: ($rootScope) ->
+            $rootScope.resourcesLoaded
       .state 'home.impac',
         data:
           pageTitle:'Impac'
@@ -68,22 +157,14 @@ angular.module 'mnoEnterpriseAngular'
         controllerAs: 'vm'
       .state 'logout',
         url: '/logout'
-        controller: ($window, $http, $translate, AnalyticsSvc, URL_CONFIG) ->
+        controller: ($state, Auth, toastr, AnalyticsSvc, MnoeCurrentUser) ->
           'ngInject'
 
           # Logout and redirect the user
-          $http.delete(URI.logout).then( ->
+          Auth.logout().then(->
             AnalyticsSvc.logOut()
-
-            logout_url = URL_CONFIG.after_sign_out_url || URI.login
-
-            if I18N_CONFIG.enabled
-              if URL_CONFIG.after_sign_out_url
-                $window.location.href = logout_url
-              else
-                $window.location.href = "/#{$translate.use()}#{URI.login}"
-            else
-              $window.location.href = logout_url
+            toastr.info('You have been logged out.')
+            $state.go('login')
           )
 
     if MnoeConfigProvider.$get().isOnboardingWizardEnabled()
@@ -128,6 +209,9 @@ angular.module 'mnoEnterpriseAngular'
           templateUrl: 'app/views/marketplace/marketplace.html'
           controller: 'DashboardMarketplaceCtrl'
           controllerAs: 'vm'
+          resolve:
+            resourcesLoaded: ($rootScope) ->
+              $rootScope.resourcesLoaded
         .state 'home.marketplace.app',
           data:
             pageTitle:'Marketplace'
@@ -211,16 +295,15 @@ angular.module 'mnoEnterpriseAngular'
       MnoeCurrentUser = $injector.get('MnoeCurrentUser')
       MnoeOrganizations = $injector.get('MnoeOrganizations')
       MnoeAppInstances = $injector.get('MnoeAppInstances')
-      $window = $injector.get('$window')
 
-      MnoeCurrentUser.get().then(
+      MnoeCurrentUser.get(skip_login_check: true).then(
         (response) ->
           # Same as MnoeCurrentUser.loginRequired
           unless response.logged_in
             if MnoeConfig.arePublicApplicationsEnabled()
               $location.url('/landing')
             else
-              $window.location = URI.login
+              $location.url('/login')
           else
             if MnoeConfig.isOnboardingWizardEnabled()
               MnoeOrganizations.getCurrentOrganisation().then(

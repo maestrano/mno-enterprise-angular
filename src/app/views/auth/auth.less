@@ -1,0 +1,420 @@
+//---------------------------------------------------------------------------
+// Material Style
+//---------------------------------------------------------------------------
+.registration-material {
+  height: 90%;
+  width: 100%;
+  position: absolute;
+  background-color: @login-bg-color;
+  text-align: center;
+
+  .action-box {
+    height: 90%;
+  }
+
+  .action-box md-input-container {
+    text-align: left;
+  }
+
+  .action-box md-checkbox {
+    text-align: left;
+  }
+}
+
+// Default style
+
+.registration when (isstring(@login-bg-img)) {
+  background-image: url(@login-bg-img);
+  background-size: cover;
+}
+
+.registration {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  background-color: @login-bg-color;
+
+  .login-box-wrapper {
+    text-align: center;
+    @login-box-grid-position();
+  }
+
+  .login-box-wrapper.large {
+    text-align: center;
+    margin-top: 80px;
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .login-box-wrapper md-input-container {
+    text-align: left;
+  }
+
+  .login-box-wrapper .login-box-title {
+    color: @login-box-title-color;
+    margin-bottom: 15px;
+    @login-box-title();
+  }
+
+  .login-box-wrapper .login-box {
+    padding: @login-box-padding;
+    background-color: @login-box-bg-color;
+    border-radius: @login-box-corners;
+
+      .loader {
+        content: url(../images/loader-32x32-bg-inverse.gif)
+      }
+  }
+
+  .login-box-wrapper .login-box .brand-logo when (isstring(@login-box-brand-logo-img)){
+    min-height: 80px;
+    background-repeat: no-repeat;
+    background-image: url(@login-box-brand-logo-img);
+    background-size: 100%;
+    @login-box-brand-logo();
+  }
+
+  .login-box-wrapper .login-box .btn-login {
+    @login-box-btn-login();
+  }
+
+
+  .login-box-wrapper .login-box:before when (@login-box-title-display-box-arrow = true){
+    .fa;
+    color: @login-box-bg-color;
+    display: block;
+    content: @fa-var-caret-up;
+    margin-top: -27px;
+    font-size: 24px;
+    line-height: 8px;
+    max-width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .login-box .sign-in-using {
+    color: @decorator-main-color;
+    margin-top: 5px;
+  }
+  .login-box .oauth-sso {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px;
+
+    .omniauth i {
+      display: inline-block;
+      border-radius: 3px;
+      color: @login-box-oauth-text-color;
+      width: 25px;
+      height: 25px;
+      margin: 0 5px;
+      line-height: 25px;
+      text-align: center;
+
+      &.fa-facebook {
+        background: @login-box-oauth-bg-color-facebook;
+      }
+      &.fa-google {
+        background: @login-box-oauth-bg-color-google;
+      }
+      &.fa-linkedin {
+        background: @login-box-oauth-bg-color-linkedin;
+      }
+    }
+    .omniauth.intuit {
+      background: @login-box-oauth-bg-color-intuit;
+      height: 25px;
+      width: 50px;
+      display: inline-block;
+      margin: 0 5px;
+      border-radius: 3px;
+      background-position: 50%;
+      background-repeat: no-repeat;
+      background-size: 40px auto;
+      background-image: url(@login-box-sso-intuit-logo);
+    }
+  }
+
+  .login-box h3, .login-box h5 {
+    color: @text-inverse-strong-color;
+  }
+
+  .checkbox-section label {
+    font-weight: normal;
+  }
+
+  .login-box-wrapper .login-box .phone select.form-control {
+    height: 34px;
+  }
+}
+
+input.fluroblue[type=radio] {
+  width   : 18px;
+  margin  : 0;
+  padding : 0;
+  opacity : 0;
+}
+
+input.fluroblue[type=radio] + label{
+  display      : inline-block;
+  margin-left  : -12px;
+  padding-left : 25px;
+  background   : image-url('icons/radio-fluroblue.png') no-repeat 0 -18px;
+  line-height  : 18px;
+}
+
+input.fluroblue[type=radio]:checked + label{
+  background-position : 0 1px;
+}
+
+form label {
+  color: @input-label-color;
+}
+
+.input-group-addon.select select {
+  background-color: @input-bg;
+}
+
+
+select {
+    text-indent: 1px;
+    text-overflow: '';
+}
+
+// Remove dropdown arrow (Chrome, Firefox and IE)
+select.unstyled {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+//----------------------------------------
+// Styling for phone: select + input
+//----------------------------------------
+form .phone {
+  select.form-control {
+    width:30%;
+    .border-right-radius(0px);
+  }
+
+  input.form-control[type='text'] {
+    margin-left:23%;
+    margin-top:-34px;
+    width:77%;
+    .border-left-radius(0px);
+  }
+}
+
+form select.form-control  {
+  height:44px;
+  -webkit-appearance: none;
+}
+
+form .select.fa {
+  margin: -28px 7% 0px 0px;
+  float: right;
+}
+
+//----------------------------------------
+// Styling for password checker
+//----------------------------------------
+form li.checked {
+  color: lighten(@decorator-inverse-color,30%);
+}
+
+form li.unchecked {
+  color: lighten(@text-strong-color,70%);
+}
+
+//----------------------------------------
+// Style for forms on inverse backgrounds
+//----------------------------------------
+form.inverse {
+  select {
+    background-color: @bg-inverse-color;
+    .font(16px, 300, @decorator-inverse-color);
+    border:solid 1px #111c21;
+
+    .border-radius(5px);
+    height:44px;
+    -webkit-appearance: none;
+    padding-left:15px;
+    width:100%;
+
+    // Placeholder
+    .placeholder(@decorator-inverse-color);
+  }
+
+  .select.fa {
+    .font(16px,300,@decorator-inverse-color);
+    margin: -28px 7% 0px 0px;
+    float: right;
+  }
+
+  .form-control {
+    // Placeholder
+    .placeholder(@decorator-inverse-color);
+  }
+}
+
+//------------------------------------
+// Dark forms styles
+//------------------------------------
+
+form.dark {
+  input[type='text'], input[type='email'], textarea {
+    .border-radius(5px);
+    .font(16px, 300, @bg-main-color);
+    background-color: @bg-inverse-color;
+    border: solid 1px @bg-inverse-color;
+    line-height: 25px;
+    margin-bottom: 0px;
+    width: 100%;
+    min-height: 42px;
+    padding: 5px 5px 5px 15px;
+  }
+
+  *::-webkit-input-placeholder {
+      color: @bg-main-color;
+  }
+  *:-moz-placeholder {
+      /* FF 4-18 */
+      color: @bg-main-color;
+  }
+  *::-moz-placeholder {
+      /* FF 19+ */
+      color: @bg-main-color;
+  }
+  *:-ms-input-placeholder {
+      /* IE 10+ */
+      color: @bg-main-color;
+  }
+
+  label {
+    color: @bg-main-color;
+  }
+}
+
+.dark {
+  .bootstrap-select {
+    select {
+      .font(16px, 300, @bg-main-color);
+      background-color: @bg-inverse-color;
+    }
+
+    .dropdown-toggle {
+      height: 42px;
+    }
+
+    .dropdown-menu {
+      .font(16px, 300, @bg-main-color);
+      background-color: @bg-inverse-color;
+    }
+    .dropdown-menu > li > a {
+      .font(16px, 300, @bg-main-color);
+    }
+
+    .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+      .font(16px, 300, @decorator-inverse-color);
+      background-color: @bg-inverse-color;
+    }
+  }
+}
+
+// Put a dropdown inside an input-group-addon
+.input-group-addon.select {
+  padding:0px;
+  select {
+    height:100%;
+    border:0px;
+  }
+}
+
+//------------------------------------
+// Invalid inputs (AngularJS)
+//------------------------------------
+input.ng-dirty.ng-invalid {
+  border-color: @brand-danger;
+}
+
+// Mixins
+
+html, body {
+  height: 100%;
+}
+
+// .border-radius doesn't exist anymore in bootstrap3
+.border-radius(@radius) {
+  .border-top-radius(@radius);
+  .border-bottom-radius(@radius);
+}
+
+
+// Thoses mixins don't exist anymore in bootstrap 3. I just did a dummy
+// implementation of them to prevent errors
+.muted {
+}
+
+.rgba(@color,@alpha) {
+  background-color:@color;
+  background-color:rgba(red(@color),green(@color),blue(@color),@alpha);
+}
+
+.font(@size,@weight,@color) {
+  font-weight:@weight;
+  font-size:@size;
+  color:@color;
+}
+
+.buttonBackground(@a,@b) {
+}
+
+.border-top-left-radius(@a) {
+}
+
+.border-top-right-radius(@a) {
+}
+
+.border-bottom-right-radius(@a) {
+}
+
+.border-bottom-left-radius(@a) {
+}
+
+.inherit-all {
+  .font(inherit,inherit,inherit);
+  background-color:inherit;
+  text-align:inherit;
+}
+
+// Fontawesome icon mixing
+// E.g.:
+// .my-class {
+//   .icon-fa(exchange);
+// }
+//
+// E.g.:
+// .my-class {
+//   .fa-lg();
+//   .icon-fa(exchange);
+// }
+//
+.icon-fa(@icon) {
+  .fa;
+  @fa-icon-variable: "fa-var-@{icon}";
+  &:before { content: @@fa-icon-variable; }
+};
+
+// Replace glyphicon by fontawesome
+.glyphicon.glyphicon-chevron-right {
+  .icon-fa(chevron-right)
+}
+.glyphicon.glyphicon-chevron-left {
+  .icon-fa(chevron-left)
+}
+

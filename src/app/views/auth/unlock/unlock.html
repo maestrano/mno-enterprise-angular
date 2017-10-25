@@ -1,0 +1,38 @@
+<div>
+  <div class='registration'>
+    <div class='container'>
+      <div class='row'>
+        <div class='login-box-wrapper'>
+          <div class='login-box-title'>
+            <h2>Resend unlock instructions</h2>
+          </div>
+          <div class='login-box'>
+            <img class='brand-logo'>
+            <form name="vm.form" class="new_user" id="new_user" ng-submit="vm.resendUnlockInstructions()">
+              <div>
+                <input placeholder="Email" required="required" ng-model="vm.user.email" class="form-control" type="email" name="user[email]" id="user_email" />
+              </div>
+              <br>
+              <br>
+              <div>
+                <button class='btn btn-warning btn-login' ng-hide='vm.hasClicked' type='submit'>
+                  Resend unlock instructions
+                </button>
+                <img class='loader' ng-show='vm.hasClicked'>
+              </div>
+            </form>
+            <hr>
+            <a ui-sref="login">{{'mno_enterprise.auth.shared.links.login' | translate}}</a>>
+            <br>
+            <a ui-sref="signup">{{'mno_enterprise.auth.shared.links.signup' | translate}}</a>
+            <br>
+            <a ui-sref="password_recovery">{{'mno_enterprise.auth.shared.links.recover_password' | translate}}</a>
+            <br>
+            <a ui-sref="confirmation_recovery">{{'mno_enterprise.auth.shared.links.resend_confirmation' | translate}}</a>
+            <br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

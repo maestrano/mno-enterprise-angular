@@ -1,0 +1,37 @@
+<div class='registration'>
+  <div class='container'>
+    <div class='row'>
+      <div class='login-box-wrapper'>
+        <div class='login-box-title'>
+          <h2>{{ 'mno_enterprise.auth.passwords.new.title' | translate}}</h2>
+        </div>
+        <div class='login-box'>
+          <div class='brand-logo'></div>
+          <form class="form-horizontal autofill-detect" id="new_user" name="vm.form" ng-submit="vm.password_recovery()" validate>
+            <div class='row'>
+              <div class='col-sm-12'>
+                <input placeholder="*Email" ng-model="vm.user.email" class="form-control" type="email" name="email" id="user_email" ng-change="vm.request_sent = false" required />
+              </div>
+            </div>
+            <br>
+            <div class='row'>
+              <div class='col-sm-12'>
+                <div class='text-center'>
+                  <button class='btn btn-warning' ng-click='vm.hasClicked = true' ng-disabled='vm.form.$invalid || vm.request_sent' ng-hide='vm.hasClicked' type='submit'>{{ 'mno_enterprise.auth.passwords.new.recover' | translate}}</button>
+                  <img class="loader" ng-show='vm.hasClicked'>
+                </div>
+              </div>
+            </div>
+          </form>
+          <hr>
+          <a ui-sref="login">Already have an account? Log in</a>
+          <br>
+          <a ui-sref="signup">Don&#39;t have an account? Sign up</a>
+          <br>
+          <a href="/mnoe/auth/users/confirmation/new">Didn&#39;t receive confirmation instructions?</a>
+          <br>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,57 @@
+<div class='registration'>
+  <div class='container'>
+    <div class='row'>
+      <div class='login-box-wrapper'>
+        <div class='login-box-title'>
+          <h2>{{ 'mno_enterprise.auth.passwords.edit.title' | translate }}</h2>
+        </div>
+        <div class='login-box'>
+          <div class='brand-logo'></div>
+          <form class="form-horizontal autofill-detect" id="new_user" name="vm.form" ng-submit="vm.password_reset()" validate>
+            <div class='row'>
+              <div class='col-sm-12'>
+                <div class="input-group">
+                <input mno-password-strength password-score="vm.user.$pwdScore" type="{{isShown ? 'text' : 'password'}}" placeholder="*Password" ng-model="vm.user.password" class="form-control" name="password" id="user_password" autocomplete="off"  autofocus required/>
+                <span class="input-group-addon pw-strength-indicator" ng-class='vm.user.$pwdScore.class' uib-tooltip="{{'activemodel.errors.mno_enterprise/user.password_weak' | translate}}" tooltip-enable="vm.user.$pwdScore.value == 'weak'" tooltip-placement="auto">
+                  {{ vm.user.$pwdScore.value }}
+                </span>
+              </div>
+              </div>
+            </div>
+            <br>
+            <div class='row'>
+              <div class='col-sm-12'>
+                <input type="{{isShown ? 'text' : 'password'}}" placeholder="*Confirm Password" ng-model="vm.user.password_confirmation" class="form-control" name="password_confirmation" id="user_password_confirmation" ng-change="vm.resetConfirmed = false" autocomplete="off" autofocus required />
+              </div>
+            </div>
+            <br>
+              <div class="text-center" >
+                <label>Show</label>
+                <br />
+                <input type="checkbox" ng-model="isShown" />
+              </div>
+            <br>
+            <div class='row'>
+              <div class='col-sm-12'>
+                <div class='text-center'>
+                  <button class='btn btn-warning' ng-click='vm.hasClicked = true' ng-disabled='vm.form.$invalid' ng-hide='vm.hasClicked' type='submit'>{{ 'mno_enterprise.auth.passwords.edit.change' | translate }}</button>
+                  <img class="loader" ng-show='vm.hasClicked'>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <a ui-sref="login">Log in</a><br />
+
+            <a ui-sref="signup">Sign up</a><br />
+
+            <a href="/mnoe/auth/users/confirmation/new">Didn&#39;t receive confirmation instructions?</a><br />
+
+            <a href="/mnoe/auth/users/unlock/new">Didn&#39;t receive unlock instructions?</a><br />
+
+            <!-- <a href="/mnoe/users/auth/intuit">Sign in with Intuit</a><br /> -->
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->

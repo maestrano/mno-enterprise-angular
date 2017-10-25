@@ -37,7 +37,7 @@ angular.module 'mnoEnterpriseAngular'
 
     # Find the locale from the User#settings
     localeFromUser = ->
-      MnoeCurrentUser.get().then(
+      MnoeCurrentUser.get(skip_login_check: true).then(
         (response) ->
           response.settings?.locale
       )

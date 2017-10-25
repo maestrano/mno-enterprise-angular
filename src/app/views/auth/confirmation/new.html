@@ -1,0 +1,39 @@
+<div>
+  <div class='registration'>
+    <div class='container'>
+      <div class='row'>
+        <div class='login-box-wrapper'>
+          <div class='login-box-title'>
+            <h2>Confirmation</h2>
+          </div>
+          <div class='login-box'>
+            <div class='brand-logo'></div>
+            <form name="vm.form" class="form-horizontal autofill-detect" id="new_user" ng-submit="vm.resendConfirmation()">
+              <div class='row'>
+                <div class='col-sm-12'>
+                  <input placeholder="*Email" autofocus="autofocus" required="required" ng-model="vm.user.email" class="form-control" type="email" name="user[email]" id="user_email" />
+                </div>
+              </div>
+              <br>
+              <div class='row'>
+                <div class='col-sm-12'>
+                  <div class='text-center'>
+                    <button class='btn btn-warning' ng-click='vm.hasClicked = true' ng-disabled='vm.form.$invalid' ng-hide='vm.hasClicked' type='submit'>Resend confirmation instructions</button>
+                    <img ng-show='vm.hasClicked' class='loader'>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <hr>
+            <a ui-sref="login">{{'mno_enterprise.auth.shared.links.login' | translate}}</a>
+            <br>
+            <a ui-sref="signup">{{'mno_enterprise.auth.shared.links.signup' | translate}}</a>
+            <br>
+            <a ui-sref="password_recovery">{{'mno_enterprise.auth.shared.links.recover_password' | translate}}</a>
+            <br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

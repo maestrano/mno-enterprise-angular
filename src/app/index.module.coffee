@@ -22,5 +22,7 @@ angular.module 'mnoEnterpriseAngular', [
   'schemaForm',
   'angular.filter',
   'textAngular',
-  'jsonFormatter'
+  'jsonFormatter',
+  'mnoUiElements',
+  'Devise'
 ]

@@ -1,15 +1,23 @@
-<div class="container-fluid">
-  <mno-impersonation-bar></mno-impersonation-bar>
-</div>
+<div class="myspace">
+  <div ng-if="!isLoggedIn" class="layout-loading text-center">
+    <mno-loader></mno-loader>
+    <span class="layout-loading-text" translate="mno_enterprise.templates.components.layout.your_dashboard_is_loading"></span>
+  </div>
 
-<div ng-if="isLoggedIn && hasNoOrganisations" class="layout-loading">
-  <mno-without-organisation></mno-without-organisation>
-</div>
+  <div class="container-fluid">
+    <mno-impersonation-bar></mno-impersonation-bar>
+  </div>
 
-<div id="dashboard" ng-if="isLoggedIn && !hasNoOrganisations">
-  <dashboard-company-selectbox></dashboard-company-selectbox>
-  <dashboard-menu></dashboard-menu>
-  <div class="container">
-    <div ui-view></div>
+  <div ng-if="isLoggedIn && hasNoOrganisations" class="layout-loading">
+    <mno-without-organisation></mno-without-organisation>
+  </div>
+
+  <div id="dashboard" ng-if="isLoggedIn && !hasNoOrganisations">
+    <dashboard-company-selectbox></dashboard-company-selectbox>
+    <dashboard-menu></dashboard-menu>
+    <div class="container">
+      <div ui-view></div>
+    </div>
   </div>
 </div>
+

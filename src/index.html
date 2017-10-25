@@ -37,12 +37,7 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <div ng-if="!isLoggedIn && !publicPage" class="layout-loading text-center">
-      <mno-loader></mno-loader>
-      <span class="layout-loading-text" translate="mno_enterprise.templates.components.layout.your_dashboard_is_loading"></span>
-    </div>
-
-    <div ui-view class="myspace"></div>
+    <div ui-view class="page-wrapper"></div>
 
     <!-- build:js({.tmp,src}) scripts/vendor.js -->
     <!-- bower:js -->

@@ -1,0 +1,40 @@
+<div class='registration'>
+  <div class='container'>
+    <div class='row'>
+      <div class='login-box-wrapper'>
+        <div class='login-box-title'>
+          <h2>Confirmation sent!</h2>
+        </div>
+        <div class='login-box'>
+          <div class='brand-logo'></div>
+          <div>We've sent you a confirmation link, please check your email inbox.</div>
+          <form name="vm.form" class="form-horizontal" autocomplete="off" id="edit_user" ng-submit="vm.resendConfirmation()">
+            <hr>
+            <div class='form-horizontal'>
+              <div class='row'>
+                <div class='text-center'>
+                  <div class='col-sm-12'>
+                    <label style='font-weight: normal;'>If you did not receive the email please click resend.</label>
+                  </div>
+                  <div class='col-sm-12'>
+                    <input placeholder="Email" required="required" ng-model="vm.user.email" class="form-control" type="email" value="" name="user[email]" id="user_email"/>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class='row'>
+                <div class='col-sm-12'>
+                  <div class='text-center'>
+                    <button class='btn btn-warning' ng-click='vm.hasClicked = true' ng-disabled='vm.form.$invalid' ng-hide='vm.hasClicked' type='submit'>Resend!</button>
+                    <img class='loader' ng-show='vm.hasClicked'>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

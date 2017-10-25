@@ -1,0 +1,59 @@
+<div class='registration'>
+  <div class='container'>
+    <div class='row'>
+      <div class='login-box-wrapper'>
+        <div class='login-box-title'>
+          <h2>{{'mno_enterprise.auth.registrations.new.title' | translate}}</h2>
+        </div>
+        <div class='login-box'>
+          <div class='brand-logo'></div>
+          <form name="vm.form" class="form-horizontal autofill-detect" autocomplete="off" id="new_user" ng-submit="vm.signup()">
+            <div class='row'>
+              <div class='col-sm-12'>
+                <input placeholder="*Email" required="required" ng-model="vm.user.email" class="form-control" type="email" name="email" id="user_email" ng-change="vm.checkServerErrors()"/>
+                <div class="text-danger text-left" ng-if="vm.form.email.$dirty || vm.form.$submitted" ng-messages="vm.form.email.$error">
+                  <p ng-message="required">Email Required</p>
+                  <p ng-message="email">Invalid Email</p>
+                  <p ng-message="server">{{ vm.errorHandler.errorMessage('email') }}</p>
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class='row'>
+              <div class='col-sm-12'>
+                <input placeholder="Company" ng-model="vm.user.company" class="form-control" type="text" name="company" id="user_company"/>
+              </div>
+            </div>
+            <br>
+            <div class='row'>
+              <div class='col-sm-12'>
+                <div class='checkbox-section text-center'>
+                  <input type="checkbox" name="tos" id="tos" value="accept" required="required" ng-model="vm.acceptTos"/>
+                  <label for='tos'>{{'mno_enterprise.auth.registrations.new.user_accept' | translate}}</label>
+                  <a target="_blank" href="/mnoe/terms">{{'mno_enterprise.auth.registrations.new.tos' | translate}}</a>
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class='row'>
+              <div class='col-sm-12'>
+                <div class='text-center'>
+                  <button class='btn btn-warning' ng-click='vm.hasClicked = true' ng-disabled='vm.form.$invalid' ng-hide='vm.hasClicked' type='submit'>
+                    {{'mno_enterprise.auth.registrations.new.create' | translate}}
+                  </button>
+                  <img class='loader' ng-show='vm.hasClicked'>
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <hr>
+          <a ui-sref="login">{{'mno_enterprise.auth.shared.links.login' | translate}}</a>
+          <br>
+          <a href="/mnoe/auth/users/confirmation/new">{{'mno_enterprise.auth.shared.links.resend_confirmation' | translate}}</a>
+          <br>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
