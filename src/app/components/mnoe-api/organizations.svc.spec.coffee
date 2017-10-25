@@ -45,6 +45,14 @@ describe('Service: MnoeOrganizations', ->
         ]
       })
 
+    # @get backend interceptor
+    $httpBackend.when('GET', '/mnoe/jpi/v1/marketplace?organization_id=9').respond(200,
+      {
+        "apps": [
+          { "id": 9, "uid": "app-abcd", "name": "My App" }
+        ]
+      })
+
     # # @update backend interceptor
     # $httpBackend.when('PUT', '/mnoe/jpi/v1/organizations/9').respond(200,
     #   {

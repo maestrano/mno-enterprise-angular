@@ -31,12 +31,23 @@
             {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.price' | translate }}:
           </span>
 
-          <span ng-hide="vm.subscription.product_pricing.pricing_type == 'payg'" ng-repeat="price in vm.subscription.product_pricing.prices | filterBy: ['currency']: vm.orgCurrency" class="badge">
-            {{ price.currency }} {{ price.price_cents / 100 }}
-          </span>
-          <span ng-show="vm.subscription.product_pricing.pricing_type == 'recurring'">
-            / {{ vm.subscription.product_pricing.per_unit }} / {{ vm.subscription.product_pricing.per_duration }}
-          </span>
+          <div ng-hide="vm.subscription.product_pricing.pricing_type == 'payg'">
+            <div ng-repeat="price in vm.subscription.product_pricing.prices | filterBy: ['currency']: vm.orgCurrency" class="badge">
+              <span ng-hide="vm.subscription.product_pricing.license_based">
+                {{ price.currency }} {{ price.price_cents / 100 | number:2 }}
+                <span ng-show="vm.subscription.product_pricing.pricing_type == 'recurring'">
+                  / {{ vm.subscription.product_pricing.per_unit }} / {{ vm.subscription.product_pricing.per_duration }}
+                </span>
+              </span>
+              <span ng-show="vm.subscription.product_pricing.license_based">
+                {{ price.currency }} {{ price.price_cents / 100 * vm.subscription.max_licenses | number:2 }}
+                <span ng-show="vm.subscription.product_pricing.pricing_type == 'recurring'">
+                  / {{ vm.subscription.product_pricing.per_duration }}
+                </span>
+              </span>
+            </div>
+          </div>
+
           <span ng-show="vm.subscription.product_pricing.pricing_type == 'payg'">
             {{ 'mno_enterprise.templates.dashboard.provisioning.order.pricing_type.payg' | translate }}
           </span>

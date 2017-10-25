@@ -42,10 +42,15 @@
             <input class="form-control hide-border" ng-model="vm.subscription.status" readonly/>
           </div>
 
+          <div class="form-group" ng-show="vm.subscription.product_pricing.license_based">
+            <label class="control-label text-color" translate>mno_enterprise.templates.dashboard.provisioning.subscription.licenses</label>
+            <input class="form-control hide-border" ng-model="vm.subscription.max_licenses" readonly/>
+          </div>
+
           <div class="form-group">
             <label class="control-label text-color" translate>mno_enterprise.templates.dashboard.provisioning.subscription.amount</label>
             <ul>
-              <li ng-hide="vm.subscription.product_pricing.pricing_type == 'payg'" ng-repeat="price in vm.subscription.product_pricing.prices">
+              <li ng-hide="vm.subscription.product_pricing.pricing_type == 'payg'" ng-repeat="price in vm.subscription.product_pricing.prices | filterBy: ['currency']: vm.subscription.currency">
                 <span class="badge">{{ price.currency }} {{ price.price_cents / 100 }}</span>
                 <span ng-show="vm.subscription.product_pricing.pricing_type == 'recurring'">
                   / {{ vm.subscription.product_pricing.per_unit }} / {{ vm.subscription.product_pricing.per_duration }}
