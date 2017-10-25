@@ -17,16 +17,15 @@
         </div>
         <div ng-show="editor.busy"><i class="fa fa-spinner fa-pulse fa-2x"></i></div>
       </div>
-
       <uib-tabset class="top-buffer-2">
         <uib-tab heading="Theme">
           <div class="row top-buffer-1">
             <div class="form-group col-md-6" ng-repeat="(color, value) in theme">
               <label>{{labels[color]}} <br/><small class="text-muted">{{color}}</small></label>
-              <input type="color" class="form-control"
-                     ng-model="theme[color]"
-                     ng-model-options="{ debounce: 300 }"
-                     ng-change="editor.update()">
+              <spectrum-colorpicker
+                ng-model="theme[color]" ng-model-options="{ debounce: 300 }" ng-change="editor.update()" palette
+                options="{showInput: true, showAlpha: true, showPalette: true, showSelectionPalette: true, format: 'hex'}">
+              </spectrum-colorpicker>
             </div>
           </div>
         </uib-tab>

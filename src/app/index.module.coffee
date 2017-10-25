@@ -22,5 +22,6 @@ angular.module 'mnoEnterpriseAngular', [
   'schemaForm',
   'angular.filter',
   'textAngular',
-  'jsonFormatter'
+  'jsonFormatter',
+  'angularSpectrumColorpicker'
 ]
