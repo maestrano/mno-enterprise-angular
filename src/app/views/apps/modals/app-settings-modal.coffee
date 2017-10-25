@@ -17,10 +17,27 @@ angular.module 'mnoEnterpriseAngular'
         $scope.syncs.page = page
         $scope.loadSyncs()
     }
-    $scope.mnoSortableTableFields = [{ header: 'Date', attr: 'updated_at'}, { header: 'Status', attr: 'status'}, { header: 'Message', attr: 'message'}]
+    $scope.idMaps = {
+      externalNames: []
+      list: []
+      sort: 'name.asc'
+      baseSize: 4
+      page: 1
+      loading: false
+      pageChangedCb: (page) ->
+        $scope.idMaps.page = page
+        $scope.loadIdMaps($scope.idMaps.externalNames)
+    }
+    $scope.mnoSyncsTableFields = [{ header: 'Date', attr: 'updated_at'}, { header: 'Status', attr: 'status'}, { header: 'Message', attr: 'message'}]
+    $scope.mnoIdMapsTableFields = [{ header: 'Name', attr: 'name'}, { header: 'In Maestrano', attr: 'connec_id'}, { header: 'In Neto', attr: 'external_id'}]
 
     this.$onInit = ->
-      $scope.loadSyncs()
+      if MnoeAppInstances.isAddOnWithOrg(app)
+        $scope.loadSyncs()
+
+    $scope.fetchIdMaps = (externalNames, isOpen) ->
+      return if !isOpen || $scope.idMaps.externalNames == externalNames
+      $scope.loadIdMaps(externalNames)
 
     # ----------------------------------------------------------
     # Initialize deletion sentence
@@ -99,6 +116,21 @@ angular.module 'mnoEnterpriseAngular'
           $scope.syncs.loading = false
         )
 
+    $scope.loadIdMaps = (externalNames) ->
+      $scope.idMaps.loading = true
+      $scope.idMaps.externalNames = externalNames
+      params = { size: $scope.idMaps.baseSize, page: $scope.idMaps.page, sort: $scope.idMaps.sort , entity: externalNames.join(',')}
+      MnoeAppInstances.getIdMaps($scope.app, params)
+        .then((response) ->
+          $scope.idMaps.list = response.data.map (e) ->
+            att = e.attributes
+            att.connec_id = if att.connec_id then '&#9989;' else '&#10060;'
+            att.external_id = if att.external_id then '&#9989;' else '&#10060;'
+            att
+          $scope.idMaps.totalItems = response.headers('x-total-count')
+          $scope.idMaps.loading = false
+        )
+
     $scope.disconnect = ->
       $scope.isDisconnecting = true
       MnoeAppInstances.disconnect(app)
@@ -110,12 +142,15 @@ angular.module 'mnoEnterpriseAngular'
           $scope.isDisconnecting = false
         )
 
-    $scope.sortableTableServerPipe = (tableState)->
-      $scope.syncs.sort = updateTableSort(tableState.sort)
+    $scope.sortableSyncsServerPipe = (tableState)->
+      $scope.syncs.sort = updateTableSort(tableState.sort, $scope.syncs.sort)
       $scope.loadSyncs()
 
-    updateTableSort = (sortState = {}) ->
-      sort = $scope.syncs.sort
+    $scope.sortableIdMapsServerPipe = (tableState)->
+      $scope.idMaps.sort = updateTableSort(tableState.sort, $scope.idMaps.sort)
+      $scope.loadIdMaps($scope.idMaps.externalNames)
+
+    updateTableSort = (sortState = {}, sort) ->
       if sortState.predicate
         sort = sortState.predicate
         if sortState.reverse

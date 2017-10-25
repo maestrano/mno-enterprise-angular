@@ -81,6 +81,9 @@ angular.module 'mnoEnterpriseAngular'
     @getSyncs = (instance, params) ->
       MnoeFullApiSvc.one('organizations', MnoeOrganizations.selectedId).one('/app_instances', instance.id).doGET('/sync_history', params)
 
+    @getIdMaps = (instance, params) ->
+      MnoeFullApiSvc.one('organizations', MnoeOrganizations.selectedId).one('/app_instances', instance.id).doGET('/id_maps', params)
+
     @disconnect = (instance) ->
       MnoeApiSvc.one('organizations', MnoeOrganizations.selectedId).one('/app_instances', instance.id).post('/disconnect')
 
