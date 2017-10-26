@@ -14,7 +14,7 @@ angular.module 'mnoEnterpriseAngular'
       #====================================
       vm.initialize = ->
         vm.isLoading = false
-        MnoeOrganizations.getCurrentOrganisation().then((x) -> vm.isCompanyActive = x.organization.active)
+        vm.isCompanyActive = MnoeOrganizations.getSelected().organization.active
         if vm.isBillingShown()
           vm.activeTab = 'billing'
         else

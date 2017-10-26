@@ -182,10 +182,14 @@ angular.module 'mnoEnterpriseAngular'
       MnoeApiSvc.one('organizations', _self.selectedId).doPOST({reason: reason, password: password}, 'halt')
 
     @companyActiveRequired = () ->
-      _self.getCurrentOrganisation().then((org) ->
-        unless org.organization.active
+      if _self.selected
+        unless _self.selected.organization.active
           $state.go('home.company')
-      )
+      else
+        _self.getCurrentOrganisation().then((org) ->
+          unless org.organization.active
+            $state.go('home.company')
+        )
     #======================================
     # User Role
     #======================================
