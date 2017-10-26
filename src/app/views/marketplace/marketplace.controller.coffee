@@ -59,6 +59,7 @@ angular.module 'mnoEnterpriseAngular'
           response = response.plain()
 
           vm.categories = response.categories
+          vm.displayCategories = vm.categories.length
           vm.apps = response.apps
 
           vm.isLoading = false
