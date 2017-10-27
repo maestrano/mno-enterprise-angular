@@ -179,7 +179,7 @@ angular.module 'mnoEnterpriseAngular'
       return defer.promise
 
     @freeze = (reason, password) ->
-      MnoeApiSvc.one('organizations', _self.selectedId).doPOST({reason: reason, password: password}, 'halt')
+      MnoeApiSvc.one('organizations', _self.selectedId).doPOST({reason: reason, password: password}, 'freeze')
 
     @companyActiveRequired = () ->
       if _self.selected
