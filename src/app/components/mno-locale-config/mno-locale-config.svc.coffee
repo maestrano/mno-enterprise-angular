@@ -21,6 +21,11 @@ angular.module 'mnoEnterpriseAngular'
       MnoeApiSvc.setBaseUrl(api_root)
       MnoeFullApiSvc.setBaseUrl(api_root)
 
+    # Check if the detected locale is available
+    filterAvailableLocales = (locale) ->
+      return unless locale
+      _.get(_.find(I18N_CONFIG.available_locales, {id: locale}), 'id')
+
     # Try to determine the locale from the URL
     localeFromUrl = ->
       # Get current path (eg. "/en/dashboard/" or "/dashboard/")
@@ -31,7 +36,7 @@ angular.module 'mnoEnterpriseAngular'
       found = path.match(re)
 
       # Ex found: ["/en/dashboard/", "en", index: 0, input: "/en/dashboard/"]
-      locale = found[1] if found?
+      locale = filterAvailableLocales(found[1]) if found?
 
       $q.resolve(locale)
 
@@ -39,7 +44,7 @@ angular.module 'mnoEnterpriseAngular'
     localeFromUser = ->
       MnoeCurrentUser.get().then(
         (response) ->
-          response.settings?.locale
+          filterAvailableLocales(response.settings?.locale)
       )
 
     # Build our fallback stack manually to be ['language', preferredLanguage, LOCALES.fallbackLanguage]
