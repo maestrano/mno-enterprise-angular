@@ -16,29 +16,60 @@ angular.module 'mnoEnterpriseAngular'
     vm.appsFilter = (app) ->
       if vm.selectedCategory then _.contains(app.categories, vm.selectedCategory) else true
 
+    # Add conflictingApp attribute to marketplace apps
+    refreshConflictingApp = (app) ->
+      # List of non multi_instantiable categories
+      subCats = _.map(_.filter(app.subcategories, 'multi_instantiable', false), 'name')
+
+      for marketApp in vm.marketplace.apps
+        continue if marketApp == app
+
+        if _.some(marketApp.subcategories, (subCat) -> not subCat.multi_instantiable and subCat.name in subCats)
+          marketApp.conflictingApp = app
+
+
     # Select or deselect an app
     vm.toggleApp = (app) ->
-      # User cannot add more apps
-      return if vm.maxAppsSelected && !app.checked
+      refreshConflictingApp(app)
+      # User cannot add disabled apps (over 4 or conflicting)
+      return if vm.appSelectDisabled(app)
 
       app.checked = !app.checked
       if app.checked
         vm.selectedApps.push(app)
       else
         _.remove(vm.selectedApps, app)
+
       vm.maxAppsSelected = (vm.selectedApps.length == MAX_APPS_ONBOARDING)
+
       compareSharedEntities(vm.selectedApps)
-      return
+
+    # Find conflicts between already selected apps
+    vm.selectedAppConflict = (app) ->
+      app.conflictingApp in vm.selectedApps
+
+    # User cannot select disabled apps
+    vm.appSelectDisabled = (app) ->
+      !app.checked && (vm.maxAppsSelected || vm.selectedAppConflict(app))
+
+    # User cannot select disabled apps tooltips
+    vm.appSelectDisabledTooltipText = (app) ->
+      if vm.maxAppsSelected
+        'mno_enterprise.templates.onboarding.select_your_app.max_apps_selected_tooltip'
+      else if vm.selectedAppConflict(app)
+        'mno_enterprise.templates.onboarding.select_your_app.conflicting_app_selected_tooltip'
 
     compareSharedEntities = (apps) ->
       appEntities = []
       listEntities = []
+
       # List of entities per app
       _.each(apps, (a) ->
         entities = _.map(a.shared_entities, 'shared_entity_name')
         listEntities = _(listEntities).concat(entities).value()
         appEntities.push({nid: a.nid, logo: a.logo, name: a.name, entities: entities})
       )
+
       # Build the full list of entities
       listEntities = _.uniq(listEntities)
       vm.appEntities = appEntities
@@ -46,7 +77,6 @@ angular.module 'mnoEnterpriseAngular'
 
     vm.containsEntity = (entities, entity) ->
       return _.includes(entities, entity)
-
     # ====================================
     # Connect the apps & go to next screen
     # ====================================
@@ -91,10 +121,8 @@ angular.module 'mnoEnterpriseAngular'
       (response) ->
         vm.appInstances = angular.copy(response.appInstances)
         vm.marketplace = angular.copy(response.marketplace.plain())
-
         # Fetch the already selected apps
         vm.originalAppNids = _.map(vm.appInstances, 'app_nid')
-
         # Toggle the already selected apps
         _.each(_.filter(vm.marketplace.apps, (app) -> _.includes(vm.originalAppNids, app.nid)), (a) -> vm.toggleApp(a))
     ).finally(-> vm.isLoading = false)
