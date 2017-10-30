@@ -16,17 +16,21 @@ angular.module 'mnoEnterpriseAngular'
     vm.appsFilter = (app) ->
       if vm.selectedCategory then _.contains(app.categories, vm.selectedCategory) else true
 
+    # Add conflictingApp attribute to marketplace apps
+    refreshConflictingApp = (app) ->
+      # List of non multi_instantiable categories
+      subCats = _.map(_.filter(app.subcategories, 'multi_instantiable', false), 'name')
+
+      for marketApp in vm.marketplace.apps
+        continue if marketApp == app
+
+        if _.some(marketApp.subcategories, (subCat) -> not subCat.multi_instantiable and subCat.name in subCats)
+          marketApp.conflictingApp = app
+
+
     # Select or deselect an app
     vm.toggleApp = (app) ->
-      # Add conflictingApp attribute to marketplace apps
-      names = _.map(app.subcategories, 'name')
-      marketplaceApps = _.filter(vm.marketplace.apps, (marketApp) -> marketApp != app)
-      _.map(marketplaceApps, (marketApp) ->
-        if _.find(marketApp.subcategories, (subCategory) ->
-          not subCategory.multi_instantiable and subCategory.name in names
-        )
-          marketApp.conflictingApp = app
-      )
+      refreshConflictingApp(app)
       # User cannot add disabled apps (over 4 or conflicting)
       return if vm.appSelectDisabled(app)
 
@@ -35,17 +39,19 @@ angular.module 'mnoEnterpriseAngular'
         vm.selectedApps.push(app)
       else
         _.remove(vm.selectedApps, app)
+
       vm.maxAppsSelected = (vm.selectedApps.length == MAX_APPS_ONBOARDING)
+
       compareSharedEntities(vm.selectedApps)
-      return
+
     # Find conflicts between already selected apps
     vm.selectedAppConflict = (app) ->
-      _.find(vm.selectedApps, (selectedApp) ->
-        app.conflictingApp == selectedApp
-      )
+      app.conflictingApp in vm.selectedApps
+
     # User cannot select disabled apps
     vm.appSelectDisabled = (app) ->
-      (vm.maxAppsSelected && !app.checked) || vm.selectedAppConflict(app) && !app.checked
+      !app.checked && (vm.maxAppsSelected || vm.selectedAppConflict(app))
+
     # User cannot select disabled apps tooltips
     vm.appSelectDisabledTooltipText = (app) ->
       if vm.maxAppsSelected
@@ -56,12 +62,14 @@ angular.module 'mnoEnterpriseAngular'
     compareSharedEntities = (apps) ->
       appEntities = []
       listEntities = []
+
       # List of entities per app
       _.each(apps, (a) ->
         entities = _.map(a.shared_entities, 'shared_entity_name')
         listEntities = _(listEntities).concat(entities).value()
         appEntities.push({nid: a.nid, logo: a.logo, name: a.name, entities: entities})
       )
+
       # Build the full list of entities
       listEntities = _.uniq(listEntities)
       vm.appEntities = appEntities
@@ -92,6 +100,7 @@ angular.module 'mnoEnterpriseAngular'
               $state.go('onboarding.step3')
           )
       )
+
     # ====================================
     # App Info modal
     # ====================================
