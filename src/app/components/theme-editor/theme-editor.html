@@ -23,7 +23,7 @@
             <div class="form-group col-md-6" ng-repeat="(color, value) in theme">
               <label>{{labels[color]}} <br/><small class="text-muted">{{color}}</small></label>
               <spectrum-colorpicker
-                ng-model="theme[color]" ng-model-options="{ debounce: 300 }" ng-change="editor.update()" palette
+                ng-model="theme[color]" ng-model-options="{ debounce: 300 }" ng-change="editor.update()"
                 options="{showInput: true, showAlpha: true, showPalette: true, showSelectionPalette: true, format: 'hex'}">
               </spectrum-colorpicker>
             </div>
