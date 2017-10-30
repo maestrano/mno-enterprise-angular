@@ -6,7 +6,7 @@ angular.module 'mnoEnterpriseAngular'
       close: '&'
       dismiss: '&'
     }
-    controller: ($log, toastr) ->
+    controller: ($log, $state, toastr) ->
       ctrl = this
       ctrl.password = ""
       ctrl.delReasons = ""
@@ -22,6 +22,8 @@ angular.module 'mnoEnterpriseAngular'
         ctrl.resolve.actionCb(ctrl.delReasons, ctrl.password).then(
           (response) ->
             toastr.success('Organization successfully frozen')
+            # Reload the state to block access to Impac!, marketplace, ...
+            $state.reload()
             ctrl.close(response)
           (errors) ->
             $log.error(errors)
