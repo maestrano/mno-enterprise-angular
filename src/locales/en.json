@@ -714,6 +714,7 @@
   "mno_enterprise.templates.dashboard.provisioning.subscriptions.status": "Status",
   "mno_enterprise.templates.dashboard.provisioning.subscriptions.states.requested": "requested",
   "mno_enterprise.templates.dashboard.provisioning.subscriptions.states.approved": "approved",
+  "mno_enterprise.templates.dashboard.provisioning.subscriptions.states.provisioning": "provisioning",
   "mno_enterprise.templates.dashboard.provisioning.subscriptions.states.fulfilled": "fulfilled",
   "mno_enterprise.templates.dashboard.provisioning.subscriptions.states.expired": "expired",
   "mno_enterprise.templates.dashboard.provisioning.subscriptions.states.suspended": "suspended",
