@@ -11,7 +11,7 @@
     <!-- Marketplace nav -->
     <div class="row">
       <div class="marketplace-nav">
-        <div ng-if='vm.displayCategories' class="col-sm-4">
+        <div ng-if="vm.displayCategories" class="col-sm-4">
           <select class="form-control" ng-model="vm.selectedCategory" ng-options="c for c in vm.categories" ng-change="vm.searchTerm = ''">
             <option value=''>{{ 'mno_enterprise.templates.dashboard.marketplace.index.select_all' | translate }}</option>
           </select>
