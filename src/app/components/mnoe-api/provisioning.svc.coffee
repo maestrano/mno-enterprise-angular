@@ -103,4 +103,15 @@ angular.module 'mnoEnterpriseAngular'
           )
       )
 
+    @getSubscriptionEvents = (subscriptionId) ->
+      deferred = $q.defer()
+      MnoeOrganizations.get().then(
+        (response) ->
+          MnoeApiSvc.one('organizations', response.organization.id).one('subscriptions', subscriptionId). customGET('/subscription_events').then(
+            (response) ->
+              deferred.resolve(response)
+          )
+      )
+      return deferred.promise
+
     return
