@@ -367,7 +367,7 @@ ThemeEditorCtrl = ($scope, $window, $log, $timeout,  toastr, themeEditorSvc) ->
   editor.reset = (opts = {published: false, default: false, save: false}) ->
     editor.busy = true
     if opts.published || opts.default
-      promise = if opts.publish
+      promise = if opts.published
         themeEditorSvc.resetToPublishedTheme()
       else
         themeEditorSvc.resetToDefaultTheme()
