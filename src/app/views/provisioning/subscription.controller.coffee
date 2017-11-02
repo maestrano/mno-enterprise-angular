@@ -21,7 +21,7 @@ angular.module 'mnoEnterpriseAngular'
     )
 
     # Configure user friendly json tree
-    vm.rootName = $filter('translate')('mno_enterprise.templates.dashboard.provisioning.subscription.events.provisioning_data.root_name')
+    vm.rootName = $filter('translate')('mno_enterprise.templates.dashboard.provisioning.subscription.provisioning_data_root_name')
     vm.jsonTreeSettings = {
       dateFormat: 'yyyy-MM-dd HH:mm:ss'
     }
