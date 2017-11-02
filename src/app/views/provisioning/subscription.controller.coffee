@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningSubscriptionCtrl', ($stateParams, MnoeProvisioning, MnoeMarketplace) ->
+  .controller('ProvisioningSubscriptionCtrl', ($stateParams, $filter, MnoeProvisioning, MnoeMarketplace) ->
 
     vm = this
     vm.isLoading = true
@@ -19,6 +19,12 @@ angular.module 'mnoEnterpriseAngular'
       (response) ->
         vm.subscriptionEvents = response.subscription_events
     )
+
+    # Configure user friendly json tree
+    vm.rootName = $filter('translate')('mno_enterprise.templates.dashboard.provisioning.subscription.events.provisioning_data.root_name')
+    vm.jsonTreeSettings = {
+      dateFormat: 'yyyy-MM-dd HH:mm:ss'
+    }
 
     return
   )
