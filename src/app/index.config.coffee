@@ -36,11 +36,6 @@ angular.module 'mnoEnterpriseAngular'
           $q.reject rejection
       }
 
-  .config((JSONFormatterConfigProvider) ->
-    # Enable the hover preview feature
-    JSONFormatterConfigProvider.hoverPreviewEnabled = true
-  )
-
   .config(($sceDelegateProvider) ->
     'ngInject'
 

@@ -39,7 +39,7 @@
     "angular-filter": "^0.5.16",
     "mno-ui-elements": "maestrano/mno-ui-elements#master",
     "textAngular": "^1.5.16",
-    "json-formatter": "^0.6.0",
+    "angular-user-friendly-json-tree": "^2.0.1",
     "es6-shim": "^0.35.3",
     "angular-spectrum-colorpicker": "^1.4.5"
   },
