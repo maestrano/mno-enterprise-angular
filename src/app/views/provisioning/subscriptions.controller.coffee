@@ -38,5 +38,8 @@ angular.module 'mnoEnterpriseAngular'
         vm.subscriptions = response.subscriptions
     ).finally(-> vm.isLoading = false)
 
+    vm.displayInfoTooltip = (subscription) ->
+      return subscription.status == 'aborted'
+
     return
   )
