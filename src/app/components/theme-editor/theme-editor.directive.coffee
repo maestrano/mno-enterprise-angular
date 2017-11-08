@@ -406,15 +406,18 @@ ThemeEditorCtrl = ($scope, $window, $log, $timeout,  toastr, themeEditorSvc) ->
     editor.output = output = angular.toJson(themeToHash(),true)
 
     # Create and download the less file
-    anchor = angular.element('<a/>')
-    anchor.css({display: 'none'}) # Make sure it's not visible
-    angular.element(document.body).append(anchor) # Attach to document
-
-    anchor.attr({
-      href: 'data:attachment/csv;charset=utf-8,' + encodeURI(output),
-      target: '_blank',
-      download: 'live-previewer.json'
-    })[0].click()
+    if $window.navigator.msSaveBlob
+      blobObject = new Blob([editor.output], {type: 'data:attachment/csv;charset=utf-8'})
+      $window.navigator.msSaveBlob(blobObject, 'live-previewer.json') # Now the user will have the option of clicking the Save button and the Open button.
+    else
+      anchor = angular.element('<a/>')
+      anchor.css({display: 'none'}) # Make sure it's not visible
+      angular.element(document.body).append(anchor) # Attach to document
+      anchor.attr({
+        href: 'data:attachment/csv;charset=utf-8,' + encodeURI(output),
+        target: '_blank',
+        download: 'live-previewer.json'
+      })[0].click()
 
     anchor.remove() # Clean it up afterwards
 
