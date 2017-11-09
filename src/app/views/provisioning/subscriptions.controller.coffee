@@ -28,7 +28,7 @@ angular.module 'mnoEnterpriseAngular'
 
     $q.all({organization: orgPromise, subscriptions: subPromise}).then(
       (response) ->
-        vm.orgCurrency = response.organization.billing?.current?.options?.iso_code || MnoeConfig.marketplaceCurrency()
+        vm.orgCurrency = response.organization.organization?.billing_currency || MnoeConfig.marketplaceCurrency()
 
         # If a subscription doesn't contains a pricing for the org currency, a warning message is displayed
         vm.displayCurrencyWarning = not _.every(response.subscriptions, (subscription) ->

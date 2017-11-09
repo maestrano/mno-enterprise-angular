@@ -20,7 +20,7 @@ angular.module 'mnoEnterpriseAngular'
           products = response.localProducts
           organization = response.organization
 
-          vm.orgCurrency = organization.billing?.current?.options?.iso_code || MnoeConfig.marketplaceCurrency()
+          vm.orgCurrency = organization.organization?.billing_currency || MnoeConfig.marketplaceCurrency()
 
           # App to be displayed
           productId = $stateParams.productId

@@ -7,7 +7,7 @@ angular.module 'mnoEnterpriseAngular'
 
     MnoeOrganizations.get().then(
       (response) ->
-        vm.orgCurrency = response.billing?.current?.options?.iso_code || MnoeConfig.marketplaceCurrency()
+        vm.orgCurrency = response.organization?.billing_currency || MnoeConfig.marketplaceCurrency()
     )
 
     return

@@ -11,7 +11,7 @@ angular.module 'mnoEnterpriseAngular'
 
     $q.all({organization: orgPromise, products: prodsPromise, subscription: initPromise}).then(
       (response) ->
-        vm.orgCurrency = response.organization.billing?.current?.options?.iso_code || MnoeConfig.marketplaceCurrency()
+        vm.orgCurrency = response.organization.organization?.billing_currency || MnoeConfig.marketplaceCurrency()
         vm.subscription = response.subscription
 
         MnoeMarketplace.findProduct({id: vm.subscription.product?.id, nid: $stateParams.nid}).then(
