@@ -90,6 +90,7 @@
             {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.status' | translate }}:
           </span>
           <span title="{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.states.' + subscription.status | translate }}">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.states.' + subscription.status | translate }}</span>
+          <i class="fa fa-info-circle" ng-hide="!vm.displayInfoTooltip(subscription)" uib-tooltip="{{'mno_enterprise.templates.dashboard.provisioning.subscriptions.tooltip.aborted' | translate}}" tooltip-append-to-body="true"></i>
         </div>
 
         <div class="cell col-md-1">
