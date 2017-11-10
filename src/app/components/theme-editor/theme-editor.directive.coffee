@@ -423,7 +423,7 @@ ThemeEditorCtrl = ($scope, $window, $log, $timeout,  toastr, themeEditorSvc) ->
   editor.import = ->
     editor.busy = true
     #loadThemeData(themeEditorSvc.parseLessVars(editor.output))
-    loadThemeData(angular.fromJson(editor.output))
+    loadThemeData(angular.fromJson([editor.output]))
     editor.update().then ->
       editor.busy = false
       toastr.info('Theme has been imported')
