@@ -1,5 +1,27 @@
 # Change Log
 
+## [v1.1.3](https://github.com/maestrano/mno-enterprise-angular/tree/v1.1.3) (2017-11-10)
+[Full Changelog](https://github.com/maestrano/mno-enterprise-angular/compare/v1.1.2...v1.1.3)
+
+**Implemented enhancements:**
+
+- Update impac-angular default version [\#335](https://github.com/maestrano/mno-enterprise-angular/pull/335) ([cesar-tonnoir](https://github.com/cesar-tonnoir))
+- \[MNOE-502\] Improvement on-boarding [\#235](https://github.com/maestrano/mno-enterprise-angular/pull/235) ([rheasunshine](https://github.com/rheasunshine))
+
+**Fixed bugs:**
+
+- \[MNOE-680\] Fix display categories filter when only one [\#367](https://github.com/maestrano/mno-enterprise-angular/pull/367) ([hedudelgado](https://github.com/hedudelgado))
+- \[MNOE-438\] Fix install app button position [\#360](https://github.com/maestrano/mno-enterprise-angular/pull/360) ([hedudelgado](https://github.com/hedudelgado))
+- \[MNO-686\] Fix popover not closing [\#320](https://github.com/maestrano/mno-enterprise-angular/pull/320) ([hedudelgado](https://github.com/hedudelgado))
+- \[MNOE-587\]\[Bug\] Nan average rating [\#307](https://github.com/maestrano/mno-enterprise-angular/pull/307) ([adamaziz15](https://github.com/adamaziz15))
+- \[MNOE-345\] Fix pagination in question tab and workflow [\#225](https://github.com/maestrano/mno-enterprise-angular/pull/225) ([hedudelgado](https://github.com/hedudelgado))
+- \[MNOE-486\] Fix pagination when more than 5 comments [\#218](https://github.com/maestrano/mno-enterprise-angular/pull/218) ([hedudelgado](https://github.com/hedudelgado))
+
+**Merged pull requests:**
+
+- Overrides jquery-rss config [\#356](https://github.com/maestrano/mno-enterprise-angular/pull/356) ([cesar-tonnoir](https://github.com/cesar-tonnoir))
+- Backporting 2.0 fixes [\#343](https://github.com/maestrano/mno-enterprise-angular/pull/343) ([fgourichon](https://github.com/fgourichon))
+
 ## [v1.1.2](https://github.com/maestrano/mno-enterprise-angular/tree/v1.1.2) (2017-08-29)
 [Full Changelog](https://github.com/maestrano/mno-enterprise-angular/compare/v1.1.1...v1.1.2)
 

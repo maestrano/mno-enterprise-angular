@@ -5,17 +5,19 @@
     text-align: center;
     justify-content: flex-start;
     padding: 1em;
+  }
 
-    #data-shared {
-      margin-left: 0.5em;
-      flex: 1;
-      padding: 0.5em;
-    }
+  #apps {
+    width: 50%;
+    padding: 0.5em;
+    flex: 1;
+  }
 
-    #apps-widget {
-      flex: 1;
-      padding: 0.5em;
-    }
+  #data-shared {
+    width: 50%;
+    padding: 1em;
+    flex: 1;
+  }
 
     #apps-widget {
       #widget-header-bar {
@@ -72,6 +74,10 @@
           }
         }
 
+        .app-icon[disabled] {
+          cursor: not-allowed;
+        }
+
         .app-title {
           color: @onboarding-app-selector-title;
           text-align: center;
@@ -115,7 +121,6 @@
         }
       }
     }
-  }
 
   .onboarding-footer {
     margin-top: 15px;
