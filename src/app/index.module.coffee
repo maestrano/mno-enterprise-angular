@@ -11,6 +11,7 @@ angular.module 'mnoEnterpriseAngular', [
   'ngSanitize',
   'ui.router',
   'ui.bootstrap',
+  'smart-table',
   'toastr',
   'restangular',
   'platanus.inflector',

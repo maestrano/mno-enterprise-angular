@@ -313,6 +313,7 @@
   "mno_enterprise.templates.dashboard.menu.marketplace": "市场",
   "mno_enterprise.templates.dashboard.menu.logout": "登出",
   "mno_enterprise.templates.dashboard.menu.new_company": "新公司",
+  "mno_enterprise.templates.dashboard.menu.messages": "消息",
   "mno_enterprise.templates.modals.create.title": "创建新的仪表板",
   "mno_enterprise.templates.modals.create.label_name": "名称",
   "mno_enterprise.templates.modals.create.label_current_company": "当前公司",
