@@ -4,7 +4,7 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('DashboardMarketplaceAppCtrl',($q, $scope, $stateParams, $state, $sce, $window, $uibModal, $anchorScroll,
     $location, toastr, MnoeMarketplace, MnoeOrganizations, MnoeCurrentUser, MnoeAppInstances, MnoConfirm,
-    MnoErrorsHandler, PRICING_CONFIG, REVIEWS_CONFIG, QUESTIONS_CONFIG) ->
+    MnoErrorsHandler, PRICING_CONFIG, REVIEWS_CONFIG, QUESTIONS_CONFIG, ITEMS_PER_PAGE) ->
 
       vm = this
 
@@ -91,10 +91,11 @@ angular.module 'mnoEnterpriseAngular'
           (review.user_id == vm.userId) && (parseInt(review.edited_by_id) == review.user_id || !review.edited_by_id)
         
         vm.isQuestionsPaginationShown = () ->
-          vm.questions.totalItems && (vm.questions.totalItems > vm.questions.nbItems) && !vm.questions.loading
+          !vm.questions.loading && (vm.questions.totalItems > Math.min.apply(null, ITEMS_PER_PAGE))
 
         vm.isReviewsPaginationShown = () ->
-          vm.reviews.totalItems && (vm.reviews.totalItems > vm.reviews.nbItems) && !vm.reviews.loading
+          !vm.reviews.loading && (vm.reviews.totalItems > Math.min.apply(null, ITEMS_PER_PAGE))
+
         #====================================
         # Cart Management
         #====================================
