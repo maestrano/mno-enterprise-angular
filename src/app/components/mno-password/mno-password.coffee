@@ -7,6 +7,7 @@ angular.module 'mnoEnterpriseAngular'
         data: '=',
         confirm: '=?',
         current: '=?',
+        minLength: '@',
         currentText: '@',
         newText: '@',
         confirmText: '@'
@@ -14,12 +15,13 @@ angular.module 'mnoEnterpriseAngular'
       templateUrl: 'app/components/mno-password/mno-password.html',
       link: (scope, element, attrs) ->
         # Init args
+        scope.minLength = 6 if !scope.minLength
         scope.current = false if !scope.current
         scope.confirm = false if !scope.confirm
         scope.errorHandler = MnoErrorsHandler
 
         scope.password =
-          hasEightChars: false
+          hasMinLength: false
           hasOneNumber: false
           hasOneUpper: false
           hasOneLower: false
@@ -28,7 +30,7 @@ angular.module 'mnoEnterpriseAngular'
             # Reset server error on change
             scope.password.resetServerErrors()
 
-            scope.password.hasEightChars = scope.data.password? && (scope.data.password.length >= 8)
+            scope.password.hasMinLength = scope.data.password? && (scope.data.password.length >= scope.minLength)
             scope.password.hasOneNumber = false
             scope.password.hasOneUpper = false
             scope.password.hasOneLower = false
@@ -40,7 +42,7 @@ angular.module 'mnoEnterpriseAngular'
                 scope.password.hasOneLower = true if (letter == letter.toLowerCase() && letter != letter.toUpperCase() && !parseInt(letter))
               )
 
-              passwordValidity = scope.password.hasEightChars && scope.password.hasOneNumber && scope.password.hasOneUpper && scope.password.hasOneLower
+              passwordValidity = scope.password.hasMinLength && scope.password.hasOneNumber && scope.password.hasOneUpper && scope.password.hasOneLower
               scope.form.password.$setValidity("password", passwordValidity)
 
             if scope.confirm

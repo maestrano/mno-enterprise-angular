@@ -539,7 +539,7 @@
   "mno_enterprise.templates.components.mno_password.current_password": "Current Password",
   "mno_enterprise.templates.components.mno_password.new_password": "New Password",
   "mno_enterprise.templates.components.mno_password.confirm_password": "Confirm Password",
-  "mno_enterprise.templates.components.mno_password.eight_characters_minimum": "Eight characters minimum",
+  "mno_enterprise.templates.components.mno_password.minimum_length": "{length} characters minimum",
   "mno_enterprise.templates.components.mno_password.one_uppercase_character": "One uppercase character",
   "mno_enterprise.templates.components.mno_password.one_number": "One number",
   "mno_enterprise.templates.components.mno_password.one_lowercase_character": "One lowercase character",
