@@ -2,6 +2,13 @@ angular.module 'mnoEnterpriseAngular'
   .factory 'MnoeConfig', ($log, DASHBOARD_CONFIG, ADMIN_PANEL_CONFIG) ->
     _self = @
 
+    @isImpacEnabled = () ->
+      if DASHBOARD_CONFIG.impac?.enabled?
+        DASHBOARD_CONFIG.impac.enabled
+      else
+        $log.debug("DASHBOARD_CONFIG.impac.enabled missing")
+        true
+
     @isAuditLogEnabled = () ->
       if DASHBOARD_CONFIG.audit_log?.enabled?
         DASHBOARD_CONFIG.audit_log.enabled
