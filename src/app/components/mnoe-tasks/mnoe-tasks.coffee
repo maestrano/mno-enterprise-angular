@@ -2,7 +2,7 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
   bindings: {
   },
   templateUrl: 'app/components/mnoe-tasks/mnoe-tasks.html',
-  controller: ($filter, $scope, MnoeOrganizations, $uibModal, $translate, $timeout, $q, toastr, MnoErrorsHandler, MnoeTasks, MnoeCurrentUser)->
+  controller: ($filter, $scope, $uibModal, $translate, $timeout, $q, toastr, MnoeOrganizations, MnoeTasks, MnoeCurrentUser, MnoErrorsHandler)->
     ctrl = this
     ctrl.$onInit = ->
       ctrl.tasks = {
