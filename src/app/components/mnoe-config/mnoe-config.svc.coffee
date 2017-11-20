@@ -7,7 +7,7 @@ angular.module 'mnoEnterpriseAngular'
         DASHBOARD_CONFIG.impac.enabled
       else
         $log.debug("DASHBOARD_CONFIG.impac.enabled missing")
-        false
+        true
 
     @isAuditLogEnabled = () ->
       if DASHBOARD_CONFIG.audit_log?.enabled?
