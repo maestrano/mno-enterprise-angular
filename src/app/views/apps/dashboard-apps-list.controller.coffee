@@ -1,6 +1,6 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('DashboardAppsListCtrl',
-    ($scope, $interval, $q, $state, $stateParams, $window, $uibModal, MnoConfirm, MnoeOrganizations, MnoeAppInstances, ImpacConfigSvc, MARKETPLACE_CONFIG) ->
+    ($scope, $interval, $q, $state, $stateParams, $window, $uibModal, MnoConfirm, MnoeOrganizations, MnoeAppInstances, ImpacConfigSvc, MARKETPLACE_CONFIG, DOCK_CONFIG) ->
 
       #====================================
       # Pre-Initialization
@@ -108,8 +108,8 @@ angular.module 'mnoEnterpriseAngular'
         ImpacConfigSvc.getOrganizations().then(
           (resp) ->
             selectedOrg = _.find(resp.organizations, { id: parseInt(val) })
-            if selectedOrg.acl.related.impac.show
-              # Redirects the user to Impac! if authorised
+            if selectedOrg.acl.related.impac.show && DOCK_CONFIG.enabled
+              # Redirects the user to Impac! if authorised (and dock is enabled)
               $state.go('home.impac')
             else
               # Loads the apps otherwise
