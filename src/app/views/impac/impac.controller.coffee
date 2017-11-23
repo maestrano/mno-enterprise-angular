@@ -16,10 +16,11 @@ angular.module 'mnoEnterpriseAngular'
         (resp) ->
           selectedOrg = _.find(resp.organizations, { id: parseInt(newValue) })
           if selectedOrg.acl.related.impac.show
-            # Display Impac! and force it to reload if necessary
+            # Displays Impac! and reloads dashboard if user authorised
             vm.isImpacShown = true
             ImpacDashboardsSvc.reload(true) if newValue? && oldValue? && parseInt(newValue) != parseInt(oldValue)
           else
+            # Redirects the user to /apps otherwise
             $state.go('home.apps')
       ) if newValue?
     )

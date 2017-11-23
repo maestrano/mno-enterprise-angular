@@ -1,6 +1,6 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('DashboardAppsListCtrl',
-    ($scope, $interval, $q, $stateParams, $window, $uibModal, MnoConfirm, MnoeOrganizations, MnoeAppInstances, MARKETPLACE_CONFIG) ->
+    ($scope, $interval, $q, $state, $stateParams, $window, $uibModal, MnoConfirm, MnoeOrganizations, MnoeAppInstances, ImpacConfigSvc, MARKETPLACE_CONFIG) ->
 
       #====================================
       # Pre-Initialization
@@ -104,11 +104,19 @@ angular.module 'mnoEnterpriseAngular'
       # Post-Initialization
       #====================================
       $scope.$watch MnoeOrganizations.getSelectedId, (val) ->
-        if val?
-          $scope.isLoading = true
-          MnoeAppInstances.getAppInstances().then(
-            ->
-              $scope.isLoading = false
-              $scope.apps = MnoeAppInstances.appInstances
-          )
+        $scope.isLoading = true
+        ImpacConfigSvc.getOrganizations().then(
+          (resp) ->
+            selectedOrg = _.find(resp.organizations, { id: parseInt(val) })
+            if selectedOrg.acl.related.impac.show
+              # Redirects the user to Impac! if authorised
+              $state.go('home.impac')
+            else
+              # Loads the apps otherwise
+              MnoeAppInstances.getAppInstances().then(
+                ->
+                  $scope.isLoading = false
+                  $scope.apps = MnoeAppInstances.appInstances
+              )
+        ) if val?
   )
