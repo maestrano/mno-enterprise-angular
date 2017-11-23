@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller 'ImpacController', ($scope, $state, ImpacDashboardsSvc, MnoeCurrentUser, MnoeOrganizations, DOCK_CONFIG) ->
+  .controller 'ImpacController', ($scope, $state, MnoeOrganizations, ImpacConfigSvc, ImpacDashboardsSvc, DOCK_CONFIG) ->
     'ngInject'
 
     vm = this
@@ -10,17 +10,17 @@ angular.module 'mnoEnterpriseAngular'
     # Post-Initialization
     #====================================
     $scope.$watch(MnoeOrganizations.getSelectedId, (newValue, oldValue) ->
-      MnoeCurrentUser.get().then(
-        (response) ->
-          selectedOrg = _.find(response.organizations, {id: parseInt(newValue)})
-          # Needs to be at least admin to display impac! or user is redirected to apps dashboard
-          if MnoeOrganizations.role.atLeastAdmin(selectedOrg.current_user_role)
-            # Display impac! and force it to reload if necessary
-            vm.isImpacShown = true
-            ImpacDashboardsSvc.reload(true) if newValue? && oldValue? && parseInt(newValue) != parseInt(oldValue)
-          else
-            $state.go('home.apps')
-      ) if newValue?
+      if newValue?
+        ImpacConfigSvc.getOrganizations().then(
+          (resp) ->
+            selectedOrg = _.find(resp.organizations, { id: parseInt(newValue) })
+            if selectedOrg.acl.related.impac.show
+              # Display Impac! and force it to reload if necessary
+              vm.isImpacShown = true
+              ImpacDashboardsSvc.reload(true) if newValue? && oldValue? && parseInt(newValue) != parseInt(oldValue)
+            else
+              $state.go('home.apps')
+        )
     )
 
     return
