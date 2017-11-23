@@ -10,17 +10,18 @@ angular.module 'mnoEnterpriseAngular'
     # Post-Initialization
     #====================================
     $scope.$watch(MnoeOrganizations.getSelectedId, (newValue, oldValue) ->
-      if newValue?
-        ImpacConfigSvc.getOrganizations().then(
-          (resp) ->
-            selectedOrg = _.find(resp.organizations, { id: parseInt(newValue) })
-            if selectedOrg.acl.related.impac.show
-              # Display Impac! and force it to reload if necessary
-              vm.isImpacShown = true
-              ImpacDashboardsSvc.reload(true) if newValue? && oldValue? && parseInt(newValue) != parseInt(oldValue)
-            else
-              $state.go('home.apps')
-        )
+      # Fetches the organizations using ImpacConfigSvc (and not MnoeOrganizations)
+      # => Allows to make sure the ACL has already been overriden if necessary (see impac.config.coffee)
+      ImpacConfigSvc.getOrganizations().then(
+        (resp) ->
+          selectedOrg = _.find(resp.organizations, { id: parseInt(newValue) })
+          if selectedOrg.acl.related.impac.show
+            # Display Impac! and force it to reload if necessary
+            vm.isImpacShown = true
+            ImpacDashboardsSvc.reload(true) if newValue? && oldValue? && parseInt(newValue) != parseInt(oldValue)
+          else
+            $state.go('home.apps')
+      ) if newValue?
     )
 
     return

@@ -56,6 +56,21 @@ angular.module 'mnoEnterpriseAngular'
 # IMPAC-LINKING: Configuring linking
 #======================================================================================
 .run((ImpacLinking, ImpacConfigSvc, IMPAC_CONFIG) ->
+  # Example: override ACL for each organization
+  # 
+  # overrideAcl = (orgs) ->
+  #   _.map(orgs, (org) ->
+  #     angular.merge(org, {
+  #       acl:
+  #         related:
+  #           impac: { show: true }
+  #           dashboards: { update: true }
+  #           widgets: { update: true }
+  #           kpis: { show: true }
+  #     })
+  #   )
+  # ImpacConfigSvc.configure(overrideAcl)
+  
   data =
     user: ImpacConfigSvc.getUserData
     organizations: ImpacConfigSvc.getOrganizations
