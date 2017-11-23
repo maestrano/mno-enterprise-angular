@@ -1,6 +1,14 @@
 angular.module 'mnoEnterpriseAngular'
   .service('ImpacConfigSvc' , ($log, $q, MnoeCurrentUser, MnoeOrganizations) ->
 
+    _self = @
+
+    @config =
+      customizeAcl: (orgs) -> orgs
+
+    @configure = (customizeAclFunction) ->
+      angular.merge(_self.config, { customizeAcl: customizeAclFunction })
+
     @getUserData = ->
       MnoeCurrentUser.get()
 
@@ -13,7 +21,7 @@ angular.module 'mnoEnterpriseAngular'
             $log.error(err = {msg: "Unable to retrieve user organizations"})
             return $q.reject(err)
 
-          return userOrgs
+          return _self.config.customizeAcl(userOrgs)
       )
 
       currentOrgIdPromise = MnoeOrganizations.get(MnoeOrganizations.selectedId).then(
