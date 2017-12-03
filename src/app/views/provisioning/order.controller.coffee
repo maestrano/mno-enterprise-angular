@@ -23,6 +23,10 @@ angular.module 'mnoEnterpriseAngular'
               (pp) -> pp.pricing_type == 'payg' || _.some(pp.prices, (p) -> p.currency == vm.orgCurrency)
             )
 
+            vm.select_plan = (pricingPlan)->
+              vm.subscription.product_pricing = pricingPlan
+              vm.subscription.max_licenses ||= 1 if vm.subscription.product_pricing.license_based
+
             MnoeProvisioning.setSubscription(vm.subscription)
         )
     ).finally(-> vm.isLoading = false)
@@ -33,6 +37,5 @@ angular.module 'mnoEnterpriseAngular'
         $state.go('home.provisioning.additional_details')
       else
         $state.go('home.provisioning.confirm')
-
     return
   )
