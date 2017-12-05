@@ -27,7 +27,7 @@ DashboardCompanySelectboxCtrl = ($scope, $state, $stateParams, $uibModal, MnoeCu
     selectBox.close()
 
   selectOrganization = ->
-    selectBox.organization = _.find(MnoeCurrentUser.user.organizations, { id: MnoeOrganizations.selectedId })
+    selectBox.organization = MnoeOrganizations.getSelected()?.organization || _.find(MnoeCurrentUser.user.organizations, { id: MnoeOrganizations.selectedId })
 
   # Toggle the select box
   selectBox.toggle = ->
