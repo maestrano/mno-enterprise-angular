@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningSubscriptionCtrl', ($stateParams, $filter, MnoeProvisioning, MnoeMarketplace) ->
+  .controller('ProvisioningSubscriptionCtrl', ($stateParams, $filter, $uibModal, MnoeProvisioning, MnoeMarketplace) ->
 
     vm = this
     vm.isLoading = true
@@ -25,6 +25,16 @@ angular.module 'mnoEnterpriseAngular'
     vm.jsonTreeSettings = {
       dateFormat: 'yyyy-MM-dd HH:mm:ss'
     }
+
+    vm.displayInfoTooltip = ->
+      return vm.subscription.status == 'aborted'
+
+    vm.displayStatusInfo = ->
+      modalInstance = $uibModal.open(
+        templateUrl: 'app/views/provisioning/subscription-status-info-modal/subscription-status-info.html'
+        controller: 'SubscriptionInfoController'
+        controllerAs: 'vm'
+      )
 
     return
   )

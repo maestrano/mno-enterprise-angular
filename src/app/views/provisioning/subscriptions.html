@@ -16,10 +16,14 @@
         <div class="cell col-md-2">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.product' | translate }}</div>
         <div class="cell col-md-2">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.subscription' | translate }}</div>
         <div class="cell col-md-1">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.licenses' | translate }}</div>
-        <div class="cell col-md-3">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.amount' | translate }}</div>
-        <div class="cell col-md-1">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.start_date' | translate }}</div>
-        <div class="cell col-md-1">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.end_date' | translate }}</div>
-        <div class="cell col-md-1">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.status' | translate }}</div>
+        <div class="cell col-md-2">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.amount' | translate }}</div>
+        <div class="cell col-md-4">
+          <div class="row">
+            <div class="cell col-md-4">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.start_date' | translate }}</div>
+            <div class="cell col-md-4">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.end_date' | translate }}</div>
+            <div class="cell col-md-4">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.status' | translate }}</div>
+          </div>
+        </div>
         <div class="cell col-md-1">&nbsp;</div>
       </div>
 
@@ -51,7 +55,7 @@
           <span title="{{subscription.max_licenses}}">{{subscription.max_licenses}}</span>
         </div>
 
-        <div class="cell col-md-3" ng-click="vm.goToSubscription(subscription)">
+        <div class="cell col-md-2" ng-click="vm.goToSubscription(subscription)">
           <span class="cell-label visible-xs-inline">
             {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.amount' | translate }}:
           </span>
@@ -71,26 +75,30 @@
           </span>
         </div>
 
-        <div class="cell col-md-1" ng-click="vm.goToSubscription(subscription)">
-          <span class="cell-label visible-xs-inline">
-            {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.start_date' | translate }}:
-          </span>
-          <span title="{{subscription.start_date | amDateFormat: 'LL'}}">{{subscription.start_date | amDateFormat: 'L'}}</span>
-        </div>
+        <div class="cell col-md-4">
+          <div class="row">
+            <div class="cell col-md-4" ng-click="vm.goToSubscription(subscription)">
+              <span class="cell-label visible-xs-inline">
+                {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.start_date' | translate }}:
+              </span>
+              <span title="{{subscription.start_date | amDateFormat: 'LL'}}">{{subscription.start_date | amDateFormat: 'L'}}</span>
+            </div>
 
-        <div class="cell col-md-1" ng-click="vm.goToSubscription(subscription)">
-          <span class="cell-label visible-xs-inline">
-            {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.end_date' | translate }}:
-          </span>
-          <span title="{{subscription.end_date | amDateFormat: 'LL'}}">{{subscription.end_date | amDateFormat: 'L'}}</span>
-        </div>
+            <div class="cell col-md-4" ng-click="vm.goToSubscription(subscription)">
+              <span class="cell-label visible-xs-inline">
+                {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.end_date' | translate }}:
+              </span>
+              <span title="{{subscription.end_date | amDateFormat: 'LL'}}">{{subscription.end_date | amDateFormat: 'L'}}</span>
+            </div>
 
-        <div class="cell col-md-1" ng-click="vm.goToSubscription(subscription)">
-          <span class="cell-label visible-xs-inline">
-            {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.status' | translate }}:
-          </span>
-          <span title="{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.states.' + subscription.status | translate }}">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.states.' + subscription.status | translate }}</span>
-          <i class="fa fa-info-circle" ng-hide="!vm.displayInfoTooltip(subscription)" uib-tooltip="{{'mno_enterprise.templates.dashboard.provisioning.subscriptions.tooltip.aborted' | translate}}" tooltip-append-to-body="true"></i>
+            <div class="cell col-md-4" ng-click="vm.goToSubscription(subscription)">
+              <span class="cell-label visible-xs-inline">
+                {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.status' | translate }}:
+              </span>
+              <span title="{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.states.' + subscription.status | translate }}">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.states.' + subscription.status | translate }}</span>
+              <i class="fa fa-info-circle" ng-hide="!vm.displayInfoTooltip(subscription)" uib-tooltip="{{'mno_enterprise.templates.dashboard.provisioning.subscriptions.tooltip.aborted' | translate}}" tooltip-append-to-body="true"></i>
+            </div>
+          </div>
         </div>
 
         <div class="cell col-md-1">
