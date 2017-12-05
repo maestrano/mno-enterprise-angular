@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('SubscriptionInfoController', ($filter, $stateParams, $log, $uibModalInstance) ->
+  .controller('SubscriptionInfoController', ($uibModalInstance) ->
     vm = this
 
     vm.onCancel = () ->

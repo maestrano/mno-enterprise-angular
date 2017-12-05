@@ -39,10 +39,8 @@
 
           <div class="form-group">
             <label class="control-label text-color" translate>mno_enterprise.templates.dashboard.provisioning.subscription.status</label>
-            <div>
-              {{vm.subscription.status}}
-              <a href="" ng-hide="!vm.displayInfoTooltip()" ng-click="vm.displayStatusInfo()"><i class="fa fa-info-circle"></i></a>
-            </div>
+            {{vm.subscription.status}}&nbsp;
+            <a href="" ng-hide="!vm.displayInfoTooltip()" ng-click="vm.displayStatusInfo()"><i class="fa fa-info-circle"></i></a>
           </div>
 
           <div class="form-group" ng-show="vm.subscription.product_pricing.license_based">

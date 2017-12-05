@@ -731,6 +731,7 @@
   "mno_enterprise.templates.dashboard.provisioning.subscriptions.cancel_error": "An error occurred while canceling this subscription. Please contact your administrator.",
   "mno_enterprise.templates.dashboard.provisioning.subscriptions.empty_list": "You don't have any subscriptions",
   "mno_enterprise.templates.dashboard.provisioning.subscriptions.tooltip.aborted": "Your order was aborted during fulfillment. Please contact your administrator for more information",
+  "mno_enterprise.templates.dashboard.provisioning.subscriptions.status.info.body.header": "Subscription has been aborted",
   "mno_enterprise.templates.dashboard.provisioning.subscriptions.status.info.body.aborted": "Something wrong happened when fulfilling your order.<p>It can be a temporary issue, please check again in 15 minutes.<p>If the issue persists, contact your system administrator",
   "mno_enterprise.templates.dashboard.provisioning.subscriptions.status.info.close": "Close",
   "mno_enterprise.templates.dashboard.marketplace.index.title": "Marketplace",
