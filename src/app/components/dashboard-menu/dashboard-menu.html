@@ -17,19 +17,17 @@
       <!-- ------------------------- -->
       <!-- My account section        -->
       <!-- ------------------------- -->
-      <li>
-        <a ng-if="!isAdmin" ui-sref="home.apps" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}</a>
-      </li>
-      <li ng-if="!isDockEnabled">
-        <a ng-if="isAdmin" ui-sref="home.apps" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}</a>
+
+      <li ng-if="!isImpacAvailable || !isDockEnabled">
+        <a ui-sref="home.apps" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}</a>
       </li>
 
-      <li ng-if="!isDockEnabled">
-        <a ng-if="isAdmin" ui-sref="home.impac" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.impac' | translate }}</a>
+      <li ng-if="isImpacAvailable && isDockEnabled">
+        <a ui-sref="home.impac" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}</a>
       </li>
 
-      <li ng-if="isDockEnabled">
-        <a ng-if="isAdmin" ui-sref="home.impac" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}</a>
+      <li ng-if="isImpacAvailable && !isDockEnabled">
+        <a ui-sref="home.impac" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.impac' | translate }}</a>
       </li>
 
       <li>
@@ -61,17 +59,17 @@
       <div class='brand-logo'></div>
     </a>
 
-    <a ng-if="(!isDockEnabled && isAdmin) || !isAdmin" ui-sref="home.apps" class="dashboard-button top-buffer-1" ui-sref-active="active">
+    <a ng-if="!isImpacAvailable || !isDockEnabled" ui-sref="home.apps" class="dashboard-button top-buffer-1" ui-sref-active="active">
       <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}</div>
       <i class="dhb-icon-dashboard"></i>
     </a>
 
-    <a ng-if="isDockEnabled && isAdmin" ui-sref="home.impac" class="dashboard-button top-buffer-1" ui-sref-active="active">
+    <a ng-if="isImpacAvailable && isDockEnabled" ui-sref="home.impac" class="dashboard-button top-buffer-1" ui-sref-active="active">
       <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}</div>
       <i class="dhb-icon-impac"></i>
     </a>
 
-    <a ng-if="!isDockEnabled && isAdmin" ui-sref="home.impac" class="dashboard-button top-buffer-1" ui-sref-active="active">
+    <a ng-if="isImpacAvailable && !isDockEnabled" ui-sref="home.impac" class="dashboard-button top-buffer-1" ui-sref-active="active">
       <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.impac' | translate }}</div>
       <i class="dhb-icon-impac"></i>
     </a>
