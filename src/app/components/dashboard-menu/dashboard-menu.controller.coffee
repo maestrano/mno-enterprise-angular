@@ -9,7 +9,7 @@ angular.module 'mnoEnterpriseAngular'
       templateUrl: 'app/components/dashboard-menu/dashboard-menu.html',
 
       controller: ($scope, MnoeOrganizations, ImpacConfigSvc, DOCK_CONFIG, ORGANIZATION_MANAGEMENT, MARKETPLACE_CONFIG) ->
-        $scope.dockEnabled = DOCK_CONFIG.enabled
+        $scope.isDockEnabled = DOCK_CONFIG.enabled
         $scope.isOrganizationManagementEnabled = ORGANIZATION_MANAGEMENT.enabled
         $scope.isMarketplaceEnabled = MARKETPLACE_CONFIG.enabled
 
@@ -17,7 +17,7 @@ angular.module 'mnoEnterpriseAngular'
           ImpacConfigSvc.getOrganizations().then(
             (response) ->
               selectedOrg = _.find(response.organizations, { id: parseInt(newValue) })
-              $scope.impacAvailable = selectedOrg.acl.related.impac.show
+              $scope.isImpacAvailable = selectedOrg.acl.related.impac.show
           ) if newValue?
         )
 

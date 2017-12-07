@@ -57,7 +57,6 @@ angular.module 'mnoEnterpriseAngular'
 #======================================================================================
 .run((ImpacLinking, ImpacConfigSvc, IMPAC_CONFIG) ->
   # Example: override ACL for each organization
-  # 
   # overrideAcl = (orgs) ->
   #   _.map(orgs, (org) ->
   #     angular.merge(org, {
