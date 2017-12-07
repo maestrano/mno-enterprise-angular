@@ -1,6 +1,14 @@
 angular.module 'mnoEnterpriseAngular'
   .service('ImpacConfigSvc' , ($log, $q, MnoeCurrentUser, MnoeOrganizations) ->
 
+    _self = @
+
+    @config =
+      overrideOrgs: (orgs) -> orgs
+
+    @configure = (overrideOrgsFunction) ->
+      angular.merge(_self.config, { overrideOrgs: overrideOrgsFunction })
+
     @getUserData = ->
       MnoeCurrentUser.get()
 
@@ -13,7 +21,7 @@ angular.module 'mnoEnterpriseAngular'
             $log.error(err = {msg: "Unable to retrieve user organizations"})
             return $q.reject(err)
 
-          return userOrgs
+          return _self.config.overrideOrgs(userOrgs)
       )
 
       currentOrgIdPromise = MnoeOrganizations.get(MnoeOrganizations.selectedId).then(
@@ -29,7 +37,7 @@ angular.module 'mnoEnterpriseAngular'
 
       $q.all([userOrgsPromise, currentOrgIdPromise]).then(
         (responses) ->
-          return {organizations: responses[0], currentOrgId: responses[1]}
+          return { organizations: responses[0], currentOrgId: responses[1] }
       )
 
     return @

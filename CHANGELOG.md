@@ -1,5 +1,12 @@
 # Change Log
 
+## [Unreleased](https://github.com/maestrano/mno-enterprise-angular/tree/master)
+
+**Dependencies:**
+
+Requires MnoHub containing [maestrano/maestrano-hub#818](https://github.com/maestrano/maestrano-hub/pull/818) (eg: v2.0.0-rc8+)
+Requires Mno Enterprise containing [maestrano/mno-enterprise#588](https://github.com/maestrano/mno-enterprise/pull/588) (v3.4)
+
 ## [v1.1.3](https://github.com/maestrano/mno-enterprise-angular/tree/v1.1.3) (2017-11-10)
 [Full Changelog](https://github.com/maestrano/mno-enterprise-angular/compare/v1.1.2...v1.1.3)
 

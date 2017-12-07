@@ -8,18 +8,17 @@ angular.module 'mnoEnterpriseAngular'
       restrict: 'EA'
       templateUrl: 'app/components/dashboard-menu/dashboard-menu.html',
 
-      controller: ($scope, MnoeCurrentUser, MnoeOrganizations, DOCK_CONFIG, ORGANIZATION_MANAGEMENT, MARKETPLACE_CONFIG, TASKS_CONFIG) ->
+      controller: ($scope, MnoeOrganizations, ImpacConfigSvc, DOCK_CONFIG, ORGANIZATION_MANAGEMENT, MARKETPLACE_CONFIG, TASKS_CONFIG) ->
         $scope.isDockEnabled = DOCK_CONFIG.enabled
         $scope.isOrganizationManagementEnabled = ORGANIZATION_MANAGEMENT.enabled
         $scope.isMarketplaceEnabled = MARKETPLACE_CONFIG.enabled
         $scope.isTasksEnabled = TASKS_CONFIG.enabled
 
         $scope.$watch(MnoeOrganizations.getSelectedId, (newValue) ->
-          # Impac! is displayed only to admin and super admin
-          MnoeCurrentUser.get().then(
+          ImpacConfigSvc.getOrganizations().then(
             (response) ->
-              selectedOrg = _.find(response.organizations, {id: parseInt(newValue)})
-              $scope.isAdmin = MnoeOrganizations.role.atLeastAdmin(selectedOrg.current_user_role)
+              selectedOrg = _.find(response.organizations, { id: parseInt(newValue) })
+              $scope.isImpacAvailable = selectedOrg.acl.related.impac.show
           ) if newValue?
         )
 
