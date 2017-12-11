@@ -184,19 +184,16 @@ angular.module 'mnoEnterpriseAngular'
         MnoeCurrentUser.refresh().then( ->
           # If everything wennt well, update the active flag
           _self.selected.organization.active = false
-        ).then( ->
           response
-         )
+        )
       )
 
     @companyActiveRequired = () ->
       if _self.selected
-        unless _self.selected.organization.active
-          $state.go('home.company')
+        $state.go('home.company') unless _self.selected.organization.active
       else
         _self.getCurrentOrganisation().then((org) ->
-          unless org.organization.active
-            $state.go('home.company')
+          $state.go('home.company') unless org.organization.active
         )
     #======================================
     # User Role
