@@ -2,7 +2,7 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
   bindings: {
   },
   templateUrl: 'app/components/mnoe-tasks/mnoe-tasks.html',
-  controller: ($filter, $uibModal, $translate, $timeout, $q, toastr, MnoErrorsHandler, MnoeTasks, MnoeCurrentUser)->
+  controller: ($filter, $scope, $uibModal, $translate, $timeout, $q, toastr, MnoeOrganizations, MnoeTasks, MnoeCurrentUser, MnoErrorsHandler)->
     ctrl = this
     ctrl.$onInit = ->
       ctrl.tasks = {
@@ -267,6 +267,10 @@ angular.module('mnoEnterpriseAngular').component('mnoeTasks', {
             updateTaskStatus(task, task.markedDone)
         template: htmlTemplate
       }
+
+    $scope.$watch(MnoeOrganizations.getSelectedId, (newValue, oldValue) ->
+      ctrl.onRefreshTasks() unless newValue == oldValue
+    )
 
     ctrl
 })
