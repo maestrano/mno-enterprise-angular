@@ -17,18 +17,19 @@
       <!-- ------------------------- -->
       <!-- My account section        -->
       <!-- ------------------------- -->
-      <li>
-        <a ng-if="!isAdmin || !isImpacEnabled" ui-sref="home.apps" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}</a>
+
+      <li ng-if="(!isAdmin && isCompanyActive) || !isImpacEnabled">
+        <a ng-if="!isAdmin" ui-sref="home.apps" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}</a>
       </li>
-      <li ng-if="!isDockEnabled">
+      <li ng-if="!isDockEnabled && isCompanyActive">
         <a ng-if="isAdmin" ui-sref="home.apps" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}</a>
       </li>
 
-      <li ng-if="!isDockEnabled">
+      <li ng-if="!isDockEnabled && isCompanyActive">
         <a ng-if="isAdmin && isImpacEnabled" ui-sref="home.impac" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.impac' | translate }}</a>
       </li>
 
-      <li ng-if="isDockEnabled">
+      <li ng-if="isDockEnabled && isCompanyActive">
         <a ng-if="isAdmin && isImpacEnabled" ui-sref="home.impac" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}</a>
       </li>
 
@@ -40,11 +41,11 @@
         <a ui-sref="home.company" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.company' | translate }}</a>
       </li>
 
-      <li ng-if="isProvisioningEnabled && isAdmin">
+      <li ng-if="isProvisioningEnabled && isAdmin && isCompanyActive">
         <a ui-sref="home.subscriptions" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.subscriptions' | translate }}</a>
       </li>
 
-      <li ng-if="isMarketplaceEnabled">
+      <li ng-if="isMarketplaceEnabled && isCompanyActive">
         <a ui-sref="home.marketplace" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.marketplace' | translate }}</a>
       </li>
 
@@ -66,17 +67,17 @@
     </a>
 
     <div class="menu-buttons-wrapper">
-      <a ng-if="(!isDockEnabled && isAdmin) || !isAdmin || !isImpacEnabled" ui-sref="home.apps" class="dashboard-button top-buffer-1" ui-sref-active="active">
+      <a ng-if="(!isDockEnabled && isAdmin && isCompanyActive) || !isAdmin || !isImpacEnabled" ui-sref="home.apps" class="dashboard-button top-buffer-1" ui-sref-active="active">
         <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}</div>
         <i class="dhb-icon-dashboard"></i>
       </a>
 
-      <a ng-if="isDockEnabled && isAdmin && isImpacEnabled" ui-sref="home.impac" class="dashboard-button top-buffer-1" ui-sref-active="active">
+      <a ng-if="isDockEnabled && isAdmin && isCompanyActive && isImpacEnabled" ui-sref="home.impac" class="dashboard-button top-buffer-1" ui-sref-active="active">
         <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}</div>
         <i class="dhb-icon-impac"></i>
       </a>
 
-      <a ng-if="!isDockEnabled && isAdmin && isImpacEnabled" ui-sref="home.impac" class="dashboard-button top-buffer-1" ui-sref-active="active">
+      <a ng-if="!isDockEnabled && isAdmin && isCompanyActive && isImpacEnabled" ui-sref="home.impac" class="dashboard-button top-buffer-1" ui-sref-active="active">
         <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.impac' | translate }}</div>
         <i class="dhb-icon-impac"></i>
       </a>
@@ -91,12 +92,12 @@
         <i class="dhb-icon-company"></i>
       </a>
 
-      <a ng-if="isProvisioningEnabled && isAdmin" ui-sref="home.subscriptions" class="dashboard-button top-buffer-1" ui-sref-active="active">
+      <a ng-if="isProvisioningEnabled && isAdmin && isCompanyActive" ui-sref="home.subscriptions" class="dashboard-button top-buffer-1" ui-sref-active="active">
         <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.subscriptions' | translate }}</div>
         <i class="dhb-icon-subscriptions"></i>
       </a>
 
-      <a ng-if="isMarketplaceEnabled" ui-sref="home.marketplace" class="dashboard-button top-buffer-1" ui-sref-active="active">
+      <a ng-if="isMarketplaceEnabled && isCompanyActive" ui-sref="home.marketplace" class="dashboard-button top-buffer-1" ui-sref-active="active">
         <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.marketplace' | translate }}</div>
         <i class="dhb-icon-marketplace"></i>
       </a>
