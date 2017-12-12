@@ -45,9 +45,6 @@ angular.module 'mnoEnterpriseAngular'
         url: '/apps'
         templateUrl: 'app/views/apps/dashboard-apps-list.html'
         controller: 'DashboardAppsListCtrl'
-        resolve:
-          companyActiveRequired: (MnoeOrganizations) ->
-            MnoeOrganizations.companyActiveRequired()
       .state 'home.impac',
         data:
           pageTitle:'Impac'
@@ -55,9 +52,6 @@ angular.module 'mnoEnterpriseAngular'
         templateUrl: 'app/views/impac/impac.html'
         controller: 'ImpacController'
         controllerAs: 'vm'
-        resolve:
-          companyActiveRequired: (MnoeOrganizations) ->
-            MnoeOrganizations.companyActiveRequired()
       .state 'home.account',
         data:
           pageTitle:'Account'
@@ -103,8 +97,6 @@ angular.module 'mnoEnterpriseAngular'
           resolve:
             loginRequired: (MnoeCurrentUser) ->
               MnoeCurrentUser.loginRequired()
-            companyActiveRequired: (MnoeOrganizations) ->
-              MnoeOrganizations.companyActiveRequired()
         .state 'onboarding.step1',
           data:
             pageTitle:'Welcome'
@@ -136,9 +128,6 @@ angular.module 'mnoEnterpriseAngular'
           templateUrl: 'app/views/marketplace/marketplace.html'
           controller: 'DashboardMarketplaceCtrl'
           controllerAs: 'vm'
-          resolve:
-            companyActiveRequired: (MnoeOrganizations) ->
-              MnoeOrganizations.companyActiveRequired()
         .state 'home.marketplace.app',
           data:
             pageTitle:'Marketplace'

@@ -178,23 +178,6 @@ angular.module 'mnoEnterpriseAngular'
 
       return defer.promise
 
-    @freeze = (reason, password) ->
-      MnoeApiSvc.one('organizations', _self.selectedId).doPOST({reason: reason, password: password}, 'freeze').then((response) ->
-        # Reload the current user with the updated organization
-        MnoeCurrentUser.refresh().then( ->
-          # If everything wennt well, update the active flag
-          _self.selected.organization.active = false
-          response
-        )
-      )
-
-    @companyActiveRequired = () ->
-      if _self.selected
-        $state.go('home.company') unless _self.selected.organization.active
-      else
-        _self.getCurrentOrganisation().then((org) ->
-          $state.go('home.company') unless org.organization.active
-        )
     #======================================
     # User Role
     #======================================
