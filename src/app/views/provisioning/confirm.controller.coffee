@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningConfirmCtrl', ($state, MnoeOrganizations, MnoeProvisioning, MnoeConfig) ->
+  .controller('ProvisioningConfirmCtrl', ($scope, $state, MnoeOrganizations, MnoeProvisioning, MnoeAppInstances, MnoeConfig) ->
 
     vm = this
 
@@ -11,6 +11,11 @@ angular.module 'mnoEnterpriseAngular'
       MnoeProvisioning.saveSubscription(vm.subscription).then(
         (response) ->
           MnoeProvisioning.setSubscription(response)
+          # Reload dock apps
+          MnoeAppInstances.getAppInstances().then(
+            (response) ->
+              $scope.apps = response
+          )
           $state.go('home.provisioning.order_summary')
       ).finally(-> vm.isLoading = false)
 
