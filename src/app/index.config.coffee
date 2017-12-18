@@ -51,7 +51,10 @@ angular.module 'mnoEnterpriseAngular'
             when 429, 503
               $log.info('[MnoHubErrorInterceptor] MnoHub error, redirecting to error page')
               $window.location.href = "/mnoe/errors/#{rejection.status}"
-              toastr.error("errors.#{rejection.status}.description", "errors.#{rejection.status}.title")
+              toastr.error(
+                "mno_enterprise.errors.#{rejection.status}.description",
+                "mno_enterprise.errors.#{rejection.status}.title"
+              )
               return $q.defer().promise
 
             else
