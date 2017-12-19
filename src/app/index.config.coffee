@@ -35,7 +35,8 @@ angular.module 'mnoEnterpriseAngular'
             when 401
               # Redirect to login page
               console.log "User is not connected!"
-              $window.location.href = '/'
+              redirect = window.encodeURIComponent("#{location.pathname}#{location.hash}")
+              $window.location.href = "/?return_to=#{redirect}"
 
             # Password expired
             when 403
