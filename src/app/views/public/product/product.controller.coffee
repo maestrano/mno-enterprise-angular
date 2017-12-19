@@ -21,7 +21,7 @@ angular.module 'mnoEnterpriseAngular'
 
           # App rating
           vm.averageRating = parseFloat(vm.app.average_rating).toFixed(1)
-          vm.isRateDisplayed = vm.averageRating >= 0
+          vm.isRateDisplayed = MnoeConfig.areMarketplaceReviewsEnabled() && vm.averageRating >= 0
 
           # App pricing plan
           plans = vm.app.pricing_plans
