@@ -21,13 +21,13 @@ angular.module 'mnoEnterpriseAngular'
         # Launch Cb
         ctrl.resolve.actionCb(ctrl.delReasons, ctrl.password).then(
           (response) ->
-            toastr.success('Organization successfully frozen')
+            toastr.success('mno_enterprise.templates.dashboard.organization.settings.deletion.toastr_success')
             # Reload the state to block access to Impac!, marketplace, ...
             $state.reload()
             ctrl.close(response)
           (errors) ->
             $log.error(errors)
-            toastr.error(errors.statusText, "Error")
+            toastr.error(errors.statusText, "mno_enterprise.templates.dashboard.organization.settings.deletion.toastr_error")
         ).finally(-> ctrl.isLoading = false)
       return
     })
