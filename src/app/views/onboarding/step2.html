@@ -24,13 +24,13 @@
               <mno-widget-body class="no-padding large">
                 <div  class="app-tile" ng-repeat="app in vm.marketplace.apps | filter:vm.appsFilter | filter:{name: vm.searchTerm}">
                   <a class="app-info-modal" href="" ng-click="vm.openInfoModal(app)"><i class="fa fa-info-circle"></i></a>
-                  <span uib-tooltip="{{ vm.appSelectDisabledTooltipText(app) | translate:{appName: app.conflictingApp.name} }}" tooltip-enable="vm.appSelectDisabled(app)" tooltip-placement="auto" tooltip-trigger="hover">
+                  <div uib-tooltip="{{ vm.appSelectDisabledTooltipText(app) | translate:{appName: app.conflictingApp.name} }}" tooltip-enable="vm.appSelectDisabled(app)" tooltip-placement="auto" tooltip-trigger="hover">
                     <div class="app-icon" ng-click="vm.toggleApp(app)" ng-disabled="vm.appSelectDisabled(app)">
-                    </span>
-                    <div class="checked" ng-show="app.checked">
-                      <i class="fa fa-check fa-5x"></i>
+                      <div class="checked" ng-show="app.checked">
+                        <i class="fa fa-check fa-5x"></i>
+                      </div>
+                      <img class="app-logo img-thumbnail" ng-src="{{app.logo}}" alt="{{::app.name}} logo" title="{{::app.tiny_description}}">
                     </div>
-                    <img class="app-logo img-thumbnail" ng-src="{{app.logo}}" alt="{{::app.name}} logo" title="{{::app.tiny_description}}">
                   </div>
                   <div class="app-title">
                     {{::app.name}}
