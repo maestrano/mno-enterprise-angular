@@ -300,7 +300,7 @@
   "mno_enterprise.templates.dashboard.marketplace.show.platform_admin": "Platform moderator",
   "mno_enterprise.templates.dashboard.marketplace.show.edited_by_user": "Edited by User",
   "mno_enterprise.templates.dashboard.marketplace.show.edited_by_user_tooltip": "Show edit history",
-  "mno_enterprise.templates.dashboard.marketplace.show.edited_by_admin": "Edited by Admin",
+  "mno_enterprise.templates.dashboard.marketplace.show.edited_by_admin": "Edited by Platform moderator",
   "mno_enterprise.templates.dashboard.marketplace.show.just_now": "Just Now",
   "mno_enterprise.templates.dashboard.marketplace.show.company_feedback": "Company feedback",
   "mno_enterprise.templates.dashboard.marketplace.show.review_title": "Review",
