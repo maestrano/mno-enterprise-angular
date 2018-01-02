@@ -239,7 +239,7 @@ DashboardOrganizationMembersCtrl = ($scope, $uibModal, $sce, $translate,  MnoeOr
     self.invalidEmails = []
 
     _.each self.userEmails.split("\n"), (email) ->
-      email_regexp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
+      email_regexp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
       if email.match(email_regexp)
         self.members.push({email: email, role: self.config.defaultRole })
       else
