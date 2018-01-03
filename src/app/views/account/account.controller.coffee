@@ -1,6 +1,6 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('DashboardAccountCtrl',
-    ($log, $timeout, toastr, MnoeCurrentUser, MnoErrorsHandler, Miscellaneous, Utilities, I18N_CONFIG, DEVELOPER_SECTION_CONFIG, DEVISE_CONFIG, USER_MANAGEMENT) ->
+    ($log, $timeout, toastr, MnoeCurrentUser, MnoeOrganizations, MnoErrorsHandler, Miscellaneous, Utilities, I18N_CONFIG, DEVELOPER_SECTION_CONFIG, DEVISE_CONFIG, USER_MANAGEMENT) ->
 
       vm = @
       # Scope init
@@ -48,6 +48,7 @@ angular.module 'mnoEnterpriseAngular'
 
             userOrig = _.clone(vm.user.model)
             vm.user.loading = false
+            MnoeOrganizations.get(MnoeOrganizations.selectedId, true)
           (error) ->
             vm.user.loading = false
             vm.errors.user = Utilities.processRailsError(error)

@@ -31,7 +31,8 @@ angular.module 'mnoEnterpriseAngular'
           response = response.plain()
 
           if !response.logged_in
-            $window.location.href = URI.login
+            redirect = window.encodeURIComponent("#{location.pathname}#{location.hash}")
+            $window.location.href = URI.login + "?return_to=#{redirect}"
 
           angular.copy(response, _self.user)
           response

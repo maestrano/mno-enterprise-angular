@@ -26,9 +26,9 @@ angular.module 'mnoEnterpriseAngular'
       )
 
     organizationPromise = null
-    @get = (id = null) ->
+    @get = (id = null, force = false) ->
       # return the cached promise if not a new call
-      return organizationPromise if ((!id? || id == _self.selectedId) && organizationPromise?)
+      return organizationPromise if ((!id? || id == _self.selectedId) && organizationPromise? && !force?)
 
       # Fetch user
       organizationPromise = MnoeCurrentUser.get().then(
