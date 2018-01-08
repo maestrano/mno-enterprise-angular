@@ -1,6 +1,6 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('LandingProductCtrl',
-    ($scope, $rootScope, $state, $stateParams, $window, MnoeConfig, MnoeMarketplace) ->
+    ($scope, $rootScope, $state, $stateParams, $window, MnoeConfig, MnoeMarketplace, PRICING_TYPES) ->
 
       vm = @
       vm.isLoading = true

@@ -15,3 +15,6 @@ angular.module 'mnoEnterpriseAngular'
   .constant('LOCALES', {
     'fallbackLanguage': 'en'
   })
+  .constant('PRICING_TYPES', {
+    'unpriced': ['free', 'payg']
+  })
