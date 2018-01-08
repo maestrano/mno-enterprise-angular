@@ -40,7 +40,7 @@
               <span class="cell-label visible-xs-inline">
                 {{ 'mno_enterprise.templates.dashboard.provisioning.order.price' | translate }}:
               </span>
-              <span ng-hide="pricingPlan.pricing_type == 'payg'" ng-repeat="price in pricingPlan.prices | filterBy: ['currency']: vm.orgCurrency" class="badge">
+              <span ng-show="pricingPlan.pricing_type == 'recurring' || pricingPlan.pricing_type == 'one_off'" ng-repeat="price in pricingPlan.prices | filterBy: ['currency']: vm.orgCurrency" class="badge">
                 {{ price.currency }} {{ price.price_cents / 100 }}
               </span>
               <span ng-show="pricingPlan.pricing_type == 'recurring'">

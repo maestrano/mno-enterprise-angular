@@ -33,7 +33,7 @@ angular.module 'mnoEnterpriseAngular'
         # If a subscription doesn't contains a pricing for the org currency, a warning message is displayed
         vm.displayCurrencyWarning = not _.every(response.subscriptions, (subscription) ->
           currencies = _.map(subscription?.product_pricing?.prices, 'currency')
-          _.includes(currencies, vm.orgCurrency) || subscription?.product_pricing?.pricing_type == 'payg'
+          _.includes(currencies, vm.orgCurrency) || subscription?.product_pricing?.pricing_type == 'free' || subscription?.product_pricing?.pricing_type == 'payg'
         )
         vm.subscriptions = response.subscriptions
     ).finally(-> vm.isLoading = false)
