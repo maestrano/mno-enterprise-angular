@@ -666,6 +666,7 @@
   "mno_enterprise.templates.dashboard.provisioning.order.price": "Price",
   "mno_enterprise.templates.dashboard.provisioning.order.next": "Next",
   "mno_enterprise.templates.dashboard.provisioning.order.pricing_type.payg": "Usage Based",
+  "mno_enterprise.templates.dashboard.provisioning.order.pricing_type.free": "Free",
   "mno_enterprise.templates.dashboard.provisioning.order.licenses": "Number of licenses",
   "mno_enterprise.templates.dashboard.provisioning.order.total": "Total price",
   "mno_enterprise.templates.dashboard.provisioning.details.title": "Enter details",

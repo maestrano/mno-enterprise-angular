@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningSubscriptionsCtrl', ($q, $state, $stateParams, toastr, MnoeOrganizations, MnoeProvisioning, MnoeConfig, MnoConfirm) ->
+  .controller('ProvisioningSubscriptionsCtrl', ($q, $state, $stateParams, toastr, MnoeOrganizations, MnoeProvisioning, MnoeConfig, MnoConfirm, PRICING_TYPES) ->
 
     vm = this
     vm.isLoading = true
@@ -33,7 +33,7 @@ angular.module 'mnoEnterpriseAngular'
         # If a subscription doesn't contains a pricing for the org currency, a warning message is displayed
         vm.displayCurrencyWarning = not _.every(response.subscriptions, (subscription) ->
           currencies = _.map(subscription?.product_pricing?.prices, 'currency')
-          _.includes(currencies, vm.orgCurrency) || subscription?.product_pricing?.pricing_type == 'free' || subscription?.product_pricing?.pricing_type == 'payg'
+          _.includes(currencies, vm.orgCurrency) || (subscription?.product_pricing?.pricing_type in PRICING_TYPES['unpriced'])
         )
         vm.subscriptions = response.subscriptions
     ).finally(-> vm.isLoading = false)
