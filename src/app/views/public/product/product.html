@@ -103,7 +103,7 @@
             <ul>
               <li ng-repeat="plan in vm.pricingPlans">
                 <b>{{plan.name}}</b>: {{plan.description}}<br>
-                <div ng-show="plan.pricing_type != 'payg'">
+                <div ng-show="plan.pricing_type == 'recurring' || plan.pricing_type == 'one_off'">
                   <span>{{plan.currency}}</span>
                   <span ng-show="plan.price.value">{{plan.price.value}}</span>
                   <span ng-hide="plan.price.value">{{plan.price}}</span>
