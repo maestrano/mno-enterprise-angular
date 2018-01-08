@@ -16,6 +16,12 @@
           </div>
         </div>
 
+        <div class="row td-row" ng-if="vm.subscription.product.product_pricings.length === 0">
+          <div class="cell col-md-12 text-center" translate>
+            {{ 'mno_enterprise.templates.dashboard.provisioning.order.no_pricing_found' | translate }}
+          </div>
+        </div>
+
         <div class="row td-row" ng-repeat="pricingPlan in vm.subscription.product.product_pricings" ng-click="vm.select_plan(pricingPlan)">
           <div class="cell radio-selector col-xs-2">
             <input type="radio" name="optradio" ng-model="vm.subscription.product_pricing.id" ng-value="pricingPlan.id" required>
