@@ -55,12 +55,12 @@ DashboardOrganizationSettingsCtrl = ($scope, $window, MnoeOrganizations, Utiliti
 
   $scope.isCurrencyChangeShown = ->
     if MnoeOrganizations.role.isSuperAdmin()
-      $scope.availableBillingCurrencies()
+      $scope.getAvailableBillingCurrencies()
       true
     else
       false
 
-  $scope.availableBillingCurrencies = ->
+  $scope.getAvailableBillingCurrencies = ->
     $scope.currencies = MnoeConfig.availableBillingCurrencies()
 
   #====================================
