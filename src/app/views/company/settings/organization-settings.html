@@ -24,7 +24,7 @@
       <label class="col-sm-3 control-label">{{ 'mno_enterprise.templates.dashboard.organization.settings.billing_currency' | translate }}</label>
       <div class="col-sm-6">
         <select ng-model="model.billing_currency" class="form-control">
-          <option ng-repeat="currency in currencies" value="{{currency}}">{{currency}}</option>
+          <option ng-repeat="currency in currencies" value="{{::currency}}">{{::currency}}</option>
         </select>
       </div>
     </div>
