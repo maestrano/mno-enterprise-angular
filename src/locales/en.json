@@ -651,6 +651,7 @@
   "mno_enterprise.templates.dashboard.organization.members.removal_modal.cancel": "Cancel",
   "mno_enterprise.templates.dashboard.organization.members.removal_modal.remove": "Remove",
   "mno_enterprise.templates.dashboard.organization.settings.company_name": "Company name",
+  "mno_enterprise.templates.dashboard.organization.settings.billing_currency": "Billing currency",
   "mno_enterprise.templates.dashboard.organization.settings.connec_data_sharing": "Connec!™ Data Sharing",
   "mno_enterprise.templates.dashboard.organization.settings.enable": "On",
   "mno_enterprise.templates.dashboard.organization.settings.disable": "Off",

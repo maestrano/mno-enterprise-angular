@@ -1,5 +1,5 @@
 
-DashboardOrganizationSettingsCtrl = ($scope, $window, MnoeOrganizations, Utilities) ->
+DashboardOrganizationSettingsCtrl = ($scope, $window, MnoeOrganizations, Utilities, MnoeConfig) ->
   'ngInject'
 
   #====================================
@@ -9,6 +9,7 @@ DashboardOrganizationSettingsCtrl = ($scope, $window, MnoeOrganizations, Utiliti
   $scope.model = {}
   $scope.origModel = {}
   $scope.forms = {}
+  $scope.currencies = []
 
   #====================================
   # Scope Management
@@ -51,6 +52,16 @@ DashboardOrganizationSettingsCtrl = ($scope, $window, MnoeOrganizations, Utiliti
   $scope.isSaveEnabled = ->
     f = $scope.forms
     $scope.isChanged() && f.settings.$valid
+
+  $scope.isCurrencyChangeShown = ->
+    if MnoeOrganizations.role.isSuperAdmin()
+      $scope.getAvailableBillingCurrencies()
+      true
+    else
+      false
+
+  $scope.getAvailableBillingCurrencies = ->
+    $scope.currencies = MnoeConfig.availableBillingCurrencies()
 
   #====================================
   # Post-Initialization
