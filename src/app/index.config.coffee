@@ -68,6 +68,18 @@ angular.module 'mnoEnterpriseAngular'
               $q.reject rejection
       }
 
+  .config ($httpProvider) ->
+    $httpProvider.interceptors.push ($q, $injector, URI) ->
+      {
+        request: (config) ->
+          # Intercept requests made to the API and reset the sessions timeout
+          if config.url.includes(URI.api_root)
+            MnoSessionTimeout = $injector.get("MnoSessionTimeout")
+            console.log "Sent a request to MNOE!"
+            MnoSessionTimeout.resetTimer()
+          config
+      }
+
   .config(($sceDelegateProvider) ->
     'ngInject'
 
