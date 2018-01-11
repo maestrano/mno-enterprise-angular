@@ -73,7 +73,7 @@ angular.module 'mnoEnterpriseAngular'
       {
         request: (config) ->
           # Intercept requests made to the API and reset the sessions timeout
-          if config.url.includes(URI.api_root)
+          if config.url.includes(URI.api_root) && !config.url.includes('login') && !config.url.includes('logout')
             MnoSessionTimeout = $injector.get("MnoSessionTimeout")
             console.log "Sent a request to MNOE!"
             MnoSessionTimeout.resetTimer()
