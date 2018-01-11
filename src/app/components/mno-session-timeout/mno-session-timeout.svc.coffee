@@ -21,8 +21,12 @@ angular.module 'mnoEnterpriseAngular'
         controller: modalController)
 
 
-    modalController = ($scope, $state, $uibModalInstance, MnoeCurrentUser, toastr) ->
+    modalController = ($scope, $state, $interval, $uibModalInstance, MnoeCurrentUser, toastr) ->
       'ngInject'
+
+      $scope.countdown = 10
+
+      $interval((-> $scope.countdown -= 1),1000, 10)
 
       $scope.stayLoggedIn = () ->
         $scope.isLoading = true
