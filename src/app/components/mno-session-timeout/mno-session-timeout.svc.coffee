@@ -15,6 +15,7 @@ angular.module 'mnoEnterpriseAngular'
       console.debug("Timeout finished!")
 
       $uibModal.open(
+        size: 'md'
         keyboard: false
         backdrop: 'static'
         templateUrl: 'app/components/mno-session-timeout/mno-session-timeout.html'
@@ -32,10 +33,9 @@ angular.module 'mnoEnterpriseAngular'
         $scope.isLoading = true
         MnoeCurrentUser.refresh().then(
           (response) ->
-            toastr.success("You successsfully stayed logged in", "Success")
             $uibModalInstance.close(response)
           (error) ->
-            toastr.alert("We couldnt manage to remain you logged in. You will be redirected to the login page", "Error")
+            toastr.warning("We couldnt manage to remain you logged in. You will be redirected to the login page", "Error")
             $uibModalInstance.dismiss('cancel')
             $state.go('logout')
         ).finally(-> $scope.isLoading = false)
