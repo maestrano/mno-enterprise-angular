@@ -30,6 +30,9 @@ angular.module 'mnoEnterpriseAngular'
           $state.go('home.marketplace') unless vm.product?
       ).finally(-> vm.isLoading = false)
 
+    vm.planAvailableForCurrency = (plan) ->
+      _.includes(_.map(plan.prices, 'currency'), vm.orgCurrency)
+
     #====================================
     # Post-Initialization
     #====================================
