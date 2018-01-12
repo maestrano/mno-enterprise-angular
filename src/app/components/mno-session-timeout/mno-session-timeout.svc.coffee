@@ -35,7 +35,7 @@ angular.module 'mnoEnterpriseAngular'
           (response) ->
             $uibModalInstance.close(response)
           (error) ->
-            toastr.warning("We couldnt manage to remain you logged in. You will be redirected to the login page", "Error")
+            toastr.warning("mno_enterprise.auth.sessions.timeout.error")
             $uibModalInstance.dismiss('cancel')
             $state.go('logout')
         ).finally(-> $scope.isLoading = false)
