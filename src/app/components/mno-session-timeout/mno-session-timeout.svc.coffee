@@ -1,12 +1,12 @@
 angular.module 'mnoEnterpriseAngular'
-  .service 'MnoSessionTimeout', ($q, $timeout,$uibModal) ->
+  .service 'MnoSessionTimeout', ($q, $timeout,$uibModal, DEVISE_CONFIG) ->
     _self = @
 
     timer = null
 
     @resetTimer = ->
       _self.cancelTimer()
-      timer = $timeout(showTimeoutModal, 30*1000 - 10*1000)
+      timer = $timeout(showTimeoutModal, DEVISE_CONFIG.timeout_in*1000 - 12*1000)
 
     @cancelTimer = ->
       $timeout.cancel(timer)

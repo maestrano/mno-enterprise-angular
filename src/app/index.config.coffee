@@ -69,14 +69,14 @@ angular.module 'mnoEnterpriseAngular'
       }
 
   .config ($httpProvider) ->
-    $httpProvider.interceptors.push ($q, $injector, URI) ->
+    $httpProvider.interceptors.push ($q, $injector, DEVISE_CONFIG) ->
       {
         request: (config) ->
           # Intercept requests made to the API and reset the sessions timeout
-          if config.url.includes(URI.api_root) && !config.url.includes('login') && !config.url.includes('logout')
-            MnoSessionTimeout = $injector.get("MnoSessionTimeout")
-            console.log "Sent a request to MNOE!"
-            MnoSessionTimeout.resetTimer()
+          if DEVISE_CONFIG.timeout_in > 0
+            if config.url.includes('mnoe') && !config.url.includes('sign_out') && !config.url.includes('sign_in') && !config.url.includes('app_instances_sync')
+              MnoSessionTimeout = $injector.get("MnoSessionTimeout")
+              MnoSessionTimeout.resetTimer()
           config
       }
 
