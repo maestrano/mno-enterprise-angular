@@ -12,8 +12,6 @@ angular.module 'mnoEnterpriseAngular'
       $timeout.cancel(timer)
 
     showTimeoutModal = ->
-      console.debug("Timeout finished!")
-
       $uibModal.open({
         size: 'md'
         keyboard: false
