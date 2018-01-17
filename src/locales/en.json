@@ -752,6 +752,7 @@
   "mno_enterprise.templates.dashboard.marketplace.show.launch_app": "Launch app",
   "mno_enterprise.templates.dashboard.marketplace.show.connect_app": "Connect App",
   "mno_enterprise.templates.dashboard.marketplace.show.price": "Price",
+  "mno_enterprise.templates.dashboard.marketplace.show.free_trial_duration": "Free trial duration",
   "mno_enterprise.templates.dashboard.marketplace.show.no_pricing_found": "This plan is not available in your currency",
   "mno_enterprise.templates.dashboard.marketplace.show.tag_responsive": "Responsive",
   "mno_enterprise.templates.dashboard.marketplace.show.tag_star": "Star!™ Tutorials",
