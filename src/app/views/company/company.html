@@ -90,7 +90,7 @@
       <!-------------------------------------->
       <!--        Members Section           -->
       <!-------------------------------------->
-      <div uib-tab index="'members'">
+      <div uib-tab index="'members'" ng-if="vm.isCompanyActive">
         <div uib-tab-heading>{{ 'mno_enterprise.templates.dashboard.organization.index.members.title' | translate }}</div>
 
         <!-- Directive: DashboardOrganizationMembers -->
@@ -106,7 +106,7 @@
       <!-------------------------------------->
       <!--     Team Management Section      -->
       <!-------------------------------------->
-      <div uib-tab index="'team'">
+      <div uib-tab index="'team'" ng-if="vm.isCompanyActive">
         <div uib-tab-heading>{{ 'mno_enterprise.templates.dashboard.organization.index.teams.title' | translate }}</div>
 
         <div class="clearfix">
@@ -127,7 +127,7 @@
       <!-------------------------------------->
       <!--        Audit Log Section         -->
       <!-------------------------------------->
-      <div uib-tab index="'audit'" ng-if="vm.isAuditLogShown()">
+      <div uib-tab index="'audit'" ng-if="vm.isAuditLogShown() && vm.isCompanyActive">
         <div uib-tab-heading>{{ 'mno_enterprise.templates.dashboard.organization.index.audit_log.title' | translate }}</div>
 
         <!-- Directive: DashboardOrganizationAuditLog -->
@@ -143,7 +143,7 @@
       <!-------------------------------------->
       <!--    Company Settings Section      -->
       <!-------------------------------------->
-      <div uib-tab index="'settings'" ng-show="vm.isSettingsShown()" >
+      <div uib-tab index="'settings'" ng-show="vm.isSettingsShown() && vm.isCompanyActive" >
         <div uib-tab-heading>{{ 'mno_enterprise.templates.dashboard.organization.index.settings.title' | translate }}</div>
 
         <div class="well clearfix">
@@ -152,9 +152,10 @@
             <div dashboard-organization-settings></div>
           </div>
         </div>
-
-        <!-- End: tab settings section -->
+          <dashboard-company-deletion></dashboard-company-deletion>
+        </div>
       </div>
+        <!-- End: tab settings section -->
 
       <!-- End: tabset -->
     </div>
