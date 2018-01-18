@@ -20,6 +20,14 @@ angular.module 'mnoEnterpriseAngular'
         controller: 'LandingCtrl'
         controllerAs: 'vm'
         public: true
+      .state 'public.local_product',
+        data:
+          pageTitle: "Reseller's Product Preview"
+        url: '/localproduct/:productId'
+        templateUrl: 'app/views/public/local-product/local-product.html'
+        controller: 'LandingLocalProductCtrl'
+        controllerAs: 'vm'
+        public: true
       .state 'public.product',
         data:
           pageTitle: "Product Preview"

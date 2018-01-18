@@ -1,11 +1,13 @@
 <div id="public">
-  <div class="container">
+  <mno-loader ng-show="vm.isLoading" class="top-buffer-4"></mno-loader>
+
+  <div class="container" ng-show="!vm.isLoading">
     <div class="row highlight-products" ng-if="vm.highlightedApps.length">
       <div class="col-md-12 carousel-container">
         <div class="well carousel">
           <div uib-carousel active="0" interval="3000">
             <div uib-slide ng-repeat="app in vm.highlightedApps" index="$index">
-              <a ui-sref="public.product({productId: app.nid})">
+              <a ui-sref="{{vm.highlightHref(app)}}">
                 <div class="carousel-image-container">
                   <div ng-style="vm.carouselImageStyle(app)" class="carousel-image"></div>
                   <img class="carousel-logo" ng-src="{{::app.logo}}" ng-alt="{{::app.name}}">
@@ -16,49 +18,20 @@
         </div>
       </div>
     </div>
-    <div class="row dashboard-marketplace">
-      <!-------------------------------------->
-      <!--        Marketplace Content       -->
-      <!-------------------------------------->
-      <div class="top-buffer-4" ng-show="!vm.isLoading">
-        <!-- Marketplace nav -->
-        <div class="row">
-          <div class="marketplace-nav">
-            <div class="col-sm-4">
-              <select class="form-control" ng-model="vm.selectedCategory" ng-options="c for c in vm.categories" ng-change="vm.searchTerm = ''">
-                <option value=''>{{ 'mno_enterprise.templates.dashboard.marketplace.index.select_all' | translate }}</option>
-              </select>
-            </div>
-            <div class="col-sm-4">
-              <input type="text" class="form-control" placeholder="{{ 'mno_enterprise.templates.dashboard.marketplace.index.search' | translate }}" ng-model="vm.searchTerm" ng-change="vm.selectedCategory = ''"/>
-            </div>
-          </div>
-        </div>
 
-        <!-- Marketplace list -->
-        <div class="row">
-          <div class="marketplace-list">
-
-            <!-- App Cards-->
-            <div class="col-sm-6 col-md-4" ng-repeat="app in vm.apps | filter:vm.appsFilter | filter:vm.searchTerm">
-              <a class="marketplace-app-card" ui-sref="public.product({productId: app.nid})">
-                <div class="media">
-                  <div class="pull-left">
-                    <img class="media-object" ng-src="{{::app.logo}}" ng-alt="{{::app.name}}">
-                  </div>
-                  <div class="media-body">
-                    <h4 class="media-heading">{{::app.name}}</h4>
-                    {{::app.tiny_description}}
-                  </div>
-                  <div class="arrow">
-                    <i class="fa fa-caret-right fa-2x"></i>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div><!-- End: marketplace-list -->
-        </div><!-- End: row -->
-      </div>
+    <div ng-if="vm.localProducts.length" class="row dashboard-organization top-buffer-4">
+      <uib-tabset active="active">
+        <uib-tab index="0">
+          <div uib-tab-heading>{{ 'mno_enterprise.templates.dashboard.marketplace.index.applications' | translate }}</div>
+          <landing-products></landing-products>
+        </uib-tab>
+        <uib-tab index="1">
+          <div uib-tab-heading>{{ 'mno_enterprise.templates.dashboard.marketplace.index.reseller_products' | translate }}</div>
+          <landing-local-products></landing-local-products>
+        </uib-tab>
+      </uib-tabset>
     </div>
+
+    <landing-products ng-if="!vm.localProducts.length"></landing-products>
   </div>
 </div>
