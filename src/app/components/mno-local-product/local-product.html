@@ -3,7 +3,7 @@
     <!-- Header -->
     <div class="row show-header top-buffer-4">
       <div class="col-md-12">
-        <a ui-sref="home.marketplace" class="text-muted">
+        <a ui-sref="{{vm.parentState}}" class="text-muted">
           <i class="fa fa-chevron-left"></i> {{ 'mno_enterprise.templates.dashboard.marketplace.show.back' | translate }}
         </a>
         <div class="media" ng-show="!vm.isLoading">
@@ -34,6 +34,11 @@
         <!-- Key benefits -->
         <div class="col-md-4">
           <div class="well text-center well-details">
+            <a class="btn btn-warning btn-lg top-buffer-1" ng-if="::vm.isProvisioningEnabled" ui-sref="home.provisioning.order({nid: vm.product.nid})"
+              translate>
+              mno_enterprise.templates.dashboard.marketplace.show.provision
+            </a>
+
             <div class="row">
               <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-12 col-md-offset-0 top-buffer-1">
                 <ul class="key-benefits">
@@ -58,12 +63,14 @@
       <!-- Pricing -->
       <div ng-if="vm.isPriceShown" class="row top-buffer-1">
         <div class="col-md-12">
-          <div class="well" ng-switch="vm.product.product_pricings">
+          <div class="well" ng-switch="vm.product.pricing_plans">
             <h3>{{ 'mno_enterprise.templates.dashboard.marketplace.show.price' | translate }}</h3>
             <ul>
-              <li ng-repeat="plan in vm.product.product_pricings">
+              <li ng-repeat="plan in vm.product.pricing_plans">
                 <b>{{plan.name}}</b>: {{plan.description}}
                 <br>
+                <span ng-if="!vm.isPublic && !vm.planAvailableForCurrency(plan)">{{ 'mno_enterprise.templates.dashboard.marketplace.show.no_pricing_found' | translate }}</span>
+                <span ng-if="!vm.isPublic" ng-repeat="price in plan.prices | filterBy: ['currency']: vm.orgCurrency">{{price.currency}} {{price.price_cents / 100}}</span>
               </li>
             </ul>
           </div>

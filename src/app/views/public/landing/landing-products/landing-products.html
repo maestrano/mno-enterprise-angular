@@ -26,7 +26,7 @@
 
         <!-- App Cards-->
         <div class="col-sm-6 col-md-4" ng-repeat="app in $ctrl.apps | filter:$ctrl.appsFilter | filter:$ctrl.searchTerm">
-          <a class="marketplace-app-card" ui-sref="public.product({productId: app.nid})">
+          <a class="marketplace-app-card" ui-sref="public.product({appId: app.nid})">
             <div class="media">
               <div class="pull-left">
                 <img class="media-object" ng-src="{{::app.logo}}" ng-alt="{{::app.name}}">
