@@ -23,7 +23,7 @@
       <uib-tabset active="active">
         <uib-tab index="0">
           <div uib-tab-heading>{{ 'mno_enterprise.templates.dashboard.marketplace.index.applications' | translate }}</div>
-          <landing-products></landing-products>
+          <mno-app-listing is-public="true"></mno-app-listing>
         </uib-tab>
         <uib-tab index="1">
           <div uib-tab-heading>{{ 'mno_enterprise.templates.dashboard.marketplace.index.reseller_products' | translate }}</div>
@@ -31,7 +31,6 @@
         </uib-tab>
       </uib-tabset>
     </div>
-
-    <landing-products ng-if="!vm.localProducts.length"></landing-products>
+      <mno-app-listing ng-if="!vm.localProducts.length" is-public="true"></mno-app-listing>
   </div>
 </div>
