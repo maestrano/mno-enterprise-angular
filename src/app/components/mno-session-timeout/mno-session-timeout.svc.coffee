@@ -6,7 +6,7 @@ angular.module 'mnoEnterpriseAngular'
 
     @resetTimer = ->
       _self.cancelTimer()
-      timer = $timeout(showTimeoutModal, DEVISE_CONFIG.timeout_in * 1000 - 12 * 1000)
+      timer = $timeout(showTimeoutModal, (DEVISE_CONFIG.timeout_in - 12) * 1000)
 
     @cancelTimer = ->
       $timeout.cancel(timer)
@@ -18,7 +18,7 @@ angular.module 'mnoEnterpriseAngular'
         backdrop: 'static'
         templateUrl: 'app/components/mno-session-timeout/mno-session-timeout.html'
         controller: modalController
-        })
+      })
 
 
     modalController = ($scope, $state, $interval, $uibModalInstance, MnoeCurrentUser, toastr) ->

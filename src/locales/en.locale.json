@@ -739,7 +739,7 @@
   "mno_enterprise.auth.sessions.timeout.stay_logged_in": "Stay Logged In",
   "mno_enterprise.auth.sessions.timeout.log_off": "Log Off",
   "mno_enterprise.auth.sessions.timeout.log_in": "Log In",
-  "mno_enterprise.auth.sessions.timeout.error": "We couldnt manage to remain you logged in. You will be redirected to the login page",
+  "mno_enterprise.auth.sessions.timeout.error": "We could not manage to remain you logged in. You will be redirected to the login page",
   "mno_enterprise.auth.confirmations.new.title": "Confirmation",
   "mno_enterprise.auth.confirmations.new.resend": "Resend confirmation instructions",
   "mno_enterprise.auth.confirmations.show.title": "Almost there",
