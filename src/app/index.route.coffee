@@ -24,7 +24,7 @@ angular.module 'mnoEnterpriseAngular'
         data:
           pageTitle: "Product Preview"
         url: '/product/:appId'
-        templateUrl: 'app/components/mno-app/app.html'
+        templateUrl: 'app/components/mno-apps/mno-app.html'
         controller: 'mnoApp'
         controllerAs: 'vm'
         resolve: {
@@ -36,7 +36,7 @@ angular.module 'mnoEnterpriseAngular'
         data:
           pageTitle: "Reseller's Product Preview"
         url: '/localproduct/:productId'
-        templateUrl: 'app/components/mno-local-product/local-product.html',
+        templateUrl: 'app/components/mno-local-products/mno-local-product.html',
         controller: 'mnoLocalProduct'
         controllerAs: 'vm'
         resolve: {
@@ -149,7 +149,7 @@ angular.module 'mnoEnterpriseAngular'
             pageTitle:'Marketplace'
           url: '^/marketplace/:appId'
           views: '@home':
-            templateUrl: 'app/components/mno-app/app.html',
+            templateUrl: 'app/components/mno-apps/mno-app.html',
             controller: 'mnoApp'
             controllerAs: 'vm'
             resolve: {
@@ -161,7 +161,7 @@ angular.module 'mnoEnterpriseAngular'
             pageTitle: "Marketplace"
           url: '^/marketplace/localproduct/:productId'
           views: '@home':
-            templateUrl: 'app/components/mno-local-product/local-product.html',
+            templateUrl: 'app/components/mno-local-products/mno-local-product.html',
             controller: 'mnoLocalProduct'
             controllerAs: 'vm'
             resolve: {

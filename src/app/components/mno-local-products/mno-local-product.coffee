@@ -1,11 +1,9 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('mnoLocalProduct', ($scope, $stateParams, $state, isPublic, parentState, MnoeMarketplace, MnoeOrganizations, MnoeConfig) ->
 
-    console.log "IM IN SPAAAAACE"
     vm = this
     vm.isPublic = isPublic
     vm.parentState = parentState
-    console.log vm.parentState
 
     vm.isPriceShown = if vm.isPublic
     then MnoeConfig.isMarketplacePricingEnabled()

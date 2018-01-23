@@ -11,7 +11,6 @@ angular.module 'mnoEnterpriseAngular'
     #====================================
     vm.isPublic = isPublic
     vm.parentState = parentState
-    console.log vm.parentState
 
     vm.isLoading = true
     vm.app = {}
@@ -43,11 +42,8 @@ angular.module 'mnoEnterpriseAngular'
 
         # App to be displayed
         appId = $stateParams.appId
-        console.log appId
-        console.log apps
         vm.app = _.findWhere(apps, { nid: appId })
         vm.app ||= _.findWhere(apps, { id:  appId })
-        console.log vm.app
 
         $state.go(parentState) unless vm.app?
         vm.isLoading = false
