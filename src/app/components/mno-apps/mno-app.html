@@ -102,7 +102,7 @@
       <div class="col-md-12">
         <div class="well top-buffer-1" ta-bind="text" ng-model="vm.app.description" ta-readonly="disabled"> </div>
       </div>
-      </div>
+    </div>
 
     <!-- Pricing -->
     <div ng-if="vm.isPriceShown" class="row top-buffer-1">
@@ -224,7 +224,7 @@
                       </span>
                       <span ng-if="comment.user_admin_role != 'admin'">
                         <span>{{comment.user_name}} {{ 'mno_enterprise.templates.dashboard.marketplace.show.from' | translate }}
-                          </span>
+                        </span>
                         <cite title="{{comment.organization_name}}">{{comment.organization_name}}</cite>
                       </span>
                       {{ 'mno_enterprise.templates.dashboard.marketplace.show.on' | translate }}

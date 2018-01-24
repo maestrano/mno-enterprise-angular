@@ -21,7 +21,7 @@ angular.module 'mnoEnterpriseAngular'
         MnoeMarketplace.getApps().then(
           (response) ->
             if vm.isPublic
-              vm.products = _.filter(response.products, (product) -> product.local)
+              vm.products = _.filter(response.products, 'local')
             else
               vm.products = _.filter(response.products, (product) -> product.local && _.includes(MnoeConfig.publicLocalProducts(), product.nid))
             vm.isLoading = false

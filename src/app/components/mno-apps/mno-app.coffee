@@ -1,6 +1,3 @@
-#============================================
-#
-#============================================
 angular.module 'mnoEnterpriseAngular'
   .controller('mnoApp',($q, $scope, $stateParams, $state, $sce, $window, $uibModal, $anchorScroll,
   $location, isPublic, parentState, toastr, MnoeMarketplace, MnoeOrganizations, MnoeCurrentUser, MnoeAppInstances, MnoConfirm, MnoeConfig, PRICING_TYPES) ->
@@ -47,7 +44,7 @@ angular.module 'mnoEnterpriseAngular'
 
         $state.go(parentState) unless vm.app?
         vm.isLoading = false
-        )
+      )
 
     #====================================
     # Scope Management

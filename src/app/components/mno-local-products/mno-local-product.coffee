@@ -18,7 +18,7 @@ angular.module 'mnoEnterpriseAngular'
     vm.initialize = ->
       MnoeMarketplace.getApps().then(
         (response) ->
-          vm.products = _.filter(response.products, (product) -> product.local)
+          vm.products = _.filter(response.products, 'local')
           if !vm.isPublic
             organization = MnoeOrganizations.get().then((response) -> response.organization)
             vm.orgCurrency = organization.organization?.billing_currency || MnoeConfig.marketplaceCurrency()
