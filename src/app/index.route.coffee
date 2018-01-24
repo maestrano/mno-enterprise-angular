@@ -23,10 +23,26 @@ angular.module 'mnoEnterpriseAngular'
       .state 'public.product',
         data:
           pageTitle: "Product Preview"
-        url: '/product/:productId'
-        templateUrl: 'app/views/public/product/product.html'
-        controller: 'LandingProductCtrl'
+        url: '/product/:appId'
+        templateUrl: 'app/components/mno-apps/mno-app.html'
+        controller: 'mnoApp'
         controllerAs: 'vm'
+        resolve: {
+          isPublic: -> true
+          parentState: -> 'public.landing'
+        }
+        public: true
+      .state 'public.local_product',
+        data:
+          pageTitle: "Reseller's Product Preview"
+        url: '/localproduct/:productId'
+        templateUrl: 'app/components/mno-local-products/mno-local-product.html',
+        controller: 'mnoLocalProduct'
+        controllerAs: 'vm'
+        resolve: {
+          isPublic: -> true
+          parentState: -> 'public.landing'
+        }
         public: true
       .state 'home',
         data:
@@ -133,17 +149,25 @@ angular.module 'mnoEnterpriseAngular'
             pageTitle:'Marketplace'
           url: '^/marketplace/:appId'
           views: '@home':
-            templateUrl: 'app/views/marketplace/marketplace-app.html'
-            controller: 'DashboardMarketplaceAppCtrl'
+            templateUrl: 'app/components/mno-apps/mno-app.html',
+            controller: 'mnoApp'
             controllerAs: 'vm'
-        .state 'home.marketplace.product',
+            resolve: {
+              isPublic: -> false
+              parentState: -> 'home.marketplace'
+            }
+        .state 'home.marketplace.local_product',
           data:
-            pageTitle:'Marketplace'
-          url: '^/marketplace/product/:productId'
+            pageTitle: "Marketplace"
+          url: '^/marketplace/localproduct/:productId'
           views: '@home':
-            templateUrl: 'app/views/marketplace/marketplace-product.html'
-            controller: 'DashboardMarketplaceProductCtrl'
+            templateUrl: 'app/components/mno-local-products/mno-local-product.html',
+            controller: 'mnoLocalProduct'
             controllerAs: 'vm'
+            resolve: {
+              isPublic: -> false
+              parentState: -> 'home.marketplace'
+            }
         .state 'home.marketplace.compare',
           data:
             pageTitle:'Compare apps'

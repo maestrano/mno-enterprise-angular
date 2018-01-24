@@ -65,6 +65,20 @@ angular.module 'mnoEnterpriseAngular'
         $log.debug("DASHBOARD_CONFIG.marketplace.local_products")
         false
 
+    @publicLocalProducts = () ->
+      if DASHBOARD_CONFIG.public_pages?.local_products?
+        DASHBOARD_CONFIG.public_pages.local_products
+      else
+        $log.debug("DASHBOARD_CONFIG.public_pages.local_products missing")
+        []
+
+    @publicHighlightedLocalProducts = () ->
+      if DASHBOARD_CONFIG.public_pages?.highlighted_local_products?
+        DASHBOARD_CONFIG.public_pages.highlighted_local_products
+      else
+        $log.debug("DASHBOARD_CONFIG.public_pages.highlighted_local_products missing")
+        []
+
     @isMarketplaceComparisonEnabled = () ->
       if DASHBOARD_CONFIG.marketplace?.comparison?.enabled?
         DASHBOARD_CONFIG.marketplace.comparison.enabled
