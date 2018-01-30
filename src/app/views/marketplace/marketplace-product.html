@@ -62,10 +62,10 @@
       <!-- Pricing -->
       <div ng-if="vm.isPriceShown" class="row top-buffer-1">
         <div class="col-md-12">
-          <div class="well" ng-switch="vm.product.product_pricings">
+          <div class="well" ng-switch="vm.product.pricing_plans">
             <h3>{{ 'mno_enterprise.templates.dashboard.marketplace.show.price' | translate }}</h3>
             <ul>
-              <li ng-repeat="plan in vm.product.product_pricings">
+              <li ng-repeat="plan in vm.product.pricing_plans">
                 <b>{{plan.name}}</b>: {{plan.description}}<br>
                 <span ng-if="!vm.planAvailableForCurrency(plan)">{{ 'mno_enterprise.templates.dashboard.marketplace.show.no_pricing_found' | translate }}</span>
                 <span ng-repeat="price in plan.prices | filterBy: ['currency']: vm.orgCurrency">{{price.currency}} {{price.price_cents / 100}}</span>

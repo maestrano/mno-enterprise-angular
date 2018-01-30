@@ -1,0 +1,306 @@
+  <div>
+    <div class='registration'>
+      <div class='container'>
+        <div class='row'>
+          <div class='login-box-wrapper'>
+            <div class='login-box-title'>
+              <h2>Almost there</h2>
+            </div>
+            <div class='login-box'>
+              <div class='brand-logo'></div>
+              <form name="vm.form" class="autofill-detect text-center" id="edit_user" ng-submit="vm.confirmUser()">
+                <div class='row'>
+                  <div class='col-sm-12'>
+                    <input placeholder="*First Name" required="required" ng-model="vm.user.name" class="form-control" type="text" name="user[name]" id="user_name" />
+                  </div>
+                </div>
+                <br>
+                <div class='row'>
+                  <div class='col-sm-12'>
+                    <input placeholder="*Last Name" required="required" ng-model="vm.user.surname" class="form-control" type="text" name="user[surname]" id="user_surname" />
+                  </div>
+                </div>
+                <br>
+                <div class='row'>
+                  <div class='col-sm-12'>
+                    <div class='phone'>
+                      <select class="form-control unstyled" ng-model="vm.user.phone_country_code" name="user[phone_country_code]" id="user_phone_country_code"><option value="AD">AD +376</option>
+                      <option value="AE">AE +971</option>
+                      <option value="AF">AF +93</option>
+                      <option value="AG">AG +1</option>
+                      <option value="AI">AI +1</option>
+                      <option value="AL">AL +355</option>
+                      <option value="AM">AM +374</option>
+                      <option value="AN">AN +599</option>
+                      <option value="AO">AO +244</option>
+                      <option value="AQ">AQ +672</option>
+                      <option value="AR">AR +54</option>
+                      <option value="AS">AS +1</option>
+                      <option value="AT">AT +43</option>
+                      <option value="AU">AU +61</option>
+                      <option value="AW">AW +297</option>
+                      <option value="AX">AX +358</option>
+                      <option value="AZ">AZ +994</option>
+                      <option value="BA">BA +387</option>
+                      <option value="BB">BB +1</option>
+                      <option value="BD">BD +880</option>
+                      <option value="BE">BE +32</option>
+                      <option value="BF">BF +226</option>
+                      <option value="BG">BG +359</option>
+                      <option value="BH">BH +973</option>
+                      <option value="BI">BI +257</option>
+                      <option value="BJ">BJ +229</option>
+                      <option value="BL">BL +590</option>
+                      <option value="BM">BM +1</option>
+                      <option value="BN">BN +673</option>
+                      <option value="BO">BO +591</option>
+                      <option value="BQ">BQ +599</option>
+                      <option value="BR">BR +55</option>
+                      <option value="BS">BS +1</option>
+                      <option value="BT">BT +975</option>
+                      <option value="BV">BV +</option>
+                      <option value="BW">BW +267</option>
+                      <option value="BY">BY +375</option>
+                      <option value="BZ">BZ +501</option>
+                      <option value="CA">CA +1</option>
+                      <option value="CC">CC +61</option>
+                      <option value="CD">CD +243</option>
+                      <option value="CF">CF +236</option>
+                      <option value="CG">CG +242</option>
+                      <option value="CH">CH +41</option>
+                      <option value="CI">CI +225</option>
+                      <option value="CK">CK +682</option>
+                      <option value="CL">CL +56</option>
+                      <option value="CM">CM +237</option>
+                      <option value="CN">CN +86</option>
+                      <option value="CO">CO +57</option>
+                      <option value="CR">CR +506</option>
+                      <option value="CU">CU +53</option>
+                      <option value="CV">CV +238</option>
+                      <option value="CW">CW +599</option>
+                      <option value="CX">CX +61</option>
+                      <option value="CY">CY +357</option>
+                      <option value="CZ">CZ +420</option>
+                      <option value="DE">DE +49</option>
+                      <option value="DJ">DJ +253</option>
+                      <option value="DK">DK +45</option>
+                      <option value="DM">DM +1</option>
+                      <option value="DO">DO +1</option>
+                      <option value="DZ">DZ +213</option>
+                      <option value="EC">EC +593</option>
+                      <option value="EE">EE +372</option>
+                      <option value="EG">EG +20</option>
+                      <option value="EH">EH +212</option>
+                      <option value="ER">ER +291</option>
+                      <option value="ES">ES +34</option>
+                      <option value="ET">ET +251</option>
+                      <option value="FI">FI +358</option>
+                      <option value="FJ">FJ +679</option>
+                      <option value="FK">FK +500</option>
+                      <option value="FM">FM +691</option>
+                      <option value="FO">FO +298</option>
+                      <option value="FR">FR +33</option>
+                      <option value="GA">GA +241</option>
+                      <option value="GB">GB +44</option>
+                      <option value="GD">GD +1</option>
+                      <option value="GE">GE +995</option>
+                      <option value="GF">GF +594</option>
+                      <option value="GG">GG +44</option>
+                      <option value="GH">GH +233</option>
+                      <option value="GI">GI +350</option>
+                      <option value="GL">GL +299</option>
+                      <option value="GM">GM +220</option>
+                      <option value="GN">GN +224</option>
+                      <option value="GP">GP +590</option>
+                      <option value="GQ">GQ +240</option>
+                      <option value="GR">GR +30</option>
+                      <option value="GS">GS +500</option>
+                      <option value="GT">GT +502</option>
+                      <option value="GU">GU +1</option>
+                      <option value="GW">GW +245</option>
+                      <option value="GY">GY +592</option>
+                      <option value="HK">HK +852</option>
+                      <option value="HM">HM +</option>
+                      <option value="HN">HN +504</option>
+                      <option value="HR">HR +385</option>
+                      <option value="HT">HT +509</option>
+                      <option value="HU">HU +36</option>
+                      <option value="ID">ID +62</option>
+                      <option value="IE">IE +353</option>
+                      <option value="IL">IL +972</option>
+                      <option value="IM">IM +44</option>
+                      <option value="IN">IN +91</option>
+                      <option value="IO">IO +246</option>
+                      <option value="IQ">IQ +964</option>
+                      <option value="IR">IR +98</option>
+                      <option value="IS">IS +354</option>
+                      <option value="IT">IT +39</option>
+                      <option value="JE">JE +44</option>
+                      <option value="JM">JM +1</option>
+                      <option value="JO">JO +962</option>
+                      <option value="JP">JP +81</option>
+                      <option value="KE">KE +254</option>
+                      <option value="KG">KG +996</option>
+                      <option value="KH">KH +855</option>
+                      <option value="KI">KI +686</option>
+                      <option value="KM">KM +269</option>
+                      <option value="KN">KN +1</option>
+                      <option value="KP">KP +850</option>
+                      <option value="KR">KR +82</option>
+                      <option value="KW">KW +965</option>
+                      <option value="KY">KY +1</option>
+                      <option value="KZ">KZ +7</option>
+                      <option value="LA">LA +856</option>
+                      <option value="LB">LB +961</option>
+                      <option value="LC">LC +1</option>
+                      <option value="LI">LI +423</option>
+                      <option value="LK">LK +94</option>
+                      <option value="LR">LR +231</option>
+                      <option value="LS">LS +266</option>
+                      <option value="LT">LT +370</option>
+                      <option value="LU">LU +352</option>
+                      <option value="LV">LV +371</option>
+                      <option value="LY">LY +218</option>
+                      <option value="MA">MA +212</option>
+                      <option value="MC">MC +377</option>
+                      <option value="MD">MD +373</option>
+                      <option value="ME">ME +382</option>
+                      <option value="MF">MF +590</option>
+                      <option value="MG">MG +261</option>
+                      <option value="MH">MH +692</option>
+                      <option value="MK">MK +389</option>
+                      <option value="ML">ML +223</option>
+                      <option value="MM">MM +95</option>
+                      <option value="MN">MN +976</option>
+                      <option value="MO">MO +853</option>
+                      <option value="MP">MP +1</option>
+                      <option value="MQ">MQ +596</option>
+                      <option value="MR">MR +222</option>
+                      <option value="MS">MS +1</option>
+                      <option value="MT">MT +356</option>
+                      <option value="MU">MU +230</option>
+                      <option value="MV">MV +960</option>
+                      <option value="MW">MW +265</option>
+                      <option value="MX">MX +52</option>
+                      <option value="MY">MY +60</option>
+                      <option value="MZ">MZ +258</option>
+                      <option value="NA">NA +264</option>
+                      <option value="NC">NC +687</option>
+                      <option value="NE">NE +227</option>
+                      <option value="NF">NF +672</option>
+                      <option value="NG">NG +234</option>
+                      <option value="NI">NI +505</option>
+                      <option value="NL">NL +31</option>
+                      <option value="NO">NO +47</option>
+                      <option value="NP">NP +977</option>
+                      <option value="NR">NR +674</option>
+                      <option value="NU">NU +683</option>
+                      <option value="NZ">NZ +64</option>
+                      <option value="OM">OM +968</option>
+                      <option value="PA">PA +507</option>
+                      <option value="PE">PE +51</option>
+                      <option value="PF">PF +689</option>
+                      <option value="PG">PG +675</option>
+                      <option value="PH">PH +63</option>
+                      <option value="PK">PK +92</option>
+                      <option value="PL">PL +48</option>
+                      <option value="PM">PM +508</option>
+                      <option value="PN">PN +</option>
+                      <option value="PR">PR +1</option>
+                      <option value="PS">PS +970</option>
+                      <option value="PT">PT +351</option>
+                      <option value="PW">PW +680</option>
+                      <option value="PY">PY +595</option>
+                      <option value="QA">QA +974</option>
+                      <option value="RE">RE +262</option>
+                      <option value="RO">RO +40</option>
+                      <option value="RS">RS +381</option>
+                      <option value="RU">RU +7</option>
+                      <option value="RW">RW +250</option>
+                      <option value="SA">SA +966</option>
+                      <option value="SB">SB +677</option>
+                      <option value="SC">SC +248</option>
+                      <option value="SD">SD +249</option>
+                      <option value="SE">SE +46</option>
+                      <option value="SG">SG +65</option>
+                      <option value="SH">SH +290</option>
+                      <option value="SI">SI +386</option>
+                      <option value="SJ">SJ +47</option>
+                      <option value="SK">SK +421</option>
+                      <option value="SL">SL +232</option>
+                      <option value="SM">SM +378</option>
+                      <option value="SN">SN +221</option>
+                      <option value="SO">SO +252</option>
+                      <option value="SR">SR +597</option>
+                      <option value="SS">SS +211</option>
+                      <option value="ST">ST +239</option>
+                      <option value="SV">SV +503</option>
+                      <option value="SX">SX +1</option>
+                      <option value="SY">SY +963</option>
+                      <option value="SZ">SZ +268</option>
+                      <option value="TC">TC +1</option>
+                      <option value="TD">TD +235</option>
+                      <option value="TF">TF +</option>
+                      <option value="TG">TG +228</option>
+                      <option value="TH">TH +66</option>
+                      <option value="TJ">TJ +992</option>
+                      <option value="TK">TK +690</option>
+                      <option value="TL">TL +670</option>
+                      <option value="TM">TM +993</option>
+                      <option value="TN">TN +216</option>
+                      <option value="TO">TO +676</option>
+                      <option value="TR">TR +90</option>
+                      <option value="TT">TT +1</option>
+                      <option value="TV">TV +688</option>
+                      <option value="TW">TW +886</option>
+                      <option value="TZ">TZ +255</option>
+                      <option value="UA">UA +380</option>
+                      <option value="UG">UG +256</option>
+                      <option value="UM">UM +</option>
+                      <option value="US">US +1</option>
+                      <option value="UY">UY +598</option>
+                      <option value="UZ">UZ +998</option>
+                      <option value="VA">VA +39</option>
+                      <option value="VC">VC +1</option>
+                      <option value="VE">VE +58</option>
+                      <option value="VG">VG +1</option>
+                      <option value="VI">VI +1</option>
+                      <option value="VN">VN +84</option>
+                      <option value="VU">VU +678</option>
+                      <option value="WF">WF +681</option>
+                      <option value="WS">WS +685</option>
+                      <option value="YE">YE +967</option>
+                      <option value="YT">YT +262</option>
+                      <option value="ZA">ZA +27</option>
+                      <option value="ZM">ZM +260</option>
+                      <option value="ZW">ZW +263</option></select>
+                      <input placeholder="*Phone" required="required" ng-model="vm.user.phone" class="form-control" type="text" name="user[phone]" id="user_phone" />
+                    </div>
+                  </div>
+                </div>
+                <br>
+                <div class='row'>
+                  <div class='col-sm-12'>
+                    <div class='input-group'>
+                      <input placeholder="*Choose Password" ng-model="vm.user.password" class="form-control" ng-minlength="6" mno-password-strength="true" password-score="vm.$pwdScore" required="required" type="password" name="user[password]" id="user_password" />
+                      <span class='input-group-addon classic pw-strength-indicator' ng-class='vm.$pwdScore.class'>
+                        {{ vm.$pwdScore.value }}
+                      </span>
+                    </div>
+                    <div class='text-center ng-hide' ng-show='vm.user.$pwdScore.showTip'>
+                      <small class='text-danger'>Password is not strong enough. Try mixing letters, numbers and cases</small>
+                    </div>
+                  </div>
+                </div>
+                <br>
+                <div>
+                  <button class='btn btn-warning btn-login' ng-click='vm.hasClicked = true' ng-disabled='vm.form.$invalid' ng-hide='vm.hasClicked' type='submit'>Confirm my account</button>
+                  <img class='loader' ng-show='vm.hasClicked'>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
