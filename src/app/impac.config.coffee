@@ -12,7 +12,10 @@ angular.module 'mnoEnterpriseAngular'
     kpis:
       index: "#{mnoHub}/impac/kpis"
 
+  bolts = [{ provider: 'kpmg', name: 'banking', category: 'accounts' }]
+
   ImpacRoutesProvider.configureRoutes(data)
+  ImpacRoutesProvider.configureBolts('v2', bolts)
 )
 
 #======================================================================================
