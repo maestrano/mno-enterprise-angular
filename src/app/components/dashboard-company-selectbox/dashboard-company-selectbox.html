@@ -17,7 +17,7 @@
       <ul class="list-unstyled">
         <li ng-repeat="organization in selectBox.user.organizations | orderBy:'name'">
           <a href="" class="company-link" ng-click="selectBox.changeTo(organization)">
-            <i class="fa" ng-class="organization === selectBox.organization ? 'fa-dot-circle-o' : 'fa-circle-o'"></i>
+            <i class="fa" ng-class="organization.id === selectBox.organization.id ? 'fa-dot-circle-o' : 'fa-circle-o'"></i>
             <span>{{organization.name}}</span>
           </a>
         </li>
