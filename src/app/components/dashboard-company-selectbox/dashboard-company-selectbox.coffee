@@ -60,9 +60,8 @@ DashboardCompanySelectboxCtrl = ($scope, $state, $stateParams, $uibModal, MnoeCu
   #====================================
   # Post-Initialization
   #====================================
-  $scope.$watch MnoeOrganizations.getSelectedId, (val) ->
-    if val?
-      selectOrganization()
+  $scope.$watch MnoeOrganizations.getSelected, (val) ->
+    selectOrganization()
 
 angular.module 'mnoEnterpriseAngular'
   .directive('dashboardCompanySelectbox', ->
