@@ -853,7 +853,7 @@
   "mno_enterprise.templates.dashboard.account.personal_information": "Personal Information",
   "mno_enterprise.templates.dashboard.account.user_form_name": "Name",
   "mno_enterprise.templates.dashboard.account.user_form_surname": "Surname",
-  "mno_enterprise.templates.dashboard.account.us`er_form_email": "Email",
+  "mno_enterprise.templates.dashboard.account.user_form_email": "Email",
   "mno_enterprise.templates.dashboard.account.user_form_phone": "Phone",
   "mno_enterprise.templates.dashboard.account.user_form_save": "Save",
   "mno_enterprise.templates.dashboard.account.user_form_cancel": "Cancel",
