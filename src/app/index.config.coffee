@@ -58,6 +58,12 @@ angular.module 'mnoEnterpriseAngular'
               )
               return $q.defer().promise
 
+            # Redirect to an error page when there is a bug at backend
+            when 500
+              $log.info('[MnoHubErrorInterceptor] MnoHub server error, redirecting to error page')
+              $window.location.href = "/mnoe/errors/#{rejection.status}"
+              return $q.defer().promise
+
             else
               $q.reject rejection
       }
