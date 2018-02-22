@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .service 'MnoSessionTimeout', ($q, $timeout, $uibModal, DEVISE_CONFIG) ->
+  .service 'MnoSessionTimeout', ($rootScope, $q, $timeout, $uibModal, DEVISE_CONFIG) ->
     _self = @
 
     timer = null
@@ -26,10 +26,17 @@ angular.module 'mnoEnterpriseAngular'
 
       $scope.countdown = 10
 
-      $interval((-> $scope.countdown -= 1), 1000, 10)
+      $interval((
+        ->
+          $scope.countdown -= 1
+          if $scope.countdown == 0
+            $scope.logOff(true)
+        ), 1000, 10
+      )
 
       $scope.stayLoggedIn = () ->
         $scope.isLoading = true
+        $rootScope.timeoutSet = false
         MnoeCurrentUser.refresh().then(
           (response) ->
             $uibModalInstance.close(response)
@@ -37,10 +44,13 @@ angular.module 'mnoEnterpriseAngular'
             toastr.warning("mno_enterprise.auth.sessions.timeout.error")
             $uibModalInstance.dismiss('cancel')
             $state.go('logout')
-        ).finally(-> $scope.isLoading = false)
+        ).finally(
+         ->
+          $scope.isLoading = false
+        )
 
-      $scope.logOff = () ->
+      $scope.logOff = (timeout = false) ->
         $uibModalInstance.dismiss('cancel')
-        $state.go('logout')
+        $state.go('logout', { 'timeout': timeout })
 
     return @

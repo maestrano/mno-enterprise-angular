@@ -39,7 +39,8 @@ angular.module 'mnoEnterpriseAngular'
         controllerAs: 'vm'
       .state 'logout',
         url: '/logout'
-        controller: ($window, $http, $translate, AnalyticsSvc, URL_CONFIG) ->
+        params: { timeout: false }
+        controller: ($window, $state, $http, $translate, AnalyticsSvc, URL_CONFIG) ->
           'ngInject'
 
           # Logout and redirect the user
@@ -47,12 +48,15 @@ angular.module 'mnoEnterpriseAngular'
             AnalyticsSvc.logOut()
 
             logout_url = URL_CONFIG.after_sign_out_url || URI.login
+            logout_url += '?session_timeout=true' if $state.params.timeout
 
             if I18N_CONFIG.enabled
               if URL_CONFIG.after_sign_out_url
                 $window.location.href = logout_url
               else
-                $window.location.href = "/#{$translate.use()}#{URI.login}"
+                url = "/#{$translate.use()}#{URI.login}"
+                url += '?session_timeout=true' if $state.params.timeout
+                $window.location.href = url
             else
               $window.location.href = logout_url
           )
