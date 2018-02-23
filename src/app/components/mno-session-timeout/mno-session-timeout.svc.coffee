@@ -1,8 +1,9 @@
 angular.module 'mnoEnterpriseAngular'
-  .service 'MnoSessionTimeout', ($rootScope, $q, $timeout, $uibModal, DEVISE_CONFIG) ->
+  .service 'MnoSessionTimeout', ($q, $timeout, $uibModal, DEVISE_CONFIG) ->
     _self = @
 
     timer = null
+    countdownInterval = null
 
     @resetTimer = ->
       _self.cancelTimer()
@@ -26,17 +27,16 @@ angular.module 'mnoEnterpriseAngular'
 
       $scope.countdown = 10
 
-      $interval((
+      countdownInterval = $interval((
         ->
           $scope.countdown -= 1
-          if $scope.countdown == 0
-            $scope.logOff(true)
+          $scope.logOff(true) if $scope.countdown == 0
         ), 1000, 10
       )
 
       $scope.stayLoggedIn = () ->
         $scope.isLoading = true
-        $rootScope.timeoutSet = false
+        $interval.cancel(countdownInterval)
         MnoeCurrentUser.refresh().then(
           (response) ->
             $uibModalInstance.close(response)
@@ -51,6 +51,7 @@ angular.module 'mnoEnterpriseAngular'
 
       $scope.logOff = (timeout = false) ->
         $uibModalInstance.dismiss('cancel')
+        $interval.cancel(countdownInterval)
         $state.go('logout', { 'timeout': timeout })
 
     return @
