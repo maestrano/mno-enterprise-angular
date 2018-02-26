@@ -7,6 +7,11 @@ angular.module 'mnoEnterpriseAngular'
       vm.averageRating = 5
       vm.isPriceShown = MnoeConfig.isPublicPricingEnabled()
 
+
+      # Return true if the plan has a dollar value
+      vm.pricedPlan = (plan) ->
+        plan.pricing_type not in PRICING_TYPES['unpriced']
+
       # Check that the testimonial is not empty
       vm.isTestimonialShown = (testimonial) ->
         testimonial.text? && testimonial.text.length > 0

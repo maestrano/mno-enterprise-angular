@@ -117,7 +117,7 @@
             </li>
             <li ng-repeat="plan in vm.pricing_plans">
               <b>{{plan.name}}</b>: {{plan.description}}<br>
-              <div ng-hide="PRICING_TYPES['unpriced'].indexOf(plan.pricing_type) == -1">
+              <div ng-if="vm.pricedPlan(plan)">
                 <span>{{plan.currency}}</span>
                 <span ng-show="plan.price.value">{{plan.price.value}}</span>
                 <span ng-hide="plan.price.value">{{plan.price}}</span>

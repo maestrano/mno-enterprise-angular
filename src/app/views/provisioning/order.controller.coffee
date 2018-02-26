@@ -37,5 +37,10 @@ angular.module 'mnoEnterpriseAngular'
         $state.go('home.provisioning.additional_details')
       else
         $state.go('home.provisioning.confirm')
+
+    # Return true if the plan has a dollar value
+    vm.pricedPlan = (plan) ->
+      plan.pricing_type not in PRICING_TYPES['unpriced']
+
     return
   )

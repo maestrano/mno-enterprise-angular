@@ -36,5 +36,9 @@ angular.module 'mnoEnterpriseAngular'
         controllerAs: 'vm'
       )
 
+    # Return true if the plan has a dollar value
+    vm.pricedPlan = (plan) ->
+      plan.pricing_type not in PRICING_TYPES['unpriced']
+
     return
   )

@@ -109,6 +109,13 @@ angular.module 'mnoEnterpriseAngular'
           cart.isOpen = true
 
       #====================================
+      # Pricings
+      #====================================
+      # Return true if the plan has a dollar value
+      vm.pricedPlan = (plan) ->
+        plan.pricing_type not in PRICING_TYPES['unpriced']
+
+      #====================================
       # Reviews
       #====================================
       vm.openCreateReviewModal = ->
