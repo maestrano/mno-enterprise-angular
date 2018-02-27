@@ -38,7 +38,5 @@ angular.module 'mnoEnterpriseAngular'
         else
           "public.product({productId: app.nid})"
 
-
-
       return
   )

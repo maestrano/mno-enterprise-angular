@@ -13,7 +13,6 @@ angular.module 'mnoEnterpriseAngular'
 
     vm.isLoading = true
 
-
     # Retrieve the products
     vm.initialize = ->
       MnoeMarketplace.getApps().then(
@@ -25,7 +24,6 @@ angular.module 'mnoEnterpriseAngular'
             vm.planAvailableForCurrency = (plan) ->
               _.includes(_.map(plan.prices, 'currency'), vm.orgCurrency)
 
-
           # App to be displayed
           productId = $stateParams.productId
           vm.product = _.findWhere(vm.products, { nid: productId })
@@ -33,14 +31,12 @@ angular.module 'mnoEnterpriseAngular'
           $state.go(vm.parentState) unless vm.product?
       ).finally(-> vm.isLoading = false)
 
-
     #====================================
     # Post-Initialization
     #====================================
     $scope.$watch MnoeOrganizations.getSelectedId, (val) ->
       if val?
         vm.isLoading = true
-
         vm.initialize()
 
     vm.initialize()
