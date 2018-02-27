@@ -280,6 +280,7 @@
   "mno_enterprise.templates.dashboard.organization.members.removal_modal.cancel": "Batalkan",
   "mno_enterprise.templates.dashboard.organization.members.removal_modal.remove": "Hapus",
   "mno_enterprise.templates.dashboard.organization.settings.company_name": "Nama perusahaan",
+  "mno_enterprise.templates.dashboard.organization.settings.financial_year_month": "Bulan Tahun Keuangan",
   "mno_enterprise.templates.dashboard.organization.settings.cancel": "Batalkan",
   "mno_enterprise.templates.dashboard.organization.settings.save": "Simpan",
   "mno_enterprise.templates.dashboard.teams.index.no_teams_warning": "Anda tidak memiliki tim! Tim adalah cara yang bagus untuk mengontrol siapa saja yang memiliki akses ke aplikasi di perusahaan Anda.",
