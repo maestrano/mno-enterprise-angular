@@ -50,7 +50,8 @@
           <ul class="roles-list">
             <li translate>mno_enterprise.templates.dashboard.organization.members.invite_modal.roles_info.member</li>
             <li translate>mno_enterprise.templates.dashboard.organization.members.invite_modal.roles_info.admin</li>
-            <li translate>mno_enterprise.templates.dashboard.organization.members.invite_modal.roles_info.super_admin</li>
+            <li ng-if="inviteModal.isBillingEnabled" translate>mno_enterprise.templates.dashboard.organization.members.invite_modal.roles_info.super_admin</li>
+            <li ng-if="!inviteModal.isBillingEnabled" translate>mno_enterprise.templates.dashboard.organization.members.invite_modal.roles_info.super_admin_without_billing</li>
           </ul>
         </div>
       </div>
