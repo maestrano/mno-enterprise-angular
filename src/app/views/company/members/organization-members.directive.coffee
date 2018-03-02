@@ -2,7 +2,7 @@
 #============================================
 #
 #============================================
-DashboardOrganizationMembersCtrl = ($scope, $uibModal, $sce, $translate,  MnoeOrganizations, MnoeCurrentUser, MnoeTeams, Utilities) ->
+DashboardOrganizationMembersCtrl = ($scope, $uibModal, $sce, $translate,  MnoeOrganizations, MnoeCurrentUser, MnoeTeams, Utilities, MnoeConfig) ->
   'ngInject'
 
   #====================================
@@ -33,6 +33,9 @@ DashboardOrganizationMembersCtrl = ($scope, $uibModal, $sce, $translate,  MnoeOr
 
   $scope.isInviteShown = ->
     MnoeOrganizations.can.create.member()
+
+  $scope.isBillingEnabled = ->
+    MnoeConfig.isBillingEnabled()
 
   $scope.isEditShown = (member) ->
     if !$scope.hasManySuperAdmin && member.email == MnoeCurrentUser.user.email && $scope.user_role == 'Super Admin'
@@ -86,6 +89,7 @@ DashboardOrganizationMembersCtrl = ($scope, $uibModal, $sce, $translate,  MnoeOr
     self.selectedRole = _.find(self.roleList, (r) -> r.value == member.role)
     self.$instance = $uibModal.open(self.config.instance)
     self.isLoading = false
+    self.isBillingEnabled = $scope.isBillingEnabled()
     editionModal.member = member
 
   editionModal.close = ->
@@ -199,6 +203,7 @@ DashboardOrganizationMembersCtrl = ($scope, $uibModal, $sce, $translate,  MnoeOr
     self.step = 'enterEmails'
     self.roleList = self.config.roles()
     self.teamList = self.config.teams()
+    self.isBillingEnabled = $scope.isBillingEnabled()
     self.invalidEmails = []
 
   inviteModal.close = ->

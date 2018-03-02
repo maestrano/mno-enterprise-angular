@@ -38,9 +38,10 @@
           <i class="fa fa-cloud fa-4x"></i>
           <i class="fa fa-power-off fa-4x"></i>
           <i class="fa fa-users fa-4x"></i>
-          <i class="fa fa-cc-mastercard fa-4x"></i>
+          <i ng-if="editionModal.isBillingEnabled" class="fa fa-cc-mastercard fa-4x"></i>
           <br/><br/>
-          <p>{{ 'mno_enterprise.templates.dashboard.organization.members.edition_modal.roles.super_admin' | translate }}</p>
+          <p ng-if="editionModal.isBillingEnabled">{{ 'mno_enterprise.templates.dashboard.organization.members.edition_modal.roles.super_admin' | translate }}</p>
+          <p ng-if="!editionModal.isBillingEnabled">{{ 'mno_enterprise.templates.dashboard.organization.members.edition_modal.roles.super_admin_without_billing' | translate }}</p>
         </div>
       </div>
 
