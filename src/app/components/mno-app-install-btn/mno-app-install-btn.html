@@ -21,9 +21,12 @@
   </div>
 </div>
 <div ng-if="$ctrl.isExternallyProvisioned" >
-  <a ui-sref="home.provisioning.order({nid: $ctrl.app.nid})" ng-disabled="$ctrl.isLoadingButton || !$ctrl.canProvisionApp" class="btn btn-warning btn-promo btn-lg"
-     uib-tooltip="{{$ctrl.canProvisionApp? '' : 'mno_enterprise.templates.components.app_install_btn.insufficient_privilege' | translate}}">
+  <a ng-if='$ctrl.canProvisionApp' ui-sref="home.provisioning.order({nid: $ctrl.app.nid})" ng-disabled="$ctrl.isLoadingButton" class="btn btn-warning btn-promo btn-lg">
     <span ng-show="$ctrl.isLoadingButton"><i class="fa fa-spinner fa-pulse"></i></span>
     {{ 'mno_enterprise.templates.dashboard.marketplace.show.provision' | translate }}
   </a>
+  <div ng-if='!$ctrl.canProvisionApp' disabled=true class="btn btn-warning btn-promo btn-lg"
+     uib-tooltip="{{ 'mno_enterprise.templates.components.app_install_btn.insufficient_privilege' | translate}}">
+    {{ 'mno_enterprise.templates.dashboard.marketplace.show.provision' | translate }}
+  </div>
 </div>
