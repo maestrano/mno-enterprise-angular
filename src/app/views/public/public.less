@@ -6,11 +6,36 @@
   right: 0;
   position: relative;
 
+// navbar
+
   .navbar {
     position: relative;
     height: 70px;
     background-color: @landing-nav-bg-color;
   }
+
+  .nav-logo {
+    @landing-nav-logo();
+  }
+
+  .navbar-brand {
+    @landing-nav-title();
+    color: @landing-nav-title-text-color;
+  }
+
+  .links {
+    overflow: hidden;
+    margin: 18px 20px;
+
+    a {
+      margin-left: 15px;
+      .z-depth(3);
+    }
+  }
+
+
+
+  // carousel
 
   .highlight-products {
     padding: 0 50px;
@@ -43,88 +68,135 @@
     }
   }
 
-  .nav-logo {
-    @landing-nav-logo();
-  }
-
-  .navbar-brand {
-    @landing-nav-title();
-    color: @landing-nav-title-text-color;
-  }
-
-  .links {
-    overflow: hidden;
-    margin: 18px 20px;
-
-    a {
-      margin-left: 15px;
-      .z-depth(3);
+  .show-content {
+    .well {
+      background-color: @public-marketplace-show-sections-bg-color;
+      color: @public-marketplace-show-sections-text-color;
     }
   }
 
-  .product-content {
-    padding: 25px 50px 0 50px;
+  // search and filter
+
+  .landing-page-search-wrapper {
+    margin: 0 auto;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-bottom: 25px;
   }
 
-  .marketplace-nav {
-    input.form-control {
-      color: @landing-marketplace-search-text-color;
-      border: 1px solid @landing-marketplace-search-border-color;
+  .form-control {
+    margin-top: 25px;
+    border: 0;
+    outline: 1px solid @landing-nav-bg-color;
+    font-size: 18px;
+    font-weight: 300;
+    padding: 16px;
+    width: 100%;
+  }
+
+  .landing-page-app-categories {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    .category-wrapper {
+      width: 100%;
+      text-decoration: none;
+      color: black;
+      display: inline-block;
+      font-size: 18px;
+      font-weight: 300;
+      padding: 7px 10px;
+      list-style: none;
+      border: none;
+      white-space: nowrap;
+      &:focus {
+        outline: 0;
+      }
+      &:hover {
+        background-color: @landing-nav-bg-color;
+        color: @public-main-bg-color;
+        -webkit-transition: all 0.1s ease-in-out;
+        -moz-transition: all 0.1s ease-in-out;
+        -ms-transition: all 0.1s ease-in-out;
+        -o-transition: all 0.1s ease-in-out;
+        transition: all 0.1s ease-in-out;
+      }
     }
+
+    .category-wrapper.active {
+      background-color: @landing-nav-bg-color;
+      color: @public-main-bg-color;
+    }
+
   }
 
-  .marketplace-app-card {
-    @landing-marketplace-app-card();
-    background-color: @landing-marketplace-tile-bg-color;
+  // app card/list
+  .landing-page-app-section-wrapper {
+    height: inherit;
+  }
+
+  .landing-app-card-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 25px;
+  }
+
+  .landing-app-card {
+    position: relative;
+    background-color: @dashboard-marketplace-tile-bg-color;
+    color: @dashboard-marketplace-tile-text-color;
+    cursor: pointer;
+    border: 1px solid @landing-nav-bg-color;
+    border-radius: 100%;
+    height: 200px;
+    margin: 0 auto;
+    padding: 45px;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    .landing-media-body {
+      display: none
+    }
+    img.media-object {
+      margin: 0 auto;
+      max-width: 100px;
+      border: none;
+      padding: 0;
+    }
 
     &:hover {
-      background-color: @landing-marketplace-tile-hover-bg-color;
-    }
-
-    .media {
-      .media-body {
-        color: @landing-marketplace-tile-text-color;
-
-        &:hover {
-          color: @landing-marketplace-tile-hover-text-color;
-        }
-      }
-      .media-heading {
-        color: @landing-marketplace-tile-name-color;
-
-        &:hover {
-          color: @landing-marketplace-tile-hover-name-color;
-        }
-      }
-
-      .arrow {
-        color: @landing-marketplace-tile-hover-arrow-color;
-      }
-
+      text-decoration: none;
+      background-color: @landing-nav-bg-color;
+      color: @landing-nav-bg-color;
+      border: 1px solid @landing-nav-bg-color;
       img.media-object {
-        border: 1px solid @landing-marketplace-tile-img-border-color;
-
-        &:hover {
-          border: 1px solid @landing-marketplace-tile-hover-img-border-color;
-        }
+        display: none;
+      }
+      .landing-media-body {
+        display: block;
+        overflow: wrap;
+        text-align: center;
+        color: @public-main-bg-color;
+        font-family: @font-family-sans-serif;
+        font-size: 18px;
+        font-weight: 200;
       }
     }
   }
 
-  .product-content {
-    .media {
-      .media-body {
-        h2.media-heading {
-          color: @public-marketplace-show-header-text-color;
-        }
-      }
-    }
-
-    .show-content {
-      .well {
-        background-color: @public-marketplace-show-sections-bg-color;
-        color: @public-marketplace-show-sections-text-color;
-      }
-    }
+  h4.landing-app-name {
+    color: @public-marketplace-show-header-text-color;
+    font-weight: 300;
+    text-align: center;
+    color: @public-marketplace-show-header-text-color;
+    font-family: @font-family-sans-serif;
+    line-height: 1.4;
   }
+
+  .landing-app-name-wrapper {
+    margin-top: 10px;
+  }
+
+
+
 }

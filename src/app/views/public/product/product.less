@@ -1,0 +1,103 @@
+// product
+.public-dashboard-marketplace-app {
+  padding: 25px 50px 0 50px;
+
+  .public-logo-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    .landing-logo {
+      height: 120px;
+      width: 120px;
+    }
+    .app-rating {
+      margin-top: 15px;
+    }
+  }
+  .public-back-button-container {
+    margin: 30px;
+    margin-top: 0px;
+
+    .public-back-button {
+    border: 1px solid;
+    color: @landing-nav-bg-color;
+    font-size: 16px;
+    font-weight: 200;
+    padding: 15px 40px;
+    vertical-align: middle;
+    text-decoration: none;
+      &:hover {
+        background-color: @landing-nav-bg-color;
+        color: @public-main-bg-color;
+        -webkit-transition: all 0.1s ease-in-out;
+        -moz-transition: all 0.1s ease-in-out;
+        -ms-transition: all 0.1s ease-in-out;
+        -o-transition: all 0.1s ease-in-out;
+        transition: all 0.1s ease-in-out;
+      }
+    }
+  }
+
+  .landing-content-left {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 50px;
+
+    .public-media-wrapper {
+      display: flex;
+      flex-direction: row
+    }
+
+    .media-body {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+
+      h2.media-heading {
+        font-weight: 200;
+        line-height: 1.4;
+        font-size: 45px;
+        color: @public-marketplace-show-header-text-color;
+      }
+
+      .key-benefits {
+        display: flex;
+        list-style: none;
+        justify-content: flex-start;
+        flex-direction: column;
+        font-size: 20px;
+        font-weight: 200;
+
+        .public-benefit {
+          margin-top: 10px;
+        }
+      }
+    }
+
+    .tiny-description {
+      font-weight: 200;
+      line-height: 1.4;
+      margin: 0 0 10px;
+    }
+
+    .app-features {
+      list-style: none;
+      font-size: 20px;
+      .public-app-features {
+        margin-top: 10px;
+      }
+    }
+  }
+
+  .landing-content-right {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+
+  .well {
+    background-color: @public-marketplace-show-sections-bg-color;
+    color: @public-marketplace-show-sections-text-color;
+  }
+}
