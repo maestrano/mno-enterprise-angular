@@ -7,7 +7,7 @@
       </a>
     </div>
   </div>
-  <!-- Content -->
+  <!-- Landing Page Content -->
   <div class="show-content top-buffer-1" ng-show="!vm.isLoading">
     <div class="landing-media" ng-show="!vm.isLoading">
 
@@ -26,7 +26,7 @@
 
             <h2 class="media-heading">{{vm.app.name}}</h2>
             <h3 class="tiny-description">{{vm.app.tiny_description}}</h3>
-
+            <!-- benefits -->
             <div class="key-benefits-wrapper">
               <div class="key-benefits">
                 <li class="public-benefit" ng-repeat="benefit in vm.app.key_benefits track by $index">
@@ -36,6 +36,7 @@
               </div>
             </div>
 
+            <!-- features -->
             <div class="app-features">
               <li ng-show="vm.app.is_responsive" class="public-app-features">
                 <img class="feature-logo" src="images/icons/mobile-responsive-logo.png" alt="Responsive">
@@ -50,11 +51,10 @@
                 {{ 'mno_enterprise.templates.dashboard.marketplace.show.tag_connec' | translate }}
               </li>
             </div>
-
           </div>
         </div>
       </div>
-
+      <!-- Carousel -->
       <div class="col-md-7 col-lg-7 col-sm-12 landing-content-right">
         <div class="well carousel">
           <div uib-carousel interval="3000" active="0">
@@ -65,6 +65,7 @@
         </div>
       </div>
     </div>
+
     <!-- Testimonials row -->
     <div class="row">
       <div class="col-md-6" ng-repeat="testimonial in vm.app.testimonials | limitTo:2" ng-show="vm.isTestimonialShown(testimonial)">
@@ -112,5 +113,6 @@
         </div>
       </div>
     </div>
+
   </div>
 </div>
