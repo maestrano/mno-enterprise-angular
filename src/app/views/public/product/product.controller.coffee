@@ -32,7 +32,6 @@ angular.module 'mnoEnterpriseAngular'
           plans = vm.app.pricing_plans
           currency = MnoeConfig.marketplaceCurrency()
           vm.pricingPlans = plans[currency] || plans.default
-
       ).finally(-> vm.isLoading = false)
 
       return

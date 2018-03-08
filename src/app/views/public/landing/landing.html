@@ -25,15 +25,15 @@
         <div class="row">
           <div class="col-sm-6 col-md-6 col-lg-4 landing-page-search-wrapper">
             <div class="row">
-              <input type="text" class="form-control landing-search-bar" placeholder="{{ 'mno_enterprise.templates.dashboard.marketplace.index.search' | translate }}" ng-model="vm.searchTerm" ng-change="vm.selectedCategory = ''"/>
+              <input type="text" class="form-control landing-search-bar" placeholder="{{ 'mno_enterprise.templates.dashboard.marketplace.index.search' | translate }}" ng-model="vm.searchTerm" ng-change="vm.resetCategory(vm.displayAll)"/> 
             </div>
             <div class="row">
               <div class="landing-marketplace-nav">
                 <div class="landing-page-app-categories">
-                  <div class="category-wrapper" ng-class="vm.displayAll.active" ng-click="vm.updateCategory(vm.displayAll)">
+                  <div class="category-wrapper" ng-class="vm.displayAll.active" ng-click="vm.resetCategory(vm.displayAll)">
                       {{ 'mno_enterprise.templates.dashboard.marketplace.index.select_all' | translate }}
                   </div>
-                  <div class="category-wrapper" ng-class="c.active" ng-repeat="c in vm.categories" ng-click="vm.updateCategory(c)">
+                  <div class="category-wrapper" ng-class="c.active" ng-repeat="c in vm.categories" ng-click="vm.resetCategory(c)">
                     {{c.label}}
                   </div>
                 </div>

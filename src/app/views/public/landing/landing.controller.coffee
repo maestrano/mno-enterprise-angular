@@ -17,7 +17,7 @@ angular.module 'mnoEnterpriseAngular'
           "background-image": "url(#{app.pictures[0]})"
         }
 
-      vm.updateCategory = (category) ->
+      vm.resetCategory = (category) ->
         vm.selectedCategory.active = ''
         category.active = 'active'
         vm.selectedCategory = category
