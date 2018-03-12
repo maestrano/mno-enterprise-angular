@@ -13,7 +13,7 @@ angular.module 'mnoEnterpriseAngular'
       controller: ($scope, $translate, $window, $uibModal, MnoConfirm, I18N_CONFIG, URI, MnoeCurrentUser) ->
 
         $scope.locales = I18N_CONFIG.available_locales
-        $scope.selectedLangKey = $translate.use()
+        $scope.selectedLangKey = MnoeCurrentUser.user.settings.locale
 
         # Save the previous value of the list
         $scope.$watch('selectedLangKey', (newVal, oldVal) ->

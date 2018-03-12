@@ -9,7 +9,7 @@ angular.module 'mnoEnterpriseAngular'
           if l = response.url || response.user
             setLocale(l)
           else
-            setFallbackStack($translate.use())
+            setFallbackStack(I18N_CONFIG.preferred_locale)
       )
 
     setLocale = (locale) ->
