@@ -53,14 +53,43 @@
       filter: blur(5px);
     }
 
-    .carousel-logo {
+
+    .carousel-display-wrapper {
       border-radius: 50%;
       position: absolute;
       top: 0;
       right: 0;
       bottom: 0;
       left: 0;
+      max-width: 70%;
+      max-height: auto;
       margin: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      color: @public-marketplace-show-header-text-color;
+      .carousel-logo-wrapper {
+        display: flex;
+        border-radius: 100%;
+        .carousel-logo {
+          border-radius: 100%;
+          margin: auto;
+        }
+      }
+      .carousel-app-info-wrapper {
+        display: flex;
+        flex-direction: column;
+        margin: auto;
+        .carousel-app-title {
+          font-size: 37px;
+        }
+        .carousel-app-description {
+          font-size: 23px;
+        }
+        .carousel-app-category {
+          margin-top: 3px;
+          font-size: 18px;
+        }
+      }
     }
   }
 
@@ -104,7 +133,7 @@
       padding: 7px 10px;
       list-style: none;
       border: none;
-      white-space: nowrap;
+      overflow: wrap;
 
       &:focus {
         outline: 0;

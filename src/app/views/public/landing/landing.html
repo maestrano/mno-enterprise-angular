@@ -8,7 +8,22 @@
               <a ui-sref="public.product({productId: app.nid})">
                 <div class="carousel-image-container">
                   <div ng-style="vm.carouselImageStyle(app)" class="carousel-image"></div>
-                  <img class="carousel-logo" ng-src="{{::app.logo}}" ng-alt="{{::app.name}}">
+                  <div class="carousel-display-wrapper">
+                    <div class="carousel-logo-wrapper">
+                      <img class="carousel-logo" ng-src="{{::app.logo}}" ng-alt="{{::app.name}}">
+                    </div>
+                    <div class="carousel-app-info-wrapper hidden-xs">
+                      <div class="carousel-app-title">
+                        {{::app.name}}
+                      </div>
+                      <div class="carousel-app-description">
+                        {{::app.tiny_description}}
+                      </div>
+                      <div class="carousel-app-category" ng-repeat="category in app.categories | limitTo:5">
+                        <i class="fa fa-wrench"></i>  {{category}}
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </a>
             </div>
@@ -25,7 +40,7 @@
         <div class="row">
           <div class="col-sm-6 col-md-6 col-lg-4 landing-page-search-wrapper">
             <div class="row">
-              <input type="text" class="form-control landing-search-bar" placeholder="{{ 'mno_enterprise.templates.dashboard.marketplace.index.search' | translate }}" ng-model="vm.searchTerm" ng-change="vm.resetCategory(vm.displayAll)"/> 
+              <input type="text" class="form-control landing-search-bar" placeholder="{{ 'mno_enterprise.templates.dashboard.marketplace.index.search' | translate }}" ng-model="vm.searchTerm" ng-change="vm.resetCategory(vm.displayAll)"/>
             </div>
             <div class="row">
               <div class="landing-marketplace-nav">
