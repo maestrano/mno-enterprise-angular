@@ -3,8 +3,7 @@ angular.module 'mnoEnterpriseAngular'
 
     vm = this
 
-    vm.form = [ "*" ]
-
+    # vm.form = ["*"]
     vm.subscription = MnoeProvisioning.getSubscription()
 
     # Happens when the user reload the browser during the provisioning
@@ -14,6 +13,9 @@ angular.module 'mnoEnterpriseAngular'
 
     vm.isEditMode = !_.isEmpty(vm.subscription.custom_data)
 
+    # We must use model schemaForm's sf-model, as #json_schema_opts are namespaced under model
+    vm.model = {}
+
     # The schema is contained in field vm.product.custom_schema
     #
     # jsonref is used to resolve $ref references
@@ -22,13 +24,20 @@ angular.module 'mnoEnterpriseAngular'
     # to resolve cyclic references
     #
     MnoeMarketplace.findProduct(id: vm.subscription.product.id)
-      .then((response) ->JSON.parse(response.custom_schema))
-      .then((schema) -> schemaForm.jsonref(schema))
+      .then((response) ->
+        parsedSchema = JSON.parse(response.custom_schema)
+        # Schemas with optional asf_options will be namespaced under #json_schema
+        vm.form = parsedSchema.asf_options if parsedSchema.asf_options
+        parsedSchema = parsedSchema.json_schema if parsedSchema.json_schema
+
+        parsedSchema
+      ).then((schema) -> schemaForm.jsonref(schema))
       .then((schema) -> schemaForm.jsonref(schema))
       .then((schema) -> vm.schema = schema)
 
     vm.submit = (form) ->
       return if form.$invalid
+      vm.subscription.custom_data = vm.model
       MnoeProvisioning.setSubscription(vm.subscription)
       $state.go('home.provisioning.confirm', {id: $stateParams.id, nid: $stateParams.nid})
 
