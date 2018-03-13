@@ -28,7 +28,7 @@ angular.module 'mnoEnterpriseAngular'
           vm.highlightedApps = _.filter(response.apps, (app) -> _.includes(MnoeConfig.publicHighlightedApplications(), app.nid))
           if MnoeConfig.areLocalProductsEnabled
             vm.localProducts = _.filter(response.products, (product) -> product.local && _.includes(MnoeConfig.publicLocalProducts(), product.nid))
-            vm.highlightedApps.push(_.filter(vm.localProducts, (product) -> _.includes(MnoeConfig.publicHighlightedLocalProducts(), product.nid)))
+            vm.highlightedApps = _.merge(vm.highlightedApps, _.filter(response.products, (product) -> _.includes(MnoeConfig.publicHighlightedLocalProducts(), product.nid)))
           vm.categories = response.categories
       ).finally(-> vm.isLoading = false)
 
@@ -36,7 +36,7 @@ angular.module 'mnoEnterpriseAngular'
         if app.local
           "public.local_product({productId: app.nid})"
         else
-          "public.product({productId: app.nid})"
+          "public.product({appId: app.nid})"
 
       return
   )

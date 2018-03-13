@@ -11,14 +11,14 @@ angular.module 'mnoEnterpriseAngular'
       # Initialization
       #====================================
       vm.$onInit = ->
-        vm.isPublic = vm.isPublic == "true"
+        vm.publicPage = vm.isPublic == "true"
         vm.isLoading = true
         vm.selectedCategory = ''
         vm.searchTerm = ''
         vm.isMarketplaceCompare = MnoeConfig.isMarketplaceComparisonEnabled()
         vm.showCompare = false
         vm.nbAppsToCompare = 0
-        vm.appState = if vm.isPublic then "public.product" else "home.marketplace.app"
+        vm.appState = if vm.publicPage then "public.product" else "home.marketplace.app"
         vm.initialize()
       #====================================
       # Scope Management
@@ -66,6 +66,8 @@ angular.module 'mnoEnterpriseAngular'
 
             vm.categories = response.categories
             vm.apps = response.apps
+            if vm.publicPage
+              vm.apps = _.filter(vm.apps, (app) -> _.includes(MnoeConfig.publicApplications(), app.nid))
       ).finally(-> vm.isLoading = false)
 
       $scope.$watch MnoeOrganizations.getSelectedId, (val) ->

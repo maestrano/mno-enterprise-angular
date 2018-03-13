@@ -15,15 +15,15 @@ angular.module 'mnoEnterpriseAngular'
       # Initialization
       #====================================
       vm.$onInit = ->
-        vm.isPublic = vm.isPublic == "true"
-        vm.productState = if vm.isPublic then "public.local_product" else "home.marketplace.local_product"
+        vm.publicPage = vm.isPublic == "true"
+        vm.productState = if vm.publicPage then "public.local_product" else "home.marketplace.local_product"
         vm.isLoading = true
         MnoeMarketplace.getApps().then(
           (response) ->
-            if vm.isPublic
-              vm.products = _.filter(response.products, 'local')
-            else
+            if vm.publicPage
               vm.products = _.filter(response.products, (product) -> product.local && _.includes(MnoeConfig.publicLocalProducts(), product.nid))
+            else
+              vm.products = _.filter(response.products, 'local')
             vm.isLoading = false
           )
 
