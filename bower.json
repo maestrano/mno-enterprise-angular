@@ -41,7 +41,8 @@
     "textAngular": "^1.5.16",
     "angular-user-friendly-json-tree": "^2.0.1",
     "es6-shim": "^0.35.3",
-    "angular-spectrum-colorpicker": "^1.4.5"
+    "angular-spectrum-colorpicker": "^1.4.5",
+    "angular-schema-form-calculate": "https://github.com/maestrano/angular-schema-form-calculate.git"
   },
   "devDependencies": {
     "angular-mocks": "~1.6.0"

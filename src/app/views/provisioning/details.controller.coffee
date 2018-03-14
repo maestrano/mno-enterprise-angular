@@ -15,6 +15,14 @@ angular.module 'mnoEnterpriseAngular'
 
     # We must use model schemaForm's sf-model, as #json_schema_opts are namespaced under model
     vm.model = {}
+    # Methods under the vm.model are used for calculated fields under #json_schema_opts.
+
+    # Used to calculate the end date for forms with a contractEndDate.
+    vm.model.calculateEndDate = (startDate, contractLength) ->
+      return nil unless startDate && contractLength
+      moment(startDate)
+      .add(contractLength.split('Months')[0], 'M')
+      .format('YYYY-MM-DD')
 
     # The schema is contained in field vm.product.custom_schema
     #
