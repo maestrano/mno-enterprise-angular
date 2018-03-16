@@ -238,7 +238,7 @@
   "mno_enterprise.templates.dashboard.organization.members.removal_modal.cancel": "取消",
   "mno_enterprise.templates.dashboard.organization.members.removal_modal.remove": "移除",
   "mno_enterprise.templates.dashboard.organization.settings.company_name": "公司名称",
-  "mno_enterprise.templates.dashboard.organization.settings.financial_year_month": "财政年度月份",
+  "mno_enterprise.templates.dashboard.organization.settings.financial_year_end_month": "财政年度结束月份",
   "mno_enterprise.templates.dashboard.organization.settings.cancel": "取消",
   "mno_enterprise.templates.dashboard.organization.settings.save": "保存",
   "mno_enterprise.templates.dashboard.teams.index.no_teams_warning": "您没有任何团队！团队是控制您公司应用程序访问权的一个很好的方法。",
