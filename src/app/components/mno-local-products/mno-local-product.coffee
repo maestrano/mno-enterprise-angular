@@ -6,8 +6,8 @@ angular.module 'mnoEnterpriseAngular'
     vm.parentState = parentState
 
     vm.isPriceShown = if vm.isPublic
-    then MnoeConfig.isMarketplacePricingEnabled()
-    else MnoeConfig.isPublicPricingEnabled()
+    then MnoeConfig.isPublicPricingEnabled()
+    else MnoeConfig.isMarketplacePricingEnabled()
 
     vm.isProvisioningEnabled = !vm.isPublic && MnoeConfig.isProvisioningEnabled()
 

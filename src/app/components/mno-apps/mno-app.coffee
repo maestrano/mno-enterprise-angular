@@ -18,7 +18,7 @@ angular.module 'mnoEnterpriseAngular'
     # that is not multi instantiable, if any
     vm.conflictingApp = null
     # Enabling pricing
-    vm.isPriceShown = if vm.isPublic then MnoeConfig.isMarketplacePricingEnabled() else MnoeConfig.isPublicPricingEnabled()
+    vm.isPriceShown = if vm.isPublic then MnoeConfig.isPublicPricingEnabled() else MnoeConfig.isMarketplacePricingEnabled()
     # Enabling provisioning
     vm.isProvisioningEnabled = !vm.isPublic && MnoeConfig.isProvisioningEnabled()
     # Enabling reviews
