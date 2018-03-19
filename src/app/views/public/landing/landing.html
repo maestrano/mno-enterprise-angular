@@ -26,7 +26,7 @@
           <mno-app-listing is-public="true"></mno-app-listing>
         </uib-tab>
         <uib-tab index="1">
-          <div uib-tab-heading>{{ 'mno_enterprise.templates.dashboard.marketplace.index.reseller_products' | translate }}</div>
+          <div uib-tab-heading>{{ 'mno_enterprise.templates.dashboard.marketplace.index.reseller_products' | translate:{ appname: app_name } }}</div>
           <mno-local-product-listing is-public="true"></mno-local-product-listing>
         </uib-tab>
       </uib-tabset>

@@ -742,7 +742,7 @@
   "mno_enterprise.templates.dashboard.marketplace.index.title": "Marketplace",
   "mno_enterprise.templates.dashboard.marketplace.index.select_all": "All",
   "mno_enterprise.templates.dashboard.marketplace.index.applications": "Products",
-  "mno_enterprise.templates.dashboard.marketplace.index.reseller_products": "Reseller's products",
+  "mno_enterprise.templates.dashboard.marketplace.index.reseller_products": "{appname}'s products",
   "mno_enterprise.templates.dashboard.marketplace.index.search": "Search",
   "mno_enterprise.templates.dashboard.marketplace.index.compare": "Compare application",
   "mno_enterprise.templates.dashboard.marketplace.index.select_apps": "Compare up to 4 applications",
