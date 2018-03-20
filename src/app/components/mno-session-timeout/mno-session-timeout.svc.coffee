@@ -44,8 +44,7 @@ angular.module 'mnoEnterpriseAngular'
             toastr.warning("mno_enterprise.auth.sessions.timeout.error")
             $uibModalInstance.dismiss('cancel')
             $state.go('logout')
-        ).finally(
-         ->
+        ).finally(->
           $scope.isLoading = false
         )
 
