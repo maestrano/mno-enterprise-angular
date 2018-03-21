@@ -1,7 +1,7 @@
 {
   "name": "mno-enterprise-angular",
   "description": "MnoEnterprise AngularJS Frontend",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "repository": {
     "type": "git",
     "url": "git@github.com:maestrano/mno-enterprise-angular.git"

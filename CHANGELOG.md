@@ -1,5 +1,12 @@
 # Change Log
 
+## [v1.1.5](https://github.com/maestrano/mno-enterprise-angular/tree/v1.1.5) (2018-03-21)
+[Full Changelog](https://github.com/maestrano/mno-enterprise-angular/compare/v1.1.4...v1.1.5)
+
+**Fixed bugs:**
+
+- Fix indentation [\#443](https://github.com/maestrano/mno-enterprise-angular/pull/443) ([ouranos](https://github.com/ouranos))
+
 ## [v1.1.4](https://github.com/maestrano/mno-enterprise-angular/tree/v1.1.4) (2018-03-19)
 [Full Changelog](https://github.com/maestrano/mno-enterprise-angular/compare/v1.1.3...v1.1.4)
 
