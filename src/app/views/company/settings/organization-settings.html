@@ -22,6 +22,17 @@
   </form>
 </div>
 
+<div class="row">
+  <form name="forms.settings" role="form" novalidate class="form-horizontal">
+    <div class="form-group">
+      <label class="col-sm-3 control-label">{{ 'mno_enterprise.templates.dashboard.organization.settings.financial_year_end_month' | translate }}</label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control" ng-model="model.financial_year_end_month" required/>
+      </div>
+    </div>
+  </form>
+</div>
+
 <!--
   Action buttons
 -->
