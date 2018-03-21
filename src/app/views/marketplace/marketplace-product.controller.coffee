@@ -11,8 +11,6 @@ angular.module 'mnoEnterpriseAngular'
 
     atLeastAdmin = (user, currentOrg) ->
       org = _.find(user.organizations, { id: currentOrg.organization?.id })
-      console.log 'MnoeOrganizations.role.atLeastAdmin(org.current_user_role)'
-      console.log MnoeOrganizations.role.atLeastAdmin(org.current_user_role)
       MnoeOrganizations.role.atLeastAdmin(org.current_user_role)
 
     # Retrieve the products
