@@ -23,21 +23,9 @@ angular.module 'mnoEnterpriseAngular'
       .state 'public.product',
         data:
           pageTitle: "Product Preview"
-        url: '/product/:appId'
-        templateUrl: 'app/components/mno-apps/mno-app.html'
-        controller: 'mnoApp'
-        controllerAs: 'vm'
-        resolve: {
-          isPublic: -> true
-          parentState: -> 'public.landing'
-        }
-        public: true
-      .state 'public.local_product',
-        data:
-          pageTitle: "Reseller's Product Preview"
-        url: '/localproduct/:productId'
-        templateUrl: 'app/components/mno-local-products/mno-local-product.html',
-        controller: 'mnoLocalProduct'
+        url: '/product/:productId'
+        templateUrl: 'app/views/public/product/product.html'
+        controller: 'LandingProductCtrl'
         controllerAs: 'vm'
         resolve: {
           isPublic: -> true
