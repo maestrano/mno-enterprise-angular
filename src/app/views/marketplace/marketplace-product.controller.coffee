@@ -2,25 +2,30 @@
 #
 #============================================
 angular.module 'mnoEnterpriseAngular'
-  .controller('DashboardMarketplaceProductCtrl',($scope, $q, $stateParams, $state, MnoeMarketplace, MnoeOrganizations, MnoeConfig) ->
+  .controller('DashboardMarketplaceProductCtrl',($scope, $q, $stateParams, $state, MnoeMarketplace, MnoeOrganizations, MnoeConfig, MnoeCurrentUser) ->
 
     vm = this
 
     vm.isPriceShown = MnoeConfig.isMarketplacePricingEnabled()
-    vm.isProvisioningEnabled = MnoeConfig.isProvisioningEnabled()
     vm.isLoading = true
+
+    atLeastAdmin = (user, currentOrg) ->
+      org = _.find(user.organizations, { id: currentOrg.organization?.id })
+      MnoeOrganizations.role.atLeastAdmin(org.current_user_role)
 
     # Retrieve the products
     vm.initialize = ->
       $q.all({
         organization: MnoeOrganizations.get(),
-        localProducts: MnoeMarketplace.getLocalProducts()
+        localProducts: MnoeMarketplace.getLocalProducts(),
+        currentUser: MnoeCurrentUser.get()
       }).then(
         (response) ->
           products = response.localProducts
           organization = response.organization
 
           vm.orgCurrency = organization.organization?.billing_currency || MnoeConfig.marketplaceCurrency()
+          vm.isProvisioningEnabled = MnoeConfig.isProvisioningEnabled() && atLeastAdmin(response.currentUser, organization)
 
           # App to be displayed
           productId = $stateParams.productId
