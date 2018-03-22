@@ -4,7 +4,7 @@
     <div class="row">
       <div class="marketplace-list">
         <div class="col-sm-6 col-md-4" ng-repeat="product in $ctrl.products">
-          <a class="marketplace-app-card" ui-sref="home.marketplace.product({productId: product.nid})">
+          <a class="marketplace-app-card" ui-sref="{{$ctrl.productState}}({productId: product.nid})">
             <div class="media">
               <div class="pull-left">
                 <img class="media-object" ng-src="{{::product.logo}}" ng-alt="{{::product.name}}">

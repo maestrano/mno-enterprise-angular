@@ -1,28 +1,28 @@
-#
-# Mnoe Marketplace apps
-#
-
 angular.module 'mnoEnterpriseAngular'
-  .component('mnoMarketplaceApps', {
-    templateUrl: 'app/components/mno-marketplace-apps/mno-marketplace-apps.html',
+  .component('mnoAppListing', {
+    templateUrl: 'app/components/mno-apps/mno-app-listing.html',
+    bindings: {
+      isPublic: '@'
+    }
     controller: ($scope, toastr, MnoeOrganizations, MnoeMarketplace, MnoeConfig) ->
       vm = this
 
       #====================================
       # Initialization
       #====================================
-      vm.isLoading = true
-      vm.selectedCategory = ''
-      vm.searchTerm = ''
-      vm.isMarketplaceCompare = MnoeConfig.isMarketplaceComparisonEnabled()
-      vm.showCompare = false
-      vm.nbAppsToCompare = 0
-
+      vm.$onInit = ->
+        vm.publicPage = vm.isPublic == "true"
+        vm.isLoading = true
+        vm.selectedCategory = ''
+        vm.searchTerm = ''
+        vm.isMarketplaceCompare = MnoeConfig.isMarketplaceComparisonEnabled()
+        vm.showCompare = false
+        vm.nbAppsToCompare = 0
+        vm.appState = if vm.publicPage then "public.product" else "home.marketplace.app"
+        vm.initialize()
       #====================================
       # Scope Management
       #====================================
-      vm.linkFor = (app) ->
-        "#/marketplace/#{app.id}"
 
       vm.appsFilter = (app) ->
         if (vm.searchTerm? && vm.searchTerm.length > 0) || !vm.selectedCategory
@@ -57,17 +57,22 @@ angular.module 'mnoEnterpriseAngular'
       vm.canBeCompared = ->
         return vm.nbAppsToCompare <= 4 && vm.nbAppsToCompare >=2
 
+      vm.initialize = ->
+        vm.isLoading = true
+        MnoeMarketplace.getApps().then(
+          (response) ->
+            # Remove restangular decoration
+            response = response.plain()
+
+            vm.categories = response.categories
+            vm.apps = response.apps
+            if vm.publicPage
+              vm.apps = _.filter(vm.apps, (app) -> _.includes(MnoeConfig.publicApplications(), app.nid))
+      ).finally(-> vm.isLoading = false)
+
       $scope.$watch MnoeOrganizations.getSelectedId, (val) ->
         if val?
-          vm.isLoading = true
-          MnoeMarketplace.getApps().then(
-            (response) ->
-              # Remove restangular decoration
-              response = response.plain()
-
-              vm.categories = response.categories
-              vm.apps = response.apps
-          ).finally(-> vm.isLoading = false)
+          vm.initialize()
 
       return
     })
