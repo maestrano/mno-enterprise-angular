@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('mnoLocalProduct', ($scope, $stateParams, $state, isPublic, parentState, MnoeMarketplace, MnoeOrganizations, MnoeConfig) ->
+  .controller('mnoLocalProduct', ($scope, $stateParams, $state, isPublic, parentState, MnoeMarketplace, MnoeOrganizations, MnoeConfig, MnoeCurrentUser) ->
 
     vm = this
     vm.isPublic = isPublic
@@ -13,14 +13,20 @@ angular.module 'mnoEnterpriseAngular'
 
     vm.isLoading = true
 
+    atLeastAdmin = (user, currentOrg) ->
+      org = _.find(user.organizations, { id: currentOrg.id })
+      MnoeOrganizations.role.atLeastAdmin(org.current_user_role)
+
     # Retrieve the products
     vm.initialize = ->
       MnoeMarketplace.getApps().then(
         (response) ->
           vm.products = _.filter(response.products, 'local')
           if !vm.isPublic
-            organization = MnoeOrganizations.get().then((response) -> response.organization)
-            vm.orgCurrency = organization.organization?.billing_currency || MnoeConfig.marketplaceCurrency()
+            organization = MnoeOrganizations.selected.organization
+            currentUser = MnoeCurrentUser.user
+            vm.orgCurrency = organization.billing_currency || MnoeConfig.marketplaceCurrency()
+            vm.isProvisioningEnabled = vm.isProvisioningEnabled && atLeastAdmin(currentUser, organization)
             vm.planAvailableForCurrency = (plan) ->
               _.includes(_.map(plan.prices, 'currency'), vm.orgCurrency)
 
