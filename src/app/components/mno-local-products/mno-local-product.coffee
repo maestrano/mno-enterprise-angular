@@ -9,7 +9,7 @@ angular.module 'mnoEnterpriseAngular'
     then MnoeConfig.isPublicPricingEnabled()
     else MnoeConfig.isMarketplacePricingEnabled()
 
-    vm.isProvisioningEnabled = !vm.isPublic && MnoeConfig.isProvisioningEnabled()
+    vm.isProvisioningEnabled = MnoeConfig.isProvisioningEnabled()
 
     vm.isLoading = true
 
