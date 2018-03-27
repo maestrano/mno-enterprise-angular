@@ -10,7 +10,24 @@
               <a ui-sref="{{vm.highlightHref(app)}}">
                 <div class="carousel-image-container">
                   <div ng-style="vm.carouselImageStyle(app)" class="carousel-image"></div>
-                  <img class="carousel-logo" ng-src="{{::app.logo}}" ng-alt="{{::app.name}}">
+                  <div class="carousel-display-wrapper">
+                    <div class="carousel-logo-wrapper">
+                      <img class="carousel-logo" ng-src="{{::app.logo}}" ng-alt="{{::app.name}}">
+                    </div>
+                    <div class="carousel-app-info-wrapper hidden-xs">
+                      <div class="carousel-app-info-background">
+                        <div class="carousel-app-title">
+                          {{::app.name}}
+                        </div>
+                        <div class="carousel-app-description">
+                          {{::app.tiny_description}}
+                        </div>
+                        <div class="carousel-app-category" ng-repeat="category in app.categories | limitTo:3">
+                          <i class="fa fa-angle-right"></i>  {{category}}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </a>
             </div>
