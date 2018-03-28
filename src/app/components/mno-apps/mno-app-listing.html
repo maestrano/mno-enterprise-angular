@@ -32,7 +32,7 @@
       </div>
     </div>
     <!-- Public Marketplace Nav -->
-      <div class="col-sm-6 col-md-6 col-lg-4 landing-page-search-wrapper" ng-if="$ctrl.publicPage">
+      <div class="col-sm-6 col-md-6 col-lg-4 landing-page-search-wrapper" ng-show="$ctrl.publicPage">
         <div class="row">
           <input type="text" class="form-control landing-search-bar" placeholder="{{ 'mno_enterprise.templates.dashboard.marketplace.index.search' | translate }}" ng-model="$ctrl.searchTerm" ng-change="$ctrl.resetCategory($ctrl.displayAll)"/>
         </div>
@@ -80,7 +80,7 @@
       </div><!-- End: marketplace-list -->
     </div><!-- End: row -->
     <!-- Display Public HTML if Public -->
-    <div class="col-sm-6 col-md-6 col-lg-8 landing-page-app-section-wrapper" ng-if="$ctrl.publicPage">
+    <div class="col-sm-6 col-md-6 col-lg-8 landing-page-app-section-wrapper" ng-show="$ctrl.publicPage">
       <div class="marketplace-list">
         <!-- Public App Cards-->
         <div class="col-sm-12 col-md-6 col-lg-4 landing-app-card-wrapper" ng-repeat="app in $ctrl.apps | filter:$ctrl.appsFilter | filter:$ctrl.searchTerm">

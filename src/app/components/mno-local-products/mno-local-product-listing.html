@@ -22,7 +22,7 @@
       </div>
     </div>
   <!-- display public HTML and styling if public -->
-    <div class="landing-page-app-section-wrapper" ng-if="$ctrl.publicPage">
+    <div class="landing-page-app-section-wrapper" ng-show="$ctrl.publicPage">
       <div class="local-marketplace-list">
         <!-- App Cards-->
         <div class="local-landing-apps landing-app-card-wrapper" ng-repeat="product in $ctrl.products">
