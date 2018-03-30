@@ -2,34 +2,42 @@ angular.module 'mnoEnterpriseAngular'
   .controller('ProvisioningOrderCtrl', ($q, $state, $stateParams, MnoeOrganizations, MnoeMarketplace, MnoeProvisioning, MnoeConfig, PRICING_TYPES) ->
 
     vm = this
-    vm.isLoading = true
     vm.product = null
 
-    orgPromise = MnoeOrganizations.get()
-    prodsPromise = MnoeMarketplace.getProducts()
-    initPromise = MnoeProvisioning.initSubscription({productNid: $stateParams.nid, subscriptionId: $stateParams.id})
+    # When editing an order after having completed the form, we already have the subscription.
+    vm.subscription = MnoeProvisioning.getSubscription()
 
-    $q.all({organization: orgPromise, products: prodsPromise, subscription: initPromise}).then(
-      (response) ->
-        vm.orgCurrency = response.organization.organization?.billing_currency || MnoeConfig.marketplaceCurrency()
-        vm.subscription = response.subscription
+  # Subscription must either be empty, not have the same nid, or not have the same id to refetch it.
+    # Note when non-existant $stateParams.id returns undefined while vm.subscription.id returns null.
+    if _.isEmpty(vm.subscription) || $stateParams.nid != vm.subscription.product.nid || (($stateParams.id || vm.subscription.id) && $stateParams.id != vm.subscription.id)
+      vm.isLoading = true
+      orgPromise = MnoeOrganizations.get()
+      prodsPromise = MnoeMarketplace.getProducts()
+      initPromise = MnoeProvisioning.initSubscription({productNid: $stateParams.nid, subscriptionId: $stateParams.id})
 
-        MnoeMarketplace.findProduct({id: vm.subscription.product?.id, nid: $stateParams.nid}).then(
-          (response) ->
-            vm.subscription.product = response
+      $q.all({organization: orgPromise, products: prodsPromise, subscription: initPromise}).then(
+        (response) ->
+          vm.orgCurrency = response.organization.organization?.billing_currency || MnoeConfig.marketplaceCurrency()
+          vm.subscription = response.subscription
 
-            # Filters the pricing plans not containing current currency
-            vm.subscription.product.pricing_plans = _.filter(vm.subscription.product.pricing_plans,
-              (pp) -> (pp.pricing_type in PRICING_TYPES['unpriced']) || _.some(pp.prices, (p) -> p.currency == vm.orgCurrency)
-            )
+          MnoeMarketplace.findProduct({id: vm.subscription.product?.id, nid: $stateParams.nid}).then(
+            (response) ->
+              vm.subscription.product = response
 
-            vm.select_plan = (pricingPlan)->
-              vm.subscription.product_pricing = pricingPlan
-              vm.subscription.max_licenses ||= 1 if vm.subscription.product_pricing.license_based
+              # Filters the pricing plans not containing current currency
+              vm.subscription.product.product_pricings = _.filter(vm.subscription.product.product_pricings,
+                (pp) -> (pp.pricing_type in PRICING_TYPES['unpriced']) || _.some(pp.prices, (p) -> p.currency == vm.orgCurrency)
+              )
 
-            MnoeProvisioning.setSubscription(vm.subscription)
-        )
-    ).finally(-> vm.isLoading = false)
+              vm.select_plan = (pricingPlan)->
+                vm.subscription.product_pricing = pricingPlan
+                vm.subscription.max_licenses ||= 1 if vm.subscription.product_pricing.license_based
+
+              MnoeProvisioning.setSubscription(vm.subscription)
+          )
+      ).finally(-> vm.isLoading = false)
+    else
+      vm.isLoading = false
 
     vm.next = (subscription) ->
       MnoeProvisioning.setSubscription(subscription)
