@@ -1,0 +1,41 @@
+<div class='row dashboard-app-management'>
+  <div class='col-xs-12'>
+    <h1 class='text-center bottom-buffer-3'>
+      Manage your applications
+    </h1>
+  </div>
+
+  <div class='clearfix'></div>
+  <mno-loader ng-show="vm.isLoading" class='top-buffer-3'></mno-loader>
+  <div ng-show="!vm.isLoading" class='col-xs-12 bottom-buffer-3'>
+    <div class="apps-wrapper">
+      <div ng-repeat="app in vm.apps" class='app-section'>
+        <div class='app-logo-wrapper'>
+          <img class='app-logo' ng-src="{{app.logo}}">
+        </div>
+
+        <div class='app-info'>
+          <h3 class='bottom-buffer-2'>{{app.app_name}}</h3>
+
+          <strong>Status:</strong>
+          <div ng-if=!vm.providesStatus(app)>
+            This application does not provide any status
+          </div>
+
+          <div ng-if='vm.providesStatus(app)'>
+            <span>Data sharing: {{vm.dataSharingStatus(app)}}</span>
+
+            <span ng-if="vm.subscriptionStatus(app)">
+              Subscription: {{vm.subscriptionStatus(app)}}
+            </span>
+          </div>
+        </div>
+
+        <div class='app-btn-events'>
+          <a ng-href="{{ vm.appActionUrl(app) }}" target='_blank' class='btn btn-primary top-buffer-1' >Access</a>
+          <a ui-sref="home.app-management" class='btn btn-default top-buffer-1'>Manage</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

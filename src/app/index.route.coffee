@@ -68,6 +68,13 @@ angular.module 'mnoEnterpriseAngular'
         templateUrl: 'app/views/impac/impac.html'
         controller: 'ImpacController'
         controllerAs: 'vm'
+      .state 'home.app-management',
+        data:
+          pageTitle:'App Management'
+        url: '/app-management'
+        templateUrl: 'app/views/app-management/app-management.html'
+        controller: 'AppManagementCtrl'
+        controllerAs: 'vm'
       .state 'home.account',
         data:
           pageTitle:'Account'
