@@ -1,6 +1,6 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('mnoApp',($q, $scope, $stateParams, $state, $sce, $window, $uibModal, $anchorScroll,
-  $location, isPublic, parentState, toastr, MnoeMarketplace, MnoeOrganizations, MnoeCurrentUser, MnoeAppInstances, MnoConfirm, MnoeConfig, PRICING_TYPES) ->
+  $location, isPublic, parentState, toastr, MnoeMarketplace, MnoeOrganizations, MnoeCurrentUser, MnoeAppInstances, MnoConfirm, MnoeConfig, ProvisioningHelper) ->
 
     vm = this
     #====================================
@@ -125,8 +125,7 @@ angular.module 'mnoEnterpriseAngular'
     # Pricings
     #====================================
     # Return true if the plan has a dollar value
-    vm.pricedPlan = (plan) ->
-      plan.pricing_type not in PRICING_TYPES['unpriced']
+    vm.pricedPlan = ProvisioningHelper.pricedPlan
 
     #====================================
     # Reviews
