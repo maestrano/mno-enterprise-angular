@@ -190,6 +190,31 @@
         <div uib-tab-heading>
           Order Histroy
         </div>
+
+        <div class='row'>
+          <div class='col-xs-12'>
+            <mno-loader ng-show="vm.isOrderHistoryLoading" class='top-buffer-4'></mno-loader>
+            <div ng-show="!vm.isOrderHistoryLoading" class='well order-histroy top-buffer-2'>
+              <div class='bottom-buffer-3'>
+                <div class='row subscription-event'>
+                  <div class='col-sm-4'><label>Start Date</label></div>
+                  <div class='col-sm-4'><label>Offer Name</label></div>
+                  <div class='col-sm-4'><label>Status</label></div>
+                </div>
+              </div>
+              <div ng-repeat="subscription in vm.subscriptionsHistory">
+                <div class='row'>
+                  <div class='col-sm-4'>{{ subscription.start_date | amDateFormat: 'L' }}</div>
+                  <div class='col-sm-4'>{{ subscription.product_pricing.name }}</div>
+                  <div class='col-sm-4'>{{ subscription.status }}</div>
+                </div>
+              </div>
+              <span ng-show="vm.subscriptionsHistory.length == 0">
+                No previous history available
+              </span>
+            </div>
+          </div>
+        </div>
       </uib-tab>
     </uib-tabset>
   </div>

@@ -4,6 +4,7 @@ angular.module 'mnoEnterpriseAngular'
 
       vm = @
       vm.isLoading = true
+      vm.isOrderHistoryLoading = true
 
       vm.providesStatus = (app) ->
         app.data_sharing || app.subscription
@@ -29,7 +30,12 @@ angular.module 'mnoEnterpriseAngular'
         #       to get the subscriptions for that product and load data from
         #       that in order hsitroy. Add a new loader bool to load this data
         #       i.e. isOrderHistoryLoading = true
-        # MnoeProvisioning.getProductSubscriptions()
+        MnoeProvisioning.getProductSubscriptions(vm.app.app_id).then(
+          (response) ->
+            vm.subscriptionsHistory = response
+            console.log 'vm.subscriptionsHistory'
+            console.log vm.subscriptionsHistory
+        ).finally( -> vm.isOrderHistoryLoading = false)
 
       appPromise = MnoeAppInstances.getAppInstances()
       subPromise = MnoeProvisioning.getSubscriptions()
