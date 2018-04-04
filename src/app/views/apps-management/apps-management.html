@@ -1,7 +1,7 @@
 <div class='row dashboard-apps-management'>
   <div class='col-xs-12'>
     <h1 class='text-center bottom-buffer-3'>
-      Manage your applications
+      {{ 'mno_enterprise.templates.dashboard.app_management.heading' | translate }}
     </h1>
   </div>
 
@@ -17,28 +17,30 @@
         <div class='app-info'>
           <h3 class='bottom-buffer-2'>{{app.app_name}}</h3>
 
-          <strong>Status:</strong>
+          <strong>
+            {{ 'mno_enterprise.templates.dashboard.app_management.status' | translate }}
+          </strong>
           <div ng-if=!vm.providesStatus(app)>
-            This application does not provide any status
+            {{ 'mno_enterprise.templates.dashboard.app_management.no_status' | translate }}
           </div>
 
           <div ng-if='vm.providesStatus(app)'>
             <span ng-if="vm.dataSharingEnabled(app)">
-              Data sharing: {{vm.dataSharingStatus(app)}}
+              {{ 'mno_enterprise.templates.dashboard.app_management.data_sharing.status' | translate:{status: vm.dataSharingStatus(app)} }}
             </span>
 
             <span ng-if="vm.subscriptionStatus(app)">
-              Subscription: {{vm.subscriptionStatus(app)}}
+              {{ 'mno_enterprise.templates.dashboard.app_management.subscription.status' | translate:{status: vm.subscriptionStatus(app)} }}
             </span>
           </div>
         </div>
 
         <div class='app-btn-events'>
           <a ng-href="{{ vm.appActionUrl(app) }}" target='_blank' class='btn btn-primary top-buffer-1' >
-            Access
+            {{ 'mno_enterprise.templates.dashboard.app_management.access' | translate }}
           </a>
           <a ui-sref="home.app-management({appId: app.id})" class='btn btn-default top-buffer-1'>
-            Manage
+            {{ 'mno_enterprise.templates.dashboard.app_management.manage' | translate }}
           </a>
         </div>
       </div>
