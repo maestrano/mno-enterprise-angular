@@ -10,10 +10,17 @@ angular.module 'mnoEnterpriseAngular'
         true
 
     @isAppManagementEnabled = () ->
-      if DASHBOARD_CONFIG.app_management?.enabled?
-        DASHBOARD_CONFIG.app_management.enabled
+      if DASHBOARD_CONFIG.apps_management?.enabled?
+        DASHBOARD_CONFIG.apps_management.enabled
       else
         $log.debug("DASHBOARD_CONFIG.app_management.enabled missing")
+        false
+
+    @isDataSharingEnabled = () ->
+      if DASHBOARD_CONFIG.data_sharing?.enabled?
+        DASHBOARD_CONFIG.data_sharing.enabled
+      else
+        $log.debug("DASHBOARD_CONFIG.data_sharing.enabled missing")
         false
 
     @isAuditLogEnabled = () ->
