@@ -8,7 +8,7 @@
 
 <mno-loader ng-show="vm.isLoading" class='top-buffer-4'></mno-loader>
 <div class='row dashboard-app-management' ng-if="!vm.isLoading">
-  <div class='col-xs-12'>
+  <div class='col-xs-12 bottom-buffer-3'>
     <div class='col-xs-offset-1'>
       <h2>
         <img class='app-logo' ng-src="{{vm.app.logo}}">
@@ -104,47 +104,47 @@
 
         <div class='row'>
           <div class='col-xs-12'>
-            <div class="table-cell">
-              <div class="row th-row hidden-xs">
-                <div class="col-xs-10 col-xs-offset-2">
-                  <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.order.name' | translate }}</div>
-                  <div class="cell col-sm-5">{{ 'mno_enterprise.templates.dashboard.provisioning.order.description' | translate }}</div>
-                  <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.order.price' | translate }}</div>
+            <mno-loader ng-show="vm.isCurrentSubscriptionLoading" class='top-buffer-4'></mno-loader>
+            <div ng-show="!vm.isCurrentSubscriptionLoading" class='table-cell'>
+              <div class='row th-row hidden-xs'>
+                <div class='col-xs-10 col-xs-offset-2'>
+                  <div class='cell col-sm-3'>{{ 'mno_enterprise.templates.dashboard.provisioning.order.name' | translate }}</div>
+                  <div class='cell col-sm-5'>{{ 'mno_enterprise.templates.dashboard.provisioning.order.description' | translate }}</div>
+                  <div class='cell col-sm-3'>{{ 'mno_enterprise.templates.dashboard.provisioning.order.price' | translate }}</div>
                 </div>
               </div>
-              <div>Current Subscription</div>
 
-              <div class="row td-row" ng-if="vm.subscription.product.pricing_plans.length === 0">
-                <div class="cell col-md-12 text-center" translate>
+              <div class='row td-row' ng-if="vm.currentSubscription.product.pricing_plans.length === 0">
+                <div class='cell col-md-12 text-center' translate>
                   {{ 'mno_enterprise.templates.dashboard.provisioning.order.no_pricing_found' | translate }}
                 </div>
               </div>
 
-              <div class="row td-row" ng-repeat="pricingPlan in vm.subscription.product.pricing_plans" ng-click="vm.select_plan(pricingPlan)">
-                <div class="cell radio-selector col-xs-2">
-                  <input type="radio" name="optradio" ng-model="vm.subscription.product_pricing.id" ng-value="pricingPlan.id" required>
+              <div class='row td-row' ng-repeat="pricingPlan in vm.currentSubscription.product.pricing_plans" ng-click="vm.select_plan(pricingPlan)">
+                <div class='cell radio-selector col-xs-2'>
+                  <input type='radio' name='optradio' ng-change="vm.toggleSubscriptionNext(pricingPlan.id)" ng-model="vm.currentSubscription.product_pricing.id" ng-value="pricingPlan.id">
                 </div>
 
-                <div class="col-xs-10">
-                  <div class="cell col-sm-3">
-                    <span class="cell-label visible-xs-inline">
+                <div class='col-xs-10'>
+                  <div class='cell col-sm-3'>
+                    <span class='cell-label visible-xs-inline'>
                       {{ 'mno_enterprise.templates.dashboard.provisioning.order.name' | translate }}:
                     </span>
                     {{ pricingPlan.name }}
                   </div>
 
-                  <div class="cell col-sm-5">
-                    <span class="cell-label visible-xs-inline">
+                  <div class='cell col-sm-5'>
+                    <span class='cell-label visible-xs-inline'>
                       {{ 'mno_enterprise.templates.dashboard.provisioning.order.description' | translate }}:
                     </span>
                     {{ pricingPlan.description }}
                   </div>
 
-                  <div class="cell col-sm-3">
-                    <span class="cell-label visible-xs-inline">
+                  <div class='cell col-sm-3'>
+                    <span class='cell-label visible-xs-inline'>
                       {{ 'mno_enterprise.templates.dashboard.provisioning.order.price' | translate }}:
                     </span>
-                    <span ng-if="vm.pricedPlan(pricingPlan)" ng-repeat="price in pricingPlan.prices | filterBy: ['currency']: vm.orgCurrency" class="badge">
+                    <span ng-if="vm.pricedPlan(pricingPlan)" ng-repeat="price in pricingPlan.prices | filterBy: ['currency']: vm.orgCurrency" class='badge'>
                       {{ price.currency }} {{ price.price_cents / 100 }}
                     </span>
                     <span ng-show="pricingPlan.pricing_type == 'recurring'">
@@ -160,28 +160,9 @@
                 </div>
               </div>
 
-              <div ng-show="vm.subscription.product_pricing.license_based">
-                <div class="row">
-                  <div class="col-xs-10">
-                    <label>{{ 'mno_enterprise.templates.dashboard.provisioning.order.licenses' | translate }}:
-                      <input type="number" name="input" ng-model="vm.subscription.max_licenses" min="1" ng-required="vm.subscription.product_pricing.license_based">
-                    </label>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-xs-10">
-                    <label>{{ 'mno_enterprise.templates.dashboard.provisioning.order.total' | translate }}:
-                      <span ng-hide="vm.subscription.product_pricing.pricing_type == 'payg'" ng-repeat="price in vm.subscription.product_pricing.prices | filterBy: ['currency']: vm.orgCurrency" class="badge">
-                        {{ price.currency }} {{ price.price_cents / 100 * vm.subscription.max_licenses | number:2 }}
-                      </span>
-                      <span ng-show="vm.subscription.product_pricing.pricing_type == 'recurring'">
-                        / {{ vm.subscription.product_pricing.per_unit }} / {{ vm.subscription.product_pricing.per_duration }}
-                      </span>
-                    </label>
-                  </div>
-                </div>
-              </div>
+              <button class='btn btn-primary top-buffer-1 pull-right' ng-click="vm.nextSubscription()" ng-disabled="vm.isSubChanged" translate>
+                mno_enterprise.templates.dashboard.provisioning.order.next
+              </button>
             </div>
           </div>
         </div>

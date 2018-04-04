@@ -1,13 +1,12 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('AppManagementCtrl',
-    ($q, $stateParams, MnoeConfig, MnoeAppInstances, MnoeProvisioning, MnoeOrganizations) ->
+    ($q, $state, $stateParams, MnoeConfig, MnoeAppInstances, MnoeProvisioning, MnoeOrganizations, MnoeCurrentUser, MnoeMarketplace, PRICING_TYPES) ->
 
       vm = @
       vm.isLoading = true
       vm.isOrderHistoryLoading = true
-
-      vm.providesStatus = (app) ->
-        app.data_sharing || app.subscription
+      vm.isCurrentSubscriptionLoading = true
+      vm.isSubChanged = true
 
       # TODO: Decide how data sharing status is checked
       vm.dataSharingStatus = ->
@@ -16,40 +15,82 @@ angular.module 'mnoEnterpriseAngular'
         else
           'Disconnected'
 
-      vm.subscriptionStatus = (app) ->
-        return app.subscription.status if app.subscription
+      # Return true if the plan has a dollar value
+      vm.pricedPlan = (plan) ->
+        plan.pricing_type not in PRICING_TYPES['unpriced']
 
-      vm.appActionUrl = (app) ->
-        "/mnoe/launch/#{app.uid}"
+      vm.toggleSubscriptionNext = (pricingId) ->
+        vm.isSubChanged = vm.currentPlanId == pricingId
+
+      vm.nextSubscription = ->
+        MnoeProvisioning.setSubscription(vm.currentSubscription)
+        if vm.currentSubscription.product.custom_schema?
+          $state.go('home.provisioning.additional_details')
+        else
+          $state.go('home.provisioning.confirm')
+
+      # ********************** Flags *********************************
+      vm.providesStatus = (app) ->
+        app.data_sharing || app.subscription
 
       vm.dataSharingEnabled = ->
-        MnoeConfig.isDataSharingEnabled() && vm.app.data_sharing
+        MnoeConfig.isDataSharingEnabled() && vm.app.data_sharing && vm.isAdmin
+
+      vm.manageSubScriptionEnabled = ->
+        vm.isAdmin
+
+      vm.orderHistoryEnabled = ->
+        vm.isAdmin
+
+      # ********************** Data Load *********************************
+      vm.setUserRole = ->
+        vm.isAdmin = MnoeOrganizations.role.atLeastAdmin(vm.organization.current_user_role)
+
+      vm.loadCurrentSubScription = (subscriptions) ->
+        vm.currentSubscription = _.find(subscriptions, product?.nid == vm.app.app_nid)
+        if vm.currentSubscription
+          MnoeProvisioning.initSubscription({productNid: null, subscriptionId: vm.currentSubscription.id}).then(
+            (response) ->
+              vm.orgCurrency = vm.organization?.currency || MnoeConfig.marketplaceCurrency()
+              vm.currentSubscription = response
+
+              MnoeMarketplace.findProduct({id: vm.currentSubscription.product?.id, nid: null}).then(
+                (response) ->
+                  vm.currentSubscription.product = response
+
+                  # Filters the pricing plans not containing current currency
+                  vm.currentSubscription.product.pricing_plans = _.filter(vm.currentSubscription.product.pricing_plans,
+                    (pp) ->
+                      (pp.pricing_type in PRICING_TYPES['unpriced']) || _.some(pp.prices, (p) -> p.currency == vm.orgCurrency)
+                  )
+                  vm.currentPlanId = vm.currentSubscription.product_pricing_id
+                  console.log 'vm.currentPlan'
+                  console.log vm.currentPlan
+              )
+          ).finally( -> vm.isCurrentSubscriptionLoading = false)
+        else
+          vm.isCurrentSubscriptionLoading = false
 
       vm.loadOrderHistory = ->
-        # TODO: Hit the MnoeProvisioning.getProductSubscriptions(ProductID)
-        #       to get the subscriptions for that product and load data from
-        #       that in order hsitroy. Add a new loader bool to load this data
-        #       i.e. isOrderHistoryLoading = true
         MnoeProvisioning.getProductSubscriptions(vm.app.app_id).then(
           (response) ->
             vm.subscriptionsHistory = response
-            console.log 'vm.subscriptionsHistory'
-            console.log vm.subscriptionsHistory
         ).finally( -> vm.isOrderHistoryLoading = false)
 
       appPromise = MnoeAppInstances.getAppInstances()
       subPromise = MnoeProvisioning.getSubscriptions()
-      orgPromise = MnoeOrganizations.get(MnoeOrganizations.selectedId)
+      userPromise = MnoeCurrentUser.get()
 
-      $q.all({apps: appPromise, subscriptions: subPromise, organization: orgPromise}).then(
+      $q.all({apps: appPromise, subscriptions: subPromise, currentUser: userPromise}).then(
         (response) ->
           vm.app = _.find(response.apps, { id: $stateParams.appId })
-          console.log 'vm.app'
-          console.log vm.app
-          vm.organization = response.organization.organization
+          vm.organization = _.find(response.currentUser.organizations, {id: MnoeOrganizations.selectedId})
 
-          # Starting subscription flow
-          MnoeProvisioning.initSubscription({productNid: vm.app.id, subscriptionId: $stateParams.id})
+          # User's role
+          vm.setUserRole()
+
+          # Manage subscription flow
+          vm.loadCurrentSubScription(response.subscriptions)
 
           # Order Histroy flow
           vm.loadOrderHistory()
