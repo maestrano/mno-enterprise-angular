@@ -32,8 +32,8 @@
         <a ng-if="isAdmin && isImpacEnabled" ui-sref="home.impac" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}</a>
       </li>
 
-      <li ng-if="isDockEnabled">
-        <a ui-sref="home.app-management" ui-sref-active="active">
+      <li ng-if="isAppManagementEnabled">
+        <a ui-sref="home.apps-management" ui-sref-active="active">
           App Management
         </a>
       </li>
@@ -82,7 +82,7 @@
         <i class="dhb-icon-impac"></i>
       </a>
 
-      <a ui-sref="home.app-management" class="dashboard-button top-buffer-1" ui-sref-active="active">
+      <a ng-if='isAppManagementEnabled' ui-sref="home.apps-management" class="dashboard-button top-buffer-1" ui-sref-active="active">
         <div class='content'>App Management</div>
         <i class="dhb-icon-app-management"></i>
       </a>
