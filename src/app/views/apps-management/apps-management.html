@@ -1,4 +1,4 @@
-<div class='row dashboard-app-management'>
+<div class='row dashboard-apps-management'>
   <div class='col-xs-12'>
     <h1 class='text-center bottom-buffer-3'>
       Manage your applications
@@ -23,7 +23,9 @@
           </div>
 
           <div ng-if='vm.providesStatus(app)'>
-            <span>Data sharing: {{vm.dataSharingStatus(app)}}</span>
+            <span ng-if="vm.dataSharingEnabled(app)">
+              Data sharing: {{vm.dataSharingStatus(app)}}
+            </span>
 
             <span ng-if="vm.subscriptionStatus(app)">
               Subscription: {{vm.subscriptionStatus(app)}}
@@ -32,8 +34,12 @@
         </div>
 
         <div class='app-btn-events'>
-          <a ng-href="{{ vm.appActionUrl(app) }}" target='_blank' class='btn btn-primary top-buffer-1' >Access</a>
-          <a ui-sref="home.app-management" class='btn btn-default top-buffer-1'>Manage</a>
+          <a ng-href="{{ vm.appActionUrl(app) }}" target='_blank' class='btn btn-primary top-buffer-1' >
+            Access
+          </a>
+          <a ui-sref="home.app-management({appId: app.id})" class='btn btn-default top-buffer-1'>
+            Manage
+          </a>
         </div>
       </div>
     </div>

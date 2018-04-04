@@ -1,14 +1,20 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('AppManagementCtrl',
+  .controller('AppsManagementCtrl',
     ($q, MnoeConfig, MnoeAppInstances, MnoeProvisioning) ->
 
       vm = @
       vm.isLoading = true
 
-      vm.providesStatus = (app) ->
-        app.data_sharing || app.subscription
+      # TODO: Add apps reload feature when organization is changed from
+      #       company select box.
 
-      # TODO: Change the data sharing to be based on feature flag.
+      vm.providesStatus = (app) ->
+        vm.dataSharingEnabled(app) || app.subscription
+
+      vm.dataSharingEnabled = (app) ->
+        MnoeConfig.isDataSharingEnabled() && app.data_sharing
+
+      # TODO: Decide how data sharing status is checked
       vm.dataSharingStatus = (app) ->
         if app.data_sharing
           'Connected'
