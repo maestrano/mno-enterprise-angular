@@ -116,7 +116,7 @@
             <li ng-repeat="plan in vm.pricing_plans">
               <b>{{plan.name}}</b>: {{plan.description}}
               <br>
-              <div ng-if="vm.pricedPlan(plan)">
+              <div ng-show="vm.pricedPlan(plan)">
                 <span>{{plan.currency}}</span>
                 <span ng-show="plan.price.value">{{plan.price.value}}</span>
                 <span ng-hide="plan.price.value">{{plan.price}}</span>
