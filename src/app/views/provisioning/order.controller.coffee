@@ -4,6 +4,10 @@ angular.module 'mnoEnterpriseAngular'
     vm = this
     vm.isLoading = true
     vm.product = null
+    vm.selectedCurrency = ''
+    vm.currencies = []
+    vm.filteredPricingPlans = []
+
 
     orgPromise = MnoeOrganizations.get()
     prodsPromise = MnoeMarketplace.getProducts()
@@ -21,10 +25,18 @@ angular.module 'mnoEnterpriseAngular'
           (response) ->
             vm.subscription.product = response
 
-            # Filters the pricing plans not containing current currency
-            vm.subscription.product.pricing_plans = _.filter(vm.subscription.product.pricing_plans,
-              (pp) -> !vm.pricedPlan(pp) || _.some(pp.prices, (p) -> p.currency == vm.orgCurrency)
-            )
+            # Get all the possible currencies
+            currenciesArray = []
+            _.forEach(vm.subscription.product.pricing_plans,
+              (pp) -> _.forEach(pp.prices, (p) -> currenciesArray.push(p.currency)))
+            vm.currencies = _.uniq(currenciesArray)
+
+            # Set a default currency
+            if vm.currencies.includes(vm.orgCurrency)
+              vm.selectedCurrency = vm.orgCurrency
+            else
+              vm.selectedCurrency = vm.currencies[0]
+            vm.pricingPlanFilter()
 
             vm.select_plan = (pricingPlan)->
               vm.subscription.product_pricing = pricingPlan
@@ -49,6 +61,18 @@ angular.module 'mnoEnterpriseAngular'
         else
           MnoeProvisioning.setSubscription({})
     )
+
+    # Filters the pricing plans not containing current currency
+    vm.pricingPlanFilter = () ->
+      vm.filteredPricingPlans = _.filter(vm.subscription.product.pricing_plans,
+        (pp) -> (pp.pricing_type in PRICING_TYPES['unpriced']) || _.some(pp.prices, (p) -> p.currency == vm.selectedCurrency)
+      )
+
+    # Filters the pricing plans not containing current currency
+    vm.pricingPlanFilter = () ->
+      vm.filteredPricingPlans = _.filter(vm.subscription.product.pricing_plans,
+        (pp) -> (pp.pricing_type in PRICING_TYPES['unpriced']) || _.some(pp.prices, (p) -> p.currency == vm.selectedCurrency)
+      )
 
     return
   )
