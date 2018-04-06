@@ -4,6 +4,10 @@ angular.module 'mnoEnterpriseAngular'
     vm = this
     vm.isLoading = true
     vm.product = null
+    vm.selectedCurrency = ''
+    vm.currencies = []
+    vm.filteredPricingPlans = []
+
 
     orgPromise = MnoeOrganizations.get()
     prodsPromise = MnoeMarketplace.getProducts()
@@ -24,15 +28,22 @@ angular.module 'mnoEnterpriseAngular'
             # Skip pricing selection when applicable
             vm.next(vm.subscription) if vm.skipPriceSelection(vm.subscription.product)
 
-            # Filters the pricing plans not containing current currency
-            vm.subscription.product.pricing_plans = _.filter(vm.subscription.product.pricing_plans,
-              (pp) -> !vm.pricedPlan(pp) || _.some(pp.prices, (p) -> p.currency == vm.orgCurrency)
-            )
+            # Get all the possible currencies
+            currenciesArray = []
+            _.forEach(vm.subscription.product.pricing_plans,
+              (pp) -> _.forEach(pp.prices, (p) -> currenciesArray.push(p.currency)))
+            vm.currencies = _.uniq(currenciesArray)
+
+            # Set a default currency
+            if vm.currencies.includes(vm.orgCurrency)
+              vm.selectedCurrency = vm.orgCurrency
+            else
+              vm.selectedCurrency = vm.currencies[0]
+            vm.pricingPlanFilter()
 
             vm.selectPlan = (pricingPlan)->
               vm.subscription.product_pricing = pricingPlan
               vm.subscription.max_licenses ||= 1 if vm.subscription.product_pricing.license_based
-
 
             MnoeProvisioning.setSubscription(vm.subscription)
         )
@@ -58,6 +69,18 @@ angular.module 'mnoEnterpriseAngular'
     # single billing is disabled or if single billing is enabled but externally managed
     vm.skipPriceSelection = (product) ->
       product.product_type == 'application' && (!product.single_billing_enabled || !product.billed_locally)
+
+    # Filters the pricing plans not containing current currency
+    vm.pricingPlanFilter = () ->
+      vm.filteredPricingPlans = _.filter(vm.subscription.product.pricing_plans,
+        (pp) -> (pp.pricing_type in PRICING_TYPES['unpriced']) || _.some(pp.prices, (p) -> p.currency == vm.selectedCurrency)
+      )
+
+    # Filters the pricing plans not containing current currency
+    vm.pricingPlanFilter = () ->
+      vm.filteredPricingPlans = _.filter(vm.subscription.product.pricing_plans,
+        (pp) -> (pp.pricing_type in PRICING_TYPES['unpriced']) || _.some(pp.prices, (p) -> p.currency == vm.selectedCurrency)
+      )
 
     return
   )
