@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('mnoLocalProduct', ($scope, $stateParams, $state, isPublic, parentState, MnoeMarketplace, MnoeOrganizations, MnoeConfig, MnoeCurrentUser) ->
+  .controller('mnoLocalProduct', ($scope, $stateParams, $state, isPublic, parentState, MnoeMarketplace, MnoeOrganizations, MnoeConfig, MnoeCurrentUser, PRICING_TYPES) ->
 
     vm = this
     vm.isPublic = isPublic
@@ -16,6 +16,12 @@ angular.module 'mnoEnterpriseAngular'
     atLeastAdmin = (user, currentOrg) ->
       org = _.find(user.organizations, { id: currentOrg.id })
       MnoeOrganizations.role.atLeastAdmin(org.current_user_role)
+
+    vm.hidePrices = (plan) ->
+      vm.isPublic || plan.pricing_type in PRICING_TYPES['unpriced']
+
+    vm.hideNoPricingFound = (plan) ->
+      vm.isPublic || vm.planAvailableForCurrency(plan) || plan.pricing_type in PRICING_TYPES['unpriced']
 
     # Retrieve the products
     vm.initialize = ->
