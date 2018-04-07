@@ -30,19 +30,54 @@ angular.module 'mnoEnterpriseAngular'
       editAction: $stateParams.editAction
 
     # The schema is contained in field vm.product.custom_schema
-    #
     # jsonref is used to resolve $ref references
     # jsonref is not cyclic at this stage hence the need to make a
     # reasonable number of passes (2 below + 1 in the sf-schema directive)
     # to resolve cyclic references
-    #
-    MnoeMarketplace.findProduct(id: vm.subscription.product.id).then((response) ->
-      vm.form = if response.asf_options then JSON.parse(response.asf_options) else ["*"]
+    setCustomSchema = (product) ->
+      schemaForm.jsonref(JSON.parse(product.custom_schema))
+        .then((schema) -> schemaForm.jsonref(schema))
+        .then((schema) -> schemaForm.jsonref(schema))
+        .then((schema) -> vm.schema = schema)
 
-      if response.custom_schema then JSON.parse(response.custom_schema) else {}
-      ).then((schema) -> schemaForm.jsonref(schema))
-      .then((schema) -> schemaForm.jsonref(schema))
-      .then((schema) -> vm.schema = schema)
+    orgPromise = MnoeOrganizations.get()
+    prodsPromise = MnoeMarketplace.getProducts()
+    initPromise = MnoeProvisioning.initSubscription({productNid: $stateParams.nid, subscriptionId: $stateParams.id})
+
+    if _.isEmpty(vm.subscription)
+      $q.all({organization: orgPromise, products: prodsPromise, subscription: initPromise}).then(
+        (response) ->
+          vm.orgCurrency = response.organization.organization?.billing_currency || MnoeConfig.marketplaceCurrency()
+          vm.subscription = response.subscription
+          vm.isEditMode = !_.isEmpty(vm.subscription.custom_data)
+          # If the product id is available, get the product, otherwise find with the nid.
+          productPromise = if vm.subscription.product?.id
+            MnoeMarketplace.getProduct(vm.subscription.product.id, { editAction: $stateParams.editAction })
+          else
+            MnoeMarketplace.findProduct({nid: $stateParams.nid})
+
+          productPromise.then(
+            (response) ->
+              vm.subscription.product = response
+              # Filters the pricing plans not containing current currency
+              vm.subscription.product.pricing_plans = _.filter(vm.subscription.product.pricing_plans,
+                (pp) -> (pp.pricing_type in PRICING_TYPES['unpriced']) || _.some(pp.prices, (p) -> p.currency == vm.orgCurrency)
+              )
+
+              vm.select_plan = (pricingPlan)->
+                vm.subscription.product_pricing = pricingPlan
+                vm.subscription.max_licenses ||= 1 if vm.subscription.product_pricing.license_based
+
+              MnoeProvisioning.setSubscription(vm.subscription)
+
+              vm.subscription.product
+          ).then((product) -> setCustomSchema(vm.subscription.product))
+      ).finally(-> vm.isLoading = false)
+    else if vm.subscription?.product?.custom_schema
+      vm.isEditMode = !_.isEmpty(vm.subscription.custom_data)
+      setCustomSchema(vm.subscription.product)
+    else
+      $state.go('home.provisioning.order', urlParams)
 
     vm.submit = (form) ->
       $scope.$broadcast('schemaFormValidate')

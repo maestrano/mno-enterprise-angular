@@ -44,7 +44,7 @@ angular.module 'mnoEnterpriseAngular'
           $state.go('home.provisioning.additional_details', params)
 
     if _.isEmpty(vm.subscription)
-       vm.editOrder()
+      vm.editOrder()
 
     vm.subscription.edit_action = $stateParams.editAction
 
