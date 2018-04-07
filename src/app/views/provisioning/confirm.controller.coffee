@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningConfirmCtrl', ($scope, $stateParams, $state, MnoeOrganizations, MnoeProvisioning, MnoeAppInstances, MnoeConfig) ->
+  .controller('ProvisioningConfirmCtrl', ($scope, $state, $stateParams, MnoeOrganizations, MnoeProvisioning, MnoeAppInstances, MnoeConfig) ->
 
     vm = this
 
@@ -29,6 +29,24 @@ angular.module 'mnoEnterpriseAngular'
           )
           $state.go('home.provisioning.order_summary', {id: $stateParams.id, nid: $stateParams.nid})
       ).finally(-> vm.isLoading = false)
+
+    vm.editOrder = () ->
+      params =
+        nid: $stateParams.nid,
+        orgId: $stateParams.orgId
+        id: $stateParams.id,
+        editAction: $stateParams.editAction
+
+      switch $stateParams.editAction
+        when 'CHANGE', 'NEW', null
+          $state.go('home.provisioning.order', params)
+        else
+          $state.go('home.provisioning.additional_details', params)
+
+    if _.isEmpty(vm.subscription)
+       vm.editOrder()
+
+    vm.subscription.edit_action = $stateParams.editAction
 
     MnoeOrganizations.get().then(
       (response) ->

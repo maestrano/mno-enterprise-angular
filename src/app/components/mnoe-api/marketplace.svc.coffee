@@ -66,12 +66,12 @@ angular.module 'mnoEnterpriseAngular'
           _transform_products(response.plain())
       )
 
-    @getProduct = (productId) ->
-      MnoeApiSvc.one('/products', productId).get().then(
+    productPromises = {}
+    @getProduct = (productId, params) ->
+      productPromises["#{productId}/#{params.editAction}"] ?= MnoeApiSvc.one('/products', productId).get(params).then(
         (response) ->
           _transform_products([response])
           response
-      )
 
     @getReview = (appId, reviewId) ->
       MnoeApiSvc.one('marketplace', appId).one('app_reviews', parseInt(reviewId)).get()

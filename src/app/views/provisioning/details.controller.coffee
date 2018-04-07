@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningDetailsCtrl', ($scope, $state, MnoeMarketplace, MnoeProvisioning, schemaForm, $stateParams) ->
+  .controller('ProvisioningDetailsCtrl', ($scope, $q, $stateParams, $state, MnoeMarketplace, MnoeProvisioning, MnoeOrganizations, schemaForm) ->
 
     vm = this
 
@@ -23,6 +23,12 @@ angular.module 'mnoEnterpriseAngular'
       .add(contractLength.split('Months')[0], 'M')
       .format('YYYY-MM-DD')
 
+    urlParams =
+      orgId: $stateParams.orgId,
+      id: $stateParams.id,
+      nid: $stateParams.nid,
+      editAction: $stateParams.editAction
+
     # The schema is contained in field vm.product.custom_schema
     #
     # jsonref is used to resolve $ref references
@@ -43,7 +49,7 @@ angular.module 'mnoEnterpriseAngular'
       return unless form.$valid
       vm.subscription.custom_data = vm.model
       MnoeProvisioning.setSubscription(vm.subscription)
-      $state.go('home.provisioning.confirm', {id: $stateParams.id, nid: $stateParams.nid})
+      $state.go('home.provisioning.confirm', urlParams)
 
     # Delete the cached subscription when we are leaving the subscription workflow.
     $scope.$on('$stateChangeStart', (event, toState) ->

@@ -17,7 +17,13 @@ angular.module 'mnoEnterpriseAngular'
         vm.orgCurrency = response.organization.organization?.billing_currency || MnoeConfig.marketplaceCurrency()
         vm.subscription = response.subscription
 
-        MnoeMarketplace.findProduct({id: vm.subscription.product?.id, nid: $stateParams.nid}).then(
+        # If the product id is available, get the product, otherwise find with the nid.
+        productPromise = if vm.subscription.product?.id
+          MnoeMarketplace.getProduct(vm.subscription.product.id, { editAction: $stateParams.editAction })
+        else
+          MnoeMarketplace.findProduct({nid: $stateParams.nid})
+
+        productPromise.then(
           (response) ->
             vm.subscription.product = response
 
@@ -40,10 +46,19 @@ angular.module 'mnoEnterpriseAngular'
 
     vm.next = (subscription) ->
       MnoeProvisioning.setSubscription(subscription)
+      params = {
+        orgId: $stateParams.orgId,
+        id: $stateParams.id,
+        nid: $stateParams.nid,
+        editAction: $stateParams.editAction
+      }
       if vm.subscription.product.custom_schema?
-        $state.go('home.provisioning.additional_details', {id: $stateParams.id, nid: $stateParams.nid})
+        $state.go('home.provisioning.additional_details', params)
       else
-        $state.go('home.provisioning.confirm', {id: $stateParams.id, nid: $stateParams.nid})
+        $state.go('home.provisioning.confirm', params)
+
+    vm.pricedPlan = (plan) ->
+      plan.pricing_type not in PRICING_TYPES['unpriced']
 
     # Delete the cached subscription when we are leaving the subscription workflow.
     $scope.$on('$stateChangeStart', (event, toState) ->
