@@ -103,7 +103,7 @@
 
         <div class="cell col-md-1">
           <div class="pull-right">
-            <a ui-sref="home.provisioning.order({id: subscription.id})" ng-if="subscription.status !== 'cancelled'" class="btn btn-link btn-link-warning" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.modify' | translate }}" tooltip-append-to-body="true">
+            <a ng-click="vm.openEditModal(subscription)" ng-if="subscription.status !== 'cancelled'" class="btn btn-link btn-link-warning" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.modify' | translate }}" tooltip-append-to-body="true">
               <i class="fa fa-pencil-square-o"></i>
             </a>
             <a ng-click="vm.cancelSubscription(subscription, $index)" ng-if="subscription.status !== 'cancelled'" class="btn btn-link btn-link-danger" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.cancel' | translate }}" tooltip-append-to-body="true">
@@ -115,4 +115,3 @@
     </div>
   </div>
 </div>
-

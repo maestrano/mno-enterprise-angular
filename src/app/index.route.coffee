@@ -186,7 +186,7 @@ angular.module 'mnoEnterpriseAngular'
         .state 'home.provisioning.order',
           data:
             pageTitle:'Purchase - Order'
-          url: '/order/?nid&id'
+          url: '/order/?nid&id&editAction'
           views: '@home.provisioning':
             templateUrl: 'app/views/provisioning/order.html'
             controller: 'ProvisioningOrderCtrl'
@@ -194,7 +194,7 @@ angular.module 'mnoEnterpriseAngular'
         .state 'home.provisioning.additional_details',
           data:
             pageTitle:'Purchase - Additional details'
-          url: '/details/?nid&id'
+          url: '/details/?nid&id&editAction'
           views: '@home.provisioning':
             templateUrl: 'app/views/provisioning/details.html'
             controller: 'ProvisioningDetailsCtrl'
@@ -202,7 +202,7 @@ angular.module 'mnoEnterpriseAngular'
         .state 'home.provisioning.confirm',
           data:
             pageTitle:'Purchase - Confirm'
-          url: '/confirm/?nid&id'
+          url: '/confirm/?nid&id&editAction'
           views: '@home.provisioning':
             templateUrl: 'app/views/provisioning/confirm.html'
             controller: 'ProvisioningConfirmCtrl'
