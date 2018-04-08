@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningConfirmCtrl', ($scope, $state, $stateParams, MnoeOrganizations, MnoeProvisioning, MnoeAppInstances, MnoeConfig) ->
+  .controller('ProvisioningConfirmCtrl', ($scope, $state, $stateParams, MnoeOrganizations, MnoeProvisioning, MnoeAppInstances, MnoeConfig, EDIT_ACTIONS) ->
 
     vm = this
 
@@ -47,6 +47,9 @@ angular.module 'mnoEnterpriseAngular'
       vm.editOrder()
 
     vm.subscription.edit_action = $stateParams.editAction
+
+    vm.orderTypeText = (editAction) ->
+      EDIT_ACTIONS[editAction]
 
     MnoeOrganizations.get().then(
       (response) ->

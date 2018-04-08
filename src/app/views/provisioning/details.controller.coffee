@@ -55,6 +55,7 @@ angular.module 'mnoEnterpriseAngular'
           $state.go('home.provisioning.order', urlParams) unless vm.subscription.product_pricing
 
           vm.isEditMode = !_.isEmpty(vm.subscription.custom_data)
+
           # If the product id is available, get the product, otherwise find with the nid.
           productPromise = if vm.subscription.product?.id
             MnoeMarketplace.getProduct(vm.subscription.product.id, { editAction: $stateParams.editAction })
@@ -75,6 +76,7 @@ angular.module 'mnoEnterpriseAngular'
               vm.subscription.product
           ).then((product) -> setCustomSchema(vm.subscription.product))
       ).finally(-> vm.isLoading = false)
+
   # Ensure that the subscription has a product_pricing and custom schema, otherwise redirect to order page.
     else if vm.subscription?.product?.custom_schema && vm.subscription.product_pricing
       vm.isEditMode = !_.isEmpty(vm.subscription.custom_data)
@@ -82,6 +84,19 @@ angular.module 'mnoEnterpriseAngular'
       vm.isLoading = false
     else
       $state.go('home.provisioning.order', urlParams)
+
+    vm.editPlanText = () ->
+      switch $stateParams.editAction
+        when 'NEW'
+          "mno_enterprise.templates.dashboard.provisioning.details.new_title"
+        when 'CHANGE', 'EDIT'
+          "mno_enterprise.templates.dashboard.provisioning.details.edit_title"
+        when 'REACTIVATE'
+          "mno_enterprise.templates.dashboard.provisioning.details.reactivate_title"
+        when 'RENEW'
+          "mno_enterprise.templates.dashboard.provisioning.details.renew_title"
+        when 'SUSPEND'
+          "mno_enterprise.templates.dashboard.provisioning.details.suspend_title"
 
     vm.submit = (form) ->
       $scope.$broadcast('schemaFormValidate')

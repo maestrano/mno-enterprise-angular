@@ -71,10 +71,15 @@ angular.module 'mnoEnterpriseAngular'
           MnoeProvisioning.setSubscription({})
     )
 
-    # Skip pricing selection for products with product_type 'application' if
-    # single billing is disabled or if single billing is enabled but externally managed
     vm.skipPriceSelection = (product) ->
       product.product_type == 'application' && (!product.single_billing_enabled || !product.billed_locally)
+
+    vm.subscriptionPlanText = () ->
+      switch $stateParams.editAction
+        when 'NEW'
+          'mno_enterprise.templates.dashboard.provisioning.order.new_title'
+        when 'CHANGE'
+          'mno_enterprise.templates.dashboard.provisioning.order.change_title'
 
     return
   )

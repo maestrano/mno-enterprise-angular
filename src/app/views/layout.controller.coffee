@@ -1,6 +1,17 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller 'LayoutController', ($scope, $stateParams, $state, $q, MnoeCurrentUser, MnoeOrganizations) ->
+  .controller 'LayoutController', ($scope, $location, $stateParams, $state, $q, MnoeCurrentUser, MnoeOrganizations) ->
     'ngInject'
+
+    # Used for the provisioning workflow
+    # If we are changing/creating a new order we want the edit plan breacrumb, otherwise not.
+    $scope.showOrder = () ->
+      $location.$$search["editAction"] in ["CHANGE", "NEW"]
+
+    $scope.breadcrumbNumber = (number) ->
+      if $scope.showOrder()
+        number
+      else
+        number - 1
 
     # Impac! is displayed only to admin and super admin
     $scope.$watch(MnoeOrganizations.getSelectedId, (newValue) ->
