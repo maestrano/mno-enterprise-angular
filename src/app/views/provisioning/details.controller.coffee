@@ -3,6 +3,8 @@ angular.module 'mnoEnterpriseAngular'
 
     vm = this
 
+    vm.isLoading = true
+    vm.form = [ "*" ]
     vm.subscription = MnoeProvisioning.getSubscription()
 
     # Happens when the user reload the browser during the provisioning
@@ -40,15 +42,18 @@ angular.module 'mnoEnterpriseAngular'
         .then((schema) -> schemaForm.jsonref(schema))
         .then((schema) -> vm.schema = schema)
 
-    orgPromise = MnoeOrganizations.get()
-    prodsPromise = MnoeMarketplace.getProducts()
-    initPromise = MnoeProvisioning.initSubscription({productNid: $stateParams.nid, subscriptionId: $stateParams.id})
-
     if _.isEmpty(vm.subscription)
+      orgPromise = MnoeOrganizations.get()
+      prodsPromise = MnoeMarketplace.getProducts()
+      initPromise = MnoeProvisioning.initSubscription({productNid: $stateParams.nid, subscriptionId: $stateParams.id})
+
       $q.all({organization: orgPromise, products: prodsPromise, subscription: initPromise}).then(
         (response) ->
           vm.orgCurrency = response.organization.organization?.billing_currency || MnoeConfig.marketplaceCurrency()
           vm.subscription = response.subscription
+          # Ensure that the subscription has a product_pricing, otherwise redirect to order page where you can select one.
+          $state.go('home.provisioning.order', urlParams) unless vm.subscription.product_pricing
+
           vm.isEditMode = !_.isEmpty(vm.subscription.custom_data)
           # If the product id is available, get the product, otherwise find with the nid.
           productPromise = if vm.subscription.product?.id
@@ -59,23 +64,22 @@ angular.module 'mnoEnterpriseAngular'
           productPromise.then(
             (response) ->
               vm.subscription.product = response
+
               # Filters the pricing plans not containing current currency
               vm.subscription.product.pricing_plans = _.filter(vm.subscription.product.pricing_plans,
                 (pp) -> (pp.pricing_type in PRICING_TYPES['unpriced']) || _.some(pp.prices, (p) -> p.currency == vm.orgCurrency)
               )
-
-              vm.select_plan = (pricingPlan)->
-                vm.subscription.product_pricing = pricingPlan
-                vm.subscription.max_licenses ||= 1 if vm.subscription.product_pricing.license_based
 
               MnoeProvisioning.setSubscription(vm.subscription)
 
               vm.subscription.product
           ).then((product) -> setCustomSchema(vm.subscription.product))
       ).finally(-> vm.isLoading = false)
-    else if vm.subscription?.product?.custom_schema
+  # Ensure that the subscription has a product_pricing and custom schema, otherwise redirect to order page.
+    else if vm.subscription?.product?.custom_schema && vm.subscription.product_pricing
       vm.isEditMode = !_.isEmpty(vm.subscription.custom_data)
       setCustomSchema(vm.subscription.product)
+      vm.isLoading = false
     else
       $state.go('home.provisioning.order', urlParams)
 

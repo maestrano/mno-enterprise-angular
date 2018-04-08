@@ -46,12 +46,14 @@ angular.module 'mnoEnterpriseAngular'
 
     vm.next = (subscription) ->
       MnoeProvisioning.setSubscription(subscription)
+
       params = {
         orgId: $stateParams.orgId,
         id: $stateParams.id,
         nid: $stateParams.nid,
         editAction: $stateParams.editAction
       }
+
       if vm.subscription.product.custom_schema?
         $state.go('home.provisioning.additional_details', params)
       else

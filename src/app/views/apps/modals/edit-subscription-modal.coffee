@@ -11,7 +11,6 @@ angular.module 'mnoEnterpriseAngular'
       # Reset subscription, so that the correct subscription is fetched.
       MnoeProvisioning.setSubscription({})
       vm.closeModal()
-      debugger
       params = {id: vm.subscription.id, orgId: vm.subscription.organization_id, editAction: editAction}
       switch editAction
         when 'CHANGE'
