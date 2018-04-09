@@ -106,7 +106,7 @@
                 {{ 'mno_enterprise.templates.dashboard.app_management.manage.tab.connection_status.last_sync' | translate }}
               </label>
               <!-- TODO: Decide between "Never" and "Sync in progress" -->
-              <span>{{vm.app.last_sync_at || 'Sync In progress'}}</span>
+              <span>{{vm.app.sync_status.last_sync_at || 'Sync In progress'}}</span>
             </div>
             <div>
               <!-- TODO: Add conditions to manage when this button

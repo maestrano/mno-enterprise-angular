@@ -16,7 +16,7 @@ angular.module 'mnoEnterpriseAngular'
 
       # TODO: Decide how data sharing status is checked
       vm.dataSharingStatus = (app) ->
-        if app.data_sharing
+        if app.sync_status?.status
           'Connected'
         else
           'Disconnected'
