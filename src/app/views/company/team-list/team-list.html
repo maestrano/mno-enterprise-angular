@@ -76,7 +76,7 @@
                   <span class="cell-label visible-xs-inline">
                     {{ 'mno_enterprise.templates.dashboard.teams.team_list.tbl_role' | translate }}:
                   </span>
-                  {{ member.role }}
+                  {{ memberRoleLabel(member) | translate }}
                 </div>
 
                 <div class="cell col-sm-2" ng-show="canManageTeam()">
