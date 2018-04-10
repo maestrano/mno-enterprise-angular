@@ -11,7 +11,7 @@ angular.module 'mnoEnterpriseAngular'
 
     # Used to calculate the end date for forms with a contractEndDate.
     vm.model.calculateEndDate = (startDate, contractLength) ->
-      return nil unless startDate && contractLength
+      return null unless startDate && contractLength
       moment(startDate)
       .add(contractLength.split('Months')[0], 'M')
       .format('YYYY-MM-DD')
