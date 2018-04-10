@@ -4,7 +4,7 @@ angular.module 'mnoEnterpriseAngular'
     vm = this
 
     vm.isLoading = true
-    vm.form = ["*"]
+
     # We must use model schemaForm's sf-model, as #json_schema_opts are namespaced under model
     vm.model = {}
     # Methods under the vm.model are used for calculated fields under #json_schema_opts.
@@ -25,7 +25,7 @@ angular.module 'mnoEnterpriseAngular'
             (response) ->
               vm.schema = JSON.parse(response.custom_schema)
               # Schemas with optional asf_options will be namespaced under #json_schema
-              vm.form = vm.schema.asf_options if vm.schema.asf_options
+              vm.form = if vm.schema.asf_options then vm.schema.asf_options else ["*"]
               vm.schema = vm.schema.json_schema if vm.schema.json_schema
           )
     ).finally(-> vm.isLoading = false)
