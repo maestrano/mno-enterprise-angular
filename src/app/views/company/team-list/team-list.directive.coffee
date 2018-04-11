@@ -40,6 +40,9 @@ DashboardOrganizationTeamListCtrl = ($scope, $window, $uibModal, $q, MnoeCurrent
   $scope.teamHasUser = (team, user) ->
     _.find(team.users,(u)-> u.id == user.id)?
 
+  $scope.memberRoleLabel = (user) ->
+    "mno_enterprise.templates.dashboard.organization.members.roles." +  _.snakeCase(user.role)
+
   #====================================
   # Team: Member Add Modal
   #====================================
