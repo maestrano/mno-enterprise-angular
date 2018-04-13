@@ -1,8 +1,9 @@
 angular.module 'mnoEnterpriseAngular'
-  .component('mnoAppListing', {
-    templateUrl: 'app/components/mno-apps/mno-app-listing.html',
+  .component('mnoProductListing', {
+    templateUrl: 'app/components/mno-products/mno-product-listing.html',
     bindings: {
-      isPublic: '@'
+      isPublic: '@',
+      isLocal: '<'
     }
     controller: ($scope, toastr, MnoeOrganizations, MnoeMarketplace, MnoeConfig) ->
       vm = this
@@ -17,57 +18,58 @@ angular.module 'mnoEnterpriseAngular'
         vm.searchTerm = ''
         vm.isMarketplaceCompare = MnoeConfig.isMarketplaceComparisonEnabled()
         vm.showCompare = false
-        vm.nbAppsToCompare = 0
-        vm.appState = if vm.publicPage then "public.product" else "home.marketplace.app"
+        vm.nbProductsToCompare = 0
+        vm.productState = if vm.publicPage then "public.product" else "home.marketplace.product"
         vm.initialize()
       #====================================
       # Scope Management
       #====================================
 
-      vm.appsFilter = (app) ->
+      vm.productsFilter = (product) ->
         if (vm.searchTerm? && vm.searchTerm.length > 0) || !vm.selectedCategory
           return true
         else
-          return _.contains(app.categories, vm.selectedCategory)
+          return _.contains(product.categories, vm.selectedCategory)
 
       # Cancel comparison
       vm.cancelComparison = ->
         vm.showCompare = false
 
       # Uncheck all checkboxes
-      vm.uncheckAllApps = () ->
-        angular.forEach(vm.apps, (items) ->
-          items.toCompare = false
+      uncheckAllProducts = () ->
+        angular.forEach(vm.products, (product) ->
+          product.toCompare = false
         )
 
       # Toggle compare block
       vm.enableComparison = ->
-        vm.nbAppsToCompare = 0
-        vm.uncheckAllApps()
+        vm.nbProductsToCompare = 0
+        uncheckAllProducts()
         vm.showCompare = true
 
-      vm.toggleAppToCompare = (app) ->
-        selected = app.toCompare
-        if selected && vm.nbAppsToCompare >= 4
+      vm.toggleProductToCompare = (product) ->
+        selected = product.toCompare
+        if selected && vm.nbProductsToCompare >= 4
           toastr.info("mno_enterprise.templates.dashboard.marketplace.index.toastr.error")
-          app.toCompare = false
+          product.toCompare = false
         else
-          vm.nbAppsToCompare += if selected then 1 else (-1)
+          vm.nbProductsToCompare += if selected then 1 else (-1)
 
       vm.canBeCompared = ->
-        return vm.nbAppsToCompare <= 4 && vm.nbAppsToCompare >=2
+        return vm.nbProductsToCompare <= 4 && vm.nbProductsToCompare >=2
 
       vm.initialize = ->
         vm.isLoading = true
-        MnoeMarketplace.getApps().then(
+        MnoeMarketplace.getMarketplace().then(
           (response) ->
             # Remove restangular decoration
-            response = response.plain()
+            vm.products = if vm.isLocal
+              _.filter(response.products, (product) -> product.local)
+            else
+              _.filter(response.products, (product) -> !product.local)
 
-            vm.categories = response.categories
-            vm.apps = response.apps
             if vm.publicPage
-              vm.apps = _.filter(vm.apps, (app) -> _.includes(MnoeConfig.publicApplications(), app.nid))
+              vm.products = _.filter(vm.products, (product) -> _.includes(MnoeConfig.publicProducts(), product.nid))
       ).finally(-> vm.isLoading = false)
 
       $scope.$watch MnoeOrganizations.getSelectedId, (val) ->

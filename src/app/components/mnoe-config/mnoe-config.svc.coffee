@@ -143,9 +143,9 @@ angular.module 'mnoEnterpriseAngular'
       else
         $log.debug("DASHBOARD_CONFIG.public_pricing.display_pricing missing")
 
-    @publicApplications = () ->
-      if DASHBOARD_CONFIG.public_pages?.applications?
-        DASHBOARD_CONFIG.public_pages.applications
+    @publicProducts = () ->
+      if DASHBOARD_CONFIG.public_pages?.products?
+        DASHBOARD_CONFIG.public_pages.products
       else
         $log.debug("DASHBOARD_CONFIG.public_pages.applications missing")
         []

@@ -22,9 +22,9 @@
             <span>{{ 'mno_enterprise.templates.dashboard.marketplace.index.compare' | translate }}</span>
           </button>
           <div ng-show="$ctrl.showCompare" class="marketplace-compare-action">
-            <div>{{'mno_enterprise.templates.dashboard.marketplace.index.select_apps' | translate }}</div>
+            <div>{{'mno_enterprise.templates.dashboard.marketplace.index.select_products' | translate }}</div>
             <button class="btn btn-primary" ui-sref="home.marketplace.compare" ng-disabled="!$ctrl.canBeCompared()">
-              {{'mno_enterprise.templates.dashboard.marketplace.index.compare_apps' | translate}} ({{$ctrl.nbAppsToCompare}})
+              {{'mno_enterprise.templates.dashboard.marketplace.index.compare_products' | translate}} ({{$ctrl.nbProductsToCompare}})
             </button>
             <button class="btn btn-primary" ng-click="$ctrl.cancelComparison()">{{ 'mno_enterprise.templates.dashboard.marketplace.index.cancel' | translate }}</button>
           </div>
@@ -36,23 +36,23 @@
     <div class="row">
       <div class="marketplace-list">
 
-        <!-- App Cards-->
-        <div class="col-sm-6 col-md-4" ng-repeat="app in $ctrl.apps | filter:$ctrl.appsFilter | filter:$ctrl.searchTerm">
-          <div class="marketplace-app-card-checkbox" ng-show="$ctrl.showCompare">
+        <!-- Product Cards-->
+        <div class="col-sm-6 col-md-4" ng-repeat="product in $ctrl.products | filter:$ctrl.productsFilter | filter:$ctrl.searchTerm">
+          <div class="marketplace-product-card-checkbox" ng-show="$ctrl.showCompare">
             <label>
               <input type="checkbox"
-                     ng-click="$ctrl.toggleAppToCompare(app)"
-                     ng-model="app.toCompare">
+                     ng-click="$ctrl.toggleProductToCompare(product)"
+                     ng-model="product.toCompare">
             </label>
           </div>
-          <a class="marketplace-app-card" ui-sref="{{$ctrl.appState}}({appId: app.nid})">
+          <a class="marketplace-product-card" ui-sref="{{$ctrl.productState}}({productId: product.nid})">
             <div class="media">
               <div class="pull-left">
-                <img class="media-object" ng-src="{{::app.logo}}" ng-alt="{{::app.name}}">
+                <img class="media-object" ng-src="{{::product.logo}}" ng-alt="{{::product.name}}">
               </div>
               <div class="media-body">
-                <h4 class="media-heading">{{::app.name}}</h4>
-                {{::app.tiny_description}}
+                <h4 class="media-heading">{{::product.name}}</h4>
+                {{::product.tiny_description}}
               </div>
               <div class="arrow">
                 <i class="fa fa-caret-right fa-2x"></i>
