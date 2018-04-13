@@ -45,7 +45,7 @@
                      ng-model="product.toCompare">
             </label>
           </div>
-          <a class="marketplace-product-card" ui-sref="{{$ctrl.productState}}({productId: product.nid})">
+          <a class="marketplace-product-card" ui-sref="{{$ctrl.productRef(product)}}">
             <div class="media">
               <div class="pull-left">
                 <img class="media-object" ng-src="{{::product.logo}}" ng-alt="{{::product.name}}">

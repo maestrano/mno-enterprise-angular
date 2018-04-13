@@ -20,6 +20,14 @@ angular.module 'mnoEnterpriseAngular'
         vm.showCompare = false
         vm.nbProductsToCompare = 0
         vm.productState = if vm.publicPage then "public.product" else "home.marketplace.product"
+        vm.appOrProduct = (product) ->
+          if product.app_id
+            "({appId: '#{product.app_id}', productNid: '#{product.nid}'})"
+          else
+            "({productId: '#{product.id}', productNid: '#{product.nid}'})"
+        vm.productRef = (product) ->
+          vm.productState + vm.appOrProduct(product)
+
         vm.initialize()
       #====================================
       # Scope Management
