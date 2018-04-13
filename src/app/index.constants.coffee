@@ -18,3 +18,10 @@ angular.module 'mnoEnterpriseAngular'
   .constant('PRICING_TYPES', {
     'unpriced': ['free', 'payg']
   })
+  .constant('EDIT_ACTIONS', {
+    'EDIT': 'mno_enterprise.templates.dashboard.provisioning.subscription.edit',
+    'CHANGE': 'mno_enterprise.templates.dashboard.provisioning.subscription.change',
+    'RENEW': 'mno_enterprise.templates.dashboard.provisioning.subscription.renew',
+    'SUSPEND': 'mno_enterprise.templates.dashboard.provisioning.subscription.suspend',
+    'REACTIVATE': 'mno_enterprise.templates.dashboard.provisioning.subscription.reactivate'
+    })

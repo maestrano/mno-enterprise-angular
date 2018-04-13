@@ -1,10 +1,13 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningConfirmCtrl', ($scope, $state, MnoeOrganizations, MnoeProvisioning, MnoeAppInstances, MnoeConfig) ->
+  .controller('ProvisioningConfirmCtrl', ($scope, $state, MnoeOrganizations, MnoeProvisioning, MnoeAppInstances, MnoeConfig, EDIT_ACTIONS) ->
 
     vm = this
 
     vm.isLoading = false
     vm.subscription = MnoeProvisioning.getSubscription()
+
+    vm.validateButtonText = ->
+      EDIT_ACTIONS[vm.subscription.editAction] || 'Validate'
 
     vm.validate = () ->
       vm.isLoading = true

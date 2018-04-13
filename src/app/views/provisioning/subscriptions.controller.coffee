@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningSubscriptionsCtrl', ($q, $state, $stateParams, toastr, MnoeOrganizations, MnoeProvisioning, MnoeConfig, MnoConfirm, PRICING_TYPES) ->
+  .controller('ProvisioningSubscriptionsCtrl', ($q, $state, $translate, $stateParams, toastr, MnoeOrganizations, MnoeProvisioning, MnoeConfig, MnoConfirm, PRICING_TYPES) ->
 
     vm = this
     vm.isLoading = true
@@ -39,7 +39,17 @@ angular.module 'mnoEnterpriseAngular'
     ).finally(-> vm.isLoading = false)
 
     vm.displayInfoTooltip = (subscription) ->
-      return subscription.status == 'aborted'
+      subscription.status == 'aborted'
+
+    vm.subscriptionModifiable = (subscription) ->
+      subscription.available_edit_actions && subscription.status != 'cancelled'
+
+    vm.subscriptionModifyToolTip = (subscription) ->
+      if vm.subscriptionModifiable(subscription)
+        'mno_enterprise.templates.dashboard.provisioning.subscriptions.modify'
+      else
+        'mno_enterprise.templates.dashboard.provisioning.subscriptions.cannot_modify'
+
 
     return
   )

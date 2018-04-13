@@ -58,8 +58,8 @@ angular.module 'mnoEnterpriseAngular'
           )
       )
 
-    @getProduct = (productId) ->
-      MnoeApiSvc.one('/products', productId).get()
+    @getProduct = (productId, params) ->
+      MnoeApiSvc.one('/products', productId).get(params)
 
     @getReview = (appId, reviewId) ->
       MnoeApiSvc.one('marketplace', appId).one('app_reviews', parseInt(reviewId)).get()

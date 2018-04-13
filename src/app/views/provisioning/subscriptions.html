@@ -96,17 +96,17 @@
                 {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.status' | translate }}:
               </span>
               <span title="{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.states.' + subscription.status | translate }}">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.states.' + subscription.status | translate }}</span>
-              <i class="fa fa-info-circle" ng-hide="!vm.displayInfoTooltip(subscription)" uib-tooltip="{{'mno_enterprise.templates.dashboard.provisioning.subscriptions.tooltip.aborted' | translate}}" tooltip-append-to-body="true"></i>
+              <i class="fa fa-info-circle" ng-show="vm.displayInfoTooltip(subscription)" uib-tooltip="{{'mno_enterprise.templates.dashboard.provisioning.subscriptions.tooltip.aborted' | translate}}" tooltip-append-to-body="true"></i>
             </div>
           </div>
         </div>
 
         <div class="cell col-md-1">
           <div class="pull-right">
-            <a ui-sref="home.provisioning.order({id: subscription.id})" ng-if="subscription.status !== 'cancelled'" class="btn btn-link btn-link-warning" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.modify' | translate }}" tooltip-append-to-body="true">
+            <a ui-sref="home.provisioning.order({id: subscription.id})" ng-disabled="!vm.subscriptionModifiable(subscription)" uib-tooltip="{{ vm.subscriptionModifyToolTip(subscription) | translate }}" class="btn btn-link btn-link-warning" tooltip-append-to-body="true">
               <i class="fa fa-pencil-square-o"></i>
             </a>
-            <a ng-click="vm.cancelSubscription(subscription, $index)" ng-if="subscription.status !== 'cancelled'" class="btn btn-link btn-link-danger" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.cancel' | translate }}" tooltip-append-to-body="true">
+            <a ng-click="vm.cancelSubscription(subscription, $index)" ng-disabled="!vm.subscriptionModifiable(subscription)" class="btn btn-link btn-link-danger" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.cancel' | translate }}" tooltip-append-to-body="true">
               <i class="fa fa-remove"></i>
             </a>
           </div>
@@ -115,4 +115,3 @@
     </div>
   </div>
 </div>
-
