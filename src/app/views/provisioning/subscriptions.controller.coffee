@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningSubscriptionsCtrl', ($q, $state, $stateParams, $uibModal, toastr, MnoeOrganizations, MnoeProvisioning, MnoeConfig, MnoConfirm, PRICING_TYPES) ->
+  .controller('ProvisioningSubscriptionsCtrl', ($q, $state, $stateParams, toastr, MnoeOrganizations, MnoeProvisioning, MnoeConfig, MnoConfirm, PRICING_TYPES) ->
 
     vm = this
     vm.isLoading = true
@@ -41,15 +41,18 @@ angular.module 'mnoEnterpriseAngular'
     vm.displayInfoTooltip = (subscription) ->
       return subscription.status == 'aborted'
 
-    vm.openEditModal = (subscription) ->
+    vm.showEditAction = (subscription, editAction) ->
+      editAction in subscription.available_edit_actions
+
+    vm.editSubscription = (subscription, editAction) ->
       MnoeProvisioning.setSubscription({})
-      $uibModal.open(
-        templateUrl: 'app/views/apps/modals/edit-subscription-modal.html'
-        controller: 'EditSubscriptionController'
-        controllerAs: 'vm'
-        resolve:
-          subscription: -> subscription
-      )
+
+      params = {id: subscription.id, orgId: subscription.organization_id, editAction: editAction}
+      switch editAction
+        when 'CHANGE'
+          $state.go('home.provisioning.order', params)
+        else
+          $state.go('home.provisioning.additional_details', params)
 
     return
   )

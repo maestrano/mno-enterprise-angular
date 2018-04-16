@@ -41,7 +41,7 @@
           <span title="{{ subscription.name }}">{{ subscription.product.name }}</span>
         </div>
 
-        <div class="cell col-md-2" ng-click="vm.goToSubscription(subscription)">
+        <div class="cell col-md-1" ng-click="vm.goToSubscription(subscription)">
           <span class="cell-label visible-xs-inline">
             {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.subscription' | translate }}:
           </span>
@@ -101,12 +101,21 @@
           </div>
         </div>
 
-        <div class="cell col-md-1">
+        <div class="cell col-md-2">
           <div class="pull-right">
-            <a ng-click="vm.openEditModal(subscription)" ng-if="subscription.status !== 'cancelled'" class="btn btn-link btn-link-warning" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.modify' | translate }}" tooltip-append-to-body="true">
+            <a ng-click="vm.editSubscription(subscription, 'RECTIVATE')" ng-show="vm.showEditAction(subscription, 'REACTIVATE')" class="btn btn-link btn-link-primary subscription-btn" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.reactivate_tooltip' | translate }}" tooltip-append-to-body="true">
+              <i class="fa fa-refresh"></i>
+            </a>
+            <a ng-click="vm.editSubscription(subscription, 'RENEW')" ng-show="vm.showEditAction(subscription, 'RENEW')" class="btn btn-link btn-link-primary subscription-btn" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.renew_tooltip' | translate }}" tooltip-append-to-body="true">
+              <i class="fa fa-check-square"></i>
+            </a>
+            <a ng-click="vm.editSubscription(subscription, 'CHANGE')" ng-show="vm.showEditAction(subscription, 'CHANGE')" class="btn btn-link btn-link-warning subscription-btn" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.change_tooltip' | translate }}" tooltip-append-to-body="true">
               <i class="fa fa-pencil-square-o"></i>
             </a>
-            <a ng-click="vm.cancelSubscription(subscription, $index)" ng-if="subscription.status !== 'cancelled'" class="btn btn-link btn-link-danger" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.cancel' | translate }}" tooltip-append-to-body="true">
+            <a ng-click="vm.editSubscription(subscription, 'EDIT')" ng-show="vm.showEditAction(subscription, 'EDIT')" class="btn btn-link btn-link-warning subscription-btn" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.edit_tooltip' | translate }}" tooltip-append-to-body="true">
+              <i class="fa fa-pencil"></i>
+            </a>
+            <a ng-click="vm.editSubscription(subscription, 'SUSPEND')" ng-show="vm.showEditAction(subscription, 'SUSPEND')" class="btn btn-link btn-link-danger subscription-btn" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.cancel_tooltip' | translate }}" tooltip-append-to-body="true">
               <i class="fa fa-remove"></i>
             </a>
           </div>
