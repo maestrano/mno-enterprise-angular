@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningDetailsCtrl', ($scope, $q, $stateParams, $state, MnoeMarketplace, MnoeProvisioning, MnoeOrganizations, schemaForm) ->
+  .controller('ProvisioningDetailsCtrl', ($scope, $q, $stateParams, $state, MnoeMarketplace, MnoeProvisioning, MnoeOrganizations, schemaForm, PRICING_TYPES) ->
 
     vm = this
 
@@ -86,17 +86,7 @@ angular.module 'mnoEnterpriseAngular'
       $state.go('home.provisioning.order', urlParams)
 
     vm.editPlanText = () ->
-      switch $stateParams.editAction
-        when 'NEW'
-          "mno_enterprise.templates.dashboard.provisioning.details.new_title"
-        when 'CHANGE', 'EDIT'
-          "mno_enterprise.templates.dashboard.provisioning.details.edit_title"
-        when 'REACTIVATE'
-          "mno_enterprise.templates.dashboard.provisioning.details.reactivate_title"
-        when 'RENEW'
-          "mno_enterprise.templates.dashboard.provisioning.details.renew_title"
-        when 'SUSPEND'
-          "mno_enterprise.templates.dashboard.provisioning.details.suspend_title"
+      "mno_enterprise.templates.dashboard.provisioning.details." + $stateParams.editAction.toLowerCase() + "_title"
 
     vm.submit = (form) ->
       $scope.$broadcast('schemaFormValidate')
