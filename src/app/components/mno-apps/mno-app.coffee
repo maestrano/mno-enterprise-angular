@@ -11,6 +11,9 @@ angular.module 'mnoEnterpriseAngular'
 
     vm.isLoading = true
     vm.app = {}
+    vm.appId = $stateParams.appId
+    vm.productId = $stateParams.productId
+
     vm.searchWord = ""
     # The already installed app instance of the app, if any
     vm.appInstance = null
@@ -22,17 +25,23 @@ angular.module 'mnoEnterpriseAngular'
     # Enabling provisioning
     vm.isProvisioningEnabled = !vm.isPublic && MnoeConfig.isProvisioningEnabled()
     # Enabling reviews
-    vm.isReviewingEnabled = !vm.isPublic && MnoeConfig.areMarketplaceReviewsEnabled()
+    vm.isReviewingEnabled = !vm.isPublic && vm.appId && MnoeConfig.areMarketplaceReviewsEnabled()
     # Enabling questions
-    vm.areQuestionsEnabled = !vm.isPublic && MnoeConfig.areMarketplaceQuestionsEnabled()
+    vm.areQuestionsEnabled = !vm.isPublic && vm.appId && MnoeConfig.areMarketplaceQuestionsEnabled()
 
     vm.averageRating = 5
 
     vm.sortReviewsBy = 'created_at.desc'
 
-    if $stateParams.appId
-      MnoeMarketplace.getApp($stateParams.appId).then((response) =>
+    if vm.appId
+      MnoeMarketplace.getApp(vm.appId).then((response) ->
         vm.app = response.app
+        $state.go(parentState) unless vm.app?
+        vm.isLoading = false
+      )
+    else if vm.productId
+      MnoeMarketplace.getProduct(vm.productId).then((response) ->
+        vm.app = response.plain()
         $state.go(parentState) unless vm.app?
         vm.isLoading = false
       )
@@ -437,7 +446,7 @@ angular.module 'mnoEnterpriseAngular'
 
         # Retrieve the apps and if any the current app instance
         $q.all(
-          app: MnoeMarketplace.getApp($stateParams.appId),
+          app: if vm.appId then MnoeMarketplace.getApp(vm.appId) else MnoeMarketplace.getProduct(vm.productId)
           appInstances: MnoeAppInstances.getAppInstances(),
           products: productPromise
         ).then(
@@ -446,7 +455,7 @@ angular.module 'mnoEnterpriseAngular'
             products = response.products?.products
 
             # App to be displayed
-            app = response.app?.app
+            app = if vm.appId then response.app?.app else response.app
 
             $state.go(parentState) unless app?
 
