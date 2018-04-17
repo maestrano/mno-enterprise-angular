@@ -42,9 +42,11 @@
   }
 
   .carousel-image-container {
-    height: 360px;
     text-align: center;
+    height: 360px;
     position: relative;
+    justify-content: center;
+
 
     .carousel-image {
       background-size: cover;
@@ -59,19 +61,41 @@
       top: 0;
       right: 0;
       bottom: 0;
-      left: 0;
-      max-width: 70%;
-      max-height: auto;
+      left: auto;
+      width: 100%;
+      max-height: 250px;
       margin: auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
       color: @public-marketplace-show-header-text-color;
+      @supports (display: grid) {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        width: 70%;
+        max-height: none;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
 
       .carousel-logo-wrapper {
         display: flex;
         border-radius: 100%;
+        max-height: 200px;
+        max-width: 350px;
+        min-width: 200px;
+        margin-top: 20px;
+        margin-right: 25px;
+        @supports (display: grid) {
+          max-height: none;
+          margin: auto;
+        }
 
         .carousel-logo {
+          max-width: 200px;
+          max-height: 200px;
           border-radius: 100%;
           margin: auto;
         }
@@ -80,11 +104,20 @@
       .carousel-app-info-wrapper {
         display: flex;
         flex-direction: column;
+        text-align: center;
         margin: auto;
         padding-left: 20px;
         padding-right: 20px;
+        margin-left: 25px;
         min-height: 200px;
+        max-height: none;
         min-width: 200px;
+        max-width: 350px;
+        @supports (display: grid) {
+          min-width: 200px;
+          max-height: none;
+          margin-left: auto;
+        }
         border: 1px solid @public-marketplace-carousel-card-border-color;
         margin-left: 10px;
         background-color: @public-marketplace-carousel-card-color;
