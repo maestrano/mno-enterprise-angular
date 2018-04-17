@@ -71,6 +71,9 @@ angular.module 'mnoEnterpriseAngular'
         MnoeMarketplace.getMarketplace().then(
           (response) ->
             # Remove restangular decoration
+            response = response.plain()
+
+            vm.categories = response.categories
             vm.products = if vm.isLocal
               _.filter(response.products, (product) -> product.local)
             else
