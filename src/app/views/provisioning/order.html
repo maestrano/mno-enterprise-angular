@@ -26,7 +26,7 @@
           </div>
         </div>
 
-        <div class="row td-row" ng-repeat="pricingPlan in vm.subscription.product.pricing_plans" ng-click="vm.select_plan(pricingPlan)">
+        <div class="row td-row" ng-repeat="pricingPlan in vm.subscription.product.pricing_plans" ng-click="vm.selectPlan(pricingPlan)">
           <div class="cell radio-selector col-xs-2">
             <input type="radio" name="optradio" ng-model="vm.subscription.product_pricing.id" ng-value="pricingPlan.id" required>
           </div>

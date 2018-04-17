@@ -47,9 +47,10 @@ angular.module 'mnoEnterpriseAngular'
 
     @createSubscription = (s) ->
       deferred = $q.defer()
+      subscription_params = {product_id: s.product.id, product_pricing_id: s.product_pricing?.id, max_licenses: s.max_licenses, custom_data: s.custom_data}
       MnoeOrganizations.get().then(
         (response) ->
-          subscriptionsApi(response.organization.id).post({subscription: {product_pricing_id: s.product_pricing.id, max_licenses: s.max_licenses, custom_data: s.custom_data}}).then(
+          subscriptionsApi(response.organization.id).post({subscription: subscription_params}).then(
             (response) ->
               deferred.resolve(response)
           )
@@ -60,7 +61,7 @@ angular.module 'mnoEnterpriseAngular'
       deferred = $q.defer()
       MnoeOrganizations.get().then(
         (response) ->
-          subscription.patch({subscription: {product_pricing_id: s.product_pricing.id, max_licenses: s.max_licenses, custom_data: s.custom_data}}).then(
+          subscription.patch({subscription: {product_id: s.product.id, product_pricing_id: s.product_pricing?.id, max_licenses: s.max_licenses, custom_data: s.custom_data}}).then(
             (response) ->
               deferred.resolve(response)
           )

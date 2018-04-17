@@ -5,6 +5,8 @@ angular.module 'mnoEnterpriseAngular'
 
     vm.isLoading = false
     vm.subscription = MnoeProvisioning.getSubscription()
+    vm.singleBilling = vm.subscription.product.single_billing_enabled
+    vm.billedLocally = vm.subscription.product.billed_locally
 
     # Happens when the user reload the browser during the provisioning workflow.
     if _.isEmpty(vm.subscription)
