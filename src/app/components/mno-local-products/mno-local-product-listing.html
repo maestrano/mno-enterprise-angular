@@ -26,16 +26,16 @@
       <div class="local-marketplace-list">
         <!-- App Cards-->
         <div class="local-landing-apps landing-app-card-wrapper" ng-repeat="product in $ctrl.products">
-            <a class="landing-app-card" ui-sref="{{$ctrl.productState}}({productId: product.nid})">
-              <div class="media">
-                <div class="landing-media-body">
-                  {{::product.tiny_description}}
-                </div>
-                <div class="media-object-wrapper">
-                  <img class="media-object" ng-src="{{::product.logo}}" ng-alt="{{::product.name}}">
-                </div>
+          <a class="landing-app-card" ui-sref="{{$ctrl.productState}}({productId: product.nid})">
+            <div class="media">
+              <div class="landing-media-body">
+                {{::product.tiny_description}}
               </div>
-            </a>
+              <div class="media-object-wrapper">
+                <img class="media-object" ng-src="{{::product.logo}}" ng-alt="{{::product.name}}">
+              </div>
+            </div>
+          </a>
           <div class="landing-app-name-wrapper">
             <h4 class="media-heading landing-app-name">{{::product.name}}</h4>
           </div>

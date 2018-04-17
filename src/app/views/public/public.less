@@ -115,7 +115,6 @@
         max-width: 350px;
         @supports (display: grid) {
           min-width: 200px;
-          max-height: none;
           margin-left: auto;
         }
         border: 1px solid @public-marketplace-carousel-card-border-color;
@@ -212,9 +211,15 @@
   }
 
   .local-marketplace-list {
-    display: grid;
-    grid-gap: 5px;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    @supports (display: grid) {
+      display: grid;
+      grid-gap: 5px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
   }
 
   .landing-app-card {
