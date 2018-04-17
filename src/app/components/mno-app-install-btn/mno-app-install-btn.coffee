@@ -161,7 +161,7 @@ angular.module 'mnoEnterpriseAngular'
             product = _.find(products, { nid: vm.app.nid })
 
             # Is the product externally provisioned
-            vm.isExternallyProvisioned = (vm.isProvisioningEnabled && product?.externally_provisioned)
+            vm.isExternallyProvisioned = vm.isProvisioningEnabled && (product?.product_type == 'application' || product?.externally_provisioned)
         )
 
       return
