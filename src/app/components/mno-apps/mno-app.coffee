@@ -30,16 +30,9 @@ angular.module 'mnoEnterpriseAngular'
 
     vm.sortReviewsBy = 'created_at.desc'
 
-    # Public initialization - app only, without considering reviews/org
-    MnoeMarketplace.getApps().then(
-      (response) ->
-        apps = response.apps
-
-        # App to be displayed
-        appId = $stateParams.appId
-        vm.app = _.findWhere(apps, { nid: appId })
-        vm.app ||= _.findWhere(apps, { id:  appId })
-
+    if $stateParams.appId
+      MnoeMarketplace.getApp($stateParams.appId).then((response) =>
+        vm.app = response.app
         $state.go(parentState) unless vm.app?
         vm.isLoading = false
       )
@@ -444,19 +437,16 @@ angular.module 'mnoEnterpriseAngular'
 
         # Retrieve the apps and if any the current app instance
         $q.all(
-          marketplace: MnoeMarketplace.getApps(),
+          app: MnoeMarketplace.getApp($stateParams.appId),
           appInstances: MnoeAppInstances.getAppInstances(),
           products: productPromise
         ).then(
           (response) ->
-            apps = response.marketplace.apps
             appInstances = response.appInstances
             products = response.products?.products
 
             # App to be displayed
-            appId = $stateParams.appId
-            app = _.findWhere(apps, { nid: appId })
-            app ||= _.findWhere(apps, { id:  appId })
+            app = response.app?.app
 
             $state.go(parentState) unless app?
 

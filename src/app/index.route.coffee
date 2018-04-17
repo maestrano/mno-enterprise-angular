@@ -144,13 +144,13 @@ angular.module 'mnoEnterpriseAngular'
           templateUrl: 'app/views/marketplace/marketplace.html'
           controller: 'DashboardMarketplaceCtrl'
           controllerAs: 'vm'
-        .state 'home.marketplace.product',
+        .state 'home.marketplace.app',
           data:
             pageTitle:'Marketplace'
           url: '^/marketplace/?productNid?appId?productId'
           views: '@home':
-            templateUrl: 'app/components/mno-products/mno-product.html',
-            controller: 'mnoProduct'
+            templateUrl: 'app/components/mno-apps/mno-app.html',
+            controller: 'mnoApp'
             controllerAs: 'vm'
             resolve: {
               isPublic: -> false

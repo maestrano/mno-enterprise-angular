@@ -19,7 +19,7 @@ angular.module 'mnoEnterpriseAngular'
         vm.isMarketplaceCompare = MnoeConfig.isMarketplaceComparisonEnabled()
         vm.showCompare = false
         vm.nbProductsToCompare = 0
-        vm.productState = if vm.publicPage then "public.product" else "home.marketplace.product"
+        vm.productState = if vm.publicPage then "public.app" else "home.marketplace.app"
         vm.appOrProduct = (product) ->
           if product.app_id
             "({appId: '#{product.app_id}', productNid: '#{product.nid}'})"

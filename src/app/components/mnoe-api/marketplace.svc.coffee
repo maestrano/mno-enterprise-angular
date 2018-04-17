@@ -38,6 +38,10 @@ angular.module 'mnoEnterpriseAngular'
     @getProduct = (productId) ->
       MnoeApiSvc.one('/products', productId).get()
 
+    @getApp = (appId) ->
+      params = {organization_id: MnoeOrganizations.selectedId}
+      MnoeApiSvc.one('/marketplace', appId).get(params)
+
     @getReview = (appId, reviewId) ->
       MnoeApiSvc.one('marketplace', appId).one('app_reviews', parseInt(reviewId)).get()
 
