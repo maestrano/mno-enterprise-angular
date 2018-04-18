@@ -34,8 +34,8 @@ angular.module 'mnoEnterpriseAngular'
     # Pricings
     #====================================
     # Return true if the plan has a dollar value
-    vm.pricedPlan = (plan) ->
-      plan.pricing_type not in PRICING_TYPES['unpriced']
+
+    vm.pricedPlan = ProvisioningHelper.pricedPlan
 
     getPricingPlans = (app) ->
       if vm.isPriceShown
@@ -130,12 +130,6 @@ angular.module 'mnoEnterpriseAngular'
         cart.config.organizationId = MnoeOrganizations.selectedId
         cart.bundle = { app_instances: [{app: { id: vm.app.id }}] }
         cart.isOpen = true
-
-    #====================================
-    # Pricings
-    #====================================
-    # Return true if the plan has a dollar value
-    vm.pricedPlan = ProvisioningHelper.pricedPlan
 
     #====================================
     # Reviews
