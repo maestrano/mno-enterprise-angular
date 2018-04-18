@@ -21,7 +21,7 @@
           </p>
 
           <div ng-show="canManageTeam()">
-            <button class="btn btn-sm btn-warning" ng-click="memberAddModal.open(team)">
+            <button class="btn btn-sm btn-warning" ng-click="openAddTeamMemberModal(team)">
               <i class="fa fa-user-plus"></i>
               {{ 'mno_enterprise.templates.dashboard.teams.team_list.add_team_members' | translate }}
             </button>
@@ -30,7 +30,7 @@
 
         <div class="row" ng-show="!isTeamEmpty(team)">
           <div class="col-sm-12" ng-show="canManageTeam()">
-            <button class="btn btn-sm btn-warning" ng-click="memberAddModal.open(team)">
+            <button class="btn btn-sm btn-warning" ng-click="openAddTeamMemberModal(team)">
               <i class="fa fa-user-plus"></i>
               {{ 'mno_enterprise.templates.dashboard.teams.team_list.add_team_members' | translate }}
             </button>

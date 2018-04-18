@@ -9,6 +9,7 @@ DashboardOrganizationTeamListCtrl = ($scope, $window, $uibModal, $q, MnoeCurrent
   #====================================
   $scope.isLoading = true
   $scope.teams = []
+  $scope.organization = MnoeOrganizations.selected.organization
 
   #====================================
   # Scope Management
@@ -46,73 +47,30 @@ DashboardOrganizationTeamListCtrl = ($scope, $window, $uibModal, $q, MnoeCurrent
   #====================================
   # Team: Member Add Modal
   #====================================
-  $scope.memberAddModal = memberAddModal = {}
-  memberAddModal.config = {
-    instance: {
-      backdrop: 'static'
+  $scope.openAddTeamMemberModal = (team) ->
+    modalInstance = $uibModal.open(
       templateUrl: 'app/views/company/team-list/modals/member-add-modal.html'
+      controller: 'MemberAddModalCtrl'
+      controllerAs: 'vm'
+      backdrop: 'static'
+      windowClass: 'member-add-modal'
       size: 'lg'
-      windowClass: 'inverse team-member-add-modal'
-      scope: $scope
-    }
-  }
+      resolve:
+        team: team
+        availableUsers: -> getAvailableUsers(team)
+    )
+    modalInstance.result.then(
+      ->
+        angular.copy(MnoeTeams.teams, $scope.teams)
+    )
 
-  memberAddModal.open = (team) ->
-    self = memberAddModal
-    self.team = team
-    self.users = []
-    self.userList = self.getAvailableUsers(team)
-    self.$instance = $uibModal.open(self.config.instance)
-    self.isLoading = false
+  getAvailableUsers = (team) ->
+    _.reject($scope.organization.members, (member) ->
+      member.entity != 'User' || _.find(team.users, {'id': member.id})
+    )
 
-  memberAddModal.close = ->
-    self = memberAddModal
-    self.$instance.close()
-
-  memberAddModal.getAvailableUsers = (team) ->
-    self = memberAddModal
-    list = []
-    _.each MnoeOrganizations.selected.organization.members, (m) ->
-      unless _.find(team.users,(u)-> u.id == m.id)?
-        list.push(m) if m.entity == 'User'
-    return list
-
-  memberAddModal.canAddUsers = ->
-    self = memberAddModal
-    self.userList.length > 0
-
-  memberAddModal.hasUser = (user) ->
-    self = memberAddModal
-    _.contains(self.users,user)
-
-  memberAddModal.toggleUser = (user) ->
-    self = memberAddModal
-    if self.hasUser(user)
-      self.removeUser(user)
-    else
-      self.addUser(user)
-
-  memberAddModal.addUser = (user) ->
-    self = memberAddModal
-    unless self.hasUser(user)
-      self.users.push(user)
-
-  memberAddModal.removeUser = (user) ->
-    self = memberAddModal
-    if (idx = self.users.indexOf(user)) >= 0
-      self.users.splice(idx,1)
-
-  memberAddModal.proceed = ->
-    self = memberAddModal
-    self.isLoading = true
-    MnoeTeams.addUsers(self.team.id, self.users).then(
-      (users) ->
-        self.errors = ''
-        angular.copy(users,self.team.users)
-        self.close()
-      (errors) ->
-        self.errors = Utilities.processRailsError(errors)
-    ).finally(-> self.isLoading = false)
+  $scope.usersAreAvailableToAdd = (team) ->
+    getAvailableUsers(team).length > 1
 
   #====================================
   # Team: Member Removal Modal
