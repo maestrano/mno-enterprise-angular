@@ -1,42 +1,44 @@
-<div class="modal-header">
-  <div class="close" type="button" ng-click="memberRemovalModal.close()" >×</div>
-  <h3>{{ 'mno_enterprise.templates.dashboard.teams.member_removal_modal.title' | translate }}</h3>
-</div>
+<div id="member-removal-modal">
+  <div class="modal-header">
+    <div class="close" type="button" ng-click="vm.onCancel()" >×</div>
+    <h3>{{ 'mno_enterprise.templates.dashboard.teams.member_removal_modal.title' | translate }}</h3>
+  </div>
 
-<div class="modal-body">
-  <div class="row">
-    <div class="col-sm-12">
-      <div class="alert alert-error" ng-show="memberRemovalModal.errors">
-        <button class="close" ng-click="memberRemovalModal.errors=''">×</button>
-        <ul>
-          <li ng-repeat="error in memberRemovalModal.errors">{{error}}</li>
-        </ul>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="alert alert-error" ng-show="vm.errors">
+          <button class="close" ng-click="vm.errors=''">×</button>
+          <ul>
+            <li ng-repeat="error in vm.errors">{{error}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <p class="align-center" ng-show="vm.user.name && vm.user.surname"
+          translate="mno_enterprise.templates.dashboard.teams.member_removal_modal.confirmation"
+          translate-value-fullname="{{vm.user.name}} {{vm.user.surname}}"
+          translate-value-teamname="{{vm.team.name}}"></p>
+        <p class="align-center" ng-show="!vm.user.name && !vm.user.surname"
+           translate="mno_enterprise.templates.dashboard.teams.member_removal_modal.confirmation"
+           translate-value-fullname="{{vm.user.email}}"
+           translate-value-teamname="{{vm.team.name}}"></p>
       </div>
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-sm-12">
-      <p class="align-center" ng-show="memberRemovalModal.user.name && memberRemovalModal.user.surname"
-        translate="mno_enterprise.templates.dashboard.teams.member_removal_modal.confirmation"
-        translate-value-fullname="{{memberRemovalModal.user.name}} {{memberRemovalModal.user.surname}}"
-        translate-value-teamname="{{memberRemovalModal.team.name}}"></p>
-      <p class="align-center" ng-show="!memberRemovalModal.user.name && !memberRemovalModal.user.surname"
-         translate="mno_enterprise.templates.dashboard.teams.member_removal_modal.confirmation"
-         translate-value-fullname="{{memberRemovalModal.user.email}}"
-         translate-value-teamname="{{memberRemovalModal.team.name}}"></p>
-    </div>
-  </div>
-</div>
-
-<div class="modal-footer">
-  <div class="row">
-    <div class="col-sm-12">
-      <button class="btn btn-default" ng-click="memberRemovalModal.close()" ng-show="!memberRemovalModal.isLoading">{{ 'mno_enterprise.templates.dashboard.teams.member_removal_modal.cancel' | translate }}</button>
-      <button class="btn btn-danger" ng-click="memberRemovalModal.proceed()" ng-disabled="memberRemovalModal.isLoading">
-        <span ng-show="memberRemovalModal.isLoading"><i class="fa fa-spinner fa-pulse fa-fw"></i></span>
-        {{ 'mno_enterprise.templates.dashboard.teams.member_removal_modal.remove' | translate }}
-      </button>
+  <div class="modal-footer">
+    <div class="row">
+      <div class="col-sm-12">
+        <button class="btn btn-default" ng-click="vm.onCancel()" ng-show="!vm.isLoading">{{ 'mno_enterprise.templates.dashboard.teams.member_removal_modal.cancel' | translate }}</button>
+        <button class="btn btn-danger" ng-click="vm.onSubmit()" ng-disabled="vm.isLoading">
+          <span ng-show="vm.isLoading"><i class="fa fa-spinner fa-pulse fa-fw"></i></span>
+          {{ 'mno_enterprise.templates.dashboard.teams.member_removal_modal.remove' | translate }}
+        </button>
+      </div>
     </div>
   </div>
 </div>

@@ -75,39 +75,22 @@ DashboardOrganizationTeamListCtrl = ($scope, $window, $uibModal, $q, MnoeCurrent
   #====================================
   # Team: Member Removal Modal
   #====================================
-  $scope.memberRemovalModal = memberRemovalModal = {}
-  memberRemovalModal.config = {
-    instance: {
-      backdrop: 'static'
+  $scope.openRemoveTeamMemberModal = (team, user) ->
+    modalInstance = $uibModal.open(
       templateUrl: 'app/views/company/team-list/modals/member-removal-modal.html'
+      controller: 'MemberRemovalModalCtrl'
+      controllerAs: 'vm'
+      backdrop: 'static'
+      windowClass: 'member-removal-modal'
       size: 'lg'
-      windowClass: 'inverse team-member-removal-modal'
-      scope: $scope
-    }
-  }
-
-  memberRemovalModal.open = (team, user) ->
-    self = memberRemovalModal
-    self.team = team
-    self.user = user
-    self.$instance = $uibModal.open(self.config.instance)
-    self.isLoading = false
-
-  memberRemovalModal.close = ->
-    self = memberRemovalModal
-    self.$instance.close()
-
-  memberRemovalModal.proceed = ->
-    self = memberRemovalModal
-    self.isLoading = true
-    MnoeTeams.removeUser(self.team.id, self.user).then(
-      (users) ->
-        self.errors = ''
-        angular.copy(users, self.team.users)
-        self.close()
-      (errors) ->
-        self.errors = Utilities.processRailsError(errors)
-    ).finally(-> self.isLoading = false)
+      resolve:
+        team: team
+        user: user
+    )
+    modalInstance.result.then(
+      ->
+        angular.copy(MnoeTeams.teams, $scope.teams)
+    )
 
   #====================================
   # Post-Initialization

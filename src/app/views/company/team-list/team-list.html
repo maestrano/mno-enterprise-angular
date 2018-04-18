@@ -80,7 +80,7 @@
                 </div>
 
                 <div class="cell col-sm-2" ng-show="canManageTeam()">
-                  <a ng-click="memberRemovalModal.open(team,member)" class="btn btn-link btn-link-danger">
+                  <a ng-click="openRemoveTeamMemberModal(team, member)" class="btn btn-link btn-link-danger">
                     <i class="fa fa-remove hidden-xs"></i>
                     <span class="cell-label visible-xs-inline">&nbsp;{{ 'mno_enterprise.templates.dashboard.teams.team_list.remove' | translate }}</span>
                   </a>
