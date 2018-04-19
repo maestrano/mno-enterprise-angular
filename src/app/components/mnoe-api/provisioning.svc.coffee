@@ -21,13 +21,16 @@ angular.module 'mnoEnterpriseAngular'
       subscription
 
     # Return the subscription
+    # if editing return the subscription in cache
     # if productNid: return the default subscription
     # if subscriptionId: return the fetched subscription
-    # else: return the subscription in cache (edition mode)
-    @initSubscription = ({productNid = null, subscriptionId = null}) ->
+    # else: return an empty object (this condition should never be met, but is a failsafe)
+    @initSubscription = ({productNid = null, subscriptionId = null, editing = false}) ->
       deferred = $q.defer()
 
-      if productNid?
+      if editing
+        deferred.resolve(subscription)
+      else if productNid?
         # Create a new subscription to a product
         angular.copy(defaultSubscription, subscription)
         deferred.resolve(subscription)
@@ -39,7 +42,8 @@ angular.module 'mnoEnterpriseAngular'
             deferred.resolve(subscription)
         )
       else
-        deferred.resolve(subscription)
+        deferred.resolve({})
+
       return deferred.promise
 
     @createSubscription = (s) ->
