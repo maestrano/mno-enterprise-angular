@@ -23,9 +23,9 @@ angular.module 'mnoEnterpriseAngular'
       .state 'public.product',
         data:
           pageTitle: "Product Preview"
-        url: '/product/:appId'
-        templateUrl: 'app/components/mno-apps/mno-app.html'
-        controller: 'mnoApp'
+        url: '/product/?productId?appId'
+        templateUrl: 'app/components/mno-product/mno-product.html'
+        controller: 'mnoProduct'
         controllerAs: 'vm'
         resolve: {
           isPublic: -> true
@@ -147,7 +147,7 @@ angular.module 'mnoEnterpriseAngular'
         .state 'home.marketplace.app',
           data:
             pageTitle:'Marketplace'
-          url: '^/marketplace/:appId'
+          url: '^/marketplace/?productNid?appId?productId'
           views: '@home':
             templateUrl: 'app/components/mno-apps/mno-app.html',
             controller: 'mnoApp'

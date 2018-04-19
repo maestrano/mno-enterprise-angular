@@ -81,9 +81,7 @@ angular.module 'mnoEnterpriseAngular'
     orgPromise = MnoeOrganizations.getCurrentOrganisation().then(
       (response) ->
         # Pre-load the marketplace, the products and the local products
-        MnoeMarketplace.getApps()
-        MnoeMarketplace.getProducts() if MnoeConfig.isProvisioningEnabled()
-        MnoeMarketplace.getLocalProducts() if MnoeConfig.areLocalProductsEnabled()
+        MnoeMarketplace.getMarketplace()
 
         # App instances needs to be run after fetching the organization (At least the first call)
         MnoeAppInstances.getAppInstances().then(

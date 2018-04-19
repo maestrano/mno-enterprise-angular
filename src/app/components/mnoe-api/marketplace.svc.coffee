@@ -12,7 +12,7 @@ angular.module 'mnoEnterpriseAngular'
     # Using this syntax will not trigger the data extraction in MnoeApiSvc
     # as the /marketplace payload isn't encapsulated in "{ marketplace: categories {...}, apps {...} }"
     marketplacePromises = []
-    @getApps = ->
+    @getMarketplace = ->
       params = {organization_id: MnoeOrganizations.selectedId}
       paramsKey = JSON.stringify(params)
       return marketplacePromises[paramsKey] if marketplacePromises[paramsKey]?
@@ -35,31 +35,12 @@ angular.module 'mnoEnterpriseAngular'
           _.find(response.products, (a) -> a.id == id || a.nid == nid)
       )
 
-    localProductsPromise = []
-    @getLocalProducts = (limit, offset, sort, params = {}) ->
-      params['organization_id'] = MnoeOrganizations.selectedId
-      params['where[local]'] = 'true'
-      paramsKey = JSON.stringify([limit, offset, sort, params])
-      return localProductsPromise[paramsKey] if localProductsPromise[paramsKey]?
-      localProductsPromise[paramsKey] = MnoeApiSvc.all('products').getList(params).then(
-        (response) ->
-          _.map(response.plain(), (product) ->
-            # Transforms the values_attributes ([name: 'Some string', data: 'Its value'])
-            # to attributes (vm.product.some_string)
-            _.each(product.values_attributes, (v) ->
-              try
-                product[_.snakeCase(v.name)] = JSON.parse(v.data)
-              catch
-                product[_.snakeCase(v.name)] = v.data
-            )
-            product.screenshots = _.map(product.assets_attributes, (a) -> a.url)
-
-            product
-          )
-      )
-
     @getProduct = (productId) ->
       MnoeApiSvc.one('/products', productId).get()
+
+    @getApp = (appId) ->
+      params = {organization_id: MnoeOrganizations.selectedId}
+      MnoeApiSvc.one('/marketplace', appId).get(params)
 
     @getReview = (appId, reviewId) ->
       MnoeApiSvc.one('marketplace', appId).one('app_reviews', parseInt(reviewId)).get()

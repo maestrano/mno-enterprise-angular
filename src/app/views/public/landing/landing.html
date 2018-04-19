@@ -23,16 +23,16 @@
       <uib-tabset active="active">
         <uib-tab index="0">
           <div uib-tab-heading>{{ 'mno_enterprise.templates.dashboard.marketplace.index.applications' | translate }}</div>
-          <mno-app-listing is-public="true"></mno-app-listing>
+          <mno-product-listing is-public="true"></mno-product-listing>
         </uib-tab>
         <uib-tab index="1">
           <div uib-tab-heading translate translate-value-appname="{{::app_name}}">
             mno_enterprise.templates.dashboard.marketplace.index.reseller_products
           </div>
-          <mno-local-product-listing is-public="true"></mno-local-product-listing>
+          <mno-product-listing is-public="true"></mno-product-listing>
         </uib-tab>
       </uib-tabset>
     </div>
-    <mno-app-listing ng-if="!vm.localProducts.length" is-public="true"></mno-app-listing>
+    <mno-product-listing ng-if="!vm.localProducts.length" is-public="true"></mno-product-listing>
   </div>
 </div>

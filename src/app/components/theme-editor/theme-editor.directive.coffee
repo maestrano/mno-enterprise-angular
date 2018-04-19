@@ -315,7 +315,7 @@ ThemeEditorCtrl = ($scope, $window, $log, $timeout,  toastr, themeEditorSvc) ->
       '@dashboard-marketplace-show-sections-bg-color':        '@bg-on-bg-inverse-color'
       '@dashboard-marketplace-show-sections-text-color':      '@text-strong-color'
 
-      '@dashboard-marketplace-app-card':                      '{ display: block; padding: 10px; height: 120px; margin-bottom: 10px; font-weight: 300; }'
+      '@dashboard-marketplace-product-card':                      '{ display: block; padding: 10px; height: 120px; margin-bottom: 10px; font-weight: 300; }'
     },
 
     'Reviews & Comments Section': {
