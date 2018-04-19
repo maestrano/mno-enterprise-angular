@@ -1,10 +1,19 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningConfirmCtrl', ($scope, $state, MnoeOrganizations, MnoeProvisioning, MnoeAppInstances, MnoeConfig) ->
+  .controller('ProvisioningConfirmCtrl', ($scope, $stateParams, $state, MnoeOrganizations, MnoeProvisioning, MnoeAppInstances, MnoeConfig) ->
 
     vm = this
 
     vm.isLoading = false
     vm.subscription = MnoeProvisioning.getSubscription()
+
+    # Happens when the user reload the browser during the provisioning workflow.
+    if _.isEmpty(vm.subscription)
+      # Redirect the user to the first provisioning screen
+      $state.go('home.provisioning.order', {id: $stateParams.id, nid: $stateParams.nid})
+
+    vm.editOrder = () ->
+      $state.go('home.provisioning.order', {id: $stateParams.id, nid: $stateParams.nid})
+
 
     vm.validate = () ->
       vm.isLoading = true
@@ -16,7 +25,7 @@ angular.module 'mnoEnterpriseAngular'
             (response) ->
               $scope.apps = response
           )
-          $state.go('home.provisioning.order_summary')
+          $state.go('home.provisioning.order_summary', {id: $stateParams.id, nid: $stateParams.nid})
       ).finally(-> vm.isLoading = false)
 
     MnoeOrganizations.get().then(

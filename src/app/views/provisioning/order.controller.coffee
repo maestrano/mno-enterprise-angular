@@ -37,9 +37,9 @@ angular.module 'mnoEnterpriseAngular'
     vm.next = (subscription) ->
       MnoeProvisioning.setSubscription(subscription)
       if vm.subscription.product.custom_schema?
-        $state.go('home.provisioning.additional_details')
+        $state.go('home.provisioning.additional_details', {id: $stateParams.id, nid: $stateParams.nid})
       else
-        $state.go('home.provisioning.confirm')
+        $state.go('home.provisioning.confirm', {id: $stateParams.id, nid: $stateParams.nid})
 
     # Delete the cached subscription when we are leaving the subscription workflow.
     $scope.$on('$stateChangeStart', (event, toState) ->
