@@ -9,7 +9,7 @@ angular.module 'mnoEnterpriseAngular'
     # Happens when the user reload the browser during the provisioning workflow.
     if _.isEmpty(vm.subscription)
       # Redirect the user to the first provisioning screen
-      $state.go('home.provisioning.order', {id: $stateParams.id, nid: $stateParams.nid})
+      $state.go('home.provisioning.order', {id: $stateParams.id, nid: $stateParams.nid}, {reload: true})
 
     vm.editOrder = () ->
       $state.go('home.provisioning.order', {id: $stateParams.id, nid: $stateParams.nid})
