@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningSummaryCtrl', (MnoeOrganizations, MnoeProvisioning, MnoeConfig) ->
+  .controller('ProvisioningSummaryCtrl', ($scope, MnoeOrganizations, MnoeProvisioning, MnoeConfig) ->
 
     vm = this
 
@@ -8,6 +8,11 @@ angular.module 'mnoEnterpriseAngular'
     MnoeOrganizations.get().then(
       (response) ->
         vm.orgCurrency = response.organization?.billing_currency || MnoeConfig.marketplaceCurrency()
+    )
+
+    # Delete the cached subscription.
+    $scope.$on('$stateChangeStart', (event, toState) ->
+      MnoeProvisioning.setSubscription({})
     )
 
     return

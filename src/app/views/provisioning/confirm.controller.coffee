@@ -24,5 +24,14 @@ angular.module 'mnoEnterpriseAngular'
         vm.orgCurrency = response.organization?.billing_currency || MnoeConfig.marketplaceCurrency()
     )
 
+    # Delete the cached subscription when we are leaving the subscription workflow.
+    $scope.$on('$stateChangeStart', (event, toState) ->
+      switch toState.name
+        when "home.provisioning.order", "home.provisioning.order_summary", "home.provisioning.additional_details"
+          null
+        else
+          MnoeProvisioning.setSubscription({})
+    )
+
     return
   )

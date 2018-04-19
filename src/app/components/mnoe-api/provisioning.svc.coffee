@@ -27,19 +27,22 @@ angular.module 'mnoEnterpriseAngular'
     @initSubscription = ({productNid = null, subscriptionId = null}) ->
       deferred = $q.defer()
 
-      if productNid?
-        # Create a new subscription to a product
-        angular.copy(defaultSubscription, subscription)
+      # Edit a subscription
+      if !_.isEmpty(subscription)
         deferred.resolve(subscription)
       else if subscriptionId?
-        # Edit a subscription
         _self.fetchSubscription(subscriptionId).then(
           (response) ->
             angular.copy(response, subscription)
             deferred.resolve(subscription)
         )
-      else
+      else if productNid?
+        # Create a new subscription to a product
+        angular.copy(defaultSubscription, subscription)
         deferred.resolve(subscription)
+      else
+        deferred.resolve({})
+
       return deferred.promise
 
     @createSubscription = (s) ->

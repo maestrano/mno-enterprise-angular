@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningDetailsCtrl', ($state, MnoeMarketplace, MnoeProvisioning, schemaForm) ->
+  .controller('ProvisioningDetailsCtrl', ($scope, $state, MnoeMarketplace, MnoeProvisioning, schemaForm) ->
 
     vm = this
 
@@ -25,6 +25,15 @@ angular.module 'mnoEnterpriseAngular'
       return if form.$invalid
       MnoeProvisioning.setSubscription(vm.subscription)
       $state.go('home.provisioning.confirm')
+
+    # Delete the cached subscription when we are leaving the subscription workflow.
+    $scope.$on('$stateChangeStart', (event, toState) ->
+      switch toState.name
+        when "home.provisioning.order", "home.provisioning.order_summary", "home.provisioning.confirm"
+          null
+        else
+          MnoeProvisioning.setSubscription({})
+    )
 
     return
   )
