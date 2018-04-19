@@ -4,8 +4,12 @@ angular.module 'mnoEnterpriseAngular'
       app: '<'
     },
     templateUrl: 'app/components/mno-app-install-btn/mno-app-install-btn.html',
-    controller: ($q, $state, $window, $uibModal, toastr, MnoeMarketplace, MnoeCurrentUser, MnoeOrganizations, MnoeAppInstances, MnoeConfig) ->
+    controller: ($q, $state, $window, $uibModal, toastr, MnoeMarketplace, MnoeProvisioning, MnoeCurrentUser, MnoeOrganizations, MnoeAppInstances, MnoeConfig) ->
       vm = this
+
+      vm.provisionOrder = () ->
+        MnoeProvisioning.setSubscription({})
+        $state.go('home.provisioning.order', {nid: vm.app.nid})
 
       # Return the different status of the app regarding its installation
       # - INSTALLABLE:                        The app may be installed

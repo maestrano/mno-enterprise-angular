@@ -25,7 +25,7 @@ angular.module 'mnoEnterpriseAngular'
       .then((response) ->JSON.parse(response.custom_schema))
       .then((schema) -> schemaForm.jsonref(schema))
       .then((schema) -> schemaForm.jsonref(schema))
-      .then((schema) -> vm.schema)
+      .then((schema) -> vm.schema = schema)
 
     vm.submit = (form) ->
       return if form.$invalid
