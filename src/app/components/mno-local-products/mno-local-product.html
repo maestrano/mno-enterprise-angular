@@ -63,14 +63,20 @@
       <!-- Pricing -->
       <div ng-if="vm.isPriceShown" class="row top-buffer-1">
         <div class="col-md-12">
-          <div class="well" ng-switch="vm.product.pricing_plans">
-            <h3>{{ 'mno_enterprise.templates.dashboard.marketplace.show.price' | translate }}</h3>
+          <div class="well">
+            <h2>{{ 'mno_enterprise.templates.dashboard.marketplace.show.price' | translate }}</h2>
             <ul>
+              <li ng-if="vm.product.free_trial_duration > 0">
+                <b>{{ 'mno_enterprise.templates.dashboard.marketplace.show.free_trial_duration' | translate }}</b>: {{vm.product.free_trial_duration}} {{vm.product.free_trial_unit}}
+              </li>
               <li ng-repeat="plan in vm.product.pricing_plans">
-                <b>{{plan.name}}</b>: {{plan.description}}
-                <br>
+                <b>{{plan.name}}</b>: {{plan.description}} <br>
                 <span ng-hide="vm.hideNoPricingFound(plan)">{{ 'mno_enterprise.templates.dashboard.marketplace.show.no_pricing_found' | translate }}</span>
-                <span ng-hide="vm.hidePrices(plan)" ng-repeat="price in plan.prices | filterBy: ['currency']: vm.orgCurrency">{{price.currency}} {{price.price_cents / 100}}</span>
+                <span ng-hide="vm.hidePrices(plan)" ng-repeat="price in plan.prices | filterBy: ['currency']: vm.orgCurrency">
+                  {{price.currency}} {{price.price_cents / 100}}
+                  <span ng-show="plan.pricing_type == 'recurring'"> / {{plan.per_unit}} / {{plan.per_duration}}</span>
+                </span>
+                <span ng-show="plan.pricing_type == payg">{{'mno_enterprise.templates.dashboard.marketplace.show.pricing.payg' | translate}}</span>
               </li>
             </ul>
           </div>
