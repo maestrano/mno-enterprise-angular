@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningSubscriptionCtrl', ($stateParams, $filter, $uibModal, MnoeProvisioning, MnoeMarketplace, PRICING_TYPES) ->
+  .controller('ProvisioningSubscriptionCtrl', ($stateParams, $filter, $uibModal, MnoeProvisioning, MnoeMarketplace, ProvisioningHelper) ->
 
     vm = this
     vm.isLoading = true
@@ -37,8 +37,7 @@ angular.module 'mnoEnterpriseAngular'
       )
 
     # Return true if the plan has a dollar value
-    vm.pricedPlan = (plan) ->
-      plan.pricing_type not in PRICING_TYPES['unpriced']
+    vm.pricedPlan = ProvisioningHelper.pricedPlan
 
     return
   )
