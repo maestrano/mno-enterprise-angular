@@ -10,7 +10,7 @@ angular.module 'mnoEnterpriseAngular'
     vm.isLoading = false
 
     vm.toggleUser = (user) ->
-      if _.includes(vm.selectedUsers, user) then _.remove(vm.selectedUsers, user) else vm.selectedUsers.push(user)
+      if user in vm.selectedUsers then vm.selectedUsers.splice(vm.selectedUsers.indexOf(user), 1) else vm.selectedUsers.push(user)
 
     vm.onSubmit = () ->
       vm.isLoading = true

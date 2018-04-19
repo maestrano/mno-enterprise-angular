@@ -9,7 +9,7 @@ DashboardOrganizationTeamListCtrl = ($scope, $window, $uibModal, $q, MnoeCurrent
   #====================================
   $scope.isLoading = true
   $scope.teams = []
-  $scope.organization = MnoeOrganizations.selected.organization
+  $scope.org = MnoeOrganizations.selected.organization
 
   #====================================
   # Scope Management
@@ -65,9 +65,7 @@ DashboardOrganizationTeamListCtrl = ($scope, $window, $uibModal, $q, MnoeCurrent
     )
 
   getAvailableUsers = (team) ->
-    _.reject($scope.organization.members, (member) ->
-      member.entity != 'User' || _.find(team.users, {'id': member.id})
-    )
+    (m for m in $scope.org.members when m.entity is 'User' and m.id not in (u.id for u in team.users))
 
   $scope.usersAreAvailableToAdd = (team) ->
     getAvailableUsers(team).length > 1
