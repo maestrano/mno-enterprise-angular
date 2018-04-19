@@ -44,7 +44,8 @@ angular.module 'mnoEnterpriseAngular'
       return productsPromise[paramsKey] if productsPromise[paramsKey]?
       productsPromise[paramsKey] = MnoeApiSvc.oneUrl('/products').get(params).then(
         (response) ->
-          _transform_products(response.plain())
+          response.products = _transform_products(response.products)
+          response.plain()
       )
 
     # Find a product using its id or nid
