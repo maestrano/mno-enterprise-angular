@@ -2,7 +2,7 @@
   <mno-loader ng-show="$ctrl.isLoading" class="top-buffer-4"></mno-loader>
   <div class="top-buffer-4" ng-show="!$ctrl.isLoading">
     <div class="row">
-      <div class="marketplace-list">
+      <div class="marketplace-list" ng-hide="$ctrl.publicPage">
         <div class="col-sm-6 col-md-4" ng-repeat="product in $ctrl.products">
           <a class="marketplace-app-card" ui-sref="{{$ctrl.productState}}({productId: product.nid})">
             <div class="media">
@@ -18,6 +18,27 @@
               </div>
             </div>
           </a>
+        </div>
+      </div>
+    </div>
+  <!-- display public HTML and styling if public -->
+    <div class="landing-page-app-section-wrapper" ng-show="$ctrl.publicPage">
+      <div class="local-marketplace-list">
+        <!-- App Cards-->
+        <div class="local-landing-apps landing-app-card-wrapper" ng-repeat="product in $ctrl.products">
+          <a class="landing-app-card" ui-sref="{{$ctrl.productState}}({productId: product.nid})">
+            <div class="media">
+              <div class="landing-media-body">
+                {{::product.tiny_description}}
+              </div>
+              <div class="media-object-wrapper">
+                <img class="media-object" ng-src="{{::product.logo}}" ng-alt="{{::product.name}}">
+              </div>
+            </div>
+          </a>
+          <div class="landing-app-name-wrapper">
+            <h4 class="media-heading landing-app-name">{{::product.name}}</h4>
+          </div>
         </div>
       </div>
     </div>

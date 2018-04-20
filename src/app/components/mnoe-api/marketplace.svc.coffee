@@ -9,6 +9,21 @@ angular.module 'mnoEnterpriseAngular'
   .service 'MnoeMarketplace', ($log, MnoeApiSvc, MnoeOrganizations, MnoeFullApiSvc) ->
     _self = @
 
+    _transform_products = (products) ->
+      _.map(products, (product) ->
+        # Transforms the values_attributes ([name: 'Some string', data: 'Its value'])
+        # to attributes (vm.product.some_string)
+        _.each(product.values_attributes, (v) ->
+          try
+            product[_.snakeCase(v.name)] = JSON.parse(v.data)
+          catch
+            product[_.snakeCase(v.name)] = v.data
+        )
+        product.screenshots = _.map(product.assets_attributes, (a) -> a.url)
+
+        product
+      )
+
     # Using this syntax will not trigger the data extraction in MnoeApiSvc
     # as the /marketplace payload isn't encapsulated in "{ marketplace: categories {...}, apps {...} }"
     marketplacePromises = []
@@ -16,7 +31,11 @@ angular.module 'mnoEnterpriseAngular'
       params = {organization_id: MnoeOrganizations.selectedId}
       paramsKey = JSON.stringify(params)
       return marketplacePromises[paramsKey] if marketplacePromises[paramsKey]?
-      marketplacePromises[paramsKey] = MnoeApiSvc.oneUrl('/marketplace').get(params)
+      marketplacePromises[paramsKey] = MnoeApiSvc.oneUrl('/marketplace').get(params).then(
+        (response) ->
+          response.products = _transform_products(response.products)
+          response
+      )
 
     productsPromise = []
     @getProducts = ->
@@ -25,6 +44,7 @@ angular.module 'mnoEnterpriseAngular'
       return productsPromise[paramsKey] if productsPromise[paramsKey]?
       productsPromise[paramsKey] = MnoeApiSvc.oneUrl('/products').get(params).then(
         (response) ->
+          response.products = _transform_products(response.products)
           response.plain()
       )
 
@@ -43,23 +63,15 @@ angular.module 'mnoEnterpriseAngular'
       return localProductsPromise[paramsKey] if localProductsPromise[paramsKey]?
       localProductsPromise[paramsKey] = MnoeApiSvc.all('products').getList(params).then(
         (response) ->
-          _.map(response.plain(), (product) ->
-            # Transforms the values_attributes ([name: 'Some string', data: 'Its value'])
-            # to attributes (vm.product.some_string)
-            _.each(product.values_attributes, (v) ->
-              try
-                product[_.snakeCase(v.name)] = JSON.parse(v.data)
-              catch
-                product[_.snakeCase(v.name)] = v.data
-            )
-            product.screenshots = _.map(product.assets_attributes, (a) -> a.url)
-
-            product
-          )
+          _transform_products(response.plain())
       )
 
     @getProduct = (productId) ->
-      MnoeApiSvc.one('/products', productId).get()
+      MnoeApiSvc.one('/products', productId).get().then(
+        (response) ->
+          _transform_products([response])
+          response
+      )
 
     @getReview = (appId, reviewId) ->
       MnoeApiSvc.one('marketplace', appId).one('app_reviews', parseInt(reviewId)).get()

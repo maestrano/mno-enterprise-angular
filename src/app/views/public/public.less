@@ -6,41 +6,11 @@
   right: 0;
   position: relative;
 
+// navbar
   .navbar {
     position: relative;
     height: 70px;
     background-color: @landing-nav-bg-color;
-  }
-
-  .highlight-products {
-    padding: 0 50px;
-
-    .well.carousel {
-      min-height: 400px;
-    }
-  }
-
-  .carousel-image-container {
-    height: 360px;
-    text-align: center;
-    position: relative;
-
-    .carousel-image {
-      background-size: cover;
-      height: 100%;
-      width: 100%;
-      filter: blur(5px);
-    }
-
-    .carousel-logo {
-      border-radius: 50%;
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      margin: auto;
-    }
   }
 
   .nav-logo {
@@ -62,69 +32,252 @@
     }
   }
 
-  .product-content {
-    padding: 25px 50px 0 50px;
-  }
+  // carousel
+  .highlight-products {
+    padding: 0 50px;
 
-  .marketplace-nav {
-    input.form-control {
-      color: @landing-marketplace-search-text-color;
-      border: 1px solid @landing-marketplace-search-border-color;
+    .well.carousel {
+      min-height: 400px;
     }
   }
 
-  .marketplace-app-card {
-    @landing-marketplace-app-card();
-    background-color: @landing-marketplace-tile-bg-color;
+  .carousel-image-container {
+    text-align: center;
+    height: 360px;
+    position: relative;
+    justify-content: center;
+
+    .carousel-image {
+      background-size: cover;
+      height: 100%;
+      width: 100%;
+      filter: blur(5px);
+    }
+
+    .carousel-display-wrapper {
+      border-radius: 50%;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: auto;
+      width: 100%;
+      max-height: 250px;
+      margin: auto;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      color: @public-marketplace-show-header-text-color;
+      @supports (display: grid) {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        width: 70%;
+        max-height: none;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
+
+      .carousel-logo-wrapper {
+        display: flex;
+        border-radius: 100%;
+        max-height: 200px;
+        max-width: 350px;
+        min-width: 200px;
+        margin-top: 20px;
+        margin-right: 25px;
+        @supports (display: grid) {
+          max-height: none;
+          margin: auto;
+        }
+
+        .carousel-logo {
+          max-width: 200px;
+          max-height: 200px;
+          border-radius: 100%;
+          margin: auto;
+        }
+      }
+
+      .carousel-app-info-wrapper {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        margin: auto;
+        padding-left: 20px;
+        padding-right: 20px;
+        margin-left: 25px;
+        min-height: 200px;
+        max-height: none;
+        min-width: 200px;
+        max-width: 350px;
+        @supports (display: grid) {
+          min-width: 200px;
+          margin-left: auto;
+        }
+        border: 1px solid @public-marketplace-carousel-card-border-color;
+        margin-left: 10px;
+        background-color: @public-marketplace-carousel-card-color;
+        .carousel-app-info-background {
+          margin: auto;
+          color: @public-marketplace-show-header-text-color;
+          .carousel-app-title {
+            font-size: 37px;
+          }
+
+          .carousel-app-description {
+            font-size: 23px;
+          }
+
+          .carousel-app-category {
+            margin-top: 3px;
+            font-size: 18px;
+          }
+        }
+      }
+    }
+  }
+
+  .show-content {
+    .well {
+      background-color: @public-marketplace-show-sections-bg-color;
+      color: @public-marketplace-show-sections-text-color;
+    }
+  }
+
+  // search and filter
+  .landing-page-search-wrapper {
+    margin: 0 auto;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-bottom: 25px;
+  }
+
+  .form-control {
+    margin-top: 25px;
+    border: 0;
+    outline: 1px solid @landing-nav-bg-color;
+    font-size: 18px;
+    font-weight: 300;
+    padding: 16px;
+    width: 100%;
+  }
+
+  .landing-page-app-categories {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+
+    .category-wrapper {
+      width: 100%;
+      text-decoration: none;
+      color: black;
+      display: inline-block;
+      font-size: 18px;
+      font-weight: 300;
+      padding: 7px 10px;
+      list-style: none;
+      border: none;
+      overflow: wrap;
+
+      &:focus {
+        outline: 0;
+      }
+
+      &:hover {
+        background-color: @landing-nav-bg-color;
+        color: @public-main-bg-color;
+        transition: all 0.1s ease-in-out;
+      }
+    }
+
+    .category-wrapper.active {
+      background-color: @landing-nav-bg-color;
+      color: @public-main-bg-color;
+    }
+  }
+
+  // app card/list
+  .landing-page-app-section-wrapper {
+    height: inherit;
+  }
+
+  .landing-app-card-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 25px;
+  }
+
+  .local-marketplace-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    @supports (display: grid) {
+      display: grid;
+      grid-gap: 5px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+  }
+
+  .landing-app-card {
+    position: relative;
+    background-color: @dashboard-marketplace-tile-bg-color;
+    color: @dashboard-marketplace-tile-text-color;
+    cursor: pointer;
+    border: 1px solid @landing-nav-bg-color;
+    border-radius: 100%;
+    height: 200px;
+    margin: 0 auto;
+    padding: 45px;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+
+    .landing-media-body {
+      display: none
+    }
+
+    img.media-object {
+      margin: 0 auto;
+      max-width: 100px;
+      border: none;
+      padding: 0;
+    }
 
     &:hover {
-      background-color: @landing-marketplace-tile-hover-bg-color;
-    }
-
-    .media {
-      .media-body {
-        color: @landing-marketplace-tile-text-color;
-
-        &:hover {
-          color: @landing-marketplace-tile-hover-text-color;
-        }
-      }
-      .media-heading {
-        color: @landing-marketplace-tile-name-color;
-
-        &:hover {
-          color: @landing-marketplace-tile-hover-name-color;
-        }
-      }
-
-      .arrow {
-        color: @landing-marketplace-tile-hover-arrow-color;
-      }
+      text-decoration: none;
+      background-color: @landing-nav-bg-color;
+      color: @landing-nav-bg-color;
+      border: 1px solid @landing-nav-bg-color;
 
       img.media-object {
-        border: 1px solid @landing-marketplace-tile-img-border-color;
+        display: none;
+      }
 
-        &:hover {
-          border: 1px solid @landing-marketplace-tile-hover-img-border-color;
-        }
+      .landing-media-body {
+        display: block;
+        overflow: wrap;
+        text-align: center;
+        color: @public-main-bg-color;
+        font-family: @font-family-sans-serif;
+        font-size: 18px;
+        font-weight: 200;
       }
     }
   }
 
-  .product-content {
-    .media {
-      .media-body {
-        h2.media-heading {
-          color: @public-marketplace-show-header-text-color;
-        }
-      }
-    }
+  h4.landing-app-name {
+    color: @public-marketplace-show-header-text-color;
+    font-weight: 300;
+    text-align: center;
+    color: @public-marketplace-show-header-text-color;
+    font-family: @font-family-sans-serif;
+    line-height: 1.4;
+  }
 
-    .show-content {
-      .well {
-        background-color: @public-marketplace-show-sections-bg-color;
-        color: @public-marketplace-show-sections-text-color;
-      }
-    }
+  .landing-app-name-wrapper {
+    margin-top: 10px;
   }
 }

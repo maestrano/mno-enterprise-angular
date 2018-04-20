@@ -19,16 +19,24 @@ angular.module 'mnoEnterpriseAngular'
         vm.showCompare = false
         vm.nbAppsToCompare = 0
         vm.appState = if vm.publicPage then "public.product" else "home.marketplace.app"
+        vm.displayAll = {label: "", active: 'active'}
+        vm.selectedPublicCategory = vm.displayAll
         vm.initialize()
       #====================================
       # Scope Management
       #====================================
 
       vm.appsFilter = (app) ->
-        if (vm.searchTerm? && vm.searchTerm.length > 0) || !vm.selectedCategory
+        vm.currentSelectedCategory = if vm.publicPage then vm.selectedPublicCategory.label else vm.selectedCategory
+        if (vm.searchTerm? && vm.searchTerm.length > 0) || !vm.currentSelectedCategory
           return true
         else
-          return _.contains(app.categories, vm.selectedCategory)
+          return _.contains(app.categories, vm.currentSelectedCategory)
+
+      vm.resetCategory = (category) ->
+        vm.selectedPublicCategory.active = ''
+        category.active = 'active'
+        vm.selectedPublicCategory = category
 
       # Cancel comparison
       vm.cancelComparison = ->
@@ -65,6 +73,7 @@ angular.module 'mnoEnterpriseAngular'
             response = response.plain()
 
             vm.categories = response.categories
+            vm.publicCategories = _.map(response.categories, (c) -> {label: c, active: ''})
             vm.apps = response.apps
             if vm.publicPage
               vm.apps = _.filter(vm.apps, (app) -> _.includes(MnoeConfig.publicApplications(), app.nid))

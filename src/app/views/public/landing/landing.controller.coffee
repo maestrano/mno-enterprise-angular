@@ -8,13 +8,6 @@ angular.module 'mnoEnterpriseAngular'
       vm.highlightedApps = []
       vm.localProducts = []
 
-
-      vm.appsFilter = (app) ->
-        if (vm.searchTerm? && vm.searchTerm.length > 0) || !vm.selectedCategory
-          return true
-        else
-          return _.contains(app.categories, vm.selectedCategory)
-
       vm.carouselImageStyle = (app) ->
         # Products does not have a picture
         picture = if app.pictures then app.pictures[0] else app.logo

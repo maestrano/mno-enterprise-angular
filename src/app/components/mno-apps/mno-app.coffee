@@ -30,6 +30,19 @@ angular.module 'mnoEnterpriseAngular'
 
     vm.sortReviewsBy = 'created_at.desc'
 
+    #====================================
+    # Pricings
+    #====================================
+    # Return true if the plan has a dollar value
+
+    vm.pricedPlan = ProvisioningHelper.pricedPlan
+
+    getPricingPlans = (app) ->
+      if vm.isPriceShown
+        plans = vm.app.pricing_plans
+        currency = MnoeConfig.marketplaceCurrency()
+        vm.pricing_plans = plans[currency] || plans.AUD || plans.default
+
     # Public initialization - app only, without considering reviews/org
     MnoeMarketplace.getApps().then(
       (response) ->
@@ -39,6 +52,9 @@ angular.module 'mnoEnterpriseAngular'
         appId = $stateParams.appId
         vm.app = _.findWhere(apps, { nid: appId })
         vm.app ||= _.findWhere(apps, { id:  appId })
+
+        # Init Pricing Plans
+        getPricingPlans(vm.app)
 
         $state.go(parentState) unless vm.app?
         vm.isLoading = false
@@ -59,12 +75,6 @@ angular.module 'mnoEnterpriseAngular'
       # Is the product externally provisioned
       vm.isExternallyProvisioned = (vm.isProvisioningEnabled && product?.externally_provisioned)
 
-      # Init pricing plans
-      plans = vm.app.pricing_plans
-      currency = MnoeConfig.marketplaceCurrency()
-      vm.pricing_plans = plans[currency] || plans.AUD || plans.default
-
-      # Get the user role in this organization
       MnoeOrganizations.get().then((response) -> vm.user_role = response.current_user.role)
 
       # Init initials reviews if enabled
@@ -120,12 +130,6 @@ angular.module 'mnoEnterpriseAngular'
         cart.config.organizationId = MnoeOrganizations.selectedId
         cart.bundle = { app_instances: [{app: { id: vm.app.id }}] }
         cart.isOpen = true
-
-    #====================================
-    # Pricings
-    #====================================
-    # Return true if the plan has a dollar value
-    vm.pricedPlan = ProvisioningHelper.pricedPlan
 
     #====================================
     # Reviews
@@ -462,7 +466,6 @@ angular.module 'mnoEnterpriseAngular'
             # Find if we already have it
             appInstance = _.find(appInstances, { app_nid: app.nid })
             product = _.find(products, { nid: app.nid })
-
             vm.initialize(app, appInstance, product)
         )
 
