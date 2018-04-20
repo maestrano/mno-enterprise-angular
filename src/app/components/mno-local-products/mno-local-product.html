@@ -76,7 +76,7 @@
                   {{price.currency}} {{price.price_cents / 100}}
                   <span ng-show="plan.pricing_type == 'recurring'"> / {{plan.per_unit}} / {{plan.per_duration}}</span>
                 </span>
-                <span ng-show="plan.pricing_type == payg">{{'mno_enterprise.templates.dashboard.marketplace.show.pricing.payg' | translate}}</span>
+                <span ng-show="plan.pricing_type == 'payg'">{{'mno_enterprise.templates.dashboard.marketplace.show.pricing.payg' | translate}}</span>
               </li>
             </ul>
           </div>
