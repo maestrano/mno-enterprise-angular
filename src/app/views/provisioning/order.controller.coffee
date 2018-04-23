@@ -59,8 +59,7 @@ angular.module 'mnoEnterpriseAngular'
       else
         $state.go('home.provisioning.confirm', params)
 
-    vm.pricedPlan = (plan) ->
-      plan.pricing_type not in PRICING_TYPES['unpriced']
+    vm.pricedPlan = ProvisioningHelper.pricedPlan
 
     # Delete the cached subscription when we are leaving the subscription workflow.
     $scope.$on('$stateChangeStart', (event, toState) ->

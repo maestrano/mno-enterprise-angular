@@ -72,6 +72,7 @@ angular.module 'mnoEnterpriseAngular'
         (response) ->
           _transform_products([response])
           response
+        )
 
     @getReview = (appId, reviewId) ->
       MnoeApiSvc.one('marketplace', appId).one('app_reviews', parseInt(reviewId)).get()

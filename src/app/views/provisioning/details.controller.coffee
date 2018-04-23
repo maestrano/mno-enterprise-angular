@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningDetailsCtrl', ($scope, $q, $stateParams, $state, MnoeMarketplace, MnoeProvisioning, MnoeOrganizations, schemaForm, PRICING_TYPES) ->
+  .controller('ProvisioningDetailsCtrl', ($scope, $q, $stateParams, $state, MnoeMarketplace, MnoeProvisioning, MnoeOrganizations, schemaForm, ProvisioningHelper) ->
 
     vm = this
 
@@ -68,7 +68,7 @@ angular.module 'mnoEnterpriseAngular'
 
               # Filters the pricing plans not containing current currency
               vm.subscription.product.pricing_plans = _.filter(vm.subscription.product.pricing_plans,
-                (pp) -> (pp.pricing_type in PRICING_TYPES['unpriced']) || _.some(pp.prices, (p) -> p.currency == vm.orgCurrency)
+                (pp) -> (!ProvisioningHelper.pricedPlan(pp) || _.some(pp.prices, (p) -> p.currency == vm.orgCurrency)
               )
 
               MnoeProvisioning.setSubscription(vm.subscription)
