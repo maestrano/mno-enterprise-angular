@@ -1,5 +1,5 @@
 <div id="public">
-  <mno-loader ng-show="vm.isLoading" class="top-buffer-4"></mno-loader>
+  <mno-loader ng-show="layout.isLoading" class="top-buffer-4"></mno-loader>
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="navbar-header pull-left">
       <img class="nav-logo pull-left" src="images/main-logo.png">
@@ -9,5 +9,5 @@
       <a href="{{layout.links.login}}" class="btn btn-default pull-right">Login</a>
     </div>
   </nav>
-  <div class="container" ui-view ng-show="!vm.isLoading"></div>
+  <div class="container" ui-view ng-show="!layout.isLoading"></div>
 </div>
