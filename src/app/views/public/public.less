@@ -161,6 +161,8 @@
     font-size: 18px;
     font-weight: 300;
     padding: 16px;
+    height: auto;
+    line-height: normal;
     width: 100%;
   }
 
@@ -214,11 +216,6 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
-    @supports (display: grid) {
-      display: grid;
-      grid-gap: 5px;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    }
   }
 
   .landing-app-card {
@@ -271,10 +268,11 @@
   h4.landing-app-name {
     color: @public-marketplace-show-header-text-color;
     font-weight: 300;
-    text-align: center;
     color: @public-marketplace-show-header-text-color;
     font-family: @font-family-sans-serif;
     line-height: 1.4;
+    justify-content: center;
+    text-align: center;
   }
 
   .landing-app-name-wrapper {
