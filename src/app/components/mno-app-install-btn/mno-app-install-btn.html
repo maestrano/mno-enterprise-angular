@@ -21,7 +21,7 @@
   </div>
 </div>
 <div ng-if="$ctrl.isExternallyProvisioned" >
-  <a ng-if='$ctrl.canProvisionApp' ui-sref="home.provisioning.order({nid: $ctrl.app.nid})" ng-disabled="$ctrl.isLoadingButton" class="btn btn-warning btn-promo btn-lg">
+  <a ng-if='$ctrl.canProvisionApp' ng-click="$ctrl.provisionOrder()" ng-disabled="$ctrl.isLoadingButton" class="btn btn-warning btn-promo btn-lg">
     <span ng-show="$ctrl.isLoadingButton"><i class="fa fa-spinner fa-pulse"></i></span>
     {{ 'mno_enterprise.templates.dashboard.marketplace.show.provision' | translate }}
   </a>

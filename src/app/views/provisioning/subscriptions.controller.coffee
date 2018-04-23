@@ -41,5 +41,8 @@ angular.module 'mnoEnterpriseAngular'
     vm.displayInfoTooltip = (subscription) ->
       return subscription.status == 'aborted'
 
+    vm.editSubscription = (subscription) ->
+      MnoeProvisioning.setSubscription({})
+      $state.go('home.provisioning.order', ({id: subscription.id}))
     return
   )

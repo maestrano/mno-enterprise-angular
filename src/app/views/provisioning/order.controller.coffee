@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningOrderCtrl', ($q, $state, $stateParams, MnoeOrganizations, MnoeMarketplace, MnoeProvisioning, MnoeConfig, ProvisioningHelper) ->
+  .controller('ProvisioningOrderCtrl', ($scope, $q, $state, $stateParams, MnoeOrganizations, MnoeMarketplace, MnoeProvisioning, MnoeConfig, ProvisioningHelper) ->
 
     vm = this
     vm.isLoading = true
@@ -37,9 +37,18 @@ angular.module 'mnoEnterpriseAngular'
     vm.next = (subscription) ->
       MnoeProvisioning.setSubscription(subscription)
       if vm.subscription.product.custom_schema?
-        $state.go('home.provisioning.additional_details')
+        $state.go('home.provisioning.additional_details', {id: $stateParams.id, nid: $stateParams.nid})
       else
-        $state.go('home.provisioning.confirm')
+        $state.go('home.provisioning.confirm', {id: $stateParams.id, nid: $stateParams.nid})
+
+    # Delete the cached subscription when we are leaving the subscription workflow.
+    $scope.$on('$stateChangeStart', (event, toState) ->
+      switch toState.name
+        when "home.provisioning.confirm", "home.provisioning.order_summary", "home.provisioning.additional_details"
+          null
+        else
+          MnoeProvisioning.setSubscription({})
+    )
 
     return
   )
