@@ -1,55 +1,57 @@
-<div class="modal-header">
-  <div class="close" type="button" ng-click="memberAddModal.close()" >×</div>
-  <h3>{{ 'mno_enterprise.templates.dashboard.teams.member_add_modal.title' | translate }}</h3>
-</div>
+<div id="member-add-modal">
+  <div class="modal-header">
+    <div class="close" type="button" ng-click="vm.onCancel()" >×</div>
+    <h3>{{ 'mno_enterprise.templates.dashboard.teams.member_add_modal.title' | translate }}</h3>
+  </div>
 
-<div class="modal-body">
-  <div class="row">
-    <div class="col-sm-12">
-      <div class="alert alert-error" ng-show="memberAddModal.errors">
-        <button class="close" ng-click="memberAddModal.errors=''">×</button>
-        <ul>
-          <li ng-repeat="error in memberAddModal.errors">{{error}}</li>
-        </ul>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="alert alert-error" ng-show="vm.errors">
+          <button class="close" ng-click="vm.errors=''">×</button>
+          <ul>
+            <li ng-repeat="error in vm.errors">{{error}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" ng-show="vm.availableUsers.length < 1">
+      <div class="col-sm-6 col-sm-offset-3 text-center">
+        <p>{{ 'mno_enterprise.templates.dashboard.teams.member_add_modal.all_belong_to_team_warning' | translate }}</p>
+      </div>
+    </div>
+
+    <div class="row" ng-show="vm.availableUsers.length > 0">
+      <div class="col-sm-6 col-sm-offset-3 text-center">
+        <p>{{ 'mno_enterprise.templates.dashboard.teams.member_add_modal.select_company_members' | translate }}</p>
+
+        <!-- List Available Users to add -->
+        <table>
+          <tbody>
+            <tr ng-repeat="user in vm.availableUsers">
+              <td>
+                <input type="checkbox" ng-click="vm.toggleUser(user)">
+              </td>
+              <td>
+                <span>{{user.name}} {{user.surname}}</span>
+                <span class="hidden-xs"><small><em>({{ user.email }})</em></small></span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
 
-  <div class="row" ng-show="!memberAddModal.canAddUsers()">
-    <div class="col-sm-6 col-sm-offset-3 text-center">
-      <p>{{ 'mno_enterprise.templates.dashboard.teams.member_add_modal.all_belong_to_team_warning' | translate }}</p>
-    </div>
-  </div>
-
-  <div class="row" ng-show="memberAddModal.canAddUsers()">
-    <div class="col-sm-6 col-sm-offset-3 text-center">
-      <p>{{ 'mno_enterprise.templates.dashboard.teams.member_add_modal.select_company_members' | translate }}</p>
-
-      <!-- List Available Users to add -->
-      <table>
-        <tbody>
-          <tr ng-repeat="user in memberAddModal.userList">
-            <td>
-              <input type="checkbox" ng-checked="memberAddModal.hasUser(user)" ng-click="memberAddModal.toggleUser(user)">
-            </td>
-            <td>
-              <span>{{user.name}} {{user.surname}}</span>
-              <span class="hidden-xs"><small><em>({{ user.email }})</em></small></span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-
-<div class="modal-footer">
-  <div class="row">
-    <div class="col-sm-12">
-      <button class="btn btn-default" ng-click="memberAddModal.close()" ng-show="!memberAddModal.isLoading">{{ 'mno_enterprise.templates.dashboard.teams.member_add_modal.cancel' | translate }}</button>
-      <button class="btn btn-warning" ng-if="memberAddModal.canAddUsers()" ng-click="memberAddModal.proceed()" ng-disabled="memberAddModal.isLoading">
-        <span ng-show="memberAddModal.isLoading"><i class="fa fa-spinner fa-pulse fa-fw"></i></span> {{ 'mno_enterprise.templates.dashboard.teams.member_add_modal.add' | translate }}
-      </button>
+  <div class="modal-footer">
+    <div class="row">
+      <div class="col-sm-12">
+        <button class="btn btn-default" ng-click="vm.onCancel()" ng-show="!vm.isLoading">{{ 'mno_enterprise.templates.dashboard.teams.member_add_modal.cancel' | translate }}</button>
+        <button class="btn btn-warning" ng-click="vm.onSubmit()" ng-disabled="vm.isLoading">
+          <span ng-show="vm.isLoading"><i class="fa fa-spinner fa-pulse fa-fw"></i></span> {{ 'mno_enterprise.templates.dashboard.teams.member_add_modal.add' | translate }}
+        </button>
+      </div>
     </div>
   </div>
 </div>

@@ -58,7 +58,7 @@ angular.module 'mnoEnterpriseAngular'
         (response) ->
           response = response.plain()
           # Update the team's users in the frontend
-          _.find(_self.teams, (team) -> team.id == teamId).users.push users...
+          _.find(_self.teams, {id: teamId}).users.push users...
           # return the users
           response.team.users
       )
@@ -69,6 +69,8 @@ angular.module 'mnoEnterpriseAngular'
       MnoeApiSvc.one('teams', teamId).customPUT(payload, '/remove_users').then(
         (response) ->
           response = response.plain()
+          # Update the team's users in the frontend
+          _.find(_self.teams, {id: teamId}).users = response.team.users
           # return the users
           response.team.users
       )
