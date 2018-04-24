@@ -72,6 +72,9 @@ angular.module 'mnoEnterpriseAngular'
       vm.app = app
       vm.appInstance = appInstance
 
+      # Update Pricing Plans
+      getPricingPlans(vm.app)
+
       # Is the product externally provisioned
       vm.isExternallyProvisioned = (vm.isProvisioningEnabled && product?.externally_provisioned)
 
