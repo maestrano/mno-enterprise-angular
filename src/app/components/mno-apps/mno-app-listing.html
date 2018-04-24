@@ -81,9 +81,9 @@
     </div><!-- End: row -->
     <!-- Display Public HTML if Public -->
     <div class="col-sm-6 col-md-6 col-lg-8 landing-page-app-section-wrapper" ng-show="$ctrl.publicPage">
-      <div class="marketplace-list">
+      <div class="public-marketplace-list">
         <!-- Public App Cards-->
-        <div class="col-sm-12 col-md-6 col-lg-4 landing-app-card-wrapper" ng-repeat="app in $ctrl.apps | filter:$ctrl.appsFilter | filter:$ctrl.searchTerm">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 landing-app-card-wrapper" ng-repeat="app in $ctrl.apps | filter:$ctrl.appsFilter | filter:$ctrl.searchTerm">
           <a class="landing-app-card" ui-sref="{{$ctrl.appState}}({appId: app.nid})">
             <div class="media">
               <div class="landing-media-body">
