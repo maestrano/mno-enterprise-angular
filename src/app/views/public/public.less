@@ -107,15 +107,10 @@
         margin: auto;
         padding-left: 20px;
         padding-right: 20px;
-        margin-left: 25px;
         min-height: 200px;
         max-height: none;
         min-width: 200px;
         max-width: 350px;
-        @supports (display: grid) {
-          min-width: 200px;
-          margin-left: auto;
-        }
         border: 1px solid @public-marketplace-carousel-card-border-color;
         margin-left: 10px;
         background-color: @public-marketplace-carousel-card-color;
@@ -220,7 +215,7 @@
 
   .landing-app-card {
     position: relative;
-    background-color: @dashboard-marketplace-tile-bg-color;
+    background-color: @public-marketplace-card-color;
     color: @dashboard-marketplace-tile-text-color;
     cursor: pointer;
     border: 1px solid @landing-nav-bg-color;
