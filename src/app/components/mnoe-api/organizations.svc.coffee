@@ -86,7 +86,6 @@ angular.module 'mnoEnterpriseAngular'
         (response) ->
           # Return an unrestangularized object
           # as the API doesn't return a standardized object
-          # TODO: Change API
           response.plain()
       )
 

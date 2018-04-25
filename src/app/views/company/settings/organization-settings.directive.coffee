@@ -1,5 +1,5 @@
 
-DashboardOrganizationSettingsCtrl = ($scope, $window, MnoeOrganizations, Utilities, MnoeConfig) ->
+DashboardOrganizationSettingsCtrl = ($scope, $window, MnoeOrganizations, Utilities, MnoeConfig, Miscellaneous) ->
   'ngInject'
 
   #====================================
@@ -8,8 +8,11 @@ DashboardOrganizationSettingsCtrl = ($scope, $window, MnoeOrganizations, Utiliti
   $scope.isLoading = true
   $scope.model = {}
   $scope.origModel = {}
+#TODO: separate mainAddress from model
+  # $scope.mainAddress = {}
   $scope.forms = {}
   $scope.currencies = []
+  $scope.validCountries = Miscellaneous.countries
 
   #====================================
   # Scope Management
@@ -20,14 +23,27 @@ DashboardOrganizationSettingsCtrl = ($scope, $window, MnoeOrganizations, Utiliti
     angular.copy(organization, $scope.origModel)
     $scope.isLoading = false
 
-  # Save the current state of the credit card
+  # Save the current state of the organization settings
   $scope.save = ->
     $scope.isLoading = true
     MnoeOrganizations.update($scope.model).then(
       (response) ->
         $scope.errors = ''
-        angular.copy(response.organization, $scope.model)
-        angular.copy(response.organization, $scope.origModel)
+        angular.copy(response.organization.currency, $scope.model.currency)
+        angular.copy(response.organization.name, $scope.model.name)
+        angular.copy(response.organization.currency, $scope.origModel.currency)
+        angular.copy(response.organization.name, $scope.origModel.name)
+      (errors) ->
+        $scope.errors = Utilities.processRailsError(errors)
+    ).finally(-> $scope.isLoading = false)
+
+    MnoeOrganizations.updateMainAddress($scope.model.main_address).then(
+      (response) ->
+        $scope.errors = ''
+        angular.copy(response.main_address, $scope.model.main_address)
+        angular.copy(response.main_address, $scope.origModel.main_address)
+        if $scope.callback
+          $scope.callback()
       (errors) ->
         $scope.errors = Utilities.processRailsError(errors)
     ).finally(-> $scope.isLoading = false)
