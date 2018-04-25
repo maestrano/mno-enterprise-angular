@@ -80,6 +80,16 @@ angular.module 'mnoEnterpriseAngular'
           response
       )
 
+    # Update the main address
+    @updateMainAddress = (mainAddress) ->
+      MnoeApiSvc.one('organizations', _self.selectedId).doPUT({"main_address": mainAddress}, '/update_main_address').then(
+        (response) ->
+          # Return an unrestangularized object
+          # as the API doesn't return a standardized object
+          # TODO: Change API
+          response.plain()
+      )
+
     # Update the credit card
     @updateCreditCard = (creditCard) ->
       MnoeApiSvc.one('organizations', _self.selectedId).doPUT({"credit_card": creditCard}, '/update_billing').then(
