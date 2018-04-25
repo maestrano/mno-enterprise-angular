@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('mnoLocalProduct', ($scope, $stateParams, $state, isPublic, parentState, MnoeMarketplace, MnoeOrganizations, MnoeConfig, MnoeCurrentUser, PRICING_TYPES) ->
+  .controller('mnoLocalProduct', ($scope, $stateParams, $state, isPublic, parentState, MnoeMarketplace, MnoeOrganizations, MnoeConfig, MnoeCurrentUser, ProvisioningHelper) ->
 
     vm = this
     vm.isPublic = isPublic
@@ -17,11 +17,10 @@ angular.module 'mnoEnterpriseAngular'
       org = _.find(user.organizations, { id: currentOrg.id })
       MnoeOrganizations.role.atLeastAdmin(org.current_user_role)
 
-    vm.hidePrices = (plan) ->
-      vm.isPublic || plan.pricing_type in PRICING_TYPES['unpriced']
+    vm.pricedPlan = ProvisioningHelper.pricedPlan
 
     vm.hideNoPricingFound = (plan) ->
-      vm.isPublic || vm.planAvailableForCurrency(plan) || plan.pricing_type in PRICING_TYPES['unpriced']
+      vm.isPublic || vm.planAvailableForCurrency(plan) || !vm.pricedPlan(plan)
 
     # Retrieve the products
     vm.initialize = ->
@@ -33,9 +32,11 @@ angular.module 'mnoEnterpriseAngular'
             currentUser = MnoeCurrentUser.user
             vm.orgCurrency = organization.billing_currency || MnoeConfig.marketplaceCurrency()
             vm.isProvisioningEnabled = vm.isProvisioningEnabled && atLeastAdmin(currentUser, organization)
-            vm.planAvailableForCurrency = (plan) ->
-              _.includes(_.map(plan.prices, 'currency'), vm.orgCurrency)
+          else
+            vm.orgCurrency = MnoeConfig.marketplaceCurrency()
 
+          vm.planAvailableForCurrency = (plan) ->
+            _.includes(_.map(plan.prices, 'currency'), vm.orgCurrency)
           # App to be displayed
           productId = $stateParams.productId
           vm.product = _.findWhere(vm.products, { nid: productId })
