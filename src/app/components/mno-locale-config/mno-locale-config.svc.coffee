@@ -10,7 +10,7 @@ angular.module 'mnoEnterpriseAngular'
             setLocale(l)
           else
             setFallbackStack(I18N_CONFIG.preferred_locale)
-      )
+      ).finally(-> $translate.refresh())
 
     setLocale = (locale) ->
       setFallbackStack(locale)
