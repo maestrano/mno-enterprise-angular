@@ -186,7 +186,7 @@ angular.module 'mnoEnterpriseAngular'
         .state 'home.provisioning.order',
           data:
             pageTitle:'Purchase - Order'
-          url: '/order/?nid&id&editAction'
+          url: '/order/:productId?subscriptionId&editAction'
           views: '@home.provisioning':
             templateUrl: 'app/views/provisioning/order.html'
             controller: 'ProvisioningOrderCtrl'
@@ -194,7 +194,7 @@ angular.module 'mnoEnterpriseAngular'
         .state 'home.provisioning.additional_details',
           data:
             pageTitle:'Purchase - Additional details'
-          url: '/details/?nid&id&editAction'
+          url: '/details/:productId?subscriptionId&editAction'
           views: '@home.provisioning':
             templateUrl: 'app/views/provisioning/details.html'
             controller: 'ProvisioningDetailsCtrl'
@@ -202,7 +202,7 @@ angular.module 'mnoEnterpriseAngular'
         .state 'home.provisioning.confirm',
           data:
             pageTitle:'Purchase - Confirm'
-          url: '/confirm/?nid&id&editAction'
+          url: '/confirm/:productId?subscriptionId&editAction'
           views: '@home.provisioning':
             templateUrl: 'app/views/provisioning/confirm.html'
             controller: 'ProvisioningConfirmCtrl'
@@ -210,7 +210,7 @@ angular.module 'mnoEnterpriseAngular'
         .state 'home.provisioning.order_summary',
           data:
             pageTitle:'Purchase - Order summary'
-          url: '/summary/?nid&id'
+          url: '/summary/:productId?subscriptionId&editAction'
           views: '@home.provisioning':
             templateUrl: 'app/views/provisioning/summary.html'
             controller: 'ProvisioningSummaryCtrl'

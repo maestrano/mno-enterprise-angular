@@ -47,7 +47,7 @@ angular.module 'mnoEnterpriseAngular'
     vm.editSubscription = (subscription, editAction) ->
       MnoeProvisioning.setSubscription({})
 
-      params = {id: subscription.id, orgId: subscription.organization_id, editAction: editAction}
+      params = {subscriptionId: subscription.id, orgId: subscription.organization_id, editAction: editAction}
       switch editAction
         when 'CHANGE'
           $state.go('home.provisioning.order', params)

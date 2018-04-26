@@ -67,17 +67,16 @@ angular.module 'mnoEnterpriseAngular'
               vm.subscription.product = response
 
               # Filters the pricing plans not containing current currency
-              vm.subscription.product.pricing_plans = _.filter(vm.subscription.product.pricing_plans,
-                (pp) -> (!ProvisioningHelper.pricedPlan(pp) || _.some(pp.prices, (p) -> p.currency == vm.orgCurrency)
+              vm.subscription.product.pricing_plans = _.filter(vm.subscription.product.pricing_plans, (pp) ->
+                (!ProvisioningHelper.pricedPlan(pp) || _.some(pp.prices, (p) -> p.currency == vm.orgCurrency))
               )
 
               MnoeProvisioning.setSubscription(vm.subscription)
-
               vm.subscription.product
           ).then((product) -> setCustomSchema(vm.subscription.product))
       ).finally(-> vm.isLoading = false)
 
-  # Ensure that the subscription has a product_pricing and custom schema, otherwise redirect to order page.
+    # Ensure that the subscription has a product_pricing and custom schema, otherwise redirect to order page.
     else if vm.subscription?.product?.custom_schema && vm.subscription.product_pricing
       vm.isEditMode = !_.isEmpty(vm.subscription.custom_data)
       setCustomSchema(vm.subscription.product)
