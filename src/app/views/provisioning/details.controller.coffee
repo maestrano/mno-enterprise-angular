@@ -1,13 +1,12 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningDetailsCtrl', ($scope, $q, $stateParams, $state, MnoeMarketplace, MnoeProvisioning, MnoeOrganizations, schemaForm, ProvisioningHelper) ->
+  .controller('ProvisioningDetailsCtrl', ($scope, $q, $stateParams, $state, MnoeMarketplace, MnoeProvisioning, MnoeOrganizations, schemaForm, ProvisioningHelper, toastr) ->
 
     vm = this
 
-    vm.isLoading = true
     vm.form = [ "*" ]
     vm.subscription = MnoeProvisioning.getSubscription()
-
     vm.isEditMode = !_.isEmpty(vm.subscription.custom_data)
+    vm.model = vm.subscription.custom_data || {}
 
     # We must use model schemaForm's sf-model, as #json_schema_opts are namespaced under model
     vm.model = vm.subscription.custom_data || {}
@@ -31,32 +30,36 @@ angular.module 'mnoEnterpriseAngular'
     # reasonable number of passes (2 below + 1 in the sf-schema directive)
     # to resolve cyclic references
     setCustomSchema = (product) ->
+      $state.go('home.provisioning.confirm', urlParams, {reload: true}) unless product.custom_schema
       schemaForm.jsonref(JSON.parse(product.custom_schema))
         .then((schema) -> schemaForm.jsonref(schema))
         .then((schema) -> schemaForm.jsonref(schema))
-        .then((schema) -> vm.schema = schema)
+        .then((schema) ->
+          vm.schema = if schema.json_schema then schema.json_schema else schema
+          vm.form = if schema.asf_options then schema.asf_options else ["*"]
+          )
 
     if _.isEmpty(vm.subscription)
+      vm.isLoading = true
       orgPromise = MnoeOrganizations.get()
       prodsPromise = MnoeMarketplace.getProducts()
-      initPromise = MnoeProvisioning.initSubscription({productNid: $stateParams.nid, subscriptionId: $stateParams.id})
+      initPromise = MnoeProvisioning.initSubscription({productId: $stateParams.productId, subscriptionId: $stateParams.subscriptionId})
 
       $q.all({organization: orgPromise, products: prodsPromise, subscription: initPromise}).then(
         (response) ->
           vm.orgCurrency = response.organization.organization?.billing_currency || MnoeConfig.marketplaceCurrency()
           vm.subscription = response.subscription
+          vm.model = vm.subscription.custom_data || {}
+
           # Ensure that the subscription has a product_pricing, otherwise redirect to order page where you can select one.
-          $state.go('home.provisioning.order', urlParams) unless vm.subscription.product_pricing
+          $state.go('home.provisioning.order', urlParams, {reload: true}) unless vm.subscription.product_pricing
 
           vm.isEditMode = !_.isEmpty(vm.subscription.custom_data)
 
           # If the product id is available, get the product, otherwise find with the nid.
-          productPromise = if vm.subscription.product?.id
-            MnoeMarketplace.getProduct(vm.subscription.product.id, { editAction: $stateParams.editAction })
-          else
-            MnoeMarketplace.findProduct({nid: $stateParams.nid})
-
-          productPromise.then(
+          # When in edit mode, we will be getting the product ID from the subscription, otherwise from the url.
+          productId = vm.subscription.product?.id || $stateParams.productId
+          MnoeMarketplace.getProduct(productId, { editAction: $stateParams.editAction }).then(
             (response) ->
               vm.subscription.product = response
 
@@ -74,9 +77,8 @@ angular.module 'mnoEnterpriseAngular'
     else if vm.subscription?.product?.custom_schema && vm.subscription.product_pricing
       vm.isEditMode = !_.isEmpty(vm.subscription.custom_data)
       setCustomSchema(vm.subscription.product)
-      vm.isLoading = false
     else
-      $state.go('home.provisioning.order', urlParams)
+      $state.go('home.provisioning.order', urlParams, {reload: true})
 
     vm.editPlanText = () ->
       "mno_enterprise.templates.dashboard.provisioning.details." + $stateParams.editAction.toLowerCase() + "_title"

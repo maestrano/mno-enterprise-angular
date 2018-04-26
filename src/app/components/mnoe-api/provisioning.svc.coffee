@@ -24,7 +24,7 @@ angular.module 'mnoEnterpriseAngular'
     # if productNid: return the default subscription
     # if subscriptionId: return the fetched subscription
     # else: return the subscription in cache (edition mode)
-    @initSubscription = ({productNid = null, subscriptionId = null}) ->
+    @initSubscription = ({productId = null, subscriptionId = null}) ->
       deferred = $q.defer()
       # Edit a subscription
       if !_.isEmpty(subscription)

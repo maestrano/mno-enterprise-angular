@@ -8,14 +8,22 @@ angular.module 'mnoEnterpriseAngular'
     vm.singleBilling = vm.subscription.product.single_billing_enabled
     vm.billedLocally = vm.subscription.product.billed_locally
 
+    urlParams =
+      subscriptionId: $stateParams.subscriptionId
+      productId: $stateParams.productId
+      editAction: $stateParams.editAction
+
+    vm.editOrder = (reload = true) ->
+      switch $stateParams.editAction
+        when 'CHANGE', 'NEW', null
+          $state.go('home.provisioning.order', urlParams, {reload: reload})
+        else
+          $state.go('home.provisioning.additional_details', urlParams, {reload: reload})
+
     # Happens when the user reload the browser during the provisioning workflow.
     if _.isEmpty(vm.subscription)
       # Redirect the user to the first provisioning screen
-      $state.go('home.provisioning.order', {id: $stateParams.id, nid: $stateParams.nid}, {reload: true})
-
-    vm.editOrder = () ->
-      $state.go('home.provisioning.order', {id: $stateParams.id, nid: $stateParams.nid})
-
+      vm.editOrder(true)
 
     vm.validate = () ->
       vm.isLoading = true
@@ -27,29 +35,36 @@ angular.module 'mnoEnterpriseAngular'
             (response) ->
               $scope.apps = response
           )
-          $state.go('home.provisioning.order_summary', {id: $stateParams.id, nid: $stateParams.nid})
+          $state.go('home.provisioning.order_summary', {subscriptionId: $stateParams.subscriptionId})
       ).finally(-> vm.isLoading = false)
 
     vm.editOrder = () ->
       params =
-        nid: $stateParams.nid,
-        orgId: $stateParams.orgId
-        id: $stateParams.id,
+        subscriptionId: $stateParams.subscriptionId,
+        productId: $stateParams.productId,
         editAction: $stateParams.editAction
 
       switch $stateParams.editAction
         when 'CHANGE', 'NEW', null
-          $state.go('home.provisioning.order', params)
+          $state.go('home.provisioning.order', params, {reload: true})
         else
-          $state.go('home.provisioning.additional_details', params)
+          $state.go('home.provisioning.additional_details', params, {reload: true})
 
+    # If subscription is empty redirect to appropriate page.
     if _.isEmpty(vm.subscription)
       vm.editOrder()
+    else
+      vm.subscription.edit_action = $stateParams.editAction
 
-    vm.subscription.edit_action = $stateParams.editAction
+    vm.orderTypeText = 'mno_enterprise.templates.dashboard.provisioning.subscriptions.' + $stateParams.editAction.toLowerCase()
 
-    vm.orderTypeText = (editAction) ->
-      'mno_enterprise.templates.dashboard.provisioning.subscriptions.' + editAction.toLowerCase()
+    vm.orderEditable = () ->
+     # The order is editable if we are changing the plan, or the product has a custom schema.
+     switch $stateParams.editAction
+       when 'CHANGE', 'NEW'
+         true
+       else
+         if vm.subscription.product?.custom_schema then true else false
 
     MnoeOrganizations.get().then(
       (response) ->
