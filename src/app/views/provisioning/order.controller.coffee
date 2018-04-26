@@ -7,7 +7,7 @@ angular.module 'mnoEnterpriseAngular'
 
     orgPromise = MnoeOrganizations.get()
     prodsPromise = MnoeMarketplace.getProducts()
-    initPromise = MnoeProvisioning.initSubscription({productNid: $stateParams.nid, subscriptionId: $stateParams.id})
+    initPromise = MnoeProvisioning.initSubscription({productId: $stateParams.productId, subscriptionId: $stateParams.subscriptionId})
 
     # Return true if the plan has a dollar value
     vm.pricedPlan = ProvisioningHelper.pricedPlan
@@ -17,13 +17,9 @@ angular.module 'mnoEnterpriseAngular'
         vm.orgCurrency = response.organization.organization?.billing_currency || MnoeConfig.marketplaceCurrency()
         vm.subscription = response.subscription
 
-        # If the product id is available, get the product, otherwise find with the nid.
-        productPromise = if vm.subscription.product?.id
-          MnoeMarketplace.getProduct(vm.subscription.product.id, { editAction: $stateParams.editAction })
-        else
-          MnoeMarketplace.findProduct({nid: $stateParams.nid})
-
-        productPromise.then(
+        # When in edit mode, we will be getting the product ID from the subscription, otherwise from the url.
+        productId = vm.subscription.product?.id || $stateParams.productId
+        MnoeMarketplace.getProduct(productId, { editAction: $stateParams.editAction }).then(
           (response) ->
             vm.subscription.product = response
 
@@ -48,9 +44,8 @@ angular.module 'mnoEnterpriseAngular'
       MnoeProvisioning.setSubscription(subscription)
 
       params = {
-        orgId: $stateParams.orgId,
-        id: $stateParams.id,
-        nid: $stateParams.nid,
+        productId: $stateParams.productId,
+        subscriptionId: $stateParams.subscriptionId,
         editAction: $stateParams.editAction
       }
 

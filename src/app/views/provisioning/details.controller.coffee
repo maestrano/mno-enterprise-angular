@@ -7,11 +7,6 @@ angular.module 'mnoEnterpriseAngular'
     vm.form = [ "*" ]
     vm.subscription = MnoeProvisioning.getSubscription()
 
-    # Happens when the user reload the browser during the provisioning
-    if _.isEmpty(vm.subscription)
-      # Redirect the user to the first provisioning screen
-      $state.go('home.provisioning.order', {id: $stateParams.id, nid: $stateParams.nid}, {reload: true})
-
     vm.isEditMode = !_.isEmpty(vm.subscription.custom_data)
 
     # We must use model schemaForm's sf-model, as #json_schema_opts are namespaced under model
@@ -26,9 +21,8 @@ angular.module 'mnoEnterpriseAngular'
       .format('YYYY-MM-DD')
 
     urlParams =
-      orgId: $stateParams.orgId,
-      id: $stateParams.id,
-      nid: $stateParams.nid,
+      productId: $stateParams.productId,
+      subscriptionId: $stateParams.subscriptionId,
       editAction: $stateParams.editAction
 
     # The schema is contained in field vm.product.custom_schema
