@@ -3,16 +3,18 @@ angular.module 'mnoEnterpriseAngular'
 
     vm = this
     vm.subscription = MnoeProvisioning.getCachedSubscription()
+    vm.pricedPlan = ProvisioningHelper.pricedPlan
+    urlParams = {
+      productId: $stateParams.productId,
+      subscriptionId: $stateParams.subscriptionId,
+      editAction: $stateParams.editAction
+    }
 
     fetchSubscription = () ->
       orgPromise = MnoeOrganizations.get()
-      prodsPromise = MnoeMarketplace.getProducts()
       initPromise = MnoeProvisioning.initSubscription({productId: $stateParams.productId, subscriptionId: $stateParams.subscriptionId})
 
-      # Return true if the plan has a dollar value
-      vm.pricedPlan = ProvisioningHelper.pricedPlan
-
-      $q.all({organization: orgPromise, products: prodsPromise, subscription: initPromise}).then(
+      $q.all({organization: orgPromise, subscription: initPromise}).then(
         (response) ->
           vm.orgCurrency = response.organization.organization?.billing_currency || MnoeConfig.marketplaceCurrency()
           vm.subscription = response.subscription
@@ -24,6 +26,7 @@ angular.module 'mnoEnterpriseAngular'
       )
 
     fetchProduct = () ->
+      # When in edit mode, we will be getting the product ID from the subscription, otherwise from the url.
       vm.productId = vm.subscription.product?.id || $stateParams.productId
       MnoeMarketplace.getProduct(vm.productId, { editAction: $stateParams.editAction }).then(
         (response) ->
@@ -36,11 +39,17 @@ angular.module 'mnoEnterpriseAngular'
           MnoeProvisioning.setSubscription(vm.subscription)
         )
 
+    fetchCustomSchema = () ->
+      MnoeMarketplace.fetchCustomSchema(vm.productId, { editAction: $stateParams.editAction }).then((response) ->
+        # Some products have custom schemas, whereas others do not.
+        vm.subscription.product.custom_schema = response
+        )
+
     if _.isEmpty(vm.subscription)
       vm.isLoading = true
       fetchSubscription()
         .then(fetchProduct)
-        # .then(fetchCustomSchema)
+        .then(fetchCustomSchema)
         .catch((error) ->
           toastr.error('mnoe_admin_panel.dashboard.provisioning.subscriptions.product_error')
           $state.go('dashboard.customers.organization', {orgId: $stateParams.orgId})
@@ -49,28 +58,16 @@ angular.module 'mnoEnterpriseAngular'
 
     vm.next = (subscription) ->
       MnoeProvisioning.setSubscription(subscription)
-
-      params = {
-        productId: $stateParams.productId,
-        subscriptionId: $stateParams.subscriptionId,
-        editAction: $stateParams.editAction
-      }
-
       if vm.subscription.product.custom_schema?
-        $state.go('home.provisioning.additional_details', params)
+        $state.go('home.provisioning.additional_details', urlParams)
       else
-        $state.go('home.provisioning.confirm', params)
+        $state.go('home.provisioning.confirm', urlParams)
 
-    vm.pricedPlan = ProvisioningHelper.pricedPlan
-
-    # Delete the cached subscription when we are leaving the subscription workflow.
-    $scope.$on('$stateChangeStart', (event, toState) ->
-      switch toState.name
-        when "home.provisioning.confirm", "home.provisioning.order_summary", "home.provisioning.additional_details"
-          null
-        else
-          MnoeProvisioning.setSubscription({})
-    )
+    vm.subscriptionPlanText = switch $stateParams.editAction
+        when 'NEW'
+          'mno_enterprise.templates.dashboard.provisioning.order.new_title'
+        when 'CHANGE'
+          'mno_enterprise.templates.dashboard.provisioning.order.change_title'
 
     vm.selectPlan = (pricingPlan)->
       vm.subscription.product_pricing = pricingPlan
@@ -86,5 +83,13 @@ angular.module 'mnoEnterpriseAngular'
         when 'CHANGE'
           'mno_enterprise.templates.dashboard.provisioning.order.change_title'
 
+    # Delete the cached subscription when we are leaving the subscription workflow.
+    $scope.$on('$stateChangeStart', (event, toState) ->
+      switch toState.name
+        when "home.provisioning.confirm", "home.provisioning.order_summary", "home.provisioning.additional_details"
+          null
+        else
+          MnoeProvisioning.setSubscription({})
+    )
     return
   )

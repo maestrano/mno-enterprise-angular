@@ -74,6 +74,11 @@ angular.module 'mnoEnterpriseAngular'
           response
         )
 
+    @fetchCustomSchema = (id, params) ->
+      MnoeApiSvc.one("/products/#{id}/custom_schema").get(params).then((response) ->
+        response.custom_schema
+        )
+
     @getReview = (appId, reviewId) ->
       MnoeApiSvc.one('marketplace', appId).one('app_reviews', parseInt(reviewId)).get()
 
