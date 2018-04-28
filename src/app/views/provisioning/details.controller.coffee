@@ -4,7 +4,7 @@ angular.module 'mnoEnterpriseAngular'
     vm = this
 
     vm.form = [ "*" ]
-    vm.subscription = MnoeProvisioning.getSubscription()
+    vm.subscription = MnoeProvisioning.getCachedSubscription()
     vm.isEditMode = !_.isEmpty(vm.subscription.custom_data)
     vm.model = vm.subscription.custom_data || {}
 

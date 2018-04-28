@@ -1,44 +1,51 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningOrderCtrl', ($scope, $q, $state, $stateParams, MnoeOrganizations, MnoeMarketplace, MnoeProvisioning, MnoeConfig, ProvisioningHelper) ->
+  .controller('ProvisioningOrderCtrl', ($scope, $q, $state, $stateParams, MnoeOrganizations, MnoeMarketplace, MnoeProvisioning, MnoeConfig, ProvisioningHelper, toastr) ->
 
     vm = this
-    vm.isLoading = true
-    vm.product = null
+    vm.subscription = MnoeProvisioning.getCachedSubscription()
 
-    orgPromise = MnoeOrganizations.get()
-    prodsPromise = MnoeMarketplace.getProducts()
-    initPromise = MnoeProvisioning.initSubscription({productId: $stateParams.productId, subscriptionId: $stateParams.subscriptionId})
+    fetchSubscription = () ->
+      orgPromise = MnoeOrganizations.get()
+      prodsPromise = MnoeMarketplace.getProducts()
+      initPromise = MnoeProvisioning.initSubscription({productId: $stateParams.productId, subscriptionId: $stateParams.subscriptionId})
 
-    # Return true if the plan has a dollar value
-    vm.pricedPlan = ProvisioningHelper.pricedPlan
+      # Return true if the plan has a dollar value
+      vm.pricedPlan = ProvisioningHelper.pricedPlan
 
-    $q.all({organization: orgPromise, products: prodsPromise, subscription: initPromise}).then(
-      (response) ->
-        vm.orgCurrency = response.organization.organization?.billing_currency || MnoeConfig.marketplaceCurrency()
-        vm.subscription = response.subscription
-
-        # When in edit mode, we will be getting the product ID from the subscription, otherwise from the url.
-        productId = vm.subscription.product?.id || $stateParams.productId
-        MnoeMarketplace.getProduct(productId, { editAction: $stateParams.editAction }).then(
-          (response) ->
-            vm.subscription.product = response
-
-            # Skip pricing selection when applicable
-            vm.next(vm.subscription) if vm.skipPriceSelection(vm.subscription.product)
-
-            # Filters the pricing plans not containing current currency
-            vm.subscription.product.pricing_plans = _.filter(vm.subscription.product.pricing_plans,
-              (pp) -> !vm.pricedPlan(pp) || _.some(pp.prices, (p) -> p.currency == vm.orgCurrency)
-            )
-
-            vm.selectPlan = (pricingPlan)->
-              vm.subscription.product_pricing = pricingPlan
-              vm.subscription.max_licenses ||= 1 if vm.subscription.product_pricing.license_based
-
-
-            MnoeProvisioning.setSubscription(vm.subscription)
+      $q.all({organization: orgPromise, products: prodsPromise, subscription: initPromise}).then(
+        (response) ->
+          vm.orgCurrency = response.organization.organization?.billing_currency || MnoeConfig.marketplaceCurrency()
+          vm.subscription = response.subscription
         )
-    ).finally(-> vm.isLoading = false)
+
+    filterCurrencies = (productPricings) ->
+      _.filter(vm.subscription.product.pricing_plans,
+        (pp) -> !vm.pricedPlan(pp) || _.some(pp.prices, (p) -> p.currency == vm.orgCurrency)
+      )
+
+    fetchProduct = () ->
+      vm.productId = vm.subscription.product?.id || $stateParams.productId
+      MnoeMarketplace.getProduct(vm.productId, { editAction: $stateParams.editAction }).then(
+        (response) ->
+          vm.subscription.product = response
+          return vm.next(vm.subscription) if vm.skipPriceSelection(vm.subscription.product)
+
+          # Filters the pricing plans not containing current currency
+          vm.subscription.product.pricing_plans = filterCurrencies(vm.subscription.product.product_pricings)
+
+          MnoeProvisioning.setSubscription(vm.subscription)
+        )
+
+    if _.isEmpty(vm.subscription)
+      vm.isLoading = true
+      fetchSubscription()
+        .then(fetchProduct)
+        # .then(fetchCustomSchema)
+        .catch((error) ->
+          toastr.error('mnoe_admin_panel.dashboard.provisioning.subscriptions.product_error')
+          $state.go('dashboard.customers.organization', {orgId: $stateParams.orgId})
+          )
+        .finally(() -> vm.isLoading = false)
 
     vm.next = (subscription) ->
       MnoeProvisioning.setSubscription(subscription)
@@ -64,6 +71,10 @@ angular.module 'mnoEnterpriseAngular'
         else
           MnoeProvisioning.setSubscription({})
     )
+
+    vm.selectPlan = (pricingPlan)->
+      vm.subscription.product_pricing = pricingPlan
+      vm.subscription.max_licenses ||= 1 if vm.subscription.product_pricing.license_based
 
     vm.skipPriceSelection = (product) ->
       product.product_type == 'application' && (!product.single_billing_enabled || !product.billed_locally)
