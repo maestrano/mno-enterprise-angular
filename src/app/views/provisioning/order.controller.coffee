@@ -2,6 +2,7 @@ angular.module 'mnoEnterpriseAngular'
   .controller('ProvisioningOrderCtrl', ($scope, $q, $state, $stateParams, MnoeOrganizations, MnoeMarketplace, MnoeProvisioning, MnoeConfig, ProvisioningHelper, toastr) ->
 
     vm = this
+    vm.isLoading = true
     vm.subscription = MnoeProvisioning.getCachedSubscription()
     vm.pricedPlan = ProvisioningHelper.pricedPlan
     urlParams = {
@@ -35,7 +36,6 @@ angular.module 'mnoEnterpriseAngular'
 
           # Filters the pricing plans not containing current currency
           vm.subscription.product.pricing_plans = filterCurrencies(vm.subscription.product.product_pricings)
-
           MnoeProvisioning.setSubscription(vm.subscription)
         )
 
@@ -46,15 +46,20 @@ angular.module 'mnoEnterpriseAngular'
         )
 
     if _.isEmpty(vm.subscription)
-      vm.isLoading = true
       fetchSubscription()
         .then(fetchProduct)
         .then(fetchCustomSchema)
-        .catch((error) ->
-          toastr.error('mnoe_admin_panel.dashboard.provisioning.subscriptions.product_error')
-          $state.go('dashboard.customers.organization', {orgId: $stateParams.orgId})
-          )
+        # .catch((error) ->
+        #   toastr.error('mnoe_admin_panel.dashboard.provisioning.subscriptions.product_error')
+        #   $state.go('home.subscriptions')
+        # )
         .finally(() -> vm.isLoading = false)
+    else
+      vm.isLoading = false
+
+    vm.select_plan = (pricingPlan)->
+      vm.subscription.product_pricing = pricingPlan
+      vm.subscription.max_licenses ||= 1 if vm.subscription.product_pricing.license_based
 
     vm.next = (subscription) ->
       MnoeProvisioning.setSubscription(subscription)
@@ -64,10 +69,10 @@ angular.module 'mnoEnterpriseAngular'
         $state.go('home.provisioning.confirm', urlParams)
 
     vm.subscriptionPlanText = switch $stateParams.editAction
-        when 'NEW'
-          'mno_enterprise.templates.dashboard.provisioning.order.new_title'
-        when 'CHANGE'
-          'mno_enterprise.templates.dashboard.provisioning.order.change_title'
+      when 'NEW'
+        'mno_enterprise.templates.dashboard.provisioning.order.new_title'
+      when 'CHANGE'
+        'mno_enterprise.templates.dashboard.provisioning.order.change_title'
 
     vm.selectPlan = (pricingPlan)->
       vm.subscription.product_pricing = pricingPlan

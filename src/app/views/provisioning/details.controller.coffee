@@ -1,12 +1,10 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('ProvisioningDetailsCtrl', ($scope, $q, $stateParams, $state, MnoeMarketplace, MnoeProvisioning, MnoeOrganizations, schemaForm, ProvisioningHelper, toastr) ->
-
     vm = this
 
     vm.form = [ "*" ]
     vm.subscription = MnoeProvisioning.getCachedSubscription()
     vm.isEditMode = !_.isEmpty(vm.subscription.custom_data)
-    vm.model = vm.subscription.custom_data || {}
 
     # We must use model schemaForm's sf-model, as #json_schema_opts are namespaced under model
     vm.model = vm.subscription.custom_data || {}
@@ -30,7 +28,8 @@ angular.module 'mnoEnterpriseAngular'
     # reasonable number of passes (2 below + 1 in the sf-schema directive)
     # to resolve cyclic references
     setCustomSchema = (product) ->
-      $state.go('home.provisioning.confirm', urlParams, {reload: true}) unless product.custom_schema
+      vm.model = vm.subscription.custom_data || {}
+      return $state.go('home.provisioning.confirm', urlParams, {reload: true}) unless product.custom_schema
       schemaForm.jsonref(JSON.parse(product.custom_schema))
         .then((schema) -> schemaForm.jsonref(schema))
         .then((schema) -> schemaForm.jsonref(schema))
@@ -39,49 +38,59 @@ angular.module 'mnoEnterpriseAngular'
           vm.form = if schema.asf_options then schema.asf_options else ["*"]
           )
 
-    if _.isEmpty(vm.subscription)
-      vm.isLoading = true
+    fetchSubscription = () ->
       orgPromise = MnoeOrganizations.get()
-      prodsPromise = MnoeMarketplace.getProducts()
-      initPromise = MnoeProvisioning.initSubscription({productId: $stateParams.productId, subscriptionId: $stateParams.subscriptionId})
+      initPromise = MnoeProvisioning.initSubscription({productId: urlParams.productId, subscriptionId: urlParams.subscriptionId})
 
-      $q.all({organization: orgPromise, products: prodsPromise, subscription: initPromise}).then(
+      $q.all({organization: orgPromise, subscription: initPromise}).then(
         (response) ->
           vm.orgCurrency = response.organization.organization?.billing_currency || MnoeConfig.marketplaceCurrency()
           vm.subscription = response.subscription
-          vm.model = vm.subscription.custom_data || {}
+        )
 
-          # Ensure that the subscription has a product_pricing, otherwise redirect to order page where you can select one.
-          $state.go('home.provisioning.order', urlParams, {reload: true}) unless vm.subscription.product_pricing
+    filterCurrencies = (productPricings) ->
+      _.filter(vm.subscription.product.pricing_plans,
+        (pp) -> !ProvisioningHelper.pricedPlan(pp) || _.some(pp.prices, (p) -> p.currency == vm.orgCurrency)
+      )
 
-          vm.isEditMode = !_.isEmpty(vm.subscription.custom_data)
+    fetchProduct = () ->
+      # When in edit mode, we will be getting the product ID from the subscription, otherwise from the url.
+      vm.productId = vm.subscription.product?.id || urlParams.productId
+      MnoeMarketplace.getProduct(vm.productId, { editAction: urlParams.editAction }).then(
+        (response) ->
+          vm.subscription.product = response
 
-          # If the product id is available, get the product, otherwise find with the nid.
-          # When in edit mode, we will be getting the product ID from the subscription, otherwise from the url.
-          productId = vm.subscription.product?.id || $stateParams.productId
-          MnoeMarketplace.getProduct(productId, { editAction: $stateParams.editAction }).then(
-            (response) ->
-              vm.subscription.product = response
+          # Filters the pricing plans not containing current currency
+          vm.subscription.product.pricing_plans = filterCurrencies(vm.subscription.product.product_pricings)
+          MnoeProvisioning.setSubscription(vm.subscription)
+        )
 
-              # Filters the pricing plans not containing current currency
-              vm.subscription.product.pricing_plans = _.filter(vm.subscription.product.pricing_plans, (pp) ->
-                (!ProvisioningHelper.pricedPlan(pp) || _.some(pp.prices, (p) -> p.currency == vm.orgCurrency))
-              )
+    fetchCustomSchema = () ->
+      MnoeMarketplace.fetchCustomSchema(vm.productId, { editAction: urlParams.editAction }).then((response) ->
+        # Some products have custom schemas, whereas others do not.
+        vm.subscription.product.custom_schema = response
+        )
 
-              MnoeProvisioning.setSubscription(vm.subscription)
-              vm.subscription.product
-          ).then((product) -> setCustomSchema(vm.subscription.product))
-      ).finally(-> vm.isLoading = false)
-
-    # Ensure that the subscription has a product_pricing and custom schema, otherwise redirect to order page.
-    else if vm.subscription?.product?.custom_schema && vm.subscription.product_pricing
+    if _.isEmpty(vm.subscription)
+      # We cannot go directly to this page if creating a new subscription, we must first choose a product pricing.
+      # eg. when refreshing on the details page when creating a new subscription.
+      return $state.go('home.provisioning.order', urlParams, {reload: true}) if urlParams.editAction == 'NEW'
+      vm.isLoading = true
+      fetchSubscription().then(fetchProduct).then(fetchCustomSchema)
+        .then(() -> setCustomSchema(vm.subscription.product))
+        .catch((error) ->
+          toastr.error('mnoe_admin_panel.dashboard.provisioning.subscriptions.product_error')
+          $state.go('home.subscriptions')
+        )
+        .finally(() -> vm.isLoading = false)
+    # Ensure that the cached subscription has a custom schema, otherwise redirect to order page.
+    else if vm.subscription?.product?.custom_schema
       vm.isEditMode = !_.isEmpty(vm.subscription.custom_data)
       setCustomSchema(vm.subscription.product)
     else
       $state.go('home.provisioning.order', urlParams, {reload: true})
 
-    vm.editPlanText = () ->
-      "mno_enterprise.templates.dashboard.provisioning.details." + $stateParams.editAction.toLowerCase() + "_title"
+    vm.editPlanText = "mno_enterprise.templates.dashboard.provisioning.details." + urlParams.editAction.toLowerCase() + "_title"
 
     vm.submit = (form) ->
       $scope.$broadcast('schemaFormValidate')

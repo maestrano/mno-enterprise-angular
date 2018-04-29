@@ -59,12 +59,12 @@ angular.module 'mnoEnterpriseAngular'
     vm.orderTypeText = 'mno_enterprise.templates.dashboard.provisioning.subscriptions.' + $stateParams.editAction.toLowerCase()
 
     vm.orderEditable = () ->
-     # The order is editable if we are changing the plan, or the product has a custom schema.
-     switch $stateParams.editAction
-       when 'CHANGE', 'NEW'
-         true
-       else
-         if vm.subscription.product?.custom_schema then true else false
+      # The order is editable if we are changing the plan, or the product has a custom schema.
+      switch $stateParams.editAction
+        when 'CHANGE', 'NEW'
+          true
+        else
+          if vm.subscription.product?.custom_schema then true else false
 
     MnoeOrganizations.get().then(
       (response) ->
