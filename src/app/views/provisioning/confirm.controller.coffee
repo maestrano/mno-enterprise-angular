@@ -14,8 +14,8 @@ angular.module 'mnoEnterpriseAngular'
       editAction: $stateParams.editAction
 
     vm.editOrder = (reload = true) ->
-      switch $stateParams.editAction
-        when 'CHANGE', 'NEW', null
+      switch $stateParams.editAction.toLowerCase()
+        when 'change', 'new', null
           $state.go('home.provisioning.order', urlParams, {reload: reload})
         else
           $state.go('home.provisioning.additional_details', urlParams, {reload: reload})
@@ -45,7 +45,7 @@ angular.module 'mnoEnterpriseAngular'
         editAction: $stateParams.editAction
 
       switch $stateParams.editAction
-        when 'CHANGE', 'NEW', null
+        when 'change', 'new', null
           $state.go('home.provisioning.order', params, {reload: true})
         else
           $state.go('home.provisioning.additional_details', params, {reload: true})
@@ -61,7 +61,7 @@ angular.module 'mnoEnterpriseAngular'
     vm.orderEditable = () ->
       # The order is editable if we are changing the plan, or the product has a custom schema.
       switch $stateParams.editAction
-        when 'CHANGE', 'NEW'
+        when 'change', 'new'
           true
         else
           if vm.subscription.product?.custom_schema then true else false

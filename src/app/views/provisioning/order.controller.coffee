@@ -68,10 +68,10 @@ angular.module 'mnoEnterpriseAngular'
       else
         $state.go('home.provisioning.confirm', urlParams)
 
-    vm.subscriptionPlanText = switch $stateParams.editAction
-      when 'NEW'
+    vm.subscriptionPlanText = switch $stateParams.editAction.toLowerCase( )
+      when 'new'
         'mno_enterprise.templates.dashboard.provisioning.order.new_title'
-      when 'CHANGE'
+      when 'change'
         'mno_enterprise.templates.dashboard.provisioning.order.change_title'
 
     vm.selectPlan = (pricingPlan)->

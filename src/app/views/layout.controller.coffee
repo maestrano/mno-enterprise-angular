@@ -5,7 +5,7 @@ angular.module 'mnoEnterpriseAngular'
     # Used for the provisioning workflow
     # If we are changing/creating a new order we want the edit plan breacrumb, otherwise not.
     $scope.showOrder = () ->
-      $location.$$search["editAction"] in ["CHANGE", "NEW"]
+      $location.$$search["editAction"].toLowerCase() in ["change", "new"]
 
     $scope.breadcrumbNumber = (number) ->
       if $scope.showOrder()

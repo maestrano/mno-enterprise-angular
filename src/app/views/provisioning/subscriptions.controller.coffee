@@ -42,13 +42,13 @@ angular.module 'mnoEnterpriseAngular'
       return subscription.status == 'aborted'
 
     vm.showEditAction = (subscription, editAction) ->
-      editAction in subscription.available_edit_actions
+      editAction in subscription.available_actions
 
     vm.editSubscription = (subscription, editAction) ->
       MnoeProvisioning.setSubscription({})
       params = {subscriptionId: subscription.id, editAction: editAction}
-      switch editAction
-        when 'CHANGE'
+      switch editAction.toLowerCase( )
+        when 'change'
           $state.go('home.provisioning.order', params)
         else
           $state.go('home.provisioning.additional_details', params)

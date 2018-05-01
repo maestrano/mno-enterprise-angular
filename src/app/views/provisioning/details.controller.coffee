@@ -74,7 +74,7 @@ angular.module 'mnoEnterpriseAngular'
     if _.isEmpty(vm.subscription)
       # We cannot go directly to this page if creating a new subscription, we must first choose a product pricing.
       # eg. when refreshing on the details page when creating a new subscription.
-      return $state.go('home.provisioning.order', urlParams, {reload: true}) if urlParams.editAction == 'NEW'
+      return $state.go('home.provisioning.order', urlParams, {reload: true}) if urlParams.editAction == 'new'
       vm.isLoading = true
       fetchSubscription().then(fetchProduct).then(fetchCustomSchema)
         .then(() -> setCustomSchema(vm.subscription.product))

@@ -11,7 +11,7 @@ angular.module 'mnoEnterpriseAngular'
         MnoeMarketplace.getApps().then((response) ->
           product = _.find(response.products, (product) -> product.nid == vm.app.nid)
           MnoeProvisioning.setSubscription({})
-          $state.go('home.provisioning.order', {productId: product.id, editAction: 'NEW'})
+          $state.go('home.provisioning.order', {productId: product.id, editAction: 'new'})
         )
 
       # Return the different status of the app regarding its installation
