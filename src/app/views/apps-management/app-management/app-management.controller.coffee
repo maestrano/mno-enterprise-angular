@@ -1,6 +1,6 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('AppManagementCtrl',
-    ($q, $state, $stateParams, MnoeConfig, MnoeAppInstances, MnoeProvisioning, MnoeOrganizations, MnoeCurrentUser, MnoeMarketplace, PRICING_TYPES) ->
+    ($q, $state, $stateParams, MnoeConfig, MnoeAppInstances, MnoeProvisioning, MnoeOrganizations, MnoeCurrentUser, MnoeMarketplace, PRICING_TYPES, ProvisioningHelper, AppSettingsHelper) ->
 
       vm = @
       vm.isLoading = true
@@ -17,7 +17,7 @@ angular.module 'mnoEnterpriseAngular'
 
       # Return true if the plan has a dollar value
       vm.pricedPlan = (plan) ->
-        plan.pricing_type not in PRICING_TYPES['unpriced']
+        ProvisioningHelper.pricedPlan(plan)
 
       vm.toggleSubscriptionNext = (pricingId) ->
         vm.isSubChanged = vm.currentPlanId == pricingId
@@ -42,9 +42,14 @@ angular.module 'mnoEnterpriseAngular'
       vm.orderHistoryEnabled = ->
         vm.isAdmin
 
+      vm.isAddOnSettingShown = ->
+        # TODO: Might have to change this to 'product.is_connector_framework'
+        #       if products are used instead of app
+        AppSettingsHelper.isAddOnSettingShown(vm.app)
+
       # ********************** Data Load *********************************
       vm.setUserRole = ->
-        vm.isAdmin = MnoeOrganizations.role.atLeastAdmin(vm.organization.current_user_role)
+        vm.isAdmin = MnoeOrganizations.role.atLeastAdmin()
 
       vm.loadCurrentSubScription = (subscriptions) ->
         vm.currentSubscription = _.find(subscriptions, product?.nid == vm.app.app_nid)
@@ -77,8 +82,14 @@ angular.module 'mnoEnterpriseAngular'
             vm.subscriptionsHistory = response
         ).finally( -> vm.isOrderHistoryLoading = false)
 
+      vm.addOnSettingLauch = ->
+        AppSettingsHelper.addOnSettingLauch(vm.app)
+
+      # ********************** Initialize *********************************
+      vm.setUserRole()
+
       appPromise = MnoeAppInstances.getAppInstances()
-      subPromise = if MnoeOrganizations.role.atLeastAdmin() then MnoeProvisioning.getSubscriptions() else null
+      subPromise = if vm.isAdmin then MnoeProvisioning.getSubscriptions() else null
       userPromise = MnoeCurrentUser.get()
 
       $q.all({apps: appPromise, subscriptions: subPromise, currentUser: userPromise}).then(
@@ -86,14 +97,11 @@ angular.module 'mnoEnterpriseAngular'
           vm.app = _.find(response.apps, { id: $stateParams.appId })
           vm.organization = _.find(response.currentUser.organizations, {id: MnoeOrganizations.selectedId})
 
-          # User's role
-          vm.setUserRole()
-
           # Manage subscription flow
           vm.loadCurrentSubScription(response.subscriptions)
 
           # Order Histroy flow
-          vm.loadOrderHistory()
+          vm.loadOrderHistory() if vm.isAdmin
       ).finally(-> vm.isLoading = false)
 
       return

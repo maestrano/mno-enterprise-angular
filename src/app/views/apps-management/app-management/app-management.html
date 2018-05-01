@@ -111,7 +111,9 @@
             <div>
               <!-- TODO: Add conditions to manage when this button
                          should be shown(APPINT-1044) -->
-              <button>Access Add-on setting</button>
+              <div ng-show="vm.isAddOnSettingShown()">
+                <button ng-click="vm.addOnSettingLauch()" class='btn btn-warning'>{{ 'mno_enterprise.templates.impac.dock.settings.access_add-on_settings' | translate }}</button>
+              </div>
             </div>
           </div>
         </div>
