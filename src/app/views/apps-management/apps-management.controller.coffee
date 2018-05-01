@@ -1,6 +1,6 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('AppsManagementCtrl',
-    ($q, MnoeConfig, MnoeAppInstances, MnoeProvisioning) ->
+    ($q, MnoeConfig, MnoeAppInstances, MnoeProvisioning, MnoeOrganizations) ->
 
       vm = @
       vm.isLoading = true
@@ -28,7 +28,7 @@ angular.module 'mnoEnterpriseAngular'
         "/mnoe/launch/#{app.uid}"
 
       appPromise = MnoeAppInstances.getAppInstances()
-      subPromise = MnoeProvisioning.getSubscriptions()
+      subPromise = if MnoeOrganizations.role.atLeastAdmin() then MnoeProvisioning.getSubscriptions() else null
 
       $q.all({apps: appPromise, subscriptions: subPromise}).then(
         (response) ->

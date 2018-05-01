@@ -78,7 +78,7 @@ angular.module 'mnoEnterpriseAngular'
         ).finally( -> vm.isOrderHistoryLoading = false)
 
       appPromise = MnoeAppInstances.getAppInstances()
-      subPromise = MnoeProvisioning.getSubscriptions()
+      subPromise = if MnoeOrganizations.role.atLeastAdmin() then MnoeProvisioning.getSubscriptions() else null
       userPromise = MnoeCurrentUser.get()
 
       $q.all({apps: appPromise, subscriptions: subPromise, currentUser: userPromise}).then(
