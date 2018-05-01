@@ -1,12 +1,9 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('AppsManagementCtrl',
-    ($q, MnoeConfig, MnoeAppInstances, MnoeProvisioning, MnoeOrganizations) ->
+    ($q, $scope, MnoeConfig, MnoeAppInstances, MnoeProvisioning, MnoeOrganizations) ->
 
       vm = @
       vm.isLoading = true
-
-      # TODO: Add apps reload feature when organization is changed from
-      #       company select box.
 
       vm.providesStatus = (app) ->
         vm.dataSharingEnabled(app) || app.subscription
@@ -27,17 +24,26 @@ angular.module 'mnoEnterpriseAngular'
       vm.appActionUrl = (app) ->
         "/mnoe/launch/#{app.uid}"
 
-      appPromise = MnoeAppInstances.getAppInstances()
-      subPromise = if MnoeOrganizations.role.atLeastAdmin() then MnoeProvisioning.getSubscriptions() else null
+      vm.init = ->
+        appPromise = MnoeAppInstances.getAppInstances()
+        subPromise = if MnoeOrganizations.role.atLeastAdmin() then MnoeProvisioning.getSubscriptions() else null
 
-      $q.all({apps: appPromise, subscriptions: subPromise}).then(
-        (response) ->
-          vm.apps = _.each(response.apps,
-            (app) ->
-              app.subscription = _.find(response.subscriptions, product?.nid == app.app_nid)
-              app
-          )
-      ).finally(-> vm.isLoading = false)
+        $q.all({apps: appPromise, subscriptions: subPromise}).then(
+          (response) ->
+            vm.apps = _.each(response.apps,
+              (app) ->
+                app.subscription = _.find(response.subscriptions, product?.nid == app.app_nid)
+                app
+            )
+        ).finally(-> vm.isLoading = false)
+
+      #====================================
+      # Post-Initialization
+      #====================================
+      $scope.$watch MnoeOrganizations.getSelectedId, (val) ->
+        if val?
+          vm.isLoading = true
+          vm.init()
 
       return
   )

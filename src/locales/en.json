@@ -533,6 +533,7 @@
   "mno_enterprise.templates.dashboard.app_management.access": "Access",
   "mno_enterprise.templates.dashboard.app_management.manage": "Manage",
   "mno_enterprise.templates.dashboard.app_management.back": "Back to list",
+  "mno_enterprise.templates.dashboard.app_management.unavailable": "App is not available",
   "mno_enterprise.templates.dashboard.app_management.manage.tab.app_info.title": "App info",
   "mno_enterprise.templates.dashboard.app_management.manage.tab.app_info.description": "Description",
   "mno_enterprise.templates.dashboard.app_management.manage.tab.app_info.description_details": "View details of product on the marketplace",
