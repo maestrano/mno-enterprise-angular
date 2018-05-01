@@ -85,12 +85,12 @@
           </div>
         </div>
       </uib-tab>
-      <uib-tab index='1' disable="!vm.dataSharingEnabled">
+      <uib-tab index='1' disable="!vm.dataSharingEnabled()">
         <div uib-tab-heading>
           {{ 'mno_enterprise.templates.dashboard.app_management.manage.tab.connection_status.title' | translate }}
         </div>
 
-        <div class='row'>
+        <div class='row top-buffer-1'>
           <div class='col-xs-12'>
             <div>
               <label>
@@ -116,12 +116,12 @@
           </div>
         </div>
       </uib-tab>
-      <uib-tab index='2'>
+      <uib-tab index='2' disable="!vm.manageSubScriptionEnabled()">
         <div uib-tab-heading>
           {{ 'mno_enterprise.templates.dashboard.app_management.manage.tab.update_subscription' | translate }}
         </div>
 
-        <div class='row'>
+        <div class='row top-buffer-1'>
           <div class='col-xs-12'>
             <mno-loader ng-show="vm.isCurrentSubscriptionLoading" class='top-buffer-4'></mno-loader>
             <div ng-show="!vm.isCurrentSubscriptionLoading" class='table-cell'>
@@ -186,7 +186,7 @@
           </div>
         </div>
       </uib-tab>
-      <uib-tab index='3'>
+      <uib-tab index='3' disable="!vm.orderHistoryEnabled()">
         <div uib-tab-heading>
           {{ 'mno_enterprise.templates.dashboard.app_management.manage.tab.order_history.title' | translate }}
         </div>
