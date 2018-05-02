@@ -1,0 +1,15 @@
+
+
+<suite name = "Suite">
+    
+   <test name = "tests">
+       
+       <classes>
+           
+           <class name = "DemoTest"/>
+            
+       </classes>
+           
+   </test>
+    
+</suite>

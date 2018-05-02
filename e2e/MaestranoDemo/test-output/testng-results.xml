@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="1" total="2" passed="1">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Suite" duration-ms="58052" started-at="2018-05-02T07:23:51Z" finished-at="2018-05-02T07:24:49Z">
+    <groups>
+    </groups>
+    <test name="tests" duration-ms="58052" started-at="2018-05-02T07:23:51Z" finished-at="2018-05-02T07:24:49Z">
+      <class name="DemoTest">
+        <test-method status="PASS" signature="openBrowser()[pri:0, instance:DemoTest@87f383f]" name="openBrowser" is-config="true" duration-ms="5678" started-at="2018-05-02T12:53:51Z" finished-at="2018-05-02T12:53:57Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- openBrowser -->
+        <test-method status="PASS" signature="openURL()[pri:0, instance:DemoTest@87f383f]" name="openURL" is-config="true" duration-ms="13333" started-at="2018-05-02T12:53:57Z" finished-at="2018-05-02T12:54:10Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- openURL -->
+        <test-method status="FAIL" signature="TC_Addwidget()[pri:0, instance:DemoTest@87f383f]" name="TC_Addwidget" duration-ms="7172" started-at="2018-05-02T12:54:10Z" finished-at="2018-05-02T12:54:17Z">
+          <exception class="java.lang.AssertionError">
+            <message>
+              <![CDATA[Widget not deleted expected [true] but found [false]]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.AssertionError: Widget not deleted expected [true] but found [false]
+	at org.testng.Assert.fail(Assert.java:94)
+	at org.testng.Assert.failNotEquals(Assert.java:494)
+	at org.testng.Assert.assertTrue(Assert.java:42)
+	at DemoTest.TC_Addwidget(DemoTest.java:111)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:84)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:714)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
+	at org.testng.TestRunner.privateRun(TestRunner.java:767)
+	at org.testng.TestRunner.run(TestRunner.java:617)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:240)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1224)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1149)
+	at org.testng.TestNG.run(TestNG.java:1057)
+	at org.testng.TestNG.privateMain(TestNG.java:1364)
+	at org.testng.TestNG.main(TestNG.java:1333)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.AssertionError -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC_Addwidget -->
+        <test-method status="PASS" signature="logout()[pri:0, instance:DemoTest@87f383f]" name="logout" is-config="true" duration-ms="553" started-at="2018-05-02T12:54:17Z" finished-at="2018-05-02T12:54:18Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- logout -->
+        <test-method status="PASS" signature="openURL()[pri:0, instance:DemoTest@87f383f]" name="openURL" is-config="true" duration-ms="10426" started-at="2018-05-02T12:54:18Z" finished-at="2018-05-02T12:54:28Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- openURL -->
+        <test-method status="PASS" signature="TC_Fail()[pri:0, instance:DemoTest@87f383f]" name="TC_Fail" duration-ms="20027" started-at="2018-05-02T12:54:28Z" finished-at="2018-05-02T12:54:48Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC_Fail -->
+        <test-method status="PASS" signature="logout()[pri:0, instance:DemoTest@87f383f]" name="logout" is-config="true" duration-ms="476" started-at="2018-05-02T12:54:48Z" finished-at="2018-05-02T12:54:49Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- logout -->
+        <test-method status="PASS" signature="exitBrowser()[pri:0, instance:DemoTest@87f383f]" name="exitBrowser" is-config="true" duration-ms="381" started-at="2018-05-02T12:54:49Z" finished-at="2018-05-02T12:54:49Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- exitBrowser -->
+      </class> <!-- DemoTest -->
+    </test> <!-- tests -->
+  </suite> <!-- Suite -->
+</testng-results>
