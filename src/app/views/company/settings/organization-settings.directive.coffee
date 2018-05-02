@@ -22,17 +22,18 @@ DashboardOrganizationSettingsCtrl = ($scope, $window, MnoeOrganizations, Utiliti
   # Save the current state of the organization settings
   $scope.save = ->
     $scope.isLoading = true
+    # Update main address of organization
+    if addressChangePresent() then saveMainAddress()
+    # Update organization
     MnoeOrganizations.update($scope.model).then(
       (response) ->
         $scope.errors = ''
-        angular.copy(response.organization.currency, $scope.model.currency)
-        angular.copy(response.organization.name, $scope.model.name)
-        angular.copy(response.organization.currency, $scope.origModel.currency)
-        angular.copy(response.organization.name, $scope.origModel.name)
+        angular.merge(response.organization, $scope.model)
       (errors) ->
         $scope.errors = Utilities.processRailsError(errors)
-    ).finally(-> $scope.isLoading = false)
+      ).finally(-> $scope.isLoading = false)
 
+  saveMainAddress = ->
     MnoeOrganizations.updateMainAddress($scope.model.main_address).then(
       (response) ->
         $scope.errors = ''
@@ -43,6 +44,10 @@ DashboardOrganizationSettingsCtrl = ($scope, $window, MnoeOrganizations, Utiliti
       (errors) ->
         $scope.errors = Utilities.processRailsError(errors)
     ).finally(-> $scope.isLoading = false)
+
+  # Check if address has changed
+  addressChangePresent = ->
+    !angular.equals($scope.origModel.main_address, $scope.model.main_address)
 
   # Cancel the temporary changes made by the
   # user
