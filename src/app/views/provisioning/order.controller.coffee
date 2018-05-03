@@ -7,6 +7,7 @@ angular.module 'mnoEnterpriseAngular'
     vm.selectedCurrency = ''
     vm.currencies = []
     vm.filteredPricingPlans = []
+    vm.isCurrencySelectionEnabled = MnoeConfig.isCurrencySelectionEnabled()
 
 
     orgPromise = MnoeOrganizations.get()
@@ -33,7 +34,6 @@ angular.module 'mnoEnterpriseAngular'
             _.forEach(vm.subscription.product.pricing_plans,
               (pp) -> _.forEach(pp.prices, (p) -> currenciesArray.push(p.currency)))
             vm.currencies = _.uniq(currenciesArray)
-
             # Set a default currency
             if vm.currencies.includes(vm.orgCurrency)
               vm.selectedCurrency = vm.orgCurrency
@@ -48,6 +48,12 @@ angular.module 'mnoEnterpriseAngular'
             MnoeProvisioning.setSubscription(vm.subscription)
         )
     ).finally(-> vm.isLoading = false)
+
+    # Filters the pricing plans not containing current currency
+    vm.pricingPlanFilter = () ->
+      vm.filteredPricingPlans = _.filter(vm.subscription.product.pricing_plans,
+        (pp) -> (pp.pricing_type in PRICING_TYPES['unpriced']) || _.some(pp.prices, (p) -> p.currency == vm.selectedCurrency)
+      )
 
     vm.next = (subscription) ->
       MnoeProvisioning.setSubscription(subscription)
@@ -69,12 +75,6 @@ angular.module 'mnoEnterpriseAngular'
     # single billing is disabled or if single billing is enabled but externally managed
     vm.skipPriceSelection = (product) ->
       product.product_type == 'application' && (!product.single_billing_enabled || !product.billed_locally)
-
-    # Filters the pricing plans not containing current currency
-    vm.pricingPlanFilter = () ->
-      vm.filteredPricingPlans = _.filter(vm.subscription.product.pricing_plans,
-        (pp) -> (pp.pricing_type in PRICING_TYPES['unpriced']) || _.some(pp.prices, (p) -> p.currency == vm.selectedCurrency)
-      )
 
     # Filters the pricing plans not containing current currency
     vm.pricingPlanFilter = () ->
