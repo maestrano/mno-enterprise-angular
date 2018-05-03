@@ -23,10 +23,8 @@ angular.module 'mnoEnterpriseAngular'
           vm.model = vm.subscription.custom_data
           MnoeMarketplace.findProduct(id: vm.subscription.product_id).then(
             (response) ->
-              vm.schema = JSON.parse(response.custom_schema)
-              # Schemas with optional asf_options will be namespaced under #json_schema
-              vm.form = if vm.schema.asf_options then vm.schema.asf_options else ["*"]
-              vm.schema = vm.schema.json_schema if vm.schema.json_schema
+              vm.schema = if response.custom_schema then JSON.parse(response.custom_schema) else {}
+              vm.form = if response.asf_options then JSON.parse(response.asf_options) else ["*"]
           )
     ).finally(-> vm.isLoading = false)
 

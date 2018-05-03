@@ -30,14 +30,10 @@ angular.module 'mnoEnterpriseAngular'
     # reasonable number of passes (2 below + 1 in the sf-schema directive)
     # to resolve cyclic references
     #
-    MnoeMarketplace.findProduct(id: vm.subscription.product.id)
-      .then((response) ->
-        parsedSchema = JSON.parse(response.custom_schema)
-        # Schemas with optional asf_options will be namespaced under #json_schema
-        vm.form = if parsedSchema.asf_options then parsedSchema.asf_options else ["*"]
-        parsedSchema = parsedSchema.json_schema if parsedSchema.json_schema
+    MnoeMarketplace.findProduct(id: vm.subscription.product.id).then((response) ->
+      vm.form = if response.asf_options then JSON.parse(response.asf_options) else ["*"]
 
-        parsedSchema
+      if response.custom_schema then JSON.parse(response.custom_schema) else {}
       ).then((schema) -> schemaForm.jsonref(schema))
       .then((schema) -> schemaForm.jsonref(schema))
       .then((schema) -> vm.schema = schema)
