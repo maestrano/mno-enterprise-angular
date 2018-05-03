@@ -23,6 +23,12 @@ angular.module 'mnoEnterpriseAngular'
         $log.debug("DASHBOARD_CONFIG.organization_management.billing.enabled missing")
         true
 
+    @isCurrencySelectionEnabled = () ->
+      if DASHBOARD_CONFIG.marketplace?.pricing?.currency_selection?
+        DASHBOARD_CONFIG.marketplace.pricing.currency_selection
+      else
+        true
+
     @isDeveloperSectionEnabled = () ->
       if DASHBOARD_CONFIG.developer?.enabled?
         DASHBOARD_CONFIG.developer.enabled
