@@ -706,6 +706,7 @@
   "mno_enterprise.templates.dashboard.provisioning.subscription.custom_data": "Information provided by the customer",
   "mno_enterprise.templates.dashboard.provisioning.subscription.no_custom_data": "No information provided by the customer",
   "mno_enterprise.templates.dashboard.provisioning.subscription.events": "Provisioning events",
+  "mno_enterprise.templates.dashboard.provisioning.subscription.no_provisioning_events": "No provisioning events",
   "mno_enterprise.templates.dashboard.provisioning.subscription.provisioning_data_root_name": "Provisioning Data",
   "mno_enterprise.templates.dashboard.provisioning.subscriptions.title": "Manage your subscriptions",
   "mno_enterprise.templates.dashboard.provisioning.subscriptions.currency_warning": "Some prices are missing for your current currency. Please contact your administrator for more information.",

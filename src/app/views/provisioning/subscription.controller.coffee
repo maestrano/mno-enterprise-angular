@@ -17,7 +17,7 @@ angular.module 'mnoEnterpriseAngular'
 
     MnoeProvisioning.getSubscriptionEvents($stateParams.id).then(
       (response) ->
-        vm.subscriptionEvents = response.subscription_events
+        vm.subscriptionEvents = response
     )
 
     # Configure user friendly json tree
