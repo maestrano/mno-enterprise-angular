@@ -79,7 +79,7 @@ angular.module 'mnoEnterpriseAngular'
     # Filters the pricing plans not containing current currency
     vm.pricingPlanFilter = () ->
       vm.filteredPricingPlans = _.filter(vm.subscription.product.pricing_plans,
-        (pp) -> (pp.pricing_type in PRICING_TYPES['unpriced']) || _.some(pp.prices, (p) -> p.currency == vm.selectedCurrency)
+        (pp) -> !vm.pricedPlan(pp) || _.some(pp.prices, (p) -> p.currency == vm.selectedCurrency)
       )
 
     return
