@@ -7,7 +7,8 @@
         <li class="breadcrumb-item active">{{ vm.subscription.product_pricing.name }}</li>
       </ol>
     </div>
-    <div class="table-cell">
+
+    <div ng-show="(vm.singleBilling && vm.billedLocally) || vm.subscription.product.product_type != 'application'" class="table-cell">
       <div class="row th-row hidden-xs">
         <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.name' | translate }}</div>
         <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.description' | translate }}</div>
@@ -65,6 +66,28 @@
           <span ng-show="vm.subscription.product_pricing.pricing_type == 'free'">
             {{ 'mno_enterprise.templates.dashboard.provisioning.order.pricing_type.free' | translate }}
           </span>
+        </div>
+      </div>
+    </div>
+
+    <div ng-show="vm.subscription.product.product_type == 'application'" class="table-cell">
+      <div class="row th-row hidden-xs">
+        <div class="cell col-sm-12">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.title' | translate }}</div>
+      </div>
+      <div class="row td-row">
+        <div class="cell col-sm-12">
+          <span class="cell-label visible-xs-inline">
+            {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.title' | translate }}
+          </span>
+          <div ng-hide="vm.singleBilling">
+            {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.single_billing_disabled' | translate }}
+          </div>
+          <div ng-show="vm.singleBilling && !vm.billedLocally">
+            {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.externally_managed' | translate }}
+          </div>
+          <div ng-show="vm.singleBilling && vm.billedLocally">
+            {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.billed_locally' | translate }}
+          </div>
         </div>
       </div>
     </div>
