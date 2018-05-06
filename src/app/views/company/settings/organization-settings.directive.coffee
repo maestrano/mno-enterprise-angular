@@ -1,4 +1,3 @@
-
 DashboardOrganizationSettingsCtrl = ($scope, $window, MnoeOrganizations, Utilities, MnoeConfig) ->
   'ngInject'
 
@@ -20,17 +19,35 @@ DashboardOrganizationSettingsCtrl = ($scope, $window, MnoeOrganizations, Utiliti
     angular.copy(organization, $scope.origModel)
     $scope.isLoading = false
 
-  # Save the current state of the credit card
+  # Save the current state of the organization settings
   $scope.save = ->
     $scope.isLoading = true
+    # Update main address of organization
+    if addressChangePresent() then saveMainAddress()
+    # Update organization
     MnoeOrganizations.update($scope.model).then(
       (response) ->
         $scope.errors = ''
-        angular.copy(response.organization, $scope.model)
-        angular.copy(response.organization, $scope.origModel)
+        angular.merge(response.organization, $scope.model)
+      (errors) ->
+        $scope.errors = Utilities.processRailsError(errors)
+      ).finally(-> $scope.isLoading = false)
+
+  saveMainAddress = ->
+    MnoeOrganizations.updateMainAddress($scope.model.main_address).then(
+      (response) ->
+        $scope.errors = ''
+        angular.copy(response.main_address, $scope.model.main_address)
+        angular.copy(response.main_address, $scope.origModel.main_address)
+        if $scope.callback
+          $scope.callback()
       (errors) ->
         $scope.errors = Utilities.processRailsError(errors)
     ).finally(-> $scope.isLoading = false)
+
+  # Check if address has changed
+  addressChangePresent = ->
+    !angular.equals($scope.origModel.main_address, $scope.model.main_address)
 
   # Cancel the temporary changes made by the
   # user
