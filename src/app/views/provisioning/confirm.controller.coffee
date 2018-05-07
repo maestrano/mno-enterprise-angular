@@ -5,8 +5,6 @@ angular.module 'mnoEnterpriseAngular'
 
     vm.isLoading = false
     vm.subscription = MnoeProvisioning.getCachedSubscription()
-    vm.singleBilling = vm.subscription.product.single_billing_enabled
-    vm.billedLocally = vm.subscription.product.billed_locally
 
     urlParams =
       subscriptionId: $stateParams.subscriptionId
@@ -24,6 +22,9 @@ angular.module 'mnoEnterpriseAngular'
     if _.isEmpty(vm.subscription)
       # Redirect the user to the first provisioning screen
       vm.editOrder(true)
+    else
+      vm.singleBilling = vm.subscription.product.single_billing_enabled
+      vm.billedLocally = vm.subscription.product.billed_locally
 
     vm.validate = () ->
       vm.isLoading = true

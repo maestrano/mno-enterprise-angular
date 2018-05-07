@@ -4,7 +4,6 @@ angular.module 'mnoEnterpriseAngular'
 
     vm.form = [ "*" ]
     vm.subscription = MnoeProvisioning.getCachedSubscription()
-    vm.isEditMode = !_.isEmpty(vm.subscription.custom_data)
 
     # We must use model schemaForm's sf-model, as #json_schema_opts are namespaced under model
     vm.model = vm.subscription.custom_data || {}
@@ -46,6 +45,7 @@ angular.module 'mnoEnterpriseAngular'
         (response) ->
           vm.orgCurrency = response.organization.organization?.billing_currency || MnoeConfig.marketplaceCurrency()
           vm.subscription = response.subscription
+          vm.isEditMode = !_.isEmpty(vm.subscription.custom_data)
         )
 
     filterCurrencies = (productPricings) ->

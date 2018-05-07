@@ -32,7 +32,6 @@ angular.module 'mnoEnterpriseAngular'
       MnoeMarketplace.getProduct(vm.productId, { editAction: $stateParams.editAction }).then(
         (response) ->
           vm.subscription.product = response
-          return vm.next(vm.subscription) if vm.skipPriceSelection(vm.subscription.product)
 
           # Filters the pricing plans not containing current currency
           vm.subscription.product.pricing_plans = filterCurrencies(vm.subscription.product.product_pricings)
@@ -49,10 +48,11 @@ angular.module 'mnoEnterpriseAngular'
       fetchSubscription()
         .then(fetchProduct)
         .then(fetchCustomSchema)
-        # .catch((error) ->
-        #   toastr.error('mnoe_admin_panel.dashboard.provisioning.subscriptions.product_error')
-        #   $state.go('home.subscriptions')
-        # )
+        .then(() -> vm.next(vm.subscription) if vm.skipPriceSelection(vm.subscription.product))
+        .catch((error) ->
+          toastr.error('mnoe_admin_panel.dashboard.provisioning.subscriptions.product_error')
+          $state.go('home.subscriptions')
+        )
         .finally(() -> vm.isLoading = false)
     else
       vm.isLoading = false
@@ -68,7 +68,7 @@ angular.module 'mnoEnterpriseAngular'
       else
         $state.go('home.provisioning.confirm', urlParams)
 
-    vm.subscriptionPlanText = switch $stateParams.editAction.toLowerCase( )
+    vm.subscriptionPlanText = switch $stateParams.editAction.toLowerCase()
       when 'new'
         'mno_enterprise.templates.dashboard.provisioning.order.new_title'
       when 'change'
@@ -80,13 +80,6 @@ angular.module 'mnoEnterpriseAngular'
 
     vm.skipPriceSelection = (product) ->
       product.product_type == 'application' && (!product.single_billing_enabled || !product.billed_locally)
-
-    vm.subscriptionPlanText = () ->
-      switch $stateParams.editAction
-        when 'NEW'
-          'mno_enterprise.templates.dashboard.provisioning.order.new_title'
-        when 'CHANGE'
-          'mno_enterprise.templates.dashboard.provisioning.order.change_title'
 
     # Delete the cached subscription when we are leaving the subscription workflow.
     $scope.$on('$stateChangeStart', (event, toState) ->
