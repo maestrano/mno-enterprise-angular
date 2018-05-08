@@ -41,8 +41,17 @@ angular.module 'mnoEnterpriseAngular'
     vm.displayInfoTooltip = (subscription) ->
       return subscription.status == 'aborted'
 
-    vm.editSubscription = (subscription) ->
+    vm.showEditAction = (subscription, editAction) ->
+      editAction in subscription.available_actions
+
+    vm.editSubscription = (subscription, editAction) ->
       MnoeProvisioning.setSubscription({})
-      $state.go('home.provisioning.order', ({id: subscription.id}))
+      params = {subscriptionId: subscription.id, editAction: editAction}
+      switch editAction.toLowerCase( )
+        when 'change'
+          $state.go('home.provisioning.order', params)
+        else
+          $state.go('home.provisioning.additional_details', params)
+
     return
   )
