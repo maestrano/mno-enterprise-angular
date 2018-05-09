@@ -15,7 +15,7 @@
     <div ng-hide="vm.isLoading" id="custom-schema-form">
       <form name="vm.detailsForm" ng-submit="vm.submit(vm.detailsForm)" sf-schema="vm.schema" sf-form="vm.form" sf-model="vm.model"></form>
 
-      <button type="submit" ng-click="vm.submit(vm.detailsForm)" ng-disabled="(vm.detailsForm.$pristine && !vm.isEditMode) || vm.detailsForm.$invalid" class="btn btn-primary pull-right top-buffer-1" translate>
+      <button type="submit" ng-click="vm.submit(vm.detailsForm)" ng-disabled="vm.isLoading || vm.detailsForm.$invalid" class="btn btn-primary pull-right top-buffer-1" translate>
         mno_enterprise.templates.dashboard.provisioning.details.next
       </button>
     </div>

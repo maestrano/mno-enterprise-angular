@@ -45,7 +45,6 @@ angular.module 'mnoEnterpriseAngular'
         (response) ->
           vm.orgCurrency = response.organization.organization?.billing_currency || MnoeConfig.marketplaceCurrency()
           vm.subscription = response.subscription
-          vm.isEditMode = !_.isEmpty(vm.subscription.custom_data)
         )
 
     filterCurrencies = (productPricings) ->
