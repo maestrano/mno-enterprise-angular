@@ -42,6 +42,7 @@ angular.module 'mnoEnterpriseAngular'
       return subscription.status == 'aborted'
 
     vm.showEditAction = (subscription, editAction) ->
+      return false unless subscription.available_actions
       editAction in subscription.available_actions
 
     vm.editSubscription = (subscription, editAction) ->
