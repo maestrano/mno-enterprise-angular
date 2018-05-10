@@ -1,6 +1,6 @@
 # Service for managing the users.
 angular.module 'mnoEnterpriseAngular'
-  .service 'MnoeOrganizations', ($location, $state, $cookies, $log, $q, MnoeApiSvc, MnoeCurrentUser) ->
+  .service 'MnoeOrganizations', ($location, $state, $cookies, $log, $q, MnoeApiSvc, MnoeCurrentUser, ORG_REQUIREMENTS) ->
     _self = @
 
     organizationsApi = MnoeApiSvc.all('organizations')
@@ -79,6 +79,10 @@ angular.module 'mnoEnterpriseAngular'
 
           response
       )
+
+    # Is main address required?
+    @mainAddressRequired = ->
+      _.includes(ORG_REQUIREMENTS, 'Main Address')
 
     # Update the credit card
     @updateCreditCard = (creditCard) ->
