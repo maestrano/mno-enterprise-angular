@@ -16,7 +16,7 @@ angular.module 'mnoEnterpriseAngular'
       .add(contractLength.split('Months')[0], 'M')
       .format('YYYY-MM-DD')
 
-    MnoeProvisioning.fetchSubscription($stateParams.id).then(
+    MnoeProvisioning.fetchSubscription($stateParams.id, $stateParams.cart).then(
       (response) ->
         vm.subscription = response
         if vm.subscription.custom_data?

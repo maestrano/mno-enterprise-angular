@@ -11,14 +11,15 @@ angular.module 'mnoEnterpriseAngular'
     # Happens when the user reload the browser during the provisioning workflow.
     if _.isEmpty(vm.subscription)
       # Redirect the user to the first provisioning screen
-      $state.go('home.provisioning.order', {id: $stateParams.id, nid: $stateParams.nid}, {reload: true})
+      $state.go('home.provisioning.order', {id: $stateParams.id, nid: $stateParams.nid, cart: $stateParams.cart}, {reload: true})
 
     vm.editOrder = () ->
-      $state.go('home.provisioning.order', {id: $stateParams.id, nid: $stateParams.nid})
+      $state.go('home.provisioning.order', {id: $stateParams.id, nid: $stateParams.nid, cart: $stateParams.cart})
 
 
     vm.validate = () ->
       vm.isLoading = true
+      vm.subscription.cart_entry = true if $stateParams.cart
       MnoeProvisioning.saveSubscription(vm.subscription).then(
         (response) ->
           MnoeProvisioning.setSubscription(response)
@@ -27,7 +28,16 @@ angular.module 'mnoEnterpriseAngular'
             (response) ->
               $scope.apps = response
           )
-          $state.go('home.provisioning.order_summary', {id: $stateParams.id, nid: $stateParams.nid})
+          $state.go('home.provisioning.order_summary', {id: $stateParams.id, nid: $stateParams.nid, cart: $stateParams.cart})
+      ).finally(-> vm.isLoading = false)
+
+    vm.addToCart = ->
+      vm.isLoading = true
+      vm.subscription.cart_entry = true
+      MnoeProvisioning.saveSubscription(vm.subscription).then(
+        (response) ->
+          MnoeProvisioning.refreshSubscriptions()
+          $state.go('home.marketplace')
       ).finally(-> vm.isLoading = false)
 
     MnoeOrganizations.get().then(

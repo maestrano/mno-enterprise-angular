@@ -7,7 +7,7 @@ angular.module 'mnoEnterpriseAngular'
 
     orgPromise = MnoeOrganizations.get()
     prodsPromise = MnoeMarketplace.getProducts()
-    initPromise = MnoeProvisioning.initSubscription({productNid: $stateParams.nid, subscriptionId: $stateParams.id})
+    initPromise = MnoeProvisioning.initSubscription({productNid: $stateParams.nid, subscriptionId: $stateParams.id, cart: $stateParams.cart})
 
     # Return true if the plan has a dollar value
     vm.pricedPlan = ProvisioningHelper.pricedPlan
@@ -41,9 +41,9 @@ angular.module 'mnoEnterpriseAngular'
     vm.next = (subscription) ->
       MnoeProvisioning.setSubscription(subscription)
       if vm.subscription.product.custom_schema?
-        $state.go('home.provisioning.additional_details', {id: $stateParams.id, nid: $stateParams.nid})
+        $state.go('home.provisioning.additional_details', {id: $stateParams.id, nid: $stateParams.nid, cart: $stateParams.cart})
       else
-        $state.go('home.provisioning.confirm', {id: $stateParams.id, nid: $stateParams.nid})
+        $state.go('home.provisioning.confirm', {id: $stateParams.id, nid: $stateParams.nid, cart: $stateParams.cart})
 
     # Delete the cached subscription when we are leaving the subscription workflow.
     $scope.$on('$stateChangeStart', (event, toState) ->

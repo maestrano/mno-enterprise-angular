@@ -8,7 +8,7 @@ angular.module 'mnoEnterpriseAngular'
     # Happens when the user reload the browser during the provisioning
     if _.isEmpty(vm.subscription)
       # Redirect the user to the first provisioning screen
-      $state.go('home.provisioning.order', {id: $stateParams.id, nid: $stateParams.nid}, {reload: true})
+      $state.go('home.provisioning.order', {id: $stateParams.id, nid: $stateParams.nid, cart: $stateParams.cart}, {reload: true})
 
     vm.isEditMode = !_.isEmpty(vm.subscription.custom_data)
 
@@ -43,7 +43,7 @@ angular.module 'mnoEnterpriseAngular'
       return unless form.$valid
       vm.subscription.custom_data = vm.model
       MnoeProvisioning.setSubscription(vm.subscription)
-      $state.go('home.provisioning.confirm', {id: $stateParams.id, nid: $stateParams.nid})
+      $state.go('home.provisioning.confirm', {id: $stateParams.id, nid: $stateParams.nid, cart: $stateParams.cart})
 
     # Delete the cached subscription when we are leaving the subscription workflow.
     $scope.$on('$stateChangeStart', (event, toState) ->
