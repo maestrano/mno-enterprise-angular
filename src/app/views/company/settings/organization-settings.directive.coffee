@@ -1,4 +1,3 @@
-
 DashboardOrganizationSettingsCtrl = ($scope, $window, MnoeOrganizations, Utilities, MnoeConfig) ->
   'ngInject'
 
@@ -20,17 +19,18 @@ DashboardOrganizationSettingsCtrl = ($scope, $window, MnoeOrganizations, Utiliti
     angular.copy(organization, $scope.origModel)
     $scope.isLoading = false
 
-  # Save the current state of the credit card
+  # Save the current state of the organization settings
   $scope.save = ->
     $scope.isLoading = true
+    # Update organization
     MnoeOrganizations.update($scope.model).then(
       (response) ->
         $scope.errors = ''
-        angular.copy(response.organization, $scope.model)
-        angular.copy(response.organization, $scope.origModel)
+        angular.merge(response.organization, $scope.model)
+        angular.merge(response.organization, $scope.origModel)
       (errors) ->
         $scope.errors = Utilities.processRailsError(errors)
-    ).finally(-> $scope.isLoading = false)
+      ).finally(-> $scope.isLoading = false)
 
   # Cancel the temporary changes made by the
   # user
