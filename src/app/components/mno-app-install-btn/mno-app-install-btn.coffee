@@ -8,8 +8,11 @@ angular.module 'mnoEnterpriseAngular'
       vm = this
 
       vm.provisionOrder = () ->
-        MnoeProvisioning.setSubscription({})
-        $state.go('home.provisioning.order', {nid: vm.app.nid})
+        MnoeMarketplace.getApps().then((response) ->
+          product = _.find(response.products, (product) -> product.nid == vm.app.nid)
+          MnoeProvisioning.setSubscription({})
+          $state.go('home.provisioning.order', {productId: product.id, editAction: 'new'})
+        )
 
       # Return the different status of the app regarding its installation
       # - INSTALLABLE:                        The app may be installed
