@@ -60,7 +60,8 @@ angular.module 'mnoEnterpriseAngular'
       deferred = $q.defer()
       MnoeOrganizations.get().then(
         (response) ->
-          subscription.patch({subscription: {product_id: s.product.id, product_pricing_id: s.product_pricing?.id, max_licenses: s.max_licenses, custom_data: s.custom_data}}).then(
+          subscription.patch({subscription: {product_id: s.product.id, product_pricing_id: s.product_pricing?.id,
+          max_licenses: s.max_licenses, custom_data: s.custom_data, edit_action: s.edit_action}}).then(
             (response) ->
               deferred.resolve(response)
           )

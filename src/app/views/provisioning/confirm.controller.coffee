@@ -28,6 +28,7 @@ angular.module 'mnoEnterpriseAngular'
 
     vm.validate = () ->
       vm.isLoading = true
+      vm.subscription.edit_action = $stateParams.editAction
       MnoeProvisioning.saveSubscription(vm.subscription).then(
         (response) ->
           MnoeProvisioning.setSubscription(response)
