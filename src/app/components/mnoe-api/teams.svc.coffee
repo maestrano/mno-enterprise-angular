@@ -29,7 +29,7 @@ angular.module 'mnoEnterpriseAngular'
       payload = { team: _.pick(team, "name") }
       MnoeApiSvc.one('teams', team.id).patch(payload).then(
         (response) ->
-          newTeam = response.plain().team
+          newTeam = response.plain()
           listTeam = _.find(_self.teams, {id: team.id})
           angular.copy(newTeam, listTeam)
           response
@@ -39,7 +39,7 @@ angular.module 'mnoEnterpriseAngular'
       payload = { team: {app_instances: appInstances} }
       MnoeApiSvc.one('teams', team.id).patch(payload).then(
         (response) ->
-          newTeam = response.plain().team
+          newTeam = response.plain()
           listTeam = _.find(_self.teams, {id: team.id})
           angular.copy(newTeam, listTeam)
           response

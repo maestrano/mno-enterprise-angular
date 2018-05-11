@@ -102,11 +102,14 @@ DashboardOrganizationTeamListCtrl = ($scope, $window, $uibModal, $q, MnoeCurrent
       )
   )
 
+  #Setting third argument of $watch to true for deep watching
   $scope.$watch(
-    () -> MnoeTeams.teams.length,
-    (newValue) ->
-      if newValue?
+    () -> MnoeTeams.teams,
+    (newTeam) ->(
+      if newTeam?
         $scope.initialize(MnoeTeams.teams)
+    ),
+    true
   )
 
 angular.module 'mnoEnterpriseAngular'
