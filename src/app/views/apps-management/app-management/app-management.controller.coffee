@@ -1,6 +1,6 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('AppManagementCtrl',
-    ($q, $state, $scope, toastr, $stateParams, MnoeConfig, MnoeAppInstances, MnoeProvisioning,
+    ($q, $state, $scope, toastr, $stateParams, MnoeConfig, MnoeProductInstances, MnoeProvisioning,
       MnoeOrganizations, MnoeCurrentUser, MnoeMarketplace, PRICING_TYPES, ProvisioningHelper,
       AppSettingsHelper) ->
 
@@ -12,7 +12,7 @@ angular.module 'mnoEnterpriseAngular'
 
         # TODO: Decide how data sharing status is checked
         vm.dataSharingStatus = ->
-          if vm.app.sync_status?.status
+          if vm.product.sync_status?.status
             'Connected'
           else
             'Disconnected'
@@ -32,11 +32,11 @@ angular.module 'mnoEnterpriseAngular'
             $state.go('home.provisioning.confirm')
 
         # ********************** Flags *********************************
-        vm.providesStatus = (app) ->
-          app.data_sharing || app.subscription
+        vm.providesStatus = (product) ->
+          product.data_sharing || product.subscription
 
         vm.dataSharingEnabled = ->
-          MnoeConfig.isDataSharingEnabled() && vm.app.data_sharing && vm.isAdmin
+          MnoeConfig.isDataSharingEnabled() && vm.product.data_sharing && vm.isAdmin
 
         vm.manageSubScriptionEnabled = ->
           vm.isAdmin
@@ -45,16 +45,14 @@ angular.module 'mnoEnterpriseAngular'
           vm.isAdmin
 
         vm.isAddOnSettingShown = ->
-          # TODO: Might have to change this to 'product.is_connector_framework'
-          #       if products are used instead of app
-          AppSettingsHelper.isAddOnSettingShown(vm.app)
+          AppSettingsHelper.isAddOnSettingShown(vm.product)
 
         # ********************** Data Load *********************************
         vm.setUserRole = ->
           vm.isAdmin = MnoeOrganizations.role.atLeastAdmin()
 
         vm.loadCurrentSubScription = (subscriptions) ->
-          vm.currentSubscription = _.find(subscriptions, product?.nid == vm.app.app_nid)
+          vm.currentSubscription = _.find(subscriptions, (sub) -> sub.product?.nid == vm.product.product_nid)
           if vm.currentSubscription
             MnoeProvisioning.initSubscription({productNid: null, subscriptionId: vm.currentSubscription.id}).then(
               (response) ->
@@ -66,39 +64,34 @@ angular.module 'mnoEnterpriseAngular'
                     vm.currentSubscription.product = response
 
                     # Filters the pricing plans not containing current currency
-                    vm.currentSubscription.product.pricing_plans = _.filter(vm.currentSubscription.product.pricing_plans,
-                      (pp) ->
-                        (pp.pricing_type in PRICING_TYPES['unpriced']) || _.some(pp.prices, (p) -> p.currency == vm.orgCurrency)
-                    )
+                    vm.currentSubscription.product.pricing_plans =  ProvisioningHelper.planForCurrency(vm.currentSubscription.product.pricing_plans, vm.orgCurrency)
                     vm.currentPlanId = vm.currentSubscription.product_pricing_id
-                    console.log 'vm.currentPlan'
-                    console.log vm.currentPlan
                 )
             ).finally( -> vm.isCurrentSubscriptionLoading = false)
           else
             vm.isCurrentSubscriptionLoading = false
 
         vm.loadOrderHistory = ->
-          MnoeProvisioning.getProductSubscriptions(vm.app.app_id).then(
+          MnoeProvisioning.getProductSubscriptions(vm.product.product_id).then(
             (response) ->
               vm.subscriptionsHistory = response
           ).finally( -> vm.isOrderHistoryLoading = false)
 
         vm.addOnSettingLauch = ->
-          AppSettingsHelper.addOnSettingLauch(vm.app)
+          AppSettingsHelper.addOnSettingLauch(vm.product)
 
         # ********************** Initialize *********************************
         vm.init = ->
           vm.setUserRole()
 
-          appPromise = MnoeAppInstances.getAppInstances()
+          productPromise = MnoeProductInstances.getProductInstances()
           subPromise = if vm.isAdmin then MnoeProvisioning.getSubscriptions() else null
           userPromise = MnoeCurrentUser.get()
 
-          $q.all({apps: appPromise, subscriptions: subPromise, currentUser: userPromise}).then(
+          $q.all({products: productPromise, subscriptions: subPromise, currentUser: userPromise}).then(
             (response) ->
-              vm.app = _.find(response.apps, { id: $stateParams.appId })
-              unless vm.app
+              vm.product = _.find(response.products, { id: $stateParams.appId })
+              unless vm.product
                 toastr.error('mno_enterprise.templates.dashboard.app_management.unavailable')
                 $state.go('home.apps-management')
                 return

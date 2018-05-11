@@ -531,7 +531,7 @@
   "mno_enterprise.templates.dashboard.app_management.data_sharing.status": "Data sharing: {status}",
   "mno_enterprise.templates.dashboard.app_management.subscription.status": "Subscription: {status}",
   "mno_enterprise.templates.dashboard.app_management.access": "Access",
-  "mno_enterprise.templates.dashboard.app_management.manage": "Manage",
+  "mno_enterprise.templates.dashboard.app_management.manage_app": "Manage",
   "mno_enterprise.templates.dashboard.app_management.back": "Back to list",
   "mno_enterprise.templates.dashboard.app_management.unavailable": "App is not available",
   "mno_enterprise.templates.dashboard.app_management.manage.tab.app_info.title": "App info",

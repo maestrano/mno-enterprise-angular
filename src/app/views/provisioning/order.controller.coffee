@@ -21,11 +21,6 @@ angular.module 'mnoEnterpriseAngular'
           vm.subscription = response.subscription
         )
 
-    filterCurrencies = (productPricings) ->
-      _.filter(vm.subscription.product.pricing_plans,
-        (pp) -> !vm.pricedPlan(pp) || _.some(pp.prices, (p) -> p.currency == vm.orgCurrency)
-      )
-
     fetchProduct = () ->
       # When in edit mode, we will be getting the product ID from the subscription, otherwise from the url.
       vm.productId = vm.subscription.product?.id || $stateParams.productId
@@ -34,7 +29,7 @@ angular.module 'mnoEnterpriseAngular'
           vm.subscription.product = response
 
           # Filters the pricing plans not containing current currency
-          vm.subscription.product.pricing_plans = filterCurrencies(vm.subscription.product.product_pricings)
+          vm.subscription.product.pricing_plans = ProvisioningHelper.planForCurrency(vm.subscription.product.product_pricings, vm.orgCurrency)
           MnoeProvisioning.setSubscription(vm.subscription)
         )
 

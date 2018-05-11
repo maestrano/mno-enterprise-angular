@@ -12,8 +12,8 @@
   <div class='col-xs-12 bottom-buffer-3'>
     <div class='col-xs-offset-1'>
       <h2>
-        <img class='app-logo' ng-src="{{vm.app.logo}}">
-        <label class='margin-left-20'>{{vm.app.app_name}}</label>
+        <img class='app-logo' ng-src="{{vm.product.logo}}">
+        <label class='margin-left-20'>{{vm.product.product_name}}</label>
       </h2>
     </div>
 
@@ -29,10 +29,10 @@
                 {{ 'mno_enterprise.templates.dashboard.app_management.manage.tab.app_info.description' | translate }}
               </h3>
               <p>
-                {{vm.app.name}}: {{vm.app.tiny_description}}
+                {{vm.product.name}}: {{vm.product.tiny_description}}
               </p>
               <p>
-                <a ui-sref="home.marketplace.app({appId: vm.app.app_nid})">
+                <a ui-sref="home.marketplace.app({appId: vm.product.product_nid})">
                   {{ 'mno_enterprise.templates.dashboard.app_management.manage.tab.app_info.description_details' | translate }}
                 </a>
               </p>
@@ -42,7 +42,7 @@
               <h3>
                 {{ 'mno_enterprise.templates.dashboard.app_management.manage.tab.app_info.getting_started' | translate }}
               </h3>
-              <p ng-bind-html="vm.app.getting_started"></p>
+              <p ng-bind-html="vm.product.getting_started"></p>
             </div>
 
             <div>
@@ -50,8 +50,8 @@
                 {{ 'mno_enterprise.templates.dashboard.app_management.manage.tab.app_info.support.title' | translate }}
               </h3>
               <div>
-                <a ng-href="{{ vm.app.support_url }}" target='_blank'>
-                  {{'mno_enterprise.templates.dashboard.app_management.manage.tab.app_info.support.helpdesk' | translate:{app_name: vm.app.app_name} }}
+                <a ng-href="{{ vm.product.support_url }}" target='_blank'>
+                  {{'mno_enterprise.templates.dashboard.app_management.manage.tab.app_info.support.helpdesk' | translate:{app_name: vm.product.product_name} }}
                 </a>
               </div>
               <div>
@@ -79,7 +79,7 @@
                 <label>
                   {{ 'mno_enterprise.templates.dashboard.app_management.manage.tab.app_info.technical_details.group_id' | translate }}
                 </label>
-                <span>{{vm.app.uid}}</span>
+                <span>{{vm.product.uid}}</span>
               </div>
             </div>
           </div>
@@ -106,11 +106,9 @@
                 {{ 'mno_enterprise.templates.dashboard.app_management.manage.tab.connection_status.last_sync' | translate }}
               </label>
               <!-- TODO: Decide between "Never" and "Sync in progress" -->
-              <span>{{vm.app.sync_status.last_sync_at || 'Sync In progress'}}</span>
+              <span>{{vm.product.sync_status.last_sync_at || 'Sync In progress'}}</span>
             </div>
             <div>
-              <!-- TODO: Add conditions to manage when this button
-                         should be shown(APPINT-1044) -->
               <div ng-show="vm.isAddOnSettingShown()">
                 <button ng-click="vm.addOnSettingLauch()" class='btn btn-warning'>{{ 'mno_enterprise.templates.impac.dock.settings.access_add-on_settings' | translate }}</button>
               </div>
