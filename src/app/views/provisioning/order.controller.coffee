@@ -8,12 +8,13 @@ angular.module 'mnoEnterpriseAngular'
     urlParams = {
       productId: $stateParams.productId,
       subscriptionId: $stateParams.subscriptionId,
-      editAction: $stateParams.editAction
+      editAction: $stateParams.editAction,
+      cart: $stateParams.cart
     }
 
     fetchSubscription = () ->
       orgPromise = MnoeOrganizations.get()
-      initPromise = MnoeProvisioning.initSubscription({productId: $stateParams.productId, subscriptionId: $stateParams.subscriptionId})
+      initPromise = MnoeProvisioning.initSubscription({productId: $stateParams.productId, subscriptionId: $stateParams.subscriptionId, cart: urlParams.cart})
 
       $q.all({organization: orgPromise, subscription: initPromise}).then(
         (response) ->

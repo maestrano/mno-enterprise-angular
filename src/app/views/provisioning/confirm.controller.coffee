@@ -9,7 +9,8 @@ angular.module 'mnoEnterpriseAngular'
     urlParams =
       subscriptionId: $stateParams.subscriptionId
       productId: $stateParams.productId
-      editAction: $stateParams.editAction
+      editAction: $stateParams.editAction,
+      cart: $stateParams.cart
 
     vm.editOrder = (reload = true) ->
       switch $stateParams.editAction.toLowerCase()
@@ -29,6 +30,7 @@ angular.module 'mnoEnterpriseAngular'
     vm.validate = () ->
       vm.isLoading = true
       vm.subscription.edit_action = $stateParams.editAction
+      vm.subscription.cart_entry = true if $stateParams.cart
       MnoeProvisioning.saveSubscription(vm.subscription).then(
         (response) ->
           MnoeProvisioning.setSubscription(response)
@@ -37,20 +39,30 @@ angular.module 'mnoEnterpriseAngular'
             (response) ->
               $scope.apps = response
           )
-          $state.go('home.provisioning.order_summary', {subscriptionId: $stateParams.subscriptionId})
+          $state.go('home.provisioning.order_summary', {subscriptionId: $stateParams.subscriptionId, cart: $stateParams.cart})
       ).finally(-> vm.isLoading = false)
 
     vm.editOrder = () ->
       params =
         subscriptionId: $stateParams.subscriptionId,
         productId: $stateParams.productId,
-        editAction: $stateParams.editAction
+        editAction: $stateParams.editAction,
+        cart: $stateParams.cart
 
       switch $stateParams.editAction
         when 'change', 'new', null
           $state.go('home.provisioning.order', params, {reload: true})
         else
           $state.go('home.provisioning.additional_details', params, {reload: true})
+
+    vm.addToCart = ->
+      vm.isLoading = true
+      vm.subscription.cart_entry = true
+      MnoeProvisioning.saveSubscription(vm.subscription).then(
+        (response) ->
+          MnoeProvisioning.refreshSubscriptions()
+          $state.go('home.marketplace')
+      ).finally(-> vm.isLoading = false)
 
     # If subscription is empty redirect to appropriate page.
     if _.isEmpty(vm.subscription)
