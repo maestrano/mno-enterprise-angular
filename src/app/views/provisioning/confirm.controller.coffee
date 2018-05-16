@@ -39,7 +39,7 @@ angular.module 'mnoEnterpriseAngular'
             (response) ->
               $scope.apps = response
           )
-          $state.go('home.provisioning.order_summary', {subscriptionId: $stateParams.subscriptionId, cart: $stateParams.cart})
+          $state.go('home.provisioning.order_summary', {subscriptionId: $stateParams.subscriptionId, editAction: $stateParams.editAction, cart: $stateParams.cart})
       ).finally(-> vm.isLoading = false)
 
     vm.editOrder = () ->
