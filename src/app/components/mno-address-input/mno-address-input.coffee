@@ -7,8 +7,8 @@ angular.module 'mnoEnterpriseAngular'
         address: '='
       }
 
-      controller: ($scope, Miscellaneous) ->
-        $scope.validCountries = Miscellaneous.countries
+      controller: ($scope, VALID_COUNTRIES) ->
+        $scope.validCountries = VALID_COUNTRIES
         return
     }
 )
