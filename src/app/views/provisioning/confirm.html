@@ -34,12 +34,14 @@
     <div ng-show="vm.subscription.product_pricing" class="table-cell">
       <div class="row th-row hidden-xs">
         <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.name' | translate }}</div>
-        <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.licenses' | translate }}</div>
-        <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.price' | translate }}</div>
         <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.description' | translate }}</div>
+        <div ng-hide="vm.quoteBased" class="cell col-sm-2">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.licenses' | translate }}</div>
+        <div ng-hide="vm.quoteBased" class="cell col-sm-4">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.price' | translate }}</div>
+        <div ng-show="vm.quoteBased" class="cell col-sm-4">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.quoted_price' | translate }}</div>
       </div>
 
-      <div class="row td-row">
+      <mno-loader ng-show="vm.quoteBased && !vm.quoteFetched" class="top-buffer-4"></mno-loader>
+      <div ng-hide="vm.quoteBased && !vm.quoteFetched" class="row td-row">
         <div class="cell col-sm-3">
           <span class="cell-label visible-xs-inline">
             {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.name' | translate }}:
@@ -47,7 +49,14 @@
           {{ vm.subscription.product_pricing.name }}
         </div>
 
-        <div class="cell col-sm-3">
+        <div class="cell col-sm-2">
+          <span class="cell-label visible-xs-inline">
+            {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.description' | translate }}:
+          </span>
+          {{ vm.subscription.product_pricing.description }}
+        </div>
+
+        <div ng-hide="vm.quoteBased" class="cell col-sm-2">
           <span class="cell-label visible-xs-inline">
             {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.licenses' | translate }}:
           </span>
@@ -83,6 +92,10 @@
               </span>
             </div>
           </div>
+
+          <span ng-show="vm.quoteBased">
+              {{ vm.quotedPrice }}
+          </span>
 
           <span ng-show="vm.subscription.product_pricing.pricing_type == 'payg'">
             {{ 'mno_enterprise.templates.dashboard.provisioning.order.pricing_type.payg' | translate }}

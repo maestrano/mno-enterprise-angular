@@ -130,6 +130,13 @@ angular.module 'mnoEnterpriseAngular'
       MnoeOrganizations.get().then(
         (response) ->
           MnoeApiSvc.one('organizations', response.organization.id).one('subscriptions').post('/cancel_cart_subscriptions').then(
+          
+    @getQuote = (s) ->
+      deferred = $q.defer()
+      MnoeOrganizations.get().then(
+        (response) ->
+          quoteParams = {product_id: s.product.id, product_pricing_id: s.product_pricing?.id, custom_data: s.custom_data, organization_id: response.organization.id}
+          MnoeApiSvc.one('organizations', response.organization.id).all('quotes').post(quote: quoteParams).then(
             (response) ->
               deferred.resolve(response)
           )
