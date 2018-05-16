@@ -92,8 +92,8 @@ angular.module 'mnoEnterpriseAngular'
       )
       return deferred.promise
 
-    @getSubscriptions = (params = {}) ->
-      return _self.subscriptionsPromise if !_.isEmpty(params) && _self.subscriptionsPromise?
+    @getSubscriptions = (params = {}, cart = false) ->
+      return _self.subscriptionsPromise if cart && _self.subscriptionsPromise?
 
       deferred = $q.defer()
       MnoeOrganizations.get().then(
@@ -103,7 +103,7 @@ angular.module 'mnoEnterpriseAngular'
               deferred.resolve(response)
           )
       )
-      _self.subscriptionsPromise = deferred.promise unless _.isEmpty(params)
+      _self.subscriptionsPromise = deferred.promise if cart
       return deferred.promise
 
     @cancelSubscription = (s) ->
@@ -132,7 +132,7 @@ angular.module 'mnoEnterpriseAngular'
       deferred = $q.defer()
       MnoeOrganizations.get().then(
         (response) ->
-         MnoeApiSvc.one('organizations', response.organization.id).one('subscriptions').post('/cancel_cart_subscriptions').then(
+          MnoeApiSvc.one('organizations', response.organization.id).one('subscriptions').post('/cancel_cart_subscriptions').then(
             (response) ->
               deferred.resolve(response)
           )
