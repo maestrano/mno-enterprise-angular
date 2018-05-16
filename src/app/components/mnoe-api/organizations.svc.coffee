@@ -82,7 +82,7 @@ angular.module 'mnoEnterpriseAngular'
 
     # Is main address required?
     @mainAddressRequired = ->
-      _.includes(ORG_REQUIREMENTS, 'Main Address')
+      'main_address' in ORG_REQUIREMENTS
 
     # Update the credit card
     @updateCreditCard = (creditCard) ->

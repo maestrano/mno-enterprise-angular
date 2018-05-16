@@ -26,7 +26,7 @@ DashboardOrganizationSettingsCtrl = ($scope, $window, MnoeOrganizations, Utiliti
     MnoeOrganizations.update($scope.model).then(
       (response) ->
         $scope.errors = ''
-        angular.merge(response.organization, $scope.model)
+        angular.copy(response.organization, $scope.model)
         angular.copy($scope.model, $scope.origModel)
       (errors) ->
         $scope.errors = Utilities.processRailsError(errors)
