@@ -36,7 +36,7 @@ angular.module 'mnoEnterpriseAngular'
         else
           $state.go('home.provisioning.additional_details', urlParams, {reload: reload})
 
-    if vm.subscription.product_pricing && vm.subscription.product_pricing.quote_based
+    if vm.subscription.product_pricing?.quote_based
       vm.quoteBased = true
       vm.quoteFetched = false
       MnoeProvisioning.getQuote(vm.subscription).then(

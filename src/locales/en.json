@@ -721,6 +721,7 @@
   "mno_enterprise.templates.dashboard.provisioning.confirm.update_cart": "Update Cart",
   "mno_enterprise.templates.dashboard.provisioning.confirm.validate": "Validate",
   "mno_enterprise.templates.dashboard.provisioning.confirm.price": "Price",
+  "mno_enterprise.templates.dashboard.provisioning.confirm.quoted_price": "Quoted Total Price",
   "mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.title": "Pricing Information",
   "mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.single_billing_disabled": "Subscription plan is managed by the application",
   "mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.externally_managed": "Subscription plan is managed by the application and billed via Maestrano",
