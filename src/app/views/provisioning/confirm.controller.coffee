@@ -6,6 +6,8 @@ angular.module 'mnoEnterpriseAngular'
     vm.isLoading = false
     vm.subscription = MnoeProvisioning.getCachedSubscription()
 
+    vm.orderTypeText = 'mno_enterprise.templates.dashboard.provisioning.subscriptions.' + $stateParams.editAction.toLowerCase()
+
     urlParams =
       subscriptionId: $stateParams.subscriptionId
       productId: $stateParams.productId
@@ -37,7 +39,7 @@ angular.module 'mnoEnterpriseAngular'
             (response) ->
               $scope.apps = response
           )
-          $state.go('home.provisioning.order_summary', {subscriptionId: $stateParams.subscriptionId})
+          $state.go('home.provisioning.order_summary', {subscriptionId: $stateParams.subscriptionId, editAction: $stateParams.editAction})
       ).finally(-> vm.isLoading = false)
 
     vm.editOrder = () ->
@@ -57,8 +59,6 @@ angular.module 'mnoEnterpriseAngular'
       vm.editOrder()
     else
       vm.subscription.edit_action = $stateParams.editAction
-
-    vm.orderTypeText = 'mno_enterprise.templates.dashboard.provisioning.subscriptions.' + $stateParams.editAction.toLowerCase()
 
     vm.orderEditable = () ->
       # The order is editable if we are changing the plan, or the product has a custom schema.
