@@ -52,7 +52,7 @@ angular.module 'mnoEnterpriseAngular'
         .then(() -> vm.next(vm.subscription) if vm.skipPriceSelection(vm.subscription.product))
         .catch((error) ->
           toastr.error('mnoe_admin_panel.dashboard.provisioning.subscriptions.product_error')
-          $state.go('home.subscriptions')
+          $state.go('home.subscriptions', {subType: if urlParams.cart then 'cart' else 'active'})
         )
         .finally(() -> vm.isLoading = false)
     else

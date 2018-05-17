@@ -6,7 +6,10 @@ angular.module 'mnoEnterpriseAngular'
     vm.cartSubscriptions = $stateParams.subType == 'cart'
 
     vm.goToSubscription = (subscription) ->
-      $state.go('home.subscription', { id: subscription.id, cart: vm.cartSubscriptions })
+      if vm.cartSubscriptions
+        $state.go('home.subscription', { id: subscription.id, cart: vm.cartSubscriptions })
+      else
+        $state.go('home.subscription', { id: subscription.id })
 
     vm.cancelSubscription = (subscription, i) ->
       if vm.cartSubscriptions

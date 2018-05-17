@@ -225,7 +225,7 @@ angular.module 'mnoEnterpriseAngular'
         .state 'home.subscription',
           data:
             pageTitle:'Subscription details'
-          url: '/subscriptions/:id?cart'
+          url: '/subscription/:id?cart'
           templateUrl: 'app/views/provisioning/subscription.html'
           controller: 'ProvisioningSubscriptionCtrl'
           controllerAs: 'vm'
