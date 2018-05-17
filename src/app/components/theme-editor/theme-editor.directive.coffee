@@ -430,6 +430,7 @@ ThemeEditorCtrl = ($scope, $window, $log, $timeout,  toastr, themeEditorSvc) ->
       loadThemeData(JSON.parse(editor.output), false)
     catch err
       toastr.error('Error! JSON format is incorrect. Please load correct JSON format')
+      editor.busy = false
       return
 
     editor.update().then ->
