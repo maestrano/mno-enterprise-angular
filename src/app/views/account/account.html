@@ -37,7 +37,7 @@
             <label>{{ 'mno_enterprise.templates.dashboard.account.user_form_phone' | translate }}</label>
             <div class="input-group">
               <div class="input-group-addon select">
-                <select ng-options="phone[0] as phone[1] for phone in vm.countryCodes" ng-model='vm.user.model.phone_country_code' ng-disabled="!vm.isUserManagementEnabled"></select>
+                <select ng-options="country.alpha2 as country.phone_prefix for country in vm.validCountries()" ng-model='vm.user.model.phone_country_code' ng-disabled="!vm.isUserManagementEnabled"></select>
               </div>
               <input type='text' ng-model='vm.user.model.phone' class='form-control' ng-readonly="!vm.isUserManagementEnabled">
             </div>
