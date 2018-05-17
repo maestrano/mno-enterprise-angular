@@ -32,16 +32,20 @@ angular.module 'mnoEnterpriseAngular'
     vm.validate = () ->
       vm.isLoading = true
       vm.subscription.edit_action = $stateParams.editAction
-      vm.subscription.cart_entry = true if $stateParams.cart
+      vm.subscription.cart_entry = true if $stateParams.cart == 'true'
       MnoeProvisioning.saveSubscription(vm.subscription).then(
         (response) ->
-          MnoeProvisioning.setSubscription(response)
-          # Reload dock apps
-          MnoeAppInstances.getAppInstances().then(
-            (response) ->
-              $scope.apps = response
-          )
-          $state.go('home.provisioning.order_summary', {subscriptionId: $stateParams.subscriptionId, editAction: $stateParams.editAction, cart: $stateParams.cart})
+          if $stateParams.cart == 'true' && $stateParams.editAction == 'cancel'
+            MnoeProvisioning.refreshSubscriptions()
+            $state.go("home.subscriptions", {subType: 'cart'})
+          else
+            MnoeProvisioning.setSubscription(response)
+            # Reload dock apps
+            MnoeAppInstances.getAppInstances().then(
+              (response) ->
+                $scope.apps = response
+            )
+            $state.go('home.provisioning.order_summary', {subscriptionId: $stateParams.subscriptionId, editAction: $stateParams.editAction, cart: $stateParams.cart})
       ).finally(-> vm.isLoading = false)
 
     vm.editOrder = () ->

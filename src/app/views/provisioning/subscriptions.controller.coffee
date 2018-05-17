@@ -100,7 +100,11 @@ angular.module 'mnoEnterpriseAngular'
 
     vm.editSubscription = (subscription, editAction) ->
       MnoeProvisioning.setSubscription({})
-      params = {subscriptionId: subscription.id, editAction: editAction}
+      if vm.cartSubscriptions
+        params = {subscriptionId: subscription.id, editAction: editAction, cart: vm.cartSubscriptions}
+      else
+        params = {subscriptionId: subscription.id, editAction: editAction}
+
       switch editAction.toLowerCase( )
         when 'change'
           $state.go('home.provisioning.order', params)
