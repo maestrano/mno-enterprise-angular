@@ -6,7 +6,7 @@ DashboardCompanyCartCtrl = ($scope, MnoeProvisioning) ->
   'ngInject'
 
   cartSubscriptions = ->
-    params = { where: {status_for: 'staged' } }
+    params = { where: {subscription_status_in: 'staged' } }
     MnoeProvisioning.getSubscriptions(params, true).then(
       (response) ->
         $scope.subscriptionsCount = response.length

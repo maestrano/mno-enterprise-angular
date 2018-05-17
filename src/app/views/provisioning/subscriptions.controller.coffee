@@ -47,10 +47,10 @@ angular.module 'mnoEnterpriseAngular'
 
     vm.subscriptionsPromise = ->
       if vm.cartSubscriptions
-        params = { where: {status_for: 'staged' } }
+        params = { where: {subscription_status_in: 'staged' } }
         MnoeProvisioning.getSubscriptions(params)
       else
-        params = { where: {status_for: 'non_staged' } }
+        params = { where: {subscription_status_in: 'non_staged' } }
         MnoeProvisioning.getSubscriptions(params)
 
     vm.deleteCart = ->
