@@ -547,6 +547,8 @@
   "mno_enterprise.templates.dashboard.app_management.manage.tab.app_info.technical_details.group_id": "Group id(uid):",
   "mno_enterprise.templates.dashboard.app_management.manage.tab.connection_status.title": "Connection status",
   "mno_enterprise.templates.dashboard.app_management.manage.tab.connection_status.last_sync": "Last sync:",
+  "mno_enterprise.templates.dashboard.app_management.manage.tab.connection_status.sync_in_progress": "Sync In Progress",
+  "mno_enterprise.templates.dashboard.app_management.manage.tab.connection_status.never_sync": "None",
   "mno_enterprise.templates.dashboard.app_management.manage.tab.manage_subscription": "Manage subscription",
   "mno_enterprise.templates.dashboard.app_management.manage.tab.order_history.title": "Order history",
   "mno_enterprise.templates.dashboard.app_management.manage.tab.order_history.start_date": "Start date",

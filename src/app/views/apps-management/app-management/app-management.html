@@ -102,15 +102,19 @@
               </label>
               <span>{{vm.dataSharingStatus()}}</span>
             </div>
-            <!-- TODO: Add logic to add message "This application does not
-                       provide a connection status" when data sharing is not
-                       available -->
             <div>
               <label>
                 {{ 'mno_enterprise.templates.dashboard.app_management.manage.tab.connection_status.last_sync' | translate }}
               </label>
-              <!-- TODO: Decide between "Never" and "Sync in progress" -->
-              <span>{{vm.product.sync_status.last_sync_at || 'Sync In progress'}}</span>
+              <span ng-if="vm.product.sync_status.attributes.finished_at && vm.showDataSharingDate()">
+                {{ vm.product.sync_status.attributes.finished_at | date: 'dd/MM/yyyy H:mm' }}
+              </span>
+              <span ng-if="!vm.product.sync_status.attributes.finished_at && vm.showDataSharingDate()">
+                {{ 'mno_enterprise.templates.dashboard.app_management.manage.tab.connection_status.sync_in_progress' | translate }}
+              </span>
+              <span ng-if="!vm.showDataSharingDate()">
+                {{ 'mno_enterprise.templates.dashboard.app_management.manage.tab.connection_status.never_sync' | translate }}
+              </span>
             </div>
             <div>
               <div ng-show="vm.isAddOnSettingShown()">

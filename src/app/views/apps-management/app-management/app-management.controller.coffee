@@ -12,10 +12,16 @@ angular.module 'mnoEnterpriseAngular'
 
         # TODO: Decide how data sharing status is checked
         vm.dataSharingStatus = ->
-          if vm.product.sync_status?.status
+          if vm.product.sync_status?.attributes?.status
             'Connected'
           else
             'Disconnected'
+
+        vm.showDataSharingDate = ->
+          if vm.product.sync_status?.attributes?.status
+            true
+          else
+            false
 
         # Return true if the plan has a dollar value
         vm.pricedPlan = (plan) ->
