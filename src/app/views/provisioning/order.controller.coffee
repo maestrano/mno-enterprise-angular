@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningOrderCtrl', ($scope, $q, $state, $stateParams, MnoeOrganizations, MnoeMarketplace, MnoeProvisioning, MnoeConfig, ProvisioningHelper) ->
+  .controller('ProvisioningOrderCtrl', ($scope, $q, $state, $stateParams, MnoeOrganizations, MnoeMarketplace, MnoeProvisioning, MnoeConfig, ProvisioningHelper, PRICING_TYPES) ->
 
     vm = this
     vm.isLoading = true
@@ -52,8 +52,9 @@ angular.module 'mnoEnterpriseAngular'
         (pp) -> (pp.pricing_type in PRICING_TYPES['unpriced']) || _.some(pp.prices, (p) -> p.currency == vm.selectedCurrency)
       )
 
-    vm.next = (subscription) ->
+    vm.next = (subscription, currency) ->
       MnoeProvisioning.setSubscription(subscription)
+      MnoeProvisioning.setSelectedCurrency(currency)
       if vm.subscription.product.custom_schema?
         $state.go('home.provisioning.additional_details', {id: $stateParams.id, nid: $stateParams.nid})
       else
@@ -67,12 +68,6 @@ angular.module 'mnoEnterpriseAngular'
         else
           MnoeProvisioning.setSubscription({})
     )
-
-    # Filters the pricing plans not containing current currency
-    vm.pricingPlanFilter = () ->
-      vm.filteredPricingPlans = _.filter(vm.subscription.product.pricing_plans,
-        (pp) -> (pp.pricing_type in PRICING_TYPES['unpriced']) || _.some(pp.prices, (p) -> p.currency == vm.selectedCurrency)
-      )
 
     return
   )

@@ -5,6 +5,7 @@ angular.module 'mnoEnterpriseAngular'
 
     vm.isLoading = false
     vm.subscription = MnoeProvisioning.getSubscription()
+    vm.selectedCurrency = MnoeProvisioning.getSelectedCurrency()
 
     # Happens when the user reload the browser during the provisioning workflow.
     if _.isEmpty(vm.subscription)
@@ -17,7 +18,7 @@ angular.module 'mnoEnterpriseAngular'
 
     vm.validate = () ->
       vm.isLoading = true
-      MnoeProvisioning.saveSubscription(vm.subscription).then(
+      MnoeProvisioning.saveSubscription(vm.subscription, vm.selectedCurrency).then(
         (response) ->
           MnoeProvisioning.setSubscription(response)
           # Reload dock apps

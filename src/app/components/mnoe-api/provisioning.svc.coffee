@@ -6,6 +6,7 @@ angular.module 'mnoEnterpriseAngular'
     subscriptionsApi = (id) -> MnoeApiSvc.one('/organizations', id).all('subscriptions')
 
     subscription = {}
+    selectedCurrency = ""
 
     defaultSubscription = {
       id: null
@@ -19,6 +20,12 @@ angular.module 'mnoEnterpriseAngular'
 
     @getSubscription = () ->
       subscription
+
+    @setSelectedCurrency = (c) ->
+      selectedCurrency = c
+
+    @getSelectedCurrency = () ->
+      selectedCurrency
 
     # Return the subscription
     # if productNid: return the default subscription
@@ -45,22 +52,22 @@ angular.module 'mnoEnterpriseAngular'
 
       return deferred.promise
 
-    @createSubscription = (s) ->
+    @createSubscription = (s, c) ->
       deferred = $q.defer()
       MnoeOrganizations.get().then(
         (response) ->
-          subscriptionsApi(response.organization.id).post({subscription: {product_pricing_id: s.product_pricing.id, max_licenses: s.max_licenses, custom_data: s.custom_data}}).then(
+          subscriptionsApi(response.organization.id).post({subscription: {currency: c, product_pricing_id: s.product_pricing.id, max_licenses: s.max_licenses, custom_data: s.custom_data}}).then(
             (response) ->
               deferred.resolve(response)
           )
       )
       return deferred.promise
 
-    @updateSubscription = (s) ->
+    @updateSubscription = (s, c) ->
       deferred = $q.defer()
       MnoeOrganizations.get().then(
         (response) ->
-          subscription.patch({subscription: {product_pricing_id: s.product_pricing.id, max_licenses: s.max_licenses, custom_data: s.custom_data}}).then(
+          subscription.patch({subscription: {currency: c, product_pricing_id: s.product_pricing.id, max_licenses: s.max_licenses, custom_data: s.custom_data}}).then(
             (response) ->
               deferred.resolve(response)
           )
@@ -68,11 +75,11 @@ angular.module 'mnoEnterpriseAngular'
       return deferred.promise
 
     # Detect if the subscription should be a POST or A PUT and call corresponding method
-    @saveSubscription = (subscription) ->
+    @saveSubscription = (subscription, currency) ->
       unless subscription.id
-        _self.createSubscription(subscription)
+        _self.createSubscription(subscription, currency)
       else
-        _self.updateSubscription(subscription)
+        _self.updateSubscription(subscription, currency)
 
     @fetchSubscription = (id) ->
       deferred = $q.defer()
