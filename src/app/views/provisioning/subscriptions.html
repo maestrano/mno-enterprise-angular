@@ -126,6 +126,9 @@
             <a ng-click="vm.editSubscription(subscription, 'suspend')" ng-show="vm.showEditAction(subscription, 'suspend')" class="btn btn-link btn-link-danger" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.suspend_tooltip' | translate }}" tooltip-append-to-body="true">
               <i class="fa fa-remove"></i>
             </a>
+            <a ng-click="vm.editSubscription(subscription, 'cancel')" ng-show="vm.showEditAction(subscription, 'cancel')" class="btn btn-link btn-link-danger" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.cancel_tooltip' | translate }}" tooltip-append-to-body="true">
+              <i class="fa fa-ban"></i>
+            </a>
           </div>
         </div>
       </div>
