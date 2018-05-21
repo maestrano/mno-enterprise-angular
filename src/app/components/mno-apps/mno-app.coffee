@@ -56,11 +56,11 @@ angular.module 'mnoEnterpriseAngular'
         vm.app = _.findWhere(apps, { nid: appId })
         vm.app ||= _.findWhere(apps, { id:  appId })
 
-        # Init Pricing Plans
-        getPricingPlans()
-        
         # Init currency
         vm.currency = MnoeOrganizations.selected.organization.billing_currency || MnoeConfig.marketplaceCurrency()
+
+        # Init Pricing Plans
+        getPricingPlans()
 
         $state.go(parentState) unless vm.app?
         vm.isLoading = false
@@ -79,7 +79,7 @@ angular.module 'mnoEnterpriseAngular'
       vm.appInstance = appInstance
 
       # Update Pricing Plans
-      getPricingPlans(vm.app)
+      getPricingPlans()
 
       # Is the product externally provisioned
       vm.isExternallyProvisioned = (vm.isProvisioningEnabled && product?.externally_provisioned)

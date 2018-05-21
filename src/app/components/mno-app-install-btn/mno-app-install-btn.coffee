@@ -36,7 +36,7 @@ angular.module 'mnoEnterpriseAngular'
       vm.canProvisionApp = false
 
       vm.buttonDisabled = () ->
-        vm.canProvisionApp || vm.appInstallationStatus() == "CONFLICT" || vm.arePlansAvailable
+        !vm.canProvisionApp || vm.appInstallationStatus() == "CONFLICT" || !vm.arePlansAvailable
 
       vm.updateButtonDisabledTooltip = () ->
         if !vm.canProvisionApp
@@ -176,9 +176,6 @@ angular.module 'mnoEnterpriseAngular'
             )
             vm.canProvisionApp = !_.isEmpty(authorizedOrganizations)
 
-            vm.buttonText = vm.updateButtonText()
-            vm.buttonDisabledTooltip = vm.updateButtonDisabledTooltip()
-
             # Find if the user already have an instance of it
             vm.appInstance = _.find(appInstances, {app_nid: vm.app.nid})
 
@@ -204,6 +201,9 @@ angular.module 'mnoEnterpriseAngular'
 
             # Is the product externally provisioned
             vm.isExternallyProvisioned = vm.isProvisioningEnabled && (product?.product_type == 'application' || product?.externally_provisioned)
+
+            vm.buttonText = vm.updateButtonText()
+            vm.buttonDisabledTooltip = vm.updateButtonDisabledTooltip()
         )
 
       return
