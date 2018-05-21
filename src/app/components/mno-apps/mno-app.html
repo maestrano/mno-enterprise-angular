@@ -117,7 +117,7 @@
               <b>{{ 'mno_enterprise.templates.dashboard.marketplace.show.free_trial_duration' | translate }}</b>: {{vm.app.free_trial_duration}} {{vm.app.free_trial_unit}}
             </li>
             <li ng-repeat="plan in vm.pricing_plans">
-              <b>{{plan.name}}</b>: {{plan.description}}
+              <b>{{plan.name}}</b>: {{plan.description}}<b>   <i ng-show="plan.quote_based" class="fa fa-question-circle" uib-tooltip="{{'mno_enterprise.templates.dashboard.marketplace.show.quote_based' | translate}}"></i>
               <br>
               <div ng-show="vm.pricedPlan(plan)">
                 <span>{{plan.currency}}</span>
