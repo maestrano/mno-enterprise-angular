@@ -5,6 +5,7 @@ angular.module 'mnoEnterpriseAngular'
 
     vm.isLoading = false
     vm.subscription = MnoeProvisioning.getCachedSubscription()
+    vm.selectedCurrency = MnoeProvisioning.getSelectedCurrency()
 
     urlParams =
       subscriptionId: $stateParams.subscriptionId
@@ -29,7 +30,7 @@ angular.module 'mnoEnterpriseAngular'
     vm.validate = () ->
       vm.isLoading = true
       vm.subscription.edit_action = $stateParams.editAction
-      MnoeProvisioning.saveSubscription(vm.subscription).then(
+      MnoeProvisioning.saveSubscription(vm.subscription, vm.selectedCurrency).then(
         (response) ->
           MnoeProvisioning.setSubscription(response)
           # Reload dock apps

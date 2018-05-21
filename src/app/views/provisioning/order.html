@@ -14,9 +14,13 @@
       <div ng-hide="vm.isLoading" class="table-cell" ng-show="!isLoading">
         <div class="row th-row hidden-xs">
           <div class="col-xs-10 col-xs-offset-2">
-            <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.order.name' | translate }}</div>
-            <div class="cell col-sm-5">{{ 'mno_enterprise.templates.dashboard.provisioning.order.description' | translate }}</div>
-            <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.order.price' | translate }}</div>
+            <div class="cell col-sm-2">{{ 'mno_enterprise.templates.dashboard.provisioning.order.name' | translate }}</div>
+            <div class="cell col-sm-4">{{ 'mno_enterprise.templates.dashboard.provisioning.order.description' | translate }}</div>
+            <div class="cell col-sm-2">{{ 'mno_enterprise.templates.dashboard.provisioning.order.price' | translate }}</div>
+            <div class="cell col-sm-3">
+              <select class="form-control" ng-if="vm.isCurrencySelectionEnabled" ng-model="vm.selectedCurrency" ng-options="c for c in vm.currencies" ng-change="vm.pricingPlanFilter()">
+              </select>
+            </div>
           </div>
         </div>
 
@@ -26,31 +30,31 @@
           </div>
         </div>
 
-        <div class="row td-row" ng-repeat="pricingPlan in vm.subscription.product.pricing_plans" ng-click="vm.selectPlan(pricingPlan)">
+        <div class="row td-row" ng-repeat="pricingPlan in vm.filteredPricingPlans" ng-click="vm.selectPlan(pricingPlan)">
           <div class="cell radio-selector col-xs-2">
             <input type="radio" name="optradio" ng-model="vm.subscription.product_pricing.id" ng-value="pricingPlan.id" required>
           </div>
 
           <div class="col-xs-10">
-            <div class="cell col-sm-3">
+            <div class="cell col-sm-2">
               <span class="cell-label visible-xs-inline">
                 {{ 'mno_enterprise.templates.dashboard.provisioning.order.name' | translate }}:
               </span>
               {{ pricingPlan.name }}
             </div>
 
-            <div class="cell col-sm-5">
+            <div class="cell col-sm-4">
               <span class="cell-label visible-xs-inline">
                 {{ 'mno_enterprise.templates.dashboard.provisioning.order.description' | translate }}:
               </span>
               {{ pricingPlan.description }}
             </div>
 
-            <div class="cell col-sm-3">
+            <div class="cell col-sm-5">
               <span class="cell-label visible-xs-inline">
                 {{ 'mno_enterprise.templates.dashboard.provisioning.order.price' | translate }}:
               </span>
-              <span ng-show="vm.pricedPlan(pricingPlan)" ng-repeat="price in pricingPlan.prices | filterBy: ['currency']: vm.orgCurrency" class="badge">
+              <span ng-if="vm.pricedPlan(pricingPlan)" ng-repeat="price in pricingPlan.prices | filterBy: ['currency']: vm.selectedCurrency" class="badge">
                 {{ price.currency }} {{ price.price_cents / 100 }}
               </span>
               <span ng-show="pricingPlan.pricing_type == 'recurring'">
@@ -90,7 +94,7 @@
         </div>
       </div>
 
-      <button class="btn btn-primary top-buffer-1 pull-right" ng-click="vm.next(vm.subscription)" ng-hide="vm.isLoading" ng-disabled="provisioningForm.$invalid || !vm.subscription.product_pricing" translate>
+      <button class="btn btn-primary top-buffer-1 pull-right" ng-click="vm.next(vm.subscription, vm.selectedCurrency)" ng-hide="vm.isLoading" ng-disabled="provisioningForm.$invalid || !vm.subscription.product_pricing" translate>
         mno_enterprise.templates.dashboard.provisioning.order.next
       </button>
     </div>

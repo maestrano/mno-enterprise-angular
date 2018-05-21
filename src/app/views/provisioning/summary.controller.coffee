@@ -3,6 +3,7 @@ angular.module 'mnoEnterpriseAngular'
 
     vm = this
     vm.isLoading = true
+    vm.selectedCurrency = MnoeProvisioning.getSelectedCurrency()
     MnoeProvisioning.initSubscription({subscriptionId: $stateParams.subscriptionId})
       .then((response) -> vm.subscription = response)
       .finally(() -> vm.isLoading = false)
