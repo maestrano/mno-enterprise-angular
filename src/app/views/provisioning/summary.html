@@ -15,7 +15,7 @@
       <i class="fa fa-refresh fa-spin fa-4x"></i>
     </div>
 
-    <div ng-hide="vm.isLoading" class="table-cell">
+    <div ng-show="!vm.isLoading && vm.subscription.product_pricing" class="table-cell">
       <div class="row th-row hidden-xs">
         <div class="cell col-sm-4">{{ 'mno_enterprise.templates.dashboard.provisioning.summary.name' | translate }}</div>
         <div class="cell col-sm-4">{{ 'mno_enterprise.templates.dashboard.provisioning.summary.description' | translate }}</div>
@@ -43,7 +43,7 @@
           </span>
 
           <div ng-hide="vm.subscription.product_pricing.pricing_type == 'payg'">
-            <div ng-repeat="price in vm.subscription.product_pricing.prices | filterBy: ['currency']: vm.orgCurrency" class="badge">
+            <div ng-repeat="price in vm.subscription.product_pricing.prices | filterBy: ['currency']: vm.selectedCurrency" class="badge">
               <span ng-hide="vm.subscription.product_pricing.license_based">
                 {{ price.currency }} {{ price.price_cents / 100 | number:2 }}
                 <span ng-show="vm.subscription.product_pricing.pricing_type == 'recurring'">

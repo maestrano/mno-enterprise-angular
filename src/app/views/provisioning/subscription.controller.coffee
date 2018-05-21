@@ -2,22 +2,35 @@ angular.module 'mnoEnterpriseAngular'
   .controller('ProvisioningSubscriptionCtrl', ($stateParams, $filter, $uibModal, MnoeProvisioning, MnoeMarketplace, ProvisioningHelper) ->
 
     vm = this
+
     vm.isLoading = true
+
+    # We must use model schemaForm's sf-model, as #json_schema_opts are namespaced under model
+    vm.model = {}
+    # Methods under the vm.model are used for calculated fields under #json_schema_opts.
+
+    # Used to calculate the end date for forms with a contractEndDate.
+    vm.model.calculateEndDate = (startDate, contractLength) ->
+      return null unless startDate && contractLength
+      moment(startDate)
+      .add(contractLength.split('Months')[0], 'M')
+      .format('YYYY-MM-DD')
 
     MnoeProvisioning.fetchSubscription($stateParams.id).then(
       (response) ->
         vm.subscription = response
-
         if vm.subscription.custom_data?
+          vm.model = vm.subscription.custom_data
           MnoeMarketplace.findProduct(id: vm.subscription.product_id).then(
             (response) ->
-              vm.schema = JSON.parse(response.custom_schema)
+              vm.schema = if response.custom_schema then JSON.parse(response.custom_schema) else {}
+              vm.form = if response.asf_options then JSON.parse(response.asf_options) else ["*"]
           )
     ).finally(-> vm.isLoading = false)
 
     MnoeProvisioning.getSubscriptionEvents($stateParams.id).then(
       (response) ->
-        vm.subscriptionEvents = response.subscription_events
+        vm.subscriptionEvents = response
     )
 
     # Configure user friendly json tree

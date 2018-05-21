@@ -18,7 +18,7 @@ angular.module 'mnoEnterpriseAngular'
     @setSubscription = (s) ->
       subscription = s
 
-    @getSubscription = () ->
+    @getCachedSubscription = () ->
       subscription
 
     @setSelectedCurrency = (c) ->
@@ -31,9 +31,8 @@ angular.module 'mnoEnterpriseAngular'
     # if productNid: return the default subscription
     # if subscriptionId: return the fetched subscription
     # else: return the subscription in cache (edition mode)
-    @initSubscription = ({productNid = null, subscriptionId = null}) ->
+    @initSubscription = ({productId = null, subscriptionId = null}) ->
       deferred = $q.defer()
-
       # Edit a subscription
       if !_.isEmpty(subscription)
         deferred.resolve(subscription)
@@ -43,7 +42,7 @@ angular.module 'mnoEnterpriseAngular'
             angular.copy(response, subscription)
             deferred.resolve(subscription)
         )
-      else if productNid?
+      else if productId?
         # Create a new subscription to a product
         angular.copy(defaultSubscription, subscription)
         deferred.resolve(subscription)
@@ -54,9 +53,10 @@ angular.module 'mnoEnterpriseAngular'
 
     @createSubscription = (s, c) ->
       deferred = $q.defer()
+      subscription_params = {currency: c, product_id: s.product.id, product_pricing_id: s.product_pricing?.id, max_licenses: s.max_licenses, custom_data: s.custom_data}
       MnoeOrganizations.get().then(
         (response) ->
-          subscriptionsApi(response.organization.id).post({subscription: {currency: c, product_pricing_id: s.product_pricing.id, max_licenses: s.max_licenses, custom_data: s.custom_data}}).then(
+          subscriptionsApi(response.organization.id).post({subscription: subscription_params}).then(
             (response) ->
               deferred.resolve(response)
           )
@@ -67,7 +67,8 @@ angular.module 'mnoEnterpriseAngular'
       deferred = $q.defer()
       MnoeOrganizations.get().then(
         (response) ->
-          subscription.patch({subscription: {currency: c, product_pricing_id: s.product_pricing.id, max_licenses: s.max_licenses, custom_data: s.custom_data}}).then(
+          subscription.patch({subscription: {currency: c, product_id: s.product.id, product_pricing_id: s.product_pricing?.id,
+          max_licenses: s.max_licenses, custom_data: s.custom_data, edit_action: s.edit_action}}).then(
             (response) ->
               deferred.resolve(response)
           )
@@ -117,7 +118,7 @@ angular.module 'mnoEnterpriseAngular'
       deferred = $q.defer()
       MnoeOrganizations.get().then(
         (response) ->
-          MnoeApiSvc.one('organizations', response.organization.id).one('subscriptions', subscriptionId). customGET('/subscription_events').then(
+          MnoeApiSvc.one('organizations', response.organization.id).one('subscriptions', subscriptionId).customGETLIST('subscription_events').then(
             (response) ->
               deferred.resolve(response)
           )

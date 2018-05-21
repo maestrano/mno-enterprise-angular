@@ -1,6 +1,6 @@
 <div id="provisioning-order">
   <form name="provisioningForm">
-    <h1 translate>mno_enterprise.templates.dashboard.provisioning.order.title</h1>
+    <h1 translate>{{ vm.subscriptionPlanText }}</h1>
     <div class="well pricing-plans clearfix">
       <div class="breadcrumb-info">
         <ol class="breadcrumb">
@@ -30,7 +30,7 @@
           </div>
         </div>
 
-        <div class="row td-row" ng-repeat="pricingPlan in vm.filteredPricingPlans" ng-click="vm.select_plan(pricingPlan)">
+        <div class="row td-row" ng-repeat="pricingPlan in vm.filteredPricingPlans" ng-click="vm.selectPlan(pricingPlan)">
           <div class="cell radio-selector col-xs-2">
             <input type="radio" name="optradio" ng-model="vm.subscription.product_pricing.id" ng-value="pricingPlan.id" required>
           </div>

@@ -13,10 +13,14 @@
 
     <div ng-hide="vm.isLoading" class="table-cell" ng-show="!isLoading">
       <div class="row th-row hidden-sm">
-        <div class="cell col-md-2">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.product' | translate }}</div>
-        <div class="cell col-md-2">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.subscription' | translate }}</div>
-        <div class="cell col-md-1">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.licenses' | translate }}</div>
+        <div class="cell col-md-3">
+          <div class="row">
+            <div class="cell col-md-6">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.product' | translate }}</div>
+            <div class="cell col-md-6">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.subscription' | translate }}</div>
+          </div>
+        </div>
         <div class="cell col-md-2">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.amount' | translate }}</div>
+        <div class="cell col-md-1">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.licenses' | translate }}</div>
         <div class="cell col-md-4">
           <div class="row">
             <div class="cell col-md-4">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.start_date' | translate }}</div>
@@ -24,7 +28,7 @@
             <div class="cell col-md-4">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.status' | translate }}</div>
           </div>
         </div>
-        <div class="cell col-md-1">&nbsp;</div>
+        <div class="cell col-md-2">&nbsp;</div>
       </div>
 
       <div class="row td-row" ng-if="vm.subscriptions.length === 0">
@@ -34,25 +38,23 @@
       </div>
 
       <div class="row td-row" ng-repeat="subscription in vm.subscriptions">
-        <div class="cell col-md-2" ng-click="vm.goToSubscription(subscription)">
-          <span class="cell-label visible-xs-inline">
-            {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.product' | translate }}:
-          </span>
-          <span title="{{ subscription.name }}">{{ subscription.product.name }}</span>
-        </div>
+        <div class="cell col-md-3">
+          <div class="row">
+            <div class="cell col-md-6" ng-click="vm.goToSubscription(subscription)">
+              <span class="cell-label visible-xs-inline">
+                {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.product' | translate }}:
+              </span>
+              <span title="{{ subscription.name }}">{{ subscription.product.name }}</span>
+            </div>
 
-        <div class="cell col-md-2" ng-click="vm.goToSubscription(subscription)">
-          <span class="cell-label visible-xs-inline">
-            {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.subscription' | translate }}:
-          </span>
-          <span title="{{ subscription.product_pricing.name }}">{{ subscription.product_pricing.name }}</span>&nbsp;<i class="fa fa-info-circle" ng-show="subscription.product_pricing.description" uib-tooltip="{{ subscription.product_pricing.description }}" tooltip-append-to-body="true"></i>
-        </div>
-
-        <div class="cell col-md-1" ng-click="vm.goToSubscription(subscription)">
-          <span class="cell-label visible-xs-inline">
-            {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.licenses' | translate }}:
-          </span>
-          <span title="{{subscription.max_licenses}}">{{subscription.max_licenses}}</span>
+            <div class="cell col-md-6" ng-click="vm.goToSubscription(subscription)">
+              <span class="cell-label visible-xs-inline">
+                {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.subscription' | translate }}:
+              </span>
+              <span ng-show="subscription.product_pricing" title="{{ subscription.product_pricing.name }}">{{ subscription.product_pricing.name }}</span>&nbsp;<i class="fa fa-info-circle" ng-show="subscription.product_pricing.description" uib-tooltip="{{ subscription.product_pricing.description }}" tooltip-append-to-body="true"></i>
+              <span ng-hide="subscription.product_pricing">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.not_available' | translate }}</span>&nbsp;<i class="fa fa-question-circle" ng-hide="subscription.product_pricing" uib-tooltip="{{'mno_enterprise.templates.dashboard.provisioning.subscriptions.tooltip.external_billing' | translate}}" tooltip-append-to-body="true"></i>
+            </div>
+          </div>
         </div>
 
         <div class="cell col-md-2" ng-click="vm.goToSubscription(subscription)">
@@ -73,6 +75,13 @@
           <span ng-show="subscription.product_pricing.pricing_type == 'payg'">
             {{ 'mno_enterprise.templates.dashboard.provisioning.order.pricing_type.payg' | translate }}
           </span>
+        </div>
+
+        <div class="cell col-md-1" ng-click="vm.goToSubscription(subscription)">
+          <span class="cell-label visible-xs-inline">
+            {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.licenses' | translate }}:
+          </span>
+          <span title="{{subscription.max_licenses}}">{{subscription.max_licenses}}</span>
         </div>
 
         <div class="cell col-md-4">
@@ -101,12 +110,21 @@
           </div>
         </div>
 
-        <div class="cell col-md-1">
-          <div class="pull-right">
-            <a ui-sref="home.provisioning.order({id: subscription.id})" ng-if="subscription.status !== 'cancelled'" class="btn btn-link btn-link-warning" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.modify' | translate }}" tooltip-append-to-body="true">
+        <div class="cell col-md-2">
+          <div class="pull-left">
+            <a ng-click="vm.editSubscription(subscription, 'reactivate')" ng-show="vm.showEditAction(subscription, 'reactivate')" class="btn btn-link btn-link-primary" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.reactivate_tooltip' | translate }}" tooltip-append-to-body="true">
+              <i class="fa fa-refresh"></i>
+            </a>
+            <a ng-click="vm.editSubscription(subscription, 'renew')" ng-show="vm.showEditAction(subscription, 'renew')" class="btn btn-link btn-link-primary" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.renew_tooltip' | translate }}" tooltip-append-to-body="true">
+              <i class="fa fa-check-square"></i>
+            </a>
+            <a ng-click="vm.editSubscription(subscription, 'change')" ng-show="vm.showEditAction(subscription, 'change')" class="btn btn-link btn-link-warning" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.change_tooltip' | translate }}" tooltip-append-to-body="true">
               <i class="fa fa-pencil-square-o"></i>
             </a>
-            <a ng-click="vm.cancelSubscription(subscription, $index)" ng-if="subscription.status !== 'cancelled'" class="btn btn-link btn-link-danger" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.cancel' | translate }}" tooltip-append-to-body="true">
+            <a ng-click="vm.editSubscription(subscription, 'modify')" ng-show="vm.showEditAction(subscription, 'modify')" class="btn btn-link btn-link-warning" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.modify_tooltip' | translate }}" tooltip-append-to-body="true">
+              <i class="fa fa-pencil"></i>
+            </a>
+            <a ng-click="vm.editSubscription(subscription, 'suspend')" ng-show="vm.showEditAction(subscription, 'suspend')" class="btn btn-link btn-link-danger" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.suspend_tooltip' | translate }}" tooltip-append-to-body="true">
               <i class="fa fa-remove"></i>
             </a>
           </div>
@@ -115,4 +133,3 @@
     </div>
   </div>
 </div>
-

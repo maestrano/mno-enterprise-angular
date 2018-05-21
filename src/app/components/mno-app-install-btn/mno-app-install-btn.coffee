@@ -8,8 +8,11 @@ angular.module 'mnoEnterpriseAngular'
       vm = this
 
       vm.provisionOrder = () ->
-        MnoeProvisioning.setSubscription({})
-        $state.go('home.provisioning.order', {nid: vm.app.nid})
+        MnoeMarketplace.getApps().then((response) ->
+          product = _.find(response.products, (product) -> product.nid == vm.app.nid)
+          MnoeProvisioning.setSubscription({})
+          $state.go('home.provisioning.order', {productId: product.id, editAction: 'new'})
+        )
 
       # Return the different status of the app regarding its installation
       # - INSTALLABLE:                        The app may be installed
@@ -161,7 +164,7 @@ angular.module 'mnoEnterpriseAngular'
             product = _.find(products, { nid: vm.app.nid })
 
             # Is the product externally provisioned
-            vm.isExternallyProvisioned = (vm.isProvisioningEnabled && product?.externally_provisioned)
+            vm.isExternallyProvisioned = vm.isProvisioningEnabled && (product?.product_type == 'application' || product?.externally_provisioned)
         )
 
       return

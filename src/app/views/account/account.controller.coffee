@@ -1,10 +1,14 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('DashboardAccountCtrl',
-    ($log, $timeout, toastr, MnoeCurrentUser, MnoeUserAccessRequests, MnoErrorsHandler, Miscellaneous, Utilities, I18N_CONFIG, MnoeConfig) ->
+    ($log, $timeout, toastr, MnoeCurrentUser, MnoeUserAccessRequests, MnoErrorsHandler, VALID_COUNTRIES, Utilities, I18N_CONFIG, MnoeConfig) ->
 
       vm = @
       # Scope init
-      vm.countryCodes = Miscellaneous.countryCodes
+      vm.validCountries = ->
+        countries = VALID_COUNTRIES
+        c.phone_prefix = "(#{c.alpha2}) +#{c.country_code}" for c in countries
+        countries
+
       vm.errors = {}
       vm.success = {}
       vm.isDeveloperSectionEnabled = MnoeConfig.isDeveloperSectionEnabled()
