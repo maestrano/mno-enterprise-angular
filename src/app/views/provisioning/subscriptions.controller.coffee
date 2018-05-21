@@ -53,7 +53,7 @@ angular.module 'mnoEnterpriseAngular'
         params = { where: {subscription_status_in: 'staged' } }
         MnoeProvisioning.getSubscriptions(params)
       else
-        params = { where: {subscription_status_in: 'non_staged' } }
+        params = { where: {subscription_status_in: 'visible' } }
         MnoeProvisioning.getSubscriptions(params)
 
     vm.deleteCart = ->
