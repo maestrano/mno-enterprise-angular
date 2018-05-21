@@ -10,7 +10,6 @@ angular.module 'mnoEnterpriseAngular'
         vm.isCurrentSubscriptionLoading = true
         vm.isSubChanged = true
 
-        # TODO: Decide how data sharing status is checked
         vm.dataSharingStatus = ->
           if vm.product.sync_status?.attributes?.status
             'Connected'

@@ -11,7 +11,6 @@ angular.module 'mnoEnterpriseAngular'
       vm.dataSharingEnabled = (product) ->
         MnoeConfig.isDataSharingEnabled() && product.data_sharing
 
-      # TODO: Decide how data sharing status is checked
       vm.dataSharingStatus = (product) ->
         if product.sync_status?.attributes?.status
           'Connected'
