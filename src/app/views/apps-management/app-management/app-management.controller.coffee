@@ -31,11 +31,16 @@ angular.module 'mnoEnterpriseAngular'
           vm.isSubChanged = vm.currentPlanId == pricingId
 
         vm.nextSubscription = ->
+          urlParams =
+            subscriptionId: vm.currentSubscription.id
+            productId: vm.product.id
+            editAction: 'change'
+
           MnoeProvisioning.setSubscription(vm.currentSubscription)
           if vm.currentSubscription.product.custom_schema?
-            $state.go('home.provisioning.additional_details')
+            $state.go('home.provisioning.additional_details', urlParams)
           else
-            $state.go('home.provisioning.confirm')
+            $state.go('home.provisioning.confirm', urlParams)
 
         # ********************** Flags *********************************
         vm.providesStatus = (product) ->
