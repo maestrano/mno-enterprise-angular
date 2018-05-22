@@ -45,7 +45,7 @@
           </span>
 
           <div ng-hide="vm.subscription.product_pricing.pricing_type == 'payg'">
-            <div ng-repeat="price in vm.subscription.product_pricing.prices | filterBy: ['currency']: vm.orgCurrency" class="badge">
+            <div ng-repeat="price in vm.subscription.product_pricing.prices | filterBy: ['currency']: vm.selectedCurrency" class="badge">
               <span ng-hide="vm.subscription.product_pricing.license_based">
                 {{ price.currency }} {{ price.price_cents / 100 | number:2 }}
                 <span ng-show="vm.subscription.product_pricing.pricing_type == 'recurring'">
