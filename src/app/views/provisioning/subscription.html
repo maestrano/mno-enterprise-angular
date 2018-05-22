@@ -92,8 +92,8 @@
       <div class="col-sm-6">
         <div class="well">
           <h3 class="text-color" translate>mno_enterprise.templates.dashboard.provisioning.subscription.custom_data</h3>
-          <span ng-show="!vm.customDataPresent" translate>mno_enterprise.templates.dashboard.provisioning.subscription.no_custom_data</span>
-          <form name="vm.detailsForm" ng-show="vm.customDataPresent" sf-schema="vm.schema" sf-form="vm.form" sf-model="vm.model" sf-options="{ formDefaults: { readonly: { true } }}"></form>
+          <span ng-show="!vm.schema" translate>mno_enterprise.templates.dashboard.provisioning.subscription.no_custom_data</span>
+          <form name="vm.detailsForm" ng-show="vm.schema" sf-schema="vm.schema" sf-form="vm.form" sf-model="vm.model" sf-options="{ formDefaults: { readonly: { true } }}"></form>
         </div>
       </div>
     </div>
