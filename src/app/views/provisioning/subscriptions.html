@@ -69,7 +69,8 @@
               <span class="cell-label visible-xs-inline">
                 {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.subscription' | translate }}:
               </span>
-              <span title="{{ subscription.product_pricing.name }}">{{ subscription.product_pricing.name }}</span>&nbsp;<i class="fa fa-info-circle" ng-show="subscription.product_pricing.description" uib-tooltip="{{ subscription.product_pricing.description }}" tooltip-append-to-body="true"></i>
+              <span ng-show="subscription.product_pricing" title="{{ subscription.product_pricing.name }}">{{ subscription.product_pricing.name }}</span>&nbsp;<i class="fa fa-info-circle" ng-show="subscription.product_pricing.description" uib-tooltip="{{ subscription.product_pricing.description }}" tooltip-append-to-body="true"></i>
+              <span ng-hide="subscription.product_pricing">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.not_available' | translate }}</span>&nbsp;<i class="fa fa-question-circle" ng-hide="subscription.product_pricing" uib-tooltip="{{'mno_enterprise.templates.dashboard.provisioning.subscriptions.tooltip.external_billing' | translate}}" tooltip-append-to-body="true"></i>
             </div>
           </div>
         </div>

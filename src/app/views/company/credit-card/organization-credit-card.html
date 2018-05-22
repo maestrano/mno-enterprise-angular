@@ -65,7 +65,7 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">{{ 'mno_enterprise.templates.dashboard.organization.credit_card.cc_form.country' | translate }}</label>
       <div class="col-sm-6">
-        <select class="form-control" ng-model="model.country" ng-options="country.val as country.label for country in config.validCountries" required>
+        <select class="form-control" ng-model="model.country" ng-options="country.alpha2 as country.name for country in config.validCountries" required>
           <option value='' disabled selected style='display:none;'>{{ 'mno_enterprise.templates.dashboard.organization.credit_card.cc_form.country_select' | translate }}</option>
         </select>
       </div>
@@ -121,7 +121,7 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">{{ 'mno_enterprise.templates.dashboard.organization.credit_card.billing_form.country' | translate }}</label>
       <div class="col-sm-6">
-        <select class="form-control" ng-model="model.billing_country" ng-options="country.val as country.label for country in config.validCountries" required>
+        <select class="form-control" ng-model="model.billing_country" ng-options="country.alpha2 as country.name for country in config.validCountries" required>
           <option value='' disabled selected style='display:none;'>{{ 'mno_enterprise.templates.dashboard.organization.credit_card.billing_form.country_select' | translate }}</option>
         </select>
       </div>

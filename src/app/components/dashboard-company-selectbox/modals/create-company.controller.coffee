@@ -2,6 +2,7 @@ angular.module 'mnoEnterpriseAngular'
   .controller('CreateCompanyModalCtrl', ($scope, $uibModalInstance, Utilities, MnoeOrganizations) ->
 
     $scope.modal = { model: {} }
+    $scope.mainAddressRequired = MnoeOrganizations.mainAddressRequired()
 
     $scope.modal.cancel = ->
       $uibModalInstance.dismiss('cancel')

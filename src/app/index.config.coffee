@@ -78,4 +78,7 @@ angular.module 'mnoEnterpriseAngular'
 
     # TODO: Activate in "developer mode" only (spams the console and makes the application lag)
     # $translateProvider.useMissingTranslationHandlerLog()
+
+    # Force asynchronous reload to trigger translate-cloak directive
+    $translateProvider.forceAsyncReload(true)
   )

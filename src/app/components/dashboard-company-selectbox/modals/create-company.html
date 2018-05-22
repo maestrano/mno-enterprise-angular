@@ -22,6 +22,13 @@
         <input type="text" class="form-control" name="name" ng-model="modal.model.name" required>
       </div>
     </div>
+    <div ng-show="mainAddressRequired" class="row">
+      <hr />
+      <div class="col-sm-6 col-sm-offset-3">
+        <p class="text-center" translate>mno_enterprise.templates.dashboard.create_company.enter_address</p>
+        <mno-address-input address="modal.model.main_address_attributes"></mno-address-input>
+      </div>
+    </div>
   </div>
 
   <div class="modal-footer">

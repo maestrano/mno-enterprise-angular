@@ -1,5 +1,5 @@
 
-DashboardOrganizationCreditCardCtrl = ($scope, $window, MnoeOrganizations, Miscellaneous, Utilities) ->
+DashboardOrganizationCreditCardCtrl = ($scope, $window, MnoeOrganizations, VALID_COUNTRIES, Utilities) ->
   'ngInject'
 
   #====================================
@@ -13,7 +13,7 @@ DashboardOrganizationCreditCardCtrl = ($scope, $window, MnoeOrganizations, Misce
     validTitles: ['Mr.', 'Ms.', 'Mrs.', 'Miss', 'Dr.', 'Sir.', 'Prof.']
     validMonths: [1..12]
     validYears: [d = (new Date).getFullYear()..d+20]
-    validCountries: Miscellaneous.countries
+    validCountries: VALID_COUNTRIES
     validCCTypes: ['visa', 'mastercard', 'amex', 'jcb']
   }
 

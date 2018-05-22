@@ -6,6 +6,7 @@ angular.module 'mnoEnterpriseAngular'
     subscriptionsApi = (id) -> MnoeApiSvc.one('/organizations', id).all('subscriptions')
 
     subscription = {}
+    selectedCurrency = ""
 
     @subscriptionsPromise = null
 
@@ -24,6 +25,12 @@ angular.module 'mnoEnterpriseAngular'
 
     @getCachedSubscription = () ->
       subscription
+
+    @setSelectedCurrency = (c) ->
+      selectedCurrency = c
+
+    @getSelectedCurrency = () ->
+      selectedCurrency
 
     # Return the subscription
     # if productNid: return the default subscription
@@ -49,9 +56,9 @@ angular.module 'mnoEnterpriseAngular'
 
       return deferred.promise
 
-    @createSubscription = (s) ->
+    @createSubscription = (s, c) ->
       deferred = $q.defer()
-      subscription_params = {product_id: s.product.id, product_pricing_id: s.product_pricing?.id, max_licenses: s.max_licenses, custom_data: s.custom_data, cart_entry: s.cart_entry}
+      subscription_params = {currency: c, product_id: s.product.id, product_pricing_id: s.product_pricing?.id, max_licenses: s.max_licenses, custom_data: s.custom_data, cart_entry: s.cart_entry}
       MnoeOrganizations.get().then(
         (response) ->
           subscriptionsApi(response.organization.id).post({subscription: subscription_params}).then(
@@ -61,11 +68,11 @@ angular.module 'mnoEnterpriseAngular'
       )
       return deferred.promise
 
-    @updateSubscription = (s) ->
+    @updateSubscription = (s, c) ->
       deferred = $q.defer()
       MnoeOrganizations.get().then(
         (response) ->
-          subscription.patch({subscription: {product_id: s.product.id, product_pricing_id: s.product_pricing?.id,
+          subscription.patch({subscription: {currency: c, product_id: s.product.id, product_pricing_id: s.product_pricing?.id,
           max_licenses: s.max_licenses, custom_data: s.custom_data, edit_action: s.edit_action, cart_entry: s.cart_entry}}).then(
             (response) ->
               deferred.resolve(response)
@@ -74,11 +81,11 @@ angular.module 'mnoEnterpriseAngular'
       return deferred.promise
 
     # Detect if the subscription should be a POST or A PUT and call corresponding method
-    @saveSubscription = (subscription) ->
+    @saveSubscription = (subscription, currency) ->
       unless subscription.id
-        _self.createSubscription(subscription)
+        _self.createSubscription(subscription, currency)
       else
-        _self.updateSubscription(subscription)
+        _self.updateSubscription(subscription, currency)
 
     @fetchSubscription = (id, cart) ->
       deferred = $q.defer()
@@ -121,7 +128,7 @@ angular.module 'mnoEnterpriseAngular'
       deferred = $q.defer()
       MnoeOrganizations.get().then(
         (response) ->
-          MnoeApiSvc.one('organizations', response.organization.id).one('subscriptions', subscriptionId). customGET('/subscription_events').then(
+          MnoeApiSvc.one('organizations', response.organization.id).one('subscriptions', subscriptionId).customGETLIST('subscription_events').then(
             (response) ->
               deferred.resolve(response)
           )
