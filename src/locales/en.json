@@ -1006,6 +1006,7 @@
   "mno_enterprise.templates.components.mno_address.postal_code": "Postal code",
   "mno_enterprise.templates.components.mno_address.country": "Country",
   "mno_enterprise.templates.components.mno_address.country_select": "--SELECT--",
+  "mno_enterprise.templates.components.mno_address.phone": "Phone",
   "mno_enterprise.templates.components.mno_pagination.items_per_page": "Items per page: ",
   "mno_enterprise.templates.components.mno_password.current_password": "Current Password",
   "mno_enterprise.templates.components.mno_password.new_password": "New Password",
