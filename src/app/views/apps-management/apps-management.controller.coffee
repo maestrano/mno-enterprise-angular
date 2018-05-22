@@ -31,7 +31,7 @@ angular.module 'mnoEnterpriseAngular'
           (response) ->
             vm.products = _.map(response.products,
               (product) ->
-                product.subscription = _.find(response.subscriptions, (subscription) -> subscription.product.nid == product.product_nid)
+                product.subscription = _.find(response.subscriptions, (subscription) -> subscription.product?.nid == product.product_nid)
                 product
             )
         ).finally(-> vm.isLoading = false)

@@ -61,25 +61,25 @@ angular.module 'mnoEnterpriseAngular'
         vm.setUserRole = ->
           vm.isAdmin = MnoeOrganizations.role.atLeastAdmin()
 
+        setupSubscription = (subscription) ->
+          vm.currentSubscription = subscription
+          vm.orgCurrency = vm.organization?.currency || MnoeConfig.marketplaceCurrency()
+          MnoeMarketplace.findProduct({id: vm.currentSubscription.product?.id, nid: null}).then((response) ->
+            vm.currentSubscription.product = response
+            # Filters the pricing plans not containing current currency
+            vm.currentSubscription.product.pricing_plans =  ProvisioningHelper.planForCurrency(vm.currentSubscription.product.product_pricings, vm.orgCurrency)
+            vm.currentPlanId = vm.currentSubscription.product_pricing_id
+            )
+          vm.isCurrentSubscriptionLoading = false
+
         vm.loadCurrentSubScription = (subscriptions) ->
-          vm.currentSubscription = _.find(subscriptions, (sub) -> sub.product?.nid == vm.product.product_nid)
-          if vm.currentSubscription
-            MnoeProvisioning.initSubscription({productNid: null, subscriptionId: vm.currentSubscription.id}).then(
-              (response) ->
-                vm.orgCurrency = vm.organization?.currency || MnoeConfig.marketplaceCurrency()
-                vm.currentSubscription = response
-
-                MnoeMarketplace.findProduct({id: vm.currentSubscription.product?.id, nid: null}).then(
-                  (response) ->
-                    vm.currentSubscription.product = response
-
-                    # Filters the pricing plans not containing current currency
-                    vm.currentSubscription.product.pricing_plans =  ProvisioningHelper.planForCurrency(vm.currentSubscription.product.pricing_plans, vm.orgCurrency)
-                    vm.currentPlanId = vm.currentSubscription.product_pricing_id
-                )
-            ).finally( -> vm.isCurrentSubscriptionLoading = false)
+          subscription = _.find(subscriptions, (sub) -> sub.product?.nid == vm.product.product_nid)
+          if subscription
+            setupSubscription(subscription)
           else
-            vm.isCurrentSubscriptionLoading = false
+            MnoeProvisioning.initSubscription({subscriptionId: vm.currentSubscription.id}).then((response) ->
+              setupSubscription(response)
+              )
 
         vm.loadOrderHistory = ->
           MnoeProvisioning.getProductSubscriptions(vm.product.product_id).then(
@@ -114,7 +114,6 @@ angular.module 'mnoEnterpriseAngular'
               # Order Histroy flow
               vm.loadOrderHistory() if vm.isAdmin
           ).finally(-> vm.isLoading = false)
-
 
         #====================================
         # Post-Initialization
