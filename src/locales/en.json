@@ -780,6 +780,8 @@
   "mno_enterprise.templates.dashboard.marketplace.show.price": "Price",
   "mno_enterprise.templates.dashboard.marketplace.show.free_trial_duration": "Free trial duration",
   "mno_enterprise.templates.dashboard.marketplace.show.no_pricing_found": "This plan is not available in your currency",
+  "mno_enterprise.templates.dashboard.marketplace.show.no_pricing_plans_found": "There are currently no subscriptions available in your currency",
+  "mno_enterprise.templates.dashboard.marketplace.show.no_pricing_plans_found_tooltip": "There are currently no subscriptions available in your currency",
   "mno_enterprise.templates.dashboard.marketplace.show.tag_responsive": "Responsive",
   "mno_enterprise.templates.dashboard.marketplace.show.tag_star": "Star!™ Tutorials",
   "mno_enterprise.templates.dashboard.marketplace.show.tag_connec": "Connec!™ Ready",
