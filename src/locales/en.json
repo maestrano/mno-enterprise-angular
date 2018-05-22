@@ -833,6 +833,7 @@
   "mno_enterprise.templates.dashboard.marketplace.show.no_pricing_plans_found": "There are currently no subscriptions available in your currency",
   "mno_enterprise.templates.dashboard.marketplace.show.no_pricing_plans_found_tooltip": "There are currently no subscriptions available in your currency",
   "mno_enterprise.templates.dashboard.marketplace.show.quote_based": "pricing is indicative - final price will be calculated at order time",
+  "mno_enterprise.templates.dashboard.marketplace.show.quote_error": "Unable to Fetch Quote",
   "mno_enterprise.templates.dashboard.marketplace.show.tag_responsive": "Responsive",
   "mno_enterprise.templates.dashboard.marketplace.show.tag_star": "Star!™ Tutorials",
   "mno_enterprise.templates.dashboard.marketplace.show.tag_connec": "Connec!™ Ready",

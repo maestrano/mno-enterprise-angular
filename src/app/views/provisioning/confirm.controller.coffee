@@ -41,7 +41,8 @@ angular.module 'mnoEnterpriseAngular'
       vm.quoteFetched = false
       MnoeProvisioning.getQuote(vm.subscription).then(
         (response) ->
-          vm.quotedPrice = response.totalContractValue
+          vm.quotedPrice = response.totalContractValue?.quote.value
+          vm.quotedCurrency = response.totalContractValue?.currency
           vm.quoteFetched = true
       )
 

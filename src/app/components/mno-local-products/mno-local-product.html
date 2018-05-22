@@ -74,7 +74,7 @@
                 <b>{{ 'mno_enterprise.templates.dashboard.marketplace.show.free_trial_duration' | translate }}</b>: {{vm.product.free_trial_duration}} {{vm.product.free_trial_unit}}
               </li>
               <li ng-repeat="plan in vm.product.pricing_plans">
-                <b>{{plan.name}}</b>: {{plan.description}}   <i ng-show="plan.quote_based" class="fa fa-question-circle" uib-tooltip="{{'mno_enterprise.templates.dashboard.marketplace.show.quote_based' | translate}}"></i>
+                <b>{{plan.name}}</b>: {{plan.description}}   <i ng-show="plan.quote_based" class="fa fa-question-circle" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.marketplace.show.quote_based' | translate }}"></i>
                 <br>
                 <span ng-hide="vm.hideNoPricingFound(plan)">{{ 'mno_enterprise.templates.dashboard.marketplace.show.no_pricing_found' | translate }}</span>
                 <span ng-show="vm.pricedPlan(plan)" ng-repeat="price in plan.prices | filterBy: ['currency']: vm.orgCurrency">

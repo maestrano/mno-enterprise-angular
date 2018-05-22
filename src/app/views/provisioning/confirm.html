@@ -93,11 +93,17 @@
               </span>
             </div>
           </div>
-          <span ng-show="vm.quoteBased">
-              {{ vm.quotedPrice }}
-          </span>
+          
+          <div ng-show="vm.quoteBased">
+            <span ng-show="vm.quotedPrice">
+              {{ vm.quotedCurrency }} {{ vm.quotedPrice }}
+            </span>
+            <span ng-hide="vm.quotedPrice">
+              {{ 'mno_enterprise.templates.dashboard.marketplace.show.quote_error' | translate }}
+            </span>
+          </div>
 
-          <span ng-show="vm.subscription.product_pricing.pricing_type == 'payg'">
+          <span ng-show="vm.subscription.product_pricing.pricing_type == 'payg' && !vm.quoteBased">
             {{ 'mno_enterprise.templates.dashboard.provisioning.order.pricing_type.payg' | translate }}
           </span>
           <span ng-show="vm.subscription.product_pricing.pricing_type == 'free'">
