@@ -18,7 +18,7 @@
             <div class="cell col-sm-4">{{ 'mno_enterprise.templates.dashboard.provisioning.order.description' | translate }}</div>
             <div class="cell col-sm-2">{{ 'mno_enterprise.templates.dashboard.provisioning.order.price' | translate }}</div>
             <div class="cell col-sm-3">
-              <select class="form-control" ng-if="vm.isCurrencySelectionEnabled" ng-model="vm.selectedCurrency" ng-options="c for c in vm.currencies" ng-change="vm.pricingPlanFilter()">
+              <select class="form-control" ng-if="::main.adminConfig.isCurrencySelectionEnabled()" ng-model="vm.selectedCurrency" ng-options="c for c in vm.currencies" ng-change="vm.pricingPlanFilter()">
               </select>
             </div>
           </div>
