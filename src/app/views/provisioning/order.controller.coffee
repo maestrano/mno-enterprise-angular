@@ -7,6 +7,7 @@ angular.module 'mnoEnterpriseAngular'
     vm.currencies = []
     vm.selectedCurrency = ""
     vm.filteredPricingPlans = []
+    vm.isCurrencySelectionEnabled = MnoeConfig.isCurrencySelectionEnabled()
     vm.pricedPlan = ProvisioningHelper.pricedPlan
     urlParams = {
       productId: $stateParams.productId,
