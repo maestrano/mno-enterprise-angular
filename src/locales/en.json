@@ -722,7 +722,6 @@
   "mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.title": "Pricing Information",
   "mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.single_billing_disabled": "Subscription plan is managed by the application",
   "mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.externally_managed": "Subscription plan is managed by the application and billed via Maestrano",
-  "mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.unfulfilled": "Cannot change an unfulfilled subscription's plan",
   "mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.billed_locally": "Billing is operated via Maestrano",
   "mno_enterprise.templates.dashboard.provisioning.confirm.licenses": "Licenses",
   "mno_enterprise.templates.dashboard.provisioning.summary.title": "Order summary",
