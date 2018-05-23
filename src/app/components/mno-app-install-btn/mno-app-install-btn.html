@@ -1,32 +1,9 @@
-<div ng-if="$ctrl.app && !$ctrl.isExternallyProvisioned" >
-  <div class="btn-fluid-wrapper" ng-switch on="$ctrl.appInstallationStatus()">
-    <div ng-switch-when="CONFLICT" class="message">
-      <i class="fa fa-exclamation-triangle"></i>
-      {{ 'mno_enterprise.templates.components.app_install_btn.conflicting_app' | translate }}
-      <a ui-sref="home.marketplace.app({appId: $ctrl.conflictingApp.id})" ng-disabled="!$ctrl.canProvisionApp">{{$ctrl.conflictingApp.name}}</a>
-    </div>
-    <a href="" ng-switch-when="INSTALLABLE" ng-click="!$ctrl.canProvisionApp || $ctrl.provisionApp()" ng-disabled="$ctrl.isLoadingButton || !$ctrl.canProvisionApp" class="btn btn-warning btn-promo btn-lg"
-      uib-tooltip="{{$ctrl.canProvisionApp? '' : 'mno_enterprise.templates.components.app_install_btn.insufficient_privilege' | translate}}">
-      <span ng-show="$ctrl.isLoadingButton"><i class="fa fa-spinner fa-pulse"></i></span>
-      {{ 'mno_enterprise.templates.components.app_install_btn.start_app' | translate }}
-    </a>
-    <a href="" ng-switch-when="INSTALLED_LAUNCH" ng-click="!$ctrl.canProvisionApp || $ctrl.launchAppInstance()" ng-disabled="!$ctrl.canProvisionApp" class="btn btn-warning btn-promo btn-lg"
-       uib-tooltip="{{$ctrl.canProvisionApp? '' : 'mno_enterprise.templates.components.app_install_btn.insufficient_privilege' | translate}}">
-      {{ 'mno_enterprise.templates.components.app_install_btn.launch_app' | translate }}
-    </a>
-    <a href="" ng-switch-when="INSTALLED_CONNECT" ng-click="!$ctrl.canProvisionApp || $ctrl.connectAppInstance()" ng-disabled="!$ctrl.canProvisionApp" class="btn btn-warning btn-promo btn-lg"
-       uib-tooltip="{{$ctrl.canProvisionApp? '' : 'mno_enterprise.templates.components.app_install_btn.insufficient_privilege' | translate}}">
-      {{ 'mno_enterprise.templates.components.app_install_btn.connect_app' | translate }}
-    </a>
-  </div>
-</div>
-<div ng-if="$ctrl.isExternallyProvisioned" >
-  <a ng-if='$ctrl.canProvisionApp' ng-click="$ctrl.provisionOrder()" ng-disabled="$ctrl.isLoadingButton" class="btn btn-warning btn-promo btn-lg">
+<div>
+  <a ng-if="!$ctrl.buttonDisabled()" ng-click="$ctrl.buttonClick()" ng-disabled="$ctrl.isLoadingButton" class="btn btn-warning btn-promo btn-lg" translate>
     <span ng-show="$ctrl.isLoadingButton"><i class="fa fa-spinner fa-pulse"></i></span>
-    {{ 'mno_enterprise.templates.dashboard.marketplace.show.provision' | translate }}
+    {{ $ctrl.buttonText }}
   </a>
-  <div ng-if='!$ctrl.canProvisionApp' disabled=true class="btn btn-warning btn-promo btn-lg"
-     uib-tooltip="{{ 'mno_enterprise.templates.components.app_install_btn.insufficient_privilege' | translate}}">
-    {{ 'mno_enterprise.templates.dashboard.marketplace.show.provision' | translate }}
+  <div ng-if='$ctrl.buttonDisabled()' disabled=true class="btn btn-warning btn-promo btn-lg" uib-tooltip="{{ $ctrl.buttonDisabledTooltip | translate }}" translate>
+    {{ $ctrl.buttonText }}
   </div>
 </div>
