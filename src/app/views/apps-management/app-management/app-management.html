@@ -187,6 +187,20 @@
                 </div>
               </div>
 
+              <div class="row td-row">
+                <div class="cell col-sm-12">
+                  <div ng-hide="vm.singleBilling">
+                    {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.single_billing_disabled' | translate }}
+                  </div>
+                  <div ng-show="vm.singleBilling && !vm.billedLocally">
+                    {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.externally_managed' | translate }}
+                  </div>
+                  <div ng-hide="vm.changeAction">
+                    {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.unfulfilled' | translate }}
+                  </div>
+                </div>
+              </div>
+
               <button class='btn btn-primary top-buffer-1 pull-right' ng-click="vm.nextSubscription()" ng-disabled="vm.isSubChanged" translate>
                 mno_enterprise.templates.dashboard.provisioning.order.next
               </button>

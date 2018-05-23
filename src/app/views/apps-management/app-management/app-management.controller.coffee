@@ -2,13 +2,14 @@ angular.module 'mnoEnterpriseAngular'
   .controller('AppManagementCtrl',
     ($q, $state, $scope, toastr, $stateParams, MnoeConfig, MnoeProductInstances, MnoeProvisioning,
       MnoeOrganizations, MnoeCurrentUser, MnoeMarketplace, PRICING_TYPES, ProvisioningHelper,
-      AppSettingsHelper) ->
+      AppSettingsHelper, AppManagementHelper) ->
 
         vm = @
         vm.isLoading = true
         vm.isOrderHistoryLoading = true
         vm.isCurrentSubscriptionLoading = true
         vm.isSubChanged = true
+        vm.recentSubscription = AppManagementHelper.recentSubscription
 
         vm.dataSharingStatus = ->
           if vm.product.sync_status?.attributes?.status
@@ -27,7 +28,7 @@ angular.module 'mnoEnterpriseAngular'
           ProvisioningHelper.pricedPlan(plan)
 
         vm.toggleSubscriptionNext = (pricingId) ->
-          vm.isSubChanged = vm.currentPlanId == pricingId
+          vm.changeAction && vm.isSubChanged = vm.currentPlanId == pricingId
 
         vm.nextSubscription = ->
           urlParams =
@@ -72,14 +73,26 @@ angular.module 'mnoEnterpriseAngular'
             )
           vm.isCurrentSubscriptionLoading = false
 
+        setupChangeAction = ->
+          vm.changeAction = 'change' in vm.currentSubscription.available_actions
+
         vm.loadCurrentSubScription = (subscriptions) ->
-          subscription = _.find(subscriptions, (sub) -> sub.product?.nid == vm.product.product_nid)
+          vm.singleBilling = vm.product.single_billing_enabled
+          vm.billedLocally = vm.product.billed_locally
+
+          product_subscriptions = _.filter(subscriptions, (sub) -> sub.product?.nid == vm.product.product_nid)
+          if product_subscriptions
+            fulfilled_subs = _.filter(product_subscriptions, { status: 'fulfilled'} )
+            subscription = if fulfilled_subs.length > 0
+              vm.recentSubscription(fulfilled_subs)
+            else
+              vm.recentSubscription(product_subscriptions)
+
           if subscription
             setupSubscription(subscription)
+            setupChangeAction()
           else
-            MnoeProvisioning.initSubscription({subscriptionId: vm.currentSubscription.id}).then((response) ->
-              setupSubscription(response)
-              )
+            vm.isCurrentSubscriptionLoading = false
 
         vm.loadOrderHistory = ->
           MnoeProvisioning.getProductSubscriptions(vm.product.product_id).then(

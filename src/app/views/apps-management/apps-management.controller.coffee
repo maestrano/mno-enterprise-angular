@@ -1,9 +1,10 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('AppsManagementCtrl',
-    ($q, $scope, MnoeConfig, MnoeProductInstances, MnoeProvisioning, MnoeOrganizations) ->
+    ($q, $scope, MnoeConfig, MnoeProductInstances, MnoeProvisioning, MnoeOrganizations, AppManagementHelper) ->
 
       vm = @
       vm.isLoading = true
+      vm.recentSubscription = AppManagementHelper.recentSubscription
 
       vm.providesStatus = (product) ->
         vm.dataSharingEnabled(product) || product.subscription
@@ -31,7 +32,14 @@ angular.module 'mnoEnterpriseAngular'
           (response) ->
             vm.products = _.map(response.products,
               (product) ->
-                product.subscription = _.find(response.subscriptions, (subscription) -> subscription.product?.nid == product.product_nid)
+                product_subscriptions = _.filter(response.subscriptions, (subscription) -> subscription.product?.nid == product.product_nid)
+                if product_subscriptions
+                  fulfilled_subs = _.filter(product_subscriptions, { status: 'fulfilled'} )
+                  product.subscription = if fulfilled_subs.length > 0
+                    vm.recentSubscription(fulfilled_subs)
+                  else
+                    vm.recentSubscription(product_subscriptions)
+
                 product
             )
         ).finally(-> vm.isLoading = false)
