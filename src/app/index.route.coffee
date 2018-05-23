@@ -198,7 +198,7 @@ angular.module 'mnoEnterpriseAngular'
         .state 'home.provisioning.order',
           data:
             pageTitle:'Purchase - Order'
-          url: '/order/:productId?subscriptionId&editAction'
+          url: '/order/:productId?subscriptionId&editAction&cart'
           views: '@home.provisioning':
             templateUrl: 'app/views/provisioning/order.html'
             controller: 'ProvisioningOrderCtrl'
@@ -206,7 +206,7 @@ angular.module 'mnoEnterpriseAngular'
         .state 'home.provisioning.additional_details',
           data:
             pageTitle:'Purchase - Additional details'
-          url: '/details/:productId?subscriptionId&editAction'
+          url: '/details/:productId?subscriptionId&editAction&cart'
           views: '@home.provisioning':
             templateUrl: 'app/views/provisioning/details.html'
             controller: 'ProvisioningDetailsCtrl'
@@ -214,7 +214,7 @@ angular.module 'mnoEnterpriseAngular'
         .state 'home.provisioning.confirm',
           data:
             pageTitle:'Purchase - Confirm'
-          url: '/confirm/:productId?subscriptionId&editAction'
+          url: '/confirm/:productId?subscriptionId&editAction&cart'
           views: '@home.provisioning':
             templateUrl: 'app/views/provisioning/confirm.html'
             controller: 'ProvisioningConfirmCtrl'
@@ -230,14 +230,14 @@ angular.module 'mnoEnterpriseAngular'
         .state 'home.subscriptions',
           data:
             pageTitle:'Subscriptions summary'
-          url: '/subscriptions'
+          url: '/subscriptions/:subType'
           templateUrl: 'app/views/provisioning/subscriptions.html'
           controller: 'ProvisioningSubscriptionsCtrl'
           controllerAs: 'vm'
         .state 'home.subscription',
           data:
             pageTitle:'Subscription details'
-          url: '/subscriptions/:id'
+          url: '/subscription/:id?cart'
           templateUrl: 'app/views/provisioning/subscription.html'
           controller: 'ProvisioningSubscriptionCtrl'
           controllerAs: 'vm'

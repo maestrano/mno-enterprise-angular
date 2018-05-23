@@ -47,7 +47,7 @@
       </li>
 
       <li ng-if="isProvisioningEnabled && isAdmin">
-        <a ui-sref="home.subscriptions" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.subscriptions' | translate }}</a>
+        <a ui-sref="home.subscriptions({subType: 'active'})" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.subscriptions' | translate }}</a>
       </li>
 
       <li ng-if="isMarketplaceEnabled">
@@ -102,7 +102,7 @@
         <i class="dhb-icon-company"></i>
       </a>
 
-      <a ng-if="isProvisioningEnabled && isAdmin" ui-sref="home.subscriptions" class="dashboard-button top-buffer-1" ui-sref-active="active">
+      <a ng-if="isProvisioningEnabled && isAdmin" ui-sref="home.subscriptions({subType: 'active'})" class="dashboard-button top-buffer-1" ui-sref-active="active">
         <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.subscriptions' | translate }}</div>
         <i class="dhb-icon-subscriptions"></i>
       </a>

@@ -12,12 +12,13 @@ angular.module 'mnoEnterpriseAngular'
     urlParams = {
       productId: $stateParams.productId,
       subscriptionId: $stateParams.subscriptionId,
-      editAction: $stateParams.editAction
+      editAction: $stateParams.editAction,
+      cart: $stateParams.cart
     }
 
     fetchSubscription = () ->
       orgPromise = MnoeOrganizations.get()
-      initPromise = MnoeProvisioning.initSubscription({productId: $stateParams.productId, subscriptionId: $stateParams.subscriptionId})
+      initPromise = MnoeProvisioning.initSubscription({productId: $stateParams.productId, subscriptionId: $stateParams.subscriptionId, cart: urlParams.cart})
 
       $q.all({organization: orgPromise, subscription: initPromise}).then(
         (response) ->
@@ -62,7 +63,7 @@ angular.module 'mnoEnterpriseAngular'
         .then(() -> vm.next(vm.subscription, vm.selectedCurrency) if vm.skipPriceSelection(vm.subscription.product))
         .catch((error) ->
           toastr.error('mnoe_admin_panel.dashboard.provisioning.subscriptions.product_error')
-          $state.go('home.subscriptions')
+          $state.go('home.subscriptions', {subType: if urlParams.cart then 'cart' else 'active'})
         )
         .finally(() -> vm.isLoading = false)
     else
