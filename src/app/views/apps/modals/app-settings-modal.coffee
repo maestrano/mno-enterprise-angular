@@ -1,6 +1,6 @@
 
 angular.module 'mnoEnterpriseAngular'
-  .controller('DashboardAppSettingsModalCtrl', ($scope, MnoConfirm, MnoeOrganizations, $uibModalInstance, MnoeAppInstances, Utilities, app, $window, ImpacMainSvc, $translate)->
+  .controller('DashboardAppSettingsModalCtrl', ($scope, MnoConfirm, MnoeOrganizations, $uibModalInstance, MnoeAppInstances, Utilities, app, $window, ImpacMainSvc, $translate, AppSettingsHelper)->
 
     $scope.modal ||= {}
     $scope.app = app
@@ -54,11 +54,10 @@ angular.module 'mnoEnterpriseAngular'
       false
 
     $scope.helper.isAddOnSettingShown = (app) ->
-      app.add_on
+      AppSettingsHelper.isAddOnSettingShown(app)
 
     $scope.helper.addOnSettingLauch = (app) ->
-      $window.open("/mnoe/launch/#{app.uid}?settings=true", '_blank')
-      return true
+      AppSettingsHelper.addOnSettingLauch(app)
 
     $scope.helper.dataDisconnectClick = (app) ->
 

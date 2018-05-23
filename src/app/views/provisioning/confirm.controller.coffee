@@ -41,18 +41,6 @@ angular.module 'mnoEnterpriseAngular'
           $state.go('home.provisioning.order_summary', {subscriptionId: $stateParams.subscriptionId, editAction: $stateParams.editAction})
       ).finally(-> vm.isLoading = false)
 
-    vm.editOrder = () ->
-      params =
-        subscriptionId: $stateParams.subscriptionId,
-        productId: $stateParams.productId,
-        editAction: $stateParams.editAction
-
-      switch $stateParams.editAction
-        when 'change', 'new', null
-          $state.go('home.provisioning.order', params, {reload: true})
-        else
-          $state.go('home.provisioning.additional_details', params, {reload: true})
-
     # If subscription is empty redirect to appropriate page.
     if _.isEmpty(vm.subscription)
       vm.editOrder()

@@ -32,6 +32,12 @@
         <a ng-if="isAdmin && isImpacEnabled" ui-sref="home.impac" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}</a>
       </li>
 
+      <li ng-if="isAppManagementEnabled">
+        <a ui-sref="home.apps-management" ui-sref-active="active">
+          {{ 'mno_enterprise.templates.dashboard.menu.app_management' | translate }}
+        </a>
+      </li>
+
       <li>
         <a ui-sref="home.account" ui-sref-active="active">{{ 'mno_enterprise.templates.dashboard.menu.my_account' | translate }}</a>
       </li>
@@ -74,6 +80,11 @@
       <a ng-if="isDockEnabled && isAdmin && isImpacEnabled" ui-sref="home.impac" class="dashboard-button top-buffer-1" ui-sref-active="active">
         <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.dashboard' | translate }}</div>
         <i class="dhb-icon-impac"></i>
+      </a>
+
+      <a ng-if='isAppManagementEnabled' ui-sref="home.apps-management" class="dashboard-button top-buffer-1" ui-sref-active="active">
+        <div class='content'>{{ 'mno_enterprise.templates.dashboard.menu.app_management' | translate }}</div>
+        <i class="dhb-icon-app-management"></i>
       </a>
 
       <a ng-if="!isDockEnabled && isAdmin && isImpacEnabled" ui-sref="home.impac" class="dashboard-button top-buffer-1" ui-sref-active="active">

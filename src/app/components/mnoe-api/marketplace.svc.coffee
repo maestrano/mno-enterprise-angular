@@ -68,7 +68,7 @@ angular.module 'mnoEnterpriseAngular'
 
     productPromises = {}
     @getProduct = (productId, params) ->
-      productPromises["#{productId}/#{params.editAction}"] ?= MnoeApiSvc.one('/products', productId).get(params).then(
+      productPromises["#{productId}/#{JSON.stringify(params)}"] ?= MnoeApiSvc.one('/products', productId).get(params).then(
         (response) ->
           _transform_products([response])
           response

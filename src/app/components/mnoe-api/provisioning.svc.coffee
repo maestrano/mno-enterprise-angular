@@ -104,6 +104,18 @@ angular.module 'mnoEnterpriseAngular'
       )
       return deferred.promise
 
+    @getProductSubscriptions = (productId) ->
+      deferred = $q.defer()
+      MnoeOrganizations.get().then(
+        (response) ->
+          params = { where: { product_id: productId } }
+          subscriptionsApi(response.organization.id).getList(params).then(
+            (response) ->
+              deferred.resolve(response)
+          )
+      )
+      return deferred.promise
+
     @cancelSubscription = (s) ->
       MnoeOrganizations.get().then(
         (response) ->

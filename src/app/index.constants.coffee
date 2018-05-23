@@ -10,7 +10,8 @@ angular.module 'mnoEnterpriseAngular'
     connecDoc: 'https://maestrano.atlassian.net/wiki/x/BIHLAQ'
   })
   .constant('LOCALSTORAGE', {
-    appInstancesKey: 'appInstancesV2'
+    appInstancesKey: 'appInstancesV2',
+    productInstancesKey: 'productInstancesV2'
   })
   .constant('LOCALES', {
     'fallbackLanguage': 'en'

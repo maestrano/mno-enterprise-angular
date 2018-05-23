@@ -25,15 +25,10 @@ angular.module 'mnoEnterpriseAngular'
           vm.subscription = response.subscription
         )
 
-    vm.filterCurrencies = () ->
-      vm.filteredPricingPlans = _.filter(vm.subscription.product.pricing_plans,
-        (pp) -> !vm.pricedPlan(pp) || _.some(pp.prices, (p) -> p.currency == vm.orgCurrency)
-      )
-
     fetchProduct = () ->
       # When in edit mode, we will be getting the product ID from the subscription, otherwise from the url.
       vm.productId = vm.subscription.product?.id || $stateParams.productId
-      MnoeMarketplace.getProduct(vm.productId, { editAction: $stateParams.editAction }).then(
+      MnoeMarketplace.getProduct(vm.productId).then(
         (response) ->
           vm.subscription.product = response
 
@@ -50,7 +45,7 @@ angular.module 'mnoEnterpriseAngular'
             vm.selectedCurrency = vm.currencies[0]
 
           # Filters the pricing plans not containing current currency
-          vm.filterCurrencies()
+          vm.filteredPricingPlans = ProvisioningHelper.planForCurrency(vm.subscription.product.pricing_plans, vm.orgCurrency)
           MnoeProvisioning.setSubscription(vm.subscription)
         ).finally(-> vm.isLoading = false)
 
