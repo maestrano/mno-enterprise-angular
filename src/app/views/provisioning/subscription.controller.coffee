@@ -24,8 +24,8 @@ angular.module 'mnoEnterpriseAngular'
           MnoeMarketplace.fetchCustomSchema(vm.subscription.product_id).then((response) ->
             # Some products have custom schemas, whereas others do not.
             resp = JSON.parse(response)
-            vm.schema = if resp?.json_schema then resp.json_schema else resp
-            vm.form = if resp?.asf_options then resp.asf_options else ["*"]
+            vm.form = resp?.asf_options || ["*"]
+            vm.schema = resp?.json_schema || resp
           )
     ).finally(-> vm.isLoading = false)
 
