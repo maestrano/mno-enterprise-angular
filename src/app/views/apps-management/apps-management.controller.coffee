@@ -29,9 +29,9 @@ angular.module 'mnoEnterpriseAngular'
 
         $q.all({products: productPromise, subscriptions: subPromise}).then(
           (response) ->
-            vm.products = _.each(response.products,
+            vm.products = _.map(response.products,
               (product) ->
-                product.subscription = _.find(response.subscriptions, product?.nid == product.product_nid)
+                product.subscription = _.find(response.subscriptions, (subscription) -> subscription.product?.nid == product.product_nid)
                 product
             )
         ).finally(-> vm.isLoading = false)
