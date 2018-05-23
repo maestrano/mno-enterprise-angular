@@ -67,7 +67,7 @@ angular.module 'mnoEnterpriseAngular'
           MnoeMarketplace.findProduct({id: vm.currentSubscription.product?.id, nid: null}).then((response) ->
             vm.currentSubscription.product = response
             # Filters the pricing plans not containing current currency
-            vm.currentSubscription.product.pricing_plans =  ProvisioningHelper.planForCurrency(vm.currentSubscription.product.product_pricings, vm.orgCurrency)
+            vm.currentSubscription.product.pricing_plans =  ProvisioningHelper.planForCurrency(vm.currentSubscription.product.pricing_plans, vm.orgCurrency)
             vm.currentPlanId = vm.currentSubscription.product_pricing_id
             )
           vm.isCurrentSubscriptionLoading = false
