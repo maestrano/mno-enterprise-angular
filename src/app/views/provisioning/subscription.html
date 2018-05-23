@@ -85,15 +85,15 @@
       <div class="col-sm-6">
         <div class="well">
           <h3 class="text-color" translate>mno_enterprise.templates.dashboard.provisioning.subscription.provisioning_data</h3>
-          <span ng-show="!vm.subscription.provisioning_data" translate>mno_enterprise.templates.dashboard.provisioning.subscription.no_provisioning_data</span>
+          <span ng-hide="vm.subscription.provisioning_data" translate>mno_enterprise.templates.dashboard.provisioning.subscription.no_provisioning_data</span>
           <json-formatter ng-show="vm.subscription.provisioning_data" open="2" json="vm.subscription.provisioning_data"></json-formatter>
         </div>
       </div>
       <div class="col-sm-6">
         <div class="well">
           <h3 class="text-color" translate>mno_enterprise.templates.dashboard.provisioning.subscription.custom_data</h3>
-          <span ng-show="!vm.subscription.custom_data" translate>mno_enterprise.templates.dashboard.provisioning.subscription.no_custom_data</span>
-          <form name="vm.detailsForm" ng-show="vm.subscription.custom_data" sf-schema="vm.schema" sf-form="vm.form" sf-model="vm.model" sf-options="{ formDefaults: { readonly: { true } }}"></form>
+          <span ng-hide="vm.schema" translate>mno_enterprise.templates.dashboard.provisioning.subscription.no_custom_data</span>
+          <form name="vm.detailsForm" ng-show="vm.schema" sf-schema="vm.schema" sf-form="vm.form" sf-model="vm.model" sf-options="{ formDefaults: { readonly: { true } }}"></form>
         </div>
       </div>
     </div>
