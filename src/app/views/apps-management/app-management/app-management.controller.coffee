@@ -65,9 +65,12 @@ angular.module 'mnoEnterpriseAngular'
         setupSubscription = (subscription) ->
           vm.currentSubscription = subscription
           vm.orgCurrency = vm.organization?.currency || MnoeConfig.marketplaceCurrency()
-          MnoeMarketplace.findProduct({id: vm.currentSubscription.product?.id, nid: null}).then((response) ->
+          MnoeMarketplace.getProduct(vm.currentSubscription.product.id).then((response) ->
             vm.currentSubscription.product = response
-            # Filters the pricing plans not containing current currency
+            vm.singleBilling = response.single_billing_enabled
+            vm.billedLocally = response.billed_locally
+
+              # Filters the pricing plans not containing current currency
             vm.currentSubscription.product.pricing_plans =  ProvisioningHelper.planForCurrency(vm.currentSubscription.product.pricing_plans, vm.orgCurrency)
             vm.currentPlanId = vm.currentSubscription.product_pricing_id
             )
@@ -77,8 +80,6 @@ angular.module 'mnoEnterpriseAngular'
           vm.changeAction = 'change' in vm.currentSubscription.available_actions
 
         vm.loadCurrentSubScription = (subscriptions) ->
-          vm.singleBilling = vm.product.single_billing_enabled
-          vm.billedLocally = vm.product.billed_locally
 
           product_subscriptions = _.filter(subscriptions, (sub) -> sub.product?.nid == vm.product.product_nid)
           if product_subscriptions

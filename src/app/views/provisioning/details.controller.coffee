@@ -55,7 +55,7 @@ angular.module 'mnoEnterpriseAngular'
     fetchProduct = () ->
       # When in edit mode, we will be getting the product ID from the subscription, otherwise from the url.
       vm.productId = vm.subscription.product?.id || urlParams.productId
-      MnoeMarketplace.getProduct(vm.productId, { editAction: urlParams.editAction }).then(
+      MnoeMarketplace.getProduct(vm.productId).then(
         (response) ->
           vm.subscription.product = response
 
