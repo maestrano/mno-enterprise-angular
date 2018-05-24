@@ -29,7 +29,7 @@ angular.module 'mnoEnterpriseAngular'
           )
     ).finally(-> vm.isLoading = false)
 
-    MnoeProvisioning.getSubscriptionEvents($stateParams.id).then(
+    MnoeProvisioning.getSubscriptionEvents($stateParams.id, 'created_at.desc').then(
       (response) ->
         vm.subscriptionEvents = response
     )
