@@ -102,13 +102,10 @@ DashboardOrganizationTeamListCtrl = ($scope, $window, $uibModal, $q, MnoeCurrent
       )
   )
 
-  #Setting third argument of $watch to true for deep watching
+  # Setting third argument of $watch to true for deep watching
   $scope.$watch(
     () -> MnoeTeams.teams,
-    (newTeam) ->(
-      if newTeam?
-        $scope.initialize(MnoeTeams.teams)
-    ),
+    (newTeam) -> $scope.initialize(MnoeTeams.teams) if newTeam?,
     true
   )
 
