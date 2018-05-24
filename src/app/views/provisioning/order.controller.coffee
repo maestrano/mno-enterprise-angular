@@ -30,7 +30,14 @@ angular.module 'mnoEnterpriseAngular'
       vm.filteredPricingPlans = _.filter(vm.subscription.product.pricing_plans,
         (pp) -> !vm.pricedPlan(pp) || _.some(pp.prices, (p) -> p.currency == vm.orgCurrency)
       )
-    # filter currencies if we are using a cached subscription
+
+    selectDefaultCurrency = () ->
+      if vm.currencies.includes(vm.orgCurrency)
+        vm.selectedCurrency = vm.orgCurrency
+      else
+        vm.selectedCurrency = vm.currencies[0]
+
+
     fetchProduct = () ->
       # When in edit mode, we will be getting the product ID from the subscription, otherwise from the url.
       vm.productId = vm.subscription.product?.id || $stateParams.productId
@@ -39,17 +46,10 @@ angular.module 'mnoEnterpriseAngular'
           vm.subscription.product = response
 
           # Get all the possible currencies
-          currenciesArray = []
-          _.forEach(vm.subscription.product.pricing_plans,
-            (pp) -> _.forEach(pp.prices, (p) -> currenciesArray.push(p.currency)))
-          vm.currencies = _.uniq(currenciesArray)
+          populateCurrencies()
 
           # Set a default currency
-          if vm.currencies.includes(vm.orgCurrency)
-            vm.selectedCurrency = vm.orgCurrency
-          else
-            vm.selectedCurrency = vm.currencies[0]
-
+          selectDefaultCurrency()
           # Filters the pricing plans not containing current currency
           vm.filteredPricingPlans = ProvisioningHelper.planForCurrency(vm.subscription.product.pricing_plans, vm.orgCurrency)
           MnoeProvisioning.setSubscription(vm.subscription)
@@ -60,6 +60,12 @@ angular.module 'mnoEnterpriseAngular'
         # Some products have custom schemas, whereas others do not.
         vm.subscription.product.custom_schema = response
       )
+
+    populateCurrencies = () ->
+      currenciesArray = []
+      _.forEach(vm.subscription.product.pricing_plans,
+        (pp) -> _.forEach(pp.prices, (p) -> currenciesArray.push(p.currency)))
+      vm.currencies = _.uniq(currenciesArray)
 
     if _.isEmpty(vm.subscription)
       fetchSubscription()
@@ -72,12 +78,10 @@ angular.module 'mnoEnterpriseAngular'
         )
         .finally(() -> vm.isLoading = false)
     else
-      currenciesArray = []
-      _.forEach(vm.subscription.product.pricing_plans,
-        (pp) -> _.forEach(pp.prices, (p) -> currenciesArray.push(p.currency)))
-
-      vm.currencies = _.uniq(currenciesArray)
-      vm.filteredPricingPlans = if vm.subscription?.product?.pricing_plans then vm.filterCurrencies() else []
+      # filter currencies if we are using a cached subscription
+      populateCurrencies()
+      vm.filteredPricingPlans = vm.filterCurrencies()
+      selectDefaultCurrency()
 
       vm.isLoading = false
 
