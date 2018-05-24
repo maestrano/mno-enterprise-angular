@@ -4,8 +4,9 @@ angular.module 'mnoEnterpriseAngular'
     vm = this
     vm.isLoading = true
     vm.subscription = MnoeProvisioning.getCachedSubscription()
-    vm.currencies = []
     vm.selectedCurrency = ""
+    vm.filteredPricingPlans = []
+
     vm.isCurrencySelectionEnabled = MnoeConfig.isCurrencySelectionEnabled()
     vm.pricedPlan = ProvisioningHelper.pricedPlan
     urlParams = {
@@ -30,8 +31,6 @@ angular.module 'mnoEnterpriseAngular'
         (pp) -> !vm.pricedPlan(pp) || _.some(pp.prices, (p) -> p.currency == vm.orgCurrency)
       )
     # filter currencies if we are using a cached subscription
-    vm.filteredPricingPlans = if vm.subscription?.product?.pricing_plans then vm.filterCurrencies() else []
-
     fetchProduct = () ->
       # When in edit mode, we will be getting the product ID from the subscription, otherwise from the url.
       vm.productId = vm.subscription.product?.id || $stateParams.productId
@@ -73,6 +72,13 @@ angular.module 'mnoEnterpriseAngular'
         )
         .finally(() -> vm.isLoading = false)
     else
+      currenciesArray = []
+      _.forEach(vm.subscription.product.pricing_plans,
+        (pp) -> _.forEach(pp.prices, (p) -> currenciesArray.push(p.currency)))
+
+      vm.currencies = _.uniq(currenciesArray)
+      vm.filteredPricingPlans = if vm.subscription?.product?.pricing_plans then vm.filterCurrencies() else []
+
       vm.isLoading = false
 
     vm.select_plan = (pricingPlan)->
