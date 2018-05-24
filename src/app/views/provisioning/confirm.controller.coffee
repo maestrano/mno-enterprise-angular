@@ -29,6 +29,7 @@ angular.module 'mnoEnterpriseAngular'
     else
       vm.singleBilling = vm.subscription.product.single_billing_enabled
       vm.billedLocally = vm.subscription.product.billed_locally
+      vm.subscription.edit_action = $stateParams.editAction
 
     vm.validate = () ->
       vm.isLoading = true
@@ -49,19 +50,6 @@ angular.module 'mnoEnterpriseAngular'
             $state.go('home.provisioning.order_summary', {subscriptionId: $stateParams.subscriptionId, editAction: $stateParams.editAction, cart: $stateParams.cart})
       ).finally(-> vm.isLoading = false)
 
-    vm.editOrder = () ->
-      params =
-        subscriptionId: $stateParams.subscriptionId,
-        productId: $stateParams.productId,
-        editAction: $stateParams.editAction,
-        cart: $stateParams.cart
-
-      switch $stateParams.editAction
-        when 'change', 'new', null
-          $state.go('home.provisioning.order', params, {reload: true})
-        else
-          $state.go('home.provisioning.additional_details', params, {reload: true})
-
     vm.addToCart = ->
       vm.isLoading = true
       vm.subscription.cart_entry = true
@@ -70,12 +58,6 @@ angular.module 'mnoEnterpriseAngular'
           MnoeProvisioning.refreshSubscriptions()
           $state.go('home.marketplace')
       ).finally(-> vm.isLoading = false)
-
-    # If subscription is empty redirect to appropriate page.
-    if _.isEmpty(vm.subscription)
-      vm.editOrder()
-    else
-      vm.subscription.edit_action = $stateParams.editAction
 
     vm.orderEditable = () ->
       # The order is editable if we are changing the plan, or the product has a custom schema.

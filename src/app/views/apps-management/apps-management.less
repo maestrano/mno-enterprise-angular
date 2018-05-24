@@ -1,0 +1,35 @@
+.dashboard-apps-management {
+  .apps-wrapper {
+    border: 1px solid @dashboard-app-management-border-color;
+    border-radius: 3px;
+    padding: 20px;
+  }
+  .app-section {
+    border-bottom: 1px solid @dashboard-app-management-border-color;
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:last-child {
+      border-bottom: 1px solid transparent;
+    }
+  }
+
+  .app-logo-wrapper,
+  .app-btn-events,
+  .app-info {
+    flex: 1;
+  }
+
+  .app-btn-events {
+    a {
+      margin-left: 10px;
+    }
+  }
+
+  .app-info {
+    span, strong {
+      display: block;
+    }
+  }
+}

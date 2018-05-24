@@ -1,5 +1,5 @@
 
-DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, MnoeOrganizations, MnoeAppInstances, MnoeConfig) ->
+DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, MnoeOrganizations, MnoeAppInstances, MnoeProductInstances, MnoeConfig) ->
   'ngInject'
 
   $scope.appDock = {}
@@ -42,6 +42,7 @@ DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, MnoeOrganizations
 
   $scope.helper.oAuthConnectPath = (instance)->
     MnoeAppInstances.clearCache()
+    MnoeProductInstances.clearCache()
     $window.location.href = "/mnoe/webhook/oauth/#{instance.uid}/authorize"
 
   # Launch cloud application

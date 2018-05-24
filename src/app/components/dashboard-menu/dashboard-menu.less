@@ -156,6 +156,14 @@ dashboard-menu {
       @dashboard-side-menu-btn-impac-active();
     }
 
+    .dashboard-button i.dhb-icon-app-management {
+      @dashboard-side-menu-btn-app-management();
+    }
+    .dashboard-button.active i.dhb-icon-app-management,
+    .dashboard-button:hover i.dhb-icon-app-management {
+      @dashboard-side-menu-btn-app-management-active();
+    }
+
     .dashboard-button i.dhb-icon-account {
       @dashboard-side-menu-btn-account();
     }

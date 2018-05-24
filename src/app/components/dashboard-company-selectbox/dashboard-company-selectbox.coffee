@@ -2,7 +2,7 @@
 #============================================
 #
 #============================================
-DashboardCompanySelectboxCtrl = ($scope, $state, $stateParams, $uibModal, MnoeCurrentUser, MnoeOrganizations, MnoeAppInstances, MnoeConfig) ->
+DashboardCompanySelectboxCtrl = ($scope, $state, $stateParams, $uibModal, MnoeCurrentUser, MnoeOrganizations, MnoeAppInstances, MnoeProductInstances, MnoeConfig) ->
   'ngInject'
 
   #====================================
@@ -22,7 +22,9 @@ DashboardCompanySelectboxCtrl = ($scope, $state, $stateParams, $uibModal, MnoeCu
     return if organization.id == MnoeOrganizations.selectedId
     # Switch to selected company
     MnoeAppInstances.emptyAppInstances()
+    MnoeProductInstances.emptyProductInstances()
     MnoeAppInstances.clearCache()
+    MnoeProductInstances.clearCache()
     MnoeOrganizations.get(organization.id)
     selectBox.close()
 
