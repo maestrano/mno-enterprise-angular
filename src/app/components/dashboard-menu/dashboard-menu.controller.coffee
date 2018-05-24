@@ -10,6 +10,7 @@ angular.module 'mnoEnterpriseAngular'
 
       controller: ($scope, MnoeCurrentUser, MnoeOrganizations, MnoeConfig) ->
         $scope.isDockEnabled = MnoeConfig.isDockEnabled()
+        $scope.isAppManagementEnabled = MnoeConfig.isAppManagementEnabled()
         $scope.isOrganizationManagementEnabled = MnoeConfig.isOrganizationManagementEnabled()
         $scope.isMarketplaceEnabled = MnoeConfig.isMarketplaceEnabled()
         $scope.isProvisioningEnabled = MnoeConfig.isProvisioningEnabled()
