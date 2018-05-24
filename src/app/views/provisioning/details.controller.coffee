@@ -19,7 +19,8 @@ angular.module 'mnoEnterpriseAngular'
     urlParams =
       productId: $stateParams.productId,
       subscriptionId: $stateParams.subscriptionId,
-      editAction: $stateParams.editAction
+      editAction: $stateParams.editAction,
+      cart: $stateParams.cart
 
     # The schema is contained in field vm.product.custom_schema
     # jsonref is used to resolve $ref references
@@ -39,7 +40,7 @@ angular.module 'mnoEnterpriseAngular'
 
     fetchSubscription = () ->
       orgPromise = MnoeOrganizations.get()
-      initPromise = MnoeProvisioning.initSubscription({productId: urlParams.productId, subscriptionId: urlParams.subscriptionId})
+      initPromise = MnoeProvisioning.initSubscription({productId: urlParams.productId, subscriptionId: urlParams.subscriptionId, cart: urlParams.cart})
 
       $q.all({organization: orgPromise, subscription: initPromise}).then(
         (response) ->
@@ -79,7 +80,7 @@ angular.module 'mnoEnterpriseAngular'
         .then(() -> setCustomSchema(vm.subscription.product))
         .catch((error) ->
           toastr.error('mnoe_admin_panel.dashboard.provisioning.subscriptions.product_error')
-          $state.go('home.subscriptions')
+          $state.go('home.subscriptions', {subType: if urlParams.cart then 'cart' else 'active'})
         )
         .finally(() -> vm.isLoading = false)
     # Ensure that the cached subscription has a custom schema, otherwise redirect to order page.

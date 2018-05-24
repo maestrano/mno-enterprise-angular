@@ -123,6 +123,15 @@ ThemeEditorCtrl = ($scope, $window, $log, $timeout,  toastr, themeEditorSvc) ->
       '@dashboard-side-menu-link-active-bg-color':     '@bg-main-color'
     },
 
+    'Dashboard Cart': {
+      '@dashboard-cart-width':             '100px'
+      '@dashboard-cart-height':            '70px'
+      '@dashboard-cart-bg-color':          '@bg-inverse-color'
+      '@dashboard-cart-text-size':         '25px'
+      '@dashboard-cart-border-radius':     '0 0 0 6px'
+      '@dashboard-cart-border-color':      '@text-inverse-color'
+    },
+
     'Dashboard Company Select Box': {
       '@dashboard-cpy-select-width':                    '280px'
       '@dashboard-cpy-select-pic-width':                '50px'
