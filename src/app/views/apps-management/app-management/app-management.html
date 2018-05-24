@@ -133,70 +133,80 @@
           <div class='col-xs-12'>
             <mno-loader ng-show="vm.isCurrentSubscriptionLoading" class='top-buffer-4'></mno-loader>
             <div ng-show="!vm.isCurrentSubscriptionLoading" class='table-cell'>
-              <div class='row th-row hidden-xs'>
-                <div class='col-xs-10 col-xs-offset-2'>
-                  <div class='cell col-sm-3'>{{ 'mno_enterprise.templates.dashboard.provisioning.order.name' | translate }}</div>
-                  <div class='cell col-sm-5'>{{ 'mno_enterprise.templates.dashboard.provisioning.order.description' | translate }}</div>
-                  <div class='cell col-sm-3'>{{ 'mno_enterprise.templates.dashboard.provisioning.order.price' | translate }}</div>
+              <div ng-show="(vm.singleBilling && vm.billedLocally) || vm.currentSubscription.product.product_type != 'application'">
+                <div class='row th-row hidden-xs'>
+                  <div class='col-xs-10 col-xs-offset-2'>
+                    <div class='cell col-sm-3'>{{ 'mno_enterprise.templates.dashboard.provisioning.order.name' | translate }}</div>
+                    <div class='cell col-sm-5'>{{ 'mno_enterprise.templates.dashboard.provisioning.order.description' | translate }}</div>
+                    <div class='cell col-sm-3'>{{ 'mno_enterprise.templates.dashboard.provisioning.order.price' | translate }}</div>
+                  </div>
+                </div>
+
+                <div class='row td-row' ng-if="vm.currentSubscription.product.pricing_plans.length === 0">
+                  <div class='cell col-md-12 text-center'>
+                    {{ 'mno_enterprise.templates.dashboard.provisioning.order.no_pricing_found' | translate }}
+                  </div>
+                </div>
+
+                <div class='row td-row' ng-repeat="pricingPlan in vm.currentSubscription.product.pricing_plans" ng-click="vm.selectPlan(pricingPlan)">
+                  <div class='cell radio-selector col-xs-2'>
+                    <input type='radio' name='optradio' ng-model="vm.currentSubscription.product_pricing.id" ng-value="pricingPlan.id">
+                  </div>
+
+                  <div class='col-xs-10'>
+                    <div class='cell col-sm-3'>
+                      <span class='cell-label visible-xs-inline'>
+                        {{ 'mno_enterprise.templates.dashboard.provisioning.order.name' | translate }}:
+                      </span>
+                      {{ pricingPlan.name }}
+                    </div>
+
+                    <div class='cell col-sm-5'>
+                      <span class='cell-label visible-xs-inline'>
+                        {{ 'mno_enterprise.templates.dashboard.provisioning.order.description' | translate }}:
+                      </span>
+                      {{ pricingPlan.description }}
+                    </div>
+
+                    <div class='cell col-sm-3'>
+                      <span class='cell-label visible-xs-inline'>
+                        {{ 'mno_enterprise.templates.dashboard.provisioning.order.price' | translate }}:
+                      </span>
+                      <span ng-if="vm.pricedPlan(pricingPlan)" ng-repeat="price in pricingPlan.prices | filterBy: ['currency']: vm.orgCurrency" class='badge'>
+                        {{ price.currency }} {{ price.price_cents / 100 }}
+                      </span>
+                      <span ng-show="pricingPlan.pricing_type == 'recurring'">
+                        / {{ pricingPlan.per_unit }} / {{ pricingPlan.per_duration }}
+                      </span>
+                      <span ng-show="pricingPlan.pricing_type == 'payg'">
+                        {{ 'mno_enterprise.templates.dashboard.provisioning.order.pricing_type.payg' | translate }}
+                      </span>
+                      <span ng-show="pricingPlan.pricing_type == 'free'">
+                        {{ 'mno_enterprise.templates.dashboard.provisioning.order.pricing_type.free' | translate }}
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div class='row td-row' ng-if="vm.currentSubscription.product.pricing_plans.length === 0">
-                <div class='cell col-md-12 text-center'>
-                  {{ 'mno_enterprise.templates.dashboard.provisioning.order.no_pricing_found' | translate }}
+              <div ng-show="vm.currentSubscription.product.product_type == 'application'" class="table-cell">
+                <div class="row th-row hidden-xs">
+                  <div class="cell col-sm-12">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.title' | translate }}</div>
                 </div>
-              </div>
-
-              <div class='row td-row' ng-repeat="pricingPlan in vm.currentSubscription.product.pricing_plans" ng-click="vm.select_plan(pricingPlan)">
-                <div class='cell radio-selector col-xs-2'>
-                  <input type='radio' name='optradio' ng-change="vm.toggleSubscriptionNext(pricingPlan.id)" ng-model="vm.currentSubscription.product_pricing.id" ng-value="pricingPlan.id">
-                </div>
-
-                <div class='col-xs-10'>
-                  <div class='cell col-sm-3'>
-                    <span class='cell-label visible-xs-inline'>
-                      {{ 'mno_enterprise.templates.dashboard.provisioning.order.name' | translate }}:
+                <div class="row td-row">
+                  <div class="cell col-sm-12">
+                    <span class="cell-label visible-xs-inline">
+                      {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.title' | translate }}
                     </span>
-                    {{ pricingPlan.name }}
-                  </div>
-
-                  <div class='cell col-sm-5'>
-                    <span class='cell-label visible-xs-inline'>
-                      {{ 'mno_enterprise.templates.dashboard.provisioning.order.description' | translate }}:
-                    </span>
-                    {{ pricingPlan.description }}
-                  </div>
-
-                  <div class='cell col-sm-3'>
-                    <span class='cell-label visible-xs-inline'>
-                      {{ 'mno_enterprise.templates.dashboard.provisioning.order.price' | translate }}:
-                    </span>
-                    <span ng-if="vm.pricedPlan(pricingPlan)" ng-repeat="price in pricingPlan.prices | filterBy: ['currency']: vm.orgCurrency" class='badge'>
-                      {{ price.currency }} {{ price.price_cents / 100 }}
-                    </span>
-                    <span ng-show="pricingPlan.pricing_type == 'recurring'">
-                      / {{ pricingPlan.per_unit }} / {{ pricingPlan.per_duration }}
-                    </span>
-                    <span ng-show="pricingPlan.pricing_type == 'payg'">
-                      {{ 'mno_enterprise.templates.dashboard.provisioning.order.pricing_type.payg' | translate }}
-                    </span>
-                    <span ng-show="pricingPlan.pricing_type == 'free'">
-                      {{ 'mno_enterprise.templates.dashboard.provisioning.order.pricing_type.free' | translate }}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row td-row">
-                <div class="cell col-sm-12">
-                  <div ng-hide="vm.singleBilling">
-                    {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.single_billing_disabled' | translate }}
-                  </div>
-                  <div ng-show="vm.singleBilling && !vm.billedLocally">
-                    {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.externally_managed' | translate }}
-                  </div>
-                  <div ng-hide="vm.changeAction">
-                    {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.unfulfilled' | translate }}
+                    <div ng-hide="vm.singleBilling">
+                      {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.single_billing_disabled' | translate }}
+                    </div>
+                    <div ng-show="vm.singleBilling && !vm.billedLocally">
+                      {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.externally_managed' | translate }}
+                    </div>
+                    <div ng-show="vm.singleBilling && vm.billedLocally">
+                      {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.billed_locally' | translate }}
+                    </div>
                   </div>
                 </div>
               </div>

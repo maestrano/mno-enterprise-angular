@@ -35,7 +35,6 @@ angular.module 'mnoEnterpriseAngular'
             subscriptionId: vm.currentSubscription.id
             productId: vm.product.id
             editAction: 'change'
-
           MnoeProvisioning.setSubscription(vm.currentSubscription)
           if vm.currentSubscription.product.custom_schema?
             $state.go('home.provisioning.additional_details', urlParams)
@@ -45,6 +44,11 @@ angular.module 'mnoEnterpriseAngular'
         # ********************** Flags *********************************
         vm.providesStatus = (product) ->
           product.data_sharing || product.subscription
+
+        vm.selectPlan = (pricingPlan) ->
+          vm.changeAction && vm.isSubChanged = vm.currentPlanId == pricingPlan.id
+          vm.currentSubscription.product_pricing = pricingPlan
+          vm.currentSubscription.max_licenses ||= 1 if vm.currentSubscription.product_pricing.license_based
 
         vm.dataSharingEnabled = ->
           MnoeConfig.isDataSharingEnabled() && vm.product.data_sharing && vm.isAdmin
@@ -65,9 +69,18 @@ angular.module 'mnoEnterpriseAngular'
         setupSubscription = (subscription) ->
           vm.currentSubscription = subscription
           vm.orgCurrency = vm.organization?.currency || MnoeConfig.marketplaceCurrency()
-          MnoeMarketplace.findProduct({id: vm.currentSubscription.product?.id, nid: null}).then((response) ->
+
+          MnoeMarketplace.getProduct(vm.currentSubscription.product.id).then((response) ->
             vm.currentSubscription.product = response
-            # Filters the pricing plans not containing current currency
+            MnoeMarketplace.fetchCustomSchema(response.id, { editAction: $stateParams.editAction }).then((response) ->
+              # Some products have custom schemas, whereas others do not.
+              vm.currentSubscription.product.custom_schema = response
+            )
+
+            vm.singleBilling = response.single_billing_enabled
+            vm.billedLocally = response.billed_locally
+
+              # Filters the pricing plans not containing current currency
             vm.currentSubscription.product.pricing_plans =  ProvisioningHelper.planForCurrency(vm.currentSubscription.product.pricing_plans, vm.orgCurrency)
             vm.currentPlanId = vm.currentSubscription.product_pricing_id
             )
@@ -77,9 +90,6 @@ angular.module 'mnoEnterpriseAngular'
           vm.changeAction = 'change' in vm.currentSubscription.available_actions
 
         vm.loadCurrentSubScription = (subscriptions) ->
-          vm.singleBilling = vm.product.single_billing_enabled
-          vm.billedLocally = vm.product.billed_locally
-
           product_subscriptions = _.filter(subscriptions, (sub) -> sub.product?.nid == vm.product.product_nid)
           if product_subscriptions
             fulfilled_subs = _.filter(product_subscriptions, { status: 'fulfilled'} )
