@@ -80,7 +80,7 @@ angular.module 'mnoEnterpriseAngular'
             vm.singleBilling = response.single_billing_enabled
             vm.billedLocally = response.billed_locally
 
-              # Filters the pricing plans not containing current currency
+            # Filters the pricing plans not containing current currency
             vm.currentSubscription.product.pricing_plans =  ProvisioningHelper.planForCurrency(vm.currentSubscription.product.pricing_plans, vm.orgCurrency)
             vm.currentPlanId = vm.currentSubscription.product_pricing_id
             )
