@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningConfirmCtrl', ($scope, $state, $stateParams, MnoeOrganizations, MnoeProvisioning, MnoeAppInstances, MnoeConfig) ->
+  .controller('ProvisioningConfirmCtrl', ($scope, $state, $stateParams, MnoeOrganizations, MnoeProvisioning, MnoeAppInstances, MnoeConfig, ProvisioningHelper) ->
 
     vm = this
 
@@ -22,10 +22,6 @@ angular.module 'mnoEnterpriseAngular'
           $state.go('home.provisioning.order', urlParams, {reload: reload})
         else
           $state.go('home.provisioning.additional_details', urlParams, {reload: reload})
-
-    vm.disableEdit = () ->
-      return false if vm.subscription.product?.custom_schema
-      vm.subscription.product.product_type == 'application' && (!vm.subscription.product.single_billing_enabled || !vm.subscription.product.billed_locally)
 
     # Happens when the user reload the browser during the provisioning workflow.
     if _.isEmpty(vm.subscription)
@@ -65,12 +61,15 @@ angular.module 'mnoEnterpriseAngular'
       ).finally(-> vm.isLoading = false)
 
     vm.orderEditable = () ->
-      # The order is editable if we are changing the plan, or the product has a custom schema.
+      # The order is editable if the product has a custom schema.
+      return true if vm.subscription.product?.custom_schema
+      # Disable editing if unable to initially select a pricing plan.
+      return false if ProvisioningHelper.skipPricingPlans(vm.subscription.product)
       switch $stateParams.editAction
         when 'change', 'new'
           true
         else
-          if vm.subscription.product?.custom_schema then true else false
+          false
 
     MnoeOrganizations.get().then(
       (response) ->

@@ -14,6 +14,15 @@ angular.module 'mnoEnterpriseAngular'
       editAction: $stateParams.editAction,
       cart: $stateParams.cart
     }
+    vm.skipPriceSelection = ProvisioningHelper.skipPricingPlans
+
+    vm.next = (subscription, currency) ->
+      MnoeProvisioning.setSubscription(subscription)
+      MnoeProvisioning.setSelectedCurrency(currency)
+      if vm.subscription.product.custom_schema?
+        $state.go('home.provisioning.additional_details', urlParams, { reload: true })
+      else
+        $state.go('home.provisioning.confirm', urlParams, { reload: true })
 
     fetchSubscription = () ->
       orgPromise = MnoeOrganizations.get()
@@ -77,7 +86,10 @@ angular.module 'mnoEnterpriseAngular'
         )
         .finally(() -> vm.isLoading = false)
     else
-      # filter currencies if we are using a cached subscription
+      # Skip this view when subscription plan is not editable
+      vm.next(vm.subscription, vm.subscription.currency) if vm.skipPriceSelection(vm.subscription.product)
+
+      # Filter currencies if we are using a cached subscription
       populateCurrencies()
       vm.filteredPricingPlans = vm.filterCurrencies()
       selectDefaultCurrency()
@@ -93,14 +105,6 @@ angular.module 'mnoEnterpriseAngular'
       vm.filteredPricingPlans = _.filter(vm.subscription.product.pricing_plans,
         (pp) -> (pp.pricing_type in PRICING_TYPES['unpriced']) || _.some(pp.prices, (p) -> p.currency == vm.selectedCurrency)
       )
-
-    vm.next = (subscription, currency) ->
-      MnoeProvisioning.setSubscription(subscription)
-      MnoeProvisioning.setSelectedCurrency(currency)
-      if vm.subscription.product.custom_schema?
-        $state.go('home.provisioning.additional_details', urlParams)
-      else
-        $state.go('home.provisioning.confirm', urlParams)
 
     vm.subscriptionPlanText = switch $stateParams.editAction.toLowerCase()
       when 'new'
