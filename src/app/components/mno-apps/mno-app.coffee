@@ -12,6 +12,7 @@ angular.module 'mnoEnterpriseAngular'
     vm.isLoading = true
     vm.app = {}
     vm.searchWord = ""
+    vm.arePlansAvailable = true
     # The already installed app instance of the app, if any
     vm.appInstance = null
     # An already installed app, conflicting with the app because it contains a common subcategory
@@ -37,11 +38,13 @@ angular.module 'mnoEnterpriseAngular'
 
     vm.pricedPlan = ProvisioningHelper.pricedPlan
 
-    getPricingPlans = (app) ->
+    getPricingPlans = () ->
       if vm.isPriceShown
         plans = vm.app.pricing_plans
-        currency = MnoeConfig.marketplaceCurrency()
-        vm.pricing_plans = plans[currency] || plans.AUD || plans.default
+        if plans[vm.currency]
+          vm.pricing_plans = plans[vm.currency]
+        else
+          vm.arePlansAvailable = false
 
     # Public initialization - app only, without considering reviews/org
     MnoeMarketplace.getApps().then(
@@ -53,8 +56,11 @@ angular.module 'mnoEnterpriseAngular'
         vm.app = _.findWhere(apps, { nid: appId })
         vm.app ||= _.findWhere(apps, { id:  appId })
 
+        # Init currency
+        vm.currency = MnoeOrganizations.selected.organization.billing_currency || MnoeConfig.marketplaceCurrency()
+
         # Init Pricing Plans
-        getPricingPlans(vm.app)
+        getPricingPlans()
 
         $state.go(parentState) unless vm.app?
         vm.isLoading = false
@@ -73,7 +79,7 @@ angular.module 'mnoEnterpriseAngular'
       vm.appInstance = appInstance
 
       # Update Pricing Plans
-      getPricingPlans(vm.app)
+      getPricingPlans()
 
       # Is the product externally provisioned
       vm.isExternallyProvisioned = (vm.isProvisioningEnabled && product?.externally_provisioned)

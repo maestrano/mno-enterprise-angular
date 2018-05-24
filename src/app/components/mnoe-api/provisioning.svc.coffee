@@ -124,11 +124,12 @@ angular.module 'mnoEnterpriseAngular'
           )
       )
 
-    @getSubscriptionEvents = (subscriptionId) ->
+    @getSubscriptionEvents = (subscriptionId, sort, params = {}) ->
+      params["order_by"] = sort
       deferred = $q.defer()
       MnoeOrganizations.get().then(
         (response) ->
-          MnoeApiSvc.one('organizations', response.organization.id).one('subscriptions', subscriptionId).customGETLIST('subscription_events').then(
+          MnoeApiSvc.one('organizations', response.organization.id).one('subscriptions', subscriptionId).customGETLIST('subscription_events', params).then(
             (response) ->
               deferred.resolve(response)
           )

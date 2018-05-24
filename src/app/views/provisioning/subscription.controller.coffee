@@ -4,7 +4,6 @@ angular.module 'mnoEnterpriseAngular'
     vm = this
 
     vm.isLoading = true
-
     # We must use model schemaForm's sf-model, as #json_schema_opts are namespaced under model
     vm.model = {}
     # Methods under the vm.model are used for calculated fields under #json_schema_opts.
@@ -19,16 +18,18 @@ angular.module 'mnoEnterpriseAngular'
     MnoeProvisioning.fetchSubscription($stateParams.id, $stateParams.cart).then(
       (response) ->
         vm.subscription = response
-        if vm.subscription.custom_data?
+        unless _.isEmpty(vm.subscription.custom_data)
           vm.model = vm.subscription.custom_data
-          MnoeMarketplace.findProduct(id: vm.subscription.product_id).then(
-            (response) ->
-              vm.schema = if response.custom_schema then JSON.parse(response.custom_schema) else {}
-              vm.form = if response.asf_options then JSON.parse(response.asf_options) else ["*"]
+
+          MnoeMarketplace.fetchCustomSchema(vm.subscription.product_id).then((response) ->
+            # Some products have custom schemas, whereas others do not.
+            resp = JSON.parse(response)
+            vm.form = resp?.asf_options || ["*"]
+            vm.schema = resp?.json_schema || resp
           )
     ).finally(-> vm.isLoading = false)
 
-    MnoeProvisioning.getSubscriptionEvents($stateParams.id).then(
+    MnoeProvisioning.getSubscriptionEvents($stateParams.id, 'created_at.desc').then(
       (response) ->
         vm.subscriptionEvents = response
     )
