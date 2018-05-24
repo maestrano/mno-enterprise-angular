@@ -6,7 +6,6 @@ angular.module 'mnoEnterpriseAngular'
     vm.subscription = MnoeProvisioning.getCachedSubscription()
     vm.selectedCurrency = ""
     vm.filteredPricingPlans = []
-
     vm.isCurrencySelectionEnabled = MnoeConfig.isCurrencySelectionEnabled()
     vm.pricedPlan = ProvisioningHelper.pricedPlan
     urlParams = {

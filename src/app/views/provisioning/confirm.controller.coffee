@@ -24,6 +24,7 @@ angular.module 'mnoEnterpriseAngular'
           $state.go('home.provisioning.additional_details', urlParams, {reload: reload})
 
     vm.disableEdit = () ->
+      return false if vm.subscription.product?.custom_schema
       vm.subscription.product.product_type == 'application' && (!vm.subscription.product.single_billing_enabled || !vm.subscription.product.billed_locally)
 
     # Happens when the user reload the browser during the provisioning workflow.
