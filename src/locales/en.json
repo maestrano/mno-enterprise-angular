@@ -769,7 +769,6 @@
   "mno_enterprise.templates.dashboard.provisioning.subscriptions.new": "New install",
   "mno_enterprise.templates.dashboard.provisioning.subscriptions.change": "Change plan",
   "mno_enterprise.templates.dashboard.provisioning.subscriptions.modify": "Modify",
-  "mno_enterprise.templates.dashboard.provisioning.subscriptions.cart.cancel": "Remove Item",
   "mno_enterprise.templates.dashboard.provisioning.subscriptions.cart.cancel_modal.title": "Remove Item",
   "mno_enterprise.templates.dashboard.provisioning.subscriptions.cart.cancel_modal.body": "This will remove the subscription from the cart. Continue?",
   "mno_enterprise.templates.dashboard.provisioning.subscriptions.renew": "Renew",

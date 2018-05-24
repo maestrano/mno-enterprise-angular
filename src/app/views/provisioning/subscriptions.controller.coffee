@@ -20,9 +20,6 @@ angular.module 'mnoEnterpriseAngular'
         headerText = 'mno_enterprise.templates.dashboard.provisioning.subscriptions.cancel_modal.title'
         bodyText = 'mno_enterprise.templates.dashboard.provisioning.subscriptions.cancel_modal.body'
 
-      # TODO: When cart item is removed, we want to update the cart subscriptions
-      #       and not show cancelled subscription in response.
-
       modalOptions =
         headerText: headerText
         bodyText: bodyText

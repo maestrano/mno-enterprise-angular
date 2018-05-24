@@ -16,7 +16,7 @@ DashboardCompanyCartCtrl = ($scope, MnoeProvisioning) ->
   #====================================
   # Post-Initialization
   #====================================
-  $scope.$watch MnoeProvisioning.getSubscriptionsPromise, (val) ->
+  $scope.$watch MnoeProvisioning.getCartSubscriptionsPromise, (val) ->
     cartSubscriptions()
 
 angular.module 'mnoEnterpriseAngular'

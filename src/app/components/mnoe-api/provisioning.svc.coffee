@@ -8,7 +8,7 @@ angular.module 'mnoEnterpriseAngular'
     subscription = {}
     selectedCurrency = ""
 
-    @subscriptionsPromise = null
+    @cartSubscriptionsPromise = null
 
     defaultSubscription = {
       id: null
@@ -17,8 +17,8 @@ angular.module 'mnoEnterpriseAngular'
       custom_data: {}
     }
 
-    @getSubscriptionsPromise = ->
-      _self.subscriptionsPromise
+    @getCartSubscriptionsPromise = ->
+      _self.cartSubscriptionsPromise
 
     @setSubscription = (s) ->
       subscription = s
@@ -100,7 +100,7 @@ angular.module 'mnoEnterpriseAngular'
       return deferred.promise
 
     @getSubscriptions = (params = {}, cart = false) ->
-      return _self.subscriptionsPromise if cart && _self.subscriptionsPromise?
+      return _self.cartSubscriptionsPromise if cart && _self.cartSubscriptionsPromise?
 
       deferred = $q.defer()
       MnoeOrganizations.get().then(
@@ -110,7 +110,7 @@ angular.module 'mnoEnterpriseAngular'
               deferred.resolve(response)
           )
       )
-      _self.subscriptionsPromise = deferred.promise if cart
+      _self.cartSubscriptionsPromise = deferred.promise if cart
       return deferred.promise
 
     @cancelSubscription = (s) ->
@@ -158,7 +158,7 @@ angular.module 'mnoEnterpriseAngular'
       return deferred.promise
 
     @emptySubscriptions = () ->
-      _self.subscriptionsPromise = null
+      _self.cartSubscriptionsPromise = null
 
     @refreshSubscriptions = ->
       _self.emptySubscriptions()
