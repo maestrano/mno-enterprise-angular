@@ -52,7 +52,7 @@ angular.module 'mnoEnterpriseAngular'
           # Filters the pricing plans not containing current currency
           vm.filterCurrencies()
           MnoeProvisioning.setSubscription(vm.subscription)
-        ).finally(-> vm.isLoading = false)
+        )
 
     fetchCustomSchema = () ->
       MnoeMarketplace.fetchCustomSchema(vm.productId, { editAction: $stateParams.editAction }).then((response) ->
