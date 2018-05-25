@@ -109,10 +109,10 @@
       <div class="col-md-12">
         <div class="well">
           <h2>{{ 'mno_enterprise.templates.dashboard.marketplace.show.price' | translate }}</h2>
-          <div translate ng-if="!vm.arePlansAvailable">
+          <div translate ng-if="!vm.pricing_plans">
             {{ 'mno_enterprise.templates.dashboard.marketplace.show.no_pricing_plans_found' | translate }}
           </div>
-          <ul ng-if="vm.arePlansAvailable">
+          <ul ng-if="vm.pricing_plans">
             <li ng-if="vm.app.free_trial_duration > 0">
               <b>{{ 'mno_enterprise.templates.dashboard.marketplace.show.free_trial_duration' | translate }}</b>: {{vm.app.free_trial_duration}} {{vm.app.free_trial_unit}}
             </li>

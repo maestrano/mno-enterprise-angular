@@ -4,9 +4,9 @@ angular.module 'mnoEnterpriseAngular'
       app: '<'
     },
     templateUrl: 'app/components/mno-app-install-btn/mno-app-install-btn.html',
-    controller: ($q, $state, $window, $uibModal, toastr, MnoeMarketplace, MnoeProvisioning, MnoeCurrentUser, MnoeOrganizations, MnoeAppInstances, MnoeConfig) ->
+    controller: ($q, $state, $window, $uibModal, toastr, MnoeMarketplace, MnoeProvisioning, MnoeCurrentUser, MnoeOrganizations, MnoeAppInstances, MnoeConfig, ProvisioningHelper) ->
       vm = this
-      vm.arePlansAvailable = true
+      vm.orderPossible = true
       vm.buttonText = ''
       vm.buttonDisabledTooltip = ''
 
@@ -36,12 +36,12 @@ angular.module 'mnoEnterpriseAngular'
       vm.canProvisionApp = false
 
       vm.buttonDisabled = () ->
-        !vm.canProvisionApp || vm.appInstallationStatus() == "CONFLICT" || !vm.arePlansAvailable
+        !vm.canProvisionApp || vm.appInstallationStatus() == "CONFLICT" || !vm.orderPossible
 
       vm.updateButtonDisabledTooltip = () ->
         if !vm.canProvisionApp
           'mno_enterprise.templates.components.app_install_btn.insufficient_privilege'
-        else if !vm.arePlansAvailable
+        else if !vm.orderPossible
           'mno_enterprise.templates.dashboard.marketplace.show.no_pricing_plans_found_tooltip'
 
       vm.updateButtonText = () ->
@@ -167,8 +167,6 @@ angular.module 'mnoEnterpriseAngular'
             products = response.products?.products
             currency = MnoeOrganizations.selected.organization.billing_currency || MnoeConfig.marketplaceCurrency()
             plans = vm.app.pricing_plans
-            if !plans[currency]
-              vm.arePlansAvailable = false
 
             # Get number of organizations with at least an admin role
             authorizedOrganizations = _.filter(currentUser.organizations, (org) ->
@@ -201,6 +199,12 @@ angular.module 'mnoEnterpriseAngular'
 
             # Is the product externally provisioned
             vm.isExternallyProvisioned = vm.isProvisioningEnabled && (product?.product_type == 'application' || product?.externally_provisioned)
+            # Is currency selection enabled
+            currencySelection = MnoeConfig.isCurrencySelectionEnabled()
+            # Are there any available plans
+            availablePlans = ProvisioningHelper.plansForCurrency(plans, currency)
+
+            vm.orderPossible = !_.isEmpty(availablePlans) || (plans.default&[0] && currencySelection) || ProvisioningHelper.skipPriceSelection(product)
 
             vm.buttonText = vm.updateButtonText()
             vm.buttonDisabledTooltip = vm.updateButtonDisabledTooltip()

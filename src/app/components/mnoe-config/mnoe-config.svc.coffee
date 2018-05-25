@@ -197,10 +197,10 @@ angular.module 'mnoEnterpriseAngular'
         false
 
     @availableBillingCurrencies = () ->
-      if DASHBOARD_CONFIG.available_billing_currencies?
-        DASHBOARD_CONFIG.available_billing_currencies
+      if ADMIN_PANEL_CONFIG.available_billing_currencies?
+        ADMIN_PANEL_CONFIG.available_billing_currencies
       else
-        $log.debug("DASHBOARD_CONFIG.billing_currencies missing")
+        $log.debug("ADMIN_PANEL_CONFIG.available_billing_currencies missing")
         ['AED', 'AUD', 'CAD', 'EUR', 'GBP', 'HKD', 'JPY', 'NZD', 'SGD', 'USD']
 
     return @
