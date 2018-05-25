@@ -34,7 +34,7 @@ angular.module 'mnoEnterpriseAngular'
           vm.subscription = response.subscription
         )
 
-    vm.filterCurrencies = () ->
+    filterCurrencies = () ->
       vm.filteredPricingPlans = ProvisioningHelper.planForCurrency(vm.subscription.product.pricing_plans, vm.orgCurrency)
 
     selectDefaultCurrency = () ->
@@ -43,27 +43,24 @@ angular.module 'mnoEnterpriseAngular'
       else
         vm.selectedCurrency = vm.currencies[0]
 
-
     fetchProduct = () ->
       # When in edit mode, we will be getting the product ID from the subscription, otherwise from the url.
       vm.productId = vm.subscription.product?.id || $stateParams.productId
       MnoeMarketplace.getProduct(vm.productId).then(
         (response) ->
           vm.subscription.product = response
-
           # Get all the possible currencies
           populateCurrencies()
-
-          # Set a default currency
           selectDefaultCurrency()
+
           # Filters the pricing plans not containing current currency
-          vm.filteredPricingPlans = ProvisioningHelper.planForCurrency(vm.subscription.product.pricing_plans, vm.orgCurrency)
+          filterCurrencies()
+
           MnoeProvisioning.setSubscription(vm.subscription)
         )
 
     fetchCustomSchema = () ->
       MnoeMarketplace.fetchCustomSchema(vm.productId, { editAction: $stateParams.editAction }).then((response) ->
-        # Some products have custom schemas, whereas others do not.
         vm.subscription.product.custom_schema = response
       )
 
@@ -87,10 +84,11 @@ angular.module 'mnoEnterpriseAngular'
       # Skip this view when subscription plan is not editable
       vm.next(vm.subscription, vm.subscription.currency) if vm.skipPriceSelection(vm.subscription.product)
 
-      # Filter currencies if we are using a cached subscription
+      # Grab subscription's selected pricing plan's currency, then filter currencies.
+      vm.orgCurrency = MnoeProvisioning.getSelectedCurrency()
       populateCurrencies()
-      vm.filteredPricingPlans = vm.filterCurrencies()
       selectDefaultCurrency()
+      filterCurrencies()
 
       vm.isLoading = false
 
