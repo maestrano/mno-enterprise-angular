@@ -56,7 +56,7 @@ angular.module 'mnoEnterpriseAngular'
     vm.deleteCart = ->
       MnoeProvisioning.deleteCartSubscriptions().then(
         (response) ->
-          MnoeProvisioning.emptySubscriptions()
+          MnoeProvisioning.emptyCartSubscriptions()
           toastr.info('mno_enterprise.templates.dashboard.provisioning.subscriptions.cart.delete_cart.toastr')
           $state.go("home.marketplace")
       )
@@ -65,7 +65,7 @@ angular.module 'mnoEnterpriseAngular'
       MnoeProvisioning.submitCartSubscriptions().then(
         (response) ->
           # Reload dock apps
-          MnoeProvisioning.refreshSubscriptions()
+          MnoeProvisioning.refreshCartSubscriptions()
 
           toastr.success('mno_enterprise.templates.dashboard.provisioning.subscriptions.cart.submit_cart.toastr')
           $state.go("home.subscriptions", {subType: 'active'})

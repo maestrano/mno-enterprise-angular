@@ -170,11 +170,11 @@ angular.module 'mnoEnterpriseAngular'
       )
       return deferred.promise
 
-    @emptySubscriptions = () ->
+    @emptyCartSubscriptions = () ->
       _self.cartSubscriptionsPromise = null
 
-    @refreshSubscriptions = ->
-      _self.emptySubscriptions()
-      _self.getSubscriptions({ where: {staged_subscriptions: true } })
+    @refreshCartSubscriptions = ->
+      _self.emptyCartSubscriptions()
+      _self.getSubscriptions({ where: {subscription_status_in: 'staged' } })
 
     return

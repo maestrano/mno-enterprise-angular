@@ -38,7 +38,7 @@ angular.module 'mnoEnterpriseAngular'
       MnoeProvisioning.saveSubscription(vm.subscription, vm.selectedCurrency).then(
         (response) ->
           if $stateParams.cart == 'true' && $stateParams.editAction == 'cancel'
-            MnoeProvisioning.refreshSubscriptions()
+            MnoeProvisioning.refreshCartSubscriptions()
             $state.go("home.subscriptions", {subType: 'cart'})
           else
             MnoeProvisioning.setSubscription(response)
@@ -55,7 +55,7 @@ angular.module 'mnoEnterpriseAngular'
       vm.subscription.cart_entry = true
       MnoeProvisioning.saveSubscription(vm.subscription).then(
         (response) ->
-          MnoeProvisioning.refreshSubscriptions()
+          MnoeProvisioning.refreshCartSubscriptions()
           $state.go('home.marketplace')
       ).finally(-> vm.isLoading = false)
 
