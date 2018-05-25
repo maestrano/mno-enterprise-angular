@@ -227,35 +227,46 @@
           <div class='col-xs-12'>
             <mno-loader ng-show="vm.isOrderHistoryLoading" class='top-buffer-4'></mno-loader>
             <div ng-show="!vm.isOrderHistoryLoading" class='well order-histroy top-buffer-2'>
-              <div class='bottom-buffer-3'>
-                <div class='row subscription-event'>
-                  <div class='col-sm-4'>
-                    <label>
-                      {{ 'mno_enterprise.templates.dashboard.app_management.manage.tab.order_history.start_date' | translate }}
-                    </label>
-                  </div>
-                  <div class='col-sm-4'>
-                    <label>
-                      {{ 'mno_enterprise.templates.dashboard.app_management.manage.tab.order_history.offer_name' | translate }}
-                    </label>
-                  </div>
-                  <div class='col-sm-4'>
-                    <label>
-                      {{ 'mno_enterprise.templates.dashboard.app_management.manage.tab.order_history.status' | translate }}
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div ng-repeat="subscription in vm.subscriptionsHistory">
-                <div class='row'>
-                  <div class='col-sm-4'>{{ subscription.start_date | amDateFormat: 'L' }}</div>
-                  <div class='col-sm-4'>{{ subscription.product_pricing.name }}</div>
-                  <div class='col-sm-4'>{{ subscription.status }}</div>
-                </div>
-              </div>
-              <span ng-show="vm.subscriptionsHistory.length == 0">
+              <div ng-if="!vm.subscriptionsHistory">
                 {{ 'mno_enterprise.templates.dashboard.app_management.manage.tab.order_history.no_history' | translate }}
-              </span>
+              </div>
+              <div ng-if="vm.subscriptionsHistory">
+                <div class='bottom-buffer-1'>
+                  <div class='row subscription-event'>
+                    <div class='col-sm-3'>
+                      <label>
+                        {{ 'mno_enterprise.templates.dashboard.app_management.manage.tab.order_history.start_date' | translate }}
+                      </label>
+                    </div>
+                    <div class='col-sm-3'>
+                      <label>
+                        {{ 'mno_enterprise.templates.dashboard.app_management.manage.tab.order_history.event_type' | translate }}
+                      </label>
+                    </div>
+                    <div class='col-sm-3'>
+                      <label>
+                        {{ 'mno_enterprise.templates.dashboard.app_management.manage.tab.order_history.status' | translate }}
+                      </label>
+                    </div>
+                    <div class='col-sm-3'>
+                      <label>
+                        {{ 'mno_enterprise.templates.dashboard.app_management.manage.tab.order_history.message' | translate }}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div ng-repeat="subscriptionEvent in vm.subscriptionsHistory">
+                  <div class='row'>
+                    <div class='col-sm-3'>{{ subscriptionEvent.created_at | amDateFormat: 'L' }}</div>
+                    <div class='col-sm-3'>{{ subscriptionEvent.event_type }}</div>
+                    <div class='col-sm-3'>{{ subscriptionEvent.status }}</div>
+                    <div class='col-sm-3'>{{ subscriptionEvent.message }}</div>
+                  </div>
+                </div>
+                <span ng-show="vm.subscriptionsHistory.length == 0">
+                  {{ 'mno_enterprise.templates.dashboard.app_management.manage.tab.order_history.no_history' | translate }}
+                </span>
+              </div>
             </div>
           </div>
         </div>
