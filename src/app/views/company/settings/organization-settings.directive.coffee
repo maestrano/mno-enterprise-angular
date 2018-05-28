@@ -63,6 +63,8 @@ DashboardOrganizationSettingsCtrl = ($scope, $window, MnoeOrganizations, Utiliti
   $scope.getAvailableBillingCurrencies = ->
     $scope.currencies = MnoeConfig.availableBillingCurrencies()
 
+  $scope.mainAddressRequired = MnoeOrganizations.mainAddressRequired()
+
   #====================================
   # Post-Initialization
   #====================================

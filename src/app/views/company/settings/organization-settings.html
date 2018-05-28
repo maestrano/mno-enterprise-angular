@@ -30,7 +30,7 @@
     </div>
 
     <!-- Organization main address -->
-    <div class="form-group">
+    <div class="form-group" ng-if="mainAddressRequired">
       <label class="col-sm-3 control-label">{{ 'mno_enterprise.templates.dashboard.organization.settings.main_address' | translate }}</label>
       <mno-address-input class="settings-address" address="model.main_address_attributes"></mno-address-input>
     </div>
