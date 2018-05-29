@@ -26,7 +26,6 @@ DashboardCompanySelectboxCtrl = ($scope, $state, $stateParams, $uibModal, MnoeCu
     MnoeAppInstances.clearCache()
     MnoeProductInstances.clearCache()
     MnoeOrganizations.get(organization.id)
-    MnoeProvisioning.refreshCartSubscriptions()
     selectBox.close()
 
   selectOrganization = ->
