@@ -95,7 +95,11 @@ angular.module 'mnoEnterpriseAngular'
 
     vm.selectPlan = (pricingPlan)->
       vm.subscription.product_pricing = pricingPlan
-      vm.subscription.max_licenses ||= 1 if vm.subscription.product_pricing.license_based
+      if vm.subscription.product_pricing.license_based
+        vm.subscription.max_licenses ||= 1
+      else
+        # Reset max licenses, as they may have already been set on the subscription
+        vm.subscription.max_licenses = null
 
     vm.skipPriceSelection = (product) ->
       product.product_type == 'application' && (!product.single_billing_enabled || !product.billed_locally)
