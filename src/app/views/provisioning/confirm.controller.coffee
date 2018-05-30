@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningConfirmCtrl', ($scope, $state, $stateParams, MnoeOrganizations, MnoeProvisioning, MnoeAppInstances, MnoeConfig) ->
+  .controller('ProvisioningConfirmCtrl', ($scope, $state, $stateParams, MnoeOrganizations, MnoeProvisioning, MnoeAppInstances, MnoeConfig, ProvisioningHelper, schemaForm) ->
 
     vm = this
 
@@ -16,6 +16,16 @@ angular.module 'mnoEnterpriseAngular'
       editAction: $stateParams.editAction,
       cart: $stateParams.cart
 
+    setCustomSchema = () ->
+      vm.model = vm.subscription.custom_data || {}
+      schemaForm.jsonref(JSON.parse(vm.subscription.product.custom_schema))
+        .then((schema) -> schemaForm.jsonref(schema))
+        .then((schema) -> schemaForm.jsonref(schema))
+        .then((schema) ->
+          vm.schema = schema.json_schema || schema
+          vm.form = schema.asf_options || ["*"]
+        )
+
     vm.editOrder = (reload = true) ->
       switch $stateParams.editAction.toLowerCase()
         when 'change', 'new', null
@@ -31,6 +41,8 @@ angular.module 'mnoEnterpriseAngular'
       vm.singleBilling = vm.subscription.product.single_billing_enabled
       vm.billedLocally = vm.subscription.product.billed_locally
       vm.subscription.edit_action = $stateParams.editAction
+      # Render custom Schema if it exists
+      setCustomSchema() if vm.subscription.custom_data && vm.subscription.product.custom_schema
 
     vm.validate = () ->
       vm.isLoading = true
