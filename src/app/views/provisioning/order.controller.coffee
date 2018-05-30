@@ -14,7 +14,6 @@ angular.module 'mnoEnterpriseAngular'
       editAction: $stateParams.editAction,
       cart: $stateParams.cart
     }
-    vm.skipPriceSelection = ProvisioningHelper.skipPricingPlans
 
     vm.next = (subscription, currency) ->
       MnoeProvisioning.setSubscription(subscription)
@@ -82,7 +81,7 @@ angular.module 'mnoEnterpriseAngular'
         .finally(() -> vm.isLoading = false)
     else
       # Skip this view when subscription plan is not editable
-      vm.next(vm.subscription, vm.subscription.currency) if vm.skipPriceSelection(vm.subscription.product)
+      vm.next(vm.subscription, vm.subscription.currency) if ProvisioningHelper.skipPricingPlans(vm.subscription.product)
 
       # Grab subscription's selected pricing plan's currency, then filter currencies.
       vm.orgCurrency = MnoeProvisioning.getSelectedCurrency()
