@@ -6,6 +6,7 @@ angular.module 'mnoEnterpriseAngular'
     vm.isLoading = false
     vm.subscription = MnoeProvisioning.getCachedSubscription()
     vm.selectedCurrency = MnoeProvisioning.getSelectedCurrency()
+    vm.cartItem = $stateParams.cart == 'true'
 
     vm.orderTypeText = 'mno_enterprise.templates.dashboard.provisioning.subscriptions.' + $stateParams.editAction.toLowerCase()
 
@@ -34,10 +35,10 @@ angular.module 'mnoEnterpriseAngular'
     vm.validate = () ->
       vm.isLoading = true
       vm.subscription.edit_action = $stateParams.editAction
-      vm.subscription.cart_entry = true if $stateParams.cart == 'true'
+      vm.subscription.cart_entry = true if vm.cartItem
       MnoeProvisioning.saveSubscription(vm.subscription, vm.selectedCurrency).then(
         (response) ->
-          if $stateParams.cart == 'true' && $stateParams.editAction == 'cancel'
+          if vm.cartItem
             MnoeProvisioning.refreshCartSubscriptions()
             $state.go("home.subscriptions", {subType: 'cart'})
           else
