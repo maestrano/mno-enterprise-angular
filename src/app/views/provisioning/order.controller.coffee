@@ -60,7 +60,7 @@ angular.module 'mnoEnterpriseAngular'
       fetchSubscription()
         .then(fetchProduct)
         .then(fetchCustomSchema)
-        .then(() -> vm.next(vm.subscription, vm.selectedCurrency) if vm.skipPriceSelection(vm.subscription.product))
+        .then(() -> vm.next(vm.subscription, vm.selectedCurrency) if ProvisioningHelper.skipPriceSelection(vm.subscription.product))
         .catch((error) ->
           toastr.error('mnoe_admin_panel.dashboard.provisioning.subscriptions.product_error')
           $state.go('home.subscriptions', {subType: if urlParams.cart then 'cart' else 'active'})
@@ -96,9 +96,6 @@ angular.module 'mnoEnterpriseAngular'
     vm.selectPlan = (pricingPlan)->
       vm.subscription.product_pricing = pricingPlan
       vm.subscription.max_licenses ||= 1 if vm.subscription.product_pricing.license_based
-
-    vm.skipPriceSelection = (product) ->
-      product.product_type == 'application' && (!product.single_billing_enabled || !product.billed_locally)
 
     # Delete the cached subscription when we are leaving the subscription workflow.
     $scope.$on('$stateChangeStart', (event, toState) ->
