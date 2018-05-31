@@ -64,7 +64,7 @@ angular.module 'mnoEnterpriseAngular'
       # The order is editable if the product has a custom schema.
       return true if vm.subscription.product?.custom_schema
       # Disable editing if unable to initially select a pricing plan.
-      return false if ProvisioningHelper.skipPricingPlans(vm.subscription.product)
+      return false if ProvisioningHelper.skipPriceSelection(vm.subscription.product)
       switch $stateParams.editAction
         when 'change', 'new'
           true

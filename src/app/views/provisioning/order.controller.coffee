@@ -32,8 +32,8 @@ angular.module 'mnoEnterpriseAngular'
           vm.orgCurrency = response.organization.organization?.billing_currency || MnoeConfig.marketplaceCurrency()
           vm.subscription = response.subscription
         )
-
-    filterCurrencies = () ->
+    # Filters the pricing plans not containing current currency
+    vm.filterPricingPlans = () ->
       vm.filteredPricingPlans = ProvisioningHelper.planForCurrency(vm.subscription.product.pricing_plans, vm.selectedCurrency)
 
     selectDefaultCurrency = () ->
@@ -53,7 +53,7 @@ angular.module 'mnoEnterpriseAngular'
           selectDefaultCurrency()
 
           # Filters the pricing plans not containing current currency
-          filterCurrencies()
+          vm.filterPricingPlans()
 
           MnoeProvisioning.setSubscription(vm.subscription)
         )
@@ -81,25 +81,19 @@ angular.module 'mnoEnterpriseAngular'
         .finally(() -> vm.isLoading = false)
     else
       # Skip this view when subscription plan is not editable
-      vm.next(vm.subscription, vm.subscription.currency) if ProvisioningHelper.skipPricingPlans(vm.subscription.product)
+      vm.next(vm.subscription, vm.subscription.currency) if ProvisioningHelper.skipPriceSelection(vm.subscription.product)
 
       # Grab subscription's selected pricing plan's currency, then filter currencies.
       vm.orgCurrency = MnoeProvisioning.getSelectedCurrency()
       populateCurrencies()
       selectDefaultCurrency()
-      filterCurrencies()
+      vm.filterPricingPlans()
 
       vm.isLoading = false
 
     vm.select_plan = (pricingPlan)->
       vm.subscription.product_pricing = pricingPlan
       vm.subscription.max_licenses ||= 1 if vm.subscription.product_pricing.license_based
-
-    # Filters the pricing plans not containing current currency
-    vm.pricingPlanFilter = () ->
-      vm.filteredPricingPlans = _.filter(vm.subscription.product.pricing_plans,
-        (pp) -> (pp.pricing_type in PRICING_TYPES['unpriced']) || _.some(pp.prices, (p) -> p.currency == vm.selectedCurrency)
-      )
 
     vm.subscriptionPlanText = switch $stateParams.editAction.toLowerCase()
       when 'new'
