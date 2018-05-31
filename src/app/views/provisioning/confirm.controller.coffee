@@ -17,13 +17,14 @@ angular.module 'mnoEnterpriseAngular'
       cart: $stateParams.cart
 
     setCustomSchema = () ->
-      vm.model = vm.subscription.custom_data || {}
-      schemaForm.jsonref(JSON.parse(vm.subscription.product.custom_schema))
+      parsedSchema = JSON.parse(vm.subscription.product.custom_schema)
+      schema = parsedSchema.json_schema || parsedSchema
+      vm.form = parsedSchema.asf_options || ["*"]
+      schemaForm.jsonref(schema)
         .then((schema) -> schemaForm.jsonref(schema))
         .then((schema) -> schemaForm.jsonref(schema))
         .then((schema) ->
-          vm.schema = schema.json_schema || schema
-          vm.form = schema.asf_options || ["*"]
+          vm.schema = schema
         )
 
     vm.editOrder = (reload = true) ->
