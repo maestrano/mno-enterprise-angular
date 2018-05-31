@@ -5,7 +5,11 @@ angular.module 'mnoEnterpriseAngular'
     vm.isLoading = true
     vm.selectedCurrency = MnoeProvisioning.getSelectedCurrency()
     MnoeProvisioning.initSubscription({subscriptionId: $stateParams.subscriptionId})
-      .then((response) -> vm.subscription = response)
+      .then((response) ->
+        vm.subscription = response
+        vm.singleBilling = vm.subscription.product.single_billing_enabled
+        vm.billedLocally = vm.subscription.product.billed_locally
+        )
       .finally(() -> vm.isLoading = false)
 
     vm.orderTypeText = 'mno_enterprise.templates.dashboard.provisioning.subscriptions.' + $stateParams.editAction.toLowerCase()

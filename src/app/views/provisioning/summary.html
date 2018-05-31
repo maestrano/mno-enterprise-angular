@@ -15,64 +15,87 @@
       <i class="fa fa-refresh fa-spin fa-4x"></i>
     </div>
 
-    <div ng-show="!vm.isLoading && vm.subscription.product_pricing" class="table-cell">
-      <div class="row th-row hidden-xs">
-        <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.summary.name' | translate }}</div>
-        <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.summary.order_type' | translate }}</div>
-        <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.summary.description' | translate }}</div>
-        <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.summary.price' | translate }}</div>
-      </div>
-
-      <div class="row td-row">
-        <div class="cell col-sm-3">
-          <span class="cell-label visible-xs-inline">
-            {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.name' | translate }}:
-          </span>
-          {{ vm.subscription.product_pricing.name }}
+    <div ng-hide="vm.isLoading">
+      <div class="table-cell">
+        <div class="row th-row hidden-xs">
+          <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.summary.order_type' | translate }}</div>
+          <div ng-show="vm.subscription.product.product_type == 'application'" class="cell col-sm-7">{{ 'mno_enterprise.templates.dashboard.provisioning.summary.pricing_info.title' | translate }}</div>
         </div>
-
-        <div class="cell col-sm-3">
-          <span class="cell-label visible-xs-inline">
-            {{ 'mno_enterprise.templates.dashboard.provisioning.summary.order_type' | translate }}:
-          </span>
-          {{ vm.orderTypeText | translate }}
-        </div>
-
-        <div class="cell col-sm-3">
-          <span class="cell-label visible-xs-inline">
-            {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.description' | translate }}:
-          </span>
-          {{ vm.subscription.product_pricing.description }}
-        </div>
-
-        <div class="cell col-sm-3">
-          <span class="cell-label visible-xs-inline">
-            {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.price' | translate }}:
-          </span>
-
-          <div ng-hide="vm.subscription.product_pricing.pricing_type == 'payg'">
-            <div ng-repeat="price in vm.subscription.product_pricing.prices | filterBy: ['currency']: vm.selectedCurrency" class="badge">
-              <span ng-hide="vm.subscription.product_pricing.license_based">
-                {{ price.currency }} {{ price.price_cents / 100 | number:2 }}
-                <span ng-show="vm.subscription.product_pricing.pricing_type == 'recurring'">
-                  / {{ vm.subscription.product_pricing.per_unit }} / {{ vm.subscription.product_pricing.per_duration }}
-                </span>
-              </span>
-              <span ng-show="vm.subscription.product_pricing.license_based">
-                {{ price.currency }} {{ price.price_cents / 100 * vm.subscription.max_licenses | number:2 }}
-                <span ng-show="vm.subscription.product_pricing.pricing_type == 'recurring'">
-                  / {{ vm.subscription.product_pricing.per_duration }}
-                </span>
-              </span>
+        <div class="row td-row">
+          <div class="cell col-sm-3">
+            <span class="cell-label visible-xs-inline">
+              {{ 'mno_enterprise.templates.dashboard.provisioning.summary.order_type' | translate }}:
+            </span>
+            {{ vm.orderTypeText | translate }}
+          </div>
+          <div ng-show="vm.subscription.product.product_type == 'application'" class="cell col-sm-7">
+            <span class="cell-label visible-xs-inline">
+              {{ 'mno_enterprise.templates.dashboard.provisioning.summary.pricing_info.title' | translate }}:
+            </span>
+            <div ng-hide="vm.singleBilling">
+              {{ 'mno_enterprise.templates.dashboard.provisioning.summary.pricing_info.single_billing_disabled' | translate }}
+            </div>
+            <div ng-show="vm.singleBilling && !vm.billedLocally">
+              {{ 'mno_enterprise.templates.dashboard.provisioning.summary.pricing_info.externally_managed' | translate }}
+            </div>
+            <div ng-show="vm.singleBilling && vm.billedLocally">
+              {{ 'mno_enterprise.templates.dashboard.provisioning.summary.pricing_info.billed_locally' | translate }}
             </div>
           </div>
+        </div>
+      </div>
 
-          <span ng-show="vm.subscription.product_pricing.pricing_type == 'payg'">
-            {{ 'mno_enterprise.templates.dashboard.provisioning.order.pricing_type.payg' | translate }}
-          </span>
-          <span ng-show="vm.subscription.product_pricing.pricing_type == 'free'">
-            {{ 'mno_enterprise.templates.dashboard.provisioning.order.pricing_type.free' | translate }}
-          </span>
+      <div ng-show="!vm.isLoading && vm.subscription.product_pricing" class="table-cell">
+        <div class="row th-row hidden-xs">
+          <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.summary.name' | translate }}</div>
+          <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.summary.description' | translate }}</div>
+          <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.summary.price' | translate }}</div>
+        </div>
+
+        <div class="row td-row">
+          <div class="cell col-sm-3">
+            <span class="cell-label visible-xs-inline">
+              {{ 'mno_enterprise.templates.dashboard.provisioning.summary.name' | translate }}:
+            </span>
+            {{ vm.subscription.product_pricing.name }}
+          </div>
+
+          <div class="cell col-sm-3">
+            <span class="cell-label visible-xs-inline">
+              {{ 'mno_enterprise.templates.dashboard.provisioning.summary.description' | translate }}:
+            </span>
+            {{ vm.subscription.product_pricing.description }}
+          </div>
+
+          <div class="cell col-sm-3">
+            <span class="cell-label visible-xs-inline">
+              {{ 'mno_enterprise.templates.dashboard.provisioning.summary.price' | translate }}:
+            </span>
+
+            <div ng-hide="vm.subscription.product_pricing.pricing_type == 'payg'">
+              <div ng-repeat="price in vm.subscription.product_pricing.prices | filterBy: ['currency']: vm.selectedCurrency" class="badge">
+                <span ng-hide="vm.subscription.product_pricing.license_based">
+                  {{ price.currency }} {{ price.price_cents / 100 | number:2 }}
+                  <span ng-show="vm.subscription.product_pricing.pricing_type == 'recurring'">
+                    / {{ vm.subscription.product_pricing.per_unit }} / {{ vm.subscription.product_pricing.per_duration }}
+                  </span>
+                </span>
+                <span ng-show="vm.subscription.product_pricing.license_based">
+                  {{ price.currency }} {{ price.price_cents / 100 * vm.subscription.max_licenses | number:2 }}
+                  <span ng-show="vm.subscription.product_pricing.pricing_type == 'recurring'">
+                    / {{ vm.subscription.product_pricing.per_duration }}
+                  </span>
+                </span>
+              </div>
+            </div>
+
+            <span ng-show="vm.subscription.product_pricing.pricing_type == 'payg'">
+              {{ 'mno_enterprise.templates.dashboard.provisioning.order.pricing_type.payg' | translate }}
+            </span>
+            <span ng-show="vm.subscription.product_pricing.pricing_type == 'free'">
+              {{ 'mno_enterprise.templates.dashboard.provisioning.order.pricing_type.free' | translate }}
+            </span>
+          </div>
         </div>
       </div>
     </div>
