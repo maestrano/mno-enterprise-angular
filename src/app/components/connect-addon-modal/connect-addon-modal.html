@@ -1,0 +1,81 @@
+<div id="connect-addon-modal">
+  <div class="modal-header">
+    <div class="close" type="button" aria-label="Close" ng-click="$ctrl.close()">×</div>
+    <h3 class="modal-title"
+        translate="mno_enterprise.templates.components.addon_connect.title"
+        translate-values="{appname: $ctrl.app.name}"></h3>
+  </div>
+
+  <div>
+    <ul class="breadcrumb" ng-switch on="$ctrl.currentStep">
+      <li ng-switch-when="0">{{"mno_enterprise.templates.components.addon_connect.link_account.title" | translate}}</li>
+      <li ng-switch-when="0"><a href="#" class="not-active">{{"mno_enterprise.templates.components.addon_connect.entities.select" | translate}}</a></li>
+      <li ng-switch-when="0"><a href="#" class="not-active">{{"mno_enterprise.templates.components.addon_connect.sync.start_sync" | translate}}</a></li>
+
+      <li ng-switch-when="1|2" ng-switch-when-separator="|"><a href="#" class="not-active">{{"mno_enterprise.templates.components.addon_connect.link_account.title" | translate}}</a></li>
+      <li ng-switch-when="1">{{"mno_enterprise.templates.components.addon_connect.entities.select" | translate}}</li>
+      <li ng-switch-when="1"><a href="#" ng-click="$ctrl.forceSelectEntities()">{{"mno_enterprise.templates.components.addon_connect.sync.start_sync" | translate}}</a></li>
+
+      <li ng-switch-when="2"><a href="#" ng-click="$ctrl.unselectEntities()">{{"mno_enterprise.templates.components.addon_connect.entities.select" | translate}}</a></li>
+      <li ng-switch-when="2">{{"mno_enterprise.templates.components.addon_connect.sync.start_sync" | translate}}</li>
+    </ul>
+
+    <!-- Link -->
+    <div class="modal-body" ng-show="$ctrl.currentStep == 0">
+      <h4 class="text-center">{{"mno_enterprise.templates.components.addon_connect.link_account.link" | translate:{ appname: $ctrl.app.app_name} }}</h4>
+      <div class="top-buffer-1"></div>
+
+      <form sf-schema="$ctrl.schema" sf-form="$ctrl.form" sf-model="$ctrl.model" ng-submit="$ctrl.submit(setupForm)" name="setupForm" ng-if="!$ctrl.isFormLoading"></form>
+      <mno-loader ng-if="$ctrl.isFormLoading"></mno-loader>
+    </div>
+
+    <!-- Chose Entities -->
+    <div class="modal-body" ng-show="$ctrl.currentStep == 1">
+      <h4 class="text-center">{{"mno_enterprise.templates.components.addon_connect.entities.chose_entities" | translate}}</h4>
+
+      <table class="table-striped table-condensed" width="100%">
+        <tr>
+          <th>{{"mno_enterprise.templates.components.addon_connect.entities.entity" | translate}}</th>
+          <th>{{"mno_enterprise.templates.components.addon_connect.entities.to_app" | translate:{ appname: $ctrl.app.app_name} }}</th>
+          <th>{{"mno_enterprise.templates.components.addon_connect.entities.to_connec" | translate:{ appname: $ctrl.app.app_name} }}</th>
+        </tr>
+        <tr ng-repeat="entity in $ctrl.app.addon_organization.displayable_synchronized_entities">
+          <td>{{entity.connec_name}}</td>
+          <td align="center"><input type="checkbox" ng-model="entity.can_push_to_external" ng-checked="entity.can_push_to_external" ng-disabled="$ctrl.app.addon_organization.push_disabled"></td>
+          <td align="center"><input type="checkbox" ng-model="entity.can_push_to_connec" ng-checked="entity.can_push_to_connec" ng-disabled="ctrl.app.addon_organization.pull_disabled"></td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Historical data -->
+    <div class="modal-body" ng-show="$ctrl.currentStep == 2">
+      <h4 class="text-center">{{"mno_enterprise.templates.components.addon_connect.sync.chose_historical" | translate}}</h4>
+
+      <div>
+        <p translate="mno_enterprise.templates.components.addon_connect.sync.warning_hisorical_html" translate-values="{appname: $ctrl.app.name}"></p>
+        <input ng-model="$ctrl.historicalData" type="checkbox" display=inline-block></input>
+        <small ng-show="!$ctrl.historicalData"
+               translate="mno_enterprise.templates.components.addon_connect.sync.historical_unchecked" translate-values="{date: ($ctrl.date | amDateFormat:'LLL')}">
+        </small>
+        <small translate="mno_enterprise.templates.components.addon_connect.sync.historical_checked" translate-values="{appname: $ctrl.app.name}" ng-show="$ctrl.historicalData"></small>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <div class="btn-toolbar">
+      <button class="btn btn-default" ng-click="$ctrl.close()">{{"mno_enterprise.webhook.o_auth.providers.cancel" | translate}}</button>
+      <div class="pull-right">
+        <button class="btn btn-warning" ng-if="$ctrl.currentStep != 0" ng-click="$ctrl.backClick()" ng-disabled="$ctrl.isDisconnecting">
+          <i class="fa fa-arrow-left"></i>
+          {{"mno_enterprise.templates.components.addon_connect.back" | translate}}
+        </button>
+        <button class="btn btn-success" ng-click="$ctrl.nextClick()" ng-disabled="$ctrl.isSubmitting || $ctrl.isUpdating">
+          {{"mno_enterprise.templates.components.addon_connect.next" | translate}}
+          <i class="fa fa-arrow-right"></i>
+          <i class="fa fa-refresh fa-spin" ng-if="$ctrl.isSubmitting || $ctrl.isUpdating"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

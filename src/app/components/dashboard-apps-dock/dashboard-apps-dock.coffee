@@ -33,9 +33,15 @@ DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, MnoeOrganizations
     $scope.helper.isNewOfficeApp(app)
 
   $scope.helper.isOauthConnectBtnShown = (instance) ->
-    instance.app_nid != 'office-365' &&
+    (instance.app_nid != 'office-365' &&
     instance.stack == 'connector' &&
-    !instance.oauth_keys_valid
+    !instance.oauth_keys_valid) ||
+    $scope.helper.isCreateAccountShown(instance) ||
+    (MnoeAppInstances.isAddOnWithOrg(instance) && !instance.addon_organization.sync_enabled)
+
+  $scope.helper.isCreateAccountShown = (instance) ->
+    MnoeAppInstances.isAddOnWithOrg(instance) &&
+    !instance.addon_organization.has_account_linked
 
   $scope.helper.isNewOfficeApp = (instance) ->
     instance.stack == 'connector' && instance.appNid == 'office-365' && (moment(instance.createdAt) > moment().subtract({minutes:5}))
@@ -54,6 +60,12 @@ DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, MnoeOrganizations
     else
       $window.open("/mnoe/launch/#{app.uid}", '_blank')
       return true
+
+  $scope.redirectToExternal = (app, event) ->
+    $scope.setActiveApp(event, app.id)
+    $window.open(app.addon_organization.account_creation_link, '_blank')
+    $scope.showConnectModal(app)
+    return true
 
   $scope.setActiveApp = (event, app) ->
     if $scope.isActiveApp(app)
@@ -87,24 +99,30 @@ DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, MnoeOrganizations
   # App Connect modal
   #====================================
   $scope.showConnectModal = (app) ->
-    switch app.app_nid
-      when "xero" then modalInfo = {
-        template: "app/views/apps/modals/app-connect-modal-xero.html",
-        controller: 'DashboardAppConnectXeroModalCtrl'
-      }
-      when "myob" then modalInfo = {
-        template: "app/views/apps/modals/app-connect-modal-myob.html",
-        controller: 'DashboardAppConnectMyobModalCtrl'
-      }
-      else $scope.helper.oAuthConnectPath(app)
+    if app.stack == 'cloud'
+      modalInstance = $uibModal.open({
+        component: 'connectAddonModal'
+        resolve:
+          app: -> app
+      })
+    else
+      switch app.app_nid
+        when "xero" then modalInfo = {
+          template: "app/views/apps/modals/app-connect-modal-xero.html",
+          controller: 'DashboardAppConnectXeroModalCtrl'
+        }
+        when "myob" then modalInfo = {
+          template: "app/views/apps/modals/app-connect-modal-myob.html",
+          controller: 'DashboardAppConnectMyobModalCtrl'
+        }
+        else $scope.helper.oAuthConnectPath(app)
 
-    modalInstance = $uibModal.open(
-      templateUrl: modalInfo.template
-      controller: modalInfo.controller
-      resolve:
-        app: ->
-          app
-    )
+      modalInstance = $uibModal.open(
+        templateUrl: modalInfo.template
+        controller: modalInfo.controller
+        resolve:
+          app: -> app
+      )
 
   #====================================
   # Post-Initialization

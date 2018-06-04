@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .service 'MnoeAppInstances', ($q, MnoeApiSvc, MnoeOrganizations, MnoLocalStorage, MnoeCurrentUser, LOCALSTORAGE) ->
+  .service 'MnoeAppInstances', ($q, MnoeApiSvc, MnoeFullApiSvc, MnoeOrganizations, MnoLocalStorage, MnoeCurrentUser, LOCALSTORAGE) ->
     _self = @
 
     # Store selected organization app instances
@@ -32,6 +32,12 @@ angular.module 'mnoEnterpriseAngular'
       _self.emptyAppInstances()
       fetchAppInstances()
 
+    # Return true if the app from the app_instance parameter is an add_on,
+    # and we managed to retrieve the organization from the connector
+    @isAddOnWithOrg = (instance) ->
+      instance.add_on &&
+      instance.addon_organization
+
     # Retrieve app instances from the backend
     fetchAppInstances = ->
       # Workaround as the API is not standard (return a hash map not an array)
@@ -61,6 +67,33 @@ angular.module 'mnoEnterpriseAngular'
       # Append response array to service array
       Array.prototype.push.apply(_self.appInstances, arr)
       return _self.appInstances
+
+    @getForm = (instance) ->
+      MnoeApiSvc.one('/app_instances', instance.id).doGET('/setup_form')
+
+    @submitForm = (instance, model) ->
+      data = {}
+      for key of model
+        if model.hasOwnProperty(key)
+          data[key] = model[key]
+      MnoeApiSvc.one('/app_instances', instance.id).post('/create_omniauth', data)
+
+    @getSyncs = (instance, params) ->
+      MnoeFullApiSvc.one('/app_instances', instance.id).doGET('/sync_history', params)
+
+    @getIdMaps = (instance, params) ->
+      MnoeFullApiSvc.one('/app_instances', instance.id).doGET('/id_maps', params)
+
+    @disconnect = (instance) ->
+      MnoeApiSvc.one('/app_instances', instance.id).post('/disconnect')
+
+    @sync = (instance, fullSync = false) ->
+      data = {full_sync: fullSync}
+      MnoeApiSvc.one('/app_instances', instance.id).post('/sync', data)
+
+    @updateEntities = (instance, entities, orgId) ->
+      data = {entities: entities, org_id: orgId}
+      MnoeApiSvc.one('/app_instances', instance.id).customPUT(data, '/update_addon_synchronized_entities')
 
     # Path to connect this app instance and redirect to the current page
     @oAuthConnectPath = (instance, extra_params = '') ->

@@ -16,7 +16,54 @@
       <!-- Add on settings -->
       <div ng-show="helper.isAddOnSettingShown(app)">
         <hr>
-        <button ng-click="helper.addOnSettingLauch(app)" class="btn btn-warning">{{ 'mno_enterprise.templates.impac.dock.settings.access_add-on_settings' | translate }}</button>
+        <uib-tabset active="activeJustified" justified="true">
+          <uib-tab index="0" heading="{{'mno_enterprise.templates.impac.dock.settings.sync_list.history' | translate}}" ng-click="loadSyncs()" select="selectHistory()">
+            <h4 class="text-center" style="margin-bottom: 20px; margin-top: 20px">{{ 'mno_enterprise.templates.impac.dock.settings.sync_list.title' | translate }}</h4>
+            <mno-sortable-table row-collection="syncs.list" fields="mnoSyncsTableFields" is-loading="syncs.loading" pipe="sortableSyncsServerPipe"></mno-sortable-table>
+
+            <div class="pagination">
+              <mno-pagination
+                page="syncs.page"
+                nb-items="syncs.baseSize"
+                total-items="syncs.totalItems"
+                on-change-cb="syncs.pageChangedCb(nbItems, page)"
+                is-loading="syncs.loading">
+              </mno-pagination>
+            </div>
+          </uib-tab>
+
+          <uib-tab index="1" heading="{{'mno_enterprise.templates.impac.dock.settings.id_maps.title' | translate}}" select="selectData()" ng-click="loadIdMaps()">
+            <div>
+              <mno-sortable-table row-collection="idMaps.list" fields="mnoIdMapsTableFields" sub-headers="mnoIdMapsSubHeaders" is-loading="idMaps.loading" pipe="sortableIdMapsServerPipe"></mno-sortable-table>
+              <div class="pagination">
+                <mno-pagination
+                  page="idMaps.page"
+                  nb-items="idMaps.baseSize"
+                  total-items="idMaps.totalItems"
+                  on-change-cb="idMaps.pageChangedCb(nbItems, page)"
+                  is-loading="idMaps.loading">
+                </mno-pagination>
+              </div>
+            </div>
+          </uib-tab>
+
+          <uib-tab index="2" heading="{{'mno_enterprise.templates.impac.dock.settings.entities.title' | translate}}" select="selectEntities()">
+            <h4 class="text-center" style="margin-bottom: 20px; margin-top: 20px">{{"mno_enterprise.templates.components.addon_connect.entities.chose_entities" | translate}}</h4>
+
+            <table class="table-striped table-condensed">
+              <tr>
+                <th>{{"mno_enterprise.templates.components.addon_connect.entities.entity" | translate}}&nbsp</th>
+                <th>{{"mno_enterprise.templates.components.addon_connect.entities.to_app" | translate:{ appname: app.app_name} }}&nbsp</th>
+                <th>{{"mno_enterprise.templates.components.addon_connect.entities.to_connec" | translate:{ appname: app.app_name} }}&nbsp</th>
+              </tr>
+              <tr ng-repeat="entity in app.addon_organization.displayable_synchronized_entities">
+                <td>{{entity.connec_name}}&nbsp</td>
+                <td align="center"><input type="checkbox" ng-model="entity.can_push_to_external" checked="entity.can_push_to_external"/></td>
+                <td align="center"><input type="checkbox" ng-model="entity.can_push_to_connec" checked="entity.can_push_to_connec"/></td>
+              </tr>
+            </table>
+          </uib-tab>
+        </uib-tabset>
       </div>
       <!-- Data Sharing -->
       <div ng-show="helper.isDataSyncShown(app) || helper.isDataDisconnectShown(app)">
@@ -50,7 +97,20 @@
       <!-- Deletion -->
       <hr>
       <div ng-show="helper.canDeleteApp()" class="app-deletion">
-        <button class="btn btn-danger" ng-hide="app.showDelete" ng-click="app.showDelete = !app.showDelete">{{ 'mno_enterprise.templates.impac.dock.settings.delete' | translate }}</button>
+        <div>
+          <div class="panel-group">
+            <div class="btn-toolbar">
+              <button class="btn btn-warning" ng-hide="!helper.isAddOnSettingShown(app)" ng-click="disconnect()">  {{ "mno_enterprise.templates.impac.dock.settings.disconnect_app" | translate }}
+                <i class="fa fa-refresh fa-spin" ng-if="isDisconnecting"></i>
+              </button>
+              <button class="btn btn-danger" ng-hide="app.showDelete" ng-click="app.showDelete = !app.showDelete">{{ 'mno_enterprise.templates.impac.dock.settings.delete' | translate }}</button>
+              <div class="pull-right">
+                <button class="btn btn-success" ng-if="selectedTab == 0 && syncEnabled()" ng-click="syncApp()">{{"mno_enterprise.templates.impac.dock.settings.sync" | translate}}</button>
+                <button class="btn btn-success" ng-if="selectedTab == 2" ng-click="syncApp()">{{"mno_enterprise.templates.impac.dock.settings.entities.update" | translate}}</button>
+              </div>
+            </div>
+          </div>
+        </div>
         <div ng-show="app.showDelete">
           <h4>{{ 'mno_enterprise.templates.impac.dock.settings.confirm_app_deletion' | translate }}</h4>
           <div ng-show="app.plan.currentBillingType == 'monthly'">
