@@ -35,7 +35,7 @@
       <div class="row th-row hidden-xs">
         <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.name' | translate }}</div>
         <div class="cell col-sm-2">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.description' | translate }}</div>
-        <div class="cell col-sm-2">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.licenses' | translate }}</div>
+        <div class="cell col-sm-2" ng-show="vm.subscription.product_pricing.license_based">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.licenses' | translate }}</div>
         <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.price' | translate }}</div>
       </div>
 
@@ -54,7 +54,7 @@
           {{ vm.subscription.product_pricing.description }}
         </div>
 
-        <div class="cell col-sm-2">
+        <div class="cell col-sm-2" ng-show="vm.subscription.product_pricing.license_based">
           <span class="cell-label visible-xs-inline">
             {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.licenses' | translate }}:
           </span>
