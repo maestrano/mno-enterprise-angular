@@ -89,6 +89,14 @@ angular.module 'mnoEnterpriseAngular'
         vm.orgCurrency = response.organization?.billing_currency || MnoeConfig.marketplaceCurrency()
     )
 
+    vm.pricingText = () ->
+      if !vm.singleBilling
+        'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.single_billing_disabled'
+      else if vm.billedLocally
+        'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.billed_locally'
+      else
+        'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.externally_managed'
+
     # Delete the cached subscription when we are leaving the subscription workflow.
     $scope.$on('$stateChangeStart', (event, toState) ->
       switch toState.name

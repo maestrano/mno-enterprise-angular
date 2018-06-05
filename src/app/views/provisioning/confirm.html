@@ -24,14 +24,8 @@
           <span class="cell-label visible-xs-inline">
             {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.title' | translate }}:
           </span>
-          <div ng-hide="vm.singleBilling">
-            {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.single_billing_disabled' | translate }}
-          </div>
-          <div ng-show="vm.singleBilling && !vm.billedLocally">
-            {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.externally_managed' | translate }}
-          </div>
-          <div ng-show="vm.singleBilling && vm.billedLocally">
-            {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.billed_locally' | translate }}
+          <div>
+            {{ vm.pricingText() | translate }}
           </div>
         </div>
       </div>
@@ -97,6 +91,16 @@
           </span>
         </div>
       </div>
+    </div>
+
+    <!-- Display Read-Only Custom Form Data If It Exists -->
+    <div ng-if="vm.subscription.custom_data && vm.subscription.product.custom_schema">
+      <mno-widget is-loading="vm.isLoading">
+        <mno-widget-header></mno-widget-header>
+        <mno-widget-body>
+          <form name="vm.detailsForm" sf-schema="vm.schema" sf-form="vm.form" sf-model="vm.subscription.custom_data" sf-options="{ formDefaults: { readonly: { true } } }"></form>
+        </mno-widget-body>
+      </mno-widget>
     </div>
 
     <span class="pull-right top-buffer-1">

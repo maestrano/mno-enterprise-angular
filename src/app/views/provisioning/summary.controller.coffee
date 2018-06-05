@@ -24,5 +24,13 @@ angular.module 'mnoEnterpriseAngular'
       MnoeProvisioning.setSubscription({})
     )
 
+    vm.pricingText = () ->
+      if !vm.singleBilling
+        'mno_enterprise.templates.dashboard.provisioning.summary.pricing_info.single_billing_disabled'
+      else if vm.billedLocally
+        'mno_enterprise.templates.dashboard.provisioning.summary.pricing_info.billed_locally'
+      else
+        'mno_enterprise.templates.dashboard.provisioning.summary.pricing_info.externally_managed'
+
     return
   )

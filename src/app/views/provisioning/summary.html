@@ -32,14 +32,8 @@
             <span class="cell-label visible-xs-inline">
               {{ 'mno_enterprise.templates.dashboard.provisioning.summary.pricing_info.title' | translate }}:
             </span>
-            <div ng-hide="vm.singleBilling">
-              {{ 'mno_enterprise.templates.dashboard.provisioning.summary.pricing_info.single_billing_disabled' | translate }}
-            </div>
-            <div ng-show="vm.singleBilling && !vm.billedLocally">
-              {{ 'mno_enterprise.templates.dashboard.provisioning.summary.pricing_info.externally_managed' | translate }}
-            </div>
-            <div ng-show="vm.singleBilling && vm.billedLocally">
-              {{ 'mno_enterprise.templates.dashboard.provisioning.summary.pricing_info.billed_locally' | translate }}
+            <div>
+              {{ vm.pricingText() | translate }}
             </div>
           </div>
         </div>
@@ -49,6 +43,7 @@
         <div class="row th-row hidden-xs">
           <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.summary.name' | translate }}</div>
           <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.summary.description' | translate }}</div>
+          <div class="cell col-sm-2">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.licenses' | translate }}</div>
           <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.summary.price' | translate }}</div>
         </div>
 
