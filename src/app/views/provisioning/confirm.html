@@ -35,9 +35,9 @@
       <div class="row th-row hidden-xs">
         <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.name' | translate }}</div>
         <div class="cell col-sm-2">{{ 'mno_enterprise.templates.dashboard.provisioning.summary.order_type' | translate }}</div>
-        <div class="cell col-sm-2">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.description' | translate }}</div>
         <div class="cell col-sm-2" ng-show="vm.subscription.product_pricing.license_based">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.licenses' | translate }}</div>
-        <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.price' | translate }}</div>
+        <div class="cell col-sm-2">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.price' | translate }}</div>
+        <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.description' | translate }}</div>
       </div>
 
       <div class="row td-row">
@@ -55,13 +55,6 @@
           {{ vm.orderTypeText | translate }}
         </div>
 
-        <div class="cell col-sm-2">
-          <span class="cell-label visible-xs-inline">
-            {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.description' | translate }}:
-          </span>
-          {{ vm.subscription.product_pricing.description }}
-        </div>
-
         <div class="cell col-sm-2" ng-show="vm.subscription.product_pricing.license_based">
           <span class="cell-label visible-xs-inline">
             {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.licenses' | translate }}:
@@ -69,7 +62,7 @@
           {{ vm.subscription.max_licenses }}
         </div>
 
-        <div class="cell col-sm-3">
+        <div class="cell col-sm-2">
           <span class="cell-label visible-xs-inline">
             {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.price' | translate }}:
           </span>
@@ -97,6 +90,13 @@
           <span ng-show="vm.subscription.product_pricing.pricing_type == 'free'">
             {{ 'mno_enterprise.templates.dashboard.provisioning.order.pricing_type.free' | translate }}
           </span>
+        </div>
+
+        <div class="cell col-sm-3">
+          <span class="cell-label visible-xs-inline">
+            {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.description' | translate }}:
+          </span>
+          {{ vm.subscription.product_pricing.description }}
         </div>
       </div>
     </div>
