@@ -74,12 +74,15 @@ angular.module 'mnoEnterpriseAngular'
       ).finally(-> vm.isLoading = false)
 
     vm.orderEditable = () ->
-      # The order is editable if we are changing the plan, or the product has a custom schema.
+      # The order is editable if the product has a custom schema.
+      return true if vm.subscription.product?.custom_schema
+      # Disable editing if unable to initially select a pricing plan.
+      return false if ProvisioningHelper.skipPriceSelection(vm.subscription.product)
       switch $stateParams.editAction
         when 'change', 'new'
           true
         else
-          if vm.subscription.product?.custom_schema then true else false
+          false
 
     MnoeOrganizations.get().then(
       (response) ->

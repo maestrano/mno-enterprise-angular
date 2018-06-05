@@ -4,7 +4,6 @@ angular.module 'mnoEnterpriseAngular'
     vm = this
     vm.isLoading = true
     vm.subscription = MnoeProvisioning.getCachedSubscription()
-    vm.currencies = []
     vm.selectedCurrency = ""
     vm.filteredPricingPlans = []
     vm.isCurrencySelectionEnabled = MnoeConfig.isCurrencySelectionEnabled()
@@ -16,6 +15,14 @@ angular.module 'mnoEnterpriseAngular'
       cart: $stateParams.cart
     }
 
+    vm.next = (subscription, currency) ->
+      MnoeProvisioning.setSubscription(subscription)
+      MnoeProvisioning.setSelectedCurrency(currency)
+      if vm.subscription.product.custom_schema?
+        $state.go('home.provisioning.additional_details', urlParams, { reload: true })
+      else
+        $state.go('home.provisioning.confirm', urlParams, { reload: true })
+
     fetchSubscription = () ->
       orgPromise = MnoeOrganizations.get()
       initPromise = MnoeProvisioning.initSubscription({productId: $stateParams.productId, subscriptionId: $stateParams.subscriptionId, cart: urlParams.cart})
@@ -25,6 +32,15 @@ angular.module 'mnoEnterpriseAngular'
           vm.orgCurrency = response.organization.organization?.billing_currency || MnoeConfig.marketplaceCurrency()
           vm.subscription = response.subscription
         )
+    # Filters the pricing plans not containing current currency
+    vm.filterPricingPlans = () ->
+      vm.filteredPricingPlans = ProvisioningHelper.planForCurrency(vm.subscription.product.pricing_plans, vm.selectedCurrency)
+
+    selectDefaultCurrency = () ->
+      if vm.currencies.includes(vm.orgCurrency)
+        vm.selectedCurrency = vm.orgCurrency
+      else
+        vm.selectedCurrency = vm.currencies[0]
 
     fetchProduct = () ->
       # When in edit mode, we will be getting the product ID from the subscription, otherwise from the url.
@@ -32,60 +48,52 @@ angular.module 'mnoEnterpriseAngular'
       MnoeMarketplace.getProduct(vm.productId).then(
         (response) ->
           vm.subscription.product = response
-
           # Get all the possible currencies
-          currenciesArray = []
-          _.forEach(vm.subscription.product.pricing_plans,
-            (pp) -> _.forEach(pp.prices, (p) -> currenciesArray.push(p.currency)))
-          vm.currencies = _.uniq(currenciesArray)
-
-          # Set a default currency
-          if vm.currencies.includes(vm.orgCurrency)
-            vm.selectedCurrency = vm.orgCurrency
-          else
-            vm.selectedCurrency = vm.currencies[0]
+          populateCurrencies()
+          selectDefaultCurrency()
 
           # Filters the pricing plans not containing current currency
-          vm.filteredPricingPlans = ProvisioningHelper.planForCurrency(vm.subscription.product.pricing_plans, vm.orgCurrency)
+          vm.filterPricingPlans()
+
           MnoeProvisioning.setSubscription(vm.subscription)
         )
 
     fetchCustomSchema = () ->
       MnoeMarketplace.fetchCustomSchema(vm.productId, { editAction: $stateParams.editAction }).then((response) ->
-        # Some products have custom schemas, whereas others do not.
         vm.subscription.product.custom_schema = response
       )
+
+    populateCurrencies = () ->
+      currenciesArray = []
+      _.forEach(vm.subscription.product.pricing_plans,
+        (pp) -> _.forEach(pp.prices, (p) -> currenciesArray.push(p.currency)))
+      vm.currencies = _.uniq(currenciesArray)
 
     if _.isEmpty(vm.subscription)
       fetchSubscription()
         .then(fetchProduct)
         .then(fetchCustomSchema)
-        .then(() -> vm.next(vm.subscription, vm.selectedCurrency) if vm.skipPriceSelection(vm.subscription.product))
+        .then(() -> vm.next(vm.subscription, vm.selectedCurrency) if ProvisioningHelper.skipPriceSelection(vm.subscription.product))
         .catch((error) ->
           toastr.error('mnoe_admin_panel.dashboard.provisioning.subscriptions.product_error')
           $state.go('home.subscriptions', {subType: if urlParams.cart then 'cart' else 'active'})
         )
         .finally(() -> vm.isLoading = false)
     else
+      # Skip this view when subscription plan is not editable
+      vm.next(vm.subscription, vm.subscription.currency) if ProvisioningHelper.skipPriceSelection(vm.subscription.product)
+
+      # Grab subscription's selected pricing plan's currency, then filter currencies.
+      vm.orgCurrency = MnoeProvisioning.getSelectedCurrency()
+      populateCurrencies()
+      selectDefaultCurrency()
+      vm.filterPricingPlans()
+
       vm.isLoading = false
 
     vm.select_plan = (pricingPlan)->
       vm.subscription.product_pricing = pricingPlan
       vm.subscription.max_licenses ||= 1 if vm.subscription.product_pricing.license_based
-
-    # Filters the pricing plans not containing current currency
-    vm.pricingPlanFilter = () ->
-      vm.filteredPricingPlans = _.filter(vm.subscription.product.pricing_plans,
-        (pp) -> (pp.pricing_type in PRICING_TYPES['unpriced']) || _.some(pp.prices, (p) -> p.currency == vm.selectedCurrency)
-      )
-
-    vm.next = (subscription, currency) ->
-      MnoeProvisioning.setSubscription(subscription)
-      MnoeProvisioning.setSelectedCurrency(currency)
-      if vm.subscription.product.custom_schema?
-        $state.go('home.provisioning.additional_details', urlParams)
-      else
-        $state.go('home.provisioning.confirm', urlParams)
 
     vm.subscriptionPlanText = switch $stateParams.editAction.toLowerCase()
       when 'new'
@@ -96,9 +104,6 @@ angular.module 'mnoEnterpriseAngular'
     vm.selectPlan = (pricingPlan)->
       vm.subscription.product_pricing = pricingPlan
       vm.subscription.max_licenses ||= 1 if vm.subscription.product_pricing.license_based
-
-    vm.skipPriceSelection = (product) ->
-      product.product_type == 'application' && (!product.single_billing_enabled || !product.billed_locally)
 
     # Delete the cached subscription when we are leaving the subscription workflow.
     $scope.$on('$stateChangeStart', (event, toState) ->
