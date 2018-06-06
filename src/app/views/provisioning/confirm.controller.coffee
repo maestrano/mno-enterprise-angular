@@ -31,7 +31,7 @@ angular.module 'mnoEnterpriseAngular'
 
     vm.editOrder = (reload = true) ->
       switch $stateParams.editAction.toLowerCase()
-        when 'change', 'new', null
+        when 'change', 'provision', null
           $state.go('home.provisioning.order', urlParams, {reload: reload})
         else
           $state.go('home.provisioning.additional_details', urlParams, {reload: reload})
@@ -98,7 +98,7 @@ angular.module 'mnoEnterpriseAngular'
       # Disable editing if unable to initially select a pricing plan.
       return false if ProvisioningHelper.skipPriceSelection(vm.subscription.product)
       switch $stateParams.editAction
-        when 'change', 'new'
+        when 'change', 'provision'
           true
         else
           false

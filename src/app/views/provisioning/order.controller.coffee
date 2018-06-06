@@ -106,8 +106,8 @@ angular.module 'mnoEnterpriseAngular'
       vm.subscription.max_licenses ||= 1 if vm.subscription.product_pricing.license_based
 
     vm.subscriptionPlanText = switch $stateParams.editAction.toLowerCase()
-      when 'new'
-        'mno_enterprise.templates.dashboard.provisioning.order.new_title'
+      when 'provision'
+        'mno_enterprise.templates.dashboard.provisioning.order.provision_title'
       when 'change'
         'mno_enterprise.templates.dashboard.provisioning.order.change_title'
 
