@@ -59,13 +59,12 @@ angular.module 'mnoEnterpriseAngular'
     else
       vm.singleBilling = vm.subscription.product.single_billing_enabled
       vm.billedLocally = vm.subscription.product.billed_locally
-      vm.subscription.edit_action = $stateParams.editAction
       # Render custom Schema if it exists
       setCustomSchema() if vm.subscription.custom_data && vm.subscription.product.custom_schema
 
     vm.validate = () ->
       vm.isLoading = true
-      vm.subscription.edit_action = $stateParams.editAction
+      vm.subscription.event_type = $stateParams.editAction
       vm.subscription.cart_entry = true if vm.cartItem
       MnoeProvisioning.saveSubscription(vm.subscription, vm.selectedCurrency).then(
         (response) ->

@@ -63,12 +63,29 @@ angular.module 'mnoEnterpriseAngular'
 
       return deferred.promise
 
+    subscriptionParams = (s, c) ->
+      {
+        subscription: {
+          product_id: s.product.id,
+          cart_entry: s.cart_entry,
+          subscription_events_attributes: [{
+            event_type: s.event_type,
+            product_pricing_id: s.product_pricing?.id,
+            subscription_details: {
+              start_date: s.start_date,
+              custom_data: s.custom_data,
+              currency: c,
+              max_licenses: s.max_licenses
+            }
+          }]
+        }
+      }
+
     @createSubscription = (s, c) ->
       deferred = $q.defer()
-      subscription_params = {currency: c, product_id: s.product.id, product_pricing_id: s.product_pricing?.id, max_licenses: s.max_licenses, custom_data: s.custom_data, cart_entry: s.cart_entry}
       MnoeOrganizations.get().then(
         (response) ->
-          subscriptionsApi(response.organization.id).post({subscription: subscription_params}).then(
+          subscriptionsApi(response.organization.id).post(subscriptionParams(s,c)).then(
             (response) ->
               deferred.resolve(response)
           )
@@ -80,7 +97,7 @@ angular.module 'mnoEnterpriseAngular'
       MnoeOrganizations.get().then(
         (response) ->
           subscription.patch({subscription: {currency: c, product_id: s.product.id, product_pricing_id: s.product_pricing?.id,
-          max_licenses: s.max_licenses, custom_data: s.custom_data, edit_action: s.edit_action, cart_entry: s.cart_entry}}).then(
+          max_licenses: s.max_licenses, custom_data: s.custom_data, cart_entry: s.cart_entry}}).then(
             (response) ->
               deferred.resolve(response)
           )
