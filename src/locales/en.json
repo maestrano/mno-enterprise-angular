@@ -705,7 +705,7 @@
   "mno_enterprise.templates.dashboard.provisioning.order.licenses": "Number of licenses",
   "mno_enterprise.templates.dashboard.provisioning.order.total": "Total price",
   "mno_enterprise.templates.dashboard.provisioning.order.no_pricing_found": "There are currently no subscriptions available in your currency",
-  "mno_enterprise.templates.dashboard.provisioning.details.new_title": "Enter your details",
+  "mno_enterprise.templates.dashboard.provisioning.details.provision_title": "Enter your details",
   "mno_enterprise.templates.dashboard.provisioning.details.modify_title": "Modify your details",
   "mno_enterprise.templates.dashboard.provisioning.details.change_title": "Edit your details",
   "mno_enterprise.templates.dashboard.provisioning.details.reactivate_title": "Reactivate your plan",
