@@ -10,6 +10,9 @@ angular.module 'mnoEnterpriseAngular'
         vm.isCurrentSubscriptionLoading = true
         vm.isSubChanged = true
         vm.recentSubscription = AppManagementHelper.recentSubscription
+        vm.editSubscription = ProvisioningHelper.editSubscription
+        vm.showEditAction = ProvisioningHelper.showEditAction
+        vm.goToSubscription = ProvisioningHelper.goToSubscription
 
         vm.dataSharingStatus = ->
           if vm.product.sync_status?.attributes?.status
