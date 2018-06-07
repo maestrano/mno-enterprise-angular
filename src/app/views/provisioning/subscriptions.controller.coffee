@@ -11,40 +11,6 @@ angular.module 'mnoEnterpriseAngular'
       else
         $state.go('home.subscription', { id: subscription.id })
 
-    vm.cancelSubscription = (subscription, i) ->
-      if vm.cartSubscriptions
-        subscription.cart_entry = true
-        headerText = 'mno_enterprise.templates.dashboard.provisioning.subscriptions.cart.cancel_modal.title'
-        bodyText = 'mno_enterprise.templates.dashboard.provisioning.subscriptions.cart.cancel_modal.body'
-      else
-        headerText = 'mno_enterprise.templates.dashboard.provisioning.subscriptions.cancel_modal.title'
-        bodyText = 'mno_enterprise.templates.dashboard.provisioning.subscriptions.cancel_modal.body'
-
-      modalOptions =
-        headerText: headerText
-        bodyText: bodyText
-        closeButtonText: 'mno_enterprise.templates.dashboard.provisioning.subscriptions.cancel_modal.no'
-        actionButtonText: 'mno_enterprise.templates.dashboard.provisioning.subscriptions.cancel_modal.yes'
-        actionCb: -> MnoeProvisioning.cancelSubscription(subscription).then(
-          (response) ->
-            if vm.cartSubscriptions
-              vm.subscriptions = _.reject(vm.subscriptions, (sub) -> sub.id == subscription.id)
-            else
-              angular.copy(response.subscription, vm.subscriptions[i])
-          ->
-            toastr.error('mno_enterprise.templates.dashboard.provisioning.subscriptions.cancel_error')
-        )
-        type: 'danger'
-
-      MnoConfirm.showModal(modalOptions)
-
-    # NOte: we might not need this one anymore based on rework
-    vm.modifySubscription = (subscription, i) ->
-      if vm.cartSubscriptions
-        $state.go("home.provisioning.order", {id: subscription.id, cart: true})
-      else
-        $state.go("home.provisioning.order", {id: subscription.id})
-
     vm.subscriptionsPromise = ->
       if vm.cartSubscriptions
         params = { where: {subscription_status_in: 'staged' } }
