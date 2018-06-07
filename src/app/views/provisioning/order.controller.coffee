@@ -107,6 +107,7 @@ angular.module 'mnoEnterpriseAngular'
         vm.subscription.max_licenses ||= 1
       else
         # Reset max licenses, as they may have already been set on the subscription
+        vm.subscription.max_licenses = null
 
     # Delete the cached subscription when we are leaving the subscription workflow.
     $scope.$on('$stateChangeStart', (event, toState) ->

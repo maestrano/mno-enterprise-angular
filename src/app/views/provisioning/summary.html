@@ -50,22 +50,21 @@
         <div class="row td-row">
           <div class="cell col-sm-3">
             <span class="cell-label visible-xs-inline">
-              {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.name' | translate }}:
+              {{ 'mno_enterprise.templates.dashboard.provisioning.summary.name' | translate }}:
             </span>
             {{ vm.subscription.product_pricing.name }}
           </div>
-        </div>
 
         <div class="cell col-sm-2" ng-show="vm.subscription.product_pricing.license_based">
           <span class="cell-label visible-xs-inline">
-            {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.licenses' | translate }}:
+            {{ 'mno_enterprise.templates.dashboard.provisioning.summary.licenses' | translate }}:
           </span>
           {{ vm.subscription.max_licenses }}
         </div>
 
         <div class="cell col-sm-2">
           <span class="cell-label visible-xs-inline">
-            {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.price' | translate }}:
+            {{ 'mno_enterprise.templates.dashboard.provisioning.summary.price' | translate }}:
           </span>
 
             <div ng-hide="vm.subscription.product_pricing.pricing_type == 'payg'">
@@ -92,13 +91,13 @@
               {{ 'mno_enterprise.templates.dashboard.provisioning.order.pricing_type.free' | translate }}
             </span>
           </div>
-        </div>
 
-        <div class="cell col-sm-3">
-          <span class="cell-label visible-xs-inline">
-            {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.description' | translate }}:
-          </span>
-          {{ vm.subscription.product_pricing.description }}
+          <div class="cell col-sm-3">
+            <span class="cell-label visible-xs-inline">
+              {{ 'mno_enterprise.templates.dashboard.provisioning.summary.description' | translate }}:
+            </span>
+            {{ vm.subscription.product_pricing.description }}
+          </div>
         </div>
       </div>
     </div>
