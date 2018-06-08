@@ -5,10 +5,19 @@ angular.module 'mnoEnterpriseAngular'
     @pricedPlan = (plan) ->
       plan.pricing_type not in PRICING_TYPES['unpriced']
 
-    @planForCurrency = (plans, currency) ->
-      _.filter(plans,
-        (pp) -> !_self.pricedPlan(pp) || _.some(pp.prices, (p) -> p.currency == currency)
-      )
+    @plansForCurrency = (plans, currency) ->
+      if _.isArray(plans)
+        _.filter(plans,
+          (pp) -> !_self.pricedPlan(pp) || _.some(pp.prices, (p) -> p.currency == currency)
+        )
+      else
+        plansWithoutDefault = _.clone(plans, true)
+        delete plansWithoutDefault.default
+
+        pricingPlans = _.flatten(_.values(plansWithoutDefault))
+        _.filter(pricingPlans,
+          (pp) -> !_self.pricedPlan(pp) || pp.currency == currency
+        )
 
     # Skip pricing selection for products with product_type 'application',
     # where singly billing is disabled and the product is externally provisioned.

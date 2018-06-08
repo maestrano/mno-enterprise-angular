@@ -34,7 +34,7 @@ angular.module 'mnoEnterpriseAngular'
         )
     # Filters the pricing plans not containing current currency
     vm.filterPricingPlans = () ->
-      vm.filteredPricingPlans = ProvisioningHelper.planForCurrency(vm.subscription.product.pricing_plans, vm.selectedCurrency)
+      vm.filteredPricingPlans = ProvisioningHelper.plansForCurrency(vm.subscription.product.pricing_plans, vm.selectedCurrency)
 
     selectDefaultCurrency = () ->
       if vm.currencies.includes(vm.orgCurrency)
