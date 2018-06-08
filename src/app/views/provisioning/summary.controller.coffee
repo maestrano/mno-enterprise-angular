@@ -4,6 +4,7 @@ angular.module 'mnoEnterpriseAngular'
     vm = this
     vm.isLoading = true
     vm.selectedCurrency = MnoeProvisioning.getSelectedCurrency()
+    vm.subType = if $stateParams.cart == 'true' then 'cart' else 'active'
     MnoeProvisioning.initSubscription({subscriptionId: $stateParams.subscriptionId})
       .then((response) ->
         vm.subscription = response

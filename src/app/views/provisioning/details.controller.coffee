@@ -27,14 +27,12 @@ angular.module 'mnoEnterpriseAngular'
       vm.subscription.product_pricing || ProvisioningHelper.skipPriceSelection(vm.subscription.product)
 
     handleRedirect = (product) ->
-      # If there is a custom schema and we can skip pricing, stay on this page.
-      return if product.custom_schema && skipPricing()
       # If there is no custom schema and pricings are skipped -- go directly to the confirm page.
       if skipPricing()
-        $state.go('dashboard.provisioning.confirm', urlParams, {reload: true})
+        $state.go('home.provisioning.confirm', urlParams, {reload: true})
       # Default: If we can't skip pricings, we must go back to the order page to choose a price. Happens when we reload page on a new order.
       else
-        $state.go('dashboard.provisioning.order', urlParams, {reload: true})
+        $state.go('home.provisioning.order', urlParams, {reload: true})
 
     # The schema is contained in field vm.product.custom_schema
     # jsonref is used to resolve $ref references
@@ -42,7 +40,8 @@ angular.module 'mnoEnterpriseAngular'
     # reasonable number of passes (2 below + 1 in the sf-schema directive)
     # to resolve cyclic references
     setCustomSchema = (product) ->
-      handleRedirect(product)
+      # If there is a custom schema and we can skip pricing, stay on this page.
+      return handleRedirect(product) unless product.custom_schema && skipPricing()
       vm.model = vm.subscription.custom_data || {}
       parsedSchema = JSON.parse(product.custom_schema)
       schema = parsedSchema.json_schema || parsedSchema
@@ -92,7 +91,7 @@ angular.module 'mnoEnterpriseAngular'
       fetchSubscription().then(fetchProduct).then(fetchCustomSchema)
         .then(() -> setCustomSchema(vm.subscription.product))
         .catch((error) ->
-          toastr.error('mnoe_admin_panel.dashboard.provisioning.subscriptions.product_error')
+          toastr.error('mno_enterprise.dashboard.provisioning.subscriptions.product_error')
           $state.go('home.subscriptions', {subType: if urlParams.cart then 'cart' else 'active'})
         )
         .finally(() -> vm.isLoading = false)

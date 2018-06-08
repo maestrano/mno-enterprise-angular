@@ -222,7 +222,7 @@ angular.module 'mnoEnterpriseAngular'
         .state 'home.provisioning.order_summary',
           data:
             pageTitle:'Purchase - Order summary'
-          url: '/summary/:productId?subscriptionId&editAction'
+          url: '/summary/:productId?subscriptionId&editAction&cart'
           views: '@home.provisioning':
             templateUrl: 'app/views/provisioning/summary.html'
             controller: 'ProvisioningSummaryCtrl'
