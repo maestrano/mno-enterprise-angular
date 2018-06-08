@@ -2,7 +2,7 @@ angular.module 'mnoEnterpriseAngular'
   .controller('AppManagementCtrl',
     ($q, $state, $scope, toastr, $stateParams, MnoeConfig, MnoeProductInstances, MnoeProvisioning,
       MnoeOrganizations, MnoeCurrentUser, MnoeMarketplace, PRICING_TYPES, ProvisioningHelper,
-      AppSettingsHelper, AppManagementHelper) ->
+      AppSettingsHelper, AppManagementHelper, MnoeAppInstances) ->
 
         vm = @
         vm.isLoading = true
@@ -10,12 +10,6 @@ angular.module 'mnoEnterpriseAngular'
         vm.isCurrentSubscriptionLoading = true
         vm.isSubChanged = true
         vm.recentSubscription = AppManagementHelper.recentSubscription
-
-        vm.dataSharingStatus = ->
-          if vm.product.sync_status?.attributes?.status
-            'Connected'
-          else
-            'Disconnected'
 
         vm.showDataSharingDate = ->
           if vm.product.sync_status?.attributes?.status
@@ -113,6 +107,17 @@ angular.module 'mnoEnterpriseAngular'
         vm.addOnSettingLauch = ->
           AppSettingsHelper.addOnSettingLauch(vm.product)
 
+        setSyncStatusValue = ->
+          vm.product.sync_status = _.find(vm.connec_apps, (app) -> app.uid == vm.product.uid)
+          unless vm.product.sync_status
+            vm.dataSharingStatus = 'Disconnected'
+            return
+
+          if vm.product.sync_status.toLowerCase() in ['error', 'disconnected']
+            vm.dataSharingStatus = 'Disconnected'
+          else
+            vm.dataSharingStatus = 'Connected'
+
         # ********************** Initialize *********************************
         vm.init = ->
           vm.setUserRole()
@@ -136,7 +141,20 @@ angular.module 'mnoEnterpriseAngular'
 
               # Order Histroy flow
               vm.loadOrderHistory() if vm.isAdmin
-          ).finally(-> vm.isLoading = false)
+          ).finally(
+            ->
+              vm.isLoading = false
+              vm.initAppInstanceSync()
+            )
+
+        vm.initAppInstanceSync = ->
+          return if vm.product.sync_status
+
+          MnoeAppInstances.getAppInstanceSync().then(
+            (response) ->
+              vm.connec_apps = response.connectors
+              setSyncStatusValue()
+          )
 
         #====================================
         # Post-Initialization

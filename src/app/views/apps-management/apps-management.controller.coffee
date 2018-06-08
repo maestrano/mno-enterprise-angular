@@ -1,10 +1,29 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('AppsManagementCtrl',
-    ($q, $scope, MnoeConfig, MnoeProductInstances, MnoeProvisioning, MnoeOrganizations, AppManagementHelper) ->
+    ($q, $scope, MnoeConfig, MnoeProductInstances, MnoeProvisioning, MnoeOrganizations, AppManagementHelper, MnoeAppInstances) ->
 
       vm = @
       vm.isLoading = true
       vm.recentSubscription = AppManagementHelper.recentSubscription
+
+      getSyncStatusValue = (product) ->
+        sync_status = _.find(vm.connec_apps, (app) -> app.uid == product.uid)
+        return 'Disconnected' unless sync_status
+
+        if sync_status.status.toLowerCase() in ['error', 'disconnected']
+          'Disconnected'
+        else
+          'Connected'
+
+      getSyncStatuses = ->
+        vm.products = _.map(vm.products,
+          (product) ->
+            if product.uid in vm.filterSyncProductIds
+              product.sync_status = {}
+              product.sync_status.attributes = {}
+              product.sync_status.attributes.status = getSyncStatusValue(product)
+            product
+        )
 
       vm.providesStatus = (product) ->
         vm.dataSharingEnabled(product) || product.subscription
@@ -13,16 +32,23 @@ angular.module 'mnoEnterpriseAngular'
         MnoeConfig.isDataSharingEnabled() && product.data_sharing
 
       vm.dataSharingStatus = (product) ->
-        if product.sync_status?.attributes?.status
-          'Connected'
-        else
-          'Disconnected'
+        return product.sync_status?.attributes?.status
 
       vm.subscriptionStatus = (product) ->
         return product.subscription.status if product.subscription
 
       vm.appActionUrl = (product) ->
         "/mnoe/launch/#{product.uid}"
+
+      vm.initAppInstanceSync = ->
+        vm.filterSyncProductIds = _.map(_.filter(vm.products, (product) -> !product.sync_status), (prod) -> prod.uid)
+        return if vm.filterSyncProductIds.length == 0
+
+        MnoeAppInstances.getAppInstanceSync().then(
+          (response) ->
+            vm.connec_apps = response.connectors
+            getSyncStatuses()
+        )
 
       vm.init = ->
         productPromise = MnoeProductInstances.getProductInstances()
@@ -42,7 +68,11 @@ angular.module 'mnoEnterpriseAngular'
 
                 product
             )
-        ).finally(-> vm.isLoading = false)
+        ).finally(
+          ->
+            vm.isLoading = false
+            vm.initAppInstanceSync()
+          )
 
       #====================================
       # Post-Initialization

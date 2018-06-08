@@ -100,7 +100,10 @@
               <label>
                 {{ 'mno_enterprise.templates.dashboard.app_management.manage.tab.connection_status.title' | translate }}
               </label>
-              <span>{{vm.dataSharingStatus()}}</span>
+              <span ng-show="vm.dataSharingStatus">{{vm.dataSharingStatus}}</span>
+              <span ng-hide="vm.dataSharingStatus">
+                <i class='fa fa-spinner fa-pulse fa-fw'></i>
+              </span>
             </div>
             <div>
               <label>
