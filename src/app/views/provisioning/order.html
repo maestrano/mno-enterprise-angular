@@ -12,12 +12,12 @@
       </div>
 
       <div ng-hide="vm.isLoading" class="table-cell" ng-show="!isLoading">
-        <div class="row th-row hidden-xs">
-          <div class="col-xs-10 col-xs-offset-2">
-            <div class="cell col-sm-2">{{ 'mno_enterprise.templates.dashboard.provisioning.order.name' | translate }}</div>
-            <div class="cell col-sm-4">{{ 'mno_enterprise.templates.dashboard.provisioning.order.description' | translate }}</div>
-            <div class="cell col-sm-2">{{ 'mno_enterprise.templates.dashboard.provisioning.order.price' | translate }}</div>
-            <div class="cell col-sm-3">
+        <div class="row th-row">
+          <div class="col-xs-11 col-xs-offset-1">
+            <div class="cell col-sm-3 hidden-xs" >{{ 'mno_enterprise.templates.dashboard.provisioning.order.name' | translate }}</div>
+            <div class="cell col-sm-4 hidden-xs">{{ 'mno_enterprise.templates.dashboard.provisioning.order.description' | translate }}</div>
+            <div class="cell col-sm-3 hidden-xs">{{ 'mno_enterprise.templates.dashboard.provisioning.order.price' | translate }}</div>
+            <div class="cell col-sm-2 col-xs-6">
               <select class="form-control" ng-if="vm.isCurrencySelectionEnabled" ng-model="vm.selectedCurrency" ng-options="c for c in vm.currencies" ng-change="vm.filterPricingPlans()">
               </select>
             </div>
@@ -31,12 +31,12 @@
         </div>
 
         <div class="row td-row" ng-repeat="pricingPlan in vm.filteredPricingPlans" ng-click="vm.selectPlan(pricingPlan)">
-          <div class="cell radio-selector col-xs-2">
+          <div class="cell radio-selector col-xs-1">
             <input type="radio" name="optradio" ng-model="vm.subscription.product_pricing.id" ng-value="pricingPlan.id" required>
           </div>
 
-          <div class="col-xs-10">
-            <div class="cell col-sm-2" uib-tooltip="{{ pricingPlan.name }}">
+          <div class="col-xs-11">
+            <div class="cell col-sm-3" uib-tooltip="{{ pricingPlan.name }}">
               <span class="cell-label visible-xs-inline">
                 {{ 'mno_enterprise.templates.dashboard.provisioning.order.name' | translate }}:
               </span>
