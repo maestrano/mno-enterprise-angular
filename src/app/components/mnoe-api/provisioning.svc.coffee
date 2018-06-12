@@ -134,7 +134,7 @@ angular.module 'mnoEnterpriseAngular'
               deferred.resolve(response)
           )
       )
-      
+
     @getQuote = (s) ->
       deferred = $q.defer()
       MnoeOrganizations.get().then(
@@ -143,6 +143,8 @@ angular.module 'mnoEnterpriseAngular'
           MnoeApiSvc.one('organizations', response.organization.id).all('quotes').post(quote: quoteParams).then(
             (response) ->
               deferred.resolve(response)
+            (errors) ->
+              deferred.reject(response)
           )
       )
       return deferred.promise

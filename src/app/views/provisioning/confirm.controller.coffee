@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningConfirmCtrl', ($scope, $state, $stateParams, MnoeOrganizations, MnoeProvisioning, MnoeAppInstances, MnoeConfig, ProvisioningHelper, schemaForm) ->
+  .controller('ProvisioningConfirmCtrl', ($scope, $state, $stateParams, $log, MnoeOrganizations, MnoeProvisioning, MnoeAppInstances, MnoeConfig, ProvisioningHelper, schemaForm, toastr) ->
 
     vm = this
 
@@ -44,6 +44,10 @@ angular.module 'mnoEnterpriseAngular'
           vm.quotedPrice = response.totalContractValue?.quote
           vm.quotedCurrency = response.totalContractValue?.currency
           vm.quoteFetched = true
+        (error) ->
+          $log.error(error)
+          toastr.error('mno_enterprise.templates.dashboard.marketplace.show.quote_error')
+          $state.go("home.marketplace")
       )
 
     # Happens when the user reload the browser during the provisioning workflow.
