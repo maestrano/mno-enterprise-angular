@@ -59,7 +59,7 @@
             {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.price' | translate }}:
           </span>
 
-          <div ng-hide="vm.subscription.product_pricing.pricing_type == 'payg'">
+          <div ng-hide="vm.pricedPlan(vm.subscription.product_pricing.pricing_type)">
             <div ng-repeat="price in vm.subscription.product_pricing.prices | filterBy: ['currency']: vm.selectedCurrency" class="badge">
               <span ng-hide="vm.subscription.product_pricing.license_based">
                 {{ price.currency }} {{ price.price_cents / 100 | number:2 }}
