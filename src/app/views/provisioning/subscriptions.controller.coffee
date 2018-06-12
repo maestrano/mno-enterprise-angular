@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningSubscriptionsCtrl', ($q, $state, $stateParams, toastr, MnoeOrganizations, MnoeProvisioning, MnoeConfig, MnoConfirm, PRICING_TYPES) ->
+  .controller('ProvisioningSubscriptionsCtrl', ($q, $scope, $state, $stateParams, toastr, MnoeOrganizations, MnoeProvisioning, MnoeConfig, MnoConfirm, PRICING_TYPES) ->
 
     vm = this
     vm.isLoading = true
@@ -37,25 +37,37 @@ angular.module 'mnoEnterpriseAngular'
           $state.go("home.subscriptions", {subType: 'active'})
       )
 
-    orgPromise = MnoeOrganizations.get()
-    subPromise = vm.subscriptionsPromise()
+    vm.init = ->
+      orgPromise = MnoeOrganizations.get()
+      subPromise = vm.subscriptionsPromise()
 
-    $q.all({organization: orgPromise, subscriptions: subPromise}).then(
-      (response) ->
-        vm.subscriptions = response.subscriptions
-        if vm.cartSubscriptions && vm.subscriptions.length < 1
-          toastr.info('mno_enterprise.templates.dashboard.provisioning.subscriptions.cart.empty')
-          $state.go('home.marketplace')
-          return
+      $q.all({organization: orgPromise, subscriptions: subPromise}).then(
+        (response) ->
+          vm.subscriptions = response.subscriptions
+          if vm.cartSubscriptions && vm.subscriptions.length < 1
+            toastr.info('mno_enterprise.templates.dashboard.provisioning.subscriptions.cart.empty')
+            $state.go('home.marketplace')
+            return
 
-        vm.orgCurrency = response.organization.organization?.billing_currency || MnoeConfig.marketplaceCurrency()
+          vm.orgCurrency = response.organization.organization?.billing_currency || MnoeConfig.marketplaceCurrency()
 
-        # If a subscription doesn't contains a pricing for the org currency, a warning message is displayed
-        vm.displayCurrencyWarning = not _.every(response.subscriptions, (subscription) ->
-          currencies = _.map(subscription?.product_pricing?.prices, 'currency')
-          _.includes(currencies, vm.orgCurrency) || (subscription?.product_pricing?.pricing_type in PRICING_TYPES['unpriced'])
-        )
-    ).finally(-> vm.isLoading = false)
+          # If a subscription doesn't contains a pricing for the org currency, a warning message is displayed
+          vm.displayCurrencyWarning = not _.every(response.subscriptions, (subscription) ->
+            currencies = _.map(subscription?.product_pricing?.prices, 'currency')
+            _.includes(currencies, vm.orgCurrency) || (subscription?.product_pricing?.pricing_type in PRICING_TYPES['unpriced'])
+          )
+      ).finally(-> vm.isLoading = false)
+
+    #====================================
+    # Post-Initialization
+    #====================================
+    # Reload the page when a new company is selected
+    $scope.$watch MnoeOrganizations.getSelectedId, (val) ->
+      if val?
+        vm.isLoading = true
+        vm.init()
+
+    return
 
     vm.displayInfoTooltip = (subscription) ->
       return subscription.status == 'aborted'
