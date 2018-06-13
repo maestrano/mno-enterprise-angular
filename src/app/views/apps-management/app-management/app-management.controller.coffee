@@ -113,10 +113,17 @@ angular.module 'mnoEnterpriseAngular'
             vm.dataSharingStatus = 'Disconnected'
             return
 
-          if vm.product.sync_status.toLowerCase() in ['error', 'disconnected']
+          vm.product.sync_status.attributes = {}
+          vm.product.sync_status.attributes.finished_at = vm.product.sync_status.last_sync_date
+          if vm.product.sync_status.status.toLowerCase() in ['error', 'disconnected']
             vm.dataSharingStatus = 'Disconnected'
           else
             vm.dataSharingStatus = 'Connected'
+
+        vm.setDataSharingStatus = ->
+          return unless vm.product.sync_status
+
+          vm.dataSharingStatus = if vm.product.sync_status?.attributes?.status then 'Connected' else 'Disconnected'
 
         # ********************** Initialize *********************************
         vm.init = ->
@@ -133,6 +140,8 @@ angular.module 'mnoEnterpriseAngular'
                 toastr.error('mno_enterprise.templates.dashboard.app_management.unavailable')
                 $state.go('home.apps-management')
                 return
+
+              vm.setDataSharingStatus()
 
               vm.organization = _.find(response.currentUser.organizations, {id: MnoeOrganizations.selectedId})
 

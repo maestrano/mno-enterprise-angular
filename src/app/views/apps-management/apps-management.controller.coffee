@@ -32,7 +32,17 @@ angular.module 'mnoEnterpriseAngular'
         MnoeConfig.isDataSharingEnabled() && product.data_sharing
 
       vm.dataSharingStatus = (product) ->
-        return product.sync_status?.attributes?.status
+        # If sync status is set from backend then it follows following:
+        # sync_status values:
+        #   null => disconnected
+        #   all other values => connected
+        if _.find(vm.filterSyncProductIds, (uid) -> uid == product.uid)
+          product.sync_status?.attributes?.status
+        else
+          if product.sync_status?.attributes?.status
+            'Connected'
+          else
+            'Disconnected'
 
       vm.subscriptionStatus = (product) ->
         return product.subscription.status if product.subscription
