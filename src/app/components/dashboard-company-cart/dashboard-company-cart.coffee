@@ -5,7 +5,7 @@
 DashboardCompanyCartCtrl = ($scope, MnoeProvisioning, MnoeOrganizations, MnoeCurrentUser) ->
   'ngInject'
 
-  initCartSubscritpions = ->
+  initCartSubscriptions = ->
     params = { where: {subscription_status_in: 'staged' } }
     MnoeProvisioning.getSubscriptions(params, true).then(
       (response) ->
@@ -18,7 +18,7 @@ DashboardCompanyCartCtrl = ($scope, MnoeProvisioning, MnoeOrganizations, MnoeCur
       (response) ->
         org = _.find(response.organizations, { id: organization.id })
         if MnoeOrganizations.role.atLeastAdmin(org.current_user_role)
-          initCartSubscritpions()
+          initCartSubscriptions()
     )
   cartSubscriptions()
 
