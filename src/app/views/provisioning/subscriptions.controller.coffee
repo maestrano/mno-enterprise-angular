@@ -37,7 +37,8 @@ angular.module 'mnoEnterpriseAngular'
           $state.go("home.subscriptions", {subType: 'active'})
       )
 
-    vm.init = ->
+    vm.initialize = ->
+      vm.isLoading = true
       orgPromise = MnoeOrganizations.get()
       subPromise = vm.subscriptionsPromise()
 
@@ -61,13 +62,8 @@ angular.module 'mnoEnterpriseAngular'
     #====================================
     # Post-Initialization
     #====================================
-    # Reload the page when a new company is selected
     $scope.$watch MnoeOrganizations.getSelectedId, (val) ->
-      if val?
-        vm.isLoading = true
-        vm.init()
-
-    return
+      vm.initialize() if val?
 
     vm.displayInfoTooltip = (subscription) ->
       return subscription.status == 'aborted'
