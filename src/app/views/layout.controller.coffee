@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller 'LayoutController', ($scope, $location, $stateParams, $state, $q, MnoeCurrentUser, MnoeOrganizations) ->
+  .controller 'LayoutController', ($scope, $location, $stateParams, $state, $q, MnoeCurrentUser, MnoeOrganizations, MnoeConfig) ->
     'ngInject'
 
     # Used for the provisioning workflow
@@ -17,10 +17,13 @@ angular.module 'mnoEnterpriseAngular'
     $scope.$watch(MnoeOrganizations.getSelectedId, (newValue) ->
       MnoeCurrentUser.get().then(
         (response) ->
+          selectedOrg = _.find(response.organizations, {id: newValue})
+          isAdmin = MnoeOrganizations.role.atLeastAdmin(selectedOrg.current_user_role)
+          $scope.isCartEnabled = if isAdmin then MnoeConfig.isProvisioningEnabled() else false
+
           # We only check the role for those states
           if $state.is('home.impac') || $state.is('home.apps')
-            selectedOrg = _.find(response.organizations, {id: newValue})
-            if MnoeOrganizations.role.atLeastAdmin(selectedOrg.current_user_role)
+            if isAdmin
               $state.go('home.impac')
             else
               $state.go('home.apps')
