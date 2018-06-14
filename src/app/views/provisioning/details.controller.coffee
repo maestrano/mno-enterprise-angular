@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningDetailsCtrl', ($scope, $q, $stateParams, $state, MnoeMarketplace, MnoeProvisioning, MnoeOrganizations, schemaForm, ProvisioningHelper, toastr) ->
+  .controller('ProvisioningDetailsCtrl', ($scope, $q, $stateParams, $state, $filter, MnoeMarketplace, MnoeProvisioning, MnoeOrganizations, schemaForm, ProvisioningHelper, toastr) ->
     vm = this
 
     vm.form = [ "*" ]
@@ -8,13 +8,22 @@ angular.module 'mnoEnterpriseAngular'
     # We must use model schemaForm's sf-model, as #json_schema_opts are namespaced under model
     vm.model = vm.subscription.custom_data || {}
 
-    # Methods under the vm.model are used for calculated fields under #json_schema_opts.
+    # Methods under the vm.model are used for calculated fields under #json_schema_opts, which are set on third-party adapters.
     # Used to calculate the end date for forms with a contractEndDate.
     vm.model.calculateEndDate = (startDate, contractLength) ->
       return null unless startDate && contractLength
       moment(startDate)
       .add(contractLength.split('Months')[0], 'M')
       .format('YYYY-MM-DD')
+
+    # Used for forms that automatically calculate the startDate.
+    vm.model.timeNow = () ->
+      $filter('date')(new Date(), 'yyyy-MM-dd')
+
+    # Workaround. You can only specify defaults in the schema, and not the vm.form section.
+    # Since we are getting the schemas remotely, we must find a way to set defaults using vm.form.
+    vm.model.defaultContractLength = () ->
+      'monthly'
 
     urlParams =
       productId: $stateParams.productId,
