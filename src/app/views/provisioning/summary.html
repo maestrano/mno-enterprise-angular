@@ -42,8 +42,8 @@
       <div ng-show="!vm.isLoading && vm.subscription.product_pricing" class="table-cell">
         <div class="row th-row hidden-xs">
           <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.summary.name' | translate }}</div>
-          <div ng-show="vm.subscription.product_pricing.license_based" class="cell col-sm-2">{{ 'mno_enterprise.templates.dashboard.provisioning.summary.licenses' | translate }}</div>
-          <div class="cell col-sm-2">{{ 'mno_enterprise.templates.dashboard.provisioning.summary.price' | translate }}</div>
+          <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.summary.licenses' | translate }}</div>
+          <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.summary.price' | translate }}</div>
           <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.summary.description' | translate }}</div>
         </div>
 
@@ -55,14 +55,23 @@
             {{ vm.subscription.product_pricing.name }}
           </div>
 
-        <div class="cell col-sm-2" ng-show="vm.subscription.product_pricing.license_based">
+        <div class="cell col-sm-3">
           <span class="cell-label visible-xs-inline">
             {{ 'mno_enterprise.templates.dashboard.provisioning.summary.licenses' | translate }}:
           </span>
-          {{ vm.subscription.max_licenses }}
+          <div ng-show="vm.subscription.max_licenses">
+            {{ vm.subscription.max_licenses }}
+          </div>
+          <div ng-hide="vm.subscription.max_licenses">
+            {{ 'mno_enterprise.templates.dashboard.provisioning.summary.no_licenses.message' | translate }}
+            <span tooltip-append-to-body="true" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.provisioning.summary.no_licenses.tooltip' | translate}}">
+              <i class='fa fa-question'></i>
+            </span>
+          </div>
+
         </div>
 
-        <div class="cell col-sm-2">
+        <div class="cell col-sm-3">
           <span class="cell-label visible-xs-inline">
             {{ 'mno_enterprise.templates.dashboard.provisioning.summary.price' | translate }}:
           </span>
