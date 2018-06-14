@@ -113,17 +113,6 @@ angular.module 'mnoEnterpriseAngular'
       _self.cartSubscriptionsPromise = deferred.promise if cart
       return deferred.promise
 
-    @cancelSubscription = (s) ->
-      MnoeOrganizations.get().then(
-        (response) ->
-          subscription_params = { cart_entry: s.cart_entry }
-          MnoeApiSvc.one('organizations', response.organization.id).one('subscriptions', s.id).post('/cancel', {subscription: subscription_params}).catch(
-            (error) ->
-              MnoErrorsHandler.processServerError(error)
-              $q.reject(error)
-          )
-      )
-
     @getSubscriptionEvents = (subscriptionId, sort, params = {}) ->
       params["order_by"] = sort
       deferred = $q.defer()
@@ -158,11 +147,11 @@ angular.module 'mnoEnterpriseAngular'
       )
       return deferred.promise
 
-    @emptySubscriptions = () ->
+    @emptyCartSubscriptions = () ->
       _self.cartSubscriptionsPromise = null
 
-    @refreshSubscriptions = ->
-      _self.emptySubscriptions()
-      _self.getSubscriptions({ where: {staged_subscriptions: true } })
+    @refreshCartSubscriptions = ->
+      _self.emptyCartSubscriptions()
+      _self.getSubscriptions({ where: {subscription_status_in: 'staged' } })
 
     return

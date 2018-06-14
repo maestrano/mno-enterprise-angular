@@ -12,7 +12,6 @@ angular.module 'mnoEnterpriseAngular'
     vm.isLoading = true
     vm.app = {}
     vm.searchWord = ""
-    vm.arePlansAvailable = true
     # The already installed app instance of the app, if any
     vm.appInstance = null
     # An already installed app, conflicting with the app because it contains a common subcategory
@@ -41,10 +40,9 @@ angular.module 'mnoEnterpriseAngular'
     getPricingPlans = () ->
       if vm.isPriceShown
         plans = vm.app.pricing_plans
-        if plans[vm.currency]
-          vm.pricing_plans = plans[vm.currency]
-        else
-          vm.arePlansAvailable = false
+        plansForCurrency = ProvisioningHelper.plansForCurrency(plans, vm.currency)
+        unless _.isEmpty(plansForCurrency)
+          vm.pricing_plans = plansForCurrency
 
     # Public initialization - app only, without considering reviews/org
     MnoeMarketplace.getApps().then(

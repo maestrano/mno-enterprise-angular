@@ -1,11 +1,12 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningConfirmCtrl', ($scope, $state, $stateParams, MnoeOrganizations, MnoeProvisioning, MnoeAppInstances, MnoeConfig) ->
+  .controller('ProvisioningConfirmCtrl', ($scope, $state, $stateParams, MnoeOrganizations, MnoeProvisioning, MnoeAppInstances, MnoeConfig, ProvisioningHelper, schemaForm) ->
 
     vm = this
 
     vm.isLoading = false
     vm.subscription = MnoeProvisioning.getCachedSubscription()
     vm.selectedCurrency = MnoeProvisioning.getSelectedCurrency()
+    vm.cartItem = $stateParams.cart == 'true'
 
     vm.orderTypeText = 'mno_enterprise.templates.dashboard.provisioning.subscriptions.' + $stateParams.editAction.toLowerCase()
 
@@ -14,6 +15,17 @@ angular.module 'mnoEnterpriseAngular'
       productId: $stateParams.productId
       editAction: $stateParams.editAction,
       cart: $stateParams.cart
+
+    setCustomSchema = () ->
+      parsedSchema = JSON.parse(vm.subscription.product.custom_schema)
+      schema = parsedSchema.json_schema || parsedSchema
+      vm.form = parsedSchema.asf_options || ["*"]
+      schemaForm.jsonref(schema)
+        .then((schema) -> schemaForm.jsonref(schema))
+        .then((schema) -> schemaForm.jsonref(schema))
+        .then((schema) ->
+          vm.schema = schema
+        )
 
     vm.editOrder = (reload = true) ->
       switch $stateParams.editAction.toLowerCase()
@@ -30,15 +42,17 @@ angular.module 'mnoEnterpriseAngular'
       vm.singleBilling = vm.subscription.product.single_billing_enabled
       vm.billedLocally = vm.subscription.product.billed_locally
       vm.subscription.edit_action = $stateParams.editAction
+      # Render custom Schema if it exists
+      setCustomSchema() if vm.subscription.custom_data && vm.subscription.product.custom_schema
 
     vm.validate = () ->
       vm.isLoading = true
       vm.subscription.edit_action = $stateParams.editAction
-      vm.subscription.cart_entry = true if $stateParams.cart == 'true'
+      vm.subscription.cart_entry = true if vm.cartItem
       MnoeProvisioning.saveSubscription(vm.subscription, vm.selectedCurrency).then(
         (response) ->
-          if $stateParams.cart == 'true' && $stateParams.editAction == 'cancel'
-            MnoeProvisioning.refreshSubscriptions()
+          if vm.cartItem
+            MnoeProvisioning.refreshCartSubscriptions()
             $state.go("home.subscriptions", {subType: 'cart'})
           else
             MnoeProvisioning.setSubscription(response)
@@ -55,22 +69,33 @@ angular.module 'mnoEnterpriseAngular'
       vm.subscription.cart_entry = true
       MnoeProvisioning.saveSubscription(vm.subscription).then(
         (response) ->
-          MnoeProvisioning.refreshSubscriptions()
+          MnoeProvisioning.refreshCartSubscriptions()
           $state.go('home.marketplace')
       ).finally(-> vm.isLoading = false)
 
     vm.orderEditable = () ->
-      # The order is editable if we are changing the plan, or the product has a custom schema.
+      # The order is editable if the product has a custom schema.
+      return true if vm.subscription.product?.custom_schema
+      # Disable editing if unable to initially select a pricing plan.
+      return false if ProvisioningHelper.skipPriceSelection(vm.subscription.product)
       switch $stateParams.editAction
         when 'change', 'new'
           true
         else
-          if vm.subscription.product?.custom_schema then true else false
+          false
 
     MnoeOrganizations.get().then(
       (response) ->
         vm.orgCurrency = response.organization?.billing_currency || MnoeConfig.marketplaceCurrency()
     )
+
+    vm.pricingText = () ->
+      if !vm.singleBilling
+        'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.single_billing_disabled'
+      else if vm.billedLocally
+        'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.billed_locally'
+      else
+        'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.externally_managed'
 
     # Delete the cached subscription when we are leaving the subscription workflow.
     $scope.$on('$stateChangeStart', (event, toState) ->

@@ -18,7 +18,7 @@
             <div class="cell col-sm-4">{{ 'mno_enterprise.templates.dashboard.provisioning.order.description' | translate }}</div>
             <div class="cell col-sm-2">{{ 'mno_enterprise.templates.dashboard.provisioning.order.price' | translate }}</div>
             <div class="cell col-sm-3">
-              <select class="form-control" ng-if="vm.isCurrencySelectionEnabled" ng-model="vm.selectedCurrency" ng-options="c for c in vm.currencies" ng-change="vm.pricingPlanFilter()">
+              <select class="form-control" ng-if="vm.isCurrencySelectionEnabled" ng-model="vm.selectedCurrency" ng-options="c for c in vm.currencies" ng-change="vm.filterPricingPlans()">
               </select>
             </div>
           </div>
@@ -36,7 +36,7 @@
           </div>
 
           <div class="col-xs-10">
-            <div class="cell col-sm-2">
+            <div class="cell col-sm-2" uib-tooltip="{{ pricingPlan.name }}">
               <span class="cell-label visible-xs-inline">
                 {{ 'mno_enterprise.templates.dashboard.provisioning.order.name' | translate }}:
               </span>
