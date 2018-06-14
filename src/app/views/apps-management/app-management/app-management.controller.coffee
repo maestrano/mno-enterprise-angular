@@ -105,10 +105,13 @@ angular.module 'mnoEnterpriseAngular'
             vm.isCurrentSubscriptionLoading = false
 
         vm.loadOrderHistory = ->
-          MnoeProvisioning.getProductSubscriptions(vm.product.product_id).then(
-            (response) ->
-              vm.subscriptionsHistory = response
-          ).finally( -> vm.isOrderHistoryLoading = false)
+          if vm.currentSubscription
+            MnoeProvisioning.getSubscriptionEvents(vm.currentSubscription.id, 'created_at.desc').then(
+              (response) ->
+                vm.subscriptionsHistory = response
+            ).finally( -> vm.isOrderHistoryLoading = false)
+          else
+            vm.isOrderHistoryLoading = false
 
         vm.addOnSettingLauch = ->
           AppSettingsHelper.addOnSettingLauch(vm.product)
