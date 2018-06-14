@@ -35,10 +35,6 @@ angular.module 'mnoEnterpriseAngular'
 
       vm.canProvisionApp = false
 
-      atLeastAdmin = (user, currentOrg) ->
-        org = _.find(user.organizations, { id: currentOrg.id })
-        MnoeOrganizations.role.atLeastAdmin(org.current_user_role)
-
       vm.buttonDisabled = () ->
         !vm.canProvisionApp || vm.appInstallationStatus() == "CONFLICT" || !vm.orderPossible
 
@@ -178,7 +174,7 @@ angular.module 'mnoEnterpriseAngular'
             )
 
             organization = MnoeOrganizations.selected.organization
-            vm.canProvisionApp = atLeastAdmin(currentUser, organization)
+            vm.canProvisionApp = _.find(authorizedOrganizations, (org) -> org.id == organization.id)
 
             # Find if the user already have an instance of it
             vm.appInstance = _.find(appInstances, {app_nid: vm.app.nid})
