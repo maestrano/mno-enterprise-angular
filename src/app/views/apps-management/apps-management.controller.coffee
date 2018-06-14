@@ -8,7 +8,7 @@ angular.module 'mnoEnterpriseAngular'
 
       getSyncStatusValue = (product) ->
         sync_status = _.find(vm.connec_apps, (app) -> app.uid == product.uid)
-        return 'Disconnected' unless sync_status
+        return 'Disconnected' unless sync_status?.status
 
         if sync_status.status.toLowerCase() in ['error', 'disconnected']
           'Disconnected'

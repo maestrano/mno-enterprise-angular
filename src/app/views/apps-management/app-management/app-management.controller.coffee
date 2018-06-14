@@ -109,7 +109,7 @@ angular.module 'mnoEnterpriseAngular'
 
         setSyncStatusValue = ->
           vm.product.sync_status = _.find(vm.connec_apps, (app) -> app.uid == vm.product.uid)
-          unless vm.product.sync_status
+          unless vm.product.sync_status?.status
             vm.dataSharingStatus = 'Disconnected'
             return
 
