@@ -2,7 +2,7 @@ angular.module 'mnoEnterpriseAngular'
   .controller('AppManagementCtrl',
     ($q, $state, $scope, toastr, $stateParams, MnoeConfig, MnoeProductInstances, MnoeProvisioning,
       MnoeOrganizations, MnoeCurrentUser, MnoeMarketplace, PRICING_TYPES, ProvisioningHelper,
-      AppSettingsHelper, AppManagementHelper) ->
+      AppSettingsHelper, AppManagementHelper, MnoeAppInstances) ->
 
         vm = @
         vm.isLoading = true
@@ -13,12 +13,6 @@ angular.module 'mnoEnterpriseAngular'
         vm.editSubscription = ProvisioningHelper.editSubscription
         vm.showEditAction = ProvisioningHelper.showEditAction
         vm.goToSubscription = ProvisioningHelper.goToSubscription
-
-        vm.dataSharingStatus = ->
-          if vm.product.sync_status?.attributes?.status
-            'Connected'
-          else
-            'Disconnected'
 
         vm.showDataSharingDate = ->
           if vm.product.sync_status?.attributes?.status
@@ -142,7 +136,20 @@ angular.module 'mnoEnterpriseAngular'
 
               # Order Histroy flow
               vm.loadOrderHistory() if vm.isAdmin
-          ).finally(-> vm.isLoading = false)
+          ).finally(
+            ->
+              vm.isLoading = false
+              vm.initAppInstanceSync()
+            )
+
+        vm.initAppInstanceSync = ->
+          return if vm.product.sync_status
+
+          MnoeAppInstances.getAppInstanceSync().then(
+            (response) ->
+              vm.connecApps = response.connectors
+              vm.product = AppManagementHelper.setProductSyncStatuses(vm.connecApps, [vm.product])[0]
+          )
 
         #====================================
         # Post-Initialization
