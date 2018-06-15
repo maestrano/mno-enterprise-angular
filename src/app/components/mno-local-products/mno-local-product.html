@@ -34,10 +34,11 @@
         <!-- Key benefits -->
         <div class="col-md-4">
           <div class="well text-center well-details">
-            <a class="btn btn-warning btn-lg top-buffer-1" ng-if="vm.isProvisioningEnabled" ui-sref="home.provisioning.order({productId: vm.product.id, editAction: 'new'})"
-              translate>
-              mno_enterprise.templates.dashboard.marketplace.show.provision
-            </a>
+            <div ng-if="!vm.isPublic" class="row">
+              <div class="col-xs-12 col-sm-4 col-sm-offset-4 col-md-8 col-md-offset-2">
+                <mno-app-install-btn app="vm.product"></mno-app-install-btn>
+              </div>
+            </div>
 
             <div class="row">
               <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-12 col-md-offset-0 top-buffer-1">
