@@ -129,91 +129,113 @@
           {{ 'mno_enterprise.templates.dashboard.app_management.manage.tab.manage_subscription' | translate }}
         </div>
 
-        <div class='row top-buffer-1'>
-          <div class='col-xs-12'>
-            <mno-loader ng-show="vm.isCurrentSubscriptionLoading" class='top-buffer-4'></mno-loader>
-            <div ng-show="!vm.isCurrentSubscriptionLoading" class='table-cell'>
-              <div ng-show="(vm.singleBilling && vm.billedLocally) || vm.currentSubscription.product.product_type != 'application'">
-                <div class='row th-row hidden-xs'>
-                  <div class='col-xs-10 col-xs-offset-2'>
-                    <div class='cell col-sm-3'>{{ 'mno_enterprise.templates.dashboard.provisioning.order.name' | translate }}</div>
-                    <div class='cell col-sm-5'>{{ 'mno_enterprise.templates.dashboard.provisioning.order.description' | translate }}</div>
-                    <div class='cell col-sm-3'>{{ 'mno_enterprise.templates.dashboard.provisioning.order.price' | translate }}</div>
+        <div class='top-buffer-1'>
+          <mno-loader ng-show="vm.isCurrentSubscriptionLoading" class='top-buffer-4'></mno-loader>
+          <div ng-hide="vm.isCurrentSubscriptionLoading" class='table-cell'>
+            <div class='row th-row hidden-sm'>
+              <div class='cell col-md-6'>
+                <div class='row'>
+                  <div class='cell col-md-6'>
+                    {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.product' | translate }}
                   </div>
-                </div>
-
-                <div class='row td-row' ng-if="vm.currentSubscription.product.pricing_plans.length === 0">
-                  <div class='cell col-md-12 text-center'>
-                    {{ 'mno_enterprise.templates.dashboard.provisioning.order.no_pricing_found' | translate }}
-                  </div>
-                </div>
-
-                <div class='row td-row' ng-repeat="pricingPlan in vm.currentSubscription.product.pricing_plans" ng-click="vm.selectPlan(pricingPlan)">
-                  <div class='cell radio-selector col-xs-2'>
-                    <input type='radio' name='optradio' ng-model="vm.currentSubscription.product_pricing.id" ng-value="pricingPlan.id">
-                  </div>
-
-                  <div class='col-xs-10'>
-                    <div class='cell col-sm-3'>
-                      <span class='cell-label visible-xs-inline'>
-                        {{ 'mno_enterprise.templates.dashboard.provisioning.order.name' | translate }}:
-                      </span>
-                      {{ pricingPlan.name }}
-                    </div>
-
-                    <div class='cell col-sm-5'>
-                      <span class='cell-label visible-xs-inline'>
-                        {{ 'mno_enterprise.templates.dashboard.provisioning.order.description' | translate }}:
-                      </span>
-                      {{ pricingPlan.description }}
-                    </div>
-
-                    <div class='cell col-sm-3'>
-                      <span class='cell-label visible-xs-inline'>
-                        {{ 'mno_enterprise.templates.dashboard.provisioning.order.price' | translate }}:
-                      </span>
-                      <span ng-if="vm.pricedPlan(pricingPlan)" ng-repeat="price in pricingPlan.prices | filterBy: ['currency']: vm.orgCurrency" class='badge'>
-                        {{ price.currency }} {{ price.price_cents / 100 }}
-                      </span>
-                      <span ng-show="pricingPlan.pricing_type == 'recurring'">
-                        / {{ pricingPlan.per_unit }} / {{ pricingPlan.per_duration }}
-                      </span>
-                      <span ng-show="pricingPlan.pricing_type == 'payg'">
-                        {{ 'mno_enterprise.templates.dashboard.provisioning.order.pricing_type.payg' | translate }}
-                      </span>
-                      <span ng-show="pricingPlan.pricing_type == 'free'">
-                        {{ 'mno_enterprise.templates.dashboard.provisioning.order.pricing_type.free' | translate }}
-                      </span>
-                    </div>
+                  <div class='cell col-md-6'>
+                    {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.subscription' | translate }}
                   </div>
                 </div>
               </div>
-
-              <div ng-show="vm.currentSubscription.product.product_type == 'application'" class="table-cell">
-                <div class="row th-row hidden-xs">
-                  <div class="cell col-sm-12">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.title' | translate }}</div>
+              <div class='cell col-md-2'>
+                {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.amount' | translate }}
+              </div>
+              <div class='cell col-md-2'>
+                <div class='row'>
+                  <div class='cell'>
+                    {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.status' | translate }}
+                  </div>
                 </div>
-                <div class="row td-row">
-                  <div class="cell col-sm-12">
-                    <span class="cell-label visible-xs-inline">
-                      {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.title' | translate }}
+              </div>
+              <div class='cell col-md-2'>&nbsp;</div>
+            </div>
+
+            <div class='row td-row' ng-if="vm.subscriptions.length === 0">
+              <div class='cell col-md-12 text-center' translate>
+                mno_enterprise.templates.dashboard.provisioning.subscriptions.empty_list
+              </div>
+            </div>
+
+            <div class='row td-row'>
+              <div class='cell col-md-6'>
+                <div class='row'>
+                  <div class='cell col-md-6' ng-click="vm.goToSubscription(vm.currentSubscription)">
+                    <span class='cell-label visible-xs-inline'>
+                      {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.product' | translate }}:
                     </span>
-                    <div ng-hide="vm.singleBilling">
-                      {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.single_billing_disabled' | translate }}
-                    </div>
-                    <div ng-show="vm.singleBilling && !vm.billedLocally">
-                      {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.externally_managed' | translate }}
-                    </div>
-                    <div ng-show="vm.singleBilling && vm.billedLocally">
-                      {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.billed_locally' | translate }}
-                    </div>
+                    <span title="{{ vm.currentSubscription.name }}">{{ vm.currentSubscription.product.name }}</span>
+                  </div>
+
+                  <div class='cell col-md-6' ng-click="vm.goToSubscription(vm.currentSubscription)">
+                    <span class='cell-label visible-xs-inline'>
+                      {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.subscription' | translate }}:
+                    </span>
+                    <span ng-show="vm.currentSubscription.product_pricing" title="{{ vm.currentSubscription.product_pricing.name }}">{{ vm.currentSubscription.product_pricing.name }}</span>&nbsp;<i class="fa fa-info-circle" ng-show="vm.currentSubscription.product_pricing.description" uib-tooltip="{{ vm.currentSubscription.product_pricing.description }}" tooltip-append-to-body='true'></i>
+                    <span ng-hide="vm.currentSubscription.product_pricing">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.not_available' | translate }}</span>&nbsp;<i class="fa fa-question-circle" ng-hide="vm.currentSubscription.product_pricing" uib-tooltip="{{'mno_enterprise.templates.dashboard.provisioning.subscriptions.tooltip.external_billing' | translate}}" tooltip-append-to-body="true"></i>
                   </div>
                 </div>
               </div>
 
-              <button class='btn btn-primary top-buffer-1 pull-right' ng-click="vm.nextSubscription()" ng-disabled="vm.isSubChanged" translate>
-                mno_enterprise.templates.dashboard.provisioning.order.next
-              </button>
+              <div class='cell col-md-2' ng-click="vm.goToSubscription(vm.currentSubscription)">
+                <span class='cell-label visible-xs-inline'>
+                  {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.amount' | translate }}:
+                </span>
+                <div ng-hide="vm.currentSubscription.product_pricing.pricing_type == 'payg'" ng-repeat="price in vm.currentSubscription.product_pricing.prices | filterBy: ['currency']: vm.orgCurrency" class="badge">
+                  <span ng-hide="vm.currentSubscription.product_pricing.license_based">
+                    {{ price.currency }} {{ price.price_cents / 100 | number:2 }}
+                  </span>
+                  <span ng-show="vm.currentSubscription.product_pricing.license_based">
+                    {{ price.currency }} {{ price.price_cents / 100 * vm.currentSubscription.max_licenses | number:2 }}
+                  </span>
+                </div>
+                <span ng-show="vm.currentSubscription.product_pricing.pricing_type == 'recurring'">
+                  / {{ vm.currentSubscription.product_pricing.per_duration }}
+                </span>
+                <span ng-show="vm.currentSubscription.product_pricing.pricing_type == 'payg'">
+                  {{ 'mno_enterprise.templates.dashboard.provisioning.order.pricing_type.payg' | translate }}
+                </span>
+              </div>
+
+              <div class='cell col-md-2'>
+                <div class='row'>
+                  <div class='cell' ng-click="vm.goToSubscription(vm.currentSubscription)">
+                    <span class='cell-label visible-xs-inline'>
+                      {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.status' | translate }}:
+                    </span>
+                    <span title="{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.states.' + vm.currentSubscription.status | translate }}">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.states.' + vm.currentSubscription.status | translate }}</span>
+                    <i class='fa fa-info-circle' ng-hide="!vm.displayInfoTooltip(vm.currentSubscription)" uib-tooltip="{{'mno_enterprise.templates.dashboard.provisioning.subscriptions.tooltip.aborted' | translate}}" tooltip-append-to-body='true'></i>
+                  </div>
+                </div>
+              </div>
+
+              <div class='cell col-md-2'>
+                <div class='pull-left'>
+                  <a ng-click="vm.editSubscription(vm.currentSubscription, 'reactivate')" ng-show="vm.showEditAction(vm.currentSubscription, 'reactivate')" class='btn btn-link btn-link-primary' uib-tooltip="{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.reactivate_tooltip' | translate }}" tooltip-append-to-body='true'>
+                    <i class='fa fa-refresh'></i>
+                  </a>
+                  <a ng-click="vm.editSubscription(vm.currentSubscription, 'renew')" ng-show="vm.showEditAction(vm.currentSubscription, 'renew')" class='btn btn-link btn-link-primary' uib-tooltip="{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.renew_tooltip' | translate }}" tooltip-append-to-body='true'>
+                    <i class='fa fa-check-square'></i>
+                  </a>
+                  <a ng-click="vm.editSubscription(vm.currentSubscription, 'change')" ng-show="vm.showEditAction(vm.currentSubscription, 'change')" class='btn btn-link btn-link-warning' uib-tooltip="{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.change_tooltip' | translate }}" tooltip-append-to-body='true'>
+                    <i class='fa fa-pencil-square-o'></i>
+                  </a>
+                  <a ng-click="vm.editSubscription(vm.currentSubscription, 'modify')" ng-show="vm.showEditAction(vm.currentSubscription, 'modify')" class='btn btn-link btn-link-warning' uib-tooltip="{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.modify_tooltip' | translate }}" tooltip-append-to-body='true'>
+                    <i class='fa fa-pencil'></i>
+                  </a>
+                  <a ng-click="vm.editSubscription(vm.currentSubscription, 'suspend')" ng-show="vm.showEditAction(vm.currentSubscription, 'suspend')" class='btn btn-link btn-link-danger' uib-tooltip="{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.suspend_tooltip' | translate }}" tooltip-append-to-body='true'>
+                    <i class='fa fa-remove'></i>
+                  </a>
+                  <a ng-click="vm.editSubscription(vm.currentSubscription, 'cancel')" ng-show="vm.showEditAction(vm.currentSubscription, 'cancel')" class='btn btn-link btn-link-danger' uib-tooltip="{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.cancel_tooltip' | translate }}" tooltip-append-to-body='true'>
+                    <i class='fa fa-ban'></i>
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>

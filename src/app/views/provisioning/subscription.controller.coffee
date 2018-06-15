@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningSubscriptionCtrl', ($stateParams, $state, $filter, $uibModal, MnoeProvisioning, MnoeMarketplace, ProvisioningHelper) ->
+  .controller('ProvisioningSubscriptionCtrl', ($stateParams, $state, $filter, $uibModal, $window, MnoeProvisioning, MnoeMarketplace, ProvisioningHelper) ->
 
     vm = this
 
@@ -51,7 +51,7 @@ angular.module 'mnoEnterpriseAngular'
       )
 
     vm.subscriptionBackLink = ->
-      $state.go('home.subscriptions', {subType: if $stateParams.cart then 'cart' else 'active'})
+      $window.history.back()
 
     # Return true if the plan has a dollar value
     vm.pricedPlan = ProvisioningHelper.pricedPlan

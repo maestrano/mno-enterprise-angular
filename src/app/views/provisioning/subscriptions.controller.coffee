@@ -1,15 +1,12 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningSubscriptionsCtrl', ($q, $state, $stateParams, toastr, MnoeOrganizations, MnoeProvisioning, MnoeConfig, MnoConfirm, PRICING_TYPES) ->
+  .controller('ProvisioningSubscriptionsCtrl', ($q, $state, $stateParams, toastr, MnoeOrganizations, MnoeProvisioning, MnoeConfig, MnoConfirm, PRICING_TYPES, ProvisioningHelper) ->
 
     vm = this
     vm.isLoading = true
     vm.cartSubscriptions = $stateParams.subType == 'cart'
 
     vm.goToSubscription = (subscription) ->
-      if vm.cartSubscriptions
-        $state.go('home.subscription', { id: subscription.id, cart: vm.cartSubscriptions })
-      else
-        $state.go('home.subscription', { id: subscription.id })
+      ProvisioningHelper.goToSubscription(subscription, vm.cartSubscriptions)
 
     vm.subscriptionsPromise = ->
       if vm.cartSubscriptions
@@ -61,21 +58,10 @@ angular.module 'mnoEnterpriseAngular'
       return subscription.status == 'aborted'
 
     vm.showEditAction = (subscription, editAction) ->
-      return false unless subscription.available_actions
-      editAction in subscription.available_actions
+      ProvisioningHelper.showEditAction(subscription, editAction)
 
     vm.editSubscription = (subscription, editAction) ->
-      MnoeProvisioning.setSubscription({})
-      if vm.cartSubscriptions
-        params = {subscriptionId: subscription.id, editAction: editAction, cart: vm.cartSubscriptions}
-      else
-        params = {subscriptionId: subscription.id, editAction: editAction}
-
-      switch editAction.toLowerCase( )
-        when 'change'
-          $state.go('home.provisioning.order', params)
-        else
-          $state.go('home.provisioning.additional_details', params)
+      ProvisioningHelper.editSubscription(subscription, editAction, vm.cartSubscriptions)
 
     return
   )
