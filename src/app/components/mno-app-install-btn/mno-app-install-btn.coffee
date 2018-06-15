@@ -172,7 +172,9 @@ angular.module 'mnoEnterpriseAngular'
             authorizedOrganizations = _.filter(currentUser.organizations, (org) ->
               MnoeOrganizations.role.atLeastAdmin(org.current_user_role)
             )
-            vm.canProvisionApp = !_.isEmpty(authorizedOrganizations)
+
+            organization = MnoeOrganizations.selected.organization
+            vm.canProvisionApp = _.find(authorizedOrganizations, (org) -> org.id == organization.id)
 
             # Find if the user already have an instance of it
             vm.appInstance = _.find(appInstances, {app_nid: vm.app.nid})

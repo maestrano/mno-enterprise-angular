@@ -34,10 +34,14 @@
         <!-- Key benefits -->
         <div class="col-md-4">
           <div class="well text-center well-details">
-            <a class="btn btn-warning btn-lg top-buffer-1" ng-if="vm.isProvisioningEnabled" ui-sref="home.provisioning.order({productId: vm.product.id, editAction: 'new'})"
+            <a class="btn btn-warning btn-lg top-buffer-1" ng-if="vm.isProvisioningEnabled && vm.canProvision" ui-sref="home.provisioning.order({productId: vm.product.id, editAction: 'new'})"
               translate>
               mno_enterprise.templates.dashboard.marketplace.show.provision
             </a>
+
+            <div ng-if="vm.isProvisioningEnabled && !vm.canProvision" disabled=true class="btn btn-warning btn-promo btn-lg" uib-tooltip="{{ 'mno_enterprise.templates.components.app_install_btn.insufficient_privilege' | translate }}" translate>
+              mno_enterprise.templates.dashboard.marketplace.show.provision
+            </div>
 
             <div class="row">
               <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-12 col-md-offset-0 top-buffer-1">
