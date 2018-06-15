@@ -93,15 +93,8 @@ angular.module 'mnoEnterpriseAngular'
         "INSTALLED_LAUNCH"
 
     @getAppInstanceSync = ->
-      defer = $q.defer()
       MnoeOrganizations.get().then(
-        ->
-          _self.appInstancesSyncPromise = MnoeApiSvc.one('organizations', MnoeOrganizations.selectedId).one('/app_instances_sync').get().then(
-            (response) ->
-              defer.resolve(response)
-          )
+        -> MnoeApiSvc.one('organizations', MnoeOrganizations.selectedId).one('/app_instances_sync').get()
       )
-
-      return defer.promise
 
     return @

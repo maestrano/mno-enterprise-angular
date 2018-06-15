@@ -26,10 +26,10 @@
 
           <div ng-if='vm.providesStatus(product)'>
             <div ng-if="vm.dataSharingEnabled(product)">
-              <span ng-show="vm.dataSharingStatus(product)">
-                {{ 'mno_enterprise.templates.dashboard.app_management.data_sharing.status' | translate:{status: vm.dataSharingStatus(product)} }}
+              <span ng-show="vm.syncStatusesSet">
+                {{ 'mno_enterprise.templates.dashboard.app_management.data_sharing.status' | translate:{status: product.sync_status.attributes.status} }}
               </span>
-              <span ng-hide="vm.dataSharingStatus(product)">
+              <span ng-hide="vm.syncStatusesSet">
                 <i class='fa fa-spinner fa-pulse fa-fw'></i>
               </span>
             </div>

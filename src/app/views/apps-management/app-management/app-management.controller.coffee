@@ -107,24 +107,6 @@ angular.module 'mnoEnterpriseAngular'
         vm.addOnSettingLauch = ->
           AppSettingsHelper.addOnSettingLauch(vm.product)
 
-        setSyncStatusValue = ->
-          vm.product.sync_status = _.find(vm.connec_apps, (app) -> app.uid == vm.product.uid)
-          unless vm.product.sync_status?.status
-            vm.dataSharingStatus = 'Disconnected'
-            return
-
-          vm.product.sync_status.attributes = {}
-          vm.product.sync_status.attributes.finished_at = vm.product.sync_status.last_sync_date
-          if vm.product.sync_status.status.toLowerCase() in ['error', 'disconnected']
-            vm.dataSharingStatus = 'Disconnected'
-          else
-            vm.dataSharingStatus = 'Connected'
-
-        vm.setDataSharingStatus = ->
-          return unless vm.product.sync_status
-
-          vm.dataSharingStatus = if vm.product.sync_status?.attributes?.status then 'Connected' else 'Disconnected'
-
         # ********************** Initialize *********************************
         vm.init = ->
           vm.setUserRole()
@@ -140,8 +122,6 @@ angular.module 'mnoEnterpriseAngular'
                 toastr.error('mno_enterprise.templates.dashboard.app_management.unavailable')
                 $state.go('home.apps-management')
                 return
-
-              vm.setDataSharingStatus()
 
               vm.organization = _.find(response.currentUser.organizations, {id: MnoeOrganizations.selectedId})
 
@@ -161,8 +141,8 @@ angular.module 'mnoEnterpriseAngular'
 
           MnoeAppInstances.getAppInstanceSync().then(
             (response) ->
-              vm.connec_apps = response.connectors
-              setSyncStatusValue()
+              vm.connecApps = response.connectors
+              vm.product = AppManagementHelper.setProductSyncStatuses(vm.connecApps, [vm.product])[0]
           )
 
         #====================================

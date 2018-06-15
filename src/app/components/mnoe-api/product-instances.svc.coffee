@@ -7,9 +7,7 @@ angular.module 'mnoEnterpriseAngular'
 
     productInstancesPromise = null
     @getProductInstances = ->
-      # Note: Temporarily commented out product instance cache till actual
-      #       connec implementation from APPINT-1238 for sync status is done.
-      # return productInstancesPromise if productInstancesPromise?
+      return productInstancesPromise if productInstancesPromise?
 
       deferred = $q.defer()
 

@@ -4,45 +4,14 @@ angular.module 'mnoEnterpriseAngular'
 
       vm = @
       vm.isLoading = true
+      vm.syncStatusesSet = false
       vm.recentSubscription = AppManagementHelper.recentSubscription
-
-      getSyncStatusValue = (product) ->
-        sync_status = _.find(vm.connec_apps, (app) -> app.uid == product.uid)
-        return 'Disconnected' unless sync_status?.status
-
-        if sync_status.status.toLowerCase() in ['error', 'disconnected']
-          'Disconnected'
-        else
-          'Connected'
-
-      getSyncStatuses = ->
-        vm.products = _.map(vm.products,
-          (product) ->
-            if product.uid in vm.filterSyncProductIds
-              product.sync_status = {}
-              product.sync_status.attributes = {}
-              product.sync_status.attributes.status = getSyncStatusValue(product)
-            product
-        )
 
       vm.providesStatus = (product) ->
         vm.dataSharingEnabled(product) || product.subscription
 
       vm.dataSharingEnabled = (product) ->
         MnoeConfig.isDataSharingEnabled() && product.data_sharing
-
-      vm.dataSharingStatus = (product) ->
-        # If sync status is set from backend then it follows following:
-        # sync_status values:
-        #   null => disconnected
-        #   all other values => connected
-        if _.find(vm.filterSyncProductIds, (uid) -> uid == product.uid)
-          product.sync_status?.attributes?.status
-        else
-          if product.sync_status?.attributes?.status
-            'Connected'
-          else
-            'Disconnected'
 
       vm.subscriptionStatus = (product) ->
         return product.subscription.status if product.subscription
@@ -51,14 +20,11 @@ angular.module 'mnoEnterpriseAngular'
         "/mnoe/launch/#{product.uid}"
 
       vm.initAppInstanceSync = ->
-        vm.filterSyncProductIds = _.map(_.filter(vm.products, (product) -> !product.sync_status), (prod) -> prod.uid)
-        return if vm.filterSyncProductIds.length == 0
-
         MnoeAppInstances.getAppInstanceSync().then(
           (response) ->
-            vm.connec_apps = response.connectors
-            getSyncStatuses()
-        )
+            vm.connecApps = response.connectors
+            vm.products = AppManagementHelper.setProductSyncStatuses(vm.connecApps, vm.products)
+        ).finally(-> vm.syncStatusesSet = true)
 
       vm.init = ->
         productPromise = MnoeProductInstances.getProductInstances()
