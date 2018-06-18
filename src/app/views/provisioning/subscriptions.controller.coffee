@@ -4,6 +4,7 @@ angular.module 'mnoEnterpriseAngular'
     vm = this
     vm.isLoading = true
     vm.cartSubscriptions = $stateParams.subType == 'cart'
+    vm.skipPriceSelection = ProvisioningHelper.skipPriceSelection
 
     vm.goToSubscription = (subscription) ->
       ProvisioningHelper.goToSubscription(subscription, vm.cartSubscriptions)
@@ -70,6 +71,9 @@ angular.module 'mnoEnterpriseAngular'
 
     vm.editSubscription = (subscription, editAction) ->
       ProvisioningHelper.editSubscription(subscription, editAction, vm.cartSubscriptions)
+
+    vm.pendingSubscription = (subscription) ->
+      subscription.status in ['pending', 'provisioning']
 
     return
   )
