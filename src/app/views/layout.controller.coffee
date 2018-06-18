@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller 'LayoutController', ($scope, $location, $stateParams, $state, $q, MnoeCurrentUser, MnoeOrganizations) ->
+  .controller 'LayoutController', ($scope, $location, $stateParams, $state, $q, MnoeCurrentUser, MnoeOrganizations, MnoeConfig) ->
     'ngInject'
 
     # Used for the provisioning workflow
@@ -26,5 +26,7 @@ angular.module 'mnoEnterpriseAngular'
               $state.go('home.apps')
       ) if newValue?
     )
+
+    $scope.isCartEnabled = MnoeConfig.isAppManagementEnabled() && MnoeConfig.isProvisioningEnabled()
 
     return

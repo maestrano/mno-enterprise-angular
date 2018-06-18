@@ -7,7 +7,7 @@
 </div>
 
 <div id="dashboard" ng-if="isLoggedIn && !hasNoOrganisations">
-  <dashboard-company-cart></dashboard-company-cart>
+  <dashboard-company-cart ng-if="isCartEnabled"></dashboard-company-cart>
   <dashboard-company-selectbox></dashboard-company-selectbox>
   <dashboard-menu></dashboard-menu>
   <div class="container">
