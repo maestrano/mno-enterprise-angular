@@ -68,16 +68,19 @@ angular.module 'mnoEnterpriseAngular'
         subscription: {
           product_id: s.product.id,
           cart_entry: s.cart_entry,
-          subscription_events_attributes: [{
-            event_type: s.event_type,
-            product_pricing_id: s.product_pricing?.id,
-            subscription_details: {
-              start_date: s.start_date,
-              custom_data: s.custom_data,
-              currency: c,
-              max_licenses: s.max_licenses
-            }
-          }]
+          subscription_events_attributes: [subscriptionEventParams(s, c)]
+        }
+      }
+
+    subscriptionEventParams = (s, c) ->
+      {
+        event_type: s.event_type,
+        product_pricing_id: s.product_pricing?.id,
+        subscription_details: {
+          start_date: s.start_date,
+          custom_data: s.custom_data,
+          currency: c,
+          max_licenses: s.max_licenses
         }
       }
 
@@ -92,24 +95,24 @@ angular.module 'mnoEnterpriseAngular'
       )
       return deferred.promise
 
-    @updateSubscription = (s, c) ->
+    @createSubscriptionEvent = (s, c) ->
       deferred = $q.defer()
-      MnoeOrganizations.get().then(
-        (response) ->
-          subscription.patch({subscription: {currency: c, product_id: s.product.id, product_pricing_id: s.product_pricing?.id,
-          max_licenses: s.max_licenses, custom_data: s.custom_data, cart_entry: s.cart_entry}}).then(
-            (response) ->
+      MnoeOrganizations.get().then((response) ->
+        MnoeApiSvc.one('organizations', response.organization.id).one('subscriptions', s.id)
+          .all('subscription_events').post({subscription_event: subscriptionEventParams(s,c)}).then((response) ->
               deferred.resolve(response)
-          )
+            )
       )
+
       return deferred.promise
 
-    # Detect if the subscription should be a POST or A PUT and call corresponding method
     @saveSubscription = (subscription, currency) ->
+      # If we are requesting to provision a new subscription, we need to create the subscription.
       unless subscription.id
         _self.createSubscription(subscription, currency)
+      # Otherwise we need to create subscription event on the existing subscription.
       else
-        _self.updateSubscription(subscription, currency)
+        _self.createSubscriptionEvent(subscription, currency)
 
     @fetchSubscription = (id, cart) ->
       deferred = $q.defer()
