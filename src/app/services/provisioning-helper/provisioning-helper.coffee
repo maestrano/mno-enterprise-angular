@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .service 'ProvisioningHelper', (PRICING_TYPES) ->
+  .service 'ProvisioningHelper', ($state, PRICING_TYPES, MnoeProvisioning) ->
     _self = @
 
     @pricedPlan = (plan) ->
@@ -22,6 +22,29 @@ angular.module 'mnoEnterpriseAngular'
     # Skip pricing selection for products with product_type 'application',
     # where singly billing is disabled and the product is externally provisioned.
     @skipPriceSelection = (product) ->
-      product.product_type == 'application' && !product.single_billing_enabled && !product.externally_provisioned
+      product?.product_type == 'application' && !product?.single_billing_enabled && !product?.externally_provisioned
+
+    @editSubscription = (subscription, editAction, cartSubscriptions = false) ->
+      MnoeProvisioning.setSubscription({})
+      if cartSubscriptions
+        params = {subscriptionId: subscription.id, editAction: editAction, cart: cartSubscriptions}
+      else
+        params = {subscriptionId: subscription.id, editAction: editAction}
+
+      switch editAction.toLowerCase( )
+        when 'change'
+          $state.go('home.provisioning.order', params)
+        else
+          $state.go('home.provisioning.additional_details', params)
+
+    @showEditAction = (subscription, editAction) ->
+      return false unless subscription.available_actions
+      editAction in subscription.available_actions
+
+    @goToSubscription = (subscription, cartSubscriptions = false) ->
+      if cartSubscriptions
+        $state.go('home.subscription', { id: subscription.id, cart: cartSubscriptions })
+      else
+        $state.go('home.subscription', { id: subscription.id })
 
     return @

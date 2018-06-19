@@ -11,7 +11,7 @@
     <div class="table-cell">
       <div class="row th-row hidden-xs">
         <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.order_type' | translate }}</div>
-        <div ng-show="vm.subscription.product.product_type == 'application'" class="cell col-sm-7">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.title' | translate }}</div>
+        <div ng-show="vm.subscription.product.product_type == 'application'" class="cell col-sm-9">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.title' | translate }}</div>
       </div>
       <div class="row td-row">
         <div class="cell col-sm-3">
@@ -20,7 +20,7 @@
           </span>
           {{ vm.orderTypeText | translate }}
         </div>
-        <div ng-show="vm.subscription.product.product_type == 'application'" class="cell col-sm-7">
+        <div ng-show="vm.subscription.product.product_type == 'application'" class="cell col-sm-9">
           <span class="cell-label visible-xs-inline">
             {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.title' | translate }}:
           </span>
@@ -31,12 +31,12 @@
       </div>
     </div>
 
-    <div ng-show="(vm.singleBilling && vm.billedLocally) || vm.subscription.product.product_type != 'application'" class="table-cell">
+    <div ng-show="vm.subscription.product_pricing" class="table-cell">
       <div class="row th-row hidden-xs">
         <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.name' | translate }}</div>
-        <div class="cell col-sm-2">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.description' | translate }}</div>
-        <div class="cell col-sm-2">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.licenses' | translate }}</div>
+        <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.licenses' | translate }}</div>
         <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.price' | translate }}</div>
+        <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.description' | translate }}</div>
       </div>
 
       <div class="row td-row">
@@ -47,18 +47,19 @@
           {{ vm.subscription.product_pricing.name }}
         </div>
 
-        <div class="cell col-sm-2">
-          <span class="cell-label visible-xs-inline">
-            {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.description' | translate }}:
-          </span>
-          {{ vm.subscription.product_pricing.description }}
-        </div>
-
-        <div class="cell col-sm-2">
+        <div class="cell col-sm-3">
           <span class="cell-label visible-xs-inline">
             {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.licenses' | translate }}:
           </span>
-          {{ vm.subscription.max_licenses }}
+          <div ng-show="vm.subscription.max_licenses">
+            {{ vm.subscription.max_licenses }}
+          </div>
+          <div ng-hide="vm.subscription.max_licenses">
+            {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.no_licenses.message' | translate }}
+            <span tooltip-append-to-body="true" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.no_licenses.tooltip' | translate}}">
+              <i class='fa fa-question'></i>
+            </span>
+          </div>
         </div>
 
         <div class="cell col-sm-3">
@@ -66,7 +67,7 @@
             {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.price' | translate }}:
           </span>
 
-          <div ng-hide="vm.subscription.product_pricing.pricing_type == 'payg'">
+          <div ng-hide="vm.pricedPlan(vm.subscription.product_pricing.pricing_type)">
             <div ng-repeat="price in vm.subscription.product_pricing.prices | filterBy: ['currency']: vm.selectedCurrency" class="badge">
               <span ng-hide="vm.subscription.product_pricing.license_based">
                 {{ price.currency }} {{ price.price_cents / 100 | number:2 }}
@@ -89,6 +90,13 @@
           <span ng-show="vm.subscription.product_pricing.pricing_type == 'free'">
             {{ 'mno_enterprise.templates.dashboard.provisioning.order.pricing_type.free' | translate }}
           </span>
+        </div>
+
+        <div class="cell col-sm-3">
+          <span class="cell-label visible-xs-inline">
+            {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.description' | translate }}:
+          </span>
+          {{ vm.subscription.product_pricing.description }}
         </div>
       </div>
     </div>

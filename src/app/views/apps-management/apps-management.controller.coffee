@@ -1,9 +1,10 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('AppsManagementCtrl',
-    ($q, $scope, MnoeConfig, MnoeProductInstances, MnoeProvisioning, MnoeOrganizations, AppManagementHelper) ->
+    ($q, $scope, MnoeConfig, MnoeProductInstances, MnoeProvisioning, MnoeOrganizations, AppManagementHelper, MnoeAppInstances) ->
 
       vm = @
       vm.isLoading = true
+      vm.syncStatusesSet = false
       vm.recentSubscription = AppManagementHelper.recentSubscription
 
       vm.providesStatus = (product) ->
@@ -12,17 +13,18 @@ angular.module 'mnoEnterpriseAngular'
       vm.dataSharingEnabled = (product) ->
         MnoeConfig.isDataSharingEnabled() && product.data_sharing
 
-      vm.dataSharingStatus = (product) ->
-        if product.sync_status?.attributes?.status
-          'Connected'
-        else
-          'Disconnected'
-
       vm.subscriptionStatus = (product) ->
         return product.subscription.status if product.subscription
 
       vm.appActionUrl = (product) ->
         "/mnoe/launch/#{product.uid}"
+
+      vm.initAppInstanceSync = ->
+        MnoeAppInstances.getAppInstanceSync().then(
+          (response) ->
+            vm.connecApps = response.connectors
+            vm.products = AppManagementHelper.setProductSyncStatuses(vm.connecApps, vm.products)
+        ).finally(-> vm.syncStatusesSet = true)
 
       vm.init = ->
         productPromise = MnoeProductInstances.getProductInstances()
@@ -42,7 +44,11 @@ angular.module 'mnoEnterpriseAngular'
 
                 product
             )
-        ).finally(-> vm.isLoading = false)
+        ).finally(
+          ->
+            vm.isLoading = false
+            vm.initAppInstanceSync()
+          )
 
       #====================================
       # Post-Initialization
