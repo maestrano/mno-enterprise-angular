@@ -19,7 +19,7 @@ angular.module 'mnoEnterpriseAngular'
         (response) ->
           selectedOrg = _.find(response.organizations, {id: newValue})
           isAdmin = MnoeOrganizations.role.atLeastAdmin(selectedOrg.current_user_role)
-          $scope.isCartEnabled = if isAdmin then MnoeConfig.isProvisioningEnabled() else false
+          $scope.isCartEnabled = isAdmin && MnoeConfig.isProvisioningEnabled()
 
           # We only check the role for those states
           if $state.is('home.impac') || $state.is('home.apps')

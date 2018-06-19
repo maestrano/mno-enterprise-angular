@@ -11,7 +11,6 @@ DashboardCompanyCartCtrl = ($scope, MnoeProvisioning, MnoeOrganizations) ->
       (response) ->
         $scope.subscriptionsCount = response.length
     )
-  cartSubscriptions()
 
   #====================================
   # Post-Initialization
