@@ -36,7 +36,7 @@
           </div>
 
           <div class="col-xs-10">
-            <div class="cell col-sm-2">
+            <div class="cell col-sm-2" uib-tooltip="{{ pricingPlan.name }}">
               <span class="cell-label visible-xs-inline">
                 {{ 'mno_enterprise.templates.dashboard.provisioning.order.name' | translate }}:
               </span>
@@ -82,7 +82,7 @@
           <div class="row">
             <div class="col-xs-10">
               <label>{{ 'mno_enterprise.templates.dashboard.provisioning.order.total' | translate }}:
-                <span ng-hide="vm.subscription.product_pricing.pricing_type == 'payg'" ng-repeat="price in vm.subscription.product_pricing.prices | filterBy: ['currency']: vm.orgCurrency" class="badge">
+                <span ng-hide="vm.pricedPlan(vm.subscription.product_pricing.pricing_type)" ng-repeat="price in vm.subscription.product_pricing.prices | filterBy: ['currency']: vm.orgCurrency" class="badge">
                   {{ price.currency }} {{ price.price_cents / 100 * vm.subscription.max_licenses | number:2 }}
                 </span>
                 <span ng-show="vm.subscription.product_pricing.pricing_type == 'recurring'">

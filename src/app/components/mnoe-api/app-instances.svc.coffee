@@ -92,4 +92,9 @@ angular.module 'mnoEnterpriseAngular'
       else
         "INSTALLED_LAUNCH"
 
+    @getAppInstanceSync = ->
+      MnoeOrganizations.get().then(
+        -> MnoeApiSvc.one('organizations', MnoeOrganizations.selectedId).one('/app_instances_sync').get()
+      )
+
     return @
