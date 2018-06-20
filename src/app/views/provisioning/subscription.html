@@ -19,7 +19,10 @@
 
           <div class="form-group">
             <label class="control-label text-color" translate>mno_enterprise.templates.dashboard.provisioning.subscription.subscription_info</label>
-            <input class="form-control hide-border" ng-model="vm.subscription.product_pricing.name" readonly/>
+            <input class="form-control hide-border" ng-if="vm.subscription.product_pricing" ng-model="vm.subscription.product_pricing.name" readonly/>
+            <div class="push-right" ng-hide="vm.subscription.product_pricing">
+              <span>{{ 'mno_enterprise.templates.dashboard.provisioning.subscription.not_available' | translate }}</span>&nbsp;<i class="fa fa-question-circle" ng-hide="vm.subscription.product_pricing" uib-tooltip="{{'mno_enterprise.templates.dashboard.provisioning.subscriptions.tooltip.external_billing' | translate}}" tooltip-append-to-body="true"></i>
+            </div>
           </div>
 
           <div class="form-group">

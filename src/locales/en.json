@@ -748,6 +748,7 @@
   "mno_enterprise.templates.dashboard.provisioning.subscription.back": "back",
   "mno_enterprise.templates.dashboard.provisioning.subscription.info": "Info",
   "mno_enterprise.templates.dashboard.provisioning.subscription.subscription_info": "Subscription info",
+  "mno_enterprise.templates.dashboard.provisioning.subscription.not_available": "N/A",
   "mno_enterprise.templates.dashboard.provisioning.subscription.product": "Product",
   "mno_enterprise.templates.dashboard.provisioning.subscription.subscription": "Subscription",
   "mno_enterprise.templates.dashboard.provisioning.subscription.description": "Description",
