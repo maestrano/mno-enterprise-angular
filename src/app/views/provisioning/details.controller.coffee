@@ -92,12 +92,18 @@ angular.module 'mnoEnterpriseAngular'
       fetchSubscription().then(fetchProduct).then(fetchCustomSchema)
         .then(() -> setCustomSchema(vm.subscription.product))
         .catch((error) ->
-          toastr.error('mnoe_admin_panel.dashboard.provisioning.subscriptions.product_error')
+          toastr.error('mno_enterprise.templates.dashboard.provisioning.subscriptions.product_error')
           $state.go('home.subscriptions', {subType: if urlParams.cart then 'cart' else 'active'})
         )
         .finally(() -> vm.isLoading = false)
     else
+      vm.isLoading = true
       setCustomSchema(vm.subscription.product)
+        .catch((error) ->
+          toastr.error('mno_enterprise.templates.dashboard.provisioning.subscriptions.product_error')
+          $state.go('home.subscriptions', {subType: if urlParams.cart then 'cart' else 'active'})
+          )
+        .finally(() -> vm.isLoading = false)
 
     vm.editPlanText = "mno_enterprise.templates.dashboard.provisioning.details." + urlParams.editAction.toLowerCase() + "_title"
 

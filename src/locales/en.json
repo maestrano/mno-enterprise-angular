@@ -806,6 +806,7 @@
   "mno_enterprise.templates.dashboard.provisioning.subscriptions.suspend": "Suspend",
   "mno_enterprise.templates.dashboard.provisioning.subscriptions.cancel": "Cancel",
   "mno_enterprise.templates.dashboard.provisioning.subscriptions.reactivate": "Reactivate",
+  "mno_enterprise.templates.dashboard.provisioning.subscriptions.product_error": "Unable to fetch your product at this time, please contact support.",
   "mno_enterprise.templates.dashboard.marketplace.index.title": "Marketplace",
   "mno_enterprise.templates.dashboard.marketplace.index.select_all": "All",
   "mno_enterprise.templates.dashboard.marketplace.index.applications": "Products",

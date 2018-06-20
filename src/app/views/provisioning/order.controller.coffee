@@ -75,7 +75,7 @@ angular.module 'mnoEnterpriseAngular'
         .then(fetchCustomSchema)
         .then(() -> vm.next(vm.subscription, vm.selectedCurrency) if ProvisioningHelper.skipPriceSelection(vm.subscription.product))
         .catch((error) ->
-          toastr.error('mnoe_admin_panel.dashboard.provisioning.subscriptions.product_error')
+          toastr.error('mno_enterprise.templates.dashboard.provisioning.subscriptions.product_error')
           $state.go('home.subscriptions', {subType: if urlParams.cart then 'cart' else 'active'})
         )
         .finally(() -> vm.isLoading = false)
