@@ -36,7 +36,6 @@
         <div class='cell' ng-class="{ 'col-md-2': !vm.cartSubscriptions, 'col-md-3': vm.cartSubscriptions }">
           {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.amount' | translate }}
         </div>
-
         <div class='cell' ng-class="{ 'col-md-1': !vm.cartSubscriptions, 'col-md-2': vm.cartSubscriptions }">
           {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.licenses' | translate }}
         </div>
@@ -100,12 +99,12 @@
           <span class="cell-label visible-xs-inline">
             {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.licenses' | translate }}:
           </span>
-          <div ng-show="vm.subscription.max_licenses">
-            {{ vm.subscription.max_licenses }}
+          <div ng-show="subscription.max_licenses">
+            {{ subscription.max_licenses }}
           </div>
-          <div ng-hide="vm.subscription.max_licenses">
-            {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.no_licenses.message' | translate }}
-            <span tooltip-append-to-body="true" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.no_licenses.tooltip' | translate}}">
+          <div ng-hide="subscription.max_licenses">
+            {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.no_licenses.message' | translate }}
+            <span tooltip-append-to-body="true" uib-tooltip="{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.no_licenses.tooltip' | translate}}">
               <i class="fa fa-question-circle"></i>
             </span>
           </div>

@@ -20,8 +20,8 @@
           <div class="form-group">
             <label class="control-label text-color" translate>mno_enterprise.templates.dashboard.provisioning.subscription.subscription_info</label>
             <input class="form-control hide-border" ng-if="vm.subscription.product_pricing" ng-model="vm.subscription.product_pricing.name" readonly/>
-            <div class="push-right" ng-hide="vm.subscription.product_pricing">
-              <span>{{ 'mno_enterprise.templates.dashboard.provisioning.subscription.not_available' | translate }}</span>&nbsp;<i class="fa fa-question-circle" ng-hide="vm.subscription.product_pricing" uib-tooltip="{{'mno_enterprise.templates.dashboard.provisioning.subscriptions.tooltip.external_billing' | translate}}" tooltip-append-to-body="true"></i>
+            <div class="form-control hide-border" ng-hide="vm.subscription.product_pricing">
+              <span>{{ 'mno_enterprise.templates.dashboard.provisioning.subscription.not_available' | translate }}</span>&nbsp;<i class="fa fa-question-circle" uib-tooltip="{{'mno_enterprise.templates.dashboard.provisioning.subscriptions.tooltip.external_billing' | translate}}" tooltip-append-to-body="true"></i>
             </div>
           </div>
 
@@ -31,7 +31,7 @@
           </div>
 
           <div class="form-group">
-            <label class="control-label text-color" translate>mno_enterprise.templates.dashboard.provisioning.subscription.date</label>
+            <label class="control-label text-color" translate>mno_enterprise.templates.dashboard.provisioning.subscription.start_date</label>
             <div class="push-right">{{ vm.subscription.start_date | amDateFormat: 'L' }}</div>
           </div>
 
@@ -42,11 +42,11 @@
 
           <div class="form-group">
             <label class="control-label text-color" translate>mno_enterprise.templates.dashboard.provisioning.subscription.status</label>
-            {{vm.subscription.status}}&nbsp;
+            <div class="push-right">{{vm.subscription.status}}</div>
             <a href="" ng-hide="!vm.displayInfoTooltip()" ng-click="vm.displayStatusInfo()"><i class="fa fa-info-circle"></i></a>
           </div>
 
-          <div class="form-group" ng-show="vm.subscription.product_pricing.license_based">
+          <div class="form-group" ng-show="vm.subscription.max_licenses">
             <label class="control-label text-color" translate>mno_enterprise.templates.dashboard.provisioning.subscription.licenses</label>
             <input class="form-control hide-border" ng-model="vm.subscription.max_licenses" readonly/>
           </div>
