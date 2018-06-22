@@ -16,7 +16,7 @@ angular.module 'mnoEnterpriseAngular'
           'Connected'
 
         product.sync_status = {
-          attributes: {status: syncStatus, finished_at: connecStatus.last_sync_date}
+          attributes: {status: syncStatus, finished_at: connecStatus?.last_sync_date}
         }
 
         product
