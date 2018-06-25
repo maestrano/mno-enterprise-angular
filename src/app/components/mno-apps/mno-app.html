@@ -109,7 +109,7 @@
       <div class="col-md-12">
         <div class="well">
           <h2>{{ 'mno_enterprise.templates.dashboard.marketplace.show.price' | translate }}</h2>
-          <div translate ng-if="!vm.pricing_plans">
+          <div translate ng-if="!vm.pricing_plans && !vm.skipPriceSelection">
             {{ 'mno_enterprise.templates.dashboard.marketplace.show.no_pricing_plans_found' | translate }}
           </div>
           <ul ng-if="vm.pricing_plans">

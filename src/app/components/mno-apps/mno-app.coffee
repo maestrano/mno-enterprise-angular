@@ -82,6 +82,9 @@ angular.module 'mnoEnterpriseAngular'
       # Is the product externally provisioned
       vm.isExternallyProvisioned = (vm.isProvisioningEnabled && product?.externally_provisioned)
 
+      # Does the product skip pricing selection
+      vm.skipPriceSelection = ProvisioningHelper.skipPriceSelection(product)
+
       MnoeOrganizations.get().then((response) -> vm.user_role = response.current_user.role)
 
       # Init initials reviews if enabled
