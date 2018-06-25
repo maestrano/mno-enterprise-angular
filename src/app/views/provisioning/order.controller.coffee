@@ -37,10 +37,10 @@ angular.module 'mnoEnterpriseAngular'
       vm.filteredPricingPlans = ProvisioningHelper.plansForCurrency(vm.subscription.product.pricing_plans, vm.selectedCurrency)
 
     selectDefaultCurrency = () ->
-      if vm.currencies.includes(vm.orgCurrency)
-        vm.selectedCurrency = vm.orgCurrency
+      vm.selectedCurrency = if !vm.currencies.includes(vm.orgCurrency) && vm.isCurrencySelectionEnabled
+        vm.currencies[0]
       else
-        vm.selectedCurrency = vm.currencies[0]
+        vm.orgCurrency
 
     fetchProduct = () ->
       # When in edit mode, we will be getting the product ID from the subscription, otherwise from the url.
