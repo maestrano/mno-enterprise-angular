@@ -70,6 +70,7 @@ angular.module 'mnoEnterpriseAngular'
       vm.currencies = _.uniq(currenciesArray)
 
     if _.isEmpty(vm.subscription)
+      vm.isLoading = true
       fetchSubscription()
         .then(fetchProduct)
         .then(fetchCustomSchema)
@@ -80,6 +81,7 @@ angular.module 'mnoEnterpriseAngular'
         )
         .finally(() -> vm.isLoading = false)
     else
+      vm.isLoading = true
       # Skip this view when subscription plan is not editable
       vm.next(vm.subscription, vm.subscription.currency) if ProvisioningHelper.skipPriceSelection(vm.subscription.product)
 
