@@ -65,27 +65,31 @@ angular.module 'mnoEnterpriseAngular'
     vm.validate = () ->
       vm.isLoading = true
       vm.subscription.event_type = $stateParams.editAction
-      vm.subscription.cart_entry = true if vm.cartItem
-      MnoeProvisioning.saveSubscription(vm.subscription, vm.selectedCurrency).then(
-        (response) ->
-          if vm.cartItem
-            MnoeProvisioning.refreshCartSubscriptions()
-            $state.go("home.subscriptions", {subType: 'cart'})
-          else
 
-            MnoeProvisioning.setSubscription(response)
-            # Reload dock apps
-            MnoeAppInstances.getAppInstances().then(
-              (response) ->
-                $scope.apps = response
-            )
-            $state.go('home.provisioning.order_summary', {subscriptionId: $stateParams.subscriptionId, editAction: $stateParams.editAction, cart: $stateParams.cart})
-      ).finally(-> vm.isLoading = false)
+      if vm.cartItem
+        vm.subscription.cart_entry = true
+        provisioningPromise = MnoeProvisioning.saveSubscriptionCart(vm.subscription, vm.selectedCurrency)
+      else
+        provisioningPromise= MnoeProvisioning.saveSubscription(vm.subscription, vm.selectedCurrency)
+
+      provisioningPromise.then((response) ->
+        if vm.cartItem
+          MnoeProvisioning.refreshCartSubscriptions()
+          $state.go("home.subscriptions", {subType: 'cart'})
+        else
+          MnoeProvisioning.setSubscription(response)
+          # Reload dock apps
+          MnoeAppInstances.getAppInstances().then(
+            (response) ->
+              $scope.apps = response
+          )
+          $state.go('home.provisioning.order_summary', {subscriptionId: $stateParams.subscriptionId, editAction: $stateParams.editAction, cart: $stateParams.cart})
+        ).finally(-> vm.isLoading = false)
 
     vm.addToCart = ->
       vm.isLoading = true
       vm.subscription.cart_entry = true
-      MnoeProvisioning.saveSubscription(vm.subscription).then(
+      MnoeProvisioning.saveSubscriptionCart(vm.subscription, vm.selectedCurrency).then(
         (response) ->
           MnoeProvisioning.refreshCartSubscriptions()
           $state.go('home.marketplace')

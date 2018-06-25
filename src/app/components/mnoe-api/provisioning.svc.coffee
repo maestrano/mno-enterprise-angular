@@ -98,10 +98,10 @@ angular.module 'mnoEnterpriseAngular'
     @createSubscriptionEvent = (s, c) ->
       deferred = $q.defer()
       MnoeOrganizations.get().then((response) ->
-        MnoeApiSvc.one('organizations', response.organization.id).one('subscriptions', s.id)
-          .all('subscription_events').post({subscription_event: subscriptionEventParams(s,c)}).then((response) ->
-              deferred.resolve(response)
-            )
+        MnoeApiSvc.one('organizations', response.organization.id).one('subscriptions', s.id).all('subscription_events')
+          .post({subscription_event: subscriptionEventParams(s,c)}).then((response) ->
+            deferred.resolve(response)
+          )
       )
 
       return deferred.promise
@@ -178,6 +178,31 @@ angular.module 'mnoEnterpriseAngular'
               deferred.resolve(response)
           )
       )
+      return deferred.promise
+
+    @saveSubscriptionCart = (s, c) ->
+      subscription_params = {
+        currency: c, product_id: s.product.id, product_pricing_id: s.product_pricing?.id,
+        max_licenses: s.max_licenses, edit_action: s.event_type, custom_data: s.custom_data, cart_entry: s.cart_entry
+      }
+      deferred = $q.defer()
+      if s.id
+        MnoeOrganizations.get().then(
+          (response) ->
+            subscription.patch({subscription: subscription_params}).then(
+              (response) ->
+                deferred.resolve(response)
+            )
+        )
+      else
+        MnoeOrganizations.get().then(
+          (response) ->
+            subscriptionsApi(response.organization.id).post({subscription: subscription_params}).then(
+              (response) ->
+                deferred.resolve(response)
+            )
+        )
+
       return deferred.promise
 
     @emptyCartSubscriptions = () ->
