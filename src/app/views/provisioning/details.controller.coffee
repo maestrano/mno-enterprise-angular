@@ -87,8 +87,8 @@ angular.module 'mnoEnterpriseAngular'
         vm.subscription.product.custom_schema = response
         )
 
+    vm.isLoading = true
     if _.isEmpty(vm.subscription)
-      vm.isLoading = true
       fetchSubscription().then(fetchProduct).then(fetchCustomSchema)
         .then(() -> setCustomSchema(vm.subscription.product))
         .catch((error) ->
@@ -97,7 +97,6 @@ angular.module 'mnoEnterpriseAngular'
         )
         .finally(() -> vm.isLoading = false)
     else
-      vm.isLoading = true
       setCustomSchema(vm.subscription.product)
         .catch((error) ->
           toastr.error('mno_enterprise.templates.dashboard.provisioning.subscriptions.product_error')
