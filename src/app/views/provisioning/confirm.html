@@ -34,10 +34,10 @@
     <div ng-show="vm.subscription.product_pricing" class="table-cell">
       <div class="row th-row hidden-xs">
         <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.name' | translate }}</div>
+        <div ng-hide="vm.quoteBased" class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.licenses' | translate }}</div>
+        <div ng-hide="vm.quoteBased" class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.price' | translate }}</div>
+        <div ng-show="vm.quoteBased" class="cell col-sm-6">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.quoted_price' | translate }}</div>
         <div class="cell col-sm-3">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.description' | translate }}</div>
-        <div ng-hide="vm.quoteBased" class="cell col-sm-2">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.licenses' | translate }}</div>
-        <div ng-hide="vm.quoteBased" class="cell col-sm-4">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.price' | translate }}</div>
-        <div ng-show="vm.quoteBased" class="cell col-sm-4">{{ 'mno_enterprise.templates.dashboard.provisioning.confirm.quoted_price' | translate }}</div>
       </div>
 
       <mno-loader ng-show="vm.quoteBased && !vm.quoteFetched" class="top-buffer-4"></mno-loader>
@@ -49,14 +49,7 @@
           {{ vm.subscription.product_pricing.name }}
         </div>
 
-        <div class="cell col-sm-2">
-          <span class="cell-label visible-xs-inline">
-            {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.description' | translate }}:
-          </span>
-          {{ vm.subscription.product_pricing.description }}
-        </div>
-
-        <div ng-hide="vm.quoteBased" class="cell col-sm-2">
+        <div ng-hide="vm.quoteBased" class="cell col-sm-3">
           <span class="cell-label visible-xs-inline">
             {{ 'mno_enterprise.templates.dashboard.provisioning.confirm.licenses' | translate }}:
           </span>
@@ -70,7 +63,6 @@
             </span>
           </div>
         </div>
-        <div ng-show="vm.quoteBased" class="cell col-sm-1"></div>
 
         <div class="cell col-sm-3">
           <span class="cell-label visible-xs-inline">
@@ -110,6 +102,7 @@
             {{ 'mno_enterprise.templates.dashboard.provisioning.order.pricing_type.free' | translate }}
           </span>
         </div>
+        <div ng-show="vm.quoteBased" class="cell col-sm-3"></div>
 
         <div class="cell col-sm-3">
           <span class="cell-label visible-xs-inline">

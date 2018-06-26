@@ -39,7 +39,7 @@ angular.module 'mnoEnterpriseAngular'
     if vm.subscription.product_pricing?.quote_based
       vm.quoteBased = true
       vm.quoteFetched = false
-      MnoeProvisioning.getQuote(vm.subscription).then(
+      MnoeProvisioning.getQuote(vm.subscription, vm.selectedCurrency).then(
         (response) ->
           vm.quotedPrice = response.totalContractValue?.quote
           vm.quotedCurrency = response.totalContractValue?.currency
