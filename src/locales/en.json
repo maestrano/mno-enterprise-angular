@@ -737,6 +737,8 @@
   "mno_enterprise.templates.dashboard.provisioning.summary.name": "Name",
   "mno_enterprise.templates.dashboard.provisioning.summary.description": "Description",
   "mno_enterprise.templates.dashboard.provisioning.summary.price": "Price",
+  "mno_enterprise.templates.dashboard.provisioning.summary.quoted_price": "Quoted Total Price",
+  "mno_enterprise.templates.dashboard.provisioning.summary.quote_error": "Quoted Price Currently Unavailable",
   "mno_enterprise.templates.dashboard.provisioning.summary.go_to_my_app": "Go to my app",
   "mno_enterprise.templates.dashboard.provisioning.summary.order_type": "Order type",
   "mno_enterprise.templates.dashboard.provisioning.summary.pricing_info.title": "Pricing Information",

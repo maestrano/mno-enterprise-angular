@@ -7,6 +7,7 @@ angular.module 'mnoEnterpriseAngular'
 
     subscription = {}
     selectedCurrency = ""
+    quote = {}
 
     @cartSubscriptionsPromise = null
 
@@ -31,6 +32,12 @@ angular.module 'mnoEnterpriseAngular'
 
     @getSelectedCurrency = () ->
       selectedCurrency
+
+    @setQuote = (q) ->
+      quote = q
+
+    @getCachedQuote = () ->
+      { price: quote?.quote, currency: quote?.currency }
 
     # Return the subscription
     # if productNid: return the default subscription

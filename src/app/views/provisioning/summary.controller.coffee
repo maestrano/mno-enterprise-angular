@@ -3,13 +3,18 @@ angular.module 'mnoEnterpriseAngular'
 
     vm = this
     vm.isLoading = true
+    vm.quoteBased = false
+    vm.quote = {}
     vm.selectedCurrency = MnoeProvisioning.getSelectedCurrency()
     vm.subType = if $stateParams.cart == 'true' then 'cart' else 'active'
+
     MnoeProvisioning.initSubscription({subscriptionId: $stateParams.subscriptionId})
       .then((response) ->
         vm.subscription = response
         vm.singleBilling = vm.subscription.product.single_billing_enabled
         vm.billedLocally = vm.subscription.product.billed_locally
+        vm.quoteBased = vm.subscription.product_pricing.quote_based
+        vm.quote = MnoeProvisioning.getCachedQuote() if vm.quoteBased
         )
       .finally(() -> vm.isLoading = false)
 

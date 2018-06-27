@@ -43,11 +43,13 @@ angular.module 'mnoEnterpriseAngular'
         (response) ->
           vm.quotedPrice = response.totalContractValue?.quote
           vm.quotedCurrency = response.totalContractValue?.currency
+          # To be passed to the order summary screen.
+          MnoeProvisioning.setQuote(response.totalContractValue)
           vm.quoteFetched = true
         (error) ->
           $log.error(error)
           toastr.error('mno_enterprise.templates.dashboard.marketplace.show.quote_error')
-          $state.go("home.marketplace")
+          vm.quoteFetched = true
       )
 
     # Happens when the user reload the browser during the provisioning workflow.
@@ -71,6 +73,7 @@ angular.module 'mnoEnterpriseAngular'
             MnoeProvisioning.refreshCartSubscriptions()
             $state.go("home.subscriptions", {subType: 'cart'})
           else
+
             MnoeProvisioning.setSubscription(response)
             # Reload dock apps
             MnoeAppInstances.getAppInstances().then(
