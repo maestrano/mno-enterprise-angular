@@ -27,20 +27,12 @@ angular.module 'mnoEnterpriseAngular'
       # Scope Management
       #====================================
 
-      vm.checktags = (tags, term) ->
-        res = false
-        index = 0
-        while !res and index < tags.length
-          res = tags[index]?.toLowerCase().indexOf(term) isnt -1
-          index++
-        res
-
       # Filter apps by name or category
       vm.onSearchChange = () ->
         vm.selectedCategory = ''
         term = vm.searchTerm.toLowerCase()
         vm.filteredApps = (app for app in vm.apps when app.name?.toLowerCase().indexOf(term) isnt -1 or
-        vm.checktags(app.tags, term) or
+        _.some(app.tags, (tag) -> tag.toLowerCase().indexOf(term) isnt -1) or
         app.tiny_description?.toLowerCase().indexOf(term) isnt -1 or
         app.description?.toLowerCase().indexOf(term) isnt -1)
 
