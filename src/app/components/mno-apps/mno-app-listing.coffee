@@ -31,10 +31,10 @@ angular.module 'mnoEnterpriseAngular'
       vm.onSearchChange = () ->
         vm.selectedCategory = ''
         term = vm.searchTerm.toLowerCase()
-        vm.filteredApps = (app for app in vm.apps when app.name?.toLowerCase().indexOf(term) isnt -1 or
+        vm.filteredApps = (app for app in vm.apps when (app.name && app.name.toLowerCase().indexOf(term) isnt -1) or
         _.some(app.tags, (tag) -> tag.toLowerCase().indexOf(term) isnt -1) or
-        app.tiny_description?.toLowerCase().indexOf(term) isnt -1 or
-        app.description?.toLowerCase().indexOf(term) isnt -1)
+        (app.tiny_description && app.tiny_description.toLowerCase().indexOf(term) isnt -1) or
+        (app.description && app.description.toLowerCase().indexOf(term) isnt -1))
 
       vm.onCategoryChange = () ->
         vm.searchTerm = ''
