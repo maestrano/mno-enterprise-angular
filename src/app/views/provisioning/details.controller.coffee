@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningDetailsCtrl', ($scope, $q, $stateParams, $state, MnoeMarketplace, MnoeProvisioning, MnoeOrganizations, schemaForm, ProvisioningHelper, toastr) ->
+  .controller('ProvisioningDetailsCtrl', ($scope, $q, $stateParams, $state, $filter, MnoeMarketplace, MnoeProvisioning, MnoeOrganizations, schemaForm, ProvisioningHelper, toastr) ->
     vm = this
 
     vm.form = [ "*" ]
@@ -8,13 +8,22 @@ angular.module 'mnoEnterpriseAngular'
     # We must use model schemaForm's sf-model, as #json_schema_opts are namespaced under model
     vm.model = vm.subscription.custom_data || {}
 
-    # Methods under the vm.model are used for calculated fields under #json_schema_opts.
+    # Methods under the vm.model are used for calculated fields under #json_schema_opts, which are set on third-party adapters.
     # Used to calculate the end date for forms with a contractEndDate.
     vm.model.calculateEndDate = (startDate, contractLength) ->
       return null unless startDate && contractLength
       moment(startDate)
       .add(contractLength.split('Months')[0], 'M')
       .format('YYYY-MM-DD')
+
+    # Used for forms that automatically calculate the startDate.
+    vm.model.timeNow = () ->
+      $filter('date')(new Date(), 'yyyy-MM-dd')
+
+    # Workaround. You can only specify defaults in the schema, and not the vm.form section.
+    # Since we are getting the schemas remotely, we must find a way to set defaults using vm.form.
+    vm.model.defaultContractLength = () ->
+      'monthly'
 
     urlParams =
       productId: $stateParams.productId,
@@ -27,14 +36,12 @@ angular.module 'mnoEnterpriseAngular'
       vm.subscription.product_pricing || ProvisioningHelper.skipPriceSelection(vm.subscription.product)
 
     handleRedirect = (product) ->
-      # If there is a custom schema and we can skip pricing, stay on this page.
-      return if product.custom_schema && skipPricing()
       # If there is no custom schema and pricings are skipped -- go directly to the confirm page.
       if skipPricing()
-        $state.go('dashboard.provisioning.confirm', urlParams, {reload: true})
+        $state.go('home.provisioning.confirm', urlParams, {reload: true})
       # Default: If we can't skip pricings, we must go back to the order page to choose a price. Happens when we reload page on a new order.
       else
-        $state.go('dashboard.provisioning.order', urlParams, {reload: true})
+        $state.go('home.provisioning.order', urlParams, {reload: true})
 
     # The schema is contained in field vm.product.custom_schema
     # jsonref is used to resolve $ref references
@@ -42,7 +49,8 @@ angular.module 'mnoEnterpriseAngular'
     # reasonable number of passes (2 below + 1 in the sf-schema directive)
     # to resolve cyclic references
     setCustomSchema = (product) ->
-      handleRedirect(product)
+      # If there is a custom schema and we can skip pricing, stay on this page.
+      return handleRedirect(product) unless product.custom_schema && skipPricing()
       vm.model = vm.subscription.custom_data || {}
       parsedSchema = JSON.parse(product.custom_schema)
       schema = parsedSchema.json_schema || parsedSchema

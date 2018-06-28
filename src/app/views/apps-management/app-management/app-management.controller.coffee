@@ -2,7 +2,7 @@ angular.module 'mnoEnterpriseAngular'
   .controller('AppManagementCtrl',
     ($q, $state, $scope, toastr, $stateParams, MnoeConfig, MnoeProductInstances, MnoeProvisioning,
       MnoeOrganizations, MnoeCurrentUser, MnoeMarketplace, PRICING_TYPES, ProvisioningHelper,
-      AppSettingsHelper, AppManagementHelper) ->
+      AppSettingsHelper, AppManagementHelper, MnoeAppInstances) ->
 
         vm = @
         vm.isLoading = true
@@ -10,12 +10,9 @@ angular.module 'mnoEnterpriseAngular'
         vm.isCurrentSubscriptionLoading = true
         vm.isSubChanged = true
         vm.recentSubscription = AppManagementHelper.recentSubscription
-
-        vm.dataSharingStatus = ->
-          if vm.product.sync_status?.attributes?.status
-            'Connected'
-          else
-            'Disconnected'
+        vm.editSubscription = ProvisioningHelper.editSubscription
+        vm.showEditAction = ProvisioningHelper.showEditAction
+        vm.goToSubscription = ProvisioningHelper.goToSubscription
 
         vm.showDataSharingDate = ->
           if vm.product.sync_status?.attributes?.status
@@ -81,7 +78,7 @@ angular.module 'mnoEnterpriseAngular'
             vm.billedLocally = response.billed_locally
 
             # Filters the pricing plans not containing current currency
-            vm.currentSubscription.product.pricing_plans =  ProvisioningHelper.planForCurrency(vm.currentSubscription.product.pricing_plans, vm.orgCurrency)
+            vm.currentSubscription.product.pricing_plans =  ProvisioningHelper.plansForCurrency(vm.currentSubscription.product.pricing_plans, vm.orgCurrency)
             vm.currentPlanId = vm.currentSubscription.product_pricing_id
             )
           vm.isCurrentSubscriptionLoading = false
@@ -105,10 +102,13 @@ angular.module 'mnoEnterpriseAngular'
             vm.isCurrentSubscriptionLoading = false
 
         vm.loadOrderHistory = ->
-          MnoeProvisioning.getProductSubscriptions(vm.product.product_id).then(
-            (response) ->
-              vm.subscriptionsHistory = response
-          ).finally( -> vm.isOrderHistoryLoading = false)
+          if vm.currentSubscription
+            MnoeProvisioning.getSubscriptionEvents(vm.currentSubscription.id, 'created_at.desc').then(
+              (response) ->
+                vm.subscriptionsHistory = response
+            ).finally( -> vm.isOrderHistoryLoading = false)
+          else
+            vm.isOrderHistoryLoading = false
 
         vm.addOnSettingLauch = ->
           AppSettingsHelper.addOnSettingLauch(vm.product)
@@ -136,7 +136,20 @@ angular.module 'mnoEnterpriseAngular'
 
               # Order Histroy flow
               vm.loadOrderHistory() if vm.isAdmin
-          ).finally(-> vm.isLoading = false)
+          ).finally(
+            ->
+              vm.isLoading = false
+              vm.initAppInstanceSync()
+            )
+
+        vm.initAppInstanceSync = ->
+          return if vm.product.sync_status
+
+          MnoeAppInstances.getAppInstanceSync().then(
+            (response) ->
+              vm.connecApps = response.connectors
+              vm.product = AppManagementHelper.setProductSyncStatuses(vm.connecApps, [vm.product])[0]
+          )
 
         #====================================
         # Post-Initialization

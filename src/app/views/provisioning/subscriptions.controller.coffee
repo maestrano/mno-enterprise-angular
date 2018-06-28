@@ -1,49 +1,12 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningSubscriptionsCtrl', ($q, $state, $stateParams, toastr, MnoeOrganizations, MnoeProvisioning, MnoeConfig, MnoConfirm, PRICING_TYPES) ->
+  .controller('ProvisioningSubscriptionsCtrl', ($q, $state, $stateParams, toastr, MnoeOrganizations, MnoeProvisioning, MnoeConfig, MnoConfirm, PRICING_TYPES, ProvisioningHelper) ->
 
     vm = this
     vm.isLoading = true
     vm.cartSubscriptions = $stateParams.subType == 'cart'
 
     vm.goToSubscription = (subscription) ->
-      if vm.cartSubscriptions
-        $state.go('home.subscription', { id: subscription.id, cart: vm.cartSubscriptions })
-      else
-        $state.go('home.subscription', { id: subscription.id })
-
-    vm.cancelSubscription = (subscription, i) ->
-      if vm.cartSubscriptions
-        subscription.cart_entry = true
-        headerText = 'mno_enterprise.templates.dashboard.provisioning.subscriptions.cart.cancel_modal.title'
-        bodyText = 'mno_enterprise.templates.dashboard.provisioning.subscriptions.cart.cancel_modal.body'
-      else
-        headerText = 'mno_enterprise.templates.dashboard.provisioning.subscriptions.cancel_modal.title'
-        bodyText = 'mno_enterprise.templates.dashboard.provisioning.subscriptions.cancel_modal.body'
-
-      modalOptions =
-        headerText: headerText
-        bodyText: bodyText
-        closeButtonText: 'mno_enterprise.templates.dashboard.provisioning.subscriptions.cancel_modal.no'
-        actionButtonText: 'mno_enterprise.templates.dashboard.provisioning.subscriptions.cancel_modal.yes'
-        actionCb: -> MnoeProvisioning.cancelSubscription(subscription).then(
-          (response) ->
-            if vm.cartSubscriptions
-              vm.subscriptions = _.reject(vm.subscriptions, (sub) -> sub.id == subscription.id)
-            else
-              angular.copy(response.subscription, vm.subscriptions[i])
-          ->
-            toastr.error('mno_enterprise.templates.dashboard.provisioning.subscriptions.cancel_error')
-        )
-        type: 'danger'
-
-      MnoConfirm.showModal(modalOptions)
-
-    # NOte: we might not need this one anymore based on rework
-    vm.modifySubscription = (subscription, i) ->
-      if vm.cartSubscriptions
-        $state.go("home.provisioning.order", {id: subscription.id, cart: true})
-      else
-        $state.go("home.provisioning.order", {id: subscription.id})
+      ProvisioningHelper.goToSubscription(subscription, vm.cartSubscriptions)
 
     vm.subscriptionsPromise = ->
       if vm.cartSubscriptions
@@ -95,21 +58,10 @@ angular.module 'mnoEnterpriseAngular'
       return subscription.status == 'aborted'
 
     vm.showEditAction = (subscription, editAction) ->
-      return false unless subscription.available_actions
-      editAction in subscription.available_actions
+      ProvisioningHelper.showEditAction(subscription, editAction)
 
     vm.editSubscription = (subscription, editAction) ->
-      MnoeProvisioning.setSubscription({})
-      if vm.cartSubscriptions
-        params = {subscriptionId: subscription.id, editAction: editAction, cart: vm.cartSubscriptions}
-      else
-        params = {subscriptionId: subscription.id, editAction: editAction}
-
-      switch editAction.toLowerCase( )
-        when 'change'
-          $state.go('home.provisioning.order', params)
-        else
-          $state.go('home.provisioning.additional_details', params)
+      ProvisioningHelper.editSubscription(subscription, editAction, vm.cartSubscriptions)
 
     return
   )

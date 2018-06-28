@@ -34,7 +34,7 @@ angular.module 'mnoEnterpriseAngular'
         )
     # Filters the pricing plans not containing current currency
     vm.filterPricingPlans = () ->
-      vm.filteredPricingPlans = ProvisioningHelper.planForCurrency(vm.subscription.product.pricing_plans, vm.selectedCurrency)
+      vm.filteredPricingPlans = ProvisioningHelper.plansForCurrency(vm.subscription.product.pricing_plans, vm.selectedCurrency)
 
     selectDefaultCurrency = () ->
       if vm.currencies.includes(vm.orgCurrency)
@@ -104,7 +104,11 @@ angular.module 'mnoEnterpriseAngular'
 
     vm.selectPlan = (pricingPlan)->
       vm.subscription.product_pricing = pricingPlan
-      vm.subscription.max_licenses ||= 1 if vm.subscription.product_pricing.license_based
+      if vm.subscription.product_pricing.license_based
+        vm.subscription.max_licenses ||= 1
+      else
+        # Reset max licenses, as they may have already been set on the subscription
+        vm.subscription.max_licenses = null
 
     # Delete the cached subscription when we are leaving the subscription workflow.
     $scope.$on('$stateChangeStart', (event, toState) ->

@@ -10,6 +10,7 @@ angular.module 'mnoEnterpriseAngular'
     else MnoeConfig.isMarketplacePricingEnabled()
 
     vm.isProvisioningEnabled = !vm.isPublic && MnoeConfig.isProvisioningEnabled()
+    vm.canProvision = false
 
     vm.isLoading = true
 
@@ -31,7 +32,7 @@ angular.module 'mnoEnterpriseAngular'
             organization = MnoeOrganizations.selected.organization
             currentUser = MnoeCurrentUser.user
             vm.orgCurrency = organization.billing_currency || MnoeConfig.marketplaceCurrency()
-            vm.isProvisioningEnabled = vm.isProvisioningEnabled && atLeastAdmin(currentUser, organization)
+            vm.canProvision = atLeastAdmin(currentUser, organization)
           else
             vm.orgCurrency = MnoeConfig.marketplaceCurrency()
 
