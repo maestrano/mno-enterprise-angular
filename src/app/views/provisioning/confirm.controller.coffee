@@ -77,7 +77,6 @@ angular.module 'mnoEnterpriseAngular'
           MnoeProvisioning.refreshCartSubscriptions()
           $state.go("home.subscriptions", {subType: 'cart'})
         else
-          MnoeProvisioning.setSubscription(response)
           # Reload dock apps
           MnoeAppInstances.getAppInstances().then(
             (response) ->
