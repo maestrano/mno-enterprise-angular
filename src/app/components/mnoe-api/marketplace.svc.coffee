@@ -67,7 +67,8 @@ angular.module 'mnoEnterpriseAngular'
       )
 
     productPromises = {}
-    @getProduct = (productId, params) ->
+    @getProduct = (productId, params = {}) ->
+      params['organization_id'] = MnoeOrganizations.selectedId
       productPromises["#{productId}/#{JSON.stringify(params)}"] ?= MnoeApiSvc.one('/products', productId).get(params).then(
         (response) ->
           _transform_products([response])
