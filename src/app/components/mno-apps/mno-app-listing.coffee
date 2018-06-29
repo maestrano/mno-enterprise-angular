@@ -15,6 +15,7 @@ angular.module 'mnoEnterpriseAngular'
         vm.isLoading = true
         vm.selectedCategory = ''
         vm.searchTerm = ''
+        vm.filteredApps = []
         vm.isMarketplaceCompare = MnoeConfig.isMarketplaceComparisonEnabled()
         vm.showCompare = false
         vm.nbAppsToCompare = 0
@@ -26,12 +27,22 @@ angular.module 'mnoEnterpriseAngular'
       # Scope Management
       #====================================
 
-      vm.appsFilter = (app) ->
+      # Filter apps by name or category
+      vm.onSearchChange = () ->
+        vm.selectedCategory = ''
+        term = vm.searchTerm.toLowerCase()
+        vm.filteredApps = (app for app in vm.apps when (app.name && app.name.toLowerCase().indexOf(term) isnt -1) or
+        _.some(app.tags, (tag) -> tag.toLowerCase().indexOf(term) isnt -1) or
+        (app.tiny_description && app.tiny_description.toLowerCase().indexOf(term) isnt -1) or
+        (app.description && app.description.toLowerCase().indexOf(term) isnt -1))
+
+      vm.onCategoryChange = () ->
+        vm.searchTerm = ''
         vm.currentSelectedCategory = if vm.publicPage then vm.selectedPublicCategory.label else vm.selectedCategory
-        if (vm.searchTerm? && vm.searchTerm.length > 0) || !vm.currentSelectedCategory
-          return true
+        if (vm.currentSelectedCategory?.length > 0)
+          vm.filteredApps = (app for app in vm.apps when vm.currentSelectedCategory in app.categories)
         else
-          return _.contains(app.categories, vm.currentSelectedCategory)
+          vm.filteredApps = vm.apps
 
       vm.resetCategory = (category) ->
         vm.selectedPublicCategory.active = ''
@@ -75,6 +86,7 @@ angular.module 'mnoEnterpriseAngular'
             vm.categories = response.categories
             vm.publicCategories = _.map(response.categories, (c) -> {label: c, active: ''})
             vm.apps = response.apps
+            vm.filteredApps = vm.apps
             if vm.publicPage
               vm.apps = _.filter(vm.apps, (app) -> _.includes(MnoeConfig.publicApplications(), app.nid))
       ).finally(-> vm.isLoading = false)

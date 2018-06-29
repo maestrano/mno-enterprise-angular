@@ -10,12 +10,12 @@
     <div class="row">
       <div class="marketplace-nav" ng-hide="$ctrl.publicPage">
         <div class="col-sm-4">
-          <select class="form-control" ng-model="$ctrl.selectedCategory" ng-options="c for c in $ctrl.categories" ng-change="$ctrl.searchTerm = ''">
+          <select class="form-control" ng-model="$ctrl.selectedCategory" ng-options="c for c in $ctrl.categories" ng-change="$ctrl.onCategoryChange()">
             <option value=''>{{ 'mno_enterprise.templates.dashboard.marketplace.index.select_all' | translate }}</option>
           </select>
         </div>
         <div class="col-sm-4">
-          <input type="text" class="form-control" placeholder="{{ 'mno_enterprise.templates.dashboard.marketplace.index.search' | translate }}" ng-model="$ctrl.searchTerm" ng-change="$ctrl.selectedCategory = ''"/>
+          <input type="text" class="form-control" placeholder="{{ 'mno_enterprise.templates.dashboard.marketplace.index.search' | translate }}" ng-model="$ctrl.searchTerm" ng-change="$ctrl.onSearchChange()"/>
         </div>
         <div ng-show="$ctrl.isMarketplaceCompare" class="col-sm-4 text-center">
           <button ng-click="$ctrl.enableComparison()" ng-hide="$ctrl.showCompare" class="btn btn-primary">
@@ -34,15 +34,15 @@
     <!-- Public Marketplace Nav -->
     <div class="col-sm-6 col-md-6 col-lg-4 landing-page-search-wrapper" ng-show="$ctrl.publicPage">
       <div class="row">
-        <input type="text" class="form-control landing-search-bar" placeholder="{{ 'mno_enterprise.templates.dashboard.marketplace.index.search' | translate }}" ng-model="$ctrl.searchTerm" ng-change="$ctrl.resetCategory($ctrl.displayAll)"/>
+        <input type="text" class="form-control landing-search-bar" placeholder="{{ 'mno_enterprise.templates.dashboard.marketplace.index.search' | translate }}" ng-model="$ctrl.searchTerm" ng-change="$ctrl.resetCategory($ctrl.displayAll); $ctrl.onSearchChange();"/>
       </div>
       <div class="row">
         <div class="landing-marketplace-nav">
           <div class="landing-page-app-categories">
-            <div class="category-wrapper" ng-class="$ctrl.displayAll.active" ng-click="$ctrl.resetCategory($ctrl.displayAll)">
+            <div class="category-wrapper" ng-class="$ctrl.displayAll.active" ng-click="$ctrl.resetCategory($ctrl.displayAll); $ctrl.onCategoryChange()">
                 {{ 'mno_enterprise.templates.dashboard.marketplace.index.select_all' | translate }}
             </div>
-            <div class="category-wrapper" ng-class="c.active" ng-repeat="c in $ctrl.publicCategories" ng-click="$ctrl.resetCategory(c)">
+            <div class="category-wrapper" ng-class="c.active" ng-repeat="c in $ctrl.publicCategories" ng-click="$ctrl.resetCategory(c); $ctrl.onCategoryChange();">
               {{c.label}}
             </div>
           </div>
@@ -54,7 +54,7 @@
       <div class="marketplace-list">
 
         <!-- App Cards-->
-        <div class="col-sm-6 col-md-4" ng-repeat="app in $ctrl.apps | filter:$ctrl.appsFilter | filter:$ctrl.searchTerm">
+        <div class="col-sm-6 col-md-4" ng-repeat="app in $ctrl.filteredApps">
           <div class="marketplace-app-card-checkbox" ng-show="$ctrl.showCompare">
             <label>
               <input type="checkbox"
@@ -83,7 +83,7 @@
     <div class="col-sm-6 col-md-6 col-lg-8 landing-page-app-section-wrapper" ng-show="$ctrl.publicPage">
       <div class="public-marketplace-list">
         <!-- Public App Cards-->
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 landing-app-card-wrapper" ng-repeat="app in $ctrl.apps | filter:$ctrl.appsFilter | filter:$ctrl.searchTerm">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 landing-app-card-wrapper" ng-repeat="app in $ctrl.filteredApps">
           <a class="landing-app-card" ui-sref="{{$ctrl.appState}}({appId: app.nid})">
             <div class="media">
               <div class="landing-media-body">
