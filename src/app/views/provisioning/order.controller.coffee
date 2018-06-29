@@ -46,7 +46,9 @@ angular.module 'mnoEnterpriseAngular'
       vm.filteredPricingPlans = ProvisioningHelper.plansForCurrency(vm.subscription.product.pricing_plans, vm.selectedCurrency)
 
     selectDefaultCurrency = () ->
-      vm.selectedCurrency = if !vm.currencies.includes(vm.orgCurrency) && vm.isCurrencySelectionEnabled
+      vm.selectedCurrency = if vm.subscription.currency
+        vm.subscription.currency
+      else if !vm.currencies.includes(vm.orgCurrency) && vm.isCurrencySelectionEnabled
         vm.currencies[0]
       else
         vm.orgCurrency
