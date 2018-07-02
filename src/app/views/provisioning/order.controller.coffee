@@ -14,6 +14,15 @@ angular.module 'mnoEnterpriseAngular'
       editAction: $stateParams.editAction,
       cart: $stateParams.cart
     }
+    vm.skipPriceSelection = ProvisioningHelper.skipPricingPlans
+
+    vm.next = (subscription, currency) ->
+      MnoeProvisioning.setSubscription(subscription)
+      MnoeProvisioning.setSelectedCurrency(currency)
+      if vm.subscription.product.custom_schema?
+        $state.go('home.provisioning.additional_details', urlParams, { reload: true })
+      else
+        $state.go('home.provisioning.confirm', urlParams, { reload: true })
 
     vm.next = (subscription, currency) ->
       MnoeProvisioning.setSubscription(subscription)

@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningConfirmCtrl', ($scope, $state, $stateParams, MnoeOrganizations, MnoeProvisioning, MnoeAppInstances, MnoeConfig, ProvisioningHelper, schemaForm) ->
+  .controller('ProvisioningConfirmCtrl', ($scope, $state, $stateParams, $log, MnoeOrganizations, MnoeProvisioning, MnoeAppInstances, MnoeConfig, ProvisioningHelper, schemaForm, toastr) ->
 
     vm = this
 
@@ -7,6 +7,8 @@ angular.module 'mnoEnterpriseAngular'
     vm.subscription = MnoeProvisioning.getCachedSubscription()
     vm.selectedCurrency = MnoeProvisioning.getSelectedCurrency()
     vm.cartItem = $stateParams.cart == 'true'
+    vm.quoteFetched = true
+    vm.quoteBased = false
 
     vm.orderTypeText = 'mno_enterprise.templates.dashboard.provisioning.subscriptions.' + $stateParams.editAction.toLowerCase()
 
@@ -34,6 +36,22 @@ angular.module 'mnoEnterpriseAngular'
         else
           $state.go('home.provisioning.additional_details', urlParams, {reload: reload})
 
+    if vm.subscription.product_pricing?.quote_based
+      vm.quoteBased = true
+      vm.quoteFetched = false
+      MnoeProvisioning.getQuote(vm.subscription, vm.selectedCurrency).then(
+        (response) ->
+          vm.quotedPrice = response.totalContractValue?.quote
+          vm.quotedCurrency = response.totalContractValue?.currency
+          # To be passed to the order summary screen.
+          MnoeProvisioning.setQuote(response.totalContractValue)
+          vm.quoteFetched = true
+        (error) ->
+          $log.error(error)
+          toastr.error('mno_enterprise.templates.dashboard.marketplace.show.quote_error')
+          vm.quoteFetched = true
+      )
+
     # Happens when the user reload the browser during the provisioning workflow.
     if _.isEmpty(vm.subscription)
       # Redirect the user to the first provisioning screen
@@ -55,6 +73,7 @@ angular.module 'mnoEnterpriseAngular'
             MnoeProvisioning.refreshCartSubscriptions()
             $state.go("home.subscriptions", {subType: 'cart'})
           else
+
             MnoeProvisioning.setSubscription(response)
             # Reload dock apps
             MnoeAppInstances.getAppInstances().then(

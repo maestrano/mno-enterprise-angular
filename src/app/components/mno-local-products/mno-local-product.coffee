@@ -42,6 +42,7 @@ angular.module 'mnoEnterpriseAngular'
           productId = $stateParams.productId
           vm.product = _.findWhere(vm.products, { nid: productId })
           vm.product ||= _.findWhere(vm.products, { id: productId })
+
           $state.go(vm.parentState) unless vm.product?
       ).finally(-> vm.isLoading = false)
 
