@@ -526,7 +526,6 @@
   "mno_enterprise.templates.impac.index.click_below_to_add_widgets": "Click on the button below to add a new widget to your dashboard. Our widgets currently focus on financial data but more will come soon!",
   "mno_enterprise.templates.impac.index.add_new_widget": "Add a new Widget",
   "mno_enterprise.templates.dashboard.app_management.heading": "Manage your applications",
-  "mno_enterprise.templates.dashboard.app_management.status": "Status:",
   "mno_enterprise.templates.dashboard.app_management.no_status": "This application does not provide any status",
   "mno_enterprise.templates.dashboard.app_management.data_sharing.status": "Data sharing: {status}",
   "mno_enterprise.templates.dashboard.app_management.subscription.status": "Subscription: {status}",

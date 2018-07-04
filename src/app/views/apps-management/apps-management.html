@@ -17,9 +17,6 @@
         <div class='app-info'>
           <h3 class='bottom-buffer-2'>{{product.product_name}}</h3>
 
-          <strong>
-            {{ 'mno_enterprise.templates.dashboard.app_management.status' | translate }}
-          </strong>
           <div ng-if=!vm.providesStatus(product)>
             {{ 'mno_enterprise.templates.dashboard.app_management.no_status' | translate }}
           </div>
