@@ -2,7 +2,7 @@
 #============================================
 #
 #============================================
-DashboardCompanyCartCtrl = ($scope, MnoeProvisioning) ->
+DashboardCompanyCartCtrl = ($scope, MnoeProvisioning, MnoeOrganizations) ->
   'ngInject'
 
   cartSubscriptions = ->
@@ -11,11 +11,17 @@ DashboardCompanyCartCtrl = ($scope, MnoeProvisioning) ->
       (response) ->
         $scope.subscriptionsCount = response.length
     )
-  cartSubscriptions()
 
   #====================================
   # Post-Initialization
   #====================================
+  $scope.$watch MnoeOrganizations.getSelected, (val) ->
+    $scope.subscriptionsCount = 0
+    if MnoeProvisioning.cartSubscriptionsPromise
+      MnoeProvisioning.emptyCartSubscriptions()
+    else
+      cartSubscriptions()
+
   $scope.$watch MnoeProvisioning.getCartSubscriptionsPromise, (val) ->
     cartSubscriptions()
 
