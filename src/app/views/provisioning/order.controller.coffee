@@ -46,7 +46,9 @@ angular.module 'mnoEnterpriseAngular'
       vm.filteredPricingPlans = ProvisioningHelper.plansForCurrency(vm.subscription.product.pricing_plans, vm.selectedCurrency)
 
     selectDefaultCurrency = () ->
-      vm.selectedCurrency = if !vm.currencies.includes(vm.orgCurrency) && vm.isCurrencySelectionEnabled
+      vm.selectedCurrency = if vm.subscription.currency
+        vm.subscription.currency
+      else if !vm.currencies.includes(vm.orgCurrency) && vm.isCurrencySelectionEnabled
         vm.currencies[0]
       else
         vm.orgCurrency
@@ -106,8 +108,8 @@ angular.module 'mnoEnterpriseAngular'
       vm.subscription.max_licenses ||= 1 if vm.subscription.product_pricing.license_based
 
     vm.subscriptionPlanText = switch $stateParams.editAction.toLowerCase()
-      when 'new'
-        'mno_enterprise.templates.dashboard.provisioning.order.new_title'
+      when 'provision'
+        'mno_enterprise.templates.dashboard.provisioning.order.provision_title'
       when 'change'
         'mno_enterprise.templates.dashboard.provisioning.order.change_title'
 

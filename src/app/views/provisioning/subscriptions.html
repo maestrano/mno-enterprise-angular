@@ -70,7 +70,9 @@
                 {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.subscription' | translate }}:
               </span>
               <span ng-show="subscription.product_pricing" title="{{ subscription.product_pricing.name }}">{{ subscription.product_pricing.name }}</span>&nbsp;<i class="fa fa-info-circle" ng-show="subscription.product_pricing.description" uib-tooltip="{{ subscription.product_pricing.description }}" tooltip-append-to-body="true"></i>
-              <span ng-hide="subscription.product_pricing">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.not_available' | translate }}</span>&nbsp;<i class="fa fa-question-circle" ng-hide="subscription.product_pricing" uib-tooltip="{{'mno_enterprise.templates.dashboard.provisioning.subscriptions.tooltip.external_billing' | translate}}" tooltip-append-to-body="true"></i>
+              <span ng-hide="subscription.product_pricing">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.not_available' | translate }}</span>&nbsp;
+              <i class="fa fa-question-circle" ng-show="vm.skipPriceSelection(subscription.product) && !vm.pendingSubscription(subscription)" uib-tooltip="{{'mno_enterprise.templates.dashboard.provisioning.subscriptions.tooltip.external_billing' | translate}}" tooltip-append-to-body="true"></i>
+              <i class="fa fa-question-circle" ng-show="vm.pendingSubscription(subscription)" uib-tooltip="{{'mno_enterprise.templates.dashboard.provisioning.subscriptions.tooltip.pending_subscription' | translate}}" tooltip-append-to-body="true"></i>
             </div>
           </div>
         </div>
@@ -79,7 +81,7 @@
           <span class="cell-label visible-xs-inline">
             {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.amount' | translate }}:
           </span>
-          <div ng-hide="subscription.product_pricing.pricing_type == 'payg'" ng-repeat="price in subscription.product_pricing.prices | filterBy: ['currency']: vm.orgCurrency" class="badge">
+          <div ng-hide="subscription.product_pricing.pricing_type == 'payg'" ng-repeat="price in subscription.product_pricing.prices | filterBy: ['currency']: subscription.currency" class="badge">
             <span ng-hide="subscription.product_pricing.license_based">
               {{ price.currency }} {{ price.price_cents / 100 | number:2 }}
             </span>

@@ -31,7 +31,7 @@ angular.module 'mnoEnterpriseAngular'
 
     vm.editOrder = (reload = true) ->
       switch $stateParams.editAction.toLowerCase()
-        when 'change', 'new', null
+        when 'change', 'provision', null
           $state.go('home.provisioning.order', urlParams, {reload: reload})
         else
           $state.go('home.provisioning.additional_details', urlParams, {reload: reload})
@@ -59,34 +59,36 @@ angular.module 'mnoEnterpriseAngular'
     else
       vm.singleBilling = vm.subscription.product.single_billing_enabled
       vm.billedLocally = vm.subscription.product.billed_locally
-      vm.subscription.edit_action = $stateParams.editAction
       # Render custom Schema if it exists
       setCustomSchema() if vm.subscription.custom_data && vm.subscription.product.custom_schema
 
     vm.validate = () ->
       vm.isLoading = true
-      vm.subscription.edit_action = $stateParams.editAction
-      vm.subscription.cart_entry = true if vm.cartItem
-      MnoeProvisioning.saveSubscription(vm.subscription, vm.selectedCurrency).then(
-        (response) ->
-          if vm.cartItem
-            MnoeProvisioning.refreshCartSubscriptions()
-            $state.go("home.subscriptions", {subType: 'cart'})
-          else
+      vm.subscription.event_type = $stateParams.editAction
 
-            MnoeProvisioning.setSubscription(response)
-            # Reload dock apps
-            MnoeAppInstances.getAppInstances().then(
-              (response) ->
-                $scope.apps = response
-            )
-            $state.go('home.provisioning.order_summary', {subscriptionId: $stateParams.subscriptionId, editAction: $stateParams.editAction, cart: $stateParams.cart})
-      ).finally(-> vm.isLoading = false)
+      if vm.cartItem
+        vm.subscription.cart_entry = true
+        provisioningPromise = MnoeProvisioning.saveSubscriptionCart(vm.subscription, vm.selectedCurrency)
+      else
+        provisioningPromise= MnoeProvisioning.saveSubscription(vm.subscription, vm.selectedCurrency)
+
+      provisioningPromise.then((response) ->
+        if vm.cartItem
+          MnoeProvisioning.refreshCartSubscriptions()
+          $state.go("home.subscriptions", {subType: 'cart'})
+        else
+          # Reload dock apps
+          MnoeAppInstances.getAppInstances().then(
+            (response) ->
+              $scope.apps = response
+          )
+          $state.go('home.provisioning.order_summary', {subscriptionId: $stateParams.subscriptionId, editAction: $stateParams.editAction, cart: $stateParams.cart})
+        ).finally(-> vm.isLoading = false)
 
     vm.addToCart = ->
       vm.isLoading = true
       vm.subscription.cart_entry = true
-      MnoeProvisioning.saveSubscription(vm.subscription).then(
+      MnoeProvisioning.saveSubscriptionCart(vm.subscription, vm.selectedCurrency).then(
         (response) ->
           MnoeProvisioning.refreshCartSubscriptions()
           $state.go('home.marketplace')
@@ -98,7 +100,7 @@ angular.module 'mnoEnterpriseAngular'
       # Disable editing if unable to initially select a pricing plan.
       return false if ProvisioningHelper.skipPriceSelection(vm.subscription.product)
       switch $stateParams.editAction
-        when 'change', 'new'
+        when 'change', 'provision'
           true
         else
           false
