@@ -26,7 +26,7 @@
     </div>
 
     <div ng-hide="vm.isLoading" class="table-cell" ng-show="!isLoading">
-      <div class="row th-row hidden-sm">
+      <div class="row th-row hidden-sm hidden-xs">
         <div class='cell' ng-class="{ 'col-md-3': !vm.cartSubscriptions, 'col-md-5': vm.cartSubscriptions }">
           <div class="row">
             <div class="cell col-md-6">{{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.product' | translate }}</div>
@@ -62,7 +62,7 @@
               <span class="cell-label visible-xs-inline">
                 {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.product' | translate }}:
               </span>
-              <span title="{{ subscription.name }}">{{ subscription.product.name }}</span>
+              <span title="{{ subscription.name }}" uib-tooltip="{{ subscription.product.name }}" tooltip-append-to-body="true">{{ subscription.product.name }}</span>
             </div>
 
             <div class="cell col-md-6" ng-click="vm.goToSubscription(subscription)">
