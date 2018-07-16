@@ -206,7 +206,7 @@ angular.module 'mnoEnterpriseAngular'
             # Are there any available plans
             availablePlans = ProvisioningHelper.plansForCurrency(plans, currency)
 
-            vm.orderPossible = !_.isEmpty(availablePlans) || (plans.default&[0] && currencySelection) || ProvisioningHelper.skipPriceSelection(product)
+            vm.orderPossible = !_.isEmpty(availablePlans) || (plans.default?[0] && currencySelection) || ProvisioningHelper.skipPriceSelection(product)
 
             vm.buttonText = vm.updateButtonText()
             vm.buttonDisabledTooltip = vm.updateButtonDisabledTooltip()
