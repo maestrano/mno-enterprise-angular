@@ -57,7 +57,7 @@ angular.module 'mnoEnterpriseAngular'
           # Are there any available plans
           availablePlans = ProvisioningHelper.plansForCurrency(vm.product.pricing_plans, vm.orgCurrency)
 
-          vm.orderPossible = !_.isEmpty(availablePlans) || (vm.product.pricing_plans&[0].default&[0] && currencySelection)
+          vm.orderPossible = !_.isEmpty(availablePlans) || (vm.product.pricing_plans?[0].default?[0] && currencySelection)
           vm.buttonDisabledTooltip = vm.updateButtonDisabledTooltip()
 
           $state.go(vm.parentState) unless vm.product?
