@@ -11,6 +11,7 @@ angular.module 'mnoEnterpriseAngular'
 
     vm.isProvisioningEnabled = !vm.isPublic && MnoeConfig.isProvisioningEnabled()
     vm.canProvision = false
+    vm.buttonDisabledTooltip = ''
 
     vm.isLoading = true
 
@@ -22,6 +23,15 @@ angular.module 'mnoEnterpriseAngular'
 
     vm.hideNoPricingFound = (plan) ->
       vm.isPublic || vm.planAvailableForCurrency(plan) || !vm.pricedPlan(plan)
+
+    vm.buttonDisabled = () ->
+      !vm.canProvision || !vm.orderPossible
+
+    vm.updateButtonDisabledTooltip = () ->
+      if !vm.canProvision
+        'mno_enterprise.templates.components.app_install_btn.insufficient_privilege'
+      else if !vm.orderPossible
+        'mno_enterprise.templates.dashboard.marketplace.show.no_pricing_plans_found_tooltip'
 
     # Retrieve the products
     vm.initialize = ->
@@ -42,6 +52,13 @@ angular.module 'mnoEnterpriseAngular'
           productId = $stateParams.productId
           vm.product = _.findWhere(vm.products, { nid: productId })
           vm.product ||= _.findWhere(vm.products, { id: productId })
+          # Is currency selection enabled
+          currencySelection = MnoeConfig.isCurrencySelectionEnabled()
+          # Are there any available plans
+          availablePlans = ProvisioningHelper.plansForCurrency(vm.product.pricing_plans, vm.orgCurrency)
+
+          vm.orderPossible = !_.isEmpty(availablePlans) || (vm.product.pricing_plans?[0].default?[0] && currencySelection)
+          vm.buttonDisabledTooltip = vm.updateButtonDisabledTooltip()
 
           $state.go(vm.parentState) unless vm.product?
       ).finally(-> vm.isLoading = false)

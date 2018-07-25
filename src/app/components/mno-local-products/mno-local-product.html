@@ -34,11 +34,11 @@
         <!-- Key benefits -->
         <div class="col-md-4">
           <div class="well text-center well-details">
-            <a class="btn btn-warning btn-lg top-buffer-1" ng-if="vm.isProvisioningEnabled && vm.canProvision" ui-sref="home.provisioning.order({productId: vm.product.id, editAction: 'provision'})" translate>
+            <a class="btn btn-warning btn-lg top-buffer-1" ng-if="vm.isProvisioningEnabled && !vm.buttonDisabled()" ui-sref="home.provisioning.order({productId: vm.product.id, editAction: 'provision'})" translate>
               mno_enterprise.templates.dashboard.marketplace.show.provision
             </a>
 
-            <div ng-if="vm.isProvisioningEnabled && !vm.canProvision" disabled=true class="btn btn-warning btn-promo btn-lg" uib-tooltip="{{ 'mno_enterprise.templates.components.app_install_btn.insufficient_privilege' | translate }}" translate>
+            <div ng-if="vm.isProvisioningEnabled && vm.buttonDisabled()" disabled=true class="btn btn-warning btn-promo btn-lg" uib-tooltip="{{ vm.buttonDisabledTooltip | translate }}" translate>
               mno_enterprise.templates.dashboard.marketplace.show.provision
             </div>
 
@@ -68,7 +68,7 @@
         <div class="col-md-12">
           <div class="well">
             <h2>{{ 'mno_enterprise.templates.dashboard.marketplace.show.price' | translate }}</h2>
-            <ul>
+            <ul ng-if="vm.orderPossible">
               <li ng-if="vm.product.free_trial_duration > 0">
                 <b>{{ 'mno_enterprise.templates.dashboard.marketplace.show.free_trial_duration' | translate }}</b>: {{vm.product.free_trial_duration}} {{vm.product.free_trial_unit}}
               </li>
@@ -85,6 +85,7 @@
                 <span ng-show="plan.pricing_type == 'payg'">{{'mno_enterprise.templates.dashboard.marketplace.show.pricing.payg' | translate}}</span>
               </li>
             </ul>
+            <div ng-if="!vm.orderPossible">{{'mno_enterprise.templates.dashboard.marketplace.show.no_pricing_plans_found' | translate}}</div>
           </div>
         </div>
       </div>
