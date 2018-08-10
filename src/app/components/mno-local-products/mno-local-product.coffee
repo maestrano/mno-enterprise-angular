@@ -21,6 +21,9 @@ angular.module 'mnoEnterpriseAngular'
 
     vm.pricedPlan = ProvisioningHelper.pricedPlan
 
+    vm.planAvailableForCurrency = (plan) ->
+      _.includes(_.map(plan.prices, 'currency'), vm.orgCurrency)
+
     vm.hideNoPricingFound = (plan) ->
       vm.isPublic || vm.planAvailableForCurrency(plan) || !vm.pricedPlan(plan)
 
@@ -46,18 +49,23 @@ angular.module 'mnoEnterpriseAngular'
           else
             vm.orgCurrency = MnoeConfig.marketplaceCurrency()
 
-          vm.planAvailableForCurrency = (plan) ->
-            _.includes(_.map(plan.prices, 'currency'), vm.orgCurrency)
           # App to be displayed
           productId = $stateParams.productId
           vm.product = _.findWhere(vm.products, { nid: productId })
           vm.product ||= _.findWhere(vm.products, { id: productId })
+
+          # Plans
+          plans = vm.product.pricing_plans
           # Is currency selection enabled
           currencySelection = MnoeConfig.isCurrencySelectionEnabled()
           # Are there any available plans
-          availablePlans = ProvisioningHelper.plansForCurrency(vm.product.pricing_plans, vm.orgCurrency)
+          availablePlans = ProvisioningHelper.plansForCurrency(plans, vm.orgCurrency)
 
-          vm.orderPossible = !_.isEmpty(availablePlans) || (vm.product.pricing_plans?[0].default?[0] && currencySelection)
+          # We can order if there's an availablePlan for the currency
+          # Or if the currency selection is enabled and we have a priced plan
+          vm.orderPossible = !_.isEmpty(availablePlans) ||
+            (currencySelection && _.some(plans, (plan) -> ProvisioningHelper.pricedPlan(plan) && plan.prices?))
+
           vm.buttonDisabledTooltip = vm.updateButtonDisabledTooltip()
 
           $state.go(vm.parentState) unless vm.product?
