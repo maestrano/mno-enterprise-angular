@@ -18,6 +18,7 @@ DashboardOrganizationMembersCtrl = ($scope, $uibModal, $sce, $translate, MnoeOrg
   # Initialize the data used by the directive
   $scope.initialize = (members, teams = nil) ->
     $scope.members = members
+    extractExistingEmails() if members
     $scope.teams = teams if teams
     $scope.isLoading = false
     updateNbOfSuperAdmin()
@@ -52,6 +53,9 @@ DashboardOrganizationMembersCtrl = ($scope, $uibModal, $sce, $translate, MnoeOrg
     invited = if member.entity == 'User' then "" else "invited."
     "mno_enterprise.templates.dashboard.organization.members.roles." + invited + _.snakeCase(member.role)
 
+  extractExistingEmails = ->
+    $scope.membersEmailList = _.map($scope.members, 'email')
+
   updateNbOfSuperAdmin = ->
     $scope.hasManySuperAdmin = _.filter($scope.members, {'role': 'Super Admin'}).length > 1
 
@@ -74,6 +78,9 @@ DashboardOrganizationMembersCtrl = ($scope, $uibModal, $sce, $translate, MnoeOrg
 
   reloadCurrentOrganization = ->
     MnoeOrganizations.reloadCurrentOrganization()
+
+  newEmail = (email) ->
+    email not in $scope.membersEmailList
 
   #====================================
   # User Edition Modal
@@ -215,6 +222,7 @@ DashboardOrganizationMembersCtrl = ($scope, $uibModal, $sce, $translate, MnoeOrg
     self.teamList = self.config.teams()
     self.isBillingEnabled = $scope.isBillingEnabled()
     self.invalidEmails = []
+    self.existingEmails = []
 
   inviteModal.close = ->
     self = inviteModal
@@ -252,16 +260,20 @@ DashboardOrganizationMembersCtrl = ($scope, $uibModal, $sce, $translate, MnoeOrg
     self.isLoading = true
     self.members = []
     self.invalidEmails = []
+    self.existingEmails = []
 
     _.each self.userEmails.split("\n"), (email) ->
       email_regexp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
       if email.match(email_regexp)
-        self.members.push({email: email, role: self.config.defaultRole })
+        if newEmail(email)
+          self.members.push({email: email, role: self.config.defaultRole })
+        else
+          self.existingEmails.push(email)
       else
         self.invalidEmails.push(email)
 
     self.isLoading = false
-    if self.invalidEmails.length == 0
+    if self.invalidEmails.length == 0 && self.existingEmails.length == 0
       self.step = 'defineRoles'
 
   inviteModal.inviteMembers = ->
@@ -277,6 +289,8 @@ DashboardOrganizationMembersCtrl = ($scope, $uibModal, $sce, $translate, MnoeOrg
         self.errors = Utilities.processRailsError(errors)
     ).finally(-> self.isLoading = false)
 
+  inviteModal.invalidsAvailable = ->
+    inviteModal.invalidEmails.length > 0 || inviteModal.existingEmails.length > 0
 
   #====================================
   # Post-Initialization

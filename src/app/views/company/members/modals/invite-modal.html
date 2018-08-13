@@ -12,10 +12,18 @@
     <!-- Enter Emails step -->
     <div ng-switch-when="enterEmails" class="text-center">
 
-      <div class="alert alert-error" ng-show="inviteModal.invalidEmails.length > 0">
-        <ng-pluralize count="inviteModal.invalidEmails.length" when="{'one': 'The following email address is invalid: ',
-                       'other': 'The following email addresses are invalid: '}"></ng-pluralize>
-        '{{inviteModal.invalidEmails.join("', '")}}'
+      <div class="alert alert-error" ng-show="inviteModal.invalidsAvailable()">
+        <div ng-show="inviteModal.invalidEmails.length > 0">
+          <ng-pluralize count="inviteModal.invalidEmails.length" when="{'one': 'The following email address is invalid: ',
+                         'other': 'The following email addresses are invalid: '}"></ng-pluralize>
+          '{{inviteModal.invalidEmails.join("', '")}}'
+        </div>
+        <div class='clearfix'></div>
+        <div ng-show="inviteModal.existingEmails.length > 0">
+        <ng-pluralize count="inviteModal.existingEmails.length" when="{'one': 'The following email is already a part of the organization: ',
+                       'other': 'The following email addresses are already a part of the organization: '}"></ng-pluralize>
+        '{{inviteModal.existingEmails.join("', '")}}'
+        </div>
       </div>
 
       <div class="row">
