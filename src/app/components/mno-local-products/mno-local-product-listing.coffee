@@ -33,7 +33,7 @@ angular.module 'mnoEnterpriseAngular'
       # Post-Initialization
       #====================================
       $scope.$watch MnoeOrganizations.getSelectedId, (val) ->
-        vm.initialize() if val?
+        vm.initialize()
 
       return
     })
