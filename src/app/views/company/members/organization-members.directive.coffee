@@ -2,7 +2,7 @@
 #============================================
 #
 #============================================
-DashboardOrganizationMembersCtrl = ($scope, $uibModal, $sce, $translate,  MnoeOrganizations, MnoeCurrentUser, MnoeTeams, Utilities, MnoeConfig) ->
+DashboardOrganizationMembersCtrl = ($scope, $uibModal, $sce, $translate, MnoeOrganizations, MnoeCurrentUser, MnoeTeams, Utilities, MnoeConfig, MnoeAppInstances, MnoeProductInstances) ->
   'ngInject'
 
   #====================================
@@ -56,7 +56,7 @@ DashboardOrganizationMembersCtrl = ($scope, $uibModal, $sce, $translate,  MnoeOr
     $scope.hasManySuperAdmin = _.filter($scope.members, {'role': 'Super Admin'}).length > 1
 
   rolesToDisplay = ->
-    $scope.user_role = _.find(MnoeCurrentUser.user.organizations, {id: MnoeOrganizations.selectedId}).current_user_role if !$scope.user_role
+    $scope.user_role = _.find(MnoeCurrentUser.user.organizations, {id: MnoeOrganizations.selectedId})?.current_user_role if !$scope.user_role
     roles = ['Member', 'Admin']
     roles.push('Super Admin') if $scope.user_role == 'Super Admin'
     editionModal.config.roles = ->
@@ -66,6 +66,15 @@ DashboardOrganizationMembersCtrl = ($scope, $uibModal, $sce, $translate,  MnoeOr
       ]
       list.push({value: 'Super Admin', locale: 'mno_enterprise.templates.dashboard.organization.members.roles.super_admin'}) if MnoeOrganizations.role.isSuperAdmin()
       return list
+
+  clearInstancesCache = ->
+    MnoeAppInstances.emptyAppInstances()
+    MnoeProductInstances.emptyProductInstances()
+    MnoeAppInstances.clearCache()
+    MnoeProductInstances.clearCache()
+
+  reloadCurrentOrganization = ->
+    MnoeOrganizations.reloadCurrentOrganization()
 
   #====================================
   # User Edition Modal
@@ -124,6 +133,8 @@ DashboardOrganizationMembersCtrl = ($scope, $uibModal, $sce, $translate,  MnoeOr
         if obj.email == MnoeCurrentUser.user.email
           $scope.user_role = obj.role
           rolesToDisplay()
+          clearInstancesCache()
+          reloadCurrentOrganization()
         self.close()
       (errors) ->
         self.errors = Utilities.processRailsError(errors)

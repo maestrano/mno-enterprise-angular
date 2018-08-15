@@ -26,6 +26,17 @@ angular.module 'mnoEnterpriseAngular'
       )
 
     organizationPromise = null
+
+    @reloadCurrentOrganization = () ->
+      orgId = _self.selectedId
+      $cookies.remove("#{orgId}_dhb_ref_id")
+      organizationPromise = null
+      _self.selectedId = null
+      MnoeCurrentUser.refresh().then(
+        ->
+          _self.get(ida)
+      )
+
     @get = (id = null) ->
       # return the cached promise if not a new call
       return organizationPromise if ((!id? || id == _self.selectedId) && organizationPromise?)
