@@ -41,7 +41,6 @@ DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, MnoeOrganizations
     instance.stack == 'connector' && instance.appNid == 'office-365' && (moment(instance.createdAt) > moment().subtract({minutes:5}))
 
   $scope.helper.oAuthConnectPath = (instance)->
-    MnoeAppInstances.clearCache()
     MnoeProductInstances.clearCache()
     $window.location.href = "/mnoe/webhook/oauth/#{instance.uid}/authorize"
 

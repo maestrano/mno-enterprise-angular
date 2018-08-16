@@ -34,7 +34,7 @@ angular.module 'mnoEnterpriseAngular'
       _self.selectedId = null
       MnoeCurrentUser.refresh().then(
         ->
-          _self.get(ida)
+          _self.get(orgId)
       )
 
     @get = (id = null) ->

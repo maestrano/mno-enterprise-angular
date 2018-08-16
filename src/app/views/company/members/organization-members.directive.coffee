@@ -70,7 +70,6 @@ DashboardOrganizationMembersCtrl = ($scope, $uibModal, $sce, $translate, MnoeOrg
   clearInstancesCache = ->
     MnoeAppInstances.emptyAppInstances()
     MnoeProductInstances.emptyProductInstances()
-    MnoeAppInstances.clearCache()
     MnoeProductInstances.clearCache()
 
   reloadCurrentOrganization = ->

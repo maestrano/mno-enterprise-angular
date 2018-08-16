@@ -53,7 +53,6 @@ angular.module 'mnoEnterpriseAngular'
 
         MnoConfirm.showModal(modalOptions).then(
           ->
-            MnoeAppInstances.clearCache()
             $window.location.href = "/mnoe/webhook/oauth/#{instance.uid}/disconnect"
         )
 
@@ -76,7 +75,6 @@ angular.module 'mnoEnterpriseAngular'
         !instance.oauth_keys_valid
 
       $scope.helper.oAuthConnectPath = (instance)->
-        MnoeAppInstances.clearCache()
         $window.location.href = "/mnoe/webhook/oauth/#{instance.uid}/authorize"
 
       $scope.helper.isLaunchHidden = (instance) ->

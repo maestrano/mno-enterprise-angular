@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .service 'MnoeAppInstances', ($q, MnoeApiSvc, MnoeOrganizations, MnoLocalStorage, MnoeCurrentUser, LOCALSTORAGE) ->
+  .service 'MnoeAppInstances', ($q, MnoeApiSvc, MnoeOrganizations, MnoeCurrentUser, LOCALSTORAGE) ->
     _self = @
 
     # Store selected organization app instances
@@ -11,24 +11,12 @@ angular.module 'mnoEnterpriseAngular'
 
       deferred = $q.defer()
 
-      # If app instances are stored return it and refresh the cache asynchronously
-      cache = MnoLocalStorage.getObject(MnoeCurrentUser.user.id + "_" + LOCALSTORAGE.appInstancesKey)
-      if cache?
-        # Refresh the cache content asynchronously
-        fetchAppInstances()
-        # Append response array to service array
-        _self.appInstances = cache
-        # Return the promised cache
-        deferred.resolve(cache)
-      else
-        # If the cache is empty return the call promise
-        fetchAppInstances().then((response) -> deferred.resolve(response))
+      fetchAppInstances().then((response) -> deferred.resolve(response))
 
       return appInstancesPromise = deferred.promise
 
     @refreshAppInstances = ->
       appInstancesPromise = null
-      _self.clearCache()
       _self.emptyAppInstances()
       fetchAppInstances()
 
@@ -45,7 +33,6 @@ angular.module 'mnoEnterpriseAngular'
               response = response.plain()
               # Save the app instances in the local storage
               appInstances = processAppInstances(response)
-              MnoLocalStorage.setObject(MnoeCurrentUser.user.id + "_" + LOCALSTORAGE.appInstancesKey, appInstances)
               # Process the response
               defer.resolve(appInstances)
           )
@@ -64,7 +51,6 @@ angular.module 'mnoEnterpriseAngular'
 
     # Path to connect this app instance and redirect to the current page
     @oAuthConnectPath = (instance, extra_params = '') ->
-      _self.clearCache()
       _self.emptyAppInstances()
       redirect = window.encodeURIComponent("#{location.pathname}#{location.hash}")
       "/mnoe/webhook/oauth/#{instance.uid}/authorize?redirect_path=#{redirect}&#{extra_params}"
@@ -74,18 +60,11 @@ angular.module 'mnoEnterpriseAngular'
         ->
           # Remove the corresponding app from the list
           _.remove(_self.appInstances, {id: id})
-
-          # Update the local storage cache
-          MnoLocalStorage.setObject(MnoeCurrentUser.user.id + "_" + LOCALSTORAGE.appInstancesKey, _self.appInstances)
       )
 
     @emptyAppInstances = () ->
       appInstancesPromise = null
-      MnoLocalStorage.removeItem(MnoeCurrentUser.user.id + "_" + LOCALSTORAGE.appInstancesKey)
       @appInstances.length = 0
-
-    @clearCache = () ->
-      MnoLocalStorage.removeItem(MnoeCurrentUser.user.id + "_" + LOCALSTORAGE.appInstancesKey)
 
     @installStatus = (appInstance) ->
       if appInstance.app_nid != 'office-365' && appInstance.stack == 'connector' && !appInstance.oauth_keys_valid
