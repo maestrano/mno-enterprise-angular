@@ -69,7 +69,6 @@ angular.module 'mnoEnterpriseAngular'
 
       MnoConfirm.showModal(modalOptions).then(
         ->
-          MnoeAppInstances.clearCache()
           $window.location.href = "/mnoe/webhook/oauth/#{app.uid}/disconnect"
       )
   )
