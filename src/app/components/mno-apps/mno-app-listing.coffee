@@ -40,7 +40,7 @@ angular.module 'mnoEnterpriseAngular'
         vm.searchTerm = ''
         vm.currentSelectedCategory = if vm.publicPage then vm.selectedPublicCategory.label else vm.selectedCategory
         if (vm.currentSelectedCategory?.length > 0)
-          vm.filteredApps = (app for app in vm.apps when vm.currentSelectedCategory in app.categories)
+          vm.filteredApps = _.filter(vm.apps, (app) -> _.includes(app.categories, vm.currentSelectedCategory))
         else
           vm.filteredApps = vm.apps
 
@@ -84,11 +84,12 @@ angular.module 'mnoEnterpriseAngular'
             response = response.plain()
 
             vm.categories = response.categories
-            vm.publicCategories = _.map(response.categories, (c) -> {label: c, active: ''})
             vm.apps = response.apps
-            vm.filteredApps = vm.apps
             if vm.publicPage
               vm.apps = _.filter(vm.apps, (app) -> _.includes(MnoeConfig.publicApplications(), app.nid))
+              categoriesWithProduct = _.uniq(_.flatten(_.map(vm.apps, (app) -> app.categories)))
+              vm.publicCategories = _.map(categoriesWithProduct, (c) -> {label: c, active: ''})
+            vm.filteredApps = vm.apps
       ).finally(-> vm.isLoading = false)
 
       $scope.$watch MnoeOrganizations.getSelectedId, (val) ->
