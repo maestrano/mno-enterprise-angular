@@ -84,7 +84,7 @@ angular.module 'mnoEnterpriseAngular'
             response = response.plain()
 
             vm.categories = response.categories
-            vm.apps = response.apps
+            vm.apps = _.sortByAll(response.apps, ['rank', (a) -> a.name?.toLowerCase()])
             if vm.publicPage
               vm.apps = _.filter(vm.apps, (app) -> _.includes(MnoeConfig.publicApplications(), app.nid))
               categoriesWithProduct = _.uniq(_.flatten(_.map(vm.apps, (app) -> app.categories)))
