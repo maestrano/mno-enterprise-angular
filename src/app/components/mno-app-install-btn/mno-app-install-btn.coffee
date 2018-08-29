@@ -45,7 +45,7 @@ angular.module 'mnoEnterpriseAngular'
 
       vm.provisionConditions = ->
         if vm.appInstance
-          vm.vm.appInstallationBtnClick()
+          vm.appInstallationBtnClick()
         else
           vm.provisionOrder()
 
