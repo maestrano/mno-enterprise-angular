@@ -13,6 +13,12 @@ DashboardOrganizationSettingsCtrl = ($scope, $window, MnoeOrganizations, Utiliti
   #====================================
   # Scope Management
   #====================================
+  # Feature flags
+  $scope.currencies = MnoeConfig.availableBillingCurrencies()
+  $scope.currencySelection = MnoeConfig.isBillingCurrencySelectionEnabled()
+  $scope.mainAddressRequired = MnoeOrganizations.mainAddressRequired()
+  $scope.currencySelectionDisabledTooltip = if $scope.currencySelection then '' else 'mno_enterprise.templates.dashboard.organization.settings.billing_currency_disabled_tooltip'
+
   # Initialize the data used by the directive
   $scope.initialize = (organization) ->
     angular.copy(organization, $scope.model)
@@ -52,18 +58,6 @@ DashboardOrganizationSettingsCtrl = ($scope, $window, MnoeOrganizations, Utiliti
   $scope.isSaveEnabled = ->
     f = $scope.forms
     $scope.isChanged() && f.settings.$valid
-
-  $scope.isCurrencyChangeShown = ->
-    if MnoeOrganizations.role.isSuperAdmin()
-      $scope.getAvailableBillingCurrencies()
-      true
-    else
-      false
-
-  $scope.getAvailableBillingCurrencies = ->
-    $scope.currencies = MnoeConfig.availableBillingCurrencies()
-
-  $scope.mainAddressRequired = MnoeOrganizations.mainAddressRequired()
 
   #====================================
   # Post-Initialization

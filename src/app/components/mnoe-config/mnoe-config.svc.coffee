@@ -37,6 +37,13 @@ angular.module 'mnoEnterpriseAngular'
         $log.debug("DASHBOARD_CONFIG.organization_management.billing.enabled missing")
         true
 
+    @isBillingCurrencySelectionEnabled = () ->
+      if DASHBOARD_CONFIG.organization_management?.billing?.billing_currency_selection?
+        DASHBOARD_CONFIG.organization_management.billing.billing_currency_selection
+      else
+        $log.debug("DASHBOARD_CONFIG.organization_management.billing.billing_currency_selection missing")
+        true
+
     @isCurrencySelectionEnabled = () ->
       if DASHBOARD_CONFIG.marketplace?.pricing?.currency_selection?
         DASHBOARD_CONFIG.marketplace.pricing.currency_selection

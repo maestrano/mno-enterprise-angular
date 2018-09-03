@@ -11,7 +11,7 @@
 </div>
 
 
-<div class="row">
+<div class="row organization-settings">
   <form name="forms.settings" role="form" novalidate class="form-horizontal">
     <div class="form-group">
       <label class="col-sm-3 control-label">{{ 'mno_enterprise.templates.dashboard.organization.settings.company_name' | translate }}*</label>
@@ -20,10 +20,10 @@
       </div>
     </div>
 
-    <div class="form-group" ng-if="isCurrencyChangeShown()">
+    <div class="form-group">
       <label class="col-sm-3 control-label">{{ 'mno_enterprise.templates.dashboard.organization.settings.billing_currency' | translate }}*</label>
-      <div class="col-sm-6">
-        <select ng-model="model.billing_currency" class="form-control">
+      <div class="col-sm-6" uib-tooltip="{{ currencySelectionDisabledTooltip | translate }}" ng-class="{'disabled': !currencySelection}">
+        <select ng-model="model.billing_currency" ng-disabled="!currencySelection" class="form-control">
           <option ng-repeat="currency in currencies" value="{{::currency}}">{{::currency}}</option>
         </select>
       </div>
