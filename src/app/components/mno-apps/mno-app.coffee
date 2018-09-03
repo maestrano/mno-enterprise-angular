@@ -55,7 +55,7 @@ angular.module 'mnoEnterpriseAngular'
         vm.app ||= _.findWhere(apps, { id:  appId })
 
         # Init currency
-        vm.currency = MnoeOrganizations.selected.organization.billing_currency || MnoeConfig.marketplaceCurrency()
+        vm.currency = MnoeOrganizations.selected?.organization?.billing_currency || MnoeConfig.marketplaceCurrency()
 
         # Init Pricing Plans
         getPricingPlans()
