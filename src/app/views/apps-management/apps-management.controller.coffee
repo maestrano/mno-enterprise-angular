@@ -1,6 +1,6 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('AppsManagementCtrl',
-    ($q, $scope, MnoeConfig, MnoeProductInstances, MnoeProvisioning, MnoeOrganizations, AppManagementHelper, MnoeAppInstances) ->
+    ($q, $scope, $state, MnoeConfig, MnoeProductInstances, MnoeProvisioning, MnoeOrganizations, AppManagementHelper, MnoeAppInstances) ->
 
       vm = @
       vm.isLoading = true
@@ -27,6 +27,8 @@ angular.module 'mnoEnterpriseAngular'
         ).finally(-> vm.syncStatusesSet = true)
 
       vm.init = ->
+        return $state.go('home.impac') unless MnoeConfig.isProvisioningEnabled()
+
         productPromise = MnoeProductInstances.getProductInstances()
         subPromise = if MnoeOrganizations.role.atLeastAdmin() then MnoeProvisioning.getSubscriptions() else null
 

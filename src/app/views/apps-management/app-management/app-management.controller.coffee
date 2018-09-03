@@ -115,6 +115,8 @@ angular.module 'mnoEnterpriseAngular'
 
         # ********************** Initialize *********************************
         vm.init = ->
+          return $state.go('home.impac') unless MnoeConfig.isProvisioningEnabled()
+
           vm.setUserRole()
 
           productPromise = MnoeProductInstances.getProductInstances()
