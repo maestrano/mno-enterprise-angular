@@ -1,6 +1,6 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('AppsManagementCtrl',
-    ($q, $scope, $state, MnoeConfig, MnoeProductInstances, MnoeProvisioning, MnoeOrganizations, AppManagementHelper, MnoeAppInstances) ->
+    ($q, $scope, MnoeConfig, MnoeProductInstances, MnoeProvisioning, MnoeOrganizations, AppManagementHelper, MnoeAppInstances) ->
 
       vm = @
       vm.isLoading = true
