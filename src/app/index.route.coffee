@@ -68,18 +68,6 @@ angular.module 'mnoEnterpriseAngular'
         templateUrl: 'app/views/impac/impac.html'
         controller: 'ImpacController'
         controllerAs: 'vm'
-      .state 'home.apps-management',
-        data:
-          pageTitle:'App Management'
-        url: '/apps-management'
-        templateUrl: 'app/views/apps-management/apps-management.html'
-        controller: 'AppsManagementCtrl'
-        controllerAs: 'vm'
-      .state 'home.app-management',
-        url: '/app/:appId/manage'
-        templateUrl: 'app/views/apps-management/app-management/app-management.html'
-        controller: 'AppManagementCtrl'
-        controllerAs: 'vm'
       .state 'home.account',
         data:
           pageTitle:'Account'
@@ -241,6 +229,23 @@ angular.module 'mnoEnterpriseAngular'
           templateUrl: 'app/views/provisioning/subscription.html'
           controller: 'ProvisioningSubscriptionCtrl'
           controllerAs: 'vm'
+
+      if MnoeConfigProvider.$get().isAppManagementEnabled()
+        $stateProvider
+          .state 'home.apps-management',
+            data:
+              pageTitle: 'Apps Management'
+            url: '/apps-management'
+            templateUrl: 'app/views/apps-management/apps-management.html'
+            controller: 'AppsManagementCtrl'
+            controllerAs: 'vm'
+          .state 'home.app-management',
+            data:
+              pageTitle: 'App Management'
+            url: '/app/:appId/manage'
+            templateUrl: 'app/views/apps-management/app-management/app-management.html'
+            controller: 'AppManagementCtrl'
+            controllerAs: 'vm'
 
     $urlRouterProvider.otherwise ($injector, $location) ->
       MnoeConfig = $injector.get('MnoeConfig')

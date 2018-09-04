@@ -33,6 +33,39 @@ angular.module 'mnoEnterpriseAngular'
           else
             "INSTALLABLE"
 
+      vm.appInstallationBtnClick = ->
+        switch vm.appInstallationStatus()
+          when 'INSTALLABLE'
+            if vm.isExternallyProvisioned
+              vm.provisionOrder()
+            else
+              vm.provisionApp()
+          when 'INSTALLED_LAUNCH' then vm.launchAppInstance()
+          when 'INSTALLED_CONNECT' then vm.connectAppInstance()
+
+      vm.provisionConditions = ->
+        if vm.appInstance
+          vm.appInstallationBtnClick()
+        else
+          vm.provisionOrder()
+
+      vm.appInstallationBtnText = ->
+        switch vm.appInstallationStatus()
+          when 'INSTALLABLE'
+            if vm.isExternallyProvisioned
+              'mno_enterprise.templates.dashboard.marketplace.show.provision'
+            else
+              'mno_enterprise.templates.components.app_install_btn.start_app'
+          when 'INSTALLED_LAUNCH' then 'mno_enterprise.templates.components.app_install_btn.launch_app'
+          when 'INSTALLED_CONNECT' then 'mno_enterprise.templates.components.app_install_btn.connect_app'
+          when 'CONFLICT' then 'mno_enterprise.templates.components.app_install_btn.conflicting_app'
+
+      vm.provisionText = ->
+        if vm.appInstance
+          vm.appInstallationBtnText()
+        else
+          'mno_enterprise.templates.dashboard.marketplace.show.provision'
+
       vm.canProvisionApp = false
 
       vm.buttonDisabled = () ->
@@ -46,23 +79,16 @@ angular.module 'mnoEnterpriseAngular'
 
       vm.updateButtonText = () ->
         if vm.isExternallyProvisioned
-          'mno_enterprise.templates.dashboard.marketplace.show.provision'
+          vm.provisionText()
         else
-          switch vm.appInstallationStatus()
-            when 'CONFLICT' then 'mno_enterprise.templates.components.app_install_btn.conflicting_app'
-            when 'INSTALLABLE' then 'mno_enterprise.templates.components.app_install_btn.start_app'
-            when 'INSTALLED_LAUNCH' then 'mno_enterprise.templates.components.app_install_btn.launch_app'
-            when 'INSTALLED_CONNECT' then 'mno_enterprise.templates.components.app_install_btn.connect_app'
+          vm.appInstallationBtnText()
 
       vm.buttonClick = () ->
         if !vm.buttonDisabled()
           if vm.isExternallyProvisioned
-            vm.provisionOrder()
+            vm.provisionConditions()
           else
-            switch vm.appInstallationStatus()
-              when 'INSTALLABLE' then vm.provisionApp()
-              when 'INSTALLED_LAUNCH' then vm.launchAppInstance()
-              when 'INSTALLED_CONNECT' then vm.connectAppInstance()
+            vm.appInstallationBtnClick()
 
       vm.provisionApp = () ->
         return if !vm.canProvisionApp
