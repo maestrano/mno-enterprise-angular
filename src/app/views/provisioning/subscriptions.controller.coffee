@@ -1,79 +1,91 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningSubscriptionsCtrl', ($q, $scope, $state, $stateParams, toastr, MnoeOrganizations, MnoeProvisioning, MnoeConfig, MnoConfirm, PRICING_TYPES, ProvisioningHelper) ->
+  .controller('ProvisioningSubscriptionsCtrl',
+    ($q, $scope, $state, $stateParams, toastr, MnoeOrganizations, MnoeProvisioning, MnoeConfig, MnoConfirm, PRICING_TYPES, ProvisioningHelper, MnoeAppInstances, MnoeProductInstances) ->
 
-    vm = this
-    vm.isLoading = true
-    vm.cartSubscriptions = $stateParams.subType == 'cart'
-    vm.skipPriceSelection = ProvisioningHelper.skipPriceSelection
-
-    vm.goToSubscription = (subscription) ->
-      ProvisioningHelper.goToSubscription(subscription, vm.cartSubscriptions)
-
-    vm.subscriptionsPromise = ->
-      if vm.cartSubscriptions
-        params = { where: {subscription_status_in: 'staged' } }
-        MnoeProvisioning.getSubscriptions(params)
-      else
-        params = { where: {subscription_status_in: 'visible' } }
-        MnoeProvisioning.getSubscriptions(params)
-
-    vm.deleteCart = ->
-      MnoeProvisioning.deleteCartSubscriptions().then(
-        (response) ->
-          MnoeProvisioning.emptyCartSubscriptions()
-          toastr.info('mno_enterprise.templates.dashboard.provisioning.subscriptions.cart.delete_cart.toastr')
-          $state.go("home.marketplace")
-      )
-
-    vm.submitCart = ->
-      MnoeProvisioning.submitCartSubscriptions().then(
-        (response) ->
-          # Reload dock apps
-          MnoeProvisioning.refreshCartSubscriptions()
-
-          toastr.success('mno_enterprise.templates.dashboard.provisioning.subscriptions.cart.submit_cart.toastr')
-          $state.go("home.subscriptions", {subType: 'active'})
-      )
-
-    vm.initialize = ->
+      vm = this
       vm.isLoading = true
-      orgPromise = MnoeOrganizations.get()
-      subPromise = vm.subscriptionsPromise()
+      vm.isCartSubmitting = false
+      vm.isCartDeleting = false
+      vm.cartSubscriptions = $stateParams.subType == 'cart'
+      vm.skipPriceSelection = ProvisioningHelper.skipPriceSelection
 
-      $q.all({organization: orgPromise, subscriptions: subPromise}).then(
-        (response) ->
-          vm.subscriptions = response.subscriptions
-          if vm.cartSubscriptions && vm.subscriptions.length < 1
-            toastr.info('mno_enterprise.templates.dashboard.provisioning.subscriptions.cart.empty')
-            $state.go('home.marketplace')
-            return
+      vm.goToSubscription = (subscription) ->
+        ProvisioningHelper.goToSubscription(subscription, vm.cartSubscriptions)
 
-          vm.orgCurrency = response.organization.organization?.billing_currency || MnoeConfig.marketplaceCurrency()
+      vm.subscriptionsPromise = ->
+        if vm.cartSubscriptions
+          params = { where: {subscription_status_in: 'staged' } }
+          MnoeProvisioning.getSubscriptions(params)
+        else
+          params = { where: {subscription_status_in: 'visible' } }
+          MnoeProvisioning.getSubscriptions(params)
 
-          # If a subscription doesn't contains a pricing for the org currency, a warning message is displayed
-          vm.displayCurrencyWarning = not _.every(response.subscriptions, (subscription) ->
-            currencies = _.map(subscription?.product_pricing?.prices, 'currency')
-            _.includes(currencies, vm.orgCurrency) || (subscription?.product_pricing?.pricing_type in PRICING_TYPES['unpriced'])
-          )
-      ).finally(-> vm.isLoading = false)
+      vm.deleteCart = ->
+        return if vm.isCartSubmitting || vm.isCartDeleting
+        vm.isCartDeleting = true
+        MnoeProvisioning.deleteCartSubscriptions().then(
+          (response) ->
+            MnoeProvisioning.emptyCartSubscriptions()
+            toastr.info('mno_enterprise.templates.dashboard.provisioning.subscriptions.cart.delete_cart.toastr')
+            vm.isCartDeleting = false
+            $state.go("home.marketplace")
+        )
 
-    #====================================
-    # Post-Initialization
-    #====================================
-    $scope.$watch MnoeOrganizations.getSelectedId, (val) ->
-      vm.initialize() if val?
+      vm.submitCart = ->
+        return if vm.isCartSubmitting || vm.isCartDeleting
+        vm.isCartSubmitting = true
+        MnoeProvisioning.submitCartSubscriptions().then(
+          (response) ->
+            # Reload dock apps
+            MnoeProvisioning.refreshCartSubscriptions()
+            MnoeAppInstances.emptyAppInstances()
+            MnoeProductInstances.emptyProductInstances()
+            MnoeProductInstances.clearCache()
 
-    vm.displayInfoTooltip = (subscription) ->
-      return subscription.status == 'aborted'
+            toastr.success('mno_enterprise.templates.dashboard.provisioning.subscriptions.cart.submit_cart.toastr')
+            vm.isCartSubmitting = false
+            $state.go("home.subscriptions", {subType: 'active'})
+        )
 
-    vm.showEditAction = (subscription, editAction) ->
-      ProvisioningHelper.showEditAction(subscription, editAction)
+      vm.initialize = ->
+        vm.isLoading = true
+        orgPromise = MnoeOrganizations.get()
+        subPromise = vm.subscriptionsPromise()
 
-    vm.editSubscription = (subscription, editAction) ->
-      ProvisioningHelper.editSubscription(subscription, editAction, vm.cartSubscriptions)
+        $q.all({organization: orgPromise, subscriptions: subPromise}).then(
+          (response) ->
+            vm.subscriptions = response.subscriptions
+            if vm.cartSubscriptions && vm.subscriptions.length < 1
+              toastr.info('mno_enterprise.templates.dashboard.provisioning.subscriptions.cart.empty')
+              $state.go('home.marketplace')
+              return
 
-    vm.pendingSubscription = (subscription) ->
-      subscription.status in ['pending', 'provisioning']
+            vm.orgCurrency = response.organization.organization?.billing_currency || MnoeConfig.marketplaceCurrency()
 
-    return
+            # If a subscription doesn't contains a pricing for the org currency, a warning message is displayed
+            vm.displayCurrencyWarning = not _.every(response.subscriptions, (subscription) ->
+              currencies = _.map(subscription?.product_pricing?.prices, 'currency')
+              _.includes(currencies, vm.orgCurrency) || (subscription?.product_pricing?.pricing_type in PRICING_TYPES['unpriced'])
+            )
+        ).finally(-> vm.isLoading = false)
+
+      #====================================
+      # Post-Initialization
+      #====================================
+      $scope.$watch MnoeOrganizations.getSelectedId, (val) ->
+        vm.initialize() if val?
+
+      vm.displayInfoTooltip = (subscription) ->
+        return subscription.status == 'aborted'
+
+      vm.showEditAction = (subscription, editAction) ->
+        ProvisioningHelper.showEditAction(subscription, editAction)
+
+      vm.editSubscription = (subscription, editAction) ->
+        ProvisioningHelper.editSubscription(subscription, editAction, vm.cartSubscriptions)
+
+      vm.pendingSubscription = (subscription) ->
+        subscription.status in ['pending', 'provisioning']
+
+      return
   )

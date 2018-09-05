@@ -7,6 +7,7 @@ angular.module 'mnoEnterpriseAngular'
     controller: ($q, $state, $window, $uibModal, toastr, MnoeMarketplace, MnoeProvisioning, MnoeCurrentUser, MnoeOrganizations, MnoeAppInstances, MnoeConfig, ProvisioningHelper) ->
       vm = this
       vm.orderPossible = true
+      vm.allowCartProductProvision = true
       vm.buttonText = ''
       vm.buttonDisabledTooltip = ''
 
@@ -69,11 +70,13 @@ angular.module 'mnoEnterpriseAngular'
       vm.canProvisionApp = false
 
       vm.buttonDisabled = () ->
-        !vm.canProvisionApp || vm.appInstallationStatus() == "CONFLICT" || !vm.orderPossible
+        !vm.canProvisionApp || vm.appInstallationStatus() == "CONFLICT" || !vm.orderPossible || !vm.allowCartProductProvision
 
       vm.updateButtonDisabledTooltip = () ->
         if !vm.canProvisionApp
           'mno_enterprise.templates.components.app_install_btn.insufficient_privilege'
+        else if !vm.allowCartProductProvision
+          'mno_enterprise.templates.components.app_install_btn.cart_product'
         else if !vm.orderPossible
           'mno_enterprise.templates.dashboard.marketplace.show.no_pricing_plans_found_tooltip'
 
@@ -234,6 +237,18 @@ angular.module 'mnoEnterpriseAngular'
 
             vm.orderPossible = !_.isEmpty(availablePlans) || (plans.default?[0] && currencySelection) || ProvisioningHelper.skipPriceSelection(product)
 
+            # For Admins, check that the app/product is not already added to cart.
+            # If so, then prevent flow if the app/product is not multi instantiable
+            if vm.canProvisionApp
+              params = {where: {subscription_status_in: 'staged'}}
+              MnoeProvisioning.getSubscriptions(params, true).then(
+                (resp) ->
+                  cartProducts = _.map(resp, (sub) -> sub?.product?.nid)
+                  isCartProduct = vm.app.nid in cartProducts
+                  vm.allowCartProductProvision = vm.app.multi_instantiable if isCartProduct
+              )
+        ).finally(
+          ->
             vm.buttonText = vm.updateButtonText()
             vm.buttonDisabledTooltip = vm.updateButtonDisabledTooltip()
         )

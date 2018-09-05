@@ -7,10 +7,12 @@
 
 <div id="provisioning-subscriptions" class="row top-buffer-2">
   <div ng-show="vm.cartSubscriptions" class='text-right bottom-buffer-1'>
-    <button class='btn btn-primary' ng-click="vm.deleteCart()">
+    <button class='btn btn-primary' ng-disabled="vm.isCartDeleting || vm.isCartSubmitting" ng-click="vm.deleteCart()">
+      <span ng-show="vm.isCartDeleting"><i class='fa fa-spinner fa-pulse fa-fw'></i></span>
       {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.cart.delete_cart.title' | translate }}
     </button>
-    <button class='btn btn-primary' ng-click="vm.submitCart()">
+    <button class='btn btn-primary' ng-disabled="vm.isCartDeleting || vm.isCartSubmitting" ng-click="vm.submitCart()">
+      <span ng-show="vm.isCartSubmitting"><i class='fa fa-spinner fa-pulse fa-fw'></i></span>
       {{ 'mno_enterprise.templates.dashboard.provisioning.subscriptions.cart.submit_cart.title' | translate }}
     </button>
   </div>
