@@ -2,7 +2,7 @@ angular.module 'mnoEnterpriseAngular'
   .controller('AppManagementCtrl',
     ($q, $state, $scope, toastr, $stateParams, MnoeConfig, MnoeProductInstances, MnoeProvisioning,
       MnoeOrganizations, MnoeCurrentUser, MnoeMarketplace, PRICING_TYPES, ProvisioningHelper,
-      AppSettingsHelper, AppManagementHelper, MnoeAppInstances) ->
+      AppSettingsHelper, AppManagementHelper) ->
 
         vm = @
         vm.isLoading = true
@@ -14,11 +14,11 @@ angular.module 'mnoEnterpriseAngular'
         vm.showEditAction = ProvisioningHelper.showEditAction
         vm.goToSubscription = ProvisioningHelper.goToSubscription
 
-        vm.showDataSharingDate = ->
-          if vm.product.sync_status?.attributes?.status
-            true
+        vm.dataSharingMessage = ->
+          if AppManagementHelper.isProductConnected(vm.product)
+            'mno_enterprise.templates.dashboard.app_management.manage.tab.connection_status.sync_in_progress'
           else
-            false
+            'mno_enterprise.templates.dashboard.app_management.manage.tab.connection_status.never_sync'
 
         # Return true if the plan has a dollar value
         vm.pricedPlan = (plan) ->
@@ -136,20 +136,13 @@ angular.module 'mnoEnterpriseAngular'
 
               # Order Histroy flow
               vm.loadOrderHistory() if vm.isAdmin
+
+              # Sync Status flow
+              vm.product = AppManagementHelper.setProductSyncStatuses([vm.product])[0]
           ).finally(
             ->
               vm.isLoading = false
-              vm.initAppInstanceSync()
             )
-
-        vm.initAppInstanceSync = ->
-          return if vm.product.sync_status
-
-          MnoeAppInstances.getAppInstanceSync().then(
-            (response) ->
-              vm.connecApps = response.connectors
-              vm.product = AppManagementHelper.setProductSyncStatuses(vm.connecApps, [vm.product])[0]
-          )
 
         #====================================
         # Post-Initialization
