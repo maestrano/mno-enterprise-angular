@@ -661,6 +661,8 @@
   "mno_enterprise.templates.dashboard.organization.members.invite_modal.title_email": "Edit Member: {email}",
   "mno_enterprise.templates.dashboard.organization.members.invite_modal.title_enter_emails": "Enter email addresses",
   "mno_enterprise.templates.dashboard.organization.members.invite_modal.title_select_roles": "Select role for each new member",
+  "mno_enterprise.templates.dashboard.organization.members.invite_modal.invalid_emails": "The following email address{COUNT, plural, one{} other{es}} {COUNT, plural, one{is} other{are}} invalid: '{emails}'",
+  "mno_enterprise.templates.dashboard.organization.members.invite_modal.existing_emails": "'{emails}' {COUNT, plural, one{has an} other{have}} active invitation{COUNT, plural, one{} other{s}}, or already belongs to this organization",
   "mno_enterprise.templates.dashboard.organization.members.invite_modal.description": "Enter the email addresses of the people you want to invite in your company",
   "mno_enterprise.templates.dashboard.organization.members.invite_modal.example": "One address per line, e.g.:",
   "mno_enterprise.templates.dashboard.organization.members.invite_modal.disclaimer": "Please note that for security reasons unaccepted invites will automatically expire after 3 days.",
