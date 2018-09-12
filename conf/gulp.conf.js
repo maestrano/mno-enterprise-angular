@@ -9,7 +9,8 @@
  */
 
 const path = require('path');
-const gutil = require('gulp-util');
+const log = require('fancy-log');
+const colors = require('ansi-colors');
 
 exports.ngModule = 'mnoEnterpriseAngular';
 
@@ -50,7 +51,7 @@ for (const pathName in exports.paths) {
 exports.exitOnError = false;
 exports.errorHandler = function (title) {
   return function (err) {
-    gutil.log(gutil.colors.red(`[${title}]`), err.toString());
+    log(colors.red(`[${title}]`), err.toString());
     this.emit('end');
     if (exports.exitOnError)
       process.exit(1);
