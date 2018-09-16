@@ -2,7 +2,7 @@
   List of Members
 -->
 <div class="row" ng-show="isInviteShown()">
-  <button class="btn btn-sm btn-warning" ng-click="inviteMembers()">
+  <button class="btn btn-sm btn-warning" ng-click="inviteMembers()" ng-disabled="isLoading">
     <i class="fa fa-user-plus"></i>
     {{ 'mno_enterprise.templates.dashboard.organization.members.invite_users' | translate }}
   </button>
