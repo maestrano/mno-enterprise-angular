@@ -1,10 +1,9 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('AppsManagementCtrl',
-    ($q, $scope, MnoeConfig, MnoeProductInstances, MnoeProvisioning, MnoeOrganizations, AppManagementHelper, MnoeAppInstances) ->
+    ($q, $scope, MnoeConfig, MnoeProductInstances, MnoeProvisioning, MnoeOrganizations, AppManagementHelper) ->
 
       vm = @
       vm.isLoading = true
-      vm.syncStatusesSet = false
       vm.recentSubscription = AppManagementHelper.recentSubscription
 
       vm.providesStatus = (product) ->
@@ -18,13 +17,6 @@ angular.module 'mnoEnterpriseAngular'
 
       vm.appActionUrl = (product) ->
         "/mnoe/launch/#{product.uid}"
-
-      vm.initAppInstanceSync = ->
-        MnoeAppInstances.getAppInstanceSync().then(
-          (response) ->
-            vm.connecApps = response.connectors
-            vm.products = AppManagementHelper.setProductSyncStatuses(vm.connecApps, vm.products)
-        ).finally(-> vm.syncStatusesSet = true)
 
       vm.init = ->
         productPromise = MnoeProductInstances.getProductInstances()
@@ -42,12 +34,11 @@ angular.module 'mnoEnterpriseAngular'
                   else
                     vm.recentSubscription(product_subscriptions)
 
-                product
+                AppManagementHelper.setProductSyncStatuses([product])[0]
             )
         ).finally(
           ->
             vm.isLoading = false
-            vm.initAppInstanceSync()
           )
 
       #====================================
