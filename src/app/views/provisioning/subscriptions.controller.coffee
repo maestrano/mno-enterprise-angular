@@ -50,6 +50,9 @@ angular.module 'mnoEnterpriseAngular'
 
           vm.orgCurrency = response.organization.organization?.billing_currency || MnoeConfig.marketplaceCurrency()
 
+          # Is an up to date account required to allow app management and is the account past due?
+          vm.paymentRequired = MnoeConfig.isCurrentAccountRequired() && response.organization.organization.in_arrears
+
           # If a subscription doesn't contains a pricing for the org currency, a warning message is displayed
           vm.displayCurrencyWarning = not _.every(response.subscriptions, (subscription) ->
             currencies = _.map(subscription?.product_pricing?.prices, 'currency')
@@ -67,6 +70,7 @@ angular.module 'mnoEnterpriseAngular'
       return subscription.status == 'aborted'
 
     vm.showEditAction = (subscription, editAction) ->
+      return false if vm.paymentRequired
       ProvisioningHelper.showEditAction(subscription, editAction)
 
     vm.editSubscription = (subscription, editAction) ->

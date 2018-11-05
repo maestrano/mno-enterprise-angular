@@ -1,5 +1,5 @@
 
-DashboardOrganizationCreditCardCtrl = ($scope, $window, MnoeOrganizations, VALID_COUNTRIES, Utilities) ->
+DashboardOrganizationCreditCardCtrl = ($scope, $window, toastr, MnoeOrganizations, MnoConfirm, VALID_COUNTRIES, Utilities) ->
   'ngInject'
 
   #====================================
@@ -33,16 +33,35 @@ DashboardOrganizationCreditCardCtrl = ($scope, $window, MnoeOrganizations, VALID
   # Save the current state of the credit card
   $scope.save = ->
     $scope.isLoading = true
-    MnoeOrganizations.updateCreditCard($scope.model).then(
-      (response) ->
-        $scope.errors = ''
-        angular.copy(response.credit_card, $scope.model)
-        angular.copy(response.credit_card, $scope.origModel)
-        if $scope.callback
-          $scope.callback()
-      (errors) ->
-        $scope.errors = Utilities.processRailsError(errors)
-    ).finally(-> $scope.isLoading = false)
+
+    modalOptions =
+      closeButtonText: 'mno_enterprise.templates.dashboard.organization.credit_card.confirm_modal.cancel'
+      actionButtonText: 'mno_enterprise.templates.dashboard.organization.credit_card.confirm_modal.confirm'
+      headerText: 'mno_enterprise.templates.dashboard.organization.credit_card.confirm_modal.header'
+      bodyText: 'mno_enterprise.templates.dashboard.organization.credit_card.confirm_modal.disclaimer'
+      type: 'primary'
+
+    MnoConfirm.showModal(modalOptions).then(
+      ->
+        # Success
+        MnoeOrganizations.updateCreditCard($scope.model).then(
+          (response) ->
+            $scope.errors = ''
+            angular.copy(response.credit_card, $scope.model)
+            angular.copy(response.credit_card, $scope.origModel)
+            if $scope.callback
+              $scope.callback()
+            MnoeOrganizations.reloadCurrentOrganization().then(
+              ->
+                toastr.success('mno_enterprise.templates.dashboard.organization.credit_card.success_toastr')
+            )
+          (errors) ->
+            $scope.errors = Utilities.processRailsError(errors)
+        )
+      ->
+        # Cancel
+        false
+    ).finally(-> $scope.isLoading = false )
 
   # Cancel the temporary changes made by the
   # user
