@@ -10,6 +10,9 @@ describe('Service: MnoeOrganizations', ->
     $httpBackend = _$httpBackend_
 
     # Global stubs
+    $httpBackend.when('GET', 'locales/en.json').respond(200)
+    $httpBackend.when('GET', 'locales/en-AU.json').respond(200)
+
     $httpBackend.when('GET', '/mnoe/jpi/v1/current_user').respond(200,
       {
         "current_user": {

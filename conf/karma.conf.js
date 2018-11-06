@@ -10,7 +10,9 @@ module.exports = function (config) {
     junitReporter: {
       outputDir: 'test-reports'
     },
+    reporters: ['spec'],
     browsers: [
+      // 'Chrome'
       'PhantomJS'
     ],
     reporters: ['spec'],
@@ -39,6 +41,7 @@ module.exports = function (config) {
       require('karma-junit-reporter'),
       require('karma-spec-reporter'),
       require('karma-coverage'),
+      require('karma-chrome-launcher'),
       require('karma-phantomjs-launcher'),
       require('karma-phantomjs-shim'),
       require('karma-ng-html2js-preprocessor'),

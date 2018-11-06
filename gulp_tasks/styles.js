@@ -7,8 +7,8 @@ const autoprefixer = require('autoprefixer');
 const inject = require('gulp-inject');
 const replace = require('gulp-replace');
 const wiredep = require('wiredep').stream;
-const sprity = require('sprity');
-const gulpif = require('gulp-if');
+const spritesmith = require('gulp.spritesmith');
+const path = require('path');
 const rename = require('gulp-rename');
 var _ = require('lodash');
 
@@ -62,14 +62,20 @@ function styles() {
 
 // generate sprites
 function sprites() {
-  return sprity.src({
-    src: './src/images/sprites/*/*.{png,jpg}',
-    style: 'mnoe-sprites.less',
-    margin: 0,
-    name: 'sprites/mnoe-sprites',
-    prefix: 'mnoe-icon'
-  })
-    .pipe(gulpif('*.png', gulp.dest(conf.path.src('/images/')), gulp.dest(conf.path.src('/images/sprites/'))));
+  return gulp.src(conf.path.src('/images/sprites/*/*.png'))
+    .pipe(spritesmith({
+      imgName: 'mnoe-sprites.png',
+      cssName: 'mnoe-sprites.less',
+      imgPath: '../images/sprites/mnoe-sprites.png',
+      cssFormat: 'css',
+      cssOpts: {
+        cssSelector: function(sprite) {
+          var relPath = path.relative(conf.path.src('/images/sprites/'), sprite.source_image);
+          return '.mnoe-icon-' + path.dirname(relPath) + '-' + sprite.name;
+        }
+      }
+    }))
+    .pipe(gulp.dest(conf.path.src('/images/sprites/')));
 }
 
 // Concatenate all LESS files in one
