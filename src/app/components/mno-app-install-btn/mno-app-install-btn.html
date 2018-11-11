@@ -3,7 +3,7 @@
     <span ng-show="$ctrl.isLoadingButton"><i class="fa fa-spinner fa-pulse"></i></span>
     {{ $ctrl.buttonText }}
   </a>
-  <div ng-if='$ctrl.buttonDisabled()' disabled=true class="btn btn-warning btn-promo btn-lg" uib-tooltip="{{ $ctrl.buttonDisabledTooltip | translate }}" translate>
+  <div ng-if="$ctrl.buttonDisabled()" disabled=true class="btn btn-warning btn-promo btn-lg" uib-tooltip="{{ $ctrl.buttonDisabledTooltip | translate:{app_name: $ctrl.conflictingApp.name} }}" translate>
     {{ $ctrl.buttonText }}
   </div>
 </div>

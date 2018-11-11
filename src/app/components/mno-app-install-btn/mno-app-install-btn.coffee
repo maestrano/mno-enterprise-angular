@@ -4,7 +4,8 @@ angular.module 'mnoEnterpriseAngular'
       app: '<'
     },
     templateUrl: 'app/components/mno-app-install-btn/mno-app-install-btn.html',
-    controller: ($q, $state, $window, $uibModal, $translate, toastr, MnoeMarketplace, MnoeProvisioning, MnoeCurrentUser, MnoeOrganizations, MnoeAppInstances, MnoeConfig, ProvisioningHelper) ->
+    controller: ($q, $state, $window, $uibModal, $translate, toastr, MnoeMarketplace, MnoeProvisioning, MnoeCurrentUser, MnoeOrganizations, MnoeAppInstances,
+    MnoeConfig, ProvisioningHelper, OrgAccountHelper) ->
       vm = this
       vm.orderPossible = true
       vm.buttonText = ''
@@ -79,7 +80,7 @@ angular.module 'mnoEnterpriseAngular'
         else if !vm.orderPossible
           'mno_enterprise.templates.dashboard.marketplace.show.no_pricing_plans_found_tooltip'
         else if vm.conflictingApp
-          $translate.instant('mno_enterprise.templates.components.app_install_btn.conflicting_app') + ' ' + vm.conflictingApp.name
+          'mno_enterprise.templates.components.app_install_btn.conflicting_app'
 
       vm.updateButtonText = () ->
         if vm.isExternallyProvisioned
@@ -205,13 +206,8 @@ angular.module 'mnoEnterpriseAngular'
 
             organization = MnoeOrganizations.selected.organization
 
-            # Is an up to date account required to allow app management and is the account past due?
-            paymentRequired = MnoeConfig.isCurrentAccountRequired() && organization.in_arrears
-            # Are billing details required and are they present?
-            detailsRequired = MnoeConfig.areBillingDetailsRequired() && _.isEmpty(MnoeOrganizations.selected.credit_card)
-            # Billing details need to be updated if payment or billing details are required
-            # This is only enforced if payment is enabled (allows end user to add/update billing details)
-            vm.billingDetailsRequired = (paymentRequired || detailsRequired) && MnoeConfig.isPaymentEnabled()
+            # Is organization able to place orders & manage subscriptions?
+            vm.billingDetailsRequired = OrgAccountHelper.isAccountValid(MnoeOrganizations.selected)
 
             vm.canProvisionApp = _.find(authorizedOrganizations, (org) -> org.id == organization.id)
 

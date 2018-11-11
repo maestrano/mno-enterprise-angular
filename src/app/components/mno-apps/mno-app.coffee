@@ -1,6 +1,6 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('mnoApp',($q, $scope, $stateParams, $state, $sce, $window, $uibModal, $anchorScroll,
-  $location, isPublic, parentState, toastr, MnoeMarketplace, MnoeOrganizations, MnoeCurrentUser, MnoeAppInstances, MnoConfirm, MnoeConfig, ProvisioningHelper) ->
+  $location, isPublic, parentState, toastr, MnoeMarketplace, MnoeOrganizations, MnoeCurrentUser, MnoeAppInstances, MnoConfirm, MnoeConfig, ProvisioningHelper, OrgAccountHelper) ->
 
     vm = this
     #====================================
@@ -87,13 +87,8 @@ angular.module 'mnoEnterpriseAngular'
 
       MnoeOrganizations.get().then((response) -> vm.user_role = response.current_user.role)
 
-      # Is an up to date account required to allow app management and is the account past due?
-      paymentRequired = MnoeConfig.isCurrentAccountRequired() && MnoeOrganizations.selected.organization.in_arrears
-      # Are billing details required and are they present?
-      detailsRequired = MnoeConfig.areBillingDetailsRequired() && _.isEmpty(MnoeOrganizations.selected.credit_card)
-      # Billing details need to be updated if payment or billing details are required
-      # This is only enforced if payment is enabled (allows end user to add/update billing details)
-      vm.billingDetailsRequired = (paymentRequired || detailsRequired) && MnoeConfig.isPaymentEnabled()
+      # Is organization able to place order & manage subscriptions?
+      vm.billingDetailsRequired = OrgAccountHelper.isAccountValid(MnoeOrganizations.selected)
 
       # Init initials reviews if enabled
       if vm.isReviewingEnabled

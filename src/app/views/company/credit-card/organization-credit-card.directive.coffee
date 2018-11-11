@@ -39,6 +39,7 @@ DashboardOrganizationCreditCardCtrl = ($scope, $window, toastr, MnoeOrganization
       actionButtonText: 'mno_enterprise.templates.dashboard.organization.credit_card.confirm_modal.confirm'
       headerText: 'mno_enterprise.templates.dashboard.organization.credit_card.confirm_modal.header'
       bodyText: 'mno_enterprise.templates.dashboard.organization.credit_card.confirm_modal.disclaimer'
+      bodyNgClass: 'text-danger'
       type: 'primary'
 
     MnoConfirm.showModal(modalOptions).then(

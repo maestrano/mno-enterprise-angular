@@ -1,8 +1,8 @@
-<div class="modal-header">
+<div class="modal-header" ng-class="modalOptions.headerNgClass">
   <button type="button" class="close" aria-label="{{'mnoe_admin_panel.dashboard.mno_confirm.close' | translate}}" ng-click="modalOptions.close()"><span aria-hidden="true">&times;</span></button>
   <h4 class="modal-title" translate translate-values="::modalOptions.headerTextExtraData">{{modalOptions.headerText}}</h4>
 </div>
-<div class="modal-body">
+<div class="modal-body" ng-class="modalOptions.bodyNgClass">
   <p translate translate-values="::modalOptions.bodyTextExtraData">{{modalOptions.bodyText}}</p>
   <input ng-if="modalOptions.inputTextEnabled" ng-model="modalOptions.inputTextValue" type="text" class="form-control" placeholder="{{modalOptions.inputTextPlaceholder}}">
 </div>
