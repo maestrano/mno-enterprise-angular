@@ -38,6 +38,7 @@ DashboardOrganizationCreditCardCtrl = ($scope, $window, toastr, MnoeOrganization
       closeButtonText: 'mno_enterprise.templates.dashboard.organization.credit_card.confirm_modal.cancel'
       actionButtonText: 'mno_enterprise.templates.dashboard.organization.credit_card.confirm_modal.confirm'
       headerText: 'mno_enterprise.templates.dashboard.organization.credit_card.confirm_modal.header'
+      headerNgClass: 'cc-confirm-header'
       bodyText: 'mno_enterprise.templates.dashboard.organization.credit_card.confirm_modal.disclaimer'
       bodyNgClass: 'text-danger'
       type: 'primary'

@@ -625,7 +625,7 @@
   "mno_enterprise.templates.dashboard.organization.credit_card.billing_form.country_select": "-- SELECT --",
   "mno_enterprise.templates.dashboard.organization.credit_card.confirm_modal.cancel": "Cancel",
   "mno_enterprise.templates.dashboard.organization.credit_card.confirm_modal.confirm": "Ok",
-  "mno_enterprise.templates.dashboard.organization.credit_card.confirm_modal.header": "<b>Payment terms</b>",
+  "mno_enterprise.templates.dashboard.organization.credit_card.confirm_modal.header": "Payment terms",
   "mno_enterprise.templates.dashboard.organization.credit_card.confirm_modal.disclaimer": "Please note: This credit card will be used to process all outstanding invoices automatically on the 2nd of each month. Click ok to continue.",
   "mno_enterprise.templates.dashboard.organization.credit_card.success_toastr": "Your billing details have been updated successfully",
   "mno_enterprise.templates.dashboard.organization.index.title": "Company",
