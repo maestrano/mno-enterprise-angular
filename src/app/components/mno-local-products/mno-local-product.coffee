@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('mnoLocalProduct', ($scope, $stateParams, $state, isPublic, parentState, MnoeMarketplace, MnoeOrganizations, MnoeConfig, MnoeCurrentUser, ProvisioningHelper) ->
+  .controller('mnoLocalProduct', ($scope, $stateParams, $state, isPublic, parentState, MnoeMarketplace, MnoeOrganizations, MnoeConfig, MnoeCurrentUser, ProvisioningHelper, OrgAccountHelper) ->
 
     vm = this
     vm.isPublic = isPublic
@@ -28,10 +28,12 @@ angular.module 'mnoEnterpriseAngular'
       vm.isPublic || vm.planAvailableForCurrency(plan) || !vm.pricedPlan(plan)
 
     vm.buttonDisabled = () ->
-      !vm.canProvision || !vm.orderPossible
+      vm.billingDetailsRequired || !vm.canProvision || !vm.orderPossible
 
     vm.updateButtonDisabledTooltip = () ->
-      if !vm.canProvision
+      if vm.billingDetailsRequired
+        'mno_enterprise.templates.components.app_install_btn.billing_details_req'
+      else if !vm.canProvision
         'mno_enterprise.templates.components.app_install_btn.insufficient_privilege'
       else if !vm.orderPossible
         'mno_enterprise.templates.dashboard.marketplace.show.no_pricing_plans_found_tooltip'
@@ -46,6 +48,8 @@ angular.module 'mnoEnterpriseAngular'
             currentUser = MnoeCurrentUser.user
             vm.orgCurrency = organization.billing_currency || MnoeConfig.marketplaceCurrency()
             vm.canProvision = atLeastAdmin(currentUser, organization)
+            # Is organization able to place orders & manage subscriptions?
+            vm.billingDetailsRequired = OrgAccountHelper.isAccountValid(MnoeOrganizations.selected)
           else
             vm.orgCurrency = MnoeConfig.marketplaceCurrency()
 
