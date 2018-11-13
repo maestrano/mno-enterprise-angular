@@ -13,7 +13,7 @@ angular.module 'mnoEnterpriseAngular'
       # Is an up to date account required to allow app management and is the account past due?
       paymentRequired = MnoeConfig.isCurrentAccountRequired() && selectedOrg.organization.in_arrears
       # Are billing details required and are they present?
-      detailsRequired = MnoeConfig.areBillingDetailsRequired() && _.isEmpty(selectedOrg.credit_card)
+      detailsRequired = MnoeConfig.areBillingDetailsRequired() && !selectedOrg.credit_card?.id
       # Billing details need to be updated if payment or billing details are required
       # This is only enforced if payment is enabled (allows end user to add/update billing details)
       (paymentRequired || detailsRequired) && MnoeConfig.isPaymentEnabled()
