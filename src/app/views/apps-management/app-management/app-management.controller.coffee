@@ -11,7 +11,6 @@ angular.module 'mnoEnterpriseAngular'
         vm.isSubChanged = true
         vm.recentSubscription = AppManagementHelper.recentSubscription
         vm.editSubscription = ProvisioningHelper.editSubscription
-        vm.showEditAction = ProvisioningHelper.showEditAction
         vm.goToSubscription = ProvisioningHelper.goToSubscription
 
         vm.dataSharingMessage = ->
@@ -58,6 +57,10 @@ angular.module 'mnoEnterpriseAngular'
 
         vm.isAddOnSettingShown = ->
           AppSettingsHelper.isAddOnSettingShown(vm.product)
+
+        vm.showEditAction = (subscription, action) ->
+          return false if vm.paymentRequired
+          ProvisioningHelper.showEditAction(subscription, action)
 
         # ********************** Data Load *********************************
         vm.setUserRole = ->
@@ -130,6 +133,9 @@ angular.module 'mnoEnterpriseAngular'
                 return
 
               vm.organization = _.find(response.currentUser.organizations, {id: MnoeOrganizations.selectedId})
+
+              # Is an up to date account required to allow app management and is the account past due?
+              vm.paymentRequired = MnoeConfig.isCurrentAccountRequired() && MnoeOrganizations.selected.organization.in_arrears
 
               # Manage subscription flow
               vm.loadCurrentSubScription(response.subscriptions)

@@ -9,8 +9,10 @@ angular.module 'mnoEnterpriseAngular'
       actionButtonTextExtraData: {}
       headerText: 'mnoe_admin_panel.dashboard.mno_confirm.proceed'
       headerTextExtraData: {}
+      headerNgClass: {}
       bodyText: 'mnoe_admin_panel.dashboard.mno_confirm.perform'
       bodyTextExtraData: {}
+      bodyNgClass: {}
       inputTextEnabled: false
       inputTextValue: ''
       inputTextPlaceholder: ''

@@ -2,7 +2,7 @@
   <div class="product-content">
     <!-- Header -->
     <div class="row show-header top-buffer-4">
-      <div class="col-md-12">
+      <div ng-class="{'col-md-12': !vm.billingDetailsRequired, 'col-md-8': vm.billingDetailsRequired}">
         <a ui-sref="{{vm.parentState}}" class="text-muted">
           <i class="fa fa-chevron-left"></i> {{ 'mno_enterprise.templates.dashboard.marketplace.show.back' | translate }}
         </a>
@@ -13,6 +13,12 @@
           <div class="media-body">
             <h2 class="media-heading">{{vm.product.name}}</h2>
           </div>
+        </div>
+      </div>
+      <div class="col-md-4" ng-if="vm.billingDetailsRequired && !vm.isLoading">
+        <div class="alert billing-info-alert alert-danger">
+          {{ 'mno_enterprise.templates.dashboard.marketplace.show.details_required_message' | translate }}
+          <a ui-sref="home.company">{{ 'mno_enterprise.templates.dashboard.marketplace.show.details_required_link' | translate }}</a>
         </div>
       </div>
     </div>

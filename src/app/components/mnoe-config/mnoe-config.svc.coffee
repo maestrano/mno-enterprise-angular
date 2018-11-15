@@ -197,6 +197,18 @@ angular.module 'mnoEnterpriseAngular'
         $log.debug("DASHBOARD_CONFIG.user_management.enabled missing")
         true
 
+    @areBillingDetailsRequired = () ->
+      if DASHBOARD_CONFIG.app_management_requirements?.billing_details?
+        DASHBOARD_CONFIG.app_management_requirements.billing_details
+      else
+        false
+
+    @isCurrentAccountRequired = () ->
+      if DASHBOARD_CONFIG.app_management_requirements?.current_account?
+        DASHBOARD_CONFIG.app_management_requirements.current_account
+      else
+        false
+
     @isImpersonationConsentRequired = () ->
       if ADMIN_PANEL_CONFIG.impersonation?.consent_required?
         ADMIN_PANEL_CONFIG.impersonation.consent_required

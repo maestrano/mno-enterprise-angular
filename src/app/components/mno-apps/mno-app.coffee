@@ -1,6 +1,6 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('mnoApp',($q, $scope, $stateParams, $state, $sce, $window, $uibModal, $anchorScroll,
-  $location, isPublic, parentState, toastr, MnoeMarketplace, MnoeOrganizations, MnoeCurrentUser, MnoeAppInstances, MnoConfirm, MnoeConfig, ProvisioningHelper) ->
+  $location, isPublic, parentState, toastr, MnoeMarketplace, MnoeOrganizations, MnoeCurrentUser, MnoeAppInstances, MnoConfirm, MnoeConfig, ProvisioningHelper, OrgAccountHelper) ->
 
     vm = this
     #====================================
@@ -86,6 +86,9 @@ angular.module 'mnoEnterpriseAngular'
       vm.skipPriceSelection = ProvisioningHelper.skipPriceSelection(product)
 
       MnoeOrganizations.get().then((response) -> vm.user_role = response.current_user.role)
+
+      # Is organization able to place order & manage subscriptions?
+      vm.billingDetailsRequired = OrgAccountHelper.isAccountValid(MnoeOrganizations.selected)
 
       # Init initials reviews if enabled
       if vm.isReviewingEnabled

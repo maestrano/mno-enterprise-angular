@@ -2,7 +2,7 @@
   <mno-loader ng-show="vm.isLoading" class="top-buffer-4"></mno-loader>
   <!-- Header -->
   <div class="row show-header top-buffer-4">
-    <div class="col-md-12">
+    <div ng-class="{'col-md-12': !vm.billingDetailsRequired, 'col-md-8': vm.billingDetailsRequired}">
       <a ui-sref="{{vm.parentState}}" class="text-muted">
         <i class="fa fa-chevron-left"></i> {{ 'mno_enterprise.templates.dashboard.marketplace.show.back' | translate }}
       </a>
@@ -23,6 +23,12 @@
           <span ng-if="vm.anyReviews && vm.anyQuestions">&nbsp;|&nbsp;</span>
           <a ng-show="vm.anyQuestions" ng-click="vm.scrollToQuestions()" href="">{{vm.questions.list.length}} {{'mno_enterprise.templates.dashboard.marketplace.show.questions' | translate}}</a>
         </div>
+      </div>
+    </div>
+    <div class="col-md-4" ng-if="vm.billingDetailsRequired && !vm.isLoading">
+      <div class="alert billing-info-alert alert-danger">
+        {{ 'mno_enterprise.templates.dashboard.marketplace.show.details_required_message' | translate }}
+        <a ui-sref="home.company">{{ 'mno_enterprise.templates.dashboard.marketplace.show.details_required_link' | translate }}</a>
       </div>
     </div>
   </div>
