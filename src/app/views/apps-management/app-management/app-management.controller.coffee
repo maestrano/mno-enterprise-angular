@@ -87,7 +87,7 @@ angular.module 'mnoEnterpriseAngular'
           vm.changeAction = 'change' in vm.currentSubscription.available_actions
 
         vm.loadCurrentSubScription = (subscriptions) ->
-          product_subscriptions = _.filter(subscriptions, (sub) -> sub.product?.nid == vm.product.product_nid)
+          product_subscriptions = _.filter(subscriptions, (sub) -> sub.product_instance_id == vm.product.id)
           if product_subscriptions
             fulfilled_subs = _.filter(product_subscriptions, { status: 'fulfilled'} )
             subscription = if fulfilled_subs.length > 0

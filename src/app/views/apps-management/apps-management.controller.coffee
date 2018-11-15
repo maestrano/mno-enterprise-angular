@@ -26,7 +26,7 @@ angular.module 'mnoEnterpriseAngular'
           (response) ->
             vm.products = _.map(response.products,
               (product) ->
-                product_subscriptions = _.filter(response.subscriptions, (subscription) -> subscription.product?.nid == product.product_nid)
+                product_subscriptions = _.filter(response.subscriptions, (subscription) -> subscription.product_instance_id == product.id)
                 if product_subscriptions
                   fulfilled_subs = _.filter(product_subscriptions, { status: 'fulfilled'} )
                   product.subscription = if fulfilled_subs.length > 0
