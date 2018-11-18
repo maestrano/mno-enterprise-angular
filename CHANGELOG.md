@@ -1,5 +1,12 @@
 # Change Log
 
+## [v1.1.6](https://github.com/maestrano/mno-enterprise-angular/tree/v1.1.6) (2018-11-19)
+[Full Changelog](https://github.com/maestrano/mno-enterprise-angular/compare/v1.1.5...v1.1.6)
+
+**Fixed bugs:**
+
+- Fix avatar image [\#181](https://github.com/maestrano/mno-enterprise-angular/pull/181) ([ouranos](https://github.com/ouranos))
+
 ## [v1.1.5](https://github.com/maestrano/mno-enterprise-angular/tree/v1.1.5) (2018-03-21)
 [Full Changelog](https://github.com/maestrano/mno-enterprise-angular/compare/v1.1.4...v1.1.5)
 
