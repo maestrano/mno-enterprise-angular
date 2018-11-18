@@ -645,6 +645,7 @@
   "mno_enterprise.templates.dashboard.organization.invoices.amount": "Amount",
   "mno_enterprise.templates.dashboard.organization.invoices.paid": "Paid",
   "mno_enterprise.templates.dashboard.organization.invoices.download": "Download",
+  "mno_enterprise.templates.dashboard.organization.invoices.loading": "Loading Invoices",
   "mno_enterprise.templates.dashboard.organization.members.invite_users": "Invite Users",
   "mno_enterprise.templates.dashboard.organization.members.name": "Name",
   "mno_enterprise.templates.dashboard.organization.members.surname": "Surname",
