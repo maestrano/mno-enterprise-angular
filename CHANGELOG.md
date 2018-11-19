@@ -7,6 +7,44 @@
 Requires MnoHub containing [maestrano/maestrano-hub#818](https://github.com/maestrano/maestrano-hub/pull/818) (eg: v2.0.0-rc8+)
 Requires Mno Enterprise containing [maestrano/mno-enterprise#588](https://github.com/maestrano/mno-enterprise/pull/588) (v3.4)
 
+## [v1.1.6](https://github.com/maestrano/mno-enterprise-angular/tree/v1.1.6) (2018-11-19)
+[Full Changelog](https://github.com/maestrano/mno-enterprise-angular/compare/v1.1.5...v1.1.6)
+
+**Fixed bugs:**
+
+- Fix avatar image [\#181](https://github.com/maestrano/mno-enterprise-angular/pull/181) ([ouranos](https://github.com/ouranos))
+
+## [v1.1.5](https://github.com/maestrano/mno-enterprise-angular/tree/v1.1.5) (2018-03-21)
+[Full Changelog](https://github.com/maestrano/mno-enterprise-angular/compare/v1.1.4...v1.1.5)
+
+**Fixed bugs:**
+
+- Fix indentation [\#443](https://github.com/maestrano/mno-enterprise-angular/pull/443) ([ouranos](https://github.com/ouranos))
+
+## [v1.1.4](https://github.com/maestrano/mno-enterprise-angular/tree/v1.1.4) (2018-03-19)
+[Full Changelog](https://github.com/maestrano/mno-enterprise-angular/compare/v1.1.3...v1.1.4)
+
+**Implemented enhancements:**
+
+- \[MNOE-956\] Removed logos from billing details page [\#441](https://github.com/maestrano/mno-enterprise-angular/pull/441) ([MAhsenArif](https://github.com/MAhsenArif))
+- \[MNOE-872\] Session timeout modal  [\#432](https://github.com/maestrano/mno-enterprise-angular/pull/432) ([MAhsenArif](https://github.com/MAhsenArif))
+- \[MNOE-702\] Updated admin locale name to maintain coherence in Product Reviews [\#408](https://github.com/maestrano/mno-enterprise-angular/pull/408) ([MAhsenArif](https://github.com/MAhsenArif))
+- \[MNOE-534\] Added redirection for 500 server error [\#407](https://github.com/maestrano/mno-enterprise-angular/pull/407) ([MAhsenArif](https://github.com/MAhsenArif))
+- \[MNOE-744\] Redirect to previous URL after sign-in [\#402](https://github.com/maestrano/mno-enterprise-angular/pull/402) ([ouranos](https://github.com/ouranos))
+- \[MNOE-110\] MnoHub error handling interceptor [\#401](https://github.com/maestrano/mno-enterprise-angular/pull/401) ([ouranos](https://github.com/ouranos))
+- \[MNOE-788\] Improve Devise configuration [\#381](https://github.com/maestrano/mno-enterprise-angular/pull/381) ([ouranos](https://github.com/ouranos))
+
+**Fixed bugs:**
+
+- \[EMERAL-135\] Fixed org change selection not updating on UI [\#429](https://github.com/maestrano/mno-enterprise-angular/pull/429) ([MAhsenArif](https://github.com/MAhsenArif))
+- \[MNOE-894\] Logo redirects to the dashboard [\#418](https://github.com/maestrano/mno-enterprise-angular/pull/418) ([enizor](https://github.com/enizor))
+- \[MNOE-280\] Get organization data again after user is updated [\#406](https://github.com/maestrano/mno-enterprise-angular/pull/406) ([MAhsenArif](https://github.com/MAhsenArif))
+- \[MNOE-855\] Fix html on on-boarding page [\#404](https://github.com/maestrano/mno-enterprise-angular/pull/404) ([BrunoChauvet](https://github.com/BrunoChauvet))
+- \[MNOE-626\] Refactor modals to prevent clearing of app instances svc [\#396](https://github.com/maestrano/mno-enterprise-angular/pull/396) ([adamaziz15](https://github.com/adamaziz15))
+- \[MNOE-765\] Fix displaying compare button when 0 or 1 app [\#385](https://github.com/maestrano/mno-enterprise-angular/pull/385) ([hedudelgado](https://github.com/hedudelgado))
+- \[MNOE-794\] \[BUG\] Insufficient Privileges Tooltip not showing on IE11 [\#384](https://github.com/maestrano/mno-enterprise-angular/pull/384) ([adamaziz15](https://github.com/adamaziz15))
+- \[MNOE-766\] Fix review and question count not sync [\#379](https://github.com/maestrano/mno-enterprise-angular/pull/379) ([hedudelgado](https://github.com/hedudelgado))
+
 ## [v1.1.3](https://github.com/maestrano/mno-enterprise-angular/tree/v1.1.3) (2017-11-10)
 [Full Changelog](https://github.com/maestrano/mno-enterprise-angular/compare/v1.1.2...v1.1.3)
 
