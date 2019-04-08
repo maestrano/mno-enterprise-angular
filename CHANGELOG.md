@@ -1,11 +1,21 @@
 # Change Log
 
-## [Unreleased](https://github.com/maestrano/mno-enterprise-angular/tree/master)
+## [v1.2.0](https://github.com/maestrano/mno-enterprise-angular/tree/v1.2.0) (2019-04-08)
+[Full Changelog](https://github.com/maestrano/mno-enterprise-angular/compare/v1.1.6...v1.2.0)
 
 **Dependencies:**
 
-Requires MnoHub containing [maestrano/maestrano-hub#818](https://github.com/maestrano/maestrano-hub/pull/818) (eg: v2.0.0-rc8+)
-Requires Mno Enterprise containing [maestrano/mno-enterprise#588](https://github.com/maestrano/mno-enterprise/pull/588) (v3.4)
+- Requires MnoHub containing [maestrano/maestrano-hub#818](https://github.com/maestrano/maestrano-hub/pull/818) (eg: v2.0.0-rc8+)
+- Requires Mno Enterprise containing [maestrano/mno-enterprise#588](https://github.com/maestrano/mno-enterprise/pull/588) (v3.4)
+
+**Implemented enhancements:**
+
+- \[APPINT-1169\] Dynamic financial year end month [\#434](https://github.com/maestrano/mno-enterprise-angular/pull/434) ([MehreenT](https://github.com/MehreenT))
+- Impac! permissions [\#388](https://github.com/maestrano/mno-enterprise-angular/pull/388) ([cesar-tonnoir](https://github.com/cesar-tonnoir))
+
+**Fixed bugs:**
+
+- \[MNOE-810\]  IE-11 Dashboard Issues [\#389](https://github.com/maestrano/mno-enterprise-angular/pull/389) ([rheasunshine](https://github.com/rheasunshine))
 
 ## [v1.1.6](https://github.com/maestrano/mno-enterprise-angular/tree/v1.1.6) (2018-11-19)
 [Full Changelog](https://github.com/maestrano/mno-enterprise-angular/compare/v1.1.5...v1.1.6)
