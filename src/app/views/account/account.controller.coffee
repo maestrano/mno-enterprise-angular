@@ -95,6 +95,10 @@ angular.module 'mnoEnterpriseAngular'
       vm.isLocalizationOpen = false
 
       # ----------------------------------------------------
+      # Currency selection section
+      # ----------------------------------------------------
+      vm.isCurrencySectionOpen = false
+      # ----------------------------------------------------
       # Developer Section
       # ----------------------------------------------------
       vm.isDevOpen = false
