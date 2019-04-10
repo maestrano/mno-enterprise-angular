@@ -5,8 +5,10 @@
     <div class="cell col-sm-3" ng-if="payment_enabled">{{ 'mno_enterprise.templates.dashboard.organization.invoices.paid' | translate }}</div>
     <div class="cell col-sm-3 text-center">{{ 'mno_enterprise.templates.dashboard.organization.invoices.download' | translate }}</div>
   </div>
-
-  <div class="row td-row" ng-repeat="invoice in invoices">
+  <div ng-show="invoices.loading" class="row td-row text-center">
+    <span translate>mno_enterprise.templates.dashboard.organization.invoices.loading</span>
+  </div>
+  <div ng-show="!invoices.loading" class="row td-row" ng-repeat="invoice in invoices.list">
     <div class="cell col-sm-3">
       <span class="cell-label visible-xs-inline">{{ 'mno_enterprise.templates.dashboard.organization.invoices.period' | translate }}:<br/></span>
       {{ invoice.started_at|  amDateFormat:'L'}} - {{ invoice.ended_at| amDateFormat:'L'}}
@@ -30,4 +32,14 @@
       </a>
     </div>
   </div>
+</div>
+
+<div class="top-buffer-1">
+  <mno-pagination
+    page="invoices.page"
+    nb-items="invoices.nbItems"
+    total-items="invoices.totalItems"
+    on-change-cb="invoices.pageChangedCb(nbItems, page)"
+    is-loading="invoices.loading">
+  </mno-pagination>
 </div>
