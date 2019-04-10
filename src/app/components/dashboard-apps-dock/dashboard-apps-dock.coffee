@@ -118,7 +118,7 @@ DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, $timeout, MnoeOrg
   $scope.$watch MnoeOrganizations.getSelectedId, (val) ->
     if val?
       $scope.isLoading = true
-      MnoeAppInstances.getAppInstances().then(
+      MnoeAppInstances.getAppInstances(true).then(
         (response) ->
           $scope.apps = response
       ).finally(-> $scope.isLoading = false)

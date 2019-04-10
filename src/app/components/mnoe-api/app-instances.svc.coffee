@@ -6,7 +6,9 @@ angular.module 'mnoEnterpriseAngular'
     @appInstances = []
 
     appInstancesPromise = null
-    @getAppInstances = ->
+
+    # If unscoped and no cache, retrieve app instances irrespective of tenant
+    @getAppInstances = (unscoped = false) ->
       return appInstancesPromise if appInstancesPromise?
 
       deferred = $q.defer()
@@ -15,14 +17,14 @@ angular.module 'mnoEnterpriseAngular'
       cache = MnoLocalStorage.getObject(MnoeCurrentUser.user.id + "_" + LOCALSTORAGE.appInstancesKey)
       if cache?
         # Refresh the cache content asynchronously
-        fetchAppInstances()
+        fetchAppInstances(unscoped)
         # Append response array to service array
         _self.appInstances = cache
         # Return the promised cache
         deferred.resolve(cache)
       else
         # If the cache is empty return the call promise
-        fetchAppInstances().then((response) -> deferred.resolve(response))
+        fetchAppInstances(unscoped).then((response) -> deferred.resolve(response))
 
       return appInstancesPromise = deferred.promise
 
@@ -33,14 +35,16 @@ angular.module 'mnoEnterpriseAngular'
       fetchAppInstances()
 
     # Retrieve app instances from the backend
-    fetchAppInstances = ->
+    # If unscoped, retrieve app instances irrespective of tenant
+    fetchAppInstances = (unscoped) ->
       # Workaround as the API is not standard (return a hash map not an array)
       # (Prefix operation by '/' to avoid data extraction)
       # TODO: Standard API
       defer = $q.defer()
       MnoeOrganizations.get().then(
         ->
-          _self.appInstancesPromise = MnoeApiSvc.one('organizations', MnoeOrganizations.selectedId).one('/app_instances').get().then(
+          params = if unscoped then {unscoped: true} else {}
+          _self.appInstancesPromise = MnoeApiSvc.one('organizations', MnoeOrganizations.selectedId).one('/app_instances').get(params).then(
             (response) ->
               response = response.plain()
               # Save the app instances in the local storage
