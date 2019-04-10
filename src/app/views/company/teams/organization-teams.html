@@ -106,10 +106,10 @@
           <table class="permission-matrix" ng-show="hasApps()">
             <thead>
               <tr>
-                <th ng-repeat="appInstance in appInstances">
+                <th ng-repeat="productInstance in productInstances">
                   <div class="th-content">
-                    <img class="media-object" ng-src="{{appInstance.logo}}" ng-alt="{{appInstance.name}}">
-                    {{ appInstance.name | truncate: 13}}
+                    <img class="media-object" ng-src="{{productInstance.logo}}" ng-alt="{{productInstance.name}}">
+                    {{ productInstance.name | truncate: 13}}
                   </div>
                 </th>
                 <th></th>
@@ -118,8 +118,8 @@
 
             <tbody>
               <tr ng-repeat="team in teams">
-                <td ng-repeat="appInstance in appInstances">
-                  <input type="checkbox" ng-checked="matrix.hasAccess(team,appInstance)" ng-click="matrix.toggleAccess(team,appInstance)">
+                <td ng-repeat="productInstance in productInstances">
+                  <input type="checkbox" ng-checked="matrix.hasAccess(team,productInstance)" ng-click="matrix.toggleAccess(team,productInstance)">
                 </td>
                 <td></td>
               </tr>

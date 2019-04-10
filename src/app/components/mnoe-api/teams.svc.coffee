@@ -35,8 +35,8 @@ angular.module 'mnoEnterpriseAngular'
           response
       )
 
-    @updateTeamAppInstances = (team, appInstances) ->
-      payload = { team: {app_instances: appInstances} }
+    @updateTeamProductInstances = (team, productInstances) ->
+      payload = { team: {product_instances: productInstances} }
       MnoeApiSvc.one('teams', team.id).patch(payload).then(
         (response) ->
           newTeam = response.plain()

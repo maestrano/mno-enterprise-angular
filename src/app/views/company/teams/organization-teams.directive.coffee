@@ -1,6 +1,6 @@
 
 # TODO: Remove DhbTeamSvc
-DashboardOrganizationTeamsCtrl = ($scope, $window, $uibModal, $q, MnoeOrganizations, MnoeTeams, MnoeAppInstances, Utilities) ->
+DashboardOrganizationTeamsCtrl = ($scope, $window, $uibModal, $q, MnoeOrganizations, MnoeTeams, MnoeProductInstances, Utilities) ->
   'ngInject'
 
   #====================================
@@ -9,17 +9,17 @@ DashboardOrganizationTeamsCtrl = ($scope, $window, $uibModal, $q, MnoeOrganizati
   $scope.isLoading = true
   $scope.teams = []
   $scope.originalTeams = []
-  $scope.appInstances = []
+  $scope.productInstances = []
 
   #====================================
   # Scope Management
   #====================================
   # Initialize the data used by the directive
-  $scope.initialize = (teams, appInstances) ->
+  $scope.initialize = (teams, productInstances) ->
     angular.copy(teams, $scope.teams)
     angular.copy(teams, $scope.originalTeams)
-    realAppInstances = _.filter(appInstances, (i) -> i.status != 'terminated')
-    angular.copy(realAppInstances, $scope.appInstances)
+    realProductInstances = _.filter(productInstances, (i) -> i.status != 'terminated')
+    angular.copy(realProductInstances, $scope.productInstances)
     $scope.isLoading = false
 
   $scope.isTeamEmpty = (team) ->
@@ -29,7 +29,7 @@ DashboardOrganizationTeamsCtrl = ($scope, $window, $uibModal, $q, MnoeOrganizati
     $scope.teams.length > 0
 
   $scope.hasApps = ->
-    $scope.appInstances.length > 0
+    $scope.productInstances.length > 0
 
   #====================================
   # Permissions matrix
@@ -38,51 +38,51 @@ DashboardOrganizationTeamsCtrl = ($scope, $window, $uibModal, $q, MnoeOrganizati
   matrix.isLoading = false
 
   # Check if a team has access to the specified
-  # app_instance
-  # If appInstance is equal to the string 'all'
+  # product_instance
+  # If productInstance is equal to the string 'all'
   # then it checks if the team has access to all
-  # appInstances
-  matrix.hasAccess = (team, appInstance) ->
-    if angular.isString(appInstance) && appInstance == 'all'
-      _.reduce($scope.appInstances,
+  # productInstances
+  matrix.hasAccess = (team, productInstance) ->
+    if angular.isString(productInstance) && productInstance == 'all'
+      _.reduce($scope.productInstances,
         (memo, elem) ->
-          memo && _.find(team.app_instances, (i)-> i.id == elem.id)?
+          memo && _.find(team.product_instances, (i)-> i.id == elem.id)?
         , true
       )
     else
-      _.find(team.app_instances, (i)-> i.id == appInstance.id)?
+      _.find(team.product_instances, (i)-> i.id == productInstance.id)?
 
-  # Add access to the app if the team does not have
+  # Add access to the product if the team does not have
   # access and remove access if the team already
   # have access
-  matrix.toggleAccess = (team, appInstance) ->
+  matrix.toggleAccess = (team, productInstance) ->
     self = matrix
-    if (self.hasAccess(team, appInstance))
-      self.removeAccess(team, appInstance)
+    if (self.hasAccess(team, productInstance))
+      self.removeAccess(team, productInstance)
     else
-      self.addAccess(team, appInstance)
+      self.addAccess(team, productInstance)
 
-  # Add access to a specified appInstance
-  # If appInstance is equal to the string 'all'
-  # then it adds permissions to all appInstances
-  matrix.addAccess = (team, appInstance) ->
-    if angular.isString(appInstance) && appInstance == 'all'
-      team.app_instances.length = 0
-      angular.copy($scope.appInstances, team.app_instances)
+  # Add access to a specified productInstance
+  # If productInstance is equal to the string 'all'
+  # then it adds permissions to all productInstances
+  matrix.addAccess = (team, productInstance) ->
+    if angular.isString(productInstance) && productInstance == 'all'
+      team.product_instances.length = 0
+      angular.copy($scope.productInstances, team.product_instances)
     else
-      unless _.find(team.app_instances, (e)-> e.id == appInstance.id)?
-        team.app_instances.push(appInstance)
+      unless _.find(team.product_instances, (e)-> e.id == productInstance.id)?
+        team.product_instances.push(productInstance)
 
-  # Remove access to a specified appInstance
-  # If appInstance is equal to the string 'all'
-  # then it removes permissions to all appInstances
-  matrix.removeAccess = (team,appInstance) ->
-    if angular.isString(appInstance) && appInstance == 'all'
-      team.app_instances.length = 0
+  # Remove access to a specified productInstance
+  # If productInstance is equal to the string 'all'
+  # then it removes permissions to all productInstances
+  matrix.removeAccess = (team,productInstance) ->
+    if angular.isString(productInstance) && productInstance == 'all'
+      team.product_instances.length = 0
     else
-      if (elem = _.find(team.app_instances, (e)-> e.id == appInstance.id))?
-        idx = team.app_instances.indexOf(elem)
-        team.app_instances.splice(idx,1)
+      if (elem = _.find(team.product_instances, (e)-> e.id == productInstance.id))?
+        idx = team.product_instances.indexOf(elem)
+        team.product_instances.splice(idx,1)
 
   # Open the 'add team' modal
   matrix.addTeam = ->
@@ -96,7 +96,7 @@ DashboardOrganizationTeamsCtrl = ($scope, $window, $uibModal, $q, MnoeOrganizati
     _.reduce teams,
       (hash,t) ->
         hash += "#{t.id}:"
-        hash += _.sortBy(_.pluck(t.app_instances,'id'),(n)->n).join()
+        hash += _.sortBy(_.pluck(t.product_instances,'id'),(n)->n).join()
         hash += "::"
       ,""
 
@@ -107,7 +107,7 @@ DashboardOrganizationTeamsCtrl = ($scope, $window, $uibModal, $q, MnoeOrganizati
   matrix.cancel = ->
     _.each $scope.teams, (t) ->
       ot = _.find($scope.originalTeams,(e) -> e.id == t.id)
-      angular.copy(ot.app_instances,t.app_instances)
+      angular.copy(ot.product_instances,t.product_instances)
 
   matrix.save = ->
     self = matrix
@@ -115,9 +115,9 @@ DashboardOrganizationTeamsCtrl = ($scope, $window, $uibModal, $q, MnoeOrganizati
 
     qs = []
     _.each $scope.teams, (team) ->
-      # Force empty array if no app_instances permissions
-      realAppInstances = if team.app_instances.length >0 then team.app_instances else [{}]
-      qs.push MnoeTeams.updateTeamAppInstances(team, realAppInstances)
+      # Force empty array if no product_instances permissions
+      realProductInstances = if team.product_instances.length >0 then team.product_instances else [{}]
+      qs.push MnoeTeams.updateTeamProductInstances(team, realProductInstances)
 
     $q.all(qs).then(
       (->)
@@ -130,7 +130,7 @@ DashboardOrganizationTeamsCtrl = ($scope, $window, $uibModal, $q, MnoeOrganizati
   matrix.updateOriginalTeams = ->
     _.each $scope.teams, (t) ->
       ot = _.find($scope.originalTeams,(e) -> e.id == t.id)
-      angular.copy(t.app_instances,ot.app_instances)
+      angular.copy(t.product_instances,ot.product_instances)
 
   matrix.updateTeamName = (team) ->
     origTeam = _.find($scope.teams, (t) -> t.id == team.id)
@@ -247,7 +247,7 @@ DashboardOrganizationTeamsCtrl = ($scope, $window, $uibModal, $q, MnoeOrganizati
   $scope.$watch(MnoeOrganizations.getSelectedId, (newValue) ->
     if newValue?
       # Get the new teams for this organization
-      $q.all([MnoeTeams.getTeams(), MnoeAppInstances.getAppInstances()]).then(
+      $q.all([MnoeTeams.getTeams(), MnoeProductInstances.getProductInstances()]).then(
         (responses) ->
           $scope.initialize(responses[0], responses[1])
       )
