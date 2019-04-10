@@ -79,9 +79,30 @@ angular.module 'mnoEnterpriseAngular'
         data:
           pageTitle:'Company'
         url: '/company'
+        startTab: ['billings', 'members']
         templateUrl: 'app/views/company/company.html'
         controller: 'DashboardCompanyCtrl'
         controllerAs: 'vm'
+      .state 'home.company.members',
+        url: '/members'
+        startTab: ['members']
+        templateUrl: 'app/views/company/members/organization-members.html'
+        controller: 'DashboardOrganizationMembersCtrl'
+      .state 'home.company.teams',
+        url: '/teams'
+        startTab: ['teams']
+        templateUrl: 'app/views/company/teams/organization-teams.html'
+        controller: 'DashboardOrganizationTeamsCtrl'
+      .state 'home.company.settings',
+        url: '/settings'
+        startTab: ['settings']
+        templateUrl: 'app/views/company/settings/organization-settings.html'
+        controller: 'DashboardOrganizationSettingsCtrl'
+      .state 'home.company.billings',
+        url: '/billings'
+        startTab: ['billings']
+        templateUrl: 'app/views/company/billing/organization-billing.html'
+        controller: 'DashboardOrganizationBillingCtrl'
       .state 'logout',
         url: '/logout'
         controller: ($window, $http, $translate, AnalyticsSvc, URL_CONFIG) ->

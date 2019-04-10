@@ -1,8 +1,7 @@
 angular.module 'mnoEnterpriseAngular'
   .controller('DashboardCompanyCtrl',
-    ($scope, MnoeOrganizations, MnoeTeams, MnoeConfig) ->
+    ($scope, $state, MnoeOrganizations, MnoeTeams, MnoeConfig) ->
       vm = @
-
       #====================================
       # Pre-Initialization
       #====================================
@@ -14,10 +13,11 @@ angular.module 'mnoEnterpriseAngular'
       #====================================
       vm.initialize = ->
         vm.isLoading = false
+      # On refreshing the page it should stay on the same tab
         if vm.isBillingShown()
-          vm.activeTab = 'billing'
+          vm.activeTab = $state.current.startTab[0]
         else
-          vm.activeTab = 'members'
+          vm.activeTab = $state.current.startTab[1]
 
       vm.isTabSetShown = ->
         !vm.isLoading && (
