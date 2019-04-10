@@ -1,5 +1,5 @@
 
-DashboardAppsDockCtrl = ($scope, $cookies, $uibModal, $window, MnoeOrganizations, MnoeAppInstances, MnoeProductInstances, MnoeConfig) ->
+DashboardAppsDockCtrl = ($scope, $uibModal, $window, MnoeOrganizations, MnoeAppInstances, MnoeProductInstances, MnoeConfig) ->
   'ngInject'
 
   $scope.appDock = {}
