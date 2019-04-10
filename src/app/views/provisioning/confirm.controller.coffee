@@ -1,131 +1,133 @@
 angular.module 'mnoEnterpriseAngular'
-  .controller('ProvisioningConfirmCtrl', ($scope, $state, $stateParams, $log, MnoeOrganizations, MnoeProvisioning, MnoeAppInstances, MnoeConfig, ProvisioningHelper, schemaForm, toastr) ->
+  .controller('ProvisioningConfirmCtrl',
+    ($scope, $state, $stateParams, $log, MnoeOrganizations, MnoeProvisioning, MnoeAppInstances, MnoeConfig, ProvisioningHelper, schemaForm, toastr, MnoeProductInstances) ->
 
-    vm = this
+      vm = this
 
-    vm.isLoading = false
-    vm.subscription = MnoeProvisioning.getCachedSubscription()
-    vm.selectedCurrency = MnoeProvisioning.getSelectedCurrency()
-    vm.cartItem = $stateParams.cart == 'true'
-    vm.quoteFetched = true
-    vm.quoteBased = false
+      vm.isLoading = false
+      vm.subscription = MnoeProvisioning.getCachedSubscription()
+      vm.selectedCurrency = MnoeProvisioning.getSelectedCurrency()
+      vm.cartItem = $stateParams.cart == 'true'
+      vm.quoteFetched = true
+      vm.quoteBased = false
 
-    vm.orderTypeText = 'mno_enterprise.templates.dashboard.provisioning.subscriptions.' + $stateParams.editAction.toLowerCase()
+      vm.orderTypeText = 'mno_enterprise.templates.dashboard.provisioning.subscriptions.' + $stateParams.editAction.toLowerCase()
 
-    urlParams =
-      subscriptionId: $stateParams.subscriptionId
-      productId: $stateParams.productId
-      editAction: $stateParams.editAction,
-      cart: $stateParams.cart
+      urlParams =
+        subscriptionId: $stateParams.subscriptionId
+        productId: $stateParams.productId
+        editAction: $stateParams.editAction,
+        cart: $stateParams.cart
 
-    setCustomSchema = () ->
-      parsedSchema = JSON.parse(vm.subscription.product.custom_schema)
-      schema = parsedSchema.json_schema || parsedSchema
-      vm.form = parsedSchema.asf_options || ["*"]
-      schemaForm.jsonref(schema)
-        .then((schema) -> schemaForm.jsonref(schema))
-        .then((schema) -> schemaForm.jsonref(schema))
-        .then((schema) ->
-          vm.schema = schema
+      setCustomSchema = () ->
+        parsedSchema = JSON.parse(vm.subscription.product.custom_schema)
+        schema = parsedSchema.json_schema || parsedSchema
+        vm.form = parsedSchema.asf_options || ["*"]
+        schemaForm.jsonref(schema)
+          .then((schema) -> schemaForm.jsonref(schema))
+          .then((schema) -> schemaForm.jsonref(schema))
+          .then((schema) ->
+            vm.schema = schema
+          )
+
+      clearInstancesCache = ->
+        MnoeAppInstances.emptyAppInstances()
+        MnoeProductInstances.emptyProductInstances()
+        MnoeProductInstances.clearCache()
+
+      vm.editOrder = (reload = true) ->
+        switch $stateParams.editAction.toLowerCase()
+          when 'change', 'provision', null
+            $state.go('home.provisioning.order', urlParams, {reload: reload})
+          else
+            $state.go('home.provisioning.additional_details', urlParams, {reload: reload})
+
+      if vm.subscription.product_pricing?.quote_based
+        vm.quoteBased = true
+        vm.quoteFetched = false
+        MnoeProvisioning.getQuote(vm.subscription, vm.selectedCurrency).then(
+          (response) ->
+            vm.quotedPrice = response.totalContractValue?.quote
+            vm.quotedCurrency = response.totalContractValue?.currency
+            # To be passed to the order summary screen.
+            MnoeProvisioning.setQuote(response.totalContractValue)
+            vm.quoteFetched = true
+          (error) ->
+            $log.error(error)
+            toastr.error('mno_enterprise.templates.dashboard.marketplace.show.quote_error')
+            vm.quoteFetched = true
         )
 
-    vm.editOrder = (reload = true) ->
-      switch $stateParams.editAction.toLowerCase()
-        when 'change', 'provision', null
-          $state.go('home.provisioning.order', urlParams, {reload: reload})
-        else
-          $state.go('home.provisioning.additional_details', urlParams, {reload: reload})
-
-    if vm.subscription.product_pricing?.quote_based
-      vm.quoteBased = true
-      vm.quoteFetched = false
-      MnoeProvisioning.getQuote(vm.subscription, vm.selectedCurrency).then(
-        (response) ->
-          vm.quotedPrice = response.totalContractValue?.quote
-          vm.quotedCurrency = response.totalContractValue?.currency
-          # To be passed to the order summary screen.
-          MnoeProvisioning.setQuote(response.totalContractValue)
-          vm.quoteFetched = true
-        (error) ->
-          $log.error(error)
-          toastr.error('mno_enterprise.templates.dashboard.marketplace.show.quote_error')
-          vm.quoteFetched = true
-      )
-
-    # Happens when the user reload the browser during the provisioning workflow.
-    if _.isEmpty(vm.subscription)
-      # Redirect the user to the first provisioning screen
-      vm.editOrder(true)
-    else
-      vm.singleBilling = vm.subscription.product.single_billing_enabled
-      vm.billedLocally = vm.subscription.product.billed_locally
-      # Render custom Schema if it exists
-      setCustomSchema() if vm.subscription.custom_data && vm.subscription.product.custom_schema
-
-    vm.validate = () ->
-      vm.isLoading = true
-      vm.subscription.event_type = $stateParams.editAction
-
-      if vm.cartItem
-        vm.subscription.cart_entry = true
-        provisioningPromise = MnoeProvisioning.saveSubscriptionCart(vm.subscription, vm.selectedCurrency)
+      # Happens when the user reload the browser during the provisioning workflow.
+      if _.isEmpty(vm.subscription)
+        # Redirect the user to the first provisioning screen
+        vm.editOrder(true)
       else
-        provisioningPromise= MnoeProvisioning.saveSubscription(vm.subscription, vm.selectedCurrency)
+        vm.singleBilling = vm.subscription.product.single_billing_enabled
+        vm.billedLocally = vm.subscription.product.billed_locally
+        # Render custom Schema if it exists
+        setCustomSchema() if vm.subscription.custom_data && vm.subscription.product.custom_schema
 
-      provisioningPromise.then((response) ->
+      vm.validate = () ->
+        vm.isLoading = true
+        vm.subscription.event_type = $stateParams.editAction
+
         if vm.cartItem
-          MnoeProvisioning.refreshCartSubscriptions()
-          $state.go("home.subscriptions", {subType: 'cart'})
+          vm.subscription.cart_entry = true
+          provisioningPromise = MnoeProvisioning.saveSubscriptionCart(vm.subscription, vm.selectedCurrency)
         else
-          # Reload dock apps
-          MnoeAppInstances.getAppInstances().then(
-            (response) ->
-              $scope.apps = response
-          )
-          $state.go('home.provisioning.order_summary', {subscriptionId: $stateParams.subscriptionId, editAction: $stateParams.editAction, cart: $stateParams.cart})
+          provisioningPromise= MnoeProvisioning.saveSubscription(vm.subscription, vm.selectedCurrency)
+
+        provisioningPromise.then((response) ->
+          if vm.cartItem
+            MnoeProvisioning.refreshCartSubscriptions()
+            $state.go("home.subscriptions", {subType: 'cart'})
+          else
+            clearInstancesCache()
+            $state.go('home.provisioning.order_summary', {subscriptionId: $stateParams.subscriptionId, editAction: $stateParams.editAction, cart: $stateParams.cart})
+          ).finally(-> vm.isLoading = false)
+
+      vm.addToCart = ->
+        vm.isLoading = true
+        vm.subscription.cart_entry = true
+        MnoeProvisioning.saveSubscriptionCart(vm.subscription, vm.selectedCurrency).then(
+          (response) ->
+            MnoeProvisioning.refreshCartSubscriptions()
+            $state.go('home.marketplace')
         ).finally(-> vm.isLoading = false)
 
-    vm.addToCart = ->
-      vm.isLoading = true
-      vm.subscription.cart_entry = true
-      MnoeProvisioning.saveSubscriptionCart(vm.subscription, vm.selectedCurrency).then(
+      vm.orderEditable = () ->
+        # The order is editable if the product has a custom schema.
+        return true if vm.subscription.product?.custom_schema
+        # Disable editing if unable to initially select a pricing plan.
+        return false if ProvisioningHelper.skipPriceSelection(vm.subscription.product)
+        switch $stateParams.editAction
+          when 'change', 'provision'
+            true
+          else
+            false
+
+      MnoeOrganizations.get().then(
         (response) ->
-          MnoeProvisioning.refreshCartSubscriptions()
-          $state.go('home.marketplace')
-      ).finally(-> vm.isLoading = false)
+          vm.orgCurrency = response.organization?.billing_currency || MnoeConfig.marketplaceCurrency()
+      )
 
-    vm.orderEditable = () ->
-      # The order is editable if the product has a custom schema.
-      return true if vm.subscription.product?.custom_schema
-      # Disable editing if unable to initially select a pricing plan.
-      return false if ProvisioningHelper.skipPriceSelection(vm.subscription.product)
-      switch $stateParams.editAction
-        when 'change', 'provision'
-          true
+      vm.pricingText = () ->
+        if !vm.singleBilling
+          'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.single_billing_disabled'
+        else if vm.billedLocally
+          'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.billed_locally'
         else
-          false
+          'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.externally_managed'
 
-    MnoeOrganizations.get().then(
-      (response) ->
-        vm.orgCurrency = response.organization?.billing_currency || MnoeConfig.marketplaceCurrency()
-    )
+      # Delete the cached subscription when we are leaving the subscription workflow.
+      $scope.$on('$stateChangeStart', (event, toState) ->
+        switch toState.name
+          when "home.provisioning.order", "home.provisioning.order_summary", "home.provisioning.additional_details"
+            null
+          else
+            MnoeProvisioning.setSubscription({})
+      )
 
-    vm.pricingText = () ->
-      if !vm.singleBilling
-        'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.single_billing_disabled'
-      else if vm.billedLocally
-        'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.billed_locally'
-      else
-        'mno_enterprise.templates.dashboard.provisioning.confirm.pricing_info.externally_managed'
-
-    # Delete the cached subscription when we are leaving the subscription workflow.
-    $scope.$on('$stateChangeStart', (event, toState) ->
-      switch toState.name
-        when "home.provisioning.order", "home.provisioning.order_summary", "home.provisioning.additional_details"
-          null
-        else
-          MnoeProvisioning.setSubscription({})
-    )
-
-    return
+      return
   )
