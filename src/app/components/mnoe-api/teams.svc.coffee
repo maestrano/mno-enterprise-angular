@@ -75,4 +75,9 @@ angular.module 'mnoEnterpriseAngular'
           response.team.users
       )
 
+    @updateTeamMemberRole = (member) ->
+      _self.teams.forEach (team) ->
+        team_member = _.find(team.users, {email: member.email})
+        team_member.role = member.role if team_member
+
     return @

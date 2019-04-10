@@ -141,6 +141,7 @@ DashboardOrganizationMembersCtrl = ($scope, $uibModal, $sce, $translate, MnoeOrg
           rolesToDisplay()
           clearInstancesCache()
           reloadCurrentOrganization()
+        MnoeTeams.updateTeamMemberRole(obj)
         self.close()
       (errors) ->
         self.errors = Utilities.processRailsError(errors)
